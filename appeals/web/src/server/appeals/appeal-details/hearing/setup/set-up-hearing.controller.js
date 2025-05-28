@@ -11,7 +11,7 @@ import {
 	dateISOStringToDayMonthYearHourMinute,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
-import { createHearing, updateHearing } from './set-up-hearing.service.js';
+import { createHearing, updateHearing } from './hearing.service.js';
 
 /**
  * @param {string} path

@@ -156,6 +156,40 @@ exports[`appeal-details GET /:appealId Hearing should render the Hearing estimat
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Hearing should render the cancel hearing link when hearing is present and in the future 1`] = `
+"<div id="case-details-hearing-section">
+    <div>
+        <p class="govuk-body govuk-!-margin-bottom-4"><a id="cancelHearing" class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/hearing/cancel">Cancel hearing</a>
+        </p>
+    </div>
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+            <dd class="govuk-summary-list__value">15 May 2999</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/date"
+                data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+            <dd class="govuk-summary-list__value">1:00pm</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/date"
+                data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
+            <dd             class="govuk-summary-list__value">No</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/address"
+                    data-cy="change-whether-the-address-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
+                </dd>
+        </div>
+    </dl>
+    <h3 class="govuk-heading-m">Hearing estimates</h3>
+    <div>
+        <p><a id="addHearingEstimates" class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/add">Add hearing estimates</a>
+        </p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Hearing should render the hearing details summary list when hearing is present with address 1`] = `
 "<div id="case-details-hearing-section">
     <dl class="govuk-summary-list">

@@ -31,3 +31,18 @@ export const updateHearing = async (request, hearingId, hearingDetails) => {
 
 	return response;
 };
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} hearingId
+ * @returns {Promise<{hearingEstimateId: number}>}
+ */
+export const cancelHearing = async (request, hearingId) => {
+	const { appealId } = request.currentAppeal;
+
+	const response = await request.apiClient
+		.delete(`appeals/${appealId}/hearing/${hearingId}`)
+		.json();
+
+	return response;
+};

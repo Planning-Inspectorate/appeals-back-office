@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`set up hearing GET /hearing/change/address should match the snapshot 1`] = `
+exports[`change hearing GET /hearing/change/address should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - set up hearing</span>
@@ -40,7 +40,7 @@ exports[`set up hearing GET /hearing/change/address should match the snapshot 1`
 </main>"
 `;
 
-exports[`set up hearing GET /hearing/change/address-details should match the snapshot 1`] = `
+exports[`change hearing GET /hearing/change/address-details should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -91,7 +91,7 @@ exports[`set up hearing GET /hearing/change/address-details should match the sna
 </main>"
 `;
 
-exports[`set up hearing GET /hearing/change/check-details when all pages have been submitted should match the snapshot 1`] = `
+exports[`change hearing GET /hearing/change/check-details when all pages have been submitted should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -143,7 +143,7 @@ exports[`set up hearing GET /hearing/change/check-details when all pages have be
 </main>"
 `;
 
-exports[`set up hearing GET /hearing/change/check-details when only address details have been submitted should match the snapshot 1`] = `
+exports[`change hearing GET /hearing/change/check-details when only address details have been submitted should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -195,7 +195,7 @@ exports[`set up hearing GET /hearing/change/check-details when only address deta
 </main>"
 `;
 
-exports[`set up hearing GET /hearing/change/check-details when only address not known has been submitted should match the snapshot 1`] = `
+exports[`change hearing GET /hearing/change/check-details when only address not known has been submitted should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -237,7 +237,7 @@ exports[`set up hearing GET /hearing/change/check-details when only address not 
 </main>"
 `;
 
-exports[`set up hearing GET /hearing/change/check-details when only yes and address details have been submitted should match the snapshot 1`] = `
+exports[`change hearing GET /hearing/change/check-details when only yes and address details have been submitted should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -289,7 +289,7 @@ exports[`set up hearing GET /hearing/change/check-details when only yes and addr
 </main>"
 `;
 
-exports[`set up hearing GET /hearing/change/date should match the snapshot 1`] = `
+exports[`change hearing GET /hearing/change/date should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - set up hearing</span>
@@ -363,7 +363,7 @@ exports[`set up hearing GET /hearing/change/date should match the snapshot 1`] =
 </main>"
 `;
 
-exports[`set up hearing POST /hearing/change/address-details should re-render the page if addressLine1 is an empty string 1`] = `
+exports[`change hearing POST /hearing/change/address-details should re-render the page if addressLine1 is an empty string 1`] = `
 "<div class="govuk-error-summary" data-module="govuk-error-summary">
     <div role="alert">
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
@@ -377,7 +377,7 @@ exports[`set up hearing POST /hearing/change/address-details should re-render th
 </div>"
 `;
 
-exports[`set up hearing POST /hearing/change/address-details should re-render the page if addressLine1 is null 1`] = `
+exports[`change hearing POST /hearing/change/address-details should re-render the page if addressLine1 is null 1`] = `
 "<div class="govuk-error-summary" data-module="govuk-error-summary">
     <div role="alert">
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
@@ -391,7 +391,7 @@ exports[`set up hearing POST /hearing/change/address-details should re-render th
 </div>"
 `;
 
-exports[`set up hearing POST /hearing/change/address-details should re-render the page if the postcode is an empty string 1`] = `
+exports[`change hearing POST /hearing/change/address-details should re-render the page if the postcode is an empty string 1`] = `
 "<div class="govuk-error-summary" data-module="govuk-error-summary">
     <div role="alert">
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
@@ -405,7 +405,7 @@ exports[`set up hearing POST /hearing/change/address-details should re-render th
 </div>"
 `;
 
-exports[`set up hearing POST /hearing/change/address-details should re-render the page if the postcode is invalid 1`] = `
+exports[`change hearing POST /hearing/change/address-details should re-render the page if the postcode is invalid 1`] = `
 "<div class="govuk-error-summary" data-module="govuk-error-summary">
     <div role="alert">
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
@@ -419,7 +419,7 @@ exports[`set up hearing POST /hearing/change/address-details should re-render th
 </div>"
 `;
 
-exports[`set up hearing POST /hearing/change/address-details should re-render the page if the postcode is null 1`] = `
+exports[`change hearing POST /hearing/change/address-details should re-render the page if the postcode is null 1`] = `
 "<div class="govuk-error-summary" data-module="govuk-error-summary">
     <div role="alert">
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
@@ -433,7 +433,7 @@ exports[`set up hearing POST /hearing/change/address-details should re-render th
 </div>"
 `;
 
-exports[`set up hearing POST /hearing/change/address-details should re-render the page if town is an empty string 1`] = `
+exports[`change hearing POST /hearing/change/address-details should re-render the page if town is an empty string 1`] = `
 "<div class="govuk-error-summary" data-module="govuk-error-summary">
     <div role="alert">
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
@@ -447,7 +447,7 @@ exports[`set up hearing POST /hearing/change/address-details should re-render th
 </div>"
 `;
 
-exports[`set up hearing POST /hearing/change/address-details should re-render the page if town is null 1`] = `
+exports[`change hearing POST /hearing/change/address-details should re-render the page if town is null 1`] = `
 "<div class="govuk-error-summary" data-module="govuk-error-summary">
     <div role="alert">
         <h2 class="govuk-error-summary__title"> There is a problem</h2>
