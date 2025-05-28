@@ -39,9 +39,9 @@ export function mapRejectionReasonOptionsToCheckboxItemParameters(
 		const selectedTextItems = (() => {
 			const sessionContent = get(session, sessionKey);
 			const value = sessionContent?.[`rejectionReason-${reason.id}`];
-			if (!value || sessionContent?.commentId !== comment.id) {
-				return null;
-			}
+			if (!value) return null;
+
+			delete sessionContent[`rejectionReason-${reason.id}`];
 
 			return ensureArray(value);
 		})();
@@ -51,9 +51,10 @@ export function mapRejectionReasonOptionsToCheckboxItemParameters(
 			text: reason.name,
 			checked:
 				error?.optionId === reason.id || Boolean(selectedReason) || selectedReasons.includes(id),
-			error: error?.message,
+			error: error?.optionId === reason.id ? error?.message : null,
 			hasText: reason.hasText,
 			textItems: selectedReason?.text || selectedTextItems || ['']
+			//textItems: selectedTextItems || selectedReason?.text || ['']
 		};
 	});
 }
