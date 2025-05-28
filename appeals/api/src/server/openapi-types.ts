@@ -1830,6 +1830,8 @@ export interface SingleLPAQuestionnaireResponse {
 	};
 	/** @example "The inspector needs to access the neighbouring site" */
 	reasonForNeighbourVisits?: string;
+	/** @example true */
+	grantLoanPreserve?: boolean;
 }
 
 export interface UpdateAppellantCaseRequest {
@@ -1930,6 +1932,8 @@ export interface UpdateLPAQuestionnaireRequest {
 	validationOutcome?: string;
 	/** @example true */
 	isGreenBelt?: boolean;
+	/** @example true */
+	grantLoanPreserve?: boolean;
 }
 
 export type UpdateLPAQuestionnaireResponse = object;
@@ -6292,6 +6296,7 @@ export type LpaQuestionnaire = {
 	eiaSensitiveAreaDetails?: string | null;
 	consultedBodiesDetails?: string | null;
 	reasonForNeighbourVisits?: string | null;
+	grantLoanPreserve?: boolean | null;
 	designatedSiteNames?:
 		| {
 				id: number;
@@ -11688,6 +11693,7 @@ export interface LpaQuestionnaireUpdateRequest {
 	eiaSensitiveAreaDetails?: string | null;
 	consultedBodiesDetails?: string | null;
 	reasonForNeighbourVisits?: string | null;
+	grantLoanPreserve?: boolean | null;
 	designatedSiteNames?:
 		| {
 				id: number;

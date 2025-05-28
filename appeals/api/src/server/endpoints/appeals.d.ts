@@ -368,7 +368,7 @@ interface SingleLPAQuestionnaireResponse {
 	eiaSensitiveAreaDetails: string | null;
 	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
-	loanToPreserveListedBuilding?: LoanToPreserveListedBuilding[] | null;
+	grantLoanPreserve?: boolean;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -402,6 +402,7 @@ interface UpdateLPAQuestionnaireRequest {
 	eiaSensitiveAreaDetails: string | null;
 	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
+	grantLoanPreserve?: boolean;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {
@@ -911,12 +912,6 @@ type ListedBuildingDetailsResponse = {
 	id: number;
 	listEntry: string;
 	affectsListedBuilding: boolean;
-};
-
-type LoanToPreserveListedBuilding = {
-	id: number;
-	listEntry: string;
-	loanToPreserveListedBuilding: boolean;
 };
 
 type LookupTables = AppellantCaseIncompleteReason | AppellantCaseInvalidReason | ValidationOutcome;
