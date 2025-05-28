@@ -9,12 +9,14 @@ import { yesNoInput } from '#lib/mappers/index.js';
  * @param {Appeal} appealData
  * @param {LPAQuestionnaire} lpaQuestionnaireData
  * @param {{radio: string, details: string}} storedSessionData
+ * @param {string} [errorMessage]
  * @returns {PageContent}
  */
 export const changeCorrectAppealTypePage = (
 	appealData,
 	lpaQuestionnaireData,
-	storedSessionData
+	storedSessionData,
+	errorMessage
 ) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
@@ -30,7 +32,8 @@ export const changeCorrectAppealTypePage = (
 				name: 'correctAppealTypeRadio',
 				value: currentRadioValue,
 				legendText: `Is ${appealData.appealType?.toLowerCase()} the correct type of appeal?`,
-				legendIsPageHeading: true
+				legendIsPageHeading: true,
+				errorMessage: errorMessage ? errorMessage : undefined
 			})
 		]
 	};

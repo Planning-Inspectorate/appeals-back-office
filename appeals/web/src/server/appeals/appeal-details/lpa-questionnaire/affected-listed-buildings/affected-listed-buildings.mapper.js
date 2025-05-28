@@ -9,9 +9,10 @@ import { yesNoInput } from '#lib/mappers/index.js';
 /**
  * @param {Appeal} appealData
  * @param {string} currentListedBuilding
+ * @param {string} [errorMessage]
  * @returns {PageContent}
  */
-export function addAffectedListedBuildingPage(appealData, currentListedBuilding) {
+export function addAffectedListedBuildingPage(appealData, currentListedBuilding, errorMessage) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -30,7 +31,8 @@ export function addAffectedListedBuildingPage(appealData, currentListedBuilding)
 					label: {
 						text: 'Listed building number'
 					},
-					value: currentListedBuilding ?? ''
+					value: currentListedBuilding ?? '',
+					errorMessage: errorMessage ? { text: errorMessage } : undefined
 				}
 			}
 		]

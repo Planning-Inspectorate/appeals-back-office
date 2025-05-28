@@ -8,9 +8,10 @@ import { yesNoInput } from '#lib/mappers/index.js';
  * @param {Appeal} appealData
  * @param {string} data
  * @param {string} origin
+ * @param {string} [errorMessage]
  * @returns {PageContent}
  */
-export const changeGreenBeltPage = (appealData, data, origin) => {
+export const changeGreenBeltPage = (appealData, data, origin, errorMessage) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -23,7 +24,8 @@ export const changeGreenBeltPage = (appealData, data, origin) => {
 				name: 'greenBeltRadio',
 				value: data,
 				legendText: 'Is the appeal site in a green belt?',
-				legendIsPageHeading: true
+				legendIsPageHeading: true,
+				errorMessage: errorMessage ? errorMessage : undefined
 			})
 		]
 	};

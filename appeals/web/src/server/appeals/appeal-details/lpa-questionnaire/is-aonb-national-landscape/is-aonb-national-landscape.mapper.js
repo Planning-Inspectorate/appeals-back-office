@@ -8,9 +8,10 @@ import { yesNoInput } from '#lib/mappers/index.js';
  * @param {Appeal} appealData
  * @param {boolean|null|undefined} data
  * @param {string} origin
+ * @param {string} [errorMessage]
  * @returns {PageContent}
  */
-export const changeIsAonbNationalLandscape = (appealData, data, origin) => {
+export const changeIsAonbNationalLandscape = (appealData, data, origin, errorMessage) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -23,7 +24,8 @@ export const changeIsAonbNationalLandscape = (appealData, data, origin) => {
 				name: 'isAonbNationalLandscapeRadio',
 				value: data,
 				legendText: 'Is the site in an area of outstanding natural beauty?',
-				legendIsPageHeading: true
+				legendIsPageHeading: true,
+				errorMessage: errorMessage ? errorMessage : undefined
 			})
 		]
 	};

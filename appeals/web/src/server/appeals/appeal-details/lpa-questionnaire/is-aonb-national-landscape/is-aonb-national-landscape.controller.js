@@ -33,7 +33,8 @@ const renderChangeIsAonbNationalLandscape = async (request, response) => {
 		const mappedPageContents = mapper.changeIsAonbNationalLandscape(
 			currentAppeal,
 			currentRadioValue,
-			origin
+			origin,
+			errors ? errors['isAonbNationalLandscapeRadio']?.msg : undefined
 		);
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {

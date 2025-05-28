@@ -45,7 +45,12 @@ const renderChangeGreenBelt = async (request, response) => {
 		}
 		const currentRadioValue =
 			convertFromYesNoNullToBooleanOrNull(session.isGreenBelt) ?? data.isGreenBelt;
-		const mappedPageContents = changeGreenBeltPage(currentAppeal, currentRadioValue, origin);
+		const mappedPageContents = changeGreenBeltPage(
+			currentAppeal,
+			currentRadioValue,
+			origin,
+			errors ? errors['greenBeltRadio']?.msg : undefined
+		);
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {
 			pageContent: mappedPageContents,

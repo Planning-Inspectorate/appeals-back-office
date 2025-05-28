@@ -33,7 +33,8 @@ const renderChangeIsGypsyOrTravellerSite = async (request, response) => {
 		const mappedPageContents = mapper.changeIsGypsyOrTravellerSite(
 			currentAppeal,
 			currentRadioValue,
-			origin
+			origin,
+			errors ? errors['isGypsyOrTravellerSiteRadio']?.msg : undefined
 		);
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {

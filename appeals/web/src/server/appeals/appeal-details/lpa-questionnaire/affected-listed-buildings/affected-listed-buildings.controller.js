@@ -32,7 +32,8 @@ const renderAddAffectedListedBuilding = async (request, response) => {
 
 	const mappedPageContents = addAffectedListedBuildingPage(
 		currentAppeal,
-		request.session.affectedListedBuilding
+		request.session.affectedListedBuilding,
+		errors ? errors['affectedListedBuilding']?.msg : undefined
 	);
 
 	return response

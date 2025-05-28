@@ -8,9 +8,10 @@ import { yesNoInput } from '#lib/mappers/index.js';
  * @param {Appeal} appealData
  * @param {boolean|null|undefined} data
  * @param {string} origin
+ * @param {string} [errorMessage]
  * @returns {PageContent}
  */
-export const changeAffectsScheduledMonument = (appealData, data, origin) => {
+export const changeAffectsScheduledMonument = (appealData, data, origin, errorMessage) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -25,7 +26,8 @@ export const changeAffectsScheduledMonument = (appealData, data, origin) => {
 				legendText: 'Would the development affect a scheduled monument?',
 				legendIsPageHeading: true,
 				customYesLabel: 'Affected',
-				customNoLabel: 'Not affected'
+				customNoLabel: 'Not affected',
+				errorMessage: errorMessage ? errorMessage : undefined
 			})
 		]
 	};

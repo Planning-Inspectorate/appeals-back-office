@@ -8,9 +8,10 @@ import { yesNoInput } from '#lib/mappers/index.js';
  * @param {Appeal} appealData
  * @param {boolean|null|undefined} data
  * @param {string} origin
+ * @param {string} [errorMessage]
  * @returns {PageContent}
  */
-export const changeHasProtectedSpecies = (appealData, data, origin) => {
+export const changeHasProtectedSpecies = (appealData, data, origin, errorMessage) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -23,7 +24,8 @@ export const changeHasProtectedSpecies = (appealData, data, origin) => {
 				name: 'protectedSpeciesRadio',
 				value: data,
 				legendText: 'Would the development affect a protected species?',
-				legendIsPageHeading: true
+				legendIsPageHeading: true,
+				errorMessage: errorMessage ? errorMessage : undefined
 			})
 		]
 	};

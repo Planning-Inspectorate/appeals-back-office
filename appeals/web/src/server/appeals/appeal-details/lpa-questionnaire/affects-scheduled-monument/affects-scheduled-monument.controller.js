@@ -27,7 +27,8 @@ export const renderChangeAffectsScheduledMonument = async (request, response) =>
 		const mappedPageContents = mapper.changeAffectsScheduledMonument(
 			currentAppeal,
 			currentRadioValue ?? null,
-			origin
+			origin,
+			errors ? errors['affectsScheduledMonumentRadio']?.msg : undefined
 		);
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {

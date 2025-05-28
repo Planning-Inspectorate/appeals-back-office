@@ -29,7 +29,8 @@ const renderChangeCorrectAppealType = async (request, response) => {
 		const mappedPageContents = changeCorrectAppealTypePage(
 			currentAppeal,
 			lpaQuestionnaireData,
-			request.session.isCorrectType
+			request.session.isCorrectType,
+			errors ? errors['correctAppealTypeRadio']?.msg : undefined
 		);
 
 		delete request.session.isCorrectType;
@@ -73,7 +74,7 @@ export const postChangeCorrectAppealType = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Correct appeal type (LPA response) has been updated'
+			text: 'LPA questionnaire updated'
 		});
 
 		delete request.session.isCorrectType;

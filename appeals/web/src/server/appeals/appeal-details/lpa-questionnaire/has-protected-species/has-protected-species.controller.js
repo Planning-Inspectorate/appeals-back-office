@@ -32,7 +32,8 @@ const renderChangeHasProtectedSpecies = async (request, response) => {
 		const mappedPageContents = mapper.changeHasProtectedSpecies(
 			currentAppeal,
 			currentRadioValue,
-			origin
+			origin,
+			errors ? errors['protectedSpeciesRadio'].msg : undefined
 		);
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {

@@ -2,5 +2,5 @@ import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
 
 export const validateAffectsProtectedSpecies = createYesNoRadioValidator(
 	'protectedSpeciesRadio',
-	'Select whether protected species are affected'
+	'Select yes if the development would affect a protected species'
 );
