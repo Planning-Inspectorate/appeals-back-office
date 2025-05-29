@@ -3,7 +3,8 @@ import {
 	appellantCostsDecisionPage,
 	checkAndConfirmPage,
 	issueDecisionPage,
-	lpaCostsDecisionPage
+	lpaCostsDecisionPage,
+	viewDecisionPage
 } from './issue-decision.mapper.js';
 import {
 	postDocumentUpload,
@@ -540,5 +541,24 @@ export const renderCostsCheckDecision = async (request, response) => {
 	return response.status(200).render('appeals/appeal/issue-decision.njk', {
 		pageContent: mappedPageContent,
 		errors
+	});
+};
+
+/**
+ * @param {Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderViewDecision = async (request, response) => {
+	const { currentAppeal } = request;
+
+	if (!currentAppeal) {
+		return response.status(404).render('app/404.njk');
+	}
+
+	const mappedPageContent = viewDecisionPage(currentAppeal, request);
+
+	return response.status(200).render('appeals/appeal/issue-decision.njk', {
+		pageContent: mappedPageContent,
+		viewOnly: true
 	});
 };
