@@ -22,6 +22,4 @@ export const validateIncompleteReasonTextItems =
 export const validateDueDateFields = createDateInputFieldsValidator('due-date');
 export const validateDueDateValid = createDateInputDateValidityValidator('due-date');
 export const validateDueDateInFuture = createDateInputDateInFutureValidator('due-date');
-export const validateDueDateIsBusinessDay = await createDateInputDateBusinessDayValidator(
-	'due-date'
-);
+export const validateDueDateIsBusinessDay = createDateInputDateBusinessDayValidator('due-date');

@@ -120,14 +120,14 @@ const dateIsABusinessDay = async (apiClient, value) => {
 	}
 };
 
-export const createDateInputDateBusinessDayValidator = async (
+export const createDateInputDateBusinessDayValidator = (
 	fieldNamePrefix = 'date',
 	messageFieldNamePrefix = 'Date',
 	dayFieldName = '-day',
 	monthFieldName = '-month',
 	yearFieldName = '-year'
 ) =>
-	await createValidator(
+	createValidator(
 		body()
 			.custom(async (bodyFields, { req }) => {
 				const day = bodyFields[`${fieldNamePrefix}${dayFieldName}`];
