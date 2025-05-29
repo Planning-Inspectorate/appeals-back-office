@@ -9,6 +9,7 @@ import {
 	generateIssueDecisionUrl,
 	mapDecisionOutcome
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
+import config from '#environment/config.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapDecision = ({ appealDetails, session, request }) => {
@@ -31,7 +32,11 @@ export const mapDecision = ({ appealDetails, session, request }) => {
 		value: mapDecisionOutcome(decision?.outcome || '') || 'Not issued',
 		link,
 		editable,
-		actionText: canIssueDecision ? 'Issue' : 'View',
+		actionText: canIssueDecision
+			? 'Issue'
+			: config.featureFlags.featureFlagIssueDecision
+			? 'View'
+			: '',
 		classes: 'appeal-decision'
 	});
 };

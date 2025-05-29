@@ -149,4 +149,11 @@ router
 		asyncHandler(controller.postCostsCheckDecision)
 	);
 
+router
+	.route('/view-decision')
+	.get(
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(controller.renderViewDecision)
+	);
+
 export default router;
