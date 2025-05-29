@@ -9,7 +9,11 @@ import {
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_LPA_COSTS
 } from '@pins/appeals/constants/support.js';
-import { baseUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
+import {
+	baseUrl,
+	buildLogicData,
+	mapDecisionOutcome
+} from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -148,11 +152,16 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl, err
  *
  * @param {Appeal} appealDetails
  * @param {AppellantCostsDecisionRequest} appellantCostsDecision
- * @param {string|undefined} backUrl
+ * @param {string|undefined} backLinkUrl
  * @param {any} errors
  * @returns {PageContent}
  */
-export function appellantCostsDecisionPage(appealDetails, appellantCostsDecision, backUrl, errors) {
+export function appellantCostsDecisionPage(
+	appealDetails,
+	appellantCostsDecision,
+	backLinkUrl,
+	errors
+) {
 	/** @type {PageComponent} */
 	const selectAppellantCostsDecisionComponent = {
 		type: 'radios',
@@ -191,9 +200,7 @@ export function appellantCostsDecisionPage(appealDetails, appellantCostsDecision
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `What is the appellant cost decision? - ${shortAppealReference}`,
-		backLinkUrl:
-			backUrl ||
-			`/appeals-service/appeal-details/${appealDetails.appealId}/issue-decision/decision-letter-upload`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference} - issue decision`,
 		pageComponents
 	};
@@ -205,11 +212,11 @@ export function appellantCostsDecisionPage(appealDetails, appellantCostsDecision
  *
  * @param {Appeal} appealDetails
  * @param {LpaCostsDecisionRequest} lpaCostsDecision
- * @param {string|undefined} backUrl
+ * @param {string|undefined} backLinkUrl
  * @param {any} errors
  * @returns {PageContent}
  */
-export function lpaCostsDecisionPage(appealDetails, lpaCostsDecision, backUrl, errors) {
+export function lpaCostsDecisionPage(appealDetails, lpaCostsDecision, backLinkUrl, errors) {
 	/** @type {PageComponent} */
 	const selectLpaCostsDecisionComponent = {
 		type: 'radios',
@@ -248,9 +255,7 @@ export function lpaCostsDecisionPage(appealDetails, lpaCostsDecision, backUrl, e
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `What is the  LPA cost decision? - ${shortAppealReference}`,
-		backLinkUrl:
-			backUrl ||
-			`/appeals-service/appeal-details/${appealDetails.appealId}/issue-decision/appellant-costs-decision-letter-upload`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference} - issue decision`,
 		pageComponents
 	};
@@ -266,7 +271,22 @@ export function lpaCostsDecisionPage(appealDetails, lpaCostsDecision, backUrl, e
  */
 function checkAndConfirmPageRows(appealData, request) {
 	const { session, specificDecisionType } = request;
-	const baseRoute = `/appeals-service/appeal-details/${appealData.appealId}/issue-decision`;
+	const baseRoute = baseUrl(appealData);
+
+	const {
+		appellantHasAppliedForCosts,
+		lpaHasAppliedForCosts,
+		appellantDecisionHasAlreadyBeenIssued,
+		lpaDecisionHasAlreadyBeenIssued
+	} = buildLogicData(appealData);
+
+	if (!appellantHasAppliedForCosts || appellantDecisionHasAlreadyBeenIssued) {
+		session.appellantCostsDecision = {};
+	}
+
+	if (!lpaHasAppliedForCosts || lpaDecisionHasAlreadyBeenIssued) {
+		session.lpaCostsDecision = {};
+	}
 
 	const rows = [];
 
@@ -564,33 +584,4 @@ export function checkAndConfirmInvalidPage(request, appealData) {
 	}
 
 	return pageContent;
-}
-
-/**
- * Checks if the given outcome is a valid InspectorDecisionRequest and returns the corresponding mapped value.
- * @param {string | undefined} outcome The outcome to check.
- * @returns {string} The mapped decision string, or a default value if the outcome is invalid or undefined.
- */
-export function mapDecisionOutcome(outcome) {
-	switch (outcome?.toLowerCase()) {
-		case 'allowed':
-			return 'Allowed';
-		case 'dismissed':
-			return 'Dismissed';
-		case 'split':
-		case 'split_decision':
-			return 'Split decision';
-		case 'invalid':
-			return 'Invalid';
-		default:
-			return '';
-	}
-}
-
-/**
- * @param {string|number} appealId
- * @returns {string}
- */
-export function generateIssueDecisionUrl(appealId) {
-	return `/appeals-service/appeal-details/${appealId}/issue-decision/decision`;
 }

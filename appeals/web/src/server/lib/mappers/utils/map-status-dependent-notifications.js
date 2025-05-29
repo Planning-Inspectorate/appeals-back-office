@@ -1,10 +1,10 @@
-import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
 import {
 	createNotificationBanner,
 	mapRequiredActionToNotificationBannerKey
 } from '#lib/mappers/index.js';
 import { getRequiredActionsForAppeal } from './required-actions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 
 /** @typedef {import('./required-actions.js').AppealRequiredAction} AppealRequiredAction */
 /** @typedef {import('../components/index.js').NotificationBannerDefinitionKey} NotificationBannerDefinitionKey */
