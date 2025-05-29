@@ -3,8 +3,7 @@ import {
 	appellantCostsDecisionPage,
 	checkAndConfirmPage,
 	issueDecisionPage,
-	lpaCostsDecisionPage,
-	mapDecisionOutcome
+	lpaCostsDecisionPage
 } from './issue-decision.mapper.js';
 import {
 	postDocumentUpload,
@@ -23,8 +22,10 @@ import { getTodaysISOString } from '#lib/dates.js';
 import { DECISION_TYPE_INSPECTOR } from '@pins/appeals/constants/support.js';
 import {
 	baseUrl,
+	buildLogicData,
 	checkDecisionUrl,
-	getDecisions
+	getDecisions,
+	mapDecisionOutcome
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 
 /**
@@ -32,32 +33,6 @@ import {
  * @typedef {import('@pins/express/types/express.js').Request & {specificDecisionType?: string}} Request
  * @typedef {import("express-session").Session & Partial<import("express-session").SessionData>} Session
  */
-
-/**
- *
- * @param {import('../appeal-details.types.js').WebAppeal} currentAppeal
- * @returns {{appellantHasAppliedForCosts: boolean, lpaHasAppliedForCosts: boolean, appellantDecisionHasAlreadyBeenIssued: boolean, lpaDecisionHasAlreadyBeenIssued: boolean}}
- */
-function buildLogicData(currentAppeal) {
-	const appellantApplicationDocumentsExists =
-		!!currentAppeal.costs?.appellantApplicationFolder?.documents?.length;
-	const appellantWithdrawalDocumentsExists =
-		!!currentAppeal.costs?.appellantWithdrawalFolder?.documents?.length;
-	const lpaApplicationDocumentsExists =
-		!!currentAppeal.costs?.lpaApplicationFolder?.documents?.length;
-	const lpaWithdrawalDocumentsExists =
-		!!currentAppeal.costs?.lpaWithdrawalFolder?.documents?.length;
-	const appellantDecisionLetterExists =
-		!!currentAppeal.costs?.appellantDecisionFolder?.documents?.length;
-	const lpaDecisionLetterExists = !!currentAppeal.costs?.lpaDecisionFolder?.documents?.length;
-	return {
-		appellantHasAppliedForCosts:
-			appellantApplicationDocumentsExists && !appellantWithdrawalDocumentsExists,
-		lpaHasAppliedForCosts: lpaApplicationDocumentsExists && !lpaWithdrawalDocumentsExists,
-		appellantDecisionHasAlreadyBeenIssued: appellantDecisionLetterExists,
-		lpaDecisionHasAlreadyBeenIssued: lpaDecisionLetterExists
-	};
-}
 
 /**
  * @param {Request} request
@@ -243,7 +218,7 @@ export const renderAppellantCostsDecision = async (request, response) => {
 	const mappedPageContent = appellantCostsDecisionPage(
 		currentAppeal,
 		request.session.appellantCostsDecision,
-		getBackLinkUrlFromQuery(request),
+		getBackLinkUrlFromQuery(request) || `${baseUrl(currentAppeal)}/decision-letter-upload`,
 		errors
 	);
 
@@ -348,10 +323,18 @@ export const postLpaCostsDecision = async (request, response) => {
 export const renderLpaCostsDecision = async (request, response) => {
 	const { errors, currentAppeal } = request;
 
+	const { appellantHasAppliedForCosts, appellantDecisionHasAlreadyBeenIssued } =
+		buildLogicData(currentAppeal);
+
+	const backUrl =
+		appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued
+			? `${baseUrl(currentAppeal)}/appellant-costs-decision-letter-upload`
+			: `${baseUrl(currentAppeal)}/decision-letter-upload`;
+
 	const mappedPageContent = lpaCostsDecisionPage(
 		currentAppeal,
 		request.session.lpaCostsDecision,
-		getBackLinkUrlFromQuery(request),
+		getBackLinkUrlFromQuery(request) || backUrl,
 		errors
 	);
 

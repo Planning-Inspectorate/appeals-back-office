@@ -3,7 +3,6 @@ import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
-import { mapDecisionOutcome } from '../issue-decision.mapper.js';
 import {
 	appealData,
 	documentFileInfo,
@@ -12,6 +11,7 @@ import {
 	fileUploadInfo
 } from '#testing/appeals/appeals.js';
 import { cloneDeep } from 'lodash-es';
+import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -170,6 +170,7 @@ describe('issue-decision', () => {
 
 	describe('POST /decision-letter-upload', () => {
 		let issueDecisionAppealData;
+
 		beforeEach(() => {
 			issueDecisionAppealData = cloneDeep(appealData);
 			issueDecisionAppealData.costs.appellantApplicationFolder.documents = [{}];
@@ -331,6 +332,7 @@ describe('issue-decision', () => {
 
 	describe('POST /appellant-costs-decision-letter-upload', () => {
 		let issueDecisionAppealData;
+
 		beforeEach(() => {
 			issueDecisionAppealData = cloneDeep(appealData);
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
@@ -548,8 +550,14 @@ describe('issue-decision', () => {
 	});
 
 	describe('GET /issue-decision/check-your-decision', () => {
+		let issueDecisionAppealData;
+
 		beforeEach(async () => {
-			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			issueDecisionAppealData = cloneDeep(appealData);
+			issueDecisionAppealData.costs.appellantApplicationFolder.documents = [{}];
+			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
@@ -746,6 +754,7 @@ describe('issue-decision', () => {
 
 	describe('POST /issue-appellant-costs-decision-letter-upload', () => {
 		let issueDecisionAppealData;
+
 		beforeEach(() => {
 			issueDecisionAppealData = cloneDeep(appealData);
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
@@ -808,8 +817,13 @@ describe('issue-decision', () => {
 	});
 
 	describe('GET /issue-decision/check-your-appellant-costs-decision', () => {
+		let issueDecisionAppealData;
+
 		beforeEach(async () => {
-			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			issueDecisionAppealData = cloneDeep(appealData);
+			issueDecisionAppealData.costs.appellantApplicationFolder.documents = [{}];
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
@@ -943,6 +957,7 @@ describe('issue-decision', () => {
 
 	describe('POST /issue-lpa-costs-decision-letter-upload', () => {
 		let issueDecisionAppealData;
+
 		beforeEach(() => {
 			issueDecisionAppealData = cloneDeep(appealData);
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
@@ -1005,8 +1020,13 @@ describe('issue-decision', () => {
 	});
 
 	describe('GET /issue-decision/check-your-lpa-costs-decision', () => {
+		let issueDecisionAppealData;
+
 		beforeEach(async () => {
-			nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
+			issueDecisionAppealData = cloneDeep(appealData);
+			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')

@@ -1,8 +1,8 @@
-import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.mapper.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { documentationFolderTableItem, textSummaryListItem } from '#lib/mappers/index.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 // @ts-ignore
