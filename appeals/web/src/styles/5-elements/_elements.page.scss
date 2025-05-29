@@ -16,6 +16,8 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-rendering: optimizeLegibility;
+	// avoid horizontal scrolling
+	overflow-x: hidden;
 }
 
 // Smooth scrolling IF user doesn't have a preference due to motion sensitivities
