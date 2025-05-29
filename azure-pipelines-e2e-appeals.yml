@@ -11,18 +11,17 @@ variables:
     value: 'appeals'
   - group: e2e-${{ parameters.Environment }}
 
-# PR trigger disabled, until process has been agreed by team
 pr: none
 
-# pr:
-#   branches:
-#     include:
-#       - main
-#   paths:
-#     include:
-#       - appeals/e2e/cypress/e2e/back-office-appeals
-
 trigger: none
+
+schedules:
+- cron: "0 14 * * 1-5"  # 2 PM UTC, Mon-Fri
+  displayName: Weekday test run
+  branches:
+    include:
+      - feature/test-schedule  # Target specific branch (change as needed)
+  always: true  # Run even if no code changes
 
 jobs:
   - job: Run_Cypress_Tests_For_Appeals
