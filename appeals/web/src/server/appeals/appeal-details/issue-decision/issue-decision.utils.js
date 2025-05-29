@@ -51,7 +51,7 @@ export function getDecisions(session) {
 
 /**
  * Checks if the given outcome is a valid InspectorDecisionRequest and returns the corresponding mapped value.
- * @param {string | undefined} outcome The outcome to check.
+ * @param {string | undefined | null} outcome The outcome to check.
  * @returns {string} The mapped decision string, or a default value if the outcome is invalid or undefined.
  */
 export function mapDecisionOutcome(outcome) {

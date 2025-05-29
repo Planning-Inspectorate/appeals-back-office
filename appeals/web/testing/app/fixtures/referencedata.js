@@ -250,6 +250,7 @@ export const appealData = {
 		folderId: 123,
 		outcome: 'dismissed',
 		documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
+		documentName: 'decision-letter.pdf',
 		letterDate: '2023-12-25T00:00:00.000Z'
 	},
 	internalCorrespondence: {

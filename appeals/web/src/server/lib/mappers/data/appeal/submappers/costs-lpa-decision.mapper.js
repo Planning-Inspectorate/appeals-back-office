@@ -1,9 +1,9 @@
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
-import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { permissionNames } from '#environment/permissions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { baseUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapCostsLpaDecision = ({ appealDetails, currentRoute, session, request }) => {
@@ -24,8 +24,6 @@ export const mapCostsLpaDecision = ({ appealDetails, currentRoute, session, requ
 
 	const isIssued = lpaDecisionFolder?.documents?.length;
 
-	const { id: documentId = '', name: documentName = '' } = lpaDecisionFolder?.documents?.[0] || {};
-
 	const actionText = (() => {
 		if (isIssued) {
 			return 'View';
@@ -37,7 +35,7 @@ export const mapCostsLpaDecision = ({ appealDetails, currentRoute, session, requ
 	})();
 
 	const link = isIssued
-		? mapDocumentDownloadUrl(appealDetails.appealId, documentId, documentName)
+		? addBackLinkQueryToUrl(request, `${baseUrl(appealDetails)}/view-decision`)
 		: addBackLinkQueryToUrl(
 				request,
 				`${currentRoute}/issue-decision/issue-lpa-costs-decision-letter-upload`
