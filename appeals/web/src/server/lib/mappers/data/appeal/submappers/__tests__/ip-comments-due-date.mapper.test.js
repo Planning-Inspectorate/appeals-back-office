@@ -68,7 +68,7 @@ describe('ip-comments-due-date.mapper', () => {
 								attributes: {
 									'data-cy': 'change-ip-comments-due-date'
 								},
-								href: '/test/timetable/edit',
+								href: '/test/appeal-timetables/ip-comments',
 								text: 'Change',
 								visuallyHiddenText: 'Interested party comments due'
 							}

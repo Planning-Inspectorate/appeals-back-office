@@ -69,7 +69,7 @@ describe('lpa-statement-due-date.mapper', () => {
 								attributes: {
 									'data-cy': 'change-lpa-statement-due-date'
 								},
-								href: '/test/timetable/edit',
+								href: '/test/appeal-timetables/lpa-statement',
 								text: 'Change',
 								visuallyHiddenText: 'LPA statement due'
 							}
