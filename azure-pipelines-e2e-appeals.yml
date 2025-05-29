@@ -20,7 +20,7 @@ schedules:
   displayName: Weekday test run
   branches:
     include:
-      - feature/test-schedule  # Target specific branch (change as needed)
+      - test/a2-3414-schedule-test-run  # Target specific branch (change as needed)
   always: true  # Run even if no code changes
 
 jobs:
