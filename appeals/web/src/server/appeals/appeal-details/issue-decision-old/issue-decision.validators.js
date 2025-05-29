@@ -51,6 +51,5 @@ export const validateCheckDecision = createValidator(
 		.withMessage('Please confirm that the decision is ready to be sent to all parties')
 );
 
-export const validateDecisionDateIsBusinessDay = await createDateInputDateBusinessDayValidator(
-	'decision-letter-date'
-);
+export const validateDecisionDateIsBusinessDay =
+	createDateInputDateBusinessDayValidator('decision-letter-date');
