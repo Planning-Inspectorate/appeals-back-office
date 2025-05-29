@@ -26,7 +26,8 @@ export function cancelHearingPage(appealData) {
 			'a',
 			{
 				href: `/appeals-service/appeal-details/${appealData.appealId}`,
-				class: 'govuk-link'
+				class: 'govuk-link',
+				id: 'keepHearing'
 			},
 			'Keep hearing'
 		).parameters.html
