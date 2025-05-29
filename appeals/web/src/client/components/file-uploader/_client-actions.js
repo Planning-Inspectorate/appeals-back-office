@@ -385,10 +385,7 @@ const clientActions = (container) => {
 			return { message: 'NAME_SINGLE_FILE' };
 		}
 
-		let fileMimeType = selectedFile.type;
-		if (!fileMimeType || fileMimeType === '') {
-			fileMimeType = getMimeTypeFromExtension(selectedFile.name);
-		}
+		const fileMimeType = selectedFile.type || getMimeTypeFromExtension(selectedFile.name);
 
 		if (!allowedMimeTypes.includes(fileMimeType)) {
 			return {
