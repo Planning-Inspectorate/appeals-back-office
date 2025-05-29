@@ -186,7 +186,6 @@ export const renderCheckYourAnswers = async (
 							href: `/appeals-service/appeal-details/${appealId}/lpa-statement/manage-documents/${folderId}/?backUrl=/lpa-statement/incomplete/confirm`,
 							visuallyHiddenText: 'supporting documents'
 						},
-
 						Add: {
 							href: `/appeals-service/appeal-details/${appealId}/lpa-statement/add-document/?backUrl=/lpa-statement/incomplete/confirm`,
 							visuallyHiddenText: 'supporting documents'

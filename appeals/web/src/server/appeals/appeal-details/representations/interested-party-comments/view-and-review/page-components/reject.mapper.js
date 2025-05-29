@@ -2,9 +2,9 @@ import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent } from '#lib/mappers/components/page-components/html.js';
-import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { rejectionReasonHtml } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { getAttachmentList } from '../../../common/document-attachment-list.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -74,11 +74,18 @@ export async function rejectAllowResubmitPage(apiClient, appealDetails, comment,
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} comment
+ * @param {number} folderId
  * @param {import('@pins/appeals.api').Appeals.RepresentationRejectionReason[]} rejectionReasons
  * @param {{ rejectionReasons: string[], allowResubmit: boolean }} payload
  * @returns {PageContent}
  * */
-export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReasons, payload) {
+export function rejectCheckYourAnswersPage(
+	appealDetails,
+	comment,
+	folderId,
+	rejectionReasons,
+	payload
+) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 	const userProvidedEmail = Boolean(comment.represented.email);
 
@@ -94,16 +101,7 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 		return '';
 	})();
 
-	const attachmentsList =
-		comment.attachments.length > 0
-			? buildHtmlList({
-					items: comment.attachments.map(
-						(a) => `<a href="#">${a.documentVersion.document.name}</a>`
-					),
-					isOrderedList: true,
-					isNumberedList: comment.attachments.length > 1
-			  })
-			: null;
+	const attachmentsList = getAttachmentList(comment);
 
 	/** @type {PageComponent} */
 	const summaryListComponent = {
@@ -126,16 +124,26 @@ export function rejectCheckYourAnswersPage(appealDetails, comment, rejectionReas
 						html: commentHtml
 					}
 				},
-				...(attachmentsList
-					? [
+				{
+					key: {
+						text: 'Supporting documents'
+					},
+					value: { html: attachmentsList || 'No documents' },
+					actions: {
+						items: [
 							{
-								key: {
-									text: 'Supporting documents'
-								},
-								value: { html: attachmentsList }
+								text: 'Manage',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/manage-documents/${folderId}/?backUrl=/interested-party-comments/${comment.id}/reject/check-your-answers`,
+								visuallyHiddenText: 'supporting documents'
+							},
+							{
+								text: 'Add',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/add-document/?backUrl=/interested-party-comments/${comment.id}/reject/check-your-answers`,
+								visuallyHiddenText: 'supporting documents'
 							}
-					  ]
-					: []),
+						]
+					}
+				},
 				{
 					key: {
 						text: 'Review decision'
