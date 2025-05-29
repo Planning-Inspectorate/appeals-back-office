@@ -35,8 +35,9 @@ export const validateChangeAppealFinalDateInFuture = createDateInputDateInFuture
 	'change-appeal-final-date'
 );
 
-export const validateChangeAppealFinalDateIsBusinessDay =
-	await createDateInputDateBusinessDayValidator('change-appeal-final-date');
+export const validateChangeAppealFinalDateIsBusinessDay = createDateInputDateBusinessDayValidator(
+	'change-appeal-final-date'
+);
 
 export const validateHorizonReference = createValidator(
 	body()

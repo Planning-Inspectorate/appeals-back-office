@@ -4,7 +4,7 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 	// @ts-ignore
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLpaQuestionnaireDueDate = ({
@@ -25,9 +25,10 @@ export const mapLpaQuestionnaireDueDate = ({
 	) {
 		editable = false;
 	}
-	const useNewTimetableRoute = appealDetails.appealType === 'Householder';
-	// || (appealDetails.appealType === 'Planning appeal' &&
-	// 	appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN);
+	const useNewTimetableRoute =
+		appealDetails.appealType === 'Householder' ||
+		(appealDetails.appealType === 'Planning appeal' &&
+			appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN);
 
 	return textSummaryListItem({
 		id,

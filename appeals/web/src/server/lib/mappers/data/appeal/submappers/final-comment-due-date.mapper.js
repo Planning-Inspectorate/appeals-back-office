@@ -1,4 +1,4 @@
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
@@ -10,9 +10,10 @@ export const mapFinalCommentDueDate = ({
 	userHasUpdateCasePermission
 }) => {
 	const id = 'final-comments-due-date';
-	const useNewTimetableRoute = appealDetails.appealType === 'Householder';
-	// || (appealDetails.appealType === 'Planning appeal' &&
-	// 	appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN);
+	const useNewTimetableRoute =
+		appealDetails.appealType === 'Householder' ||
+		(appealDetails.appealType === 'Planning appeal' &&
+			appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN);
 	if (!appealDetails.startedAt) {
 		return { id, display: {} };
 	}
