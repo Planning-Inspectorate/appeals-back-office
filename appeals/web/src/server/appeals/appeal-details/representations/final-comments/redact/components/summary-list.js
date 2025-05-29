@@ -75,7 +75,25 @@ export const summaryList = (
 					: []),
 				{
 					key: { text: 'Supporting documents' },
-					value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' }
+					value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
+					actions: {
+						items: [
+							...(comment.attachments?.length > 0
+								? [
+										{
+											text: 'Manage',
+											href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
+											visuallyHiddenText: 'supporting documents'
+										}
+								  ]
+								: []),
+							{
+								text: 'Add',
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/add-document/?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
+								visuallyHiddenText: 'supporting documents'
+							}
+						]
+					}
 				},
 				{
 					key: { text: 'Review decision' },

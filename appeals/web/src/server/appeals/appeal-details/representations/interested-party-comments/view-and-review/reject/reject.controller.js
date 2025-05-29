@@ -158,7 +158,7 @@ export const postAllowResubmit = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderCheckYourAnswers = async (request, response) => {
-	const { currentAppeal, currentRepresentation, errors, session } = request;
+	const { currentAppeal, currentRepresentation, currentFolder, errors, session } = request;
 
 	const reasonOptions = await getRepresentationRejectionReasonOptions(
 		request.apiClient,
@@ -168,6 +168,7 @@ export const renderCheckYourAnswers = async (request, response) => {
 	const pageContent = rejectCheckYourAnswersPage(
 		currentAppeal,
 		currentRepresentation,
+		currentFolder.folderId,
 		reasonOptions,
 		{
 			rejectionReasons: prepareRejectionReasons(
@@ -179,7 +180,7 @@ export const renderCheckYourAnswers = async (request, response) => {
 		}
 	);
 
-	return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
+	return response.status(200).render('patterns/check-and-confirm-page-full-width.pattern.njk', {
 		errors,
 		pageContent
 	});
