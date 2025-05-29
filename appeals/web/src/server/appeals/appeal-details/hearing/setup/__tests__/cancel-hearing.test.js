@@ -49,6 +49,12 @@ describe('cancel hearing', () => {
 				'Cancel hearing'
 			);
 		});
+
+		it('should render the keep hearing link', () => {
+			const keepHearingLink = pageHtml.querySelector('a#keepHearing');
+			expect(keepHearingLink?.attributes.href).toBe(`${baseUrl}/${appealId}`);
+			expect(keepHearingLink?.innerHTML.trim()).toBe('Keep hearing');
+		});
 	});
 
 	describe('POST /hearing/cancel', () => {
