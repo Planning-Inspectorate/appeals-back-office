@@ -464,7 +464,7 @@ export async function seedStaticData(databaseConnector) {
 	for (const appealType of appealTypes) {
 		await databaseConnector.appealType.upsert({
 			create: appealType,
-			where: { type: appealType.type },
+			where: { type: appealType.key },
 			update: appealType
 		});
 	}
