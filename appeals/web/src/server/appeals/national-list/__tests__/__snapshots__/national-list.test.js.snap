@@ -113,7 +113,7 @@ exports[`national-list GET / should render national list - 10 pages - all page i
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <table class="govuk-table">
+            <table class="govuk-table govuk-table--small-text-until-tablet govuk-table--case-list">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
@@ -316,7 +316,7 @@ exports[`national-list GET / should render national list - 15 pages - pagination
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <table class="govuk-table">
+            <table class="govuk-table govuk-table--small-text-until-tablet govuk-table--case-list">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
@@ -498,7 +498,7 @@ exports[`national-list GET / should render national list - appeal type filter ap
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <table class="govuk-table">
+            <table class="govuk-table govuk-table--small-text-until-tablet govuk-table--case-list">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
@@ -645,7 +645,7 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <table class="govuk-table">
+            <table class="govuk-table govuk-table--small-text-until-tablet govuk-table--case-list">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
@@ -815,7 +815,7 @@ exports[`national-list GET / should render national list - no search term - filt
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <table class="govuk-table">
+            <table class="govuk-table govuk-table--small-text-until-tablet govuk-table--case-list">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
@@ -972,7 +972,7 @@ exports[`national-list GET / should render national list - search term - filter 
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <table class="govuk-table">
+            <table class="govuk-table govuk-table--small-text-until-tablet govuk-table--case-list">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
@@ -1239,7 +1239,7 @@ exports[`national-list GET / should render national list - search term 1`] = `
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <table class="govuk-table">
+            <table class="govuk-table govuk-table--small-text-until-tablet govuk-table--case-list">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
@@ -1401,7 +1401,7 @@ exports[`national-list GET / should render the header with navigation containing
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <table class="govuk-table">
+            <table class="govuk-table govuk-table--small-text-until-tablet govuk-table--case-list">
                 <thead class="govuk-table__head">
                     <tr class="govuk-table__row">
                         <th scope="col" class="govuk-table__header">Appeal reference</th>
