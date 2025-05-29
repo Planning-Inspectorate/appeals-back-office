@@ -1,7 +1,7 @@
-import { mapAppellantCase } from './map-appellant-case.js';
-import { mapLpaQuestionnaire } from './map-lpa-questionnaire.js';
+import { mapS78AppellantCase } from './map-appellant-case.js';
+import { mapS78LpaQuestionnaire } from './map-lpa-questionnaire.js';
 
 export const apiS78Mappers = {
-	appellantCase: mapAppellantCase,
-	lpaQuestionnaire: mapLpaQuestionnaire
+	appellantCase: mapS78AppellantCase,
+	lpaQuestionnaire: mapS78LpaQuestionnaire
 };

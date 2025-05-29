@@ -82,7 +82,8 @@ export const mapQuestionnaireIn = (command, isS78, designatedSites) => {
 			infrastructureLevyExpectedDate: casedata.infrastructureLevyExpectedDate,
 			lpaProcedurePreference: casedata.lpaProcedurePreference,
 			lpaProcedurePreferenceDetails: casedata.lpaProcedurePreferenceDetails,
-			lpaProcedurePreferenceDuration: casedata.lpaProcedurePreferenceDuration
+			lpaProcedurePreferenceDuration: casedata.lpaProcedurePreferenceDuration,
+			historicEnglandConsultation: casedata.historicEnglandConsultation
 		})
 	};
 };

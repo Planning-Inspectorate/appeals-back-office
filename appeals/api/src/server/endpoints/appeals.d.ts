@@ -322,6 +322,7 @@ interface SingleLPAQuestionnaireResponse {
 		eiaScreeningDirection?: FolderInfo | null;
 		otherRelevantPolicies?: FolderInfo | null;
 		appealNotification?: FolderInfo | null;
+		historicEnglandConsultation?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
@@ -365,6 +366,7 @@ interface SingleLPAQuestionnaireResponse {
 	eiaSensitiveAreaDetails: string | null;
 	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
+	grantLoanPreserve?: boolean;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -398,6 +400,7 @@ interface UpdateLPAQuestionnaireRequest {
 	eiaSensitiveAreaDetails: string | null;
 	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
+	grantLoanPreserve?: boolean;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {
