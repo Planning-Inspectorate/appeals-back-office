@@ -68,7 +68,7 @@ describe('final-comments-due-date.mapper', () => {
 								attributes: {
 									'data-cy': 'change-final-comments-due-date'
 								},
-								href: '/test/appeal-timetables/final-comments',
+								href: '/test/timetable/edit',
 								text: 'Change',
 								visuallyHiddenText: 'Final comments due'
 							}
