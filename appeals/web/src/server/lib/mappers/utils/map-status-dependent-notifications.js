@@ -163,5 +163,14 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					`/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`
 				)}" class="govuk-heading-s govuk-notification-banner__link">Update LPA statement</a>`
 			});
+		case 'addHearingAddress': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/hearing/setup/address`
+				)}">Add hearing address</a>`
+			});
+		}
 	}
 }
