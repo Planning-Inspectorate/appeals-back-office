@@ -51,10 +51,9 @@ export function mapRejectionReasonOptionsToCheckboxItemParameters(
 			text: reason.name,
 			checked:
 				error?.optionId === reason.id || Boolean(selectedReason) || selectedReasons.includes(id),
-			error: error?.optionId === reason.id ? error?.message : null,
+			error: error?.message,
 			hasText: reason.hasText,
-			textItems: selectedReason?.text || selectedTextItems || ['']
-			//textItems: selectedTextItems || selectedReason?.text || ['']
+			textItems: selectedTextItems || selectedReason?.text || ['']
 		};
 	});
 }
