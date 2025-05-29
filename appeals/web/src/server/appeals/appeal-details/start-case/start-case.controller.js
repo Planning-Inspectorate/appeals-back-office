@@ -12,6 +12,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import featureFlags from '#common/feature-flags.js';
 import { FEATURE_FLAG_NAMES, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getStartDate = async (request, response) => {
@@ -265,6 +266,17 @@ export const postConfirmProcedure = async (request, response) => {
 			bannerDefinitionKey: 'caseStarted',
 			appealId
 		});
+
+		if (
+			session.startCaseAppealProcedure?.[appealId]?.appealProcedure ===
+			APPEAL_CASE_PROCEDURE.HEARING
+		) {
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'timetableStarted',
+				appealId
+			});
+		}
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

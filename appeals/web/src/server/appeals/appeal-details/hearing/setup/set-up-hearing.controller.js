@@ -12,6 +12,7 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import { createHearing, updateHearing } from './hearing.service.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /**
  * @param {string} path
@@ -394,6 +395,12 @@ export const postHearingCheckDetails = async (request, response) => {
 	}
 
 	try {
+		const submittedAddress = {
+			address: {
+				...pick(hearing, ['addressLine1', 'addressLine2', 'town', 'county']),
+				postcode: hearing['postCode']
+			}
+		};
 		await createHearing(request, {
 			hearingStartTime: dayMonthYearHourMinuteToISOString({
 				day: hearing['hearing-date-day'],
@@ -402,12 +409,7 @@ export const postHearingCheckDetails = async (request, response) => {
 				hour: hearing['hearing-time-hour'],
 				minute: hearing['hearing-time-minute']
 			}),
-			...(hearing.addressKnown === 'yes' && {
-				address: {
-					...pick(hearing, ['addressLine1', 'addressLine2', 'town', 'county']),
-					postcode: hearing['postCode']
-				}
-			})
+			...(hearing.addressKnown === 'yes' && submittedAddress)
 		});
 
 		addNotificationBannerToSession({
@@ -415,6 +417,18 @@ export const postHearingCheckDetails = async (request, response) => {
 			bannerDefinitionKey: 'hearingSetUp',
 			appealId
 		});
+
+		if (hearing.addressKnown === 'no' || !submittedAddress) {
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'addHearingAddress',
+				appealId,
+				html: `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealId}/hearing/setup/address`
+				)}">Add hearing address</a>`
+			});
+		}
 
 		delete request.session.setUpHearing;
 
