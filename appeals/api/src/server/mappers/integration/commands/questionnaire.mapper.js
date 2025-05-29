@@ -66,6 +66,7 @@ export const mapQuestionnaireIn = (command, isS78, designatedSites) => {
 			eiaSensitiveAreaDetails: casedata.eiaSensitiveAreaDetails,
 			eiaColumnTwoThreshold: casedata.eiaColumnTwoThreshold,
 			eiaScreeningOpinion: casedata.eiaScreeningOpinion,
+			eiaScopingOpinion: casedata.eiaScopingOpinion,
 			eiaRequiresEnvironmentalStatement: casedata.eiaRequiresEnvironmentalStatement,
 			eiaCompletedEnvironmentalStatement: casedata.eiaCompletedEnvironmentalStatement,
 			consultedBodiesDetails: casedata.consultedBodiesDetails,

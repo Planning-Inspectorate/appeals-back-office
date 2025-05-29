@@ -52,13 +52,13 @@ data-index="0">
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with "Issue" action link to the issue decision start page, if the appeal status is "issue_determination" 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-decision">Issue<span class="govuk-visually-hidden"> Decision</span></a></dd></div>"`;
+
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (assign_case_officer) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (awaiting_transfer) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (closed) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (complete) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (evidence) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
@@ -80,37 +80,9 @@ exports[`appeal-details GET /:appealId Appeal decision should render a row in th
 
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (witnesses) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with with "Issue" action link to the issue decision start page, if the appeal status is "issue_determination" 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-decision">Issue<span class="govuk-visually-hidden"> Decision</span></a></dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (complete) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/issue-appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-appellant-costs-decision">Issue<span class="govuk-visually-hidden"> Appellant costs decision</span></a></dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with an "Issue" action link 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/costs/appellant-decision" data-cy="issue-appellant-costs-decision">Issue<span class="govuk-visually-hidden"> Appellant costs decision</span></a></dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (assign_case_officer) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (awaiting_transfer) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (closed) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (complete) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (evidence) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (final_comments) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (invalid) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (lpa_questionnaire) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (ready_to_start) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (statements) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (transferred) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (validation) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (withdrawn) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (witnesses) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (issue_determination) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/issue-appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-appellant-costs-decision">Issue<span class="govuk-visually-hidden"> Appellant costs decision</span></a></dd></div>"`;
 
 exports[`appeal-details GET /:appealId Case notes should render the case note details 1`] = `"<details class="govuk-details"><summary class="govuk-details__summary"><span class="govuk-details__summary-text"> 2 case notes</span></summary><div class="govuk-details__text"><form method="POST" novalidate="novalidate"><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><div class="govuk-form-group govuk-character-count" data-module="govuk-character-count" data-maxlength="500"><textarea class="govuk-textarea govuk-js-character-count" id="comment" name="comment" rows="5" aria-describedby="comment-info"></textarea><div id="comment-info" class="govuk-hint govuk-character-count__message"> You can enter up to 500 characters</div></div></div></div><button type="submit" data-prevent-double-click="true" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-1" data-module="govuk-button"> Add case note</button></form><div><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section><section><p class="govuk-body govuk-!-margin-bottom-1"> A case note you should see.</p><p class="govuk-hint govuk-!-margin-bottom-6"> 11:00am on Tuesday 1 October 2024 by John.Smith</p><hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible"></section></div></div></details>"`;
 
@@ -153,6 +125,40 @@ exports[`appeal-details GET /:appealId Hearing should render the Hearing estimat
                 </dd>
             </div>
         </dl>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Hearing should render the cancel hearing link when hearing is present and in the future 1`] = `
+"<div id="case-details-hearing-section">
+    <div>
+        <p class="govuk-body govuk-!-margin-bottom-4"><a id="cancelHearing" class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/hearing/cancel">Cancel hearing</a>
+        </p>
+    </div>
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+            <dd class="govuk-summary-list__value">15 May 2999</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/date"
+                data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+            <dd class="govuk-summary-list__value">1:00pm</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/date"
+                data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
+            <dd             class="govuk-summary-list__value">No</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/hearing/change/address"
+                    data-cy="change-whether-the-address-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
+                </dd>
+        </div>
+    </dl>
+    <h3 class="govuk-heading-m">Hearing estimates</h3>
+    <div>
+        <p><a id="addHearingEstimates" class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/hearing/estimates/add">Add hearing estimates</a>
+        </p>
+    </div>
 </div>"
 `;
 
@@ -226,35 +232,9 @@ exports[`appeal-details GET /:appealId Hearing should render the hearing details
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with an "Issue" action link 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/costs/lpa-decision" data-cy="issue-lpa-costs-decision">Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>"`;
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (complete) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/issue-lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-lpa-costs-decision">Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>"`;
 
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (assign_case_officer) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (awaiting_transfer) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (closed) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (complete) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (evidence) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (final_comments) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (invalid) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (lpa_questionnaire) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (ready_to_start) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (statements) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (transferred) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (validation) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (withdrawn) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (witnesses) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
+exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (issue_determination) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/issue-lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-lpa-costs-decision">Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>"`;
 
 exports[`appeal-details GET /:appealId Notification banners should render a "Appeal ready for validation" important notification banner with a link to validate the appeal when the appeal status is "validation" 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
@@ -1393,6 +1373,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             </div>
                             <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                                 <dd class="govuk-summary-list__value">Dismissed</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="" data-cy="view-decision">View<span class="govuk-visually-hidden"> Decision</span></a>
+                                </dd>
                             </div>
                         </dl>
                     </div>

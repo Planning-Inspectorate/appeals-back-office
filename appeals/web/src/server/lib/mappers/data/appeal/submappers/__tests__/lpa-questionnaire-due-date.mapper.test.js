@@ -27,7 +27,48 @@ describe('lpa-questionnaire-due-date.mapper', () => {
 		});
 	});
 
-	it('should display LPA Questionnaire due date with Change action link', () => {
+	// it('should display LPA Questionnaire due date with new Change action link', () => {
+	// 	data.appealDetails.startedAt = '2025-01-01';
+	// 	data.appealDetails.procedureType = 'written';
+	// 	data.appealDetails.appealType = 'Planning appeal';
+	// 	data.appealDetails.documentationSummary = {
+	// 		lpaQuestionnaire: {
+	// 			status: DOCUMENT_STATUS_NOT_RECEIVED
+	// 		}
+	// 	};
+	// 	data.appealDetails.appealStatus = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
+	// 	data.appealDetails.appealType = 'Householder';
+
+	// 	const mappedData = mapLpaQuestionnaireDueDate(data);
+	// 	expect(mappedData).toEqual({
+	// 		display: {
+	// 			summaryListItem: {
+	// 				actions: {
+	// 					items: [
+	// 						{
+	// 							attributes: {
+	// 								'data-cy': 'change-lpa-questionnaire-due-date'
+	// 							},
+	// 							href: '/test/timetable/edit',
+	// 							text: 'Change',
+	// 							visuallyHiddenText: 'LPA questionnaire due'
+	// 						}
+	// 					]
+	// 				},
+	// 				classes: 'appeal-lpa-questionnaire-due-date',
+	// 				key: {
+	// 					text: 'LPA questionnaire due'
+	// 				},
+	// 				value: {
+	// 					text: '10 January 2025'
+	// 				}
+	// 			}
+	// 		},
+	// 		id: 'lpa-questionnaire-due-date'
+	// 	});
+	// });
+
+	it('should display LPA Questionnaire due date with old Change action link', () => {
 		data.appealDetails.startedAt = '2025-01-01';
 		data.appealDetails.documentationSummary = {
 			lpaQuestionnaire: {
@@ -35,7 +76,7 @@ describe('lpa-questionnaire-due-date.mapper', () => {
 			}
 		};
 		data.appealDetails.appealStatus = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
-		data.appealDetails.appealType = 'Householder';
+		data.appealDetails.appealType = 'Planning appeal';
 
 		const mappedData = mapLpaQuestionnaireDueDate(data);
 		expect(mappedData).toEqual({
@@ -47,7 +88,7 @@ describe('lpa-questionnaire-due-date.mapper', () => {
 								attributes: {
 									'data-cy': 'change-lpa-questionnaire-due-date'
 								},
-								href: '/test/timetable/edit',
+								href: '/test/appeal-timetables/lpa-questionnaire',
 								text: 'Change',
 								visuallyHiddenText: 'LPA questionnaire due'
 							}

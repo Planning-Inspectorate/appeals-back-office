@@ -10,6 +10,9 @@ export const mapLpaStatementDueDate = ({
 	userHasUpdateCasePermission
 }) => {
 	const id = 'lpa-statement-due-date';
+	const useNewTimetableRoute = appealDetails.appealType === 'Householder';
+	// || (appealDetails.appealType === 'Planning appeal' &&
+	// 	appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN);
 	if (!appealDetails.startedAt) {
 		return { id, display: {} };
 	}
@@ -17,7 +20,9 @@ export const mapLpaStatementDueDate = ({
 		id,
 		text: 'LPA statement due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaStatementDueDate),
-		link: `${currentRoute}/appeal-timetables/lpa-statement`,
+		link: useNewTimetableRoute
+			? `${currentRoute}/timetable/edit`
+			: `${currentRoute}/appeal-timetables/lpa-statement`,
 		editable:
 			userHasUpdateCasePermission && !isStatePassed(appealDetails, APPEAL_CASE_STATUS.STATEMENTS),
 		classes: 'appeal-lpa-statement-due-date'

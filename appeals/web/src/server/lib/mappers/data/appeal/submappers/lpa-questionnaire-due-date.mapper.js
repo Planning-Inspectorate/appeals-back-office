@@ -25,15 +25,17 @@ export const mapLpaQuestionnaireDueDate = ({
 	) {
 		editable = false;
 	}
+	const useNewTimetableRoute = appealDetails.appealType === 'Householder';
+	// || (appealDetails.appealType === 'Planning appeal' &&
+	// 	appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN);
 
 	return textSummaryListItem({
 		id,
 		text: 'LPA questionnaire due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.lpaQuestionnaireDueDate),
-		link:
-			appealDetails.appealType === 'Householder'
-				? `${currentRoute}/timetable/edit`
-				: `${currentRoute}/appeal-timetables/lpa-questionnaire`,
+		link: useNewTimetableRoute
+			? `${currentRoute}/timetable/edit`
+			: `${currentRoute}/appeal-timetables/lpa-questionnaire`,
 		editable,
 		classes: 'appeal-lpa-questionnaire-due-date'
 	});

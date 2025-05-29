@@ -1,4 +1,6 @@
+import { dateIsInTheFuture, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { wrapComponents } from '#lib/mappers/index.js';
+import { startOfDay } from 'date-fns';
 import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 
 /**
@@ -26,6 +28,17 @@ export const getCaseHearing = (mappedData, appealDetails) => {
 		  }
 		: mappedData.appeal.setUpHearing.display.buttonItem;
 
+	const hearingStartTime = appealDetails.hearing?.hearingStartTime;
+	const beginningOfHearingDay =
+		hearingStartTime && startOfDay(new Date(hearingStartTime)).toISOString();
+
+	/** @type {PageComponent | undefined} */
+	const cancelHearingComponent =
+		beginningOfHearingDay &&
+		dateIsInTheFuture(dateISOStringToDayMonthYearHourMinute(beginningOfHearingDay))
+			? mappedData.appeal.cancelHearing.display.htmlItem
+			: undefined;
+
 	/** @type {PageComponent} */
 	const hearingEstimatesHeading = {
 		type: 'html',
@@ -43,6 +56,7 @@ export const getCaseHearing = (mappedData, appealDetails) => {
 	return [
 		wrapComponents(
 			[
+				...(cancelHearingComponent ? [cancelHearingComponent] : []),
 				...(hearingComponent ? [hearingComponent] : []),
 				hearingEstimatesHeading,
 				...(hearingEstimatesComponent ? [hearingEstimatesComponent] : [])

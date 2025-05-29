@@ -10,6 +10,9 @@ export const mapFinalCommentDueDate = ({
 	userHasUpdateCasePermission
 }) => {
 	const id = 'final-comments-due-date';
+	const useNewTimetableRoute = appealDetails.appealType === 'Householder';
+	// || (appealDetails.appealType === 'Planning appeal' &&
+	// 	appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN);
 	if (!appealDetails.startedAt) {
 		return { id, display: {} };
 	}
@@ -17,7 +20,9 @@ export const mapFinalCommentDueDate = ({
 		id,
 		text: 'Final comments due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.finalCommentsDueDate),
-		link: `${currentRoute}/appeal-timetables/final-comments`,
+		link: useNewTimetableRoute
+			? `${currentRoute}/timetable/edit`
+			: `${currentRoute}/appeal-timetables/final-comments`,
 		editable:
 			userHasUpdateCasePermission &&
 			!isStatePassed(appealDetails, APPEAL_CASE_STATUS.FINAL_COMMENTS),

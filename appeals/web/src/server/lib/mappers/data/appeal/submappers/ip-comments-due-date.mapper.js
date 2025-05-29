@@ -8,14 +8,20 @@ export const mapIpCommentsDueDate = ({
 	userHasUpdateCasePermission
 }) => {
 	const id = 'ip-comments-due-date';
+	const useNewTimetableRoute = appealDetails.appealType === 'Householder';
+	// || (appealDetails.appealType === 'Planning appeal' &&
+	// 	appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN);
 	if (!appealDetails.startedAt) {
 		return { id, display: {} };
 	}
+
 	return textSummaryListItem({
 		id,
 		text: 'Interested party comments due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.ipCommentsDueDate),
-		link: `${currentRoute}/appeal-timetables/ip-comments`,
+		link: useNewTimetableRoute
+			? `${currentRoute}/timetable/edit`
+			: `${currentRoute}/appeal-timetables/ip-comments`,
 		editable:
 			!appealDetails.documentationSummary.ipComments?.counts?.published &&
 			userHasUpdateCasePermission &&

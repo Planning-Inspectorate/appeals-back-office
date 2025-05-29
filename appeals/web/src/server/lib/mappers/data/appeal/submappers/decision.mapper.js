@@ -18,7 +18,7 @@ export const mapDecision = ({ appealDetails, session, request }) => {
 		!decision?.outcome && appealStatus === APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 
 	const editable =
-		isStatePassed(appealDetails, APPEAL_CASE_STATUS.EVENT) &&
+		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
 		userHasPermission(permissionNames.setCaseOutcome, session);
 
 	const { documentId, documentName } = decision || {};

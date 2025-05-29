@@ -625,6 +625,10 @@ describe('LPA Questionnaire review', () => {
 					label: 'Screening opinion documents'
 				},
 				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.EIA_SCOPING_OPINION}`,
+					label: 'Scoping opinion documents'
+				},
+				{
 					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.EIA_SCREENING_DIRECTION}`,
 					label: 'Screening direction documents'
 				},

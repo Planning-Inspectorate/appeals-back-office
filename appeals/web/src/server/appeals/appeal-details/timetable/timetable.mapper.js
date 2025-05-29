@@ -1,6 +1,7 @@
 import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -17,19 +18,19 @@ import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-han
  * @returns {PageContent}
  */
 export const mapEditTimetablePage = (appealTimetable, appealDetails, errors = undefined) => {
+	const timeTableTypes = getAppealTimetableTypes(appealDetails);
+
 	/** @type {PageContent} */
 	let pageContent = {
 		title: `Timetable due dates`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-		heading: `Timetable due dates`,
+		heading: timeTableTypes.length > 1 ? `Timetable due dates` : ``,
 		submitButtonProperties: {
 			text: 'Continue',
 			type: 'submit'
 		}
 	};
-
-	const timeTableTypes = getAppealTimetableTypes(appealDetails.appealType);
 
 	/** @type {PageComponent[]} */
 	const pageComponents = timeTableTypes.map((timetableType) => {
@@ -64,6 +65,7 @@ export const mapEditTimetablePage = (appealTimetable, appealDetails, errors = un
 				fieldset: {
 					legend: {
 						text: `${timetableTypeText} due`,
+						isPageHeading: timeTableTypes.length < 2,
 						classes: 'govuk-fieldset__legend--m'
 					}
 				},
@@ -101,20 +103,6 @@ export const mapEditTimetablePage = (appealTimetable, appealDetails, errors = un
 };
 
 /**
- * @param { number } updatedDueDateDay
- * @param { string } apiError
- * @returns { object }
- */
-export const apiErrorMapper = (updatedDueDateDay, apiError) => ({
-	'due-date-day': {
-		value: String(updatedDueDateDay),
-		msg: `Date ${apiError}`,
-		param: '',
-		location: 'body'
-	}
-});
-
-/**
  * @param {AppealTimetableType} timetableType
  * @returns {string}
  */
@@ -122,12 +110,12 @@ const getTimetableTypeText = (timetableType) => {
 	switch (timetableType) {
 		case 'lpaQuestionnaireDueDate':
 			return 'LPA questionnaire';
-		// case 'ipCommentsDueDate':
-		// 	return 'Interested party comments';
-		// case 'lpaStatementDueDate':
-		// 	return 'LPA statement';
-		// case 'finalCommentsDueDate':
-		// 	return 'Final comments';
+		case 'lpaStatementDueDate':
+			return 'Statements';
+		case 'ipCommentsDueDate':
+			return 'Interested party comments';
+		case 'finalCommentsDueDate':
+			return 'Final comments';
 		default:
 			return '';
 	}
@@ -141,37 +129,45 @@ export const getIdText = (timetableType) => {
 	switch (timetableType) {
 		case 'lpaQuestionnaireDueDate':
 			return 'lpa-questionnaire';
-		// case 'ipCommentsDueDate':
-		// 	return 'ip-comments';
-		// case 'lpaStatementDueDate':
-		// 	return 'lpa-statement';
-		// case 'finalCommentsDueDate':
-		// 	return 'final-comments';
+		case 'ipCommentsDueDate':
+			return 'ip-comments';
+		case 'lpaStatementDueDate':
+			return 'lpa-statement';
+		case 'finalCommentsDueDate':
+			return 'final-comments';
 		default:
 			return '';
 	}
 };
 
 /**
- * @param {string|undefined|null} appealType
+ * @param {Appeal} appeal
  * @returns {AppealTimetableType[]}
  */
-export const getAppealTimetableTypes = (appealType) => {
+export const getAppealTimetableTypes = (appeal) => {
 	/** @type {AppealTimetableType[]} */
 	let validAppealTimetableType = [];
 
-	switch (appealType) {
+	switch (appeal.appealType) {
 		case 'Householder':
 			validAppealTimetableType = ['lpaQuestionnaireDueDate'];
 			break;
-		// case 'Planning appeal':
-		// 	validAppealTimetableType = [
-		// 		'lpaQuestionnaireDueDate',
-		// 		'ipCommentsDueDate',
-		// 		'lpaStatementDueDate',
-		// 		'finalCommentsDueDate'
-		// 	];
-		// 	break;
+		case 'Planning appeal':
+			validAppealTimetableType = [];
+			if (
+				appeal.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE &&
+				appeal.documentationSummary?.lpaQuestionnaire?.status !== 'received'
+			) {
+				validAppealTimetableType.push('lpaQuestionnaireDueDate');
+			}
+			if (
+				appeal.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE ||
+				appeal.appealStatus === APPEAL_CASE_STATUS.STATEMENTS
+			) {
+				validAppealTimetableType.push('lpaStatementDueDate', 'ipCommentsDueDate');
+			}
+			validAppealTimetableType.push('finalCommentsDueDate');
+			break;
 	}
 	return validAppealTimetableType;
 };

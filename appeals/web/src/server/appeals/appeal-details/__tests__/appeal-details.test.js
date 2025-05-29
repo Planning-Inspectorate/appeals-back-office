@@ -36,6 +36,24 @@ const baseUrl = '/appeals-service/appeal-details';
 const pastDate = '2025-01-06T23:59:00.000Z';
 const futureDate = '3000-01-06T23:59:00.000Z';
 
+const appealStatuses = [
+	{ appealStatus: 'assign_case_officer', statusPassedEvent: false },
+	{ appealStatus: 'awaiting_transfer', statusPassedEvent: false },
+	{ appealStatus: 'closed', statusPassedEvent: false },
+	{ appealStatus: 'complete', statusPassedEvent: true },
+	{ appealStatus: 'evidence', statusPassedEvent: false },
+	{ appealStatus: 'final_comments', statusPassedEvent: false },
+	{ appealStatus: 'invalid', statusPassedEvent: false },
+	{ appealStatus: 'issue_determination', statusPassedEvent: true },
+	{ appealStatus: 'lpa_questionnaire', statusPassedEvent: false },
+	{ appealStatus: 'ready_to_start', statusPassedEvent: false },
+	{ appealStatus: 'statements', statusPassedEvent: false },
+	{ appealStatus: 'transferred', statusPassedEvent: false },
+	{ appealStatus: 'validation', statusPassedEvent: false },
+	{ appealStatus: 'withdrawn', statusPassedEvent: false },
+	{ appealStatus: 'witnesses', statusPassedEvent: false }
+];
+
 describe('appeal-details', () => {
 	beforeEach(() => {
 		installMockApi();
@@ -1809,7 +1827,11 @@ describe('appeal-details', () => {
 
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
-				.reply(200, { ...appealData, appealStatus: 'complete' });
+				.reply(200, {
+					...appealData,
+					appealStatus: 'complete',
+					stateList: [{ key: 'awaiting_event', completed: true }]
+				});
 			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 			const response = await request.get(`${baseUrl}/${appealId}`);
 			const element = parseHtml(response.text);
@@ -3125,6 +3147,45 @@ describe('appeal-details', () => {
 				).toBeFalsy();
 			});
 
+			it('should render the cancel hearing link when hearing is present and in the future', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+						hearing: {
+							hearingId: '123',
+							hearingStartTime: '2999-05-15T12:00:00.000Z'
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+
+				const hearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section'
+				}).innerHTML;
+
+				expect(hearingSectionHtml).toMatchSnapshot();
+
+				const unprettifiedHearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section',
+					skipPrettyPrint: true
+				});
+
+				expect(
+					unprettifiedHearingSectionHtml.querySelector('#cancelHearing')?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/hearing/cancel`);
+			});
+
 			it('should render the Hearing estimates summary list when estimates are present', async () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}`)
@@ -3207,7 +3268,7 @@ describe('appeal-details', () => {
 		});
 
 		describe('Appeal decision', () => {
-			it('should render a row in the case overview accordion with with "Issue" action link to the issue decision start page, if the appeal status is "issue_determination"', async () => {
+			it('should render a row in the case overview accordion with "Issue" action link to the issue decision start page, if the appeal status is "issue_determination"', async () => {
 				const appealId = 2;
 
 				nock('http://test/')
@@ -3216,7 +3277,7 @@ describe('appeal-details', () => {
 						...appealData,
 						appealId,
 						appealStatus: 'issue_determination',
-						stateList: [{ key: 'event', completed: true }],
+						stateList: [{ key: 'awaiting_event', completed: true }],
 						decision: {
 							...appealData.decision,
 							outcome: null
@@ -3237,219 +3298,172 @@ describe('appeal-details', () => {
 				);
 			});
 
-			const appealStatusesWithoutIssueDetermination = [
-				'assign_case_officer',
-				'awaiting_transfer',
-				'closed',
-				'complete',
-				'evidence',
-				'final_comments',
-				'invalid',
-				'lpa_questionnaire',
-				'ready_to_start',
-				'statements',
-				'transferred',
-				'validation',
-				'withdrawn',
-				'witnesses'
-			];
+			appealStatuses
+				.filter(({ statusPassedEvent }) => !statusPassedEvent)
+				.forEach(({ appealStatus }) => {
+					it(`should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (${appealStatus})`, async () => {
+						const appealId = 2;
 
-			for (const appealStatus of appealStatusesWithoutIssueDetermination) {
-				it(`should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (${appealStatus})`, async () => {
-					const appealId = 2;
+						nock('http://test/')
+							.get(`/appeals/${appealId}`)
+							.reply(200, {
+								...appealData,
+								appealId,
+								appealStatus,
+								decision: {
+									...appealData.decision,
+									outcome: null
+								}
+							});
+						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+						const response = await request.get(`${baseUrl}/${appealId}`);
 
-					nock('http://test/')
-						.get(`/appeals/${appealId}`)
-						.reply(200, {
-							...appealData,
-							appealId,
-							appealStatus,
-							decision: {
-								...appealData.decision,
-								outcome: null
-							}
-						});
-					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-					const response = await request.get(`${baseUrl}/${appealId}`);
+						const rowHtml = parseHtml(response.text, {
+							rootElement: '.govuk-summary-list__row.appeal-decision',
+							skipPrettyPrint: true
+						}).innerHTML;
 
-					const rowHtml = parseHtml(response.text, {
-						rootElement: '.govuk-summary-list__row.appeal-decision',
-						skipPrettyPrint: true
-					}).innerHTML;
-
-					expect(rowHtml).toMatchSnapshot();
-					expect(rowHtml).toContain('Decision</dt>');
-					expect(rowHtml).not.toContain(
-						'href="/appeals-service/appeal-details/2/issue-decision/decision"'
-					);
+						expect(rowHtml).toMatchSnapshot();
+						expect(rowHtml).toContain('Decision</dt>');
+						expect(rowHtml).not.toContain(
+							'href="/appeals-service/appeal-details/2/issue-decision/decision"'
+						);
+					});
 				});
-			}
 		});
 
 		describe('Appellant costs decision', () => {
-			it('should render a row in the case overview accordion with an "Issue" action link', async () => {
-				const appealId = 2;
+			appealStatuses
+				.filter(({ statusPassedEvent }) => statusPassedEvent)
+				.forEach(({ appealStatus }) => {
+					it(`should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (${appealStatus})`, async () => {
+						const appealId = 2;
 
-				nock('http://test/')
-					.get(`/appeals/${appealId}`)
-					.reply(200, {
-						...appealData,
-						appealId,
-						appealStatus: 'issue_determination',
-						costs: {
-							appellantApplicationFolder: {
-								documents: [{ id: 1 }]
-							}
-						}
-					});
-				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-
-				const response = await request.get(`${baseUrl}/${appealId}`);
-
-				const rowHtml = parseHtml(response.text, {
-					rootElement: '.govuk-summary-list__row.costs-appellant-decision',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(rowHtml).toMatchSnapshot();
-				expect(rowHtml).toContain('Appellant costs decision</dt>');
-				expect(rowHtml).toContain(
-					'Issue<span class="govuk-visually-hidden"> Appellant costs decision</span></a></dd></div>'
-				);
-			});
-
-			const appealStatusesWithoutIssueDetermination = [
-				'assign_case_officer',
-				'awaiting_transfer',
-				'closed',
-				'complete',
-				'evidence',
-				'final_comments',
-				'invalid',
-				'lpa_questionnaire',
-				'ready_to_start',
-				'statements',
-				'transferred',
-				'validation',
-				'withdrawn',
-				'witnesses'
-			];
-
-			for (const appealStatus of appealStatusesWithoutIssueDetermination) {
-				it(`should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (${appealStatus})`, async () => {
-					const appealId = 2;
-
-					nock('http://test/')
-						.get(`/appeals/${appealId}`)
-						.reply(200, {
-							...appealData,
-							appealId,
-							appealStatus,
-							costs: {
-								appellantApplicationFolder: {
-									documents: [{ id: 1 }]
+						nock('http://test/')
+							.get(`/appeals/${appealId}`)
+							.reply(200, {
+								...appealData,
+								appealId,
+								stateList: [{ key: 'awaiting_event', completed: true }],
+								appealStatus: 'issue_determination',
+								costs: {
+									appellantApplicationFolder: {
+										documents: [{ id: 1 }]
+									}
 								}
-							}
-						});
-					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+							});
+						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
-					const response = await request.get(`${baseUrl}/${appealId}`);
+						const response = await request.get(`${baseUrl}/${appealId}`);
 
-					const rowHtml = parseHtml(response.text, {
-						rootElement: '.govuk-summary-list__row.costs-appellant-decision',
-						skipPrettyPrint: true
-					}).innerHTML;
+						expect(response.text).toContain('govuk-summary-list__row costs-appellant-decision');
 
-					expect(rowHtml).toMatchSnapshot();
-					expect(rowHtml).toContain('Appellant costs decision</dt>');
-					expect(rowHtml).not.toContain(
-						'Issue<span class="govuk-visually-hidden"> Appellant costs decision</span></a></dd></div>'
-					);
+						const rowHtml = parseHtml(response.text, {
+							rootElement: '.govuk-summary-list__row.costs-appellant-decision',
+							skipPrettyPrint: true
+						}).innerHTML;
+
+						expect(rowHtml).toMatchSnapshot();
+						expect(rowHtml).toContain('Appellant costs decision</dt>');
+						expect(rowHtml).toContain(
+							'Issue<span class="govuk-visually-hidden"> Appellant costs decision</span></a></dd></div>'
+						);
+					});
 				});
-			}
+
+			appealStatuses
+				.filter(({ statusPassedEvent }) => !statusPassedEvent)
+				.forEach(({ appealStatus }) => {
+					it(`should not render a row in the case overview accordion , if the appeal status is before "issue_determination" (${appealStatus})`, async () => {
+						const appealId = 2;
+
+						nock('http://test/')
+							.get(`/appeals/${appealId}`)
+							.reply(200, {
+								...appealData,
+								appealId,
+								stateList: [{ key: 'event', completed: false }],
+								appealStatus,
+								costs: {
+									appellantApplicationFolder: {
+										documents: [{ id: 1 }]
+									}
+								}
+							});
+						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.text).not.toContain('govuk-summary-list__row costs-appellant-decision');
+					});
+				});
 		});
 
 		describe('LPA costs decision', () => {
-			it('should render a row in the case overview accordion with an "Issue" action link', async () => {
-				const appealId = 2;
+			appealStatuses
+				.filter(({ statusPassedEvent }) => statusPassedEvent)
+				.forEach(({ appealStatus }) => {
+					it(`should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (${appealStatus})`, async () => {
+						const appealId = 2;
 
-				nock('http://test/')
-					.get(`/appeals/${appealId}`)
-					.reply(200, {
-						...appealData,
-						appealId,
-						appealStatus: 'issue_determination',
-						costs: {
-							lpaApplicationFolder: {
-								documents: [{ id: 1 }]
-							}
-						}
-					});
-				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-
-				const response = await request.get(`${baseUrl}/${appealId}`);
-
-				const rowHtml = parseHtml(response.text, {
-					rootElement: '.govuk-summary-list__row.costs-lpa-decision',
-					skipPrettyPrint: true
-				}).innerHTML;
-
-				expect(rowHtml).toMatchSnapshot();
-				expect(rowHtml).toContain('LPA costs decision</dt>');
-				expect(rowHtml).toContain(
-					'Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>'
-				);
-			});
-
-			const appealStatusesWithoutIssueDetermination = [
-				'assign_case_officer',
-				'awaiting_transfer',
-				'closed',
-				'complete',
-				'evidence',
-				'final_comments',
-				'invalid',
-				'lpa_questionnaire',
-				'ready_to_start',
-				'statements',
-				'transferred',
-				'validation',
-				'withdrawn',
-				'witnesses'
-			];
-
-			for (const appealStatus of appealStatusesWithoutIssueDetermination) {
-				it(`should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (${appealStatus})`, async () => {
-					const appealId = 2;
-
-					nock('http://test/')
-						.get(`/appeals/${appealId}`)
-						.reply(200, {
-							...appealData,
-							appealId,
-							appealStatus,
-							costs: {
-								lpaApplicationFolder: {
-									documents: [{ id: 1 }]
+						nock('http://test/')
+							.get(`/appeals/${appealId}`)
+							.reply(200, {
+								...appealData,
+								appealId,
+								stateList: [{ key: 'awaiting_event', completed: true }],
+								appealStatus: 'issue_determination',
+								costs: {
+									lpaApplicationFolder: {
+										documents: [{ id: 1 }]
+									}
 								}
-							}
-						});
-					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+							});
+						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 
-					const response = await request.get(`${baseUrl}/${appealId}`);
+						const response = await request.get(`${baseUrl}/${appealId}`);
 
-					const rowHtml = parseHtml(response.text, {
-						rootElement: '.govuk-summary-list__row.costs-lpa-decision',
-						skipPrettyPrint: true
-					}).innerHTML;
+						expect(response.text).toContain('govuk-summary-list__row costs-lpa-decision');
 
-					expect(rowHtml).toMatchSnapshot();
-					expect(rowHtml).toContain('LPA costs decision</dt>');
-					expect(rowHtml).not.toContain(
-						'Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>'
-					);
+						const rowHtml = parseHtml(response.text, {
+							rootElement: '.govuk-summary-list__row.costs-lpa-decision',
+							skipPrettyPrint: true
+						}).innerHTML;
+
+						expect(rowHtml).toMatchSnapshot();
+						expect(rowHtml).toContain('LPA costs decision</dt>');
+						expect(rowHtml).toContain(
+							'Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>'
+						);
+					});
 				});
-			}
+
+			appealStatuses
+				.filter(({ statusPassedEvent }) => !statusPassedEvent)
+				.forEach(({ appealStatus }) => {
+					it(`should not render a row in the case overview accordion , if the appeal status is before "issue_determination" (${appealStatus})`, async () => {
+						const appealId = 2;
+
+						nock('http://test/')
+							.get(`/appeals/${appealId}`)
+							.reply(200, {
+								...appealData,
+								appealId,
+								stateList: [{ key: 'event', completed: false }],
+								appealStatus,
+								costs: {
+									lpaApplicationFolder: {
+										documents: [{ id: 1 }]
+									}
+								}
+							});
+						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.text).not.toContain('govuk-summary-list__row costs-lpa-decision');
+					});
+				});
 		});
 	});
 

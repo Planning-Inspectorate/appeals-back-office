@@ -30,11 +30,11 @@ const appealWithHearing = {
 const appealWithHearingNoAddress = {
 	...appealData,
 	hearing: {
-		date: '2025-01-01'
+		hearingStartTime: '2025-01-01T00:00:00.000Z'
 	}
 };
 
-describe('set up hearing', () => {
+describe('change hearing', () => {
 	beforeEach(installMockApi);
 	afterEach(teardown);
 
@@ -815,12 +815,10 @@ describe('set up hearing', () => {
 			await request
 				.post(`${baseUrl}/${appealId}/hearing/change/address`)
 				.send({ addressKnown: 'yes' });
-			await request
-				.post(`${baseUrl}/${appealId}/hearing/change/address-details`)
-				.send({
-					...appealWithHearing.hearing.address,
-					postCode: appealWithHearing.hearing.address.postcode
-				});
+			await request.post(`${baseUrl}/${appealId}/hearing/change/address-details`).send({
+				...appealWithHearing.hearing.address,
+				postCode: appealWithHearing.hearing.address.postcode
+			});
 
 			const response = await request.post(`${baseUrl}/${appealId}/hearing/change/check-details`);
 
