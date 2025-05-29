@@ -15,10 +15,12 @@
 		{%- for component in pageContent.pageComponents -%}
 			{%- include "../components/page-component.njk" -%}
 		{%- endfor -%}
+		{%- if not viewOnly -%}
 		<p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the decision.</p>
 		{{ govukButton({
 			text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue",
 			type: "submit"
 		}) }}
+		{%- endif -%}
 	</form>
 {%- endblock -%}
