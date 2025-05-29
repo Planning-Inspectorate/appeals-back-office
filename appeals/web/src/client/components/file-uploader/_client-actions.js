@@ -385,7 +385,12 @@ const clientActions = (container) => {
 			return { message: 'NAME_SINGLE_FILE' };
 		}
 
-		if (!allowedMimeTypes.includes(selectedFile.type)) {
+		let fileMimeType = selectedFile.type;
+		if (!fileMimeType || fileMimeType === '') {
+			fileMimeType = getMimeTypeFromExtension(selectedFile.name);
+		}
+
+		if (!allowedMimeTypes.includes(fileMimeType)) {
 			return {
 				message: 'DIFFERENT_FILE_EXTENSION',
 				metadata: { fileExtension: container.dataset.formattedAllowedTypes }
@@ -549,5 +554,38 @@ const clientActions = (container) => {
 
 	return { bindEvents };
 };
+
+/**
+ * @param {string} fileName
+ * @returns {string}
+ */
+function getMimeTypeFromExtension(fileName) {
+	const extension = fileName.toLowerCase().split('.').pop();
+
+	if (!extension) {
+		return '';
+	}
+
+	/** @type {Record<string, string>} */
+	const mimeTypeMap = {
+		msg: 'application/vnd.ms-outlook',
+		pdf: 'application/pdf',
+		doc: 'application/msword',
+		docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		xls: 'application/vnd.ms-excel',
+		xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+		ppt: 'application/vnd.ms-powerpoint',
+		pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+		txt: 'text/plain',
+		jpg: 'image/jpeg',
+		jpeg: 'image/jpeg',
+		png: 'image/png',
+		gif: 'image/gif',
+		zip: 'application/zip',
+		rar: 'application/x-rar-compressed'
+	};
+
+	return mimeTypeMap[extension] || '';
+}
 
 export default clientActions;

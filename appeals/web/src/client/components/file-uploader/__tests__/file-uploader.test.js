@@ -103,3 +103,18 @@ describe('file upload', () => {
 		expect(uploadInput.files).toHaveLength(2);
 	});
 });
+
+test('should accept .msg file even if MIME type is missing', async () => {
+	const msgFile = new File(['sample outlook msg'], 'sample.msg', { type: '' });
+
+	await waitFor(() => {
+		fireEvent.change(uploadInput, {
+			target: {
+				files: [msgFile]
+			}
+		});
+	});
+
+	expect(uploadInput.files).toHaveLength(1);
+	expect(uploadInput.files[0].name).toBe('sample.msg');
+});
