@@ -398,6 +398,7 @@ export function nationalListPage(
 						closing: '</div></div>'
 					},
 					parameters: {
+						classes: 'govuk-table--small-text-until-tablet govuk-table--case-list',
 						head: [
 							{
 								text: 'Appeal reference'
