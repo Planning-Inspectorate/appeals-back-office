@@ -4,8 +4,8 @@ import logger from '#lib/logger.js';
 import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
-import { mapDecisionOutcome } from '../issue-decision/issue-decision.mapper.js';
 import { isStatePassed } from '#lib/appeal-status.js';
+import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
