@@ -2873,7 +2873,7 @@ describe('appeal-details', () => {
 						'<dd class="govuk-summary-list__value"> 20 January 2025</dd>'
 					);
 					expect(unprettifiedHTML).toContain(
-						`href="/appeals-service/appeal-details/${appealId}/timetable/edit" data-cy="change-final-comments-due-date">Change<span class="govuk-visually-hidden"> Final comments due</span></a>`
+						`href="/appeals-service/appeal-details/${appealId}/appeal-timetables/final-comments" data-cy="change-final-comments-due-date">Change<span class="govuk-visually-hidden"> Final comments due</span></a>`
 					);
 				});
 
