@@ -46,7 +46,7 @@ export async function renderIpDetails(request, response) {
 		lastName: addIpComment?.lastName,
 		emailAddress: addIpComment?.emailAddress
 	};
-	const pageContent = ipDetailsPage(currentAppeal, values, errors);
+	const pageContent = ipDetailsPage(currentAppeal, values, request, errors);
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		errors: errors,
 		pageContent

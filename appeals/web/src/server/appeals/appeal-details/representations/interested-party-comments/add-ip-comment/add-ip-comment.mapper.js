@@ -14,6 +14,7 @@ import {
 	getTodaysISOString,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').interestedPartyComment} IpComment */
@@ -25,12 +26,15 @@ import {
 /**
  * @param {Appeal} appealDetails
  * @param {{ firstName: string, lastName: string, emailAddress: string }} values
+ * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  * */
-export const ipDetailsPage = (appealDetails, values, errors) => ({
+export const ipDetailsPage = (appealDetails, values, request, errors) => ({
 	title: "Interested party's details",
-	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
+	backLinkUrl:
+		getBackLinkUrlFromQuery(request) ||
+		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	heading: "Interested party's details",
 	pageComponents: [

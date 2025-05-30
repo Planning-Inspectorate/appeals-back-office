@@ -2530,6 +2530,76 @@ describe('appeal-details', () => {
 					});
 				}
 			});
+
+			describe('Interested party comments', () => {
+				const appealId = 3;
+
+				beforeEach(() => {
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				});
+
+				it('should not render an "Interested party comments" row if the appeal type is "Householder" (HAS)', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: 'Householder'
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Documentation</th>');
+					expect(unprettifiedHTML).not.toContain('Interested party comments</th>');
+				});
+
+				it('should render an "Interested party comments" row with a status of "No interested party comments received", and an "Add" action link to the first page of the add IP comment flow, if the appeal type is "planning appeal", and the appeal does not have IP comments awaiting review, and the statements due date has elapsed', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							appealId,
+							appealType: 'Planning appeal',
+							appealTimetable: {
+								...appealData.appealTimetable,
+								ipCommentsDueDate: '2025-05-06T22:59:00.000Z'
+							},
+							documentationSummary: {
+								ipComments: {
+									status: 'not_received',
+									receivedAt: null,
+									counts: {},
+									isRedacted: false
+								}
+							}
+						});
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps/count?status=awaiting_review`)
+						.reply(200, {
+							statement: 0,
+							comment: 0,
+							lpa_final_comment: 0,
+							appellant_final_comment: 0
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Documentation</th>');
+					expect(unprettifiedHTML).toContain('Interested party comments</th>');
+					expect(unprettifiedHTML).toContain('No interested party comments received</td>');
+					expect(unprettifiedHTML).toContain(
+						`<a href="/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-details?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}" data-cy="review-ip-comments" class="govuk-link">Add<span class="govuk-visually-hidden"> interested party comments</span></a>`
+					);
+				});
+			});
 		});
 
 		describe('Timetable', () => {
