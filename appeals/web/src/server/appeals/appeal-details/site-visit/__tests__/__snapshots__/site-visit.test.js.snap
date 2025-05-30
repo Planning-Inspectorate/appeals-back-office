@@ -2280,11 +2280,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-type">Please select a visit type</a>
                             </li>
-                            <li><a href="#visit-date-day">Visit date must include a day</a>
-                            </li>
-                            <li><a href="#visit-date-month">Visit date must include a month</a>
-                            </li>
-                            <li><a href="#visit-date-year">Visit date must include a year</a>
+                            <li><a href="#">Enter the visit date</a>
                             </li>
                             <li><a href="#visit-start-time-hour">Start time must include an hour</a>
                             </li>
@@ -4811,11 +4807,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-type">Please select a visit type</a>
                             </li>
-                            <li><a href="#visit-date-day">Visit date must include a day</a>
-                            </li>
-                            <li><a href="#visit-date-month">Visit date must include a month</a>
-                            </li>
-                            <li><a href="#visit-date-year">Visit date must include a year</a>
+                            <li><a href="#">Enter the visit date</a>
                             </li>
                             <li><a href="#visit-start-time-hour">Start time must include an hour</a>
                             </li>

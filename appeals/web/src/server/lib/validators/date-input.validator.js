@@ -22,13 +22,37 @@ export const createDateInputFieldsValidator = (
 	const _year = bodyScope ? `[${yearFieldName}]` : yearFieldName;
 
 	return createValidator(
-		body(`${bodyScope}${fieldNamePrefix}${_day}`)
-			.custom((value) => {
-				if (!value) {
-					throw new Error(`${messageFieldNamePrefix} must include a day`);
-				}
+		body(bodyScope).custom((value) => {
+			const day = value[`${fieldNamePrefix}${dayFieldName}`];
+			const month = value[`${fieldNamePrefix}${monthFieldName}`];
+			const year = value[`${fieldNamePrefix}${yearFieldName}`];
+
+			if (day && month && year) {
 				return true;
-			})
+			}
+
+			if (!day && !month && !year) {
+				throw new Error(`Enter the ${lowerCase(messageFieldNamePrefix)}`);
+			}
+
+			let missingParts = [];
+			if (!day) missingParts.push('a day');
+			if (!month) missingParts.push('a month');
+			if (!year) missingParts.push('a year');
+
+			const messageSuffix = missingParts.reduce((acc, part, index) => {
+				if (index === missingParts.length - 1) {
+					return `${acc}${part}`;
+				}
+				if (index === missingParts.length - 2) {
+					return `${acc}${part} and `;
+				}
+				return `${acc}${part}, `;
+			}, '');
+
+			throw new Error(`${capitalize(messageFieldNamePrefix)} must include ${messageSuffix}`);
+		}),
+		body(`${bodyScope}${fieldNamePrefix}${_day}`)
 			.bail()
 			.if(Boolean)
 			.isInt()
@@ -40,12 +64,6 @@ export const createDateInputFieldsValidator = (
 			.matches(/^0?[1-9]$|^1\d$|^2\d$|^3[01]$/)
 			.withMessage(`${messageFieldNamePrefix} day must be between 1 and 31`),
 		body(`${bodyScope}${fieldNamePrefix}${_month}`)
-			.custom((value) => {
-				if (!value) {
-					throw new Error(`${messageFieldNamePrefix} must include a month`);
-				}
-				return true;
-			})
 			.bail()
 			.if(Boolean)
 			.isInt()
@@ -57,12 +75,6 @@ export const createDateInputFieldsValidator = (
 			.matches(/^0?[1-9]$|^1[0-2]$/)
 			.withMessage(`${messageFieldNamePrefix} month must be between 1 and 12`),
 		body(`${bodyScope}${fieldNamePrefix}${_year}`)
-			.custom((value) => {
-				if (!value) {
-					throw new Error(`${messageFieldNamePrefix} must include a year`);
-				}
-				return true;
-			})
 			.bail()
 			.if(Boolean)
 			.isInt()
@@ -101,7 +113,6 @@ export const createDateInputDateValidityValidator = (
 				`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}must be a real date`
 			)
 	);
-
 /**
  * @param {import('got').Got} apiClient
  * @param {string} value
