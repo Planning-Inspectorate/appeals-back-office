@@ -2043,9 +2043,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a day');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a month');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a year');
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter the date');
 		});
 
 		it('should re-render the update date page with the expected error message if provided date is not in the future', async () => {
@@ -2634,9 +2632,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a day');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a month');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a year');
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter the date');
 		});
 
 		it('should re-render the valid date page with the expected error message if provided date is not in the past', async () => {
