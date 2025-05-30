@@ -34,11 +34,7 @@ export function appealTypePage(appealDetails, appealTypes, changeAppeal, errorMe
 					classes: 'govuk-fieldset__legend--l'
 				}
 			},
-			errorMessage: errorMessage
-				? {
-						text: errorMessage
-				  }
-				: undefined,
+			errorMessage: errorMessage && { text: errorMessage },
 			items: mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal)
 		}
 	};
@@ -105,11 +101,7 @@ export function resubmitAppealPage(appealDetails, changeAppeal, errorMessage) {
 					checked: changeAppeal?.resubmit === false
 				}
 			],
-			errorMessage: errorMessage
-				? {
-						text: errorMessage
-				  }
-				: undefined
+			errorMessage: errorMessage && { text: errorMessage }
 		}
 	};
 

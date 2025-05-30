@@ -228,19 +228,19 @@ const renderChangeAppealFinalDate = async (request, response) => {
 
 	//if the errors object contains a value in the empty string key - map this error to the day field to link to the day field
 	//remove other errors from the object so only the top priority error is displayed
-	if (errors && errors['']) {
-		errors['change-appeal-final-date-day'] = errors[''];
-		delete errors[''];
-		delete errors['change-appeal-final-date-month'];
-		delete errors['change-appeal-final-date-year'];
-	}
+	// if (errors && errors['']) {
+	// 	errors['change-appeal-final-date-day'] = errors[''];
+	// 	delete errors[''];
+	// 	delete errors['change-appeal-final-date-month'];
+	// 	delete errors['change-appeal-final-date-year'];
+	// }
 
 	const mappedPageContent = changeAppealFinalDatePage(
 		appealData,
 		changeDay,
 		changeMonth,
 		changeYear,
-		errors ? errors : undefined
+		errors
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
