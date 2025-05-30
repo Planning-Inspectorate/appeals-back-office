@@ -62,7 +62,7 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#levy-expected-date-day">Date must include a day</a>
+                            <li><a href="#">Date must include a day</a>
                             </li>
                         </ul>
                     </div>
@@ -340,7 +340,7 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#levy-expected-date-month">Date must include a month</a>
+                            <li><a href="#">Date must include a month</a>
                             </li>
                         </ul>
                     </div>
@@ -618,7 +618,7 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the lev
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#levy-expected-date-year">Date must include a year</a>
+                            <li><a href="#">Date must include a year</a>
                             </li>
                         </ul>
                     </div>

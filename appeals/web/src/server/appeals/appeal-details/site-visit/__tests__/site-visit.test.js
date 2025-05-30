@@ -119,9 +119,7 @@ describe('site-visit', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Please select a visit type</a>');
-			expect(errorSummaryHtml).toContain('Visit date must include a day');
-			expect(errorSummaryHtml).toContain('Visit date must include a month');
-			expect(errorSummaryHtml).toContain('Visit date must include a year');
+			expect(errorSummaryHtml).toContain('Enter the visit date');
 			expect(errorSummaryHtml).toContain('Start time must include an hour</a>');
 			expect(errorSummaryHtml).toContain('Start time must include a minute</a>');
 		});
@@ -719,9 +717,7 @@ describe('site-visit', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Please select a visit type</a>');
-			expect(errorSummaryHtml).toContain('Visit date must include a day</a>');
-			expect(errorSummaryHtml).toContain('Visit date must include a month</a>');
-			expect(errorSummaryHtml).toContain('Visit date must include a year</a>');
+			expect(errorSummaryHtml).toContain('Enter the visit date</a>');
 			expect(errorSummaryHtml).toContain('Start time must include an hour</a>');
 			expect(errorSummaryHtml).toContain('Start time must include a minute</a>');
 		});

@@ -189,9 +189,7 @@ describe('change hearing', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Hearing date must include a day');
-			expect(errorSummaryHtml).toContain('Hearing date must include a month');
-			expect(errorSummaryHtml).toContain('Hearing date must include a year');
+			expect(errorSummaryHtml).toContain('Enter the hearing date');
 		});
 
 		it('should return 400 on date in the past with appropriate error message', async () => {
