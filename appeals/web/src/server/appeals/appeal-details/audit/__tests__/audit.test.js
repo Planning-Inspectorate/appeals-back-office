@@ -93,7 +93,7 @@ describe('audit', () => {
 				'<td class="govuk-table__cell">LPA final comments accepted</td>'
 			);
 			expect(unprettifiedHtml).toContain(
-				'<td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--grey">Event</strong></td>'
+				'<td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Site visit ready to set up</strong></td>'
 			);
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">Final comments shared</td>'
@@ -102,7 +102,7 @@ describe('audit', () => {
 				'<td class="govuk-table__cell">The site visit was arranged for Thursday 2 October</td>'
 			);
 			expect(unprettifiedHtml).toContain(
-				'<td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--grey">Awaiting event</strong></td>'
+				'<td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--yellow">Awaiting site visit</strong></td>'
 			);
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Issue decision</strong></td>'

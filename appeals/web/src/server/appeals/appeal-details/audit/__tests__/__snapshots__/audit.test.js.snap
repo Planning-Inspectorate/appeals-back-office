@@ -30,7 +30,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:55</span>
                         </td>
-                        <td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--grey">Awaiting event</strong>
+                        <td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--yellow">Awaiting site visit</strong>
                         </td>
                         <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
                     </tr>
@@ -52,7 +52,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:55</span>
                         </td>
-                        <td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--grey">Event</strong>
+                        <td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Site visit ready to set up</strong>
                         </td>
                         <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
                     </tr>
