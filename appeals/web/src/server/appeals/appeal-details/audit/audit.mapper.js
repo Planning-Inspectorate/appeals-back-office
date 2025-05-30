@@ -1,6 +1,7 @@
 import usersService from '#appeals/appeal-users/users-service.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import { mapStatusText } from '#lib/appeal-status.js';
 
 /** @typedef {import('#app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 /** @typedef {{ documentGuid: string, name: string, stage: string, folderId: number, documentType: string }} DocInfo */
@@ -22,7 +23,7 @@ export const mapMessageContent = async (appeal, log, docInfo, session) => {
 	result = tryMapDocument(appeal.appealId, result, docInfo, appeal?.lpaQuestionnaireId || null);
 
 	result = tryMapRepresentationType(result);
-	result = tryMapStatus(result);
+	result = tryMapStatus(result, appeal.appealType, appeal.procedureType);
 
 	result = result.replace(/\n/g, '<br>');
 
@@ -150,16 +151,19 @@ export const tryMapDocument = (appealId, log, docInfo, lpaqId) => {
 };
 
 /**
- *
  * @param {string} log
+ * @param {string|null|undefined} appealType
+ * @param {string|undefined} appealProcedureType
  * @returns {string}
  */
-const tryMapStatus = (log) => {
+const tryMapStatus = (log, appealType, appealProcedureType) => {
 	const status = log.match(/progressed to ([a-zA-Z_]+)/)?.[1];
 
 	if (!status) {
 		return log;
 	}
+
+	const mappedStatus = mapStatusText(status, appealType || '', appealProcedureType);
 
 	/** @type {PageComponent[]} */
 	const pageComponents = [
@@ -171,7 +175,7 @@ const tryMapStatus = (log) => {
 					{
 						type: 'status-tag',
 						parameters: {
-							status
+							status: mappedStatus
 						}
 					}
 				]
