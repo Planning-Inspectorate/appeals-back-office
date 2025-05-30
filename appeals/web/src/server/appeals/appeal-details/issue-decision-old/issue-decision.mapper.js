@@ -340,7 +340,16 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 						text: 'Reasons'
 					},
 					value: {
-						html: displayPageFormatter.formatFreeTextForDisplay(session.invalidReason)
+						html: '',
+						pageComponents: [
+							{
+								type: 'show-more',
+								parameters: {
+									html: displayPageFormatter.formatFreeTextForDisplay(session.invalidReason),
+									labelText: 'Read more'
+								}
+							}
+						]
 					},
 					actions: {
 						items: [
