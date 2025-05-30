@@ -12,6 +12,7 @@ import {
 } from '#testing/appeals/appeals.js';
 import { cloneDeep } from 'lodash-es';
 import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
+import { getTodaysISOString } from '#lib/dates.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -26,6 +27,7 @@ const issueAppellantCostsDecisionLetterUploadPath = '/issue-appellant-costs-deci
 const checkYourAppellantCostsDecisionPath = '/check-your-appellant-costs-decision';
 const issueLpaCostsDecisionLetterUploadPath = '/issue-lpa-costs-decision-letter-upload';
 const checkYourLpaCostsDecisionPath = '/check-your-lpa-costs-decision';
+const viewDecisionPath = '/view-decision';
 
 describe('issue-decision', () => {
 	/**
@@ -1130,6 +1132,68 @@ describe('issue-decision', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+	});
+
+	describe('GET /issue-decision/view-decision', () => {
+		let issueDecisionAppealData;
+
+		beforeEach(async () => {
+			issueDecisionAppealData = cloneDeep(appealData);
+			issueDecisionAppealData.decision.outcome = 'allowed';
+			issueDecisionAppealData.costs.appellantDecisionFolder.documents = [
+				{
+					name: 'appellant-costs-decision-letter.pdf',
+					latestDocumentVersion: {
+						dateReceived: getTodaysISOString(),
+						version: 1
+					}
+				}
+			];
+			issueDecisionAppealData.costs.lpaDecisionFolder.documents = [
+				{
+					name: 'lpa-costs-decision-letter.pdf',
+					latestDocumentVersion: {
+						dateReceived: getTodaysISOString(),
+						version: 1
+					}
+				}
+			];
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
+			nock('http://test/')
+				.get('/appeals/document-redaction-statuses')
+				.reply(200, documentRedactionStatuses)
+				.persist();
+		});
+
+		afterEach(teardown);
+
+		it('should render the view decision page', async () => {
+			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${viewDecisionPath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision</h1>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Allowed</dd>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('decision-letter.pdf</a>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant costs decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('appellant-costs-decision-letter.pdf</a>');
+
+			expect(unprettifiedElement.innerHTML).toContain('LPA costs decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('lpa-costs-decision-letter.pdf</a>');
 		});
 	});
 });
