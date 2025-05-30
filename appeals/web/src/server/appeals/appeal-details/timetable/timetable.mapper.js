@@ -106,7 +106,7 @@ export const mapEditTimetablePage = (appealTimetable, appealDetails, errors = un
  * @param {AppealTimetableType} timetableType
  * @returns {string}
  */
-const getTimetableTypeText = (timetableType) => {
+export const getTimetableTypeText = (timetableType) => {
 	switch (timetableType) {
 		case 'lpaQuestionnaireDueDate':
 			return 'LPA questionnaire';
