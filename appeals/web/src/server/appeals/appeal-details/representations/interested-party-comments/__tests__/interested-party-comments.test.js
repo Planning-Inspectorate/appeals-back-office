@@ -194,4 +194,23 @@ describe('interested-party-comments', () => {
 			expect(invalidMessage?.textContent?.trim()).toBe('No invalid comments');
 		});
 	});
+
+	describe('GET /interested-party-comments/add/ip-details', () => {
+		const appealId = 2;
+
+		it('should render the "Interested party details" page with the expected content and back link URL', async () => {
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/ip-details?backUrl=/test/back/url`
+			);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('Interested party&#39;s details</h1>');
+
+			const backLinkHtml = parseHtml(response.text, { rootElement: '.govuk-back-link' }).innerHTML;
+
+			expect(backLinkHtml).toContain('href="/test/back/url"');
+		});
+	});
 });
