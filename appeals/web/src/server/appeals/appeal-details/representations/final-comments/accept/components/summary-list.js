@@ -34,18 +34,24 @@ export const summaryList = (appealDetails, comment, finalCommentsType, attachmen
 			{
 				key: { text: 'Supporting documents' },
 				value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
-				...(comment.attachments?.length > 0
-					? {
-							actions: {
-								items: [
+				actions: {
+					items: [
+						...(comment.attachments?.length > 0
+							? [
 									{
-										text: 'Change',
-										href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}`
+										text: 'Manage',
+										href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/final-comments/${finalCommentsType}/accept`,
+										visuallyHiddenText: 'supporting documents'
 									}
-								]
-							}
-					  }
-					: {})
+							  ]
+							: []),
+						{
+							text: 'Add',
+							href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/add-document/?backUrl=/final-comments/${finalCommentsType}/accept`,
+							visuallyHiddenText: 'supporting documents'
+						}
+					]
+				}
 			},
 			{
 				key: { text: 'Review decisions' },
