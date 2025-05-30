@@ -31,6 +31,10 @@ export const createDateInputFieldsValidator = (
 				return true;
 			}
 
+			if (!day && !month && !year) {
+				throw new Error(`Enter the ${lowerCase(messageFieldNamePrefix)}`);
+			}
+
 			let missingParts = [];
 			if (!day) missingParts.push('a day');
 			if (!month) missingParts.push('a month');
@@ -49,12 +53,6 @@ export const createDateInputFieldsValidator = (
 			throw new Error(`${capitalize(messageFieldNamePrefix)} must include ${messageSuffix}`);
 		}),
 		body(`${bodyScope}${fieldNamePrefix}${_day}`)
-			.custom((value) => {
-				if (!value) {
-					throw new Error(`${messageFieldNamePrefix} must include a day`);
-				}
-				return true;
-			})
 			.bail()
 			.if(Boolean)
 			.isInt()
@@ -66,12 +64,6 @@ export const createDateInputFieldsValidator = (
 			.matches(/^0?[1-9]$|^1\d$|^2\d$|^3[01]$/)
 			.withMessage(`${messageFieldNamePrefix} day must be between 1 and 31`),
 		body(`${bodyScope}${fieldNamePrefix}${_month}`)
-			.custom((value) => {
-				if (!value) {
-					throw new Error(`${messageFieldNamePrefix} must include a month`);
-				}
-				return true;
-			})
 			.bail()
 			.if(Boolean)
 			.isInt()
@@ -83,12 +75,6 @@ export const createDateInputFieldsValidator = (
 			.matches(/^0?[1-9]$|^1[0-2]$/)
 			.withMessage(`${messageFieldNamePrefix} month must be between 1 and 12`),
 		body(`${bodyScope}${fieldNamePrefix}${_year}`)
-			.custom((value) => {
-				if (!value) {
-					throw new Error(`${messageFieldNamePrefix} must include a year`);
-				}
-				return true;
-			})
 			.bail()
 			.if(Boolean)
 			.isInt()

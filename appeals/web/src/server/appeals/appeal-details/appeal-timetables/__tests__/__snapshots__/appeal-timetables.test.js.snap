@@ -162,11 +162,7 @@ exports[`Appeal Timetables should render "Change final comments due date" with e
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#due-date-day">Date must include a day</a>
-                            </li>
-                            <li><a href="#due-date-month">Date must include a month</a>
-                            </li>
-                            <li><a href="#due-date-year">Date must include a year</a>
+                            <li><a href="#">Enter the date</a>
                             </li>
                         </ul>
                     </div>

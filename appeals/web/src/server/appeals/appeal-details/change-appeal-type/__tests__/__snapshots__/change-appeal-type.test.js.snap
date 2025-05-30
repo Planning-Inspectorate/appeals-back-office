@@ -543,7 +543,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#change-appeal-final-date-day">Deadline to resubmit the appeal must be a real date</a>
+                            <li><a href="#">Deadline to resubmit the appeal must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -617,7 +617,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#change-appeal-final-date-day">Enter the deadline to resubmit the appeal</a>
+                            <li><a href="#">Enter the deadline to resubmit the appeal</a>
                             </li>
                         </ul>
                     </div>
@@ -691,7 +691,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#change-appeal-final-date-day">Deadline to resubmit the appeal must be a real date</a>
+                            <li><a href="#change-appeal-final-date-day">Deadline to resubmit the appeal day must be between 1 and 31</a>
+                            </li>
+                            <li><a href="#">Deadline to resubmit the appeal must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -715,8 +717,10 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                 </legend>
                                 <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
-                                    the appeal must be a real date</p>
-                                <div class="govuk-date-input" id="change-appeal-final-date">
+                                    the appeal must be a real date
+                                    <br>Deadline to resubmit the appeal day must be between 1 and 31</p>
+                                <div class="govuk-date-input"
+                                id="change-appeal-final-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
@@ -765,7 +769,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#change-appeal-final-date-day">The date must be a business day</a>
+                            <li><a href="#">The date must be a business day</a>
                             </li>
                         </ul>
                     </div>
@@ -839,7 +843,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#change-appeal-final-date-day">Deadline to resubmit the appeal must be a real date</a>
+                            <li><a href="#change-appeal-final-date-month">Deadline to resubmit the appeal month must be between 1 and 12</a>
+                            </li>
+                            <li><a href="#">Deadline to resubmit the appeal must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -863,8 +869,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                 </legend>
                                 <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
-                                    the appeal must be a real date</p>
-                                <div class="govuk-date-input" id="change-appeal-final-date">
+                                    the appeal must be a real date
+                                    <br>Deadline to resubmit the appeal month must be between 1 and 12</p>
+                                <div                                 class="govuk-date-input" id="change-appeal-final-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
@@ -889,17 +896,17 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                             type="text" value="2024" inputmode="numeric">
                                         </div>
                                     </div>
-                                </div>
-                            </fieldset>
                         </div>
-                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                            type</div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
-                    </form>
+                        </fieldset>
                 </div>
+                <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                    type</div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Confirm</button>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 </main>"
 `;
@@ -913,7 +920,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#change-appeal-final-date-day">Deadline to resubmit the appeal must be a real date</a>
+                            <li><a href="#change-appeal-final-date-year">Deadline to resubmit the appeal year must be a number</a>
+                            </li>
+                            <li><a href="#">Deadline to resubmit the appeal must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -937,8 +946,10 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                 </legend>
                                 <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
-                                    the appeal must be a real date</p>
-                                <div class="govuk-date-input" id="change-appeal-final-date">
+                                    the appeal must be a real date
+                                    <br>Deadline to resubmit the appeal year must be a number</p>
+                                <div class="govuk-date-input"
+                                id="change-appeal-final-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>

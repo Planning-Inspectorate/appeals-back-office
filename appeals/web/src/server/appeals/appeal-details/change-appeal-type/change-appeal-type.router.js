@@ -19,7 +19,6 @@ router
 	.route('/change-appeal-final-date')
 	.get(asyncHandler(controller.getChangeAppealFinalDate))
 	.post(
-		// validators.validateChangeAppealNoFieldsEmpty,
 		validators.validateChangeAppealFinalDateFields,
 		validators.validateChangeAppealFinalDateValid,
 		validators.validateChangeAppealFinalDateIsBusinessDay,
