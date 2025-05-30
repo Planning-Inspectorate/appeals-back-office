@@ -64,6 +64,11 @@ const patchAppealTimetableValidator = composeMiddleware(
 		mustBeFutureDate: true,
 		mustBeBusinessDay: true
 	}),
+	validateDateParameter({
+		parameterName: 'statementOfCommonGroundDueDate',
+		mustBeFutureDate: true,
+		mustBeBusinessDay: true
+	}),
 	validationErrorHandler
 );
 
