@@ -1,7 +1,12 @@
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { setAppealTimetables } from './timetable.service.js';
-import { mapEditTimetablePage, getAppealTimetableTypes, getIdText } from './timetable.mapper.js';
+import {
+	mapEditTimetablePage,
+	getAppealTimetableTypes,
+	getIdText,
+	getTimetableTypeText
+} from './timetable.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	dateISOStringToDisplayDate,
@@ -36,19 +41,6 @@ export const postEditTimetable = async (request, response) => {
 		const updatedDueDateDay = parseInt(request.body[`${idText}-due-date-day`], 10);
 		const updatedDueDateMonth = parseInt(request.body[`${idText}-due-date-month`], 10);
 		const updatedDueDateYear = parseInt(request.body[`${idText}-due-date-year`], 10);
-
-		if (
-			!objectContainsAllKeys(request.body, [
-				`${idText}-due-date-day`,
-				`${idText}-due-date-month`,
-				`${idText}-due-date-year`
-			]) ||
-			Number.isNaN(updatedDueDateDay) ||
-			Number.isNaN(updatedDueDateMonth) ||
-			Number.isNaN(updatedDueDateYear)
-		) {
-			return response.status(500).render('app/500.njk');
-		}
 
 		const updatedDueDateDayString = `0${updatedDueDateDay}`.slice(-2);
 		const updatedDueDateMonthString = `0${updatedDueDateMonth}`.slice(-2);
@@ -104,9 +96,28 @@ export const renderCheckYourAnswers = (request, response) => {
 	if (!objectContainsAllKeys(session, 'appealTimetable')) {
 		return response.status(500).render('app/500.njk');
 	}
-	const appealTimetable = session.appealTimetable;
-	const currentDueDateIso = appealTimetable && appealTimetable['lpaQuestionnaireDueDate'];
-	const currentDueDate = currentDueDateIso && dateISOStringToDisplayDate(currentDueDateIso);
+
+	const appealTimetables = session.appealTimetable;
+
+	const timeTableTypes = getAppealTimetableTypes(currentAppeal);
+
+	/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} */
+	let responses = {};
+
+	timeTableTypes.map((timetableType) => {
+		const currentDueDateIso = appealTimetables && appealTimetables[timetableType];
+		const currentDueDate = currentDueDateIso && dateISOStringToDisplayDate(currentDueDateIso);
+		const idText = getTimetableTypeText(timetableType) + ' due';
+		responses[idText] = {
+			value: currentDueDate,
+			actions: {
+				Change: {
+					href: `${baseUrl}/edit`,
+					visuallyHiddenText: idText + ' date'
+				}
+			}
+		};
+	});
 
 	return renderCheckYourAnswersComponent(
 		{
@@ -115,17 +126,7 @@ export const renderCheckYourAnswers = (request, response) => {
 			preHeading: `Appeal ${currentAppeal.appealReference}`,
 			backLinkUrl: `${baseUrl}/edit`,
 			submitButtonText: 'Update timetable due dates',
-			responses: {
-				'LPA questionnaire due': {
-					value: currentDueDate,
-					actions: {
-						Change: {
-							href: `${baseUrl}/edit`,
-							visuallyHiddenText: 'supporting document'
-						}
-					}
-				}
-			},
+			responses,
 			after: [
 				simpleHtmlComponent(
 					'p',
