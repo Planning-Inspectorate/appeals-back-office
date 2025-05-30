@@ -851,12 +851,14 @@ export const spec = {
 			finalCommentReviewDate: '2024-08-09',
 			issueDeterminationDate: '2024-08-10',
 			lpaQuestionnaireDueDate: '2024-08-11',
+			statementOfCommonGroundDueDate: '2024-08-12',
 			statementReviewDate: '2024-08-12'
 		},
 		UpdateAppealTimetableResponse: {
 			finalCommentReviewDate: '2024-08-09T01:00:00.000Z',
 			issueDeterminationDate: '2024-08-10T01:00:00.000Z',
 			lpaQuestionnaireDueDate: '2024-08-11T01:00:00.000Z',
+			statementOfCommonGroundDueDate: '2024-08-12',
 			statementReviewDate: '2024-08-12T01:00:00.000Z'
 		},
 		AllDocumentRedactionStatusesResponse: {
