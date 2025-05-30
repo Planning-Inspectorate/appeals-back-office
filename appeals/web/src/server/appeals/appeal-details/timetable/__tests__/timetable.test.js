@@ -8,148 +8,616 @@ const { app, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details/1/timetable';
 
-describe('Appeal Timetables', () => {
+describe('Timetable', () => {
 	afterEach(teardown);
 
-	it('should render "Timetable due dates" page for householder appeal type', async () => {
-		const appealData = {
-			...baseAppealData,
-			appealTimetable: {
-				appealTimetableId: 1
-			}
-		};
+	describe('GET /edit', () => {
+		it('should render "Timetable due dates" page for householder appeal type', async () => {
+			const appealData = {
+				...baseAppealData,
+				appealTimetable: {
+					appealTimetableId: 1
+				}
+			};
 
-		nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
 
-		const response = await request.get(`${baseUrl}/edit`);
-		const element = parseHtml(response.text);
+			const response = await request.get(`${baseUrl}/edit`);
+			const element = parseHtml(response.text);
 
-		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('LPA questionnaire due</h1>');
-		expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-day');
-		expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-month"');
-		expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-year"');
-		expect(element.innerHTML).toContain('Continue</button>');
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('LPA questionnaire due</h1>');
+			expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-day');
+			expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-month"');
+			expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-year"');
+			expect(element.innerHTML).toContain('Continue</button>');
+		});
+
+		it('should render correct "Timetable due dates" page for S78 appeal type and status lpa_questionnaire', async () => {
+			const appealData = {
+				...baseAppealData,
+				appealTimetable: {
+					appealTimetableId: 1
+				}
+			};
+			appealData.appealType = 'Planning appeal';
+			appealData.appealStatus = 'lpa_questionnaire';
+
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+
+			const response = await request.get(`${baseUrl}/edit`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Timetable due dates</h1>');
+			expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-day');
+			expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-month"');
+			expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-year"');
+			expect(element.innerHTML).toContain('name="lpa-statement-due-date-day');
+			expect(element.innerHTML).toContain('name="lpa-statement-due-date-month"');
+			expect(element.innerHTML).toContain('name="lpa-statement-due-date-year"');
+			expect(element.innerHTML).toContain('name="ip-comments-due-date-day');
+			expect(element.innerHTML).toContain('name="ip-comments-due-date-month"');
+			expect(element.innerHTML).toContain('name="ip-comments-due-date-year"');
+			expect(element.innerHTML).toContain('name="final-comments-due-date-day');
+			expect(element.innerHTML).toContain('name="final-comments-due-date-month"');
+			expect(element.innerHTML).toContain('name="final-comments-due-date-year"');
+			expect(element.innerHTML).toContain('Continue</button>');
+		});
+
+		it('should render correct "Timetable due dates" page for S78 appeal type and status lpa_questionnaire and lpaq received', async () => {
+			const appealData = {
+				...baseAppealData,
+				appealTimetable: {
+					appealTimetableId: 1
+				}
+			};
+			appealData.appealType = 'Planning appeal';
+			appealData.appealStatus = 'lpa_questionnaire';
+			appealData.documentationSummary = {
+				lpaQuestionnaire: {
+					status: 'received',
+					dueDate: '2024-10-11T10:27:06.626Z',
+					receivedAt: '2024-08-02T10:27:06.626Z',
+					representationStatus: 'awaiting_review'
+				}
+			};
+
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+
+			const response = await request.get(`${baseUrl}/edit`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Timetable due dates</h1>');
+			expect(element.innerHTML).toContain('name="lpa-statement-due-date-day');
+			expect(element.innerHTML).toContain('name="lpa-statement-due-date-month"');
+			expect(element.innerHTML).toContain('name="lpa-statement-due-date-year"');
+			expect(element.innerHTML).toContain('name="ip-comments-due-date-day');
+			expect(element.innerHTML).toContain('name="ip-comments-due-date-month"');
+			expect(element.innerHTML).toContain('name="ip-comments-due-date-year"');
+			expect(element.innerHTML).toContain('name="final-comments-due-date-day');
+			expect(element.innerHTML).toContain('name="final-comments-due-date-month"');
+			expect(element.innerHTML).toContain('name="final-comments-due-date-year"');
+			expect(element.innerHTML).toContain('Continue</button>');
+		});
+
+		it('should render correct "Timetable due dates" page for S78 appeal type and status statements', async () => {
+			const appealData = {
+				...baseAppealData,
+				appealTimetable: {
+					appealTimetableId: 1
+				}
+			};
+			appealData.appealType = 'Planning appeal';
+			appealData.appealStatus = 'statements';
+
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+
+			const response = await request.get(`${baseUrl}/edit`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Timetable due dates</h1>');
+			expect(element.innerHTML).toContain('name="lpa-statement-due-date-day');
+			expect(element.innerHTML).toContain('name="lpa-statement-due-date-month"');
+			expect(element.innerHTML).toContain('name="lpa-statement-due-date-year"');
+			expect(element.innerHTML).toContain('name="ip-comments-due-date-day');
+			expect(element.innerHTML).toContain('name="ip-comments-due-date-month"');
+			expect(element.innerHTML).toContain('name="ip-comments-due-date-year"');
+			expect(element.innerHTML).toContain('name="final-comments-due-date-day');
+			expect(element.innerHTML).toContain('name="final-comments-due-date-month"');
+			expect(element.innerHTML).toContain('name="final-comments-due-date-year"');
+			expect(element.innerHTML).toContain('Continue</button>');
+		});
+
+		it('should render correct "Timetable due dates" page for S78 appeal type and status final_comments', async () => {
+			const appealData = {
+				...baseAppealData,
+				appealTimetable: {
+					appealTimetableId: 1
+				}
+			};
+			appealData.appealType = 'Planning appeal';
+			appealData.appealStatus = 'final_comments';
+
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+
+			const response = await request.get(`${baseUrl}/edit`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Final comments due</h1>');
+			expect(element.innerHTML).toContain('name="final-comments-due-date-day');
+			expect(element.innerHTML).toContain('name="final-comments-due-date-month"');
+			expect(element.innerHTML).toContain('name="final-comments-due-date-year"');
+			expect(element.innerHTML).toContain('Continue</button>');
+		});
 	});
 
-	it('should render correct "Timetable due dates" page for S78 appeal type and status lpa_questionnaire', async () => {
-		const appealData = {
-			...baseAppealData,
-			appealTimetable: {
-				appealTimetableId: 1
-			}
-		};
-		appealData.appealType = 'Planning appeal';
-		appealData.appealStatus = 'lpa_questionnaire';
+	describe('POST /edit', () => {
+		describe('Householder', () => {
+			const appealData = {
+				...baseAppealData,
+				appealTimetable: {
+					appealTimetableId: 1
+				}
+			};
 
-		nock('http://test/').get('/appeals/1').reply(200, appealData);
+			beforeEach(() => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+				nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
+			});
+			afterEach(() => {
+				nock.cleanAll();
+			});
 
-		const response = await request.get(`${baseUrl}/edit`);
-		const element = parseHtml(response.text);
+			it.each([
+				{
+					name: 'missing day',
+					payload: {
+						'lpa-questionnaire-due-date-month': '10',
+						'lpa-questionnaire-due-date-year': '2050'
+					},
+					expectedError: 'LPA questionnaire due date must include a day</a>'
+				},
+				{
+					name: 'missing month',
+					payload: {
+						'lpa-questionnaire-due-date-day': '10',
+						'lpa-questionnaire-due-date-year': '2050'
+					},
+					expectedError: 'LPA questionnaire due date must include a month</a>'
+				},
+				{
+					name: 'missing year',
+					payload: {
+						'lpa-questionnaire-due-date-day': '10',
+						'lpa-questionnaire-due-date-month': '12'
+					},
+					expectedError: 'LPA questionnaire due date must include a year</a>'
+				},
+				{
+					name: 'not a real date',
+					payload: {
+						'lpa-questionnaire-due-date-day': '29',
+						'lpa-questionnaire-due-date-month': '2',
+						'lpa-questionnaire-due-date-year': '3000'
+					},
+					expectedError: 'LPA questionnaire due date must be a real date</a>'
+				},
+				{
+					name: 'must be in the future',
+					payload: {
+						'lpa-questionnaire-due-date-day': '25',
+						'lpa-questionnaire-due-date-month': '2',
+						'lpa-questionnaire-due-date-year': '1950'
+					},
+					expectedError: 'The lpa questionnaire due date must be in the future</a>'
+				}
+			])(
+				'should re-render edit timetable page with $name error based on payload',
+				async ({ payload, expectedError }) => {
+					const response = await request.post(`${baseUrl}/edit`).send(payload);
 
-		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Timetable due dates</h1>');
-		expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-day');
-		expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-month"');
-		expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-year"');
-		expect(element.innerHTML).toContain('name="lpa-statement-due-date-day');
-		expect(element.innerHTML).toContain('name="lpa-statement-due-date-month"');
-		expect(element.innerHTML).toContain('name="lpa-statement-due-date-year"');
-		expect(element.innerHTML).toContain('name="ip-comments-due-date-day');
-		expect(element.innerHTML).toContain('name="ip-comments-due-date-month"');
-		expect(element.innerHTML).toContain('name="ip-comments-due-date-year"');
-		expect(element.innerHTML).toContain('name="final-comments-due-date-day');
-		expect(element.innerHTML).toContain('name="final-comments-due-date-month"');
-		expect(element.innerHTML).toContain('name="final-comments-due-date-year"');
-		expect(element.innerHTML).toContain('Continue</button>');
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).toMatchSnapshot();
+					expect(element.innerHTML).toContain(expectedError);
+					expect(element.innerHTML).toContain(
+						'<h2 class="govuk-error-summary__title"> There is a problem</h2>'
+					);
+					expect(element.innerHTML).toContain('LPA questionnaire due</h1>');
+					expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-day');
+					expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-month"');
+					expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-year"');
+					expect(element.innerHTML).toContain('Continue</button>');
+				}
+			);
+
+			it('should redirect to the timetable CYA page if required due dates are present in the request body and in the correct format', async () => {
+				const response = await request.post(`${baseUrl}/edit`).send({
+					'lpa-questionnaire-due-date-day': '10',
+					'lpa-questionnaire-due-date-month': '10',
+					'lpa-questionnaire-due-date-year': '2050'
+				});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/timetable/edit/check'
+				);
+			});
+		});
+
+		describe('S78', () => {
+			const appealData = {
+				...baseAppealData,
+				appealTimetable: {
+					appealTimetableId: 1
+				},
+				appealType: 'Planning appeal',
+				appealStatus: 'lpa_questionnaire'
+			};
+
+			beforeEach(() => {
+				nock.cleanAll();
+				nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+				nock('http://test/')
+					.post(`/appeals/validate-business-date`)
+					.reply(200, { result: true })
+					.persist();
+			});
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			const timetableTypes = [
+				{
+					id: 'lpa-questionnaire',
+					label: 'LPA questionnaire'
+				},
+				{
+					id: 'lpa-statement',
+					label: 'Statements'
+				},
+				{
+					id: 'ip-comments',
+					label: 'Interested party comments'
+				},
+				{
+					id: 'final-comments',
+					label: 'Final comments'
+				}
+			];
+
+			const testCases = [
+				{
+					name: 'missing day',
+					payload: (/** @type {string} */ id) => ({
+						[`${id}-due-date-month`]: '10',
+						[`${id}-due-date-year`]: '2050'
+					}),
+					expectedError: (/** @type {string} */ label) => `${label} due date must include a day</a>`
+				},
+				{
+					name: 'missing month',
+					payload: (/** @type {string} */ id) => ({
+						[`${id}-due-date-day`]: '10',
+						[`${id}-due-date-year`]: '2050'
+					}),
+					expectedError: (/** @type {string} */ label) =>
+						`${label} due date must include a month</a>`
+				},
+				{
+					name: 'missing year',
+					payload: (/** @type {string} */ id) => ({
+						[`${id}-due-date-day`]: '10',
+						[`${id}-due-date-month`]: '12'
+					}),
+					expectedError: (/** @type {string} */ label) =>
+						`${label} due date must include a year</a>`
+				},
+				{
+					name: 'not a real date',
+					payload: (/** @type {string} */ id) => ({
+						[`${id}-due-date-day`]: '29',
+						[`${id}-due-date-month`]: '2',
+						[`${id}-due-date-year`]: '3000'
+					}),
+					expectedError: (/** @type {string} */ label) =>
+						`${label} due date must be a real date</a>`
+				},
+				{
+					name: 'must be in the future',
+					payload: (/** @type {string} */ id) => ({
+						[`${id}-due-date-day`]: '25',
+						[`${id}-due-date-month`]: '2',
+						[`${id}-due-date-year`]: '1950'
+					}),
+					expectedError: (/** @type {string} */ label) =>
+						`The ${label.toLowerCase()} due date must be in the future</a>`
+				}
+			];
+
+			timetableTypes.forEach(({ id, label }) => {
+				describe(`${label}`, () => {
+					it.each(testCases)(
+						'should re-render edit timetable page with $name error for ' + label,
+						async (testCase) => {
+							const response = await request.post(`${baseUrl}/edit`).send(testCase.payload(id));
+
+							const element = parseHtml(response.text);
+
+							expect(element.innerHTML).toMatchSnapshot();
+							expect(element.innerHTML).toContain(
+								'<h2 class="govuk-error-summary__title"> There is a problem</h2>'
+							);
+							expect(element.innerHTML).toContain(testCase.expectedError(label));
+						}
+					);
+				});
+			});
+
+			it('should redirect to the timetable CYA page if required due dates are present in the request body', async () => {
+				const response = await request.post(`${baseUrl}/edit`).send({
+					'lpa-questionnaire-due-date-day': '10',
+					'lpa-questionnaire-due-date-month': '10',
+					'lpa-questionnaire-due-date-year': '2050',
+					'lpa-statement-due-date-day': '10',
+					'lpa-statement-due-date-month': '10',
+					'lpa-statement-due-date-year': '2050',
+					'ip-comments-due-date-day': '10',
+					'ip-comments-due-date-month': '10',
+					'ip-comments-due-date-year': '2050',
+					'final-comments-due-date-day': '10',
+					'final-comments-due-date-month': '10',
+					'final-comments-due-date-year': '2050'
+				});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/timetable/edit/check'
+				);
+			});
+		});
 	});
 
-	it('should render correct "Timetable due dates" page for S78 appeal type and status lpa_questionnaire and lpaq received', async () => {
+	describe('GET /edit/check', () => {
 		const appealData = {
 			...baseAppealData,
 			appealTimetable: {
 				appealTimetableId: 1
 			}
 		};
-		appealData.appealType = 'Planning appeal';
-		appealData.appealStatus = 'lpa_questionnaire';
-		appealData.documentationSummary = {
-			lpaQuestionnaire: {
-				status: 'received',
-				dueDate: '2024-10-11T10:27:06.626Z',
-				receivedAt: '2024-08-02T10:27:06.626Z',
-				representationStatus: 'awaiting_review'
-			}
-		};
 
-		nock('http://test/').get('/appeals/1').reply(200, appealData);
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/')
+				.post(`/appeals/validate-business-date`)
+				.reply(200, { result: true })
+				.persist();
+		});
+		afterEach(() => {
+			nock.cleanAll();
+		});
 
-		const response = await request.get(`${baseUrl}/edit`);
-		const element = parseHtml(response.text);
+		it('should render "Timetable CYA" page for householder appeal type', async () => {
+			await request.post(`${baseUrl}/edit`).send({
+				'lpa-questionnaire-due-date-day': '13',
+				'lpa-questionnaire-due-date-month': '10',
+				'lpa-questionnaire-due-date-year': '2030'
+			});
 
-		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Timetable due dates</h1>');
-		expect(element.innerHTML).toContain('name="lpa-statement-due-date-day');
-		expect(element.innerHTML).toContain('name="lpa-statement-due-date-month"');
-		expect(element.innerHTML).toContain('name="lpa-statement-due-date-year"');
-		expect(element.innerHTML).toContain('name="ip-comments-due-date-day');
-		expect(element.innerHTML).toContain('name="ip-comments-due-date-month"');
-		expect(element.innerHTML).toContain('name="ip-comments-due-date-year"');
-		expect(element.innerHTML).toContain('name="final-comments-due-date-day');
-		expect(element.innerHTML).toContain('name="final-comments-due-date-month"');
-		expect(element.innerHTML).toContain('name="final-comments-due-date-year"');
-		expect(element.innerHTML).toContain('Continue</button>');
-	});
+			const response = await request.get(`${baseUrl}/edit/check`);
+			const element = parseHtml(response.text);
 
-	it('should render correct "Timetable due dates" page for S78 appeal type and status statements', async () => {
-		const appealData = {
-			...baseAppealData,
-			appealTimetable: {
-				appealTimetableId: 1
-			}
-		};
-		appealData.appealType = 'Planning appeal';
-		appealData.appealStatus = 'statements';
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('LPA questionnaire due</dt>');
+			expect(element.innerHTML).toContain('13 October 2030</dd>');
+			expect(element.innerHTML).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/timetable/edit">Change '
+			);
+			expect(element.innerHTML).toContain(
+				'We’ll send an email to the appellant and LPA to tell them about the new'
+			);
+			expect(element.innerHTML).toContain('Update timetable due dates</button>');
+		});
 
-		nock('http://test/').get('/appeals/1').reply(200, appealData);
+		it('should render correct "Timetable CYA" page for S78 appeal type and status lpa_questionnaire and lpaq NOT received', async () => {
+			const appeal = {
+				...baseAppealData,
+				appealTimetable: {
+					appealTimetableId: 1
+				}
+			};
+			appeal.appealType = 'Planning appeal';
+			appeal.appealStatus = 'lpa_questionnaire';
 
-		const response = await request.get(`${baseUrl}/edit`);
-		const element = parseHtml(response.text);
+			nock.cleanAll();
+			nock('http://test/')
+				.post(`/appeals/validate-business-date`)
+				.reply(200, { result: true })
+				.persist();
+			nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
 
-		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Timetable due dates</h1>');
-		expect(element.innerHTML).toContain('name="lpa-statement-due-date-day');
-		expect(element.innerHTML).toContain('name="lpa-statement-due-date-month"');
-		expect(element.innerHTML).toContain('name="lpa-statement-due-date-year"');
-		expect(element.innerHTML).toContain('name="ip-comments-due-date-day');
-		expect(element.innerHTML).toContain('name="ip-comments-due-date-month"');
-		expect(element.innerHTML).toContain('name="ip-comments-due-date-year"');
-		expect(element.innerHTML).toContain('name="final-comments-due-date-day');
-		expect(element.innerHTML).toContain('name="final-comments-due-date-month"');
-		expect(element.innerHTML).toContain('name="final-comments-due-date-year"');
-		expect(element.innerHTML).toContain('Continue</button>');
-	});
+			await request.post(`${baseUrl}/edit`).send({
+				'lpa-questionnaire-due-date-day': '13',
+				'lpa-questionnaire-due-date-month': '10',
+				'lpa-questionnaire-due-date-year': '2030',
+				'lpa-statement-due-date-day': '14',
+				'lpa-statement-due-date-month': '10',
+				'lpa-statement-due-date-year': '2030',
+				'ip-comments-due-date-day': '15',
+				'ip-comments-due-date-month': '10',
+				'ip-comments-due-date-year': '2030',
+				'final-comments-due-date-day': '16',
+				'final-comments-due-date-month': '10',
+				'final-comments-due-date-year': '2030'
+			});
+			const response = await request.get(`${baseUrl}/edit/check`);
+			const element = parseHtml(response.text);
 
-	it('should render correct "Timetable due dates" page for S78 appeal type and status final_comments', async () => {
-		const appealData = {
-			...baseAppealData,
-			appealTimetable: {
-				appealTimetableId: 1
-			}
-		};
-		appealData.appealType = 'Planning appeal';
-		appealData.appealStatus = 'final_comments';
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('LPA questionnaire due</dt>');
+			expect(element.innerHTML).toContain('13 October 2030</dd>');
+			expect(element.innerHTML).toContain('Statements due</dt>');
+			expect(element.innerHTML).toContain('14 October 2030</dd>');
+			expect(element.innerHTML).toContain('Interested party comments due</dt>');
+			expect(element.innerHTML).toContain('15 October 2030</dd>');
+			expect(element.innerHTML).toContain('Final comments due</dt>');
+			expect(element.innerHTML).toContain('16 October 2030</dd>');
+			expect(element.innerHTML).toContain(
+				'We’ll send an email to the appellant and LPA to tell them about the new'
+			);
+			expect(element.innerHTML).toContain('Update timetable due dates</button>');
+		});
 
-		nock('http://test/').get('/appeals/1').reply(200, appealData);
+		it('should render correct "Timetable CYA" page for S78 appeal type and status lpa_questionnaire and lpaq received', async () => {
+			const appeal = {
+				...baseAppealData,
+				appealTimetable: {
+					appealTimetableId: 1
+				}
+			};
+			appeal.appealType = 'Planning appeal';
+			appeal.appealStatus = 'lpa_questionnaire';
+			appeal.documentationSummary = {
+				lpaQuestionnaire: {
+					status: 'received',
+					dueDate: '2024-10-11T10:27:06.626Z',
+					receivedAt: '2024-08-02T10:27:06.626Z',
+					representationStatus: 'awaiting_review'
+				}
+			};
 
-		const response = await request.get(`${baseUrl}/edit`);
-		const element = parseHtml(response.text);
+			nock.cleanAll();
+			nock('http://test/')
+				.post(`/appeals/validate-business-date`)
+				.reply(200, { result: true })
+				.persist();
+			nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
 
-		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Final comments due</h1>');
-		expect(element.innerHTML).toContain('name="final-comments-due-date-day');
-		expect(element.innerHTML).toContain('name="final-comments-due-date-month"');
-		expect(element.innerHTML).toContain('name="final-comments-due-date-year"');
-		expect(element.innerHTML).toContain('Continue</button>');
+			await request.post(`${baseUrl}/edit`).send({
+				'lpa-statement-due-date-day': '14',
+				'lpa-statement-due-date-month': '10',
+				'lpa-statement-due-date-year': '2030',
+				'ip-comments-due-date-day': '15',
+				'ip-comments-due-date-month': '10',
+				'ip-comments-due-date-year': '2030',
+				'final-comments-due-date-day': '16',
+				'final-comments-due-date-month': '10',
+				'final-comments-due-date-year': '2030'
+			});
+			const response = await request.get(`${baseUrl}/edit/check`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Statements due</dt>');
+			expect(element.innerHTML).toContain('14 October 2030</dd>');
+			expect(element.innerHTML).toContain('Interested party comments due</dt>');
+			expect(element.innerHTML).toContain('15 October 2030</dd>');
+			expect(element.innerHTML).toContain('Final comments due</dt>');
+			expect(element.innerHTML).toContain('16 October 2030</dd>');
+			expect(element.innerHTML).toContain(
+				'We’ll send an email to the appellant and LPA to tell them about the new'
+			);
+			expect(element.innerHTML).toContain('Update timetable due dates</button>');
+		});
+
+		it('should render correct "Timetable CYA" page for S78 appeal type and status statements', async () => {
+			const appeal = {
+				...baseAppealData,
+				appealTimetable: {
+					appealTimetableId: 1
+				}
+			};
+			appeal.appealType = 'Planning appeal';
+			appeal.appealStatus = 'statements';
+			appeal.documentationSummary = {
+				lpaQuestionnaire: {
+					status: 'received',
+					dueDate: '2024-10-11T10:27:06.626Z',
+					receivedAt: '2024-08-02T10:27:06.626Z',
+					representationStatus: 'awaiting_review'
+				}
+			};
+
+			nock.cleanAll();
+			nock('http://test/')
+				.post(`/appeals/validate-business-date`)
+				.reply(200, { result: true })
+				.persist();
+			nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+
+			await request.post(`${baseUrl}/edit`).send({
+				'lpa-statement-due-date-day': '14',
+				'lpa-statement-due-date-month': '10',
+				'lpa-statement-due-date-year': '2030',
+				'ip-comments-due-date-day': '15',
+				'ip-comments-due-date-month': '10',
+				'ip-comments-due-date-year': '2030',
+				'final-comments-due-date-day': '16',
+				'final-comments-due-date-month': '10',
+				'final-comments-due-date-year': '2030'
+			});
+			const response = await request.get(`${baseUrl}/edit/check`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Statements due</dt>');
+			expect(element.innerHTML).toContain('14 October 2030</dd>');
+			expect(element.innerHTML).toContain('Interested party comments due</dt>');
+			expect(element.innerHTML).toContain('15 October 2030</dd>');
+			expect(element.innerHTML).toContain('Final comments due</dt>');
+			expect(element.innerHTML).toContain('16 October 2030</dd>');
+			expect(element.innerHTML).toContain(
+				'We’ll send an email to the appellant and LPA to tell them about the new'
+			);
+			expect(element.innerHTML).toContain('Update timetable due dates</button>');
+		});
+
+		it('should render correct "Timetable CYA" page for S78 appeal type and status final_comments', async () => {
+			const appeal = {
+				...baseAppealData,
+				appealTimetable: {
+					appealTimetableId: 1
+				}
+			};
+			appeal.appealType = 'Planning appeal';
+			appeal.appealStatus = 'final_comments';
+			appeal.documentationSummary = {
+				lpaQuestionnaire: {
+					status: 'received',
+					dueDate: '2024-10-11T10:27:06.626Z',
+					receivedAt: '2024-08-02T10:27:06.626Z',
+					representationStatus: 'awaiting_review'
+				}
+			};
+
+			nock.cleanAll();
+			nock('http://test/')
+				.post(`/appeals/validate-business-date`)
+				.reply(200, { result: true })
+				.persist();
+			nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+
+			await request.post(`${baseUrl}/edit`).send({
+				'final-comments-due-date-day': '16',
+				'final-comments-due-date-month': '10',
+				'final-comments-due-date-year': '2030'
+			});
+			const response = await request.get(`${baseUrl}/edit/check`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Final comments due</dt>');
+			expect(element.innerHTML).toContain('16 October 2030</dd>');
+			expect(element.innerHTML).toContain(
+				'We’ll send an email to the appellant and LPA to tell them about the new'
+			);
+			expect(element.innerHTML).toContain('Update timetable due dates</button>');
+		});
 	});
 });
