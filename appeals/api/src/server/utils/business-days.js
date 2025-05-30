@@ -19,6 +19,10 @@ import {
 	APPEAL_TYPE_SHORTHAND_FPA
 } from '@pins/appeals/constants/support.js';
 import isFPA from './is-fpa.js';
+import {
+	APPEAL_TYPE_SHORTHAND_HEARING,
+	APPEAL_TYPE_SHORTHAND_INQUIRY
+} from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedEvents} BankHolidayFeedEvents */
 /** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedDivisions} BankHolidayFeedDivisions */
@@ -188,12 +192,22 @@ const setTimeInTimeZone = (date, hours, minutes) => {
  *
  * @param {string} appealType
  * @param {Date|null} startedAt
+ * @param {string} procedureType
  * @returns {Promise<TimetableDeadlineDate | undefined>}
  */
-const calculateTimetable = async (appealType, startedAt) => {
+const calculateTimetable = async (appealType, startedAt, procedureType = 'written') => {
 	if (startedAt) {
 		const startDate = setTimeInTimeZone(startedAt, DAYTIME_HOUR, DAYTIME_MINUTE);
-		const appealTypeKey = isFPA(appealType) ? APPEAL_TYPE_SHORTHAND_FPA : APPEAL_TYPE_SHORTHAND_HAS;
+
+		/** @type {Record<string, string>} */
+		const procedureTypeMap = {
+			hearing: APPEAL_TYPE_SHORTHAND_HEARING,
+			inquiry: APPEAL_TYPE_SHORTHAND_INQUIRY
+		};
+
+		const appealTypeKey = isFPA(appealType)
+			? procedureTypeMap[procedureType] ?? APPEAL_TYPE_SHORTHAND_FPA
+			: APPEAL_TYPE_SHORTHAND_HAS;
 
 		// @ts-ignore
 		const appealTimetableConfig = CONFIG_APPEAL_TIMETABLE[appealTypeKey];

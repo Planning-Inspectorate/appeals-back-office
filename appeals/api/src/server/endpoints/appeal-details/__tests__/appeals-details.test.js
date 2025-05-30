@@ -141,7 +141,9 @@ const s78AppealDto = {
 			fullPlanningAppeal.appealTimetable.appellantStatementDueDate.toISOString(),
 		lpaStatementDueDate: fullPlanningAppeal.appealTimetable.lpaStatementDueDate.toISOString(),
 		finalCommentsDueDate: fullPlanningAppeal.appealTimetable.finalCommentsDueDate.toISOString(),
-		s106ObligationDueDate: fullPlanningAppeal.appealTimetable.s106ObligationDueDate.toISOString()
+		s106ObligationDueDate: fullPlanningAppeal.appealTimetable.s106ObligationDueDate.toISOString(),
+		statementOfCommonGroundDueDate:
+			fullPlanningAppeal.appealTimetable.statementOfCommonGroundDueDate.toISOString()
 	},
 	appealType: fullPlanningAppeal.appealType.type,
 	appellantCaseId: fullPlanningAppeal.appellantCase.id,

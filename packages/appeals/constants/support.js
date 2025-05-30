@@ -326,25 +326,41 @@ export const CASE_RELATIONSHIP_RELATED = 'related';
 // Static config
 export const CONFIG_BANKHOLIDAYS_FEED_URL = 'https://www.gov.uk/bank-holidays.json';
 
+const s78timetable = {
+	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 5
+	},
+	ipCommentsDueDate: {
+		daysFromStartDate: 25
+	},
+	appellantStatementDueDate: {
+		daysFromStartDate: 25
+	},
+	lpaStatementDueDate: {
+		daysFromStartDate: 25
+	},
+	finalCommentsDueDate: {
+		daysFromStartDate: 35
+	},
+	s106ObligationDueDate: {
+		daysFromStartDate: 35
+	}
+};
+
 export const CONFIG_APPEAL_TIMETABLE = {
 	W: {
-		lpaQuestionnaireDueDate: {
-			daysFromStartDate: 5
-		},
-		ipCommentsDueDate: {
+		...s78timetable
+	},
+	H: {
+		...s78timetable,
+		statementOfCommonGroundDueDate: {
 			daysFromStartDate: 25
-		},
-		appellantStatementDueDate: {
+		}
+	},
+	I: {
+		...s78timetable,
+		statementOfCommonGroundDueDate: {
 			daysFromStartDate: 25
-		},
-		lpaStatementDueDate: {
-			daysFromStartDate: 25
-		},
-		finalCommentsDueDate: {
-			daysFromStartDate: 35
-		},
-		s106ObligationDueDate: {
-			daysFromStartDate: 35
 		}
 	},
 	D: {
