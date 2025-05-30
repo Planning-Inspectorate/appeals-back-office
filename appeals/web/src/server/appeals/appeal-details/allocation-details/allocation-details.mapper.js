@@ -44,11 +44,7 @@ export function allocationDetailsLevelPage(
 						value: item.level,
 						text: item.level
 					})),
-					errorMessage: errorMessage
-						? {
-								text: errorMessage
-						  }
-						: undefined
+					errorMessage: errorMessage && { text: errorMessage }
 				}
 			}
 		]
@@ -100,11 +96,7 @@ export function allocationDetailsSpecialismPage(
 						checked:
 							selectedAllocationSpecialisms && selectedAllocationSpecialisms.includes(item.id)
 					})),
-					errorMessage: errorMessage
-						? {
-								text: errorMessage
-						  }
-						: undefined
+					errorMessage: errorMessage && { text: errorMessage }
 				}
 			}
 		]

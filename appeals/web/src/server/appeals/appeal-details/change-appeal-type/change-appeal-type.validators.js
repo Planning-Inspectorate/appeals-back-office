@@ -4,9 +4,7 @@ import {
 	createDateInputFieldsValidator,
 	createDateInputDateValidityValidator,
 	createDateInputDateInFutureValidator,
-	createDateInputDateBusinessDayValidator,
-	createDateInputEmptyFieldsValidator,
-	createDateInputNoEmptyFieldsValidator
+	createDateInputDateBusinessDayValidator
 } from '#lib/validators/date-input.validator.js';
 import { checkAppealReferenceExistsInHorizon } from './change-appeal-type.service.js';
 
@@ -25,10 +23,6 @@ export const validateChangeAppealFinalDate = createValidator(
 	body('appealType').trim().notEmpty().withMessage('Select the appeal type')
 );
 
-export const validateChangeAppealNoFieldsEmpty = createDateInputNoEmptyFieldsValidator(
-	'change-appeal-final-date',
-	'deadline to resubmit the appeal'
-);
 export const validateChangeAppealFinalDateFields = createDateInputFieldsValidator(
 	'change-appeal-final-date',
 	'Deadline to resubmit the appeal'
@@ -38,10 +32,6 @@ export const validateChangeAppealFinalDateValid = createDateInputDateValidityVal
 	'Deadline to resubmit the appeal'
 );
 export const validateChangeAppealFinalDateInFuture = createDateInputDateInFutureValidator(
-	'change-appeal-final-date',
-	'Deadline to resubmit the appeal'
-);
-export const validateChangeAppealFinalDateEmptyFields = createDateInputEmptyFieldsValidator(
 	'change-appeal-final-date',
 	'Deadline to resubmit the appeal'
 );
