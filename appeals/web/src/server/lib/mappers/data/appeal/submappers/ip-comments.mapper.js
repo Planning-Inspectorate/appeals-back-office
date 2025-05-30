@@ -90,7 +90,9 @@ export const mapIpComments = ({ appealDetails, currentRoute, request }) => {
 		receivedText,
 		actionHtml: `<a href="${addBackLinkQueryToUrl(
 			request,
-			`${currentRoute}/interested-party-comments`
+			`${currentRoute}/interested-party-comments${
+				status === 'not_received' ? '/add/ip-details' : ''
+			}`
 		)}" data-cy="review-ip-comments" class="govuk-link">${actionText}<span class="govuk-visually-hidden"> interested party comments</span></a>`
 	});
 };
