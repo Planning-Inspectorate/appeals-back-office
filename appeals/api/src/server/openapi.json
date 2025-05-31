@@ -10315,6 +10315,10 @@
 						"type": "string",
 						"example": "2024-08-11"
 					},
+					"statementOfCommonGroundDueDate": {
+						"type": "string",
+						"example": "2024-08-12"
+					},
 					"statementReviewDate": {
 						"type": "string",
 						"example": "2024-08-12"
@@ -10338,6 +10342,10 @@
 					"lpaQuestionnaireDueDate": {
 						"type": "string",
 						"example": "2024-08-11T01:00:00.000Z"
+					},
+					"statementOfCommonGroundDueDate": {
+						"type": "string",
+						"example": "2024-08-12"
 					},
 					"statementReviewDate": {
 						"type": "string",
@@ -11211,6 +11219,11 @@
 						"nullable": true
 					},
 					"s106ObligationDueDate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"statementOfCommonGroundDueDate": {
 						"type": "string",
 						"format": "date-time",
 						"nullable": true
@@ -25953,6 +25966,11 @@
 								"nullable": true
 							},
 							"s106ObligationDueDate": {
+								"type": "string",
+								"format": "date-time",
+								"nullable": true
+							},
+							"statementOfCommonGroundDueDate": {
 								"type": "string",
 								"format": "date-time",
 								"nullable": true

@@ -40,6 +40,11 @@ const timetable = {
 			type: 'string',
 			format: 'date-time',
 			nullable: true
+		},
+		statementOfCommonGroundDueDate: {
+			type: 'string',
+			format: 'date-time',
+			nullable: true
 		}
 	}
 };
