@@ -18,7 +18,7 @@ describe('Start case', () => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
-			cy.getAppealDetails(caseRef).then((appealDetails) => {
+			cy.loadAppealDetails(caseRef).then((appealDetails) => {
 				const startedAt = appealDetails?.startedAt;
 				expect(startedAt).to.not.be.null;
 			});
@@ -33,7 +33,7 @@ describe('Start case', () => {
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startS78Case(caseRef, 'written');
 			caseDetailsPage.validateBannerMessage('Success', 'Case started');
-			cy.getAppealDetails(caseRef).then((appealDetails) => {
+			cy.loadAppealDetails(caseRef).then((appealDetails) => {
 				const startedAt = appealDetails?.startedAt;
 				expect(startedAt).to.not.be.null;
 			});

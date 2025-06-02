@@ -44,7 +44,7 @@ describe('Managing Appellant Case Details', () => {
 				caseDetailsPage.updatePlanningApplicationReference(maxLengthReference);
 
 				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal updated');
-				cy.getAppealDetails(caseRef)
+				cy.loadAppealDetails(caseRef)
 					.its('planningApplicationReference')
 					.should('eq', maxLengthReference);
 			});

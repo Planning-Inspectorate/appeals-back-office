@@ -167,6 +167,19 @@ const appealsApiRequests = {
 		representationType: 'final_comment',
 		representationSubmittedDate: '2025-01-22T13:48:35.847Z',
 		lpaCode: 'Q9999'
+	},
+	hearingDetails: {
+		hearingStartTime: '2026-11-10T00:00:00.000Z',
+		hearingEndTime: '2026-11-10T00:00:00.000Z',
+		addressId: 1,
+		address: {
+			addressLine1: '1 Grove Cottage',
+			addressLine2: 'Shotesham Road',
+			country: 'United Kingdom',
+			county: 'Devon',
+			postcode: 'NR35 2ND',
+			town: 'Woodton'
+		}
 	}
 };
 
