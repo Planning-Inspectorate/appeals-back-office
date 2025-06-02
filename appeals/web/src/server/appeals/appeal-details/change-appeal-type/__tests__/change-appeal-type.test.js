@@ -246,10 +246,7 @@ describe('change-appeal-type', () => {
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
 		expect(unprettifiedErrorSummaryHTML).toContain(
-			'Deadline to resubmit the appeal must be a real date</a>'
-		);
-		expect(unprettifiedErrorSummaryHTML).toContain(
-			'Deadline to resubmit the appeal must be a real date</a>'
+			'Deadline to resubmit the appeal day must be between 1 and 31</a>'
 		);
 	});
 
@@ -277,10 +274,7 @@ describe('change-appeal-type', () => {
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
 		expect(unprettifiedErrorSummaryHTML).toContain(
-			'Deadline to resubmit the appeal must be a real date</a>'
-		);
-		expect(unprettifiedErrorSummaryHTML).toContain(
-			'Deadline to resubmit the appeal must be a real date</a>'
+			'Deadline to resubmit the appeal month must be between 1 and 12</a>'
 		);
 	});
 
@@ -308,10 +302,7 @@ describe('change-appeal-type', () => {
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
 		expect(unprettifiedErrorSummaryHTML).toContain(
-			'Deadline to resubmit the appeal must be a real date</a>'
-		);
-		expect(unprettifiedErrorSummaryHTML).toContain(
-			'Deadline to resubmit the appeal must be a real date</a>'
+			'Deadline to resubmit the appeal year must be a number</a>'
 		);
 	});
 
