@@ -66,7 +66,8 @@ export const mapEditTimetablePage = (appealTimetable, appealDetails, errors = un
 					legend: {
 						text: `${timetableTypeText} due`,
 						isPageHeading: timeTableTypes.length < 2,
-						classes: 'govuk-fieldset__legend--m'
+						classes:
+							timeTableTypes.length > 1 ? 'govuk-fieldset__legend--m' : 'govuk-fieldset__legend--l'
 					}
 				},
 				errorMessage: errorMessages.length
