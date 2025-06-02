@@ -53,7 +53,6 @@ export const createDateInputFieldsValidator = (
 			throw new Error(`${capitalize(messageFieldNamePrefix)} must include ${messageSuffix}`);
 		}),
 		body(`${bodyScope}${fieldNamePrefix}${_day}`)
-			.bail()
 			.if(Boolean)
 			.isInt()
 			.withMessage(`${messageFieldNamePrefix} day must be a number`)
@@ -64,7 +63,6 @@ export const createDateInputFieldsValidator = (
 			.matches(/^0?[1-9]$|^1\d$|^2\d$|^3[01]$/)
 			.withMessage(`${messageFieldNamePrefix} day must be between 1 and 31`),
 		body(`${bodyScope}${fieldNamePrefix}${_month}`)
-			.bail()
 			.if(Boolean)
 			.isInt()
 			.withMessage(`${messageFieldNamePrefix} month must be a number`)
@@ -75,7 +73,6 @@ export const createDateInputFieldsValidator = (
 			.matches(/^0?[1-9]$|^1[0-2]$/)
 			.withMessage(`${messageFieldNamePrefix} month must be between 1 and 12`),
 		body(`${bodyScope}${fieldNamePrefix}${_year}`)
-			.bail()
 			.if(Boolean)
 			.isInt()
 			.withMessage(`${messageFieldNamePrefix} year must be a number`)
