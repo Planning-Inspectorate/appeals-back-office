@@ -9,6 +9,7 @@ import {
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
+import { VALIDATION_OUTCOME_CANCEL } from '@pins/appeals/constants/support.js';
 
 /**
  * @typedef {import('pins-data-model').APPEAL_CASE_TYPE} AppealType
@@ -196,6 +197,7 @@ const createStateMachine = (appealType, procedureType, currentState) =>
 				on: {
 					[VALIDATION_OUTCOME_COMPLETE]: { target: APPEAL_CASE_STATUS.ISSUE_DETERMINATION },
 					[VALIDATION_OUTCOME_INCOMPLETE]: { target: undefined },
+					[VALIDATION_OUTCOME_CANCEL]: { target: APPEAL_CASE_STATUS.EVENT },
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
 						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
