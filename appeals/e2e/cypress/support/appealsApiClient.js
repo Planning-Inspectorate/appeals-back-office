@@ -248,11 +248,34 @@ export const appealsApiClient = {
 			return false;
 		}
 	},
-	async getAppealDetails(appealId) {
+
+	async addHearing(appealId, date) {
 		try {
-			const url = `${baseUrl}appeals/${appealId}`;
+			const requestBody = createApiSubmission(appealsApiRequests.hearingDetails);
+			requestBody.hearingStartTime = date.toISOString();
+			requestBody.hearingEndTime = date.toISOString();
+			const url = `${baseUrl}appeals/${appealId}/hearing`;
 			const response = await fetch(url, {
-				method: 'GET',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify(requestBody)
+			});
+
+			expect(response.status).eq(201);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+
+	async deleteHearing(appealId, hearingId) {
+		try {
+			const url = `${baseUrl}appeals/${appealId}/hearting/${hearingId}`;
+			const response = await fetch(url, {
+				method: 'DELETE',
 				headers: {
 					'Content-Type': 'application/json',
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'

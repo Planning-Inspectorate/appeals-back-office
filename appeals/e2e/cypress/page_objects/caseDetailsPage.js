@@ -158,7 +158,8 @@ export class CaseDetailsPage extends Page {
 		changeApplicationReferenceLink: () =>
 			cy.getByData(this._cyDataSelectors.changeApplicationReference),
 		planningApplicationReferenceField: () => cy.get('#planning-application-reference'),
-		viewCaseHistory: () => cy.getByData(this._cyDataSelectors.viewCaseHistory)
+		viewCaseHistory: () => cy.getByData(this._cyDataSelectors.viewCaseHistory),
+		cancelHearing: () => cy.get('#cancelHearing')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -436,6 +437,11 @@ export class CaseDetailsPage extends Page {
 	clickViewCaseHistory() {
 		this.elements.viewCaseHistory().click();
 	}
+
+	clickCancelHearing() {
+		this.elements.cancelHearing().click();
+	}
+
 	/***************************************************************
 	 ************************ Verification ************************
 	 ****************************************************************/
@@ -637,9 +643,12 @@ export class CaseDetailsPage extends Page {
 		this.elements.showMoreContent().should('contain.text', statement);
 	}
 
+	verifyHearingEstimateSectionIsDisplayed() {
+		this.elements.caseDetailsHearingEstimateLink().should('contain.text', 'Add hearing estimates');
+	}
+
 	verifyHearingSectionIsDisplayed() {
 		this.elements.caseDetailsHearingSectionButton().should('be.visible');
-		this.elements.caseDetailsHearingEstimateLink().should('contain.text', 'Add hearing estimates');
 	}
 
 	clickChangeApplicationReferenceLink() {
