@@ -12,7 +12,7 @@ exports[`Timetable GET /edit should render "Timetable due dates" page for househ
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                     <h1 class="govuk-fieldset__heading"> LPA questionnaire due</h1>
                 </legend>
                 <div id="lpa-questionnaire-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
@@ -63,7 +63,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                     <h1 class="govuk-fieldset__heading"> Final comments due</h1>
                 </legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
@@ -692,7 +692,7 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                     <h1 class="govuk-fieldset__heading"> LPA questionnaire due</h1>
                 </legend>
                 <div id="lpa-questionnaire-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
@@ -760,7 +760,7 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                     <h1 class="govuk-fieldset__heading"> LPA questionnaire due</h1>
                 </legend>
                 <div id="lpa-questionnaire-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
@@ -828,7 +828,7 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                     <h1 class="govuk-fieldset__heading"> LPA questionnaire due</h1>
                 </legend>
                 <div id="lpa-questionnaire-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
@@ -896,7 +896,7 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                     <h1 class="govuk-fieldset__heading"> LPA questionnaire due</h1>
                 </legend>
                 <div id="lpa-questionnaire-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
@@ -962,7 +962,7 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                     <h1 class="govuk-fieldset__heading"> LPA questionnaire due</h1>
                 </legend>
                 <div id="lpa-questionnaire-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
