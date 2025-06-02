@@ -79,7 +79,10 @@ describe('issue-decision', () => {
 				'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="Split">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="Invalid">'
+				'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="Invalid" data-aria-controls="conditional-decision-4">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<textarea class="govuk-textarea" id="invalid-reason" name="invalidReason" rows="5" aria-describedby="invalid-reason-hint"></textarea>'
 			);
 		});
 	});
@@ -138,11 +141,11 @@ describe('issue-decision', () => {
 		it(`should send the decision details for invalid, and redirect to the invalid reason page, if the decision is 'Invalid'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: 'Invalid' })
+				.send({ decision: 'Invalid', invalidReason: 'my invalid reason' })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
-				'/appeals-service/appeal-details/1/issue-decision/decision-letter-upload'
+				'/appeals-service/appeal-details/1/issue-decision/check-your-decision'
 			);
 		});
 	});

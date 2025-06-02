@@ -25,6 +25,7 @@ router
 	)
 	.post(
 		validators.validateDecision,
+		validators.validateInvalidReason,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postIssueDecision)
 	);

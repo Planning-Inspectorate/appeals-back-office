@@ -66,6 +66,7 @@ interface SingleAppealDetailsResponse {
 	decision: {
 		folderId: number;
 		outcome?: string | null;
+		invalidReason?: string | null;
 		documentId?: string | null;
 		documentName?: string | null;
 		letterDate?: string | null;
