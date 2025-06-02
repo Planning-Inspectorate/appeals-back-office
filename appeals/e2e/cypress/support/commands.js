@@ -195,10 +195,19 @@ Cypress.Commands.add('addAllocationLevelAndSpecialisms', (reference) => {
 	});
 });
 
-Cypress.Commands.add('getAppealDetails', (reference) => {
+Cypress.Commands.add('addHearingDetails', (reference, date) => {
 	return cy.wrap(null).then(async () => {
 		const details = await appealsApiClient.loadCaseDetails(reference);
 		const appealId = await details.appealId;
-		return await appealsApiClient.getAppealDetails(appealId);
+		return await appealsApiClient.addHearing(appealId, date);
+	});
+});
+
+Cypress.Commands.add('deleteHearing', (reference) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		const hearingId = await details.hearing.hearingId;
+		return await appealsApiClient.deleteHearing(appealId, hearingId);
 	});
 });

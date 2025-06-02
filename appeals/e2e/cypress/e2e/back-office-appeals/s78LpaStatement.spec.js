@@ -77,7 +77,7 @@ describe('S78 - LPA Statement', () => {
 			caseDetailsPage.verifyStatementIsDisplayed(representation, isToggleDisplayed);
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'LPA statement accepted');
-			cy.getAppealDetails(caseRef).then((appealDetails) => {
+			cy.loadAppealDetails(caseRef).then((appealDetails) => {
 				const lpaStatement = appealDetails?.documentationSummary?.lpaStatement;
 				expect(lpaStatement.status).to.eq('received');
 				expect(lpaStatement.representationStatus).to.eq('valid');

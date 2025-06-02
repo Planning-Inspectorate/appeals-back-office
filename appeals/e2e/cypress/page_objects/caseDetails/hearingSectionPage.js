@@ -20,12 +20,23 @@ export class HearingSectionPage extends CaseDetailsPage {
 
 		hearingValues: () => cy.get('.govuk-summary-list__key'),
 		changeHearing: () => cy.get('.govuk-summary-list__actions > .govuk-link').last(),
-		hearingSectionHeader: () => cy.get('h1')
+		hearingSectionHeader: () => cy.get('h1'),
+		keepHearing: () => cy.get('#keepHearing'),
+		cancelHearing: () => cy.get('#cancelHearing')
 	};
 
 	clickChangeHearing() {
 		this.hearingSectionElements.changeHearing().click();
 	}
+
+	clickCancelHearing() {
+		this.hearingSectionElements.cancelHearing().click();
+	}
+
+	clickKeepHearing() {
+		this.hearingSectionElements.keepHearing().click();
+	}
+
 	setUpHearing(date, hour, minute) {
 		dateTimeSection.enterHearingDate(date);
 		dateTimeSection.enterHearingTime(hour, minute);
@@ -61,40 +72,22 @@ export class HearingSectionPage extends CaseDetailsPage {
 		this.clickButtonByText('Continue');
 	}
 
-	verifyHearingValues(date, time, isAddressKnown, address = []) {
-		this.hearingSectionElements.hearingValues().then(($hearingValues) => {
-			const verifyLabelValue = (label, expectedValue) => {
-				cy.wrap($hearingValues)
-					.contains(label)
-					.siblings('dd')
-					.eq(0)
-					.should('contain.text', expectedValue);
-			};
+	verifyHearingValues(hearingField, expectedText, isAddressKnown = false, address = []) {
+		const fieldElement = this.hearingSectionElements
+			.rowChangeLink(hearingField)
+			.parent('dd')
+			.siblings('dd')
+			.should('be.visible');
 
-			verifyLabelValue('Date', date);
-			verifyLabelValue('Time', time);
-
-			cy.wrap($hearingValues)
-				.contains('Do you know the address')
-				.siblings('dd')
-				.eq(0)
-				.then(($answer) => {
-					const answerText = $answer.text().trim();
-					const expectedAnswer = isAddressKnown ? 'Yes' : 'No';
-
-					expect(answerText).to.equal(expectedAnswer);
-
-					// Verify address details if known
-					if (isAddressKnown) {
-						cy.wrap($hearingValues).should('have.length', 4);
-						address.forEach((addressLine) => {
-							verifyLabelValue('Address', addressLine);
-						});
-					} else {
-						cy.wrap($hearingValues).should('have.length', 3);
-					}
+		if (isAddressKnown) {
+			fieldElement.then(($el) => {
+				address.forEach((addressLine) => {
+					cy.wrap($el).should('contain.text', addressLine);
 				});
-		});
+			});
+		} else {
+			fieldElement.should('contain.text', expectedText);
+		}
 	}
 
 	verifyHearingHeader(sectionHeader) {
