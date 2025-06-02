@@ -11,9 +11,10 @@ export const clearIssueDecisionCache = async (request, response, next) => {
 	const { inspectorDecision, appellantCostsDecision, lpaCostsDecision } = request.session;
 
 	// If the appealId in the session doesn't match the appealId in the request, clear the session data.
-	if (inspectorDecision?.appealId !== appealId) request.session.inspectorDecision = {};
-	if (appellantCostsDecision?.appealId !== appealId) request.session.appellantCostsDecision = {};
-	if (lpaCostsDecision?.appealId !== appealId) request.session.lpaCostsDecision = {};
+	if (inspectorDecision?.appealId?.toString() !== appealId) request.session.inspectorDecision = {};
+	if (appellantCostsDecision?.appealId?.toString() !== appealId)
+		request.session.appellantCostsDecision = {};
+	if (lpaCostsDecision?.appealId?.toString() !== appealId) request.session.lpaCostsDecision = {};
 
 	next();
 };

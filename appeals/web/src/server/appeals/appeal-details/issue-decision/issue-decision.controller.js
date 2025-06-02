@@ -1,4 +1,4 @@
-import { postInspectorDecision } from './issue-decision.service.js';
+import { postInspectorDecision, postInspectorInvalidReason } from './issue-decision.service.js';
 import {
 	appellantCostsDecisionPage,
 	checkAndConfirmPage,
@@ -40,22 +40,46 @@ import {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postIssueDecision = async (request, response) => {
-	const { params, body, session, errors } = request;
+	const { currentAppeal, body, session, errors } = request;
+	const { appealId } = currentAppeal;
 
 	if (errors) {
 		return renderIssueDecision(request, response);
 	}
 
+	if (session.inspectorDecision.outcome !== body.decision) {
+		session.inspectorDecision = { appealId };
+		session.appellantCostsDecision = { appealId };
+		session.lpaCostsDecision = { appealId };
+	}
+
 	/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
 	session.inspectorDecision = {
-		appealId: params.appealId,
 		...request.session.inspectorDecision,
-		outcome: body.decision
+		outcome: body.decision,
+		invalidReason: body.invalidReason
 	};
 
-	return response.redirect(
-		`/appeals-service/appeal-details/${params.appealId}/issue-decision/decision-letter-upload`
-	);
+	let nextPageUrl = `${baseUrl({ appealId })}/decision-letter-upload`;
+
+	if (session.inspectorDecision.outcome === 'Invalid') {
+		const {
+			appellantHasAppliedForCosts,
+			lpaHasAppliedForCosts,
+			appellantDecisionHasAlreadyBeenIssued,
+			lpaDecisionHasAlreadyBeenIssued
+		} = buildLogicData(currentAppeal);
+
+		if (appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued) {
+			nextPageUrl = `${baseUrl(currentAppeal)}/appellant-costs-decision`;
+		} else if (lpaHasAppliedForCosts && !lpaDecisionHasAlreadyBeenIssued) {
+			nextPageUrl = `${baseUrl(currentAppeal)}/lpa-costs-decision`;
+		} else {
+			nextPageUrl = checkDecisionUrl(request);
+		}
+	}
+
+	return response.redirect(nextPageUrl);
 };
 
 /**
@@ -68,7 +92,9 @@ export const renderIssueDecision = async (request, response) => {
 
 	const mappedPageContent = issueDecisionPage(
 		currentAppeal,
-		request.session.inspectorDecision,
+		errors
+			? { outcome: request.body.decision, invalidReason: request.body.invalidReason }
+			: request.session.inspectorDecision,
 		getBackLinkUrlFromQuery(request),
 		errors
 	);
@@ -214,12 +240,16 @@ export const postAppellantCostsDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderAppellantCostsDecision = async (request, response) => {
-	const { errors, currentAppeal } = request;
+	const { errors, currentAppeal, session } = request;
+
+	const backUrl = session.inspectorDecision?.files?.length
+		? `${baseUrl(currentAppeal)}/decision-letter-upload`
+		: `${baseUrl(currentAppeal)}/decision`;
 
 	const mappedPageContent = appellantCostsDecisionPage(
 		currentAppeal,
 		request.session.appellantCostsDecision,
-		getBackLinkUrlFromQuery(request) || `${baseUrl(currentAppeal)}/decision-letter-upload`,
+		getBackLinkUrlFromQuery(request) || backUrl,
 		errors
 	);
 
@@ -322,7 +352,7 @@ export const postLpaCostsDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderLpaCostsDecision = async (request, response) => {
-	const { errors, currentAppeal } = request;
+	const { errors, currentAppeal, session } = request;
 
 	const { appellantHasAppliedForCosts, appellantDecisionHasAlreadyBeenIssued } =
 		buildLogicData(currentAppeal);
@@ -330,7 +360,9 @@ export const renderLpaCostsDecision = async (request, response) => {
 	const backUrl =
 		appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued
 			? `${baseUrl(currentAppeal)}/appellant-costs-decision-letter-upload`
-			: `${baseUrl(currentAppeal)}/decision-letter-upload`;
+			: session.inspectorDecision?.files?.length
+			? `${baseUrl(currentAppeal)}/decision-letter-upload`
+			: `${baseUrl(currentAppeal)}/decision`;
 
 	const mappedPageContent = lpaCostsDecisionPage(
 		currentAppeal,
@@ -418,40 +450,48 @@ const postDecisionDocument = async ({ apiClient, decision }) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postCheckDecision = async (request, response) => {
-	const { errors, currentAppeal, session, params, apiClient } = request;
-	const { appealId } = params;
+	const { currentAppeal, session, params, apiClient } = request;
 
 	if (!currentAppeal) {
 		return response.status(500).render('app/500.njk');
 	}
 
+	const { invalidReason } = session.inspectorDecision || {};
+	const { appealId } = params;
+
 	const decisions = getDecisions(session);
 
-	if (!decisions.length) {
+	if (!decisions.length && !invalidReason) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	if (errors) {
-		return renderCheckDecision(request, response);
+	if (decisions.length) {
+		await Promise.all(decisions.map((decision) => postDecisionDocument({ apiClient, decision })));
+		const decisionsToPost = decisions.map((decision) => {
+			const { decisionType, outcome, files } = decision;
+			return {
+				decisionType,
+				documentGuid: files[0].GUID,
+				documentDate: getTodaysISOString(),
+				outcome:
+					decisionType === DECISION_TYPE_INSPECTOR
+						? mapDecisionOutcome(outcome).toLowerCase()
+						: null
+			};
+		});
+
+		if (decisionsToPost.length) {
+			await postInspectorDecision(apiClient, appealId, decisionsToPost);
+		}
 	}
 
-	await Promise.all(decisions.map((decision) => postDecisionDocument({ apiClient, decision })));
-	const decisionsToPost = decisions.map((decision) => {
-		const { decisionType, outcome, files } = decision;
-		return {
-			decisionType,
-			documentGuid: files[0].GUID,
-			documentDate: getTodaysISOString(),
-			outcome:
-				decisionType === DECISION_TYPE_INSPECTOR ? mapDecisionOutcome(outcome).toLowerCase() : null
-		};
-	});
-
-	await postInspectorDecision(apiClient, appealId, decisionsToPost);
+	if (invalidReason) {
+		await postInspectorInvalidReason(request.apiClient, appealId, invalidReason);
+	}
 
 	addNotificationBannerToSession({
 		session: request.session,
-		bannerDefinitionKey: 'issuedDecisionValid',
+		bannerDefinitionKey: invalidReason ? 'issuedDecisionInvalid' : 'issuedDecisionValid',
 		appealId
 	});
 

@@ -140,8 +140,17 @@ exports[`issue-decision GET /decision should render the 'what is the decision' p
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="decision-4" name="decision" type="radio"
-                                        value="Invalid">
+                                        value="Invalid" data-aria-controls="conditional-decision-4">
                                         <label class="govuk-label govuk-radios__label" for="decision-4">Invalid</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-decision-4">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-label--s" for="invalid-reason">Reason</label>
+                                            <div id="invalid-reason-hint" class="govuk-hint">We will share the reason with the relevant parties</div>
+                                            <textarea class="govuk-textarea"
+                                            id="invalid-reason" name="invalidReason" rows="5" aria-describedby="invalid-reason-hint"></textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </fieldset>

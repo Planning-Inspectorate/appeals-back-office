@@ -12,7 +12,7 @@ import {
 
 /**
  *
- * @param {WebAppeal} currentAppeal
+ * @param {WebAppeal|{appealId:string}} currentAppeal
  * @returns {string}
  */
 export function baseUrl(currentAppeal) {
