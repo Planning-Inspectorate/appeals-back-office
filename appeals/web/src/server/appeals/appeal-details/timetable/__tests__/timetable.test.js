@@ -271,6 +271,46 @@ describe('Timetable', () => {
 			afterEach(() => {
 				nock.cleanAll();
 			});
+			const baseValidS78PayloadParts = {
+				'lpa-questionnaire-due-date': { day: '01', month: '10', year: '2050' },
+				'lpa-statement-due-date': { day: '02', month: '10', year: '2050' },
+				'ip-comments-due-date': { day: '03', month: '10', year: '2050' },
+				'final-comments-due-date': { day: '04', month: '10', year: '2050' }
+			};
+
+			/**
+			 * @returns {{
+			 * 'lpa-questionnaire-due-date-day': string,
+			 * 'lpa-questionnaire-due-date-month': string,
+			 * 'lpa-questionnaire-due-date-year': string,
+			 * 'lpa-statement-due-date-day': string,
+			 * 'lpa-statement-due-date-month': string,
+			 * 'lpa-statement-due-date-year': string,
+			 * 'ip-comments-due-date-day': string,
+			 * 'ip-comments-due-date-month': string,
+			 * 'ip-comments-due-date-year': string,
+			 * 'final-comments-due-date-day': string,
+			 * 'final-comments-due-date-month': string,
+			 * 'final-comments-due-date-year': string
+			 * }}
+			 */
+			const getBaseValidS78Payload = () => ({
+				'lpa-questionnaire-due-date-day':
+					baseValidS78PayloadParts['lpa-questionnaire-due-date'].day,
+				'lpa-questionnaire-due-date-month':
+					baseValidS78PayloadParts['lpa-questionnaire-due-date'].month,
+				'lpa-questionnaire-due-date-year':
+					baseValidS78PayloadParts['lpa-questionnaire-due-date'].year,
+				'lpa-statement-due-date-day': baseValidS78PayloadParts['lpa-statement-due-date'].day,
+				'lpa-statement-due-date-month': baseValidS78PayloadParts['lpa-statement-due-date'].month,
+				'lpa-statement-due-date-year': baseValidS78PayloadParts['lpa-statement-due-date'].year,
+				'ip-comments-due-date-day': baseValidS78PayloadParts['ip-comments-due-date'].day,
+				'ip-comments-due-date-month': baseValidS78PayloadParts['ip-comments-due-date'].month,
+				'ip-comments-due-date-year': baseValidS78PayloadParts['ip-comments-due-date'].year,
+				'final-comments-due-date-day': baseValidS78PayloadParts['final-comments-due-date'].day,
+				'final-comments-due-date-month': baseValidS78PayloadParts['final-comments-due-date'].month,
+				'final-comments-due-date-year': baseValidS78PayloadParts['final-comments-due-date'].year
+			});
 
 			const timetableTypes = [
 				{
@@ -340,13 +380,41 @@ describe('Timetable', () => {
 				}
 			];
 
-			timetableTypes.forEach(({ id, label }) => {
+			timetableTypes.forEach(({ id: currentFieldId, label }) => {
 				describe(`${label}`, () => {
 					it.each(testCases)(
 						'should re-render edit timetable page with $name error for ' + label,
 						async (testCase) => {
-							const response = await request.post(`${baseUrl}/edit`).send(testCase.payload(id));
+							const payloadForTest = getBaseValidS78Payload();
 
+							// Define the keys for the field under test
+							const dayKey = /** @type {keyof typeof payloadForTest} */ (
+								`${currentFieldId}-due-date-day`
+							);
+							const monthKey = /** @type {keyof typeof payloadForTest} */ (
+								`${currentFieldId}-due-date-month`
+							);
+							const yearKey = /** @type {keyof typeof payloadForTest} */ (
+								`${currentFieldId}-due-date-year`
+							);
+
+							// Remove the valid parts for the field under test, so it can be replaced by the error-inducing parts
+							// Check if keys exist before deleting (though they should, given the structure)
+							if (dayKey in payloadForTest) delete payloadForTest[dayKey];
+							if (monthKey in payloadForTest) delete payloadForTest[monthKey];
+							if (yearKey in payloadForTest) delete payloadForTest[yearKey];
+
+							// Apply the specific error-inducing payload for the current field
+							const errorInducingParts = testCase.payload(currentFieldId);
+							for (const key in errorInducingParts) {
+								if (Object.prototype.hasOwnProperty.call(errorInducingParts, key)) {
+									// Cast 'key' to tell TypeScript it's a valid key for payloadForTest
+									payloadForTest[/** @type {keyof typeof payloadForTest} */ (key)] =
+										errorInducingParts[key];
+								}
+							}
+
+							const response = await request.post(`${baseUrl}/edit`).send(payloadForTest);
 							const element = parseHtml(response.text);
 
 							expect(element.innerHTML).toMatchSnapshot();

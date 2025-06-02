@@ -674,7 +674,7 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
+                            <li><a href="#">LPA questionnaire due date must include a day</a>
                             </li>
                         </ul>
                     </div>
@@ -690,14 +690,12 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                     <h1 class="govuk-fieldset__heading"> LPA questionnaire due</h1>
                 </legend>
                 <div id="lpa-questionnaire-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -742,7 +740,7 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
+                            <li><a href="#">LPA questionnaire due date must include a month</a>
                             </li>
                         </ul>
                     </div>
@@ -758,14 +756,12 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                     <h1 class="govuk-fieldset__heading"> LPA questionnaire due</h1>
                 </legend>
                 <div id="lpa-questionnaire-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a month</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -810,7 +806,7 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
+                            <li><a href="#">LPA questionnaire due date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -826,14 +822,12 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                     <h1 class="govuk-fieldset__heading"> LPA questionnaire due</h1>
                 </legend>
                 <div id="lpa-questionnaire-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a year</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1010,25 +1004,7 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
+                            <li><a href="#">Final comments due date must include a day</a>
                             </li>
                         </ul>
                     </div>
@@ -1045,17 +1021,12 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -1083,16 +1054,11 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -1120,17 +1086,12 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -1158,12 +1119,10 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day</p>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1208,25 +1167,7 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
+                            <li><a href="#">Final comments due date must include a month</a>
                             </li>
                         </ul>
                     </div>
@@ -1243,17 +1184,12 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -1281,16 +1217,11 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -1318,17 +1249,12 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -1356,12 +1282,10 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a month</p>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1406,25 +1330,7 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
+                            <li><a href="#">Final comments due date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -1441,17 +1347,12 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -1479,16 +1380,11 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -1516,17 +1412,12 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -1554,12 +1445,10 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a year</p>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1604,24 +1493,6 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
                             <li><a href="#">The final comments due date must be in the future</a>
                             </li>
                         </ul>
@@ -1639,17 +1510,12 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -1677,16 +1543,11 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -1714,17 +1575,12 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -1800,24 +1656,6 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
                             <li><a href="#">Final comments due date must be a real date</a>
                             </li>
                         </ul>
@@ -1835,17 +1673,12 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -1873,16 +1706,11 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -1910,17 +1738,12 @@ exports[`Timetable POST /edit S78 Final comments should re-render edit timetable
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -1996,25 +1819,7 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
+                            <li><a href="#">Interested party comments due date must include a day</a>
                             </li>
                         </ul>
                     </div>
@@ -2031,17 +1836,12 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -2069,16 +1869,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -2106,13 +1901,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day</p>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2141,16 +1934,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -2194,25 +1982,7 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
+                            <li><a href="#">Interested party comments due date must include a month</a>
                             </li>
                         </ul>
                     </div>
@@ -2229,17 +1999,12 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -2267,16 +2032,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -2304,13 +2064,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a month</p>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2339,16 +2097,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -2392,25 +2145,7 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
+                            <li><a href="#">Interested party comments due date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -2427,17 +2162,12 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -2465,16 +2195,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -2502,13 +2227,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a year</p>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2537,16 +2260,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -2590,25 +2308,7 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
                             <li><a href="#">The interested party comments due date must be in the future</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -2625,17 +2325,12 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -2663,16 +2358,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -2733,16 +2423,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -2786,25 +2471,7 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
                             <li><a href="#">Interested party comments due date must be a real date</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -2821,17 +2488,12 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -2859,16 +2521,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -2929,16 +2586,11 @@ exports[`Timetable POST /edit S78 Interested party comments should re-render edi
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -2982,25 +2634,7 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
+                            <li><a href="#">LPA questionnaire due date must include a day</a>
                             </li>
                         </ul>
                     </div>
@@ -3017,13 +2651,11 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3052,16 +2684,11 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -3089,17 +2716,12 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -3127,16 +2749,11 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -3180,25 +2797,7 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
+                            <li><a href="#">LPA questionnaire due date must include a month</a>
                             </li>
                         </ul>
                     </div>
@@ -3215,13 +2814,11 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a month</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3250,16 +2847,11 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -3287,17 +2879,12 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -3325,16 +2912,11 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -3378,25 +2960,7 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
+                            <li><a href="#">LPA questionnaire due date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -3413,13 +2977,11 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a year</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3448,16 +3010,11 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -3485,17 +3042,12 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -3523,16 +3075,11 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -3578,24 +3125,6 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#">The lpa questionnaire due date must be in the future</a>
                             </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -3644,16 +3173,11 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
+                <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
@@ -3681,17 +3205,12 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -3719,16 +3238,11 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -3774,23 +3288,168 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#">LPA questionnaire due date must be a real date</a>
                             </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
+                <div id="lpa-questionnaire-due-date-hint"
+                class="govuk-hint">For example, 27 3 2007</div>
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                            id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                            id="lpa-questionnaire-due-date-month" name="lpa-questionnaire-due-date-month"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                            id="lpa-questionnaire-due-date-year" name="lpa-questionnaire-due-date-year"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">For example, 27 3 2007</div>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div class="govuk-date-input" id="final-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                            id="final-comments-due-date-day" name="final-comments-due-date-day" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                            id="final-comments-due-date-month" name="final-comments-due-date-month"
+                            type="text" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                            id="final-comments-due-date-year" name="final-comments-due-date-year" type="text"
+                            inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Timetable POST /edit S78 Statements should re-render edit timetable page with missing day error for Statements 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#">Statements due date must include a day</a>
                             </li>
                         </ul>
                     </div>
@@ -3840,213 +3499,10 @@ exports[`Timetable POST /edit S78 LPA questionnaire should re-render edit timeta
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day
-                    <br>Statements due date must include a month
-                    <br>Statements due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-statement-due-date">
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
-                            inputmode="numeric">
-                        </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
-                            inputmode="numeric">
-                        </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
-                            inputmode="numeric">
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
-                <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
-                            inputmode="numeric">
-                        </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
-                            inputmode="numeric">
-                        </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
-                            inputmode="numeric">
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                            id="final-comments-due-date-day" name="final-comments-due-date-day" type="text"
-                            inputmode="numeric">
-                        </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-month">Month</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                            id="final-comments-due-date-month" name="final-comments-due-date-month"
-                            type="text" inputmode="numeric">
-                        </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-year">Year</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                            id="final-comments-due-date-year" name="final-comments-due-date-year" type="text"
-                            inputmode="numeric">
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-        <div class="govuk-button-group">
-            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-        </div>
-    </form>
-</main>"
-`;
-
-exports[`Timetable POST /edit S78 Statements should re-render edit timetable page with missing day error for Statements 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-day">Statements due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Timetable due dates</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"></div>
-    </div>
-    <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
-                <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                            id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
-                            type="text" inputmode="numeric">
-                        </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-month">Month</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                            id="lpa-questionnaire-due-date-month" name="lpa-questionnaire-due-date-month"
-                            type="text" inputmode="numeric">
-                        </div>
-                    </div>
-                    <div class="govuk-date-input__item">
-                        <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-year">Year</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                            id="lpa-questionnaire-due-date-year" name="lpa-questionnaire-due-date-year"
-                            type="text" inputmode="numeric">
-                        </div>
-                    </div>
-                </div>
-            </fieldset>
-        </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a day</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4075,17 +3531,12 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -4113,16 +3564,11 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -4166,25 +3612,7 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-month">Statements due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
+                            <li><a href="#">Statements due date must include a month</a>
                             </li>
                         </ul>
                     </div>
@@ -4201,17 +3629,12 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -4239,12 +3662,10 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a month</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4273,17 +3694,12 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -4311,16 +3727,11 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -4364,25 +3775,7 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
-                            <li><a href="#lpa-statement-due-date-year">Statements due date must include a year</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
+                            <li><a href="#">Statements due date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -4399,17 +3792,12 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -4437,12 +3825,10 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
                 <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
-                    include a year</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4471,17 +3857,12 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -4509,16 +3890,11 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -4562,25 +3938,7 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
                             <li><a href="#">The statements due date must be in the future</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -4597,17 +3955,12 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -4667,17 +4020,12 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -4705,16 +4053,11 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
@@ -4758,25 +4101,7 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#lpa-questionnaire-due-date-day">LPA questionnaire due date must include a day</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-month">LPA questionnaire due date must include a month</a>
-                            </li>
-                            <li><a href="#lpa-questionnaire-due-date-year">LPA questionnaire due date must include a year</a>
-                            </li>
                             <li><a href="#">Statements due date must be a real date</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must include a day</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-month">Interested party comments due date must include a month</a>
-                            </li>
-                            <li><a href="#ip-comments-due-date-year">Interested party comments due date must include a year</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-day">Final comments due date must include a day</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-month">Final comments due date must include a month</a>
-                            </li>
-                            <li><a href="#final-comments-due-date-year">Final comments due date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -4793,17 +4118,12 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
-                    date must include a day
-                    <br>LPA questionnaire due date must include a month
-                    <br>LPA questionnaire due date must include a year</p>
-                <div class="govuk-date-input"
-                id="lpa-questionnaire-due-date">
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
@@ -4863,17 +4183,12 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
-                    due date must include a day
-                    <br>Interested party comments due date must include a month
-                    <br>Interested party comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="ip-comments-due-date">
+                <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
@@ -4901,16 +4216,11 @@ exports[`Timetable POST /edit S78 Statements should re-render edit timetable pag
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
                 <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
-                    must include a day
-                    <br>Final comments due date must include a month
-                    <br>Final comments due date must include a year</p>
-                <div class="govuk-date-input"
-                id="final-comments-due-date">
+                <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>

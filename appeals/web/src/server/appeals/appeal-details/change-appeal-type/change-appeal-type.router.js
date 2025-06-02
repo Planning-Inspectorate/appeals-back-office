@@ -2,6 +2,8 @@ import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import * as controller from './change-appeal-type.controller.js';
 import * as validators from './change-appeal-type.validators.js';
+import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
+import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -23,6 +25,7 @@ router
 		validators.validateChangeAppealFinalDateValid,
 		validators.validateChangeAppealFinalDateIsBusinessDay,
 		validators.validateChangeAppealFinalDateInFuture,
+		extractAndProcessDateErrors({ fieldNamePrefix: changeAppealTypeDateField }),
 		asyncHandler(controller.postChangeAppealFinalDate)
 	);
 

@@ -50,7 +50,7 @@ export const createDateInputFieldsValidator = (
 				return `${acc}${part}, `;
 			}, '');
 
-			throw new Error(`${capitalize(messageFieldNamePrefix)} must include ${messageSuffix}`);
+			throw new Error(`${messageFieldNamePrefix} must include ${messageSuffix}`);
 		}),
 		body(`${bodyScope}${fieldNamePrefix}${_day}`)
 			.if(Boolean)
@@ -251,3 +251,147 @@ export const createDateInputDateInPastValidator = (
 				)
 			)
 	);
+
+/**
+ * This middelware will handle errors related to a date component
+ * and processes them to ensure taht only one error is returned at the correct time for the component
+ * It will rekey any error to the most relevant field for the date component,
+ * ensuring that the UI is compatable with acceccibility criteria
+ *
+ * The middleware will:
+ * 1. Identify all errors related to the date component based on the fieldNamePrefix.
+ * 2. Select the first error encountered for the component.
+ * 3. If the first error is a general error (keyed as ''), it will attempt to re-key it to a specific field
+ *   within the component (e.g., 'prefix-day', 'prefix-month', 'prefix-year').
+ * 4. If re-keying is not possible, it will default to the primary field key for the component (e.g., 'prefix-day').
+ * 5. All other errors not related to this component will be preserved in the `req.errors` object.
+ *
+ * @param {{ fieldNamePrefix: string }} dateComponentConfig - Configuration for the date component.
+ * @returns {import('express').RequestHandler} The configured Express middleware.
+ */
+export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
+	const daySuffix = '-day';
+	const monthSuffix = '-month';
+	const yearSuffix = '-year';
+
+	const dayFieldKey = `${fieldNamePrefix}${daySuffix}`;
+	const monthFieldKey = `${fieldNamePrefix}${monthSuffix}`;
+	const yearFieldKey = `${fieldNamePrefix}${yearSuffix}`;
+
+	return (req, res, next) => {
+		// If there are no errors or if errors is not an object, just continue to the next middleware
+		if (!req.errors || typeof req.errors !== 'object' || req.errors === null) {
+			return next();
+		}
+
+		const allOriginalErrors = req.errors;
+		/**
+		 * @type {string[]}
+		 * @description Stores the keys of errors related to this component, in their original encounter order.
+		 */
+		const componentKeys = [];
+		/**
+		 * @type {{ [key: string]: any }}
+		 * @description Stores errors not related to this component.
+		 */
+		const otherErrors = {};
+		/**
+		 * @type {any | null}
+		 * @description Stores the error object if key is '' AND it's identified as belonging to this component.
+		 */
+		let generalErrorObjectIfRelevant = null;
+
+		// 1. Iterate through original errors to identify component errors (in order) and other errors.
+		const originalKeys = Object.keys(allOriginalErrors);
+
+		for (const key of originalKeys) {
+			const errorObject = allOriginalErrors[key];
+			let isErrorForThisComponent = false;
+
+			if (key === dayFieldKey || key === monthFieldKey || key === yearFieldKey) {
+				isErrorForThisComponent = true;
+			} else if (key === '') {
+				if (errorObject.value && typeof errorObject.value === 'object') {
+					const nestedKeys = Object.keys(errorObject.value);
+					// Check if the '' error's value object contains fields related to the date component.
+					if (nestedKeys.some((nk) => nk.startsWith(fieldNamePrefix + '-'))) {
+						isErrorForThisComponent = true;
+						generalErrorObjectIfRelevant = errorObject;
+					}
+				}
+			} else if (key.startsWith(fieldNamePrefix + '-')) {
+				// Catches other custom prefixed keys
+				isErrorForThisComponent = true;
+			}
+
+			if (isErrorForThisComponent) {
+				componentKeys.push(key);
+			} else {
+				otherErrors[key] = errorObject;
+			}
+		}
+
+		// If no errors were found for this specific date component,
+		// leave the errors as is and move to nbext middleware.
+		if (componentKeys.length === 0) {
+			req.errors = otherErrors;
+			return next();
+		}
+
+		const chosenErrorKey = componentKeys[0];
+
+		// Get the corresponding error object.
+		// If chosenErrorKey is '', and it was identified as relevant, use the stored generalErrorObjectIfRelevant.
+		// Otherwise, get it directly from allOriginalErrors using chosenErrorKey.
+		const chosenErrorObject =
+			chosenErrorKey === '' && generalErrorObjectIfRelevant
+				? generalErrorObjectIfRelevant
+				: allOriginalErrors[chosenErrorKey];
+
+		// 3. If the chosen primary error was keyed as '', attempt to re-key it.
+		let finalKeyForComponent = chosenErrorKey;
+		if (chosenErrorKey === '' && chosenErrorObject) {
+			const nestedValueObject = chosenErrorObject.value;
+			let reKeyedToSpecificField = false;
+
+			// If the error object has a value that is an object, re-key it to a specific field.
+			if (nestedValueObject && typeof nestedValueObject === 'object') {
+				const relevantNestedKeys = Object.keys(nestedValueObject)
+					.filter((k) => k.startsWith(fieldNamePrefix + '-'))
+					.sort((a, b) => {
+						if (a.endsWith(daySuffix)) return -1;
+						if (b.endsWith(daySuffix)) return 1;
+						if (a.endsWith(monthSuffix)) return -1;
+						if (b.endsWith(monthSuffix)) return 1;
+						return a.localeCompare(b);
+					});
+
+				if (relevantNestedKeys.length > 0) {
+					let preferredNewKey = null;
+					// Try to find the first relevant nested key whose value is an empty string.
+					for (const currentNestedKey of relevantNestedKeys) {
+						if (nestedValueObject[currentNestedKey] === '') {
+							preferredNewKey = currentNestedKey;
+							break;
+						}
+					}
+					// If no empty value field found, use the first relevant (and sorted) nested key.
+					if (preferredNewKey === null) {
+						preferredNewKey = relevantNestedKeys[0];
+					}
+					finalKeyForComponent = preferredNewKey;
+					reKeyedToSpecificField = true;
+				}
+			}
+
+			// If nothing retrived from previous step - defualt to the day field key.
+			if (!reKeyedToSpecificField) {
+				finalKeyForComponent = dayFieldKey;
+			}
+		}
+		req.errors = { ...otherErrors };
+		req.errors[finalKeyForComponent] = chosenErrorObject;
+
+		next();
+	};
+};
