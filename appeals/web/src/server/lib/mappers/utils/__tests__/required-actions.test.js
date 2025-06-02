@@ -36,10 +36,11 @@ describe('required actions', () => {
 			).toEqual(['addHorizonReference']);
 		});
 
-		it('should return "arrangeSiteVisit" if appeal status is "EVENT"', () => {
+		it('should return "arrangeSiteVisit" if appeal status is "EVENT" and no siteVisit exists', () => {
 			expect(
 				getRequiredActionsForAppeal({
 					...appealData,
+					siteVisit: undefined,
 					appealStatus: APPEAL_CASE_STATUS.EVENT
 				})
 			).toEqual(['arrangeSiteVisit']);

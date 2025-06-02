@@ -7,6 +7,7 @@ export const VALIDATION_OUTCOME_COMPLETE = 'Complete';
 export const VALIDATION_OUTCOME_INCOMPLETE = 'Incomplete';
 export const VALIDATION_OUTCOME_INVALID = 'Invalid';
 export const VALIDATION_OUTCOME_VALID = 'Valid';
+export const VALIDATION_OUTCOME_CANCEL = 'Cancel';
 
 export const CASE_OUTCOME_ALLOWED = 'allowed';
 export const CASE_OUTCOME_DISMISSED = 'dismissed';
