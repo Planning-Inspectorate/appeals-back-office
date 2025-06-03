@@ -151,16 +151,21 @@ export const postAppealTimetables = async (request, response) => {
 	const appealId = appealDetails.appealId;
 	const { appealTimetableId } = appealDetails.appealTimetable;
 
-	const sessionTimetable = session.appealTimetable || {};
+	let sessionTimetable = session.appealTimetable || {};
 	const originalTimetable = appealDetails.appealTimetable || {};
 
-	const isUnchanged = Object.keys(sessionTimetable).every(
-		(key) =>
-			setTimeInTimeZone(sessionTimetable[key], DEADLINE_HOUR, DEADLINE_MINUTE).toISOString() ===
-			originalTimetable[key]
-	);
+	for (const key of Object.keys(sessionTimetable)) {
+		const sessionDate = setTimeInTimeZone(
+			sessionTimetable[key],
+			DEADLINE_HOUR,
+			DEADLINE_MINUTE
+		).toISOString();
+		if (sessionDate === originalTimetable[key]) {
+			delete sessionTimetable[key];
+		}
+	}
 
-	if (isUnchanged) {
+	if (Object.keys(sessionTimetable).length === 0) {
 		// no success banner since user made no changes
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	}
@@ -170,7 +175,7 @@ export const postAppealTimetables = async (request, response) => {
 			request.apiClient,
 			appealId,
 			appealTimetableId,
-			{ ...session.appealTimetable }
+			{ ...sessionTimetable }
 		);
 
 		if (setAppealTimetableResponse.errors) {
@@ -183,6 +188,7 @@ export const postAppealTimetables = async (request, response) => {
 			appealId
 		});
 
+		delete session.appealTimetable;
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(

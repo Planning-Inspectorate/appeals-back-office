@@ -208,7 +208,7 @@ export const notificationBannerDefinitions = {
 	timetableDueDateUpdated: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Timetable dues dates updated'
+		text: 'Timetable due dates updated'
 	},
 	changePage: {
 		type: 'success',
