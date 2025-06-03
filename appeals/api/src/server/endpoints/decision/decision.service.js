@@ -2,7 +2,7 @@ import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import formatDate from '#utils/date-formatter.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_DECISION_OUTCOME, APPEAL_CASE_STATUS } from 'pins-data-model';
 import { notifySend } from '#notify/notify-send.js';
 import { loadEnvironment } from '@pins/platform';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
@@ -39,7 +39,7 @@ export const publishDecision = async (
 		documentDate,
 		documentGuid,
 		version: 1,
-		outcome
+		outcome: outcome === 'split decision' ? APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION : outcome
 	});
 
 	if (result) {
