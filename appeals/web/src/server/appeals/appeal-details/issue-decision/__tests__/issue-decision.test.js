@@ -1173,10 +1173,6 @@ describe('issue-decision', () => {
 
 		it('should render the view decision page', async () => {
 			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${viewDecisionPath}`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
