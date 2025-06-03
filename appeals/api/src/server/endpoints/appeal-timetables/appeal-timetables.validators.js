@@ -69,6 +69,11 @@ const patchAppealTimetableValidator = composeMiddleware(
 		mustBeFutureDate: true,
 		mustBeBusinessDay: true
 	}),
+	validateDateParameter({
+		parameterName: 'planningObligationDueDate',
+		mustBeFutureDate: true,
+		mustBeBusinessDay: true
+	}),
 	validationErrorHandler
 );
 

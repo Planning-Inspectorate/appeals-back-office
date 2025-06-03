@@ -198,6 +198,7 @@ export default {
 		finalCommentsDueDate: new Date('2024-12-04T23:59:00.000Z'),
 		s106ObligationDueDate: new Date('2024-12-04T23:59:00.000Z'),
 		statementOfCommonGroundDueDate: new Date('2024-12-04T23:59:00.000Z'),
+		planningObligationDueDate: new Date('2024-12-04T23:59:00.000Z'),
 		issueDeterminationDate: null
 	},
 	appealType: {
