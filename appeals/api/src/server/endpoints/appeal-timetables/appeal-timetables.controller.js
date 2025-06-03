@@ -64,7 +64,8 @@ const updateAppealTimetableById = async (req, res) => {
 			finalCommentsDueDate: body.finalCommentsDueDate,
 			s106ObligationDueDate: body.s106ObligationDueDate,
 			issueDeterminationDate: body.issueDeterminationDate,
-			statementOfCommonGroundDueDate: body.statementOfCommonGroundDueDate
+			statementOfCommonGroundDueDate: body.statementOfCommonGroundDueDate,
+			planningObligationDueDate: body.planningObligationDueDate
 		};
 
 		return res.send(updatedTimetable);

@@ -212,7 +212,8 @@ describe('appeal timetables routes', () => {
 				'issueDeterminationDate',
 				'lpaQuestionnaireDueDate',
 				'lpaStatementDueDate',
-				'statementOfCommonGroundDueDate'
+				'statementOfCommonGroundDueDate',
+				'planningObligationDueDate'
 			].forEach((fieldName) => {
 				test(`returns an error if ${fieldName} is not in the correct format`, async () => {
 					// @ts-ignore
