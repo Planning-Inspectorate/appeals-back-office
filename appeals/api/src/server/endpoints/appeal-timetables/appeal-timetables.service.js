@@ -185,18 +185,21 @@ const updateAppealTimetable = async (appealId, appealTimetableId, body, azureAdU
 
 	// @ts-ignore
 	await appealTimetableRepository.updateAppealTimetableById(appealTimetableId, processedBody);
-
+	let details = 'Timetable updated';
 	Object.keys(processedBody).map(async (key) => {
-		const details = stringTokenReplacement(AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED, [
-			// @ts-ignore
-			dueDateToAppealTimetableTextMapper[key],
-			dateISOStringToDisplayDate(processedBody[key])
-		]);
-		await createAuditTrail({
-			appealId: appealId,
-			azureAdUserId,
-			details
-		});
+		details +=
+			'\n' +
+			stringTokenReplacement(AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED, [
+				// @ts-ignore
+				dueDateToAppealTimetableTextMapper[key],
+				dateISOStringToDisplayDate(processedBody[key])
+			]);
+	});
+
+	await createAuditTrail({
+		appealId: appealId,
+		azureAdUserId,
+		details
 	});
 
 	await broadcasters.broadcastAppeal(appealId);
