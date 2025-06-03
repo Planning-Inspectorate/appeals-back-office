@@ -370,51 +370,6 @@ exports[`issue-decision GET /issue-decision/check-your-lpa-costs-decision should
 </main>"
 `;
 
-exports[`issue-decision GET /issue-decision/view-decision should render the view decision page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Decision</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form method="POST" novalidate="novalidate">
-                <dl class="govuk-summary-list">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
-                        <dd class="govuk-summary-list__value">Allowed</dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                        <dd class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/1/download/e1e90a49-fab3-44b8-a21a-bb73af089f6b/decision-letter.pdf"
-                            target="_blank">decision-letter.pdf</a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision issue date</dt>
-                        <dd class="govuk-summary-list__value">25 December 2023</dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant costs decision letter</dt>
-                        <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/1/download/undefined/1/undefined"
-                            target="_blank">appellant-costs-decision-letter.pdf</a>
-                            </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant costs decision issue date</dt>
-                        <dd                         class="govuk-summary-list__value">2 June 2025</dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA costs decision letter</dt>
-                        <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/1/download/undefined/1/undefined"
-                            target="_blank">lpa-costs-decision-letter.pdf</a>
-                            </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA costs decision issue date</dt>
-                        <dd                         class="govuk-summary-list__value">2 June 2025</dd>
-                    </div>
-                </dl>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`issue-decision GET /issue-lpa-costs-decision-letter-upload should render the decision letter upload page with a file upload component 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
