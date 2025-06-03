@@ -10318,6 +10318,14 @@
 					"statementReviewDate": {
 						"type": "string",
 						"example": "2024-08-12"
+					},
+					"statementOfCommonGroundDueDate": {
+						"type": "string",
+						"example": "2024-08-12"
+					},
+					"planningObligationDueDate": {
+						"type": "string",
+						"example": "2024-08-13"
 					}
 				},
 				"xml": {
@@ -10342,6 +10350,14 @@
 					"statementReviewDate": {
 						"type": "string",
 						"example": "2024-08-12T01:00:00.000Z"
+					},
+					"statementOfCommonGroundDueDate": {
+						"type": "string",
+						"example": "2024-08-12T01:00:00.000Z"
+					},
+					"planningObligationDueDate": {
+						"type": "string",
+						"example": "2024-08-13T01:00:00.000Z"
 					}
 				},
 				"xml": {
@@ -11211,6 +11227,16 @@
 						"nullable": true
 					},
 					"s106ObligationDueDate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"statementOfCommonGroundDueDate": {
+						"type": "string",
+						"format": "date-time",
+						"nullable": true
+					},
+					"planningObligationDueDate": {
 						"type": "string",
 						"format": "date-time",
 						"nullable": true
@@ -25953,6 +25979,16 @@
 								"nullable": true
 							},
 							"s106ObligationDueDate": {
+								"type": "string",
+								"format": "date-time",
+								"nullable": true
+							},
+							"statementOfCommonGroundDueDate": {
+								"type": "string",
+								"format": "date-time",
+								"nullable": true
+							},
+							"planningObligationDueDate": {
 								"type": "string",
 								"format": "date-time",
 								"nullable": true

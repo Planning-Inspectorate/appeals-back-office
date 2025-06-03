@@ -120,6 +120,7 @@ model AppealTimetable {
   s106ObligationDueDate          DateTime?
   issueDeterminationDate         DateTime?
   statementOfCommonGroundDueDate DateTime?
+  planningObligationDueDate      DateTime?
 }
 
 /// AppealStatus model

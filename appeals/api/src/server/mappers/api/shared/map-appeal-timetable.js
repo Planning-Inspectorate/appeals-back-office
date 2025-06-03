@@ -46,6 +46,10 @@ export const mapAppealTimetable = (data) => {
 				statementOfCommonGroundDueDate:
 					(appeal.appealTimetable.statementOfCommonGroundDueDate &&
 						appeal.appealTimetable.statementOfCommonGroundDueDate.toISOString()) ||
+					null,
+				planningObligationDueDate:
+					(appeal.appealTimetable.planningObligationDueDate &&
+						appeal.appealTimetable.planningObligationDueDate.toISOString()) ||
 					null
 			})
 		};

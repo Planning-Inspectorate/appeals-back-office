@@ -2167,6 +2167,10 @@ export interface UpdateAppealTimetableRequest {
 	lpaQuestionnaireDueDate?: string;
 	/** @example "2024-08-12" */
 	statementReviewDate?: string;
+	/** @example "2024-08-12" */
+	statementOfCommonGroundDueDate?: string;
+	/** @example "2024-08-13" */
+	planningObligationDueDate?: string;
 }
 
 export interface UpdateAppealTimetableResponse {
@@ -2178,6 +2182,10 @@ export interface UpdateAppealTimetableResponse {
 	lpaQuestionnaireDueDate?: string;
 	/** @example "2024-08-12T01:00:00.000Z" */
 	statementReviewDate?: string;
+	/** @example "2024-08-12T01:00:00.000Z" */
+	statementOfCommonGroundDueDate?: string;
+	/** @example "2024-08-13T01:00:00.000Z" */
+	planningObligationDueDate?: string;
 }
 
 export interface AllDocumentRedactionStatusesResponse {
@@ -2640,6 +2648,10 @@ export interface Timetable {
 	finalCommentsDueDate?: string | null;
 	/** @format date-time */
 	s106ObligationDueDate?: string | null;
+	/** @format date-time */
+	statementOfCommonGroundDueDate?: string | null;
+	/** @format date-time */
+	planningObligationDueDate?: string | null;
 }
 
 export interface TransferStatus {
@@ -10854,6 +10866,10 @@ export interface Appeal {
 		finalCommentsDueDate?: string | null;
 		/** @format date-time */
 		s106ObligationDueDate?: string | null;
+		/** @format date-time */
+		statementOfCommonGroundDueDate?: string | null;
+		/** @format date-time */
+		planningObligationDueDate?: string | null;
 	};
 	transferStatus?: {
 		transferredAppealType: string;
