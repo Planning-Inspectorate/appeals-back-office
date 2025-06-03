@@ -64,7 +64,12 @@ exports[`generateCommentSummaryList should return the comment summary list inclu
       },
       {
         "actions": {
-          "items": [],
+          "items": [
+            {
+              "href": "/appeals-service/appeal-details/5/interested-party-comments/undefined/redact",
+              "text": "Redact",
+            },
+          ],
         },
         "key": {
           "text": "Comment",
