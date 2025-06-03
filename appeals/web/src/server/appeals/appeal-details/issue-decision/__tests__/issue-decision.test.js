@@ -12,7 +12,6 @@ import {
 } from '#testing/appeals/appeals.js';
 import { cloneDeep } from 'lodash-es';
 import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
-import { getTodaysISOString } from '#lib/dates.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -1145,7 +1144,7 @@ describe('issue-decision', () => {
 				{
 					name: 'appellant-costs-decision-letter.pdf',
 					latestDocumentVersion: {
-						dateReceived: getTodaysISOString(),
+						dateReceived: '2025-06-02T00:00:00.000Z',
 						version: 1
 					}
 				}
@@ -1154,7 +1153,7 @@ describe('issue-decision', () => {
 				{
 					name: 'lpa-costs-decision-letter.pdf',
 					latestDocumentVersion: {
-						dateReceived: getTodaysISOString(),
+						dateReceived: '2025-06-02T00:00:00.000Z',
 						version: 1
 					}
 				}
