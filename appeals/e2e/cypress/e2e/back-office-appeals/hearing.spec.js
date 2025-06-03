@@ -202,7 +202,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		caseDetailsPage.clickHearingButton();
 
 		cy.getBusinessActualDate(currentDate, 2).then((date) => {
-			date.setHours(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds());
+			date.setHours(currentDate.getHours(), currentDate.getMinutes());
 
 			// Test back navigation from initial setup (no address)
 			hearingSectionPage.setUpHearing(date, date.getHours(), date.getMinutes());
@@ -245,7 +245,7 @@ describe('Setup hearing and add hearing estimates', () => {
 
 		cy.getBusinessActualDate(currentDate, 2).then((date) => {
 			// Set exact time and format for assertions
-			date.setHours(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds());
+			date.setHours(currentDate.getHours(), currentDate.getMinutes());
 			const expectedDateTime = formatDateAndTime(date);
 			const getTimeUpToMinutes = (isoString) => isoString.slice(0, 16);
 
@@ -311,7 +311,7 @@ describe('Setup hearing and add hearing estimates', () => {
 	it('should update existing hearing address from overview page', () => {
 		// First ensure a hearing exists with a known address
 		cy.getBusinessActualDate(new Date(), 2).then((date) => {
-			date.setHours(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds());
+			date.setHours(currentDate.getHours(), currentDate.getMinutes());
 			ensureHearingExists(caseRef, date).then((appealDetails) => {});
 			cy.reload();
 
@@ -369,7 +369,7 @@ describe('Setup hearing and add hearing estimates', () => {
 
 	it('should cancel hearing', () => {
 		cy.getBusinessActualDate(new Date(), 2).then((date) => {
-			date.setHours(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds());
+			date.setHours(currentDate.getHours(), currentDate.getMinutes());
 			ensureHearingExists(caseRef, date).then((appealDetails) => {});
 			cy.reload();
 			caseDetailsPage.clickCancelHearing();
