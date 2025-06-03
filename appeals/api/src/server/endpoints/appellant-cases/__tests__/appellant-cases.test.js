@@ -960,6 +960,7 @@ describe('appellant cases routes', () => {
 					personalisation: {
 						lpa_reference: '48269/APP/2021/1482',
 						appeal_reference_number: '1345264',
+						feedback_link: 'https://forms.office.com/r/9U4Sq9rEff',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
 					},
 					recipientEmail: 'test@136s7.com',
