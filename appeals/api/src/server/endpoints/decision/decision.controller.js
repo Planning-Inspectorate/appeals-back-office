@@ -8,7 +8,7 @@ import {
 	ERROR_INVALID_APPEAL_STATE
 } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { APPEAL_CASE_DECISION_OUTCOME, APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -48,7 +48,7 @@ export const postInspectorDecision = async (req, res) => {
 					case DECISION_TYPE_INSPECTOR: {
 						return publishDecision(
 							appeal,
-							outcome === 'split decision' ? APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION : outcome,
+							outcome,
 							documentDate,
 							documentGuid,
 							notifyClient,
