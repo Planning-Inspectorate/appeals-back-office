@@ -1143,6 +1143,7 @@ describe('appeal-details', () => {
 					.reply(200, {
 						...appealData,
 						appealId,
+						siteVisit: undefined,
 						appealStatus: 'event'
 					});
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);

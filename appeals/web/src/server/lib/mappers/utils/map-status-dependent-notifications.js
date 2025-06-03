@@ -168,8 +168,17 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				bannerDefinitionKey,
 				html: `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 					request,
-					`/appeals-service/appeal-details/${appealDetails.appealId}/hearing/setup/address`
+					`/appeals-service/appeal-details/${appealDetails.appealId}/hearing/change/address-details`
 				)}">Add hearing address</a>`
+			});
+		}
+		case 'setupHearing': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/hearing/setup/date`
+				)}">Set up hearing</a>`
 			});
 		}
 	}
