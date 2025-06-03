@@ -24,6 +24,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { EventType } from '@pins/event-client';
 import { notifySend } from '#notify/notify-send.js';
 import { APPEAL_DEVELOPMENT_TYPES } from './appellant-cases.constants.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('express').Request} Request */
@@ -97,7 +98,11 @@ export const updateAppellantCaseValidationOutcome = async (
 		const personalisation = {
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
-			site_address: siteAddress
+			site_address: siteAddress,
+			feedback_link:
+				appeal.appealType.type === APPEAL_TYPE.S78
+					? 'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzg1SlNPQjA3V0FDNUFJTldHMlEzMDdMRS4u'
+					: 'https://forms.office.com/r/9U4Sq9rEff'
 		};
 		await notifySend({
 			templateName: 'appeal-confirmed',
