@@ -16,12 +16,12 @@ pr: none
 trigger: none
 
 schedules:
-- cron: "0 2 * * 1-5"  # 2 AM UTC, Mon-Fri
+- cron: "0 2 * * 1-5"
   displayName: Weekday test run
   branches:
     include:
-      - test/a2-3414-schedule-test-run  # Target test branch (change as needed)
-  always: true  # Run even if no code changes
+      - main
+  always: true
 
 jobs:
   - job: Run_Cypress_Tests_For_Appeals
