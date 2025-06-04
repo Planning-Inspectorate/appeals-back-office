@@ -4,6 +4,8 @@ import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import * as validators from './site-visit.validators.js';
 import * as controller from './site-visit.controller.js';
 import { permissionNames } from '#environment/permissions.js';
+import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
+import { siteVisitDateField } from './site-visits.constants.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -22,6 +24,9 @@ router
 		validators.validateVisitStartTime,
 		validators.validateVisitEndTime,
 		validators.validateVisitStartTimeBeforeEndTime,
+		extractAndProcessDateErrors({
+			fieldNamePrefix: siteVisitDateField
+		}),
 		asyncHandler(controller.postScheduleSiteVisit)
 	);
 
@@ -40,6 +45,9 @@ router
 		validators.validateVisitStartTime,
 		validators.validateVisitEndTime,
 		validators.validateVisitStartTimeBeforeEndTime,
+		extractAndProcessDateErrors({
+			fieldNamePrefix: siteVisitDateField
+		}),
 		asyncHandler(controller.postManageSiteVisit)
 	);
 

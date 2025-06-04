@@ -59,25 +59,30 @@ export const createStartTimeBeforeEndTimeValidator = (
 	// @ts-ignore
 	// eslint-disable-next-line no-unused-vars
 	continueValidationCondition = (value) => true
-) =>
-	createValidator(
-		body()
+) => {
+	return createValidator(
+		body(`${startTimeFieldNamePrefix}-hour`)
 			.if(continueValidationCondition)
-			.custom((bodyFields) => {
-				const startTimeHour = parseInt(bodyFields[`${startTimeFieldNamePrefix}-hour`], 10);
-				const startTimeMinute = parseInt(bodyFields[`${startTimeFieldNamePrefix}-minute`], 10);
-				const endTimeHour = parseInt(bodyFields[`${endTimeFieldNamePrefix}-hour`], 10);
-				const endTimeMinute = parseInt(bodyFields[`${endTimeFieldNamePrefix}-minute`], 10);
+			.custom((_, { req }) => {
+				const startTimeHour = parseInt(req.body[`${startTimeFieldNamePrefix}-hour`], 10);
+				const startTimeMinute = parseInt(req.body[`${startTimeFieldNamePrefix}-minute`], 10);
+				const endTimeHour = parseInt(req.body[`${endTimeFieldNamePrefix}-hour`], 10);
+				const endTimeMinute = parseInt(req.body[`${endTimeFieldNamePrefix}-minute`], 10);
 
-				return (
-					!Number.isNaN(startTimeHour) &&
-					!Number.isNaN(startTimeMinute) &&
-					!Number.isNaN(endTimeHour) &&
-					!Number.isNaN(endTimeMinute) &&
-					timeIsBeforeTime(startTimeHour, startTimeMinute, endTimeHour, endTimeMinute)
-				);
+				if (
+					Number.isNaN(startTimeHour) ||
+					Number.isNaN(startTimeMinute) ||
+					Number.isNaN(endTimeHour) ||
+					Number.isNaN(endTimeMinute) ||
+					!timeIsBeforeTime(startTimeHour, startTimeMinute, endTimeHour, endTimeMinute)
+				) {
+					throw new Error(
+						`${capitalize(
+							startTimeMessageFieldNamePrefix
+						)} must be before ${endTimeMessageFieldNamePrefix}`
+					);
+				}
+				return true;
 			})
-			.withMessage(
-				`${startTimeMessageFieldNamePrefix} must be before ${endTimeMessageFieldNamePrefix}`
-			)
 	);
+};

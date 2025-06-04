@@ -1,4 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { dateInput } from '#lib/mappers/index.js';
 
 /**
  * @param {number} appealId
@@ -6,6 +7,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  * @param {string} dateValidDay
  * @param {string} dateValidMonth
  * @param {string} dateValidYear
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
 export function updateValidDatePage(
@@ -13,7 +15,8 @@ export function updateValidDatePage(
 	appealReference,
 	dateValidDay,
 	dateValidMonth,
-	dateValidYear
+	dateValidYear,
+	errors
 ) {
 	const title = 'Enter valid date for case';
 
@@ -24,41 +27,19 @@ export function updateValidDatePage(
 			html: `<p class="govuk-body">This is the date all case documentation was received and the appeal was valid.</p>`
 		}
 	};
-
-	/** @type {PageComponent} */
-	const selectDateComponent = {
-		type: 'date-input',
-		parameters: {
-			id: 'valid-date',
-			namePrefix: 'valid-date',
-			fieldset: {
-				legend: {
-					text: '',
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
-			hint: {
-				text: 'For example, 27 3 2023'
-			},
-			items: [
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'day',
-					value: dateValidDay || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'month',
-					value: dateValidMonth || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-					name: 'year',
-					value: dateValidYear || ''
-				}
-			]
-		}
-	};
+	const selectDateComponent = dateInput({
+		name: 'valid-date',
+		id: 'valid-date',
+		namePrefix: 'valid-date',
+		value: {
+			day: dateValidDay,
+			month: dateValidMonth,
+			year: dateValidYear
+		},
+		legendText: '',
+		hint: 'For example, 27 3 2023',
+		errors: errors
+	});
 
 	/** @type {PageComponent} */
 	const insetTextComponent = {

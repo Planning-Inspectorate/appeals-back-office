@@ -10,6 +10,7 @@ import { validatePostDecisionConfirmation } from './costs.validators.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
+import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -66,6 +67,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
 		assertUserHasPermission(permissionNames.updateCase),
+		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postAddDocumentDetails)
 	);
 
@@ -173,6 +175,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postChangeDocumentVersionDetails)
 	);
 

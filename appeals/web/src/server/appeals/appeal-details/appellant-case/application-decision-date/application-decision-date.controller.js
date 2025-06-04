@@ -30,7 +30,8 @@ const renderChangeApplicationDecisionDate = async (request, response) => {
 		const mappedPageContents = changeApplicationDecisionDatePage(
 			currentAppeal,
 			appellantCaseData,
-			request.session.applicationDecisionDate
+			request.session.applicationDecisionDate,
+			errors
 		);
 
 		return response

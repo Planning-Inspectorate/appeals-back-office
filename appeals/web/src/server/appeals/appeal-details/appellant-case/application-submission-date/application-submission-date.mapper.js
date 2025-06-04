@@ -1,5 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+import { dateInput } from '#lib/mappers/index.js';
+import { applicationSubmissionDateField } from './application-submission-date.constants.js';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
@@ -10,12 +12,14 @@ import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
  * @param {Appeal} appealData
  * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
  * @param {{day: string, month: string, year: string}} storedSessionData
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
 export const changeApplicationSubmissionDatePage = (
 	appealData,
 	appellantCaseData,
-	storedSessionData
+	storedSessionData,
+	errors
 ) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
@@ -42,42 +46,23 @@ export const changeApplicationSubmissionDatePage = (
 		title: `What date did you submit your application?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
+		// /** @type {PageComponent} */
+
 		pageComponents: [
-			{
-				type: 'date-input',
-				parameters: {
-					name: 'applicationSubmissionDate',
-					id: 'application-submission-date',
-					namePrefix: 'application-submission-date',
-					hint: {
-						text: 'For example, 27 3 2007'
-					},
-					fieldset: {
-						legend: {
-							text: 'What date did you submit your application?',
-							isPageHeading: true,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
-					items: [
-						{
-							classes: 'govuk-input--width-2',
-							name: 'day',
-							value: day
-						},
-						{
-							classes: 'govuk-input--width-2',
-							name: 'month',
-							value: month
-						},
-						{
-							classes: 'govuk-input--width-4',
-							name: 'year',
-							value: year
-						}
-					]
-				}
-			}
+			dateInput({
+				name: applicationSubmissionDateField,
+				id: applicationSubmissionDateField,
+				namePrefix: applicationSubmissionDateField,
+				value: {
+					day: day,
+					month: month,
+					year: year
+				},
+				legendText: `What date did you submit your application?`,
+				legendIsPageHeading: true,
+				hint: 'For example, 27 3 2023',
+				errors: errors
+			})
 		]
 	};
 

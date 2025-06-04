@@ -1,5 +1,5 @@
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
-import { removeSummaryListActions } from '#lib/mappers/index.js';
+import { dateInput, removeSummaryListActions } from '#lib/mappers/index.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { padNumberWithZero } from '#lib/string-utilities.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -9,6 +9,7 @@ import {
 	dateISOStringToDayMonthYearHourMinute
 } from '#lib/dates.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
+import { siteVisitDateField } from './site-visits.constants.js';
 /**
  * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -61,6 +62,7 @@ export function mapGetApiVisitTypeToWebVisitType(getApiVisitType) {
  * @param {string|number|null|undefined} visitStartTimeMinute
  * @param {string|number|null|undefined} visitEndTimeHour
  * @param {string|number|null|undefined} visitEndTimeMinute
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {Promise<PageContent>}
  */
 export async function scheduleOrManageSiteVisitPage(
@@ -77,7 +79,8 @@ export async function scheduleOrManageSiteVisitPage(
 	visitStartTimeHour,
 	visitStartTimeMinute,
 	visitEndTimeHour,
-	visitEndTimeMinute
+	visitEndTimeMinute,
+	errors
 ) {
 	const mappedData = await initialiseAndMapAppealData(
 		appealDetails,
@@ -171,40 +174,20 @@ export async function scheduleOrManageSiteVisitPage(
 		}
 	};
 
-	/** @type {PageComponent} */
-	const selectDateComponent = {
-		type: 'date-input',
-		parameters: {
-			id: 'visit-date',
-			namePrefix: 'visit-date',
-			fieldset: {
-				legend: {
-					text: 'Select date',
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
-			hint: {
-				text: 'For example, 27 3 2023'
-			},
-			items: [
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'day',
-					value: visitDateDay || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'month',
-					value: visitDateMonth || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-					name: 'year',
-					value: visitDateYear || ''
-				}
-			]
-		}
-	};
+	// /** @type {PageComponent} */
+	const selectDateComponent = dateInput({
+		name: siteVisitDateField,
+		id: siteVisitDateField,
+		namePrefix: siteVisitDateField,
+		value: {
+			day: visitDateDay,
+			month: visitDateMonth,
+			year: visitDateYear
+		},
+		legendText: 'Select date',
+		hint: 'For example, 27 3 2023',
+		errors: errors
+	});
 
 	/** @type {PageComponent} */
 	const selectTimeHtmlComponent = {

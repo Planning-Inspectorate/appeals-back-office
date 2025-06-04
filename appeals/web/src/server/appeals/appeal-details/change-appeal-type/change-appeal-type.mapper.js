@@ -3,6 +3,8 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { nameToString } from '#lib/person-name-formatter.js';
 import { getAppealTypesFromId } from './change-appeal-type.service.js';
+import { dateInput } from '#lib/mappers/index.js';
+import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -312,53 +314,19 @@ export function changeAppealFinalDatePage(
 	errors
 ) {
 	/** @type {PageComponent} */
-	const selectDateComponent = {
-		type: 'date-input',
-		parameters: {
-			id: 'change-appeal-final-date',
-			namePrefix: 'change-appeal-final-date',
-			name: 'change-appeal-final-date',
-			fieldset: {
-				legend: {
-					text: 'What is the final date the appellant must resubmit by?',
-					isPageHeading: true,
-					classes: 'govuk-fieldset__legend--l'
-				}
-			},
-			hint: {
-				text: 'For example, 27 3 2023'
-			},
-			items: [
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'day',
-					value: changeDay || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'month',
-					value: changeMonth || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-					name: 'year',
-					value: changeYear || ''
-				}
-			],
-			errorMessage: errors
-				? {
-						html: [
-							errors['']?.msg,
-							errors['change-appeal-final-date-day']?.msg,
-							errors['change-appeal-final-date-month']?.msg,
-							errors['change-appeal-final-date-year']?.msg
-						]
-							.filter(Boolean)
-							.join('<br>')
-				  }
-				: undefined
-		}
-	};
+	const selectDateComponent = dateInput({
+		name: changeAppealTypeDateField,
+		id: changeAppealTypeDateField,
+		namePrefix: changeAppealTypeDateField,
+		value: {
+			day: changeDay || '',
+			month: changeMonth || '',
+			year: changeYear || ''
+		},
+		legendText: 'What is the final date the appellant must resubmit by?',
+		hint: 'For example, 27 3 2023',
+		errors: errors
+	});
 
 	/** @type {PageComponent} */
 	const insetTextComponent = {

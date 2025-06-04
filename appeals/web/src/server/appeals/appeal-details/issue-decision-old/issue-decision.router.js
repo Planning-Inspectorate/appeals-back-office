@@ -6,6 +6,8 @@ import { createTextAreaSanitizer } from '#lib/sanitizers/textarea-sanitizer.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
+import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
+import { issueDecisionDateField } from './issue-decision.constants.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -45,6 +47,9 @@ router
 		validators.validateVisitDateValid,
 		validators.validateDueDateInPastOrToday,
 		validators.validateDecisionDateIsBusinessDay,
+		extractAndProcessDateErrors({
+			fieldNamePrefix: issueDecisionDateField
+		}),
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postDateDecisionLetter)
 	);

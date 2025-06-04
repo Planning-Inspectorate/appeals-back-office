@@ -9,18 +9,22 @@ import {
 	createTimeInputValidator,
 	createStartTimeBeforeEndTimeValidator
 } from '#lib/validators/time-input.validator.js';
+import { siteVisitDateField } from './site-visits.constants.js';
 
 export const validateSiteVisitType = createValidator(
 	body('visit-type').trim().notEmpty().withMessage('Please select a visit type')
 );
 
-export const validateVisitDateFields = createDateInputFieldsValidator('visit-date', 'Visit date');
+export const validateVisitDateFields = createDateInputFieldsValidator(
+	siteVisitDateField,
+	'Visit date'
+);
 export const validateVisitDateValid = createDateInputDateValidityValidator(
-	'visit-date',
+	siteVisitDateField,
 	'Visit date'
 );
 export const validateVisitDateInFuture = createDateInputDateInFutureValidator(
-	'visit-date',
+	siteVisitDateField,
 	'Visit date'
 );
 export const validateVisitStartTime = createTimeInputValidator(
