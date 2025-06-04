@@ -1,8 +1,10 @@
+import featureFlags from '#common/feature-flags.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/components/page-components/radio.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 
 /**
@@ -92,6 +94,35 @@ export function changeDatePage(appealId, appealReference, today) {
  * @returns {PageContent}
  */
 export function selectProcedurePage(appealReference, backLinkUrl, storedSessionData) {
+	const dataMappers = [
+		{
+			case: APPEAL_CASE_PROCEDURE.WRITTEN,
+			featureFlag: FEATURE_FLAG_NAMES.SECTION_78
+		},
+		{
+			case: APPEAL_CASE_PROCEDURE.HEARING,
+			featureFlag: FEATURE_FLAG_NAMES.SECTION_78_HEARING
+		},
+		{
+			case: APPEAL_CASE_PROCEDURE.INQUIRY,
+			featureFlag: FEATURE_FLAG_NAMES.SECTION_78_INQUIRY
+		}
+	];
+
+	/** @type {RadioItem[]} */
+	const radioItems = [];
+
+	dataMappers.map((item) => {
+		if (featureFlags.isFeatureActive(item.featureFlag)) {
+			radioItems.push({
+				value: item.case,
+				text: appealProcedureToLabelText(item.case),
+				checked:
+					storedSessionData?.appealProcedure && storedSessionData?.appealProcedure === item.case
+			});
+		}
+	});
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Appeal procedure',
@@ -103,29 +134,7 @@ export function selectProcedurePage(appealReference, backLinkUrl, storedSessionD
 				idPrefix: 'appeal-procedure',
 				legendText: 'Appeal procedure',
 				legendIsPageHeading: true,
-				items: [
-					{
-						value: APPEAL_CASE_PROCEDURE.WRITTEN,
-						text: appealProcedureToLabelText(APPEAL_CASE_PROCEDURE.WRITTEN),
-						checked:
-							storedSessionData?.appealProcedure &&
-							storedSessionData?.appealProcedure === APPEAL_CASE_PROCEDURE.WRITTEN
-					},
-					{
-						value: APPEAL_CASE_PROCEDURE.HEARING,
-						text: appealProcedureToLabelText(APPEAL_CASE_PROCEDURE.HEARING),
-						checked:
-							storedSessionData?.appealProcedure &&
-							storedSessionData?.appealProcedure === APPEAL_CASE_PROCEDURE.HEARING
-					},
-					{
-						value: APPEAL_CASE_PROCEDURE.INQUIRY,
-						text: appealProcedureToLabelText(APPEAL_CASE_PROCEDURE.INQUIRY),
-						checked:
-							storedSessionData?.appealProcedure &&
-							storedSessionData?.appealProcedure === APPEAL_CASE_PROCEDURE.INQUIRY
-					}
-				]
+				items: radioItems
 			})
 		]
 	};

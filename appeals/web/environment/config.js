@@ -54,6 +54,7 @@ export function loadConfig() {
 		CACHE_CONTROL_MAX_AGE,
 		FEATURE_FLAG_S78_WRITTEN,
 		FEATURE_FLAG_S78_HEARING,
+		FEATURE_FLAG_S78_INQUIRY,
 		FEATURE_FLAG_LINKED_APPEALS,
 		FEATURE_FLAG_S20,
 		FEATURE_FLAG_ISSUE_DECISION,
@@ -127,6 +128,7 @@ export function loadConfig() {
 		featureFlags: {
 			featureFlagS78Written: FEATURE_FLAG_S78_WRITTEN === 'true',
 			featureFlagS78Hearing: FEATURE_FLAG_S78_HEARING === 'true',
+			featureFlagS78Inquiry: FEATURE_FLAG_S78_INQUIRY === 'true',
 			featureFlagLinkedAppeals: FEATURE_FLAG_LINKED_APPEALS === 'true',
 			featureFlagS20: FEATURE_FLAG_S20 === 'true',
 			featureFlagIssueDecision: FEATURE_FLAG_ISSUE_DECISION === 'true'
