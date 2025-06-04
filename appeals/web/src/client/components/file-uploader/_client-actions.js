@@ -398,7 +398,7 @@ const clientActions = (container) => {
 			return { message: 'SIZE_SINGLE_FILE' };
 		}
 
-		if (container.dataset?.documentStage === 'representation') {
+		if (container.dataset?.documentStage === 'representation' && !isNewVersionOfExistingFile()) {
 			return null;
 		}
 
@@ -505,15 +505,17 @@ const clientActions = (container) => {
 
 		const createdUploadInfoForAtLeastOneDocument = createUploadInfoForStagedDocuments();
 
+		const { formId, documentTitle } = container.dataset || {};
+
 		if (createdUploadInfoForAtLeastOneDocument) {
 			form?.submit();
 		} else {
 			showErrors(
 				{
 					message: 'NO_FILE',
-					formId: container.dataset?.formId || '',
+					formId: formId || '',
 					metadata: {
-						fileTitle: container.dataset?.documentTitle || 'file'
+						fileTitle: documentTitle ? `the ${documentTitle}` : 'a file'
 					}
 				},
 				container
