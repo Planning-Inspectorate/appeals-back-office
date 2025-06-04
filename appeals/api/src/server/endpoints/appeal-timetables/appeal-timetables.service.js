@@ -17,10 +17,12 @@ import transitionState from '#state/transition-state.js';
 import formatDate, { dateISOStringToDisplayDate } from '#utils/date-formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { PROCEDURE_TYPE_MAP, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { notifySend } from '#notify/notify-send.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { APPEAL_TYPE_SHORTHAND_HAS } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -169,13 +171,13 @@ const startCase = async (
 };
 
 /**
- * @param {number} appealId
- * @param {number} appealTimetableId
+ * @param {Appeal} appeal
  * @param {object} body
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
  * @returns {Promise<void>}
  */
-const updateAppealTimetable = async (appealId, appealTimetableId, body, azureAdUserId) => {
+const updateAppealTimetable = async (appeal, body, notifyClient, azureAdUserId) => {
 	const processedBody = Object.fromEntries(
 		Object.entries(body).map(([item, value]) => [
 			item,
@@ -184,25 +186,35 @@ const updateAppealTimetable = async (appealId, appealTimetableId, body, azureAdU
 	);
 
 	// @ts-ignore
-	await appealTimetableRepository.updateAppealTimetableById(appealTimetableId, processedBody);
+	const result = await appealTimetableRepository.updateAppealTimetableById(
+		// @ts-ignore
+		appeal.appealTimetable.id,
+		// @ts-ignore
+		processedBody
+	);
 	let details = 'Timetable updated';
-	Object.keys(processedBody).map(async (key) => {
-		details +=
-			'\n' +
-			stringTokenReplacement(AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED, [
-				// @ts-ignore
-				dueDateToAppealTimetableTextMapper[key],
-				dateISOStringToDisplayDate(processedBody[key])
-			]);
-	});
+	if (result) {
+		Object.keys(processedBody).map(async (key) => {
+			details +=
+				'\n' +
+				stringTokenReplacement(AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED, [
+					// @ts-ignore
+					dueDateToAppealTimetableTextMapper[key],
+					dateISOStringToDisplayDate(processedBody[key])
+				]);
+		});
 
-	await createAuditTrail({
-		appealId: appealId,
-		azureAdUserId,
-		details
-	});
+		await createAuditTrail({
+			appealId: appeal.id,
+			azureAdUserId,
+			details
+		});
 
-	await broadcasters.broadcastAppeal(appealId);
+		if (shouldSendNotify(appeal.appealType?.key, appeal.procedureType?.key)) {
+			await sendTimetableUpdateNotify(appeal, processedBody, notifyClient);
+		}
+		await broadcasters.broadcastAppeal(appeal.id);
+	}
 };
 
 const dueDateToAppealTimetableTextMapper = {
@@ -210,6 +222,94 @@ const dueDateToAppealTimetableTextMapper = {
 	ipCommentsDueDate: 'Interested party comments',
 	lpaStatementDueDate: 'LPA statement',
 	finalCommentsDueDate: 'Final comments'
+};
+
+/**
+ * @param {Appeal} appeal
+ * @param {object} processedBody
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @returns {Promise<void>}
+ */
+const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient) => {
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	const personalisation = {
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress,
+		lpa_questionnaire_due_date: formatDate(
+			new Date(
+				// @ts-ignore
+				dateISOStringToDisplayDate(processedBody['lpaQuestionnaireDueDate']) ||
+					appeal.appealTimetable?.lpaQuestionnaireDueDate
+			),
+			false
+		),
+		lpa_statement_due_date: formatDate(
+			new Date(
+				// @ts-ignore
+				dateISOStringToDisplayDate(processedBody['lpaStatementDueDate']) ||
+					appeal.appealTimetable?.lpaStatementDueDate
+			),
+			false
+		),
+		ip_comments_due_date: formatDate(
+			new Date(
+				// @ts-ignore
+				dateISOStringToDisplayDate(processedBody['ipCommentsDueDate']) ||
+					appeal.appealTimetable?.ipCommentsDueDate
+			),
+			false
+		),
+		final_comments_due_date: formatDate(
+			new Date(
+				// @ts-ignore
+				dateISOStringToDisplayDate(processedBody['finalCommentsDueDate']) ||
+					appeal.appealTimetable?.finalCommentsDueDate
+			),
+			false
+		)
+	};
+
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	const lpaEmail = appeal.lpa?.email || '';
+	const templateName =
+		appeal.appealType?.key === APPEAL_TYPE_SHORTHAND_HAS
+			? 'has-appeal-timetable-updated'
+			: 'appeal-timetable-updated';
+
+	if (recipientEmail) {
+		await notifySend({
+			templateName,
+			notifyClient,
+			recipientEmail,
+			personalisation
+		});
+	}
+
+	if (lpaEmail) {
+		await notifySend({
+			templateName,
+			notifyClient,
+			recipientEmail: lpaEmail,
+			personalisation
+		});
+	}
+};
+
+/**
+ * @param {string | undefined} appealTypeShorthand
+ * @param {string | undefined} procedureType
+ * @returns {boolean}
+ */
+const shouldSendNotify = (appealTypeShorthand, procedureType) => {
+	return (
+		appealTypeShorthand === APPEAL_TYPE_SHORTHAND_HAS ||
+		(appealTypeShorthand === 'W' && procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
+		procedureType === undefined
+	);
 };
 
 export { checkAppealTimetableExists, startCase, updateAppealTimetable };

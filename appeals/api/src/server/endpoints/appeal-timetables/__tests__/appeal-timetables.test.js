@@ -87,6 +87,7 @@ describe('appeal timetables routes', () => {
 					id: 1,
 					azureAdUserId
 				});
+				databaseConnector.appealTimetable.update.mockResolvedValue(1);
 
 				const { appealTimetable, id } = houseAppealWithTimetable;
 				const response = await request
