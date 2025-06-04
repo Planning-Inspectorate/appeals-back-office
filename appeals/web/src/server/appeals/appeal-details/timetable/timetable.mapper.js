@@ -1,7 +1,7 @@
 import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
+import { dateInput } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -49,62 +49,24 @@ export const mapEditTimetablePage = (
 		const timetableTypeText = getTimetableTypeText(timetableType);
 		const idText = getIdText(timetableType);
 
-		const errorMessages = [];
-
-		if (errors != undefined) {
-			if (errors?.[`${idText}-due-date-day`]) {
-				errorMessages.push(errors[`${idText}-due-date-day`].msg);
-			}
-			if (errors?.[`${idText}-due-date-month`]) {
-				errorMessages.push(errors[`${idText}-due-date-month`].msg);
-			}
-			if (errors?.[`${idText}-due-date-year`]) {
-				errorMessages.push(getErrorByFieldname(errors, `${idText}-due-date-year`)?.text);
-			}
-		}
-
-		return {
-			type: 'date-input',
-			parameters: {
-				id: `${idText}-due-date`,
-				namePrefix: `${idText}-due-date`,
-				hint: {
-					text: 'For example, 27 3 2007'
-				},
-				fieldset: {
-					legend: {
-						text: `${timetableTypeText} due`,
-						isPageHeading: timeTableTypes.length < 2,
-						classes:
-							timeTableTypes.length > 1 ? 'govuk-fieldset__legend--m' : 'govuk-fieldset__legend--l'
-					}
-				},
-				errorMessage: errorMessages.length
-					? {
-							html: errorMessages.join('<br>')
-					  }
-					: undefined,
-				...(currentDueDateDayMonthYear && {
-					items: [
-						{
-							name: 'day',
-							classes: 'govuk-input--width-2',
-							value: currentDueDateDayMonthYear.day
-						},
-						{
-							name: 'month',
-							classes: 'govuk-input--width-2',
-							value: currentDueDateDayMonthYear.month
-						},
-						{
-							name: 'year',
-							classes: 'govuk-input--width-4',
-							value: currentDueDateDayMonthYear.year
-						}
-					]
-				})
-			}
-		};
+		/** @type {PageComponent} */
+		return dateInput({
+			name: `${idText}-due-date`,
+			id: `${idText}-due-date`,
+			namePrefix: `${idText}-due-date`,
+			value: currentDueDateDayMonthYear
+				? {
+						day: currentDueDateDayMonthYear?.day,
+						month: currentDueDateDayMonthYear?.month,
+						year: currentDueDateDayMonthYear?.year
+				  }
+				: {},
+			legendText: `${timetableTypeText} due`,
+			hint: 'For example, 27 3 2007',
+			legendClasses:
+				timeTableTypes.length > 1 ? 'govuk-fieldset__legend--m' : 'govuk-fieldset__legend--l',
+			errors: errors
+		});
 	});
 
 	pageContent.pageComponents = pageComponents;

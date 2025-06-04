@@ -117,15 +117,15 @@ const renderUpdateDueDate = async (request, response) => {
 			}
 		}
 	}
-
 	if (objectContainsAllKeys(body, ['due-date-day', 'due-date-month', 'due-date-year'])) {
-		dueDateDay = parseInt(body['due-date-day'], 10);
-		dueDateMonth = parseInt(body['due-date-month'], 10);
-		dueDateYear = parseInt(body['due-date-year'], 10);
+		dueDateDay = request.body['due-date-day'];
+		dueDateMonth = request.body['due-date-month'];
+		dueDateYear = request.body['due-date-year'];
 	}
 
 	const mappedPageContent = updateDueDatePage(
 		currentAppeal,
+		errors,
 		dueDateDay,
 		dueDateMonth,
 		dueDateYear,
