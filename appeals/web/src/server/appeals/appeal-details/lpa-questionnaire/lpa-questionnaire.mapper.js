@@ -6,7 +6,8 @@ import {
 	yesNoInput,
 	createNotificationBanner,
 	mapNotificationBannersFromSession,
-	sortNotificationBanners
+	sortNotificationBanners,
+	dateInput
 } from '#lib/mappers/index.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '#lib/mappers/data/lpa-questionnaire/mapper.js';
@@ -279,6 +280,7 @@ export function environmentServiceTeamReviewCasePage(appealData, lpaQuestionnair
 /**
  * @param {Appeal} appealData
  * @param {string|number} lpaQuestionnaireId
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {number} [dueDateDay]
  * @param {number} [dueDateMonth]
  * @param {number} [dueDateYear]
@@ -287,6 +289,7 @@ export function environmentServiceTeamReviewCasePage(appealData, lpaQuestionnair
  */
 export function updateDueDatePage(
 	appealData,
+	errors,
 	lpaQuestionnaireId,
 	dueDateDay,
 	dueDateMonth,
@@ -319,35 +322,19 @@ export function updateDueDatePage(
 			type: 'submit'
 		},
 		pageComponents: [
-			{
-				type: 'date-input',
-				parameters: {
-					id: 'due-date',
-					namePrefix: 'due-date',
-					hint: {
-						text: 'For example, 27 3 2007'
-					},
-					...(existingDueDateDayMonthYear && {
-						items: [
-							{
-								name: 'day',
-								classes: 'govuk-input--width-2',
-								value: existingDueDateDayMonthYear.day
-							},
-							{
-								name: 'month',
-								classes: 'govuk-input--width-2',
-								value: existingDueDateDayMonthYear.month
-							},
-							{
-								name: 'year',
-								classes: 'govuk-input--width-4',
-								value: existingDueDateDayMonthYear.year
-							}
-						]
-					})
-				}
-			}
+			dateInput({
+				name: 'due-date',
+				id: 'due-date',
+				namePrefix: 'due-date',
+				value: {
+					day: existingDueDateDayMonthYear?.day,
+					month: existingDueDateDayMonthYear?.month,
+					year: existingDueDateDayMonthYear?.year
+				},
+				legendText: '',
+				hint: 'For example, 27 3 2023',
+				errors: errors
+			})
 		]
 	};
 
