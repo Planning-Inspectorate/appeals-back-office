@@ -113,6 +113,12 @@ export const postLpaQuestionnaire = async (request, response) => {
 				mapWebValidationOutcomeToApiValidationOutcome('complete')
 			);
 
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'lpaqReviewComplete',
+				appealId
+			});
+
 			return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 		} else if (reviewOutcome === 'incomplete') {
 			return response.redirect(
