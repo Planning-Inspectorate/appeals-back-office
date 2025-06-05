@@ -2853,7 +2853,13 @@ describe('appeal-details', () => {
 								ipCommentsDueDate: new Date('2025-4-29')
 							},
 							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
-							appealId
+							appealId,
+							stateList: [
+								{
+									key: 'statements',
+									completed: true
+								}
+							]
 						});
 					const response = await request.get(`${baseUrl}/${appealId}`);
 					expect(response.statusCode).toBe(200);
