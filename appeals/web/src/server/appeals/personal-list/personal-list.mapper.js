@@ -377,6 +377,12 @@ function mapRequiredActionToPersonalListActionHtml(
 				`/appeals-service/appeal-details/${appealId}/lpa-statement`
 			)}">Update LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
+		case 'setupHearing': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/hearing/setup/date`
+			)}">Set up hearing</a>`;
+		}
 		default: {
 			return '';
 		}

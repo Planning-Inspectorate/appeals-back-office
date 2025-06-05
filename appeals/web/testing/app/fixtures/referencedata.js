@@ -1,7 +1,8 @@
 import {
 	APPEAL_REDACTED_STATUS,
 	APPEAL_VIRUS_CHECK_STATUS,
-	APPEAL_CASE_STATUS
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_PROCEDURE
 } from 'pins-data-model';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import {
@@ -2226,6 +2227,7 @@ export const assignedAppealsPage2 = {
 				postCode: 'BS7 8LQ'
 			},
 			appealStatus: 'event',
+			procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
 			appealType: 'Householder',
 			createdAt: '2025-03-04T14:30:30.013Z',
 			localPlanningDepartment: 'Worthing Borough Council',
@@ -3515,7 +3517,8 @@ export const appealDataToGetRequiredActions = {
 	},
 	arrangeSiteVisit: {
 		...baseAppealDataToGetRequiredActions,
-		appealStatus: APPEAL_CASE_STATUS.EVENT
+		appealStatus: APPEAL_CASE_STATUS.EVENT,
+		procedureType: APPEAL_CASE_PROCEDURE.WRITTEN
 	},
 	assignCaseOfficer: {
 		...baseAppealDataToGetRequiredActions,
@@ -3776,6 +3779,11 @@ export const appealDataToGetRequiredActions = {
 				representationStatus: null
 			}
 		}
+	},
+	setupHearing: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVENT,
+		procedureType: APPEAL_CASE_PROCEDURE.HEARING
 	},
 	startAppeal: {
 		...baseAppealDataToGetRequiredActions,

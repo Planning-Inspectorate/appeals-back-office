@@ -197,7 +197,7 @@ const createStateMachine = (appealType, procedureType, currentState) =>
 				on: {
 					[VALIDATION_OUTCOME_COMPLETE]: { target: APPEAL_CASE_STATUS.ISSUE_DETERMINATION },
 					[VALIDATION_OUTCOME_INCOMPLETE]: { target: undefined },
-					[VALIDATION_OUTCOME_CANCEL]: { target: APPEAL_CASE_STATUS.EVENT },
+					[VALIDATION_OUTCOME_CANCEL]: { target: targetStateOnStatementsComplete[procedureType] },
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
 						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
