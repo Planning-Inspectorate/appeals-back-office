@@ -118,6 +118,7 @@ describe('invalid appeal decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					appeal_reference_number: correctAppealState.reference,
+					has_costs_decision: false,
 					lpa_reference: correctAppealState.applicationReference,
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					reasons: ['Invalid reason']
@@ -131,6 +132,7 @@ describe('invalid appeal decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					appeal_reference_number: correctAppealState.reference,
+					has_costs_decision: false,
 					lpa_reference: correctAppealState.applicationReference,
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					reasons: ['Invalid reason']

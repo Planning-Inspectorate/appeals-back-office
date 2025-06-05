@@ -3,14 +3,26 @@ import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { CASE_OUTCOME_INVALID, ERROR_NO_RECIPIENT_EMAIL } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-// eslint-disable-next-line no-unused-vars
-import NotifyClient from '#utils/notify-client.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import { notifySend } from '#notify/notify-send.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} Decision */
 /** @typedef {import('@pins/appeals.api').Appeals} DecisionType */
+/** @typedef {import('#endpoints/appeals.js').NotifyClient} NotifyClient
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {string} appealDocumentType
+ * @returns {boolean}
+ */
+const hasCostsDocument = (appeal, appealDocumentType) => {
+	const folder = appeal.folders?.find(
+		(folder) => folder.path === `${APPEAL_CASE_STAGE.COSTS}/${appealDocumentType}`
+	);
+	return !!folder?.documents?.length;
+};
 
 /**
  *
@@ -48,18 +60,29 @@ export const publishInvalidDecision = async (
 		if (!recipientEmail || !appeal.lpa?.email) {
 			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 		}
+
+		const hasAppellantCostsDecision = hasCostsDocument(
+			appeal,
+			APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER
+		);
+
+		const hasLpaCostsDecision = hasCostsDocument(
+			appeal,
+			APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER
+		);
+
 		await Promise.all([
 			await notifySend({
 				templateName: 'decision-is-invalid-appellant',
 				notifyClient,
 				recipientEmail,
-				personalisation
+				personalisation: { ...personalisation, has_costs_decision: hasAppellantCostsDecision }
 			}),
 			await notifySend({
 				templateName: 'decision-is-invalid-lpa',
 				notifyClient,
 				recipientEmail,
-				personalisation
+				personalisation: { ...personalisation, has_costs_decision: hasLpaCostsDecision }
 			})
 		]);
 		await transitionState(appeal.id, azureUserId, APPEAL_CASE_STATUS.INVALID);
