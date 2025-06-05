@@ -27,6 +27,7 @@ import { submaps as hasSubmaps } from './has.js';
  *   } | null} [inspectorUser]
  * @property {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantFinalComments]
  * @property {import('#appeals/appeal-details/representations/representations.service.js').Representation} [lpaFinalComments]
+ * @property {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} [appellantCase]
  */
 
 /**
@@ -48,6 +49,7 @@ const submaps = {
  * @param {boolean} [skipAssignedUsersData]
  * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantFinalComments]
  * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [lpaFinalComments]
+ * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} [appellantCase]
  * @returns {Promise<{appeal: MappedInstructions}>}
  */
 export async function initialiseAndMapAppealData(
@@ -57,7 +59,8 @@ export async function initialiseAndMapAppealData(
 	request,
 	skipAssignedUsersData = false,
 	appellantFinalComments,
-	lpaFinalComments
+	lpaFinalComments,
+	appellantCase
 ) {
 	if (appealDetails === undefined) {
 		throw new Error('appealDetails is undefined');
@@ -104,7 +107,8 @@ export async function initialiseAndMapAppealData(
 			caseOfficerUser,
 			inspectorUser,
 			appellantFinalComments,
-			lpaFinalComments
+			lpaFinalComments,
+			appellantCase
 		});
 	});
 	return mappedData;

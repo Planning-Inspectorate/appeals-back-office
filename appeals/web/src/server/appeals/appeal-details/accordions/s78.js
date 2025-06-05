@@ -37,6 +37,9 @@ export function generateAccordion(appealDetails, mappedData, session) {
 								mappedData.appeal.lpaQuestionnaireDueDate.display.summaryListItem,
 								mappedData.appeal.lpaStatementDueDate.display.summaryListItem,
 								mappedData.appeal.ipCommentsDueDate.display.summaryListItem,
+								mappedData.appeal.statementOfCommonGroundDueDate.display.summaryListItem,
+								mappedData.appeal.planningObligationDueDate.display.summaryListItem,
+								mappedData.appeal.hearingDate.display.summaryListItem,
 								mappedData.appeal.finalCommentDueDate.display.summaryListItem
 						  ]
 						: [])

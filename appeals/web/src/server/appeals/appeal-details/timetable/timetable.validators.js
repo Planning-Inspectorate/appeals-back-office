@@ -4,7 +4,7 @@ import {
 	createDateInputDateInFutureValidator,
 	createDateInputDateBusinessDayValidator
 } from '#lib/validators/date-input.validator.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { getAppealTimetableTypes } from './timetable.mapper.js';
 
 /**
  *
@@ -25,35 +25,42 @@ export const createTimetableValidators = (fieldName, label) => [
  */
 export const selectTimetableValidators = (req) => {
 	const { currentAppeal } = req || {};
+	/** @type {import('express').RequestHandler[]} */
 	const validatorsList = [];
+	const { appellantCase } = req.locals;
+	const timetableTypes = getAppealTimetableTypes(currentAppeal, appellantCase);
 
-	if (currentAppeal.appealType === 'Householder') {
-		validatorsList.push(
-			...createTimetableValidators('lpa-questionnaire-due-date', 'LPA questionnaire due date')
-		);
-	} else if (currentAppeal.appealType === 'Planning appeal') {
-		if (
-			currentAppeal.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE &&
-			currentAppeal.documentationSummary?.lpaQuestionnaire?.status !== 'received'
-		) {
-			validatorsList.push(
-				...createTimetableValidators('lpa-questionnaire-due-date', 'LPA questionnaire due date')
-			);
+	const validatorsMap = {
+		lpaQuestionnaireDueDate: {
+			id: 'lpa-questionnaire-due-date',
+			label: 'LPA questionnaire due date'
+		},
+		lpaStatementDueDate: {
+			id: 'lpa-statement-due-date',
+			label: 'Statements due date'
+		},
+		ipCommentsDueDate: {
+			id: 'ip-comments-due-date',
+			label: 'Interested party comments due date'
+		},
+		finalCommentsDueDate: {
+			id: 'final-comments-due-date',
+			label: 'Final comments due date'
+		},
+		statementOfCommonGroundDueDate: {
+			id: 'statement-of-common-ground-due-date',
+			label: 'Statement of common ground due date'
+		},
+		planningObligationDueDate: {
+			id: 'planning-obligation-due-date',
+			label: 'Planning obligation due date'
 		}
+	};
 
-		if (
-			currentAppeal.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE ||
-			currentAppeal.appealStatus === APPEAL_CASE_STATUS.STATEMENTS
-		) {
-			validatorsList.push(
-				...createTimetableValidators('lpa-statement-due-date', 'Statements due date'),
-				...createTimetableValidators('ip-comments-due-date', 'Interested party comments due date')
-			);
-		}
+	timetableTypes.forEach((timetableType) => {
+		const { id, label } = validatorsMap[timetableType];
+		validatorsList.push(...createTimetableValidators(id, label));
+	});
 
-		validatorsList.push(
-			...createTimetableValidators('final-comments-due-date', 'Final comments due date')
-		);
-	}
 	return validatorsList;
 };
