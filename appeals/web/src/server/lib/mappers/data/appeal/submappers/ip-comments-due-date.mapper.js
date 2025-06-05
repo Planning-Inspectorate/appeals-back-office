@@ -1,6 +1,7 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { isStatePassed } from '#lib/appeal-status.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapIpCommentsDueDate = ({
@@ -25,7 +26,9 @@ export const mapIpCommentsDueDate = ({
 			? `${currentRoute}/timetable/edit`
 			: `${currentRoute}/appeal-timetables/ip-comments`,
 		editable:
-			!appealDetails.documentationSummary.ipComments?.counts?.published &&
+			(useNewTimetableRoute
+				? !isStatePassed(appealDetails, APPEAL_CASE_STATUS.STATEMENTS)
+				: !appealDetails.documentationSummary.ipComments?.counts?.published) &&
 			userHasUpdateCasePermission &&
 			Boolean(appealDetails.startedAt),
 		classes: 'appeal-ip-comments-due-date'
