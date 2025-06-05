@@ -20,6 +20,7 @@ export const pageHeading = 'Case details';
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('./representations/representations.service.js').Representation|undefined} [appellantFinalComments]
  * @param {import('./representations/representations.service.js').Representation|undefined} [lpaFinalComments]
+ * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} [appellantCase]
  * @returns {Promise<PageContent>}
  */
 export async function appealDetailsPage(
@@ -29,7 +30,8 @@ export async function appealDetailsPage(
 	session,
 	request,
 	appellantFinalComments,
-	lpaFinalComments
+	lpaFinalComments,
+	appellantCase
 ) {
 	const mappedData = await initialiseAndMapAppealData(
 		appealDetails,
@@ -38,7 +40,8 @@ export async function appealDetailsPage(
 		request,
 		false,
 		appellantFinalComments,
-		lpaFinalComments
+		lpaFinalComments,
+		appellantCase
 	);
 
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);

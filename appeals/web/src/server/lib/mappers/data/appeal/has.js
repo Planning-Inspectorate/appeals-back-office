@@ -25,7 +25,6 @@ import { mapDownloadCaseFiles } from './submappers/case-files-download.mapper.js
 import { mapInspectorCorrespondence } from './submappers/inspector-correspondence.mapper.js';
 import { mapInspectorNeighbouringSites } from './submappers/inspector-neighbouring-sites.mapper.js';
 import { mapInspector } from './submappers/inspector.mapper.js';
-import { mapIssueDeterminationDate } from './submappers/issue-determination-date.mapper.js';
 import { mapLeadOrChild } from './submappers/lead-or-child.mapper.js';
 import { mapLinkedAppeals } from './submappers/linked-appeals.mapper.js';
 import { mapLocalPlanningAuthority } from './submappers/local-planning-authority.mapper.js';
@@ -95,7 +94,6 @@ export const submaps = {
 	costsLpaWithdrawal: mapCostsLpaWithdrawal,
 	costsLpaDecision: mapCostsLpaDecision,
 	costsLpaCorrespondence: mapCostsLpaCorrespondence,
-	issueDeterminationDate: mapIssueDeterminationDate,
 	completeDate: mapCompleteDate,
 	downloadCaseFiles: mapDownloadCaseFiles,
 	lpaHealthAndSafety: mapLpaHealthAndSafety,

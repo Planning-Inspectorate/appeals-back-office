@@ -1,24 +1,33 @@
 import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
  */
 
 /**
- * @typedef {'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'lpaStatementDueDate' | 'finalCommentsDueDate'} AppealTimetableType
+ * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} AppellantCase
+ */
+/**
+ * @typedef {'lpaQuestionnaireDueDate' | 'ipCommentsDueDate' | 'lpaStatementDueDate' | 'finalCommentsDueDate' | 'statementOfCommonGroundDueDate' | 'planningObligationDueDate'} AppealTimetableType
  */
 
 /**
  * @param {import('./timetable.service.js').AppealTimetables} appealTimetable
  * @param {Appeal} appealDetails
+ * @param {AppellantCase} appellantCase
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export const mapEditTimetablePage = (appealTimetable, appealDetails, errors = undefined) => {
-	const timeTableTypes = getAppealTimetableTypes(appealDetails);
+export const mapEditTimetablePage = (
+	appealTimetable,
+	appealDetails,
+	appellantCase,
+	errors = undefined
+) => {
+	const timeTableTypes = getAppealTimetableTypes(appealDetails, appellantCase);
 
 	/** @type {PageContent} */
 	let pageContent = {
@@ -117,6 +126,10 @@ export const getTimetableTypeText = (timetableType) => {
 			return 'Interested party comments';
 		case 'finalCommentsDueDate':
 			return 'Final comments';
+		case 'statementOfCommonGroundDueDate':
+			return 'Statement of common ground';
+		case 'planningObligationDueDate':
+			return 'Planning obligation';
 		default:
 			return '';
 	}
@@ -136,6 +149,10 @@ export const getIdText = (timetableType) => {
 			return 'lpa-statement';
 		case 'finalCommentsDueDate':
 			return 'final-comments';
+		case 'statementOfCommonGroundDueDate':
+			return 'statement-of-common-ground';
+		case 'planningObligationDueDate':
+			return 'planning-obligation';
 		default:
 			return '';
 	}
@@ -143,9 +160,10 @@ export const getIdText = (timetableType) => {
 
 /**
  * @param {Appeal} appeal
+ * @param {AppellantCase} appellantCase
  * @returns {AppealTimetableType[]}
  */
-export const getAppealTimetableTypes = (appeal) => {
+export const getAppealTimetableTypes = (appeal, appellantCase) => {
 	/** @type {AppealTimetableType[]} */
 	let validAppealTimetableType = [];
 
@@ -167,7 +185,15 @@ export const getAppealTimetableTypes = (appeal) => {
 			) {
 				validAppealTimetableType.push('lpaStatementDueDate', 'ipCommentsDueDate');
 			}
-			validAppealTimetableType.push('finalCommentsDueDate');
+			if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN) {
+				validAppealTimetableType.push('finalCommentsDueDate');
+			}
+			if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
+				validAppealTimetableType.push('statementOfCommonGroundDueDate');
+				if (appellantCase.planningObligation?.hasObligation) {
+					validAppealTimetableType.push('planningObligationDueDate');
+				}
+			}
 			break;
 	}
 	return validAppealTimetableType;

@@ -22,7 +22,11 @@ export const getEditTimetable = async (request, response) => {
 	renderEditTimetable(request, response);
 };
 
-/** @type {import('@pins/express').RequestHandler<Response>} */
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export const postEditTimetable = async (request, response) => {
 	const { appealId } = request.params;
 	const { errors, session } = request;
@@ -34,7 +38,9 @@ export const postEditTimetable = async (request, response) => {
 
 	session.appealTimetable = {};
 
-	const timeTableTypes = getAppealTimetableTypes(appealDetails);
+	const { appellantCase } = request.locals;
+
+	const timeTableTypes = getAppealTimetableTypes(appealDetails, appellantCase);
 
 	timeTableTypes.forEach((timetableType) => {
 		const idText = getIdText(timetableType);
@@ -72,8 +78,14 @@ const renderEditTimetable = async (request, response) => {
 
 	const appealId = currentAppeal.appealId;
 	const appealTimetable = request.session.appealTimetable ?? currentAppeal.appealTimetable;
+	const { appellantCase } = request.locals;
 
-	const mappedPageContent = mapEditTimetablePage(appealTimetable, currentAppeal, errors);
+	const mappedPageContent = mapEditTimetablePage(
+		appealTimetable,
+		currentAppeal,
+		appellantCase,
+		errors
+	);
 
 	if (!appealId || !mappedPageContent) {
 		return response.status(500).render('app/500.njk');
@@ -89,7 +101,7 @@ const renderEditTimetable = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const renderCheckYourAnswers = (request, response) => {
+export const renderCheckYourAnswers = async (request, response) => {
 	const { errors, currentAppeal, session } = request;
 	const baseUrl = request.baseUrl;
 
@@ -99,7 +111,9 @@ export const renderCheckYourAnswers = (request, response) => {
 
 	const appealTimetables = session.appealTimetable;
 
-	const timeTableTypes = getAppealTimetableTypes(currentAppeal);
+	const { appellantCase } = request.locals;
+
+	const timeTableTypes = getAppealTimetableTypes(currentAppeal, appellantCase);
 
 	/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} */
 	let responses = {};

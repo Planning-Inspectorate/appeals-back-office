@@ -71,6 +71,10 @@ describe('representations', () => {
 					.get('/appeals/1/reps?type=lpa_final_comment')
 					.reply(200, lpaFinalCommentsAwaitingReview)
 					.persist();
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: false } })
+					.persist();
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 			});
 

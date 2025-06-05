@@ -10,11 +10,13 @@ export const mapFinalCommentDueDate = ({
 	userHasUpdateCasePermission
 }) => {
 	const id = 'final-comments-due-date';
-	const useNewTimetableRoute =
-		appealDetails.appealType === 'Householder' ||
-		(appealDetails.appealType === 'Planning appeal' &&
-			appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN);
-	if (!appealDetails.startedAt) {
+	const useNewTimetableRoute = ['Householder', 'Planning appeal'].includes(
+		appealDetails.appealType || ''
+	);
+	if (
+		!appealDetails.startedAt ||
+		appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.WRITTEN
+	) {
 		return { id, display: {} };
 	}
 	return textSummaryListItem({

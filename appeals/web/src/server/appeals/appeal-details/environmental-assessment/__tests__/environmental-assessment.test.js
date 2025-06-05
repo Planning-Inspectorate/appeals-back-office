@@ -49,6 +49,10 @@ describe('environmental-assessment', () => {
 			.get('/appeals/document-redaction-statuses')
 			.reply(200, [{ key: 'no_redaction_required', id: 10 }])
 			.persist();
+		nock('http://test/')
+			.get('/appeals/1/appellant-cases/0')
+			.reply(200, { planningObligation: { hasObligation: false } })
+			.persist();
 	});
 
 	afterEach(() => {

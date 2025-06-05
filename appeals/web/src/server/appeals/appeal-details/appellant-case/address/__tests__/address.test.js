@@ -129,6 +129,9 @@ describe('site-address', () => {
 				postcode: 'NR35 2ND',
 				town: 'Woodton'
 			});
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
 		});
 
 		behavesLikeAddressForm({

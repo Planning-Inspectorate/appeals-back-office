@@ -6,6 +6,8 @@
  * @property {string?} [lpaStatementDueDate]
  * @property {string?} [finalCommentsDueDate]
  * @property {string?} [s106ObligationDueDate]
+ * @property {string?} [statementOfCommonGroundDueDate]
+ * @property {string?} [planningObligationDueDate]
  * @property {object | string | undefined} [errors]
  */
 
