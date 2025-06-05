@@ -31,7 +31,9 @@ export function getRequiredActionsForAppeal(appealDetails) {
 			break;
 		case APPEAL_CASE_STATUS.EVENT:
 			// @ts-ignore
-			if (!appealDetails.siteVisit) {
+			if (
+				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase()
+			) {
 				actions.push('arrangeSiteVisit');
 			}
 
