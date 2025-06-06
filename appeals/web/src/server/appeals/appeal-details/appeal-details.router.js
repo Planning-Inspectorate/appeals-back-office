@@ -38,6 +38,7 @@ import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appe
 import changeAppealDetailsRouter from './change-appeal-details/change-appeal-details.router.js';
 import hearingRouter from './hearing/hearing.router.js';
 import appealPdfRoutes from './appeal-pdf.js';
+import downloadAllGeneratedPdfsRouter from './download-all-generated-pdfs.router.js';
 const router = createRouter();
 
 router
@@ -60,6 +61,8 @@ router.use(
 	startDateRouter
 );
 router.use('/', appealPdfRoutes);
+//multi pdf download below
+router.use('/', downloadAllGeneratedPdfsRouter);
 router.use('/:appealId/lpa-questionnaire', lpaQuestionnaireRouter);
 router.use('/:appealId/allocation-details', allocationDetailsRouter);
 router.use('/:appealId/appeal-timetables', appealTimetablesRouter);

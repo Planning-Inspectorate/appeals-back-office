@@ -2,13 +2,13 @@
 import { Router } from 'express';
 import { getAppealCaseNotes } from './case-notes/case-notes.service.js';
 import { performance } from 'perf_hooks';
-
 const router = Router();
 const pdfServiceBaseUrl = 'http://localhost:3001';
 const pdfServiceGenerateUrl = `${pdfServiceBaseUrl}/generate-pdf`;
 const pdfServiceHealthUrl = `${pdfServiceBaseUrl}/health`;
 
 const FETCH_TIMEOUT_MS = 30000;
+//console.log(currentAppeal);
 
 /**
  * @param {import('@pins/express/types/express.js').Request} req

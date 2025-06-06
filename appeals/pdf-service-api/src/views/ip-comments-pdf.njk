@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+  <meta charset="utf-8" />
+  <title>Interested Party Comments - {{ ipCommentsData.appealReference | default('N/A') }}</title>
+  {% if gdsCss %}<style>{{ gdsCss | safe }}</style>{% endif %}
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; margin: 15mm; font-size: 9pt; line-height: 1.3; color: #333;}
+    .logo { max-width: 100px; height: auto; margin-bottom: 10px; }
+    .header-container { display: flex; align-items: center; margin-bottom: 10px; border-bottom: 5px solid #00703c; padding-bottom: 10px; }
+    .header-text { font-size: 14pt; font-weight: bold; margin-left: 15px; }
+    .beta-banner { background-color: #f3f2f1; padding: 8px 12px; margin-bottom: 15px; border: 1px solid #b1b4b6; font-size: 9pt; }
+    .beta-banner strong { font-weight: bold; color: #505a5f; }
+    .beta-banner .feedback-link { color: #005ea5; text-decoration: underline; }
+
+    h1 { font-size: 16pt; margin-bottom: 10px; color: #003078; border-bottom: 1px solid #ccc; padding-bottom: 3px;}
+    h2 { font-size: 13pt; margin-top: 20px; margin-bottom: 8px; color: #003078; }
+    h3 { font-size: 11pt; font-weight: bold; }
+    p { margin-bottom: 10px; }
+    .not-available { color: #505a5f; font-style: italic; }
+    .comment-block { page-break-inside: avoid; margin-bottom: 20px; padding: 15px; background-color: #f8f8f8; border-left: 5px solid #b1b4b6;}
+    .comment-block.accepted { border-left-color: #00703c; } /* Green for Accepted */
+    .comment-block.rejected { border-left-color: #d4351c; } /* Red for Rejected */
+    .comment-meta { font-size: 0.9em; color: #505a5f; margin-bottom: 10px; border-bottom: 1px dashed #b1b4b6; padding-bottom: 5px; }
+    .document-list { margin-top: 5px; padding-left: 0; list-style: none; }
+    .document-list li { margin-bottom: 3px; }
+    .site-address-header { margin-bottom: 15px; }
+  </style>
+</head>
+<body class="govuk-body">
+  <div class="header-container">
+    {% if logoDataUri %}<img src="{{ logoDataUri }}" alt="Logo" class="logo">{% endif %}
+    <div class="header-text">Planning Inspectorate - Manage your appeals</div>
+  </div>
+  <div class="beta-banner">
+    <strong>BETA</strong> This is a new service - your <span class="feedback-link">feedback</span> will help us improve it.
+  </div>
+
+  <h1 class="govuk-heading-xl">Interested Party Comments</h1>
+
+  <div class="site-address-header">
+    <p><strong>Site address:</strong>
+    {% if ipCommentsData.appealSite %}
+        {{ ipCommentsData.appealSite.addressLine1 | default('') }}{% if ipCommentsData.appealSite.addressLine2 %}, {{ ipCommentsData.appealSite.addressLine2 }}{% endif %}, {{ ipCommentsData.appealSite.postCode | default('') }}
+    {% else %}
+        <span class="not-available">Site address not available.</span>
+    {% endif %}
+    </p>
+  </div>
+
+  <p><strong>Appeal Reference:</strong> {{ ipCommentsData.appealReference | default('N/A') }}</p>
+
+  {# Section for Awaiting Review Comments #}
+  <h2 class="govuk-heading-m">Awaiting review</h2>
+  {% if ipCommentsData.awaitingReviewComments and ipCommentsData.awaitingReviewComments.length %}
+    {% for comment_item in ipCommentsData.awaitingReviewComments %}
+      <div class="comment-block">
+        <p class="comment-meta">
+          <strong>Interested party:</strong> {{ comment_item.author | default('N/A') }}<br>
+          <strong>Date Received:</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}
+        </p>
+        <p class="govuk-body">{{ comment_item.originalRepresentation | nl2br | default('No comment text provided.') | safe }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="not-available">No comments awaiting review.</p>
+  {% endif %}
+
+  {# Section for Accepted Comments #}
+  <h2 class="govuk-heading-m">Accepted</h2>
+  {% if ipCommentsData.acceptedComments and ipCommentsData.acceptedComments.length %}
+    {% for comment_item in ipCommentsData.acceptedComments %}
+      <div class="comment-block accepted">
+        <p class="comment-meta">
+          <strong>Interested party:</strong> {{ comment_item.author | default('N/A') }}<br>
+          <strong>Date Received:</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}
+        </p>
+        <p class="govuk-body">{{ comment_item.originalRepresentation | nl2br | default('No comment text provided.') | safe }}</p>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="not-available">No accepted comments.</p>
+  {% endif %}
+
+  {# Section for Rejected Comments #}
+  <h2 class="govuk-heading-m">Rejected</h2>
+  {% if ipCommentsData.rejectedComments and ipCommentsData.rejectedComments.length %}
+    {% for comment_item in ipCommentsData.rejectedComments %}
+      <div class="comment-block rejected">
+        <p class="comment-meta">
+          <strong>Interested party:</strong> {{ comment_item.author | default('N/A') }}<br>
+          <strong>Date Received:</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}
+        </p>
+        <p class="govuk-body">{{ comment_item.originalRepresentation | nl2br | default('No comment text provided.') | safe }}</p>
+
+        {# Display rejection reasons #}
+        {% if comment_item.rejectionReasons and comment_item.rejectionReasons.length %}
+          <h3 class="govuk-heading-s" style="margin-top: 15px;">Why was the comment rejected?</h3>
+          <ul class="govuk-list govuk-list--bullet">
+            {% for reason in comment_item.rejectionReasons %}
+              <li>{{ reason.name }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="not-available">No rejected comments.</p>
+  {% endif %}
+
+</body>
+</html>

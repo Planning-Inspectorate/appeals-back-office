@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+  <meta charset="utf-8" />
+  <title>LPA Final Comments - {{ lpaFinalCommentsData.appealReference | default('N/A') }}</title>
+  {% if gdsCss %}<style>{{ gdsCss | safe }}</style>{% endif %}
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; margin: 15mm; font-size: 9pt; line-height: 1.3; color: #333;}
+    .logo { max-width: 100px; height: auto; margin-bottom: 10px; }
+    .header-container { display: flex; align-items: center; margin-bottom: 10px; border-bottom: 5px solid #00703c; padding-bottom: 10px; }
+    .header-text { font-size: 14pt; font-weight: bold; margin-left: 15px; }
+    .beta-banner { background-color: #f3f2f1; padding: 8px 12px; margin-bottom: 15px; border: 1px solid #b1b4b6; font-size: 9pt; }
+    .beta-banner strong { font-weight: bold; color: #505a5f; }
+    .beta-banner .feedback-link { color: #005ea5; text-decoration: underline; }
+
+    h1 { font-size: 16pt; margin-bottom: 10px; color: #003078; border-bottom: 1px solid #ccc; padding-bottom: 3px;}
+    h2 { font-size: 13pt; margin-top: 20px; margin-bottom: 8px; color: #003078; }
+    p { margin-bottom: 10px; }
+    .not-available, .no-answer { color: #505a5f; font-style: italic; }
+    .comment-block { margin-bottom: 20px; padding: 10px; background-color: #f8f8f8; border-left: 3px solid #00703c;}
+    .comment-meta { font-size: 0.9em; color: #505a5f; margin-bottom: 5px; }
+    .document-list { margin-top: 5px; padding-left: 0; list-style: none; }
+    .document-list li { margin-bottom: 3px; }
+    .site-address-header { margin-bottom: 15px; }
+  </style>
+</head>
+<body class="govuk-body">
+  <div class="header-container">
+    {% if logoDataUri %}<img src="{{ logoDataUri }}" alt="Logo" class="logo">{% endif %}
+    <div class="header-text">Planning Inspectorate - Manage your appeals</div>
+  </div>
+  <div class="beta-banner">
+    <strong>BETA</strong> This is a new service - your <span class="feedback-link">feedback</span> will help us improve it.
+  </div>
+
+  <h1 class="govuk-heading-xl">LPA Final Comments</h1>
+
+  <div class="site-address-header">
+    <p><strong>Site address:</strong>
+    {% if lpaFinalCommentsData.appealSite %}
+        {{ lpaFinalCommentsData.appealSite.addressLine1 | default('') }}{% if lpaFinalCommentsData.appealSite.addressLine2 %}, {{ lpaFinalCommentsData.appealSite.addressLine2 }}{% endif %}{% if lpaFinalCommentsData.appealSite.town %}, {{ lpaFinalCommentsData.appealSite.town }}{% endif %}{% if lpaFinalCommentsData.appealSite.county %}, {{ lpaFinalCommentsData.appealSite.county }}{% endif %}, {{ lpaFinalCommentsData.appealSite.postCode | default('') }}
+    {% else %}
+        <span class="not-available">Site address not available.</span>
+    {% endif %}
+    </p>
+  </div>
+
+  <p><strong>Appeal Reference:</strong> {{ lpaFinalCommentsData.appealReference | default('N/A') }}</p>
+  <p><strong>LPA:</strong> {{ lpaFinalCommentsData.localPlanningDepartment | default('N/A') }}</p>
+
+  <h2 class="govuk-heading-m">Submitted Final Comments</h2>
+  {# The data is in lpaFinalCommentsData.commentsList (an array, likely with one item) #}
+  {% if lpaFinalCommentsData.commentsList and lpaFinalCommentsData.commentsList.length %}
+    {% for comment_item in lpaFinalCommentsData.commentsList %}
+      <div class="comment-block">
+        <p class="comment-meta">
+          {# Use comment_item.author for the submitter #}
+          <strong>Submitted by:</strong> {{ comment_item.author | default('N/A') }}<br>
+          {# Use comment_item.created for the date #}
+          <strong>Date Received:</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}<br>
+          <strong>Status:</strong> {{ comment_item.status | default('N/A') }}
+        </p>
+        {# Use comment_item.originalRepresentation for the comment text #}
+        <p class="govuk-body">{{ comment_item.originalRepresentation | nl2br | default('No comment text provided.') }}</p>
+
+        {% if comment_item.attachments and comment_item.attachments.length %}
+          <h3 class="govuk-heading-s">Supporting Documents:</h3>
+          <ul class="document-list">
+            {# Assuming each item in attachments array has a 'name' property #}
+            {% for doc in comment_item.attachments %}
+              <li>{{ doc.name | default('Unnamed document') }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="not-available">No supporting documents submitted with this comment.</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="not-available">No LPA final comments found or submitted for this appeal.</p>
+  {% endif %}
+
+</body>
+</html>

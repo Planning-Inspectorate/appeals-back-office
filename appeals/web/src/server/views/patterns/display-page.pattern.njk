@@ -21,10 +21,13 @@
 		{%- endif -%}
 	{%- endfor -%}
 {% if pageContent.currentAppeal %}
-  <a class="govuk-button" href="/appeals-service/appeal-details/{{ pageContent.currentAppeal.appealId }}/download-pdf">
-    Download PDF
-  </a>
-
+  <div class="govuk-button-group">
+    <button class="govuk-button govuk-button--secondary js-async-download-button"
+            data-module="govuk-button"
+            data-download-url="/appeals-service/appeal-details/{{ pageContent.currentAppeal.appealId }}/download-all-generated-pdfs">
+      Download All Generated PDFs as ZIP
+    </button>
+  </div>
 {% endif %}
 	{%- if errorSummaries | length -%}
 	<div class="govuk-grid-row">
