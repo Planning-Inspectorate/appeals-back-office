@@ -434,13 +434,6 @@ export function nationalListPage(
 									html: `<span class="govuk-!-width-one-third">
 										${appeal.planningApplicationReference}
 									</span>`
-
-									// `<a class="govuk-link" href="/appeals-service/appeal-details/${
-									// 	appeal.appealId
-									// }" aria-label="Application ${numberToAccessibleDigitLabel(
-									// 	appeal.planningApplicationReference || ''
-									// )}"
-									// data-cy="${appeal.planningApplicationReference}" >${appeal.planningApplicationReference}</a>`
 								},
 								{
 									// text: addressToString(appeal.appealSite),
