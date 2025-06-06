@@ -181,6 +181,7 @@ export const postAppealTimetables = async (request, response) => {
 
 	if (Object.keys(sessionTimetable).length === 0) {
 		// no success banner since user made no changes
+		delete session.appealTimetable;
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	}
 
