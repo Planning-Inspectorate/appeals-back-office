@@ -10,7 +10,8 @@ import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-han
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import {
 	DECISION_TYPE_APPELLANT_COSTS,
-	DECISION_TYPE_LPA_COSTS
+	DECISION_TYPE_LPA_COSTS,
+	LENGTH_300
 } from '@pins/appeals/constants/support.js';
 import {
 	baseUrl,
@@ -308,15 +309,14 @@ function checkAndConfirmPageRows(appealData, request) {
 		const decisionOutcome = mapDecisionOutcome(inspectorDecision.outcome);
 
 		if (decisionOutcome) {
-			let invalidReasonHtml = inspectorDecision.invalidReason
-				? `Reason: ${inspectorDecision.invalidReason}`
-				: '';
-			if (inspectorDecision.invalidReason?.length > 300) {
+			let invalidReasonHtml = inspectorDecision.invalidReason ? `Reason: ` : '';
+			if (invalidReasonHtml) {
 				invalidReasonHtml = nunjucksEnvironments.render('appeals/components/page-component.njk', {
 					component: {
 						type: 'show-more',
 						parameters: {
-							text: invalidReasonHtml,
+							text: `${invalidReasonHtml}${inspectorDecision.invalidReason}`,
+							maximumBeforeHiding: invalidReasonHtml.length + LENGTH_300, // 300 being the maximum length of the invalid reason before hiding
 							toggleTextCollapsed: 'Show more',
 							toggleTextExpanded: 'Show less'
 						}
