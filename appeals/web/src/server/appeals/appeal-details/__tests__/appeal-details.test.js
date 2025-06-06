@@ -43,7 +43,7 @@ const appealStatuses = [
 	{ appealStatus: 'complete', statusPassedEvent: true },
 	{ appealStatus: 'evidence', statusPassedEvent: false },
 	{ appealStatus: 'final_comments', statusPassedEvent: false },
-	{ appealStatus: 'invalid', statusPassedEvent: false },
+	{ appealStatus: 'invalid', statusPassedEvent: true },
 	{ appealStatus: 'issue_determination', statusPassedEvent: true },
 	{ appealStatus: 'lpa_questionnaire', statusPassedEvent: false },
 	{ appealStatus: 'ready_to_start', statusPassedEvent: false },
