@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
+import { mapValues } from 'lodash-es';
 import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_MUST_BE_BUSINESS_DAY,
@@ -549,14 +550,7 @@ describe('appeal timetables routes', () => {
 					azureAdUserId
 				});
 
-				const { id } = fullPlanningAppeal;
-				const response = await request
-					.post(`/appeals/${id}/appeal-timetables/`)
-					.send({ procedureType: 'hearing' })
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(201);
-				expect(response.body).toEqual({
+				const s78timetableDto = {
 					appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
 					finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
 					ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
@@ -564,7 +558,37 @@ describe('appeal timetables routes', () => {
 					lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
 					s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
 					statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+				};
+				const s78timetable = mapValues(s78timetableDto, (date) => new Date(date));
+
+				const { id } = fullPlanningAppeal;
+				const response = await request
+					.post(`/appeals/${id}/appeal-timetables/`)
+					.send({ procedureType: 'hearing' })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(response.body).toEqual(s78timetableDto);
+
+				expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
+					create: { ...s78timetable, appealId: id },
+					update: { ...s78timetable },
+					where: { appealId: id },
+					include: { appeal: true }
 				});
+
+				['The case timeline was created', 'Case started\nAppeal procedure: hearing'].forEach(
+					(details) => {
+						expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+							data: {
+								appealId: id,
+								details,
+								loggedAt: expect.any(Date),
+								userId: 1
+							}
+						});
+					}
+				);
 
 				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);

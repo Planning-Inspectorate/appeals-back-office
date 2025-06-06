@@ -53,6 +53,7 @@ export const AUDIT_TRAIL_ASSIGNED_CASE_OFFICER =
 export const AUDIT_TRAIL_ASSIGNED_INSPECTOR =
 	'The inspector {replacement0} was assigned to the case';
 export const AUDIT_TRAIL_MODIFIED_APPEAL = 'The {replacement0} property was updated';
+export const AUDIT_TRAIL_CASE_STARTED = 'Case started\nAppeal procedure: {replacement0}';
 export const AUDIT_TRAIL_CASE_TIMELINE_CREATED = 'The case timeline was created';
 export const AUDIT_TRAIL_CASE_TIMELINE_UPDATED = 'The case timeline was updated';
 export const AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED =
@@ -175,6 +176,11 @@ export const AUDIT_TRAIL_LISTED_BUILDING_REMOVED = 'A listed building was remove
 
 export const AUDIT_TRAIL_LPA_UPDATED = 'LPA updated to {replacement0}';
 
+export const AUDIT_TRAIL_HEARING_SET_UP = 'Hearing set up on {replacement0}';
+export const AUDIT_TRAIL_HEARING_DATE_UPDATED = 'Hearing date updated to {replacement0}';
+export const AUDIT_TRAIL_HEARING_ADDRESS_ADDED = 'The hearing address has been added';
+export const AUDIT_TRAIL_HEARING_ADDRESS_UPDATED = 'Hearing address updated to {replacement0}';
+export const AUDIT_TRAIL_HEARING_CANCELLED = 'Hearing cancelled';
 export const AUDIT_TRAIL_HEARING_ESTIMATES_ADDED = 'Hearing estimates added';
 export const AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED = 'Hearing estimates updated';
 export const AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED = 'Hearing estimates removed';

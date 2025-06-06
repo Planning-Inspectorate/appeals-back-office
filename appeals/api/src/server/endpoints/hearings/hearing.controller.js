@@ -9,6 +9,17 @@ import {
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_CANCEL
 } from '@pins/appeals/constants/support.js';
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { AUDIT_TRAIL_HEARING_SET_UP } from '@pins/appeals/constants/support.js';
+import { dateISOStringToDisplayDate } from '#utils/date-formatter.js';
+import {
+	AUDIT_TRAIL_HEARING_ADDRESS_ADDED,
+	AUDIT_TRAIL_HEARING_DATE_UPDATED,
+	AUDIT_TRAIL_HEARING_ADDRESS_UPDATED,
+	AUDIT_TRAIL_HEARING_CANCELLED
+} from '@pins/appeals/constants/support.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -57,8 +68,24 @@ export const postHearing = async (req, res) => {
 				}
 			})
 		});
+
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) && address) {
 			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+		}
+
+		await createAuditTrail({
+			appealId: appeal.id,
+			azureAdUserId,
+			details: stringTokenReplacement(AUDIT_TRAIL_HEARING_SET_UP, [
+				dateISOStringToDisplayDate(hearingStartTime)
+			])
+		});
+		if (address) {
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId,
+				details: AUDIT_TRAIL_HEARING_ADDRESS_ADDED
+			});
 		}
 	} catch (error) {
 		logger.error(error);
@@ -108,6 +135,29 @@ export const rearrangeHearing = async (req, res) => {
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) && address) {
 			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		}
+
+		const existingHearing = req.appeal.hearing;
+		if (existingHearing?.hearingStartTime !== hearingStartTime) {
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId,
+				details: stringTokenReplacement(AUDIT_TRAIL_HEARING_DATE_UPDATED, [
+					dateISOStringToDisplayDate(hearingStartTime)
+				])
+			});
+		}
+		if (address) {
+			const details = existingHearing?.address
+				? stringTokenReplacement(AUDIT_TRAIL_HEARING_ADDRESS_UPDATED, [
+						formatAddressSingleLine(address)
+				  ])
+				: AUDIT_TRAIL_HEARING_ADDRESS_ADDED;
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId,
+				details
+			});
+		}
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
@@ -129,6 +179,11 @@ export const cancelHearing = async (req, res) => {
 	try {
 		await deleteHearing({ hearingId: Number(hearingId) });
 		await transitionState(Number(appealId), azureAdUserId, VALIDATION_OUTCOME_CANCEL);
+		await createAuditTrail({
+			appealId: Number(appealId),
+			azureAdUserId,
+			details: AUDIT_TRAIL_HEARING_CANCELLED
+		});
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
