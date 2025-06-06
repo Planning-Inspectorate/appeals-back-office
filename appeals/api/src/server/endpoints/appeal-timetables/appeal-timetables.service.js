@@ -17,12 +17,13 @@ import transitionState from '#state/transition-state.js';
 import formatDate, { dateISOStringToDisplayDate } from '#utils/date-formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { PROCEDURE_TYPE_MAP, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from 'pins-data-model';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { notifySend } from '#notify/notify-send.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { APPEAL_TYPE_SHORTHAND_HAS } from '@pins/appeals/constants/support.js';
+import { AUDIT_TRAIL_CASE_STARTED } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -109,6 +110,14 @@ const startCase = async (
 				azureAdUserId,
 				details: AUDIT_TRAIL_CASE_TIMELINE_CREATED
 			});
+
+			if (appeal.appealType?.key === APPEAL_CASE_TYPE.W) {
+				await createAuditTrail({
+					appealId: appeal.id,
+					azureAdUserId,
+					details: stringTokenReplacement(AUDIT_TRAIL_CASE_STARTED, [procedureType || 'written'])
+				});
+			}
 
 			const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
 			const lpaEmail = appeal.lpa?.email || '';
