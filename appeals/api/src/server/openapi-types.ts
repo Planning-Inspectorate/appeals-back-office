@@ -487,6 +487,7 @@ export interface Folder {
 				| 'eiaScreeningOpinion'
 				| 'emergingPlan'
 				| 'environmentalAssessment'
+				| 'historicEnglandConsultation'
 				| 'inspectorCorrespondence'
 				| 'interestedPartyComment'
 				| 'lpaCaseCorrespondence'
@@ -586,6 +587,7 @@ export interface Folder {
 				| 'eiaScreeningOpinion'
 				| 'emergingPlan'
 				| 'environmentalAssessment'
+				| 'historicEnglandConsultation'
 				| 'inspectorCorrespondence'
 				| 'interestedPartyComment'
 				| 'lpaCaseCorrespondence'
@@ -1715,6 +1717,22 @@ export interface SingleLPAQuestionnaireResponse {
 				caseId?: number;
 			}[];
 		};
+		historicEnglandConsultation?: {
+			/** @example 1 */
+			folderId?: number;
+			/** @example "path/to/document/folder" */
+			path?: string;
+			documents?: {
+				/** @example "fdadc281-f686-40ee-97cf-9bafdd02b1cb" */
+				id?: string;
+				/** @example "an appeal related document.pdf" */
+				name?: string;
+				/** @example 1 */
+				folderId?: number;
+				/** @example 2 */
+				caseId?: number;
+			}[];
+		};
 	};
 	/** @example true */
 	doesAffectAListedBuilding?: boolean;
@@ -1812,6 +1830,8 @@ export interface SingleLPAQuestionnaireResponse {
 	};
 	/** @example "The inspector needs to access the neighbouring site" */
 	reasonForNeighbourVisits?: string;
+	/** @example true */
+	grantLoanPreserve?: boolean;
 }
 
 export interface UpdateAppellantCaseRequest {
@@ -1912,6 +1932,8 @@ export interface UpdateLPAQuestionnaireRequest {
 	validationOutcome?: string;
 	/** @example true */
 	isGreenBelt?: boolean;
+	/** @example true */
+	grantLoanPreserve?: boolean;
 }
 
 export type UpdateLPAQuestionnaireResponse = object;
@@ -2807,6 +2829,7 @@ export interface AppealDecision {
 				| 'eiaScreeningOpinion'
 				| 'emergingPlan'
 				| 'environmentalAssessment'
+				| 'historicEnglandConsultation'
 				| 'inspectorCorrespondence'
 				| 'interestedPartyComment'
 				| 'lpaCaseCorrespondence'
@@ -2906,6 +2929,7 @@ export interface AppealDecision {
 				| 'eiaScreeningOpinion'
 				| 'emergingPlan'
 				| 'environmentalAssessment'
+				| 'historicEnglandConsultation'
 				| 'inspectorCorrespondence'
 				| 'interestedPartyComment'
 				| 'lpaCaseCorrespondence'
@@ -3028,6 +3052,7 @@ export interface AppealWithdrawal {
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
 					| 'environmentalAssessment'
+					| 'historicEnglandConsultation'
 					| 'inspectorCorrespondence'
 					| 'interestedPartyComment'
 					| 'lpaCaseCorrespondence'
@@ -3127,6 +3152,7 @@ export interface AppealWithdrawal {
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
 					| 'environmentalAssessment'
+					| 'historicEnglandConsultation'
 					| 'inspectorCorrespondence'
 					| 'interestedPartyComment'
 					| 'lpaCaseCorrespondence'
@@ -3253,6 +3279,7 @@ export interface Document {
 			| 'eiaScreeningOpinion'
 			| 'emergingPlan'
 			| 'environmentalAssessment'
+			| 'historicEnglandConsultation'
 			| 'inspectorCorrespondence'
 			| 'interestedPartyComment'
 			| 'lpaCaseCorrespondence'
@@ -3352,6 +3379,7 @@ export interface Document {
 			| 'eiaScreeningOpinion'
 			| 'emergingPlan'
 			| 'environmentalAssessment'
+			| 'historicEnglandConsultation'
 			| 'inspectorCorrespondence'
 			| 'interestedPartyComment'
 			| 'lpaCaseCorrespondence'
@@ -3453,6 +3481,7 @@ export interface DocumentVersion {
 		| 'eiaScreeningOpinion'
 		| 'emergingPlan'
 		| 'environmentalAssessment'
+		| 'historicEnglandConsultation'
 		| 'inspectorCorrespondence'
 		| 'interestedPartyComment'
 		| 'lpaCaseCorrespondence'
@@ -3716,6 +3745,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -3815,6 +3845,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -3928,6 +3959,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -4027,6 +4059,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -4140,6 +4173,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -4239,6 +4273,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -4352,6 +4387,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -4451,6 +4487,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -4564,6 +4601,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -4663,6 +4701,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -4776,6 +4815,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -4875,6 +4915,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -4988,6 +5029,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -5087,6 +5129,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -5200,6 +5243,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -5299,6 +5343,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -5412,6 +5457,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -5511,6 +5557,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -5624,6 +5671,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -5723,6 +5771,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -5836,6 +5885,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -5935,6 +5985,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -6048,6 +6099,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -6147,6 +6199,7 @@ export type AppellantCase = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -6273,6 +6326,7 @@ export type LpaQuestionnaire = {
 	eiaSensitiveAreaDetails?: string | null;
 	consultedBodiesDetails?: string | null;
 	reasonForNeighbourVisits?: string | null;
+	grantLoanPreserve?: boolean | null;
 	designatedSiteNames?:
 		| {
 				id: number;
@@ -6371,6 +6425,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -6470,6 +6525,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -6583,6 +6639,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -6682,6 +6739,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -6795,6 +6853,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -6894,6 +6953,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -7007,6 +7067,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -7106,6 +7167,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -7219,6 +7281,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -7318,6 +7381,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -7431,6 +7495,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -7530,6 +7595,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -7643,6 +7709,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -7742,6 +7809,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -7855,6 +7923,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -7954,6 +8023,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -8067,6 +8137,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -8166,6 +8237,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -8279,6 +8351,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -8378,6 +8451,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -8491,6 +8565,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -8590,6 +8665,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -8703,6 +8779,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -8802,6 +8879,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -8915,6 +8993,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -9014,6 +9093,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -9127,6 +9207,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -9226,6 +9307,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -9339,6 +9421,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -9438,6 +9521,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -9551,6 +9635,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -9650,6 +9735,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -9763,6 +9849,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -9862,6 +9949,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -9975,6 +10063,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -10074,6 +10163,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -10399,6 +10489,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -10498,6 +10589,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -10611,6 +10703,7 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -10710,6 +10803,221 @@ export type LpaQuestionnaire = {
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
+						| 'inspectorCorrespondence'
+						| 'interestedPartyComment'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
+						| 'lpaCostsWithdrawal'
+						| 'lpaFinalComment'
+						| 'lpaProofOfEvidence'
+						| 'lpaStatement'
+						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'rule6ProofOfEvidence'
+						| 'rule6Statement'
+						| 'rule6WitnessesEvidence'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		historicEnglandConsultation?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appealNotification'
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
+						| 'appellantCostsWithdrawal'
+						| 'appellantFinalComment'
+						| 'appellantProofOfEvidence'
+						| 'appellantStatement'
+						| 'appellantWitnessesEvidence'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
+						| 'inspectorCorrespondence'
+						| 'interestedPartyComment'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
+						| 'lpaCostsWithdrawal'
+						| 'lpaFinalComment'
+						| 'lpaProofOfEvidence'
+						| 'lpaStatement'
+						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'rule6ProofOfEvidence'
+						| 'rule6Statement'
+						| 'rule6WitnessesEvidence'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appealNotification'
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
+						| 'appellantCostsWithdrawal'
+						| 'appellantFinalComment'
+						| 'appellantProofOfEvidence'
+						| 'appellantStatement'
+						| 'appellantWitnessesEvidence'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
@@ -10971,6 +11279,7 @@ export interface Appeal {
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
 					| 'environmentalAssessment'
+					| 'historicEnglandConsultation'
 					| 'inspectorCorrespondence'
 					| 'interestedPartyComment'
 					| 'lpaCaseCorrespondence'
@@ -11070,6 +11379,7 @@ export interface Appeal {
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
 					| 'environmentalAssessment'
+					| 'historicEnglandConsultation'
 					| 'inspectorCorrespondence'
 					| 'interestedPartyComment'
 					| 'lpaCaseCorrespondence'
@@ -11192,6 +11502,7 @@ export interface Appeal {
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
 					| 'environmentalAssessment'
+					| 'historicEnglandConsultation'
 					| 'inspectorCorrespondence'
 					| 'interestedPartyComment'
 					| 'lpaCaseCorrespondence'
@@ -11291,6 +11602,7 @@ export interface Appeal {
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
 					| 'environmentalAssessment'
+					| 'historicEnglandConsultation'
 					| 'inspectorCorrespondence'
 					| 'interestedPartyComment'
 					| 'lpaCaseCorrespondence'
@@ -11456,6 +11768,7 @@ export interface LpaQuestionnaireUpdateRequest {
 	eiaSensitiveAreaDetails?: string | null;
 	consultedBodiesDetails?: string | null;
 	reasonForNeighbourVisits?: string | null;
+	grantLoanPreserve?: boolean | null;
 	designatedSiteNames?:
 		| {
 				id: number;

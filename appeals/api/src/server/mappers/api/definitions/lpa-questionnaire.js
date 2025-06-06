@@ -105,6 +105,10 @@ const updateableFields = {
 		type: 'string',
 		nullable: true
 	},
+	grantLoanPreserve: {
+		type: 'boolean',
+		nullable: true
+	},
 	designatedSiteNames: {
 		type: 'array',
 		items: {
@@ -200,7 +204,8 @@ const lpaQuestionnaire = {
 				eiaScreeningDirection: { ...Folder },
 				eiaScopingOpinion: { ...Folder },
 				lpaCaseCorrespondence: { ...Folder },
-				otherRelevantPolicies: { ...Folder }
+				otherRelevantPolicies: { ...Folder },
+				historicEnglandConsultation: { ...Folder }
 			},
 			nullable: true
 		}

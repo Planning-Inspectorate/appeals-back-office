@@ -452,6 +452,10 @@ model LPAQuestionnaire {
   designatedSiteNameCustom            String?
   designatedSiteNames                 DesignatedSiteSelected[]
 
+  //S20 fields
+  historicEnglandConsultation Boolean?
+  grantLoanPreserve           Boolean?
+
   @@index([appealId])
   @@index([isGreenBelt])
 }

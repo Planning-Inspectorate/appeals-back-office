@@ -6635,6 +6635,7 @@
 												"eiaScreeningOpinion",
 												"emergingPlan",
 												"environmentalAssessment",
+												"historicEnglandConsultation",
 												"inspectorCorrespondence",
 												"interestedPartyComment",
 												"lpaCaseCorrespondence",
@@ -6797,6 +6798,7 @@
 													"eiaScreeningOpinion",
 													"emergingPlan",
 													"environmentalAssessment",
+													"historicEnglandConsultation",
 													"inspectorCorrespondence",
 													"interestedPartyComment",
 													"lpaCaseCorrespondence",
@@ -9256,6 +9258,43 @@
 										}
 									}
 								}
+							},
+							"historicEnglandConsultation": {
+								"type": "object",
+								"properties": {
+									"folderId": {
+										"type": "number",
+										"example": 1
+									},
+									"path": {
+										"type": "string",
+										"example": "path/to/document/folder"
+									},
+									"documents": {
+										"type": "array",
+										"items": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "string",
+													"example": "fdadc281-f686-40ee-97cf-9bafdd02b1cb"
+												},
+												"name": {
+													"type": "string",
+													"example": "an appeal related document.pdf"
+												},
+												"folderId": {
+													"type": "number",
+													"example": 1
+												},
+												"caseId": {
+													"type": "number",
+													"example": 2
+												}
+											}
+										}
+									}
+								}
 							}
 						}
 					},
@@ -9470,6 +9509,10 @@
 					"reasonForNeighbourVisits": {
 						"type": "string",
 						"example": "The inspector needs to access the neighbouring site"
+					},
+					"grantLoanPreserve": {
+						"type": "boolean",
+						"example": true
 					}
 				},
 				"xml": {
@@ -9699,6 +9742,10 @@
 						"example": "incomplete"
 					},
 					"isGreenBelt": {
+						"type": "boolean",
+						"example": true
+					},
+					"grantLoanPreserve": {
 						"type": "boolean",
 						"example": true
 					}
@@ -11644,6 +11691,7 @@
 												"eiaScreeningOpinion",
 												"emergingPlan",
 												"environmentalAssessment",
+												"historicEnglandConsultation",
 												"inspectorCorrespondence",
 												"interestedPartyComment",
 												"lpaCaseCorrespondence",
@@ -11806,6 +11854,7 @@
 													"eiaScreeningOpinion",
 													"emergingPlan",
 													"environmentalAssessment",
+													"historicEnglandConsultation",
 													"inspectorCorrespondence",
 													"interestedPartyComment",
 													"lpaCaseCorrespondence",
@@ -12034,6 +12083,7 @@
 														"eiaScreeningOpinion",
 														"emergingPlan",
 														"environmentalAssessment",
+														"historicEnglandConsultation",
 														"inspectorCorrespondence",
 														"interestedPartyComment",
 														"lpaCaseCorrespondence",
@@ -12196,6 +12246,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -12430,6 +12481,7 @@
 									"eiaScreeningOpinion",
 									"emergingPlan",
 									"environmentalAssessment",
+									"historicEnglandConsultation",
 									"inspectorCorrespondence",
 									"interestedPartyComment",
 									"lpaCaseCorrespondence",
@@ -12586,6 +12638,7 @@
 										"eiaScreeningOpinion",
 										"emergingPlan",
 										"environmentalAssessment",
+										"historicEnglandConsultation",
 										"inspectorCorrespondence",
 										"interestedPartyComment",
 										"lpaCaseCorrespondence",
@@ -12743,6 +12796,7 @@
 							"eiaScreeningOpinion",
 							"emergingPlan",
 							"environmentalAssessment",
+							"historicEnglandConsultation",
 							"inspectorCorrespondence",
 							"interestedPartyComment",
 							"lpaCaseCorrespondence",
@@ -13400,6 +13454,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -13562,6 +13617,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -13765,6 +13821,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -13927,6 +13984,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -14130,6 +14188,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -14292,6 +14351,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -14495,6 +14555,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -14657,6 +14718,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -14860,6 +14922,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -15022,6 +15085,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -15225,6 +15289,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -15387,6 +15452,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -15590,6 +15656,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -15752,6 +15819,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -15955,6 +16023,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -16117,6 +16186,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -16320,6 +16390,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -16482,6 +16553,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -16685,6 +16757,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -16847,6 +16920,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -17050,6 +17124,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -17212,6 +17287,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -17415,6 +17491,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -17577,6 +17654,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -17893,6 +17971,10 @@
 						"type": "string",
 						"nullable": true
 					},
+					"grantLoanPreserve": {
+						"type": "boolean",
+						"nullable": true
+					},
 					"designatedSiteNames": {
 						"type": "array",
 						"items": {
@@ -18142,6 +18224,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -18304,6 +18387,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -18507,6 +18591,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -18669,6 +18754,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -18872,6 +18958,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -19034,6 +19121,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -19237,6 +19325,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -19399,6 +19488,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -19602,6 +19692,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -19764,6 +19855,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -19967,6 +20059,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -20129,6 +20222,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -20332,6 +20426,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -20494,6 +20589,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -20697,6 +20793,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -20859,6 +20956,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -21062,6 +21160,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -21224,6 +21323,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -21427,6 +21527,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -21589,6 +21690,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -21792,6 +21894,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -21954,6 +22057,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -22157,6 +22261,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -22319,6 +22424,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -22522,6 +22628,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -22684,6 +22791,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -22887,6 +22995,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -23049,6 +23158,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -23252,6 +23362,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -23414,6 +23525,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -23617,6 +23729,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -23779,6 +23892,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -23982,6 +24096,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -24144,6 +24259,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -24347,6 +24463,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -24509,6 +24626,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -25077,6 +25195,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -25239,6 +25358,7 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -25442,6 +25562,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -25604,6 +25725,374 @@
 																	"eiaScreeningOpinion",
 																	"emergingPlan",
 																	"environmentalAssessment",
+																	"historicEnglandConsultation",
+																	"inspectorCorrespondence",
+																	"interestedPartyComment",
+																	"lpaCaseCorrespondence",
+																	"lpaCostsApplication",
+																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
+																	"lpaCostsWithdrawal",
+																	"lpaFinalComment",
+																	"lpaProofOfEvidence",
+																	"lpaStatement",
+																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
+																	"newPlansDrawings",
+																	"originalApplicationForm",
+																	"otherNewDocuments",
+																	"otherPartyRepresentations",
+																	"otherRelevantPolicies",
+																	"ownershipCertificate",
+																	"planningObligation",
+																	"planningOfficerReport",
+																	"plansDrawings",
+																	"rule6ProofOfEvidence",
+																	"rule6Statement",
+																	"rule6WitnessesEvidence",
+																	"statementCommonGround",
+																	"supplementaryPlanning",
+																	"treePreservationPlan",
+																	"uncategorised",
+																	"whoNotified",
+																	"whoNotifiedLetterToNeighbours",
+																	"whoNotifiedPressAdvert",
+																	"whoNotifiedSiteNotice"
+																]
+															},
+															"stage": {
+																"type": "string",
+																"enum": [
+																	"appeal-decision",
+																	"appellant-case",
+																	"costs",
+																	"evidence",
+																	"final-comments",
+																	"internal",
+																	"lpa-questionnaire",
+																	"statements",
+																	"third-party-comments",
+																	"witnesses"
+																]
+															},
+															"documentURI": {
+																"type": "string"
+															},
+															"isLateEntry": {
+																"type": "boolean"
+															},
+															"isDeleted": {
+																"type": "boolean"
+															},
+															"versionAudit": {
+																"nullable": true,
+																"type": "array",
+																"items": {
+																	"type": "object",
+																	"required": ["loggedAt", "user", "action", "details"],
+																	"properties": {
+																		"loggedAt": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"user": {
+																			"type": "string",
+																			"format": "uuid"
+																		},
+																		"action": {
+																			"type": "string"
+																		},
+																		"details": {
+																			"type": "string"
+																		}
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												}
+											}
+										}
+									}
+								}
+							},
+							"historicEnglandConsultation": {
+								"type": "object",
+								"required": ["caseId", "folderId", "path", "documents"],
+								"properties": {
+									"caseId": {
+										"type": "number"
+									},
+									"folderId": {
+										"type": "number"
+									},
+									"path": {
+										"type": "string"
+									},
+									"documents": {
+										"nullable": true,
+										"type": "array",
+										"items": {
+											"type": "object",
+											"required": ["id", "name"],
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"caseId": {
+													"type": "number"
+												},
+												"folderId": {
+													"type": "number"
+												},
+												"name": {
+													"type": "string"
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"latestDocumentVersion": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationMap",
+																"consultationResponses",
+																"crossTeamCorrespondence",
+																"definitiveMapStatement",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"environmentalAssessment",
+																"historicEnglandConsultation",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
+																"lpaCostsWithdrawal",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planningObligation",
+																"planningOfficerReport",
+																"plansDrawings",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												},
+												"allVersions": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"required": [
+															"id",
+															"version",
+															"virusCheckStatus",
+															"redactionStatus",
+															"documentURI"
+														],
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"version": {
+																"type": "number"
+															},
+															"fileName": {
+																"type": "string"
+															},
+															"originalFileName": {
+																"type": "string"
+															},
+															"size": {
+																"type": "number"
+															},
+															"mime": {
+																"type": "string"
+															},
+															"createdAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"dateReceived": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"redactionStatus": {
+																"type": "string",
+																"enum": ["no_redaction_required", "not_redacted", "redacted"]
+															},
+															"virusCheckStatus": {
+																"type": "string",
+																"enum": ["affected", "not_scanned", "scanned"]
+															},
+															"documentType": {
+																"type": "string",
+																"enum": [
+																	"appealNotification",
+																	"appellantCaseCorrespondence",
+																	"appellantCaseWithdrawalLetter",
+																	"appellantCostsApplication",
+																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
+																	"appellantCostsWithdrawal",
+																	"appellantFinalComment",
+																	"appellantProofOfEvidence",
+																	"appellantStatement",
+																	"appellantWitnessesEvidence",
+																	"applicationDecisionLetter",
+																	"caseDecisionLetter",
+																	"changedDescription",
+																	"communityInfrastructureLevy",
+																	"conservationMap",
+																	"consultationResponses",
+																	"crossTeamCorrespondence",
+																	"definitiveMapStatement",
+																	"designAccessStatement",
+																	"developmentPlanPolicies",
+																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
+																	"eiaScreeningDirection",
+																	"eiaScreeningOpinion",
+																	"emergingPlan",
+																	"environmentalAssessment",
+																	"historicEnglandConsultation",
 																	"inspectorCorrespondence",
 																	"interestedPartyComment",
 																	"lpaCaseCorrespondence",
@@ -26325,6 +26814,7 @@
 														"eiaScreeningOpinion",
 														"emergingPlan",
 														"environmentalAssessment",
+														"historicEnglandConsultation",
 														"inspectorCorrespondence",
 														"interestedPartyComment",
 														"lpaCaseCorrespondence",
@@ -26487,6 +26977,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -26712,6 +27203,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -26874,6 +27366,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -27076,6 +27569,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -27238,6 +27732,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -27440,6 +27935,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -27602,6 +28098,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -27804,6 +28301,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -27966,6 +28464,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -28168,6 +28667,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -28330,6 +28830,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -28532,6 +29033,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -28694,6 +29196,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -28896,6 +29399,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -29058,6 +29562,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -29260,6 +29765,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -29422,6 +29928,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -29624,6 +30131,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -29786,6 +30294,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -29990,6 +30499,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -30152,6 +30662,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -30354,6 +30865,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -30516,6 +31028,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -30718,6 +31231,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -30880,6 +31394,7 @@
 																"eiaScreeningOpinion",
 																"emergingPlan",
 																"environmentalAssessment",
+																"historicEnglandConsultation",
 																"inspectorCorrespondence",
 																"interestedPartyComment",
 																"lpaCaseCorrespondence",
@@ -31083,6 +31598,7 @@
 														"eiaScreeningOpinion",
 														"emergingPlan",
 														"environmentalAssessment",
+														"historicEnglandConsultation",
 														"inspectorCorrespondence",
 														"interestedPartyComment",
 														"lpaCaseCorrespondence",
@@ -31245,6 +31761,7 @@
 															"eiaScreeningOpinion",
 															"emergingPlan",
 															"environmentalAssessment",
+															"historicEnglandConsultation",
 															"inspectorCorrespondence",
 															"interestedPartyComment",
 															"lpaCaseCorrespondence",
@@ -31660,6 +32177,10 @@
 					},
 					"reasonForNeighbourVisits": {
 						"type": "string",
+						"nullable": true
+					},
+					"grantLoanPreserve": {
+						"type": "boolean",
 						"nullable": true
 					},
 					"designatedSiteNames": {
