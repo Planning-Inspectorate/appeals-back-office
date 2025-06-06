@@ -51,6 +51,7 @@ export const mapAppealDecision = (data) => {
 					return {
 						folderId: decisionFolder.id,
 						path: decisionFolder.path,
+						letterDate: appeal.inspectorDecision.caseDecisionOutcomeDate?.toISOString(),
 						outcome
 					};
 				}

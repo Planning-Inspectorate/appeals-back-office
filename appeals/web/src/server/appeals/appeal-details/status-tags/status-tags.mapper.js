@@ -49,13 +49,15 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 	}
 
 	const isAppealWithdrawn = appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
+	const isAppealInvalid = appealDetails.appealStatus === APPEAL_CASE_STATUS.INVALID;
 
 	if (
-		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
-		statusTag &&
-		(appealDetails.decision.documentId ||
-			appealDetails.costs.appellantDecisionFolder?.documents?.length ||
-			appealDetails.costs.lpaDecisionFolder?.documents?.length)
+		isAppealInvalid ||
+		(isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
+			statusTag &&
+			(appealDetails.decision.documentId ||
+				appealDetails.costs.appellantDecisionFolder?.documents?.length ||
+				appealDetails.costs.lpaDecisionFolder?.documents?.length))
 	) {
 		const letterDate = appealDetails.decision?.letterDate
 			? dateISOStringToDisplayDate(appealDetails.decision.letterDate)

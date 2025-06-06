@@ -11,7 +11,10 @@ export const mapCostsAppellantDecision = ({ appealDetails, currentRoute, session
 		appealDetails.costs ?? {};
 
 	if (
-		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
+		!(
+			isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
+			appealDetails.appealStatus === APPEAL_CASE_STATUS.INVALID
+		) ||
 		!appellantApplicationFolder?.documents?.length ||
 		appellantWithdrawalFolder?.documents?.length
 	) {
@@ -19,7 +22,8 @@ export const mapCostsAppellantDecision = ({ appealDetails, currentRoute, session
 	}
 
 	const editable =
-		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
+		(isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
+			appealDetails.appealStatus === APPEAL_CASE_STATUS.INVALID) &&
 		userHasPermission(permissionNames.setCaseOutcome, session);
 
 	const isIssued = appellantDecisionFolder?.documents?.length;
