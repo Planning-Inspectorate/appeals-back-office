@@ -512,11 +512,23 @@ export function viewDecisionPageRows(appealData) {
 	if (decision) {
 		const { outcome, documentId, documentName, letterDate, invalidReason } = decision;
 		const decisionOutcome = mapDecisionOutcome(outcome);
+		let invalidReasonHtml = invalidReason ? `Reason: ` : '';
+		if (invalidReasonHtml) {
+			invalidReasonHtml = nunjucksEnvironments.render('appeals/components/page-component.njk', {
+				component: {
+					type: 'show-more',
+					parameters: {
+						text: `${invalidReasonHtml}${invalidReason}`,
+						maximumBeforeHiding: invalidReasonHtml.length + LENGTH_300, // 300 being the maximum length of the invalid reason before hiding
+						toggleTextCollapsed: 'Show more',
+						toggleTextExpanded: 'Show less'
+					}
+				}
+			});
+		}
 		rows.push({
 			key: 'Decision',
-			value: `${decisionOutcome}${
-				invalidReason ? `<br><br>Reason: ${invalidReason.replaceAll(`\n`, '<br>')}` : ''
-			}`
+			html: `${decisionOutcome}${invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''}`
 		});
 		if (documentName) {
 			rows.push({
