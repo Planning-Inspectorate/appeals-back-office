@@ -2969,6 +2969,7 @@ export interface AppealDecision {
 	documentName?: string | null;
 	/** @format date-time */
 	letterDate?: string | null;
+	invalidReason?: string | null;
 	virusCheckStatus?: 'affected' | 'not_scanned' | 'scanned';
 	outcome?: 'allowed' | 'dismissed' | 'invalid' | 'split_decision';
 }
@@ -11133,6 +11134,7 @@ export interface Appeal {
 		documentName?: string | null;
 		/** @format date-time */
 		letterDate?: string | null;
+		invalidReason?: string | null;
 		virusCheckStatus?: 'affected' | 'not_scanned' | 'scanned';
 		outcome?: 'allowed' | 'dismissed' | 'invalid' | 'split_decision';
 	};

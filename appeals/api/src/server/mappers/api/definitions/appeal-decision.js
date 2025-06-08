@@ -19,6 +19,10 @@ const appealDecision = {
 			format: 'date-time',
 			nullable: true
 		},
+		invalidReason: {
+			type: 'string',
+			nullable: true
+		},
 		virusCheckStatus: {
 			type: 'string',
 			enum: [...Object.values(APPEAL_VIRUS_CHECK_STATUS)]

@@ -11,10 +11,7 @@ export const mapCostsLpaDecision = ({ appealDetails, currentRoute, session, requ
 		appealDetails.costs ?? {};
 
 	if (
-		!(
-			isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
-			appealDetails.appealStatus === APPEAL_CASE_STATUS.INVALID
-		) ||
+		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
 		!lpaApplicationFolder?.documents?.length ||
 		lpaWithdrawalFolder?.documents?.length
 	) {
@@ -22,8 +19,7 @@ export const mapCostsLpaDecision = ({ appealDetails, currentRoute, session, requ
 	}
 
 	const editable =
-		(isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
-			appealDetails.appealStatus === APPEAL_CASE_STATUS.INVALID) &&
+		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
 		userHasPermission(permissionNames.setCaseOutcome, session);
 
 	const isIssued = lpaDecisionFolder?.documents?.length;
