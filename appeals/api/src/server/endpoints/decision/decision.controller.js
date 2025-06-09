@@ -10,6 +10,7 @@ import {
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { isCurrentStatus } from '#utils/current-status.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -28,7 +29,7 @@ export const postInspectorDecision = async (req, res) => {
 		decisions.some(
 			(/** @type {Decision} */ decision) => decision?.decisionType === DECISION_TYPE_INSPECTOR
 		) &&
-		appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.ISSUE_DETERMINATION
+		!isCurrentStatus(req.appeal, APPEAL_CASE_STATUS.ISSUE_DETERMINATION)
 	) {
 		return res.status(400).send({ errors: { state: ERROR_INVALID_APPEAL_STATE } });
 	}

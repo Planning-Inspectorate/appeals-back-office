@@ -1887,7 +1887,7 @@ describe('appeal-details', () => {
 				.reply(200, {
 					...appealData,
 					appealStatus: 'complete',
-					stateList: [{ key: 'awaiting_event', completed: true }]
+					completedStateList: ['awaiting_event']
 				});
 			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 			const response = await request.get(`${baseUrl}/${appealId}`);
@@ -2937,12 +2937,7 @@ describe('appeal-details', () => {
 							},
 							caseOfficer: '2cb7735e-c4cf-410b-b773-5ec4cf110b87',
 							appealId,
-							stateList: [
-								{
-									key: 'statements',
-									completed: true
-								}
-							]
+							completedStateList: ['statements']
 						});
 					const response = await request.get(`${baseUrl}/${appealId}`);
 					expect(response.statusCode).toBe(200);
@@ -3898,7 +3893,7 @@ describe('appeal-details', () => {
 						...appealData,
 						appealId,
 						appealStatus: 'issue_determination',
-						stateList: [{ key: 'awaiting_event', completed: true }],
+						completedStateList: ['awaiting_event'],
 						decision: {
 							...appealData.decision,
 							outcome: null
@@ -3965,7 +3960,7 @@ describe('appeal-details', () => {
 							.reply(200, {
 								...appealData,
 								appealId,
-								stateList: [{ key: 'awaiting_event', completed: true }],
+								completedStateList: ['awaiting_event'],
 								appealStatus: 'issue_determination',
 								costs: {
 									appellantApplicationFolder: {
@@ -4003,7 +3998,7 @@ describe('appeal-details', () => {
 							.reply(200, {
 								...appealData,
 								appealId,
-								stateList: [{ key: 'event', completed: false }],
+								completedStateList: ['event'],
 								appealStatus,
 								costs: {
 									appellantApplicationFolder: {
@@ -4032,8 +4027,8 @@ describe('appeal-details', () => {
 							.reply(200, {
 								...appealData,
 								appealId,
-								stateList: [{ key: 'awaiting_event', completed: true }],
-								appealStatus: 'issue_determination',
+								completedStateList: ['awaiting_event'],
+								appealStatus,
 								costs: {
 									lpaApplicationFolder: {
 										documents: [{ id: 1 }]
@@ -4070,7 +4065,7 @@ describe('appeal-details', () => {
 							.reply(200, {
 								...appealData,
 								appealId,
-								stateList: [{ key: 'event', completed: false }],
+								completedStateList: ['event'],
 								appealStatus,
 								costs: {
 									lpaApplicationFolder: {

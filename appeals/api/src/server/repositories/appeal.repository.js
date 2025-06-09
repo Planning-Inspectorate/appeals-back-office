@@ -68,11 +68,7 @@ const appealDetailsInclude = {
 	appellant: true,
 	agent: true,
 	lpa: true,
-	appealStatus: {
-		where: {
-			valid: true
-		}
-	},
+	appealStatus: true,
 	appealTimetable: true,
 	appealType: true,
 	caseOfficer: true,

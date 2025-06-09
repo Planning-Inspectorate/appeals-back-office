@@ -1,5 +1,7 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
+import { currentStatus } from '#utils/current-status.js';
+
 /**
  * @param {Appeal} appeal
  * @returns {import('@pins/appeals.api').Appeals.LinkableAppealSummary}
@@ -9,7 +11,7 @@ export const formatLinkableAppealSummary = (appeal) => {
 		appealId: appeal.id.toString(),
 		appealReference: appeal.reference,
 		appealType: appeal.appealType?.type,
-		appealStatus: appeal.appealStatus[0].status,
+		appealStatus: currentStatus(appeal),
 		siteAddress: {
 			addressLine1: appeal.address?.addressLine1 || '',
 			addressLine2: appeal.address?.addressLine2 || '',

@@ -14,6 +14,7 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.service.js';
+import { currentStatus } from '#utils/current-status.js';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,
@@ -48,7 +49,7 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
-	appealStatus: appeal.appealStatus[0].status,
+	appealStatus: currentStatus(appeal),
 	appealType: appeal.appealType?.type,
 	procedureType: appeal.procedureType?.name,
 	createdAt: appeal.caseCreatedDate,
@@ -70,7 +71,7 @@ const formatMyAppeals = async (appeal, linkedAppeals) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
-	appealStatus: appeal.appealStatus[0].status,
+	appealStatus: currentStatus(appeal),
 	appealType: appeal.appealType?.type,
 	procedureType: appeal.procedureType?.name,
 	createdAt: appeal.caseCreatedDate,
@@ -189,7 +190,7 @@ function formatAppealTimetable(appeal) {
  * @returns {Promise<Date | null | undefined>}
  */
 export const mapAppealToDueDate = async (appeal, appellantCaseStatus, appellantCaseDueDate) => {
-	switch (appeal.appealStatus[0].status) {
+	switch (currentStatus(appeal)) {
 		case APPEAL_CASE_STATUS.READY_TO_START:
 			if (appellantCaseStatus === 'Incomplete' && appellantCaseDueDate) {
 				return new Date(appellantCaseDueDate);
