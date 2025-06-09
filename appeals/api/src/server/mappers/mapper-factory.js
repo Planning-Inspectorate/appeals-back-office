@@ -74,10 +74,13 @@ function createIntegrationMap(mappingRequest) {
 
 	switch (appeal.appealType?.key) {
 		//TODO: validate with Data Model
-		case APPEAL_CASE_TYPE.W:
-		case APPEAL_CASE_TYPE.Y: {
+		case APPEAL_CASE_TYPE.W: {
 			const s78 = createMap(integrationMappers.integrationS78Mappers, mappingRequest);
 			return mergeMaps(caseData, s78);
+		}
+		case APPEAL_CASE_TYPE.Y: {
+			const s20 = createMap(integrationMappers.integrationS20Mappers, mappingRequest);
+			return mergeMaps(caseData, s20);
 		}
 		default:
 			return caseData;

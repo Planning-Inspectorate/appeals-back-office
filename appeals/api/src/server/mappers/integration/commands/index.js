@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { APPEAL_CASE_STAGE, APPEAL_CASE_TYPE, SERVICE_USER_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from 'pins-data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { mapAddressIn, mapNeighbouringAddressIn } from './address.mapper.js';
 import { mapDocumentIn } from './document.mapper.js';
@@ -89,9 +89,8 @@ const mapAppealSubmission = (data) => {
  */
 const mapQuestionnaireSubmission = (data, appeal, designatedSites) => {
 	const { casedata, documents } = data;
-	const isS78 = appeal?.appealType?.key === APPEAL_CASE_TYPE.W || false;
 	const questionnaireInput = {
-		...mapQuestionnaireIn({ casedata }, isS78, designatedSites),
+		...mapQuestionnaireIn({ casedata }, designatedSites),
 		neighbouringSites: {
 			create: casedata.neighbouringSiteAddresses?.map((site) => {
 				return {
