@@ -1,6 +1,9 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('pins-data-model').Schemas.AppealS78Case} AppealS78Case */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
+
+import { mapAppellantCaseSharedFields } from '../shared/s20s78/map-appellant-case.js';
+
 /**
  *
  * @param {MappingRequest} data
@@ -11,31 +14,12 @@ export const mapAppellantCase = (data) => {
 
 	const casedata = appeal.appellantCase;
 
+	// @ts-ignore
 	return {
-		// @ts-ignore
-		appellantProcedurePreference: casedata?.appellantProcedurePreference,
-		appellantProcedurePreferenceDetails: casedata?.appellantProcedurePreferenceDetails ?? null,
-		appellantProcedurePreferenceDuration: casedata?.appellantProcedurePreferenceDuration ?? null,
-		appellantProcedurePreferenceWitnessCount:
-			casedata?.appellantProcedurePreferenceWitnessCount ?? null,
+		...mapAppellantCaseSharedFields(data),
 		informedTenantsAgriculturalHolding: casedata?.informedTenantsAgriculturalHolding ?? null,
 		agriculturalHolding: casedata?.agriculturalHolding ?? null,
 		tenantAgriculturalHolding: casedata?.tenantAgriculturalHolding ?? null,
-		otherTenantsAgriculturalHolding: casedata?.otherTenantsAgriculturalHolding ?? null,
-		caseworkReason: casedata?.caseworkReason ?? null,
-		// @ts-ignore
-		developmentType: casedata?.developmentType ?? null,
-		jurisdiction: casedata?.jurisdiction ?? null,
-		numberOfResidencesNetChange: casedata?.numberOfResidencesNetChange ?? null,
-		siteGridReferenceEasting: casedata?.siteGridReferenceEasting ?? null,
-		siteGridReferenceNorthing: casedata?.siteGridReferenceNorthing ?? null,
-		siteViewableFromRoad: casedata?.siteViewableFromRoad ?? null,
-		planningObligation: casedata?.planningObligation ?? null,
-		statusPlanningObligation: casedata?.statusPlanningObligation ?? null,
-		// @ts-ignore
-		typeOfPlanningApplication: casedata?.typeOfPlanningApplication,
-
-		//TODO:
-		designAccessStatementProvided: null
+		otherTenantsAgriculturalHolding: casedata?.otherTenantsAgriculturalHolding ?? null
 	};
 };

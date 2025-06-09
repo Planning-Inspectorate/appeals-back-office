@@ -1,16 +1,15 @@
-import { mapLpaQuestionnaireSharedFields } from '../shared/s20s78/map-lpa-questionnaire.js';
-
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('pins-data-model').Schemas.AppealS78Case} AppealS78Case */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
+import { mapAppellantCaseSharedFields } from '#mappers/integration/shared/s20s78/map-appellant-case.js';
+
 /**
  *
  * @param {MappingRequest} data
- * @returns {AppealS78Case}
  */
-export const mapLpaQuestionnaire = (data) => {
+export const mapAppellantCase = (data) => {
 	return {
-		...mapLpaQuestionnaireSharedFields(data)
+		...mapAppellantCaseSharedFields(data)
 	};
 };
