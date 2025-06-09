@@ -32,9 +32,6 @@ export const mapAppellantCase = (data) => {
 		siteViewableFromRoad: casedata?.siteViewableFromRoad ?? null,
 		planningObligation: casedata?.planningObligation ?? null,
 		statusPlanningObligation: casedata?.statusPlanningObligation ?? null,
-		// @ts-ignore
-		typeOfPlanningApplication: casedata?.typeOfPlanningApplication,
-
 		//TODO:
 		designAccessStatementProvided: null
 	};

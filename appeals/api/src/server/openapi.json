@@ -13154,6 +13154,18 @@
 							"other-minor"
 						]
 					},
+					"typeOfPlanningApplication": {
+						"type": "string",
+						"nullable": true,
+						"enum": [
+							"full-appeal",
+							"householder-planning",
+							"outline-planning",
+							"prior-approval",
+							"removal-or-variation-of-conditions",
+							"reserved-matters"
+						]
+					},
 					"validation": {
 						"type": "object",
 						"properties": {
@@ -31466,6 +31478,18 @@
 							"minor-traveller-caravan",
 							"other-major",
 							"other-minor"
+						]
+					},
+					"typeOfPlanningApplication": {
+						"type": "string",
+						"nullable": true,
+						"enum": [
+							"full-appeal",
+							"householder-planning",
+							"outline-planning",
+							"prior-approval",
+							"removal-or-variation-of-conditions",
+							"reserved-matters"
 						]
 					},
 					"appellantCaseValidationOutcomeId": {

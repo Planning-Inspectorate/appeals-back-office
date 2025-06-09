@@ -3623,6 +3623,14 @@ export type AppellantCase = {
 		| 'other-major'
 		| 'other-minor'
 		| null;
+	typeOfPlanningApplication?:
+		| 'full-appeal'
+		| 'householder-planning'
+		| 'outline-planning'
+		| 'prior-approval'
+		| 'removal-or-variation-of-conditions'
+		| 'reserved-matters'
+		| null;
 	validation?: {
 		outcome?: string | null;
 		incompleteReasons?: {
@@ -11398,6 +11406,14 @@ export interface AppellantCaseUpdateRequest {
 		| 'minor-traveller-caravan'
 		| 'other-major'
 		| 'other-minor'
+		| null;
+	typeOfPlanningApplication?:
+		| 'full-appeal'
+		| 'householder-planning'
+		| 'outline-planning'
+		| 'prior-approval'
+		| 'removal-or-variation-of-conditions'
+		| 'reserved-matters'
 		| null;
 	appellantCaseValidationOutcomeId?: number | null;
 	validationOutcome?: {
