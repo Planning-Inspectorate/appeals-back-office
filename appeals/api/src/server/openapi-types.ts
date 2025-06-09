@@ -1162,6 +1162,8 @@ export interface SingleAppealResponse {
 	};
 	/** @example [] */
 	stateList?: any[];
+	/** @example ["awaiting_event"] */
+	completedStateList?: string[];
 }
 
 export interface SingleAppellantCaseResponse {

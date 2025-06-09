@@ -171,6 +171,7 @@ export const appealData = {
 	},
 	appealStatus: 'received_appeal',
 	stateList: [],
+	completedStateList: [],
 	appealTimetable: {
 		appealTimetableId: 1053,
 		lpaQuestionnaireDueDate: '2023-10-11T01:00:00.000Z',

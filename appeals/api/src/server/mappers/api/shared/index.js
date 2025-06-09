@@ -16,6 +16,7 @@ import { mapAppellantCase } from './map-appellant-case.js';
 import { mapLpaQuestionnaire } from './map-lpa-questionnaire.js';
 import { mapHearing } from './map-hearing.js';
 import { mapHearingEstimate } from './map-hearing-estimate.js';
+import { mapCompletedStateList } from '#mappers/api/shared/map-completed-state-list.js';
 
 export const apiSharedMappers = {
 	appealSummary: mapAppealSummary,
@@ -27,6 +28,7 @@ export const apiSharedMappers = {
 	appealTimetable: mapAppealTimetable,
 	documentationSummary: mapDocumentationSummary,
 	stateList: mapStateList,
+	completedStateList: mapCompletedStateList,
 	decision: mapAppealDecision,
 	appealRelationships: mapAppealRelationships,
 	neighbouringSites: mapNeighbouringSites,

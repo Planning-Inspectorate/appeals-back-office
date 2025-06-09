@@ -23,6 +23,7 @@ import { camelToScreamingSnake } from '#utils/string-utils.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import { notifyOnStatusChange } from './notify/index.js';
+import { currentStatus } from '#utils/current-status.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -315,15 +316,15 @@ export async function publish(req, res) {
 		throw new BackOfficeAppError('azureAdUserId not provided', 401);
 	}
 
-	const currentStatus = appeal.appealStatus[0]?.status;
-	if (!currentStatus) {
+	const currentAppealStatus = currentStatus(appeal);
+	if (!currentAppealStatus) {
 		throw new BackOfficeAppError(`no status found for appeal ${appeal.id}`, 500);
 	}
 
-	const publish = handlers[currentStatus];
+	const publish = handlers[currentAppealStatus];
 	if (!publish) {
 		throw new BackOfficeAppError(
-			`cannot publish representations when appeal is in the ${currentStatus} state`,
+			`cannot publish representations when appeal is in the ${currentAppealStatus} state`,
 			409
 		);
 	}
@@ -337,7 +338,7 @@ export async function publish(req, res) {
 			[APPEAL_CASE_STATUS.FINAL_COMMENTS]: 'Final comments'
 		};
 
-		const replacement = replacements[currentStatus];
+		const replacement = replacements[currentAppealStatus];
 		if (replacement) {
 			const details = stringTokenReplacement(CONSTANTS.AUDIT_TRAIL_REP_SHARED, [replacement]);
 

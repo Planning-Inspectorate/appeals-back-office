@@ -13,6 +13,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 import isFPA from '#utils/is-fpa.js';
+import { currentStatus } from '#utils/current-status.js';
 
 /** @typedef {import('#db-client').AppealType} AppealType */
 /** @typedef {import('#db-client').AppealStatus} AppealStatus */
@@ -34,7 +35,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		throw new Error(`appeal with ID ${appealId} is missing fields required to transition state`);
 	}
 
-	const currentState = appealStatus[0].status;
+	const currentState = currentStatus(appeal);
 
 	if (!procedureType) {
 		logger.info(`Procedure type not set for appeal ${appealId}, defaulting to written`);
@@ -74,6 +75,7 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	if (
 		currentState !== APPEAL_CASE_STATUS.AWAITING_EVENT &&
 		newState === APPEAL_CASE_STATUS.EVENT &&
+		// newState === APPEAL_CASE_STATUS.ISSUE_DETERMINATION &&
 		[APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA].includes(appealType.key) &&
 		appeal.siteVisit
 	) {

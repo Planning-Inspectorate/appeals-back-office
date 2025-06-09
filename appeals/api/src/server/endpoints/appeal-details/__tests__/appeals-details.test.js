@@ -51,6 +51,7 @@ const householdAppealDto = {
 	},
 	appealStatus: householdAppeal.appealStatus[0].status,
 	stateList: householdAppeal.stateList,
+	completedStateList: [householdAppeal.appealStatus[0].status],
 	appealType: householdAppeal.appealType.type,
 	appealTimetable: {
 		appealTimetableId: householdAppeal.appealTimetable.id,
@@ -131,6 +132,7 @@ const s78AppealDto = {
 	},
 	appealStatus: fullPlanningAppeal.appealStatus[0].status,
 	stateList: fullPlanningAppeal.stateList,
+	completedStateList: [fullPlanningAppeal.appealStatus[0].status],
 	appealTimetable: {
 		appealTimetableId: fullPlanningAppeal.appealTimetable.id,
 		caseResubmissionDueDate: null,

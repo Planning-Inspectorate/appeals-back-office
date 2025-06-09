@@ -5,6 +5,7 @@ import {
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { currentStatus } from '#utils/current-status.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
@@ -68,7 +69,7 @@ const canPublishFinalComments = (currentAppeal) => {
 @returns {Promise<object|void>}
  */
 export const validateRepresentationsToPublish = async (req, res, next) => {
-	const { status } = req.appeal?.appealStatus[0] || {};
+	const status = currentStatus(req.appeal);
 	const { STATEMENTS, FINAL_COMMENTS } = APPEAL_CASE_STATUS;
 
 	if (

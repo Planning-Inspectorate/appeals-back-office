@@ -51,18 +51,9 @@ export function mapAppealProcedureTypeToEventName(appealProcedureType) {
  * @returns {boolean}
  * */
 export function isStatePassed(appeal, state) {
-	const { stateList } = appeal;
+	const { completedStateList = [] } = appeal;
 
-	if (!stateList) {
-		return false;
-	}
-
-	const propState = stateList.find((s) => s.key === state);
-	if (!propState) {
-		return false;
-	}
-
-	return propState.completed;
+	return completedStateList.includes(state);
 }
 
 /**

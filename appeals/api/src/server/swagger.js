@@ -387,7 +387,8 @@ export const spec = {
 					status: 'not_received'
 				}
 			},
-			stateList: []
+			stateList: [],
+			completedStateList: ['awaiting_event']
 		},
 		SingleAppellantCaseResponse: {
 			agriculturalHolding: {
