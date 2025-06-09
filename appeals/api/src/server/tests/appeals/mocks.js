@@ -4,6 +4,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import has from './has.js';
 import s78 from './s78.js';
+import s20 from './s20.js';
 
 import {
 	azureAdUserId,
@@ -85,6 +86,10 @@ export const appealHas = {
 
 export const appealS78 = {
 	...s78
+};
+
+export const appealS20 = {
+	...s20
 };
 
 export const householdAppeal = {

@@ -98,6 +98,11 @@ describe('appeals api mappers', () => {
 			folders: []
 		};
 
+		const appealS20 = {
+			...mocks.s20Appeal,
+			folders: []
+		};
+
 		// @ts-ignore
 		const hasAppCaseOutput = mapCase({ appeal: appealHAS, context: contextEnum.appellantCase });
 
@@ -125,6 +130,19 @@ describe('appeals api mappers', () => {
 		expect(s78LpaqOutput).toHaveProperty('siteAccessRequired');
 		expect(s78LpaqOutput).toHaveProperty('healthAndSafety');
 		expect(s78LpaqOutput).toHaveProperty('lpaProcedurePreference');
+
+		// @ts-ignore
+		const s20CaseOutput = mapCase({ appeal: appealS20, context: contextEnum.appellantCase });
+
+		expect(s20CaseOutput).not.toHaveProperty('agriculturalHolding');
+		expect(s20CaseOutput).not.toHaveProperty('tenantAgriculturalHolding');
+		expect(s20CaseOutput).not.toHaveProperty('otherTenantsAgriculturalHolding');
+		expect(s20CaseOutput).not.toHaveProperty('informedTenantsAgriculturalHolding');
+
+		// @ts-ignore
+		const s20LpaqOutput = mapCase({ appeal: appealS20, context: contextEnum.lpaQuestionnaire });
+
+		expect(s20LpaqOutput).toHaveProperty('preserveGrantLoan');
 	});
 
 	test('should only map the appellant case fields specific to the case type', async () => {
