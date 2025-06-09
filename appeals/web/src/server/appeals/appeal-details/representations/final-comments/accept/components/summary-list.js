@@ -60,7 +60,7 @@ export const summaryList = (appealDetails, comment, finalCommentsType, attachmen
 					items: [
 						{
 							text: 'Change',
-							href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/`
+							href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}?backUrl=/final-comments/${finalCommentsType}/accept`
 						}
 					]
 				}

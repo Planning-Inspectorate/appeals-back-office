@@ -64,7 +64,7 @@ export const summaryList = (
 								actions: {
 									items: [
 										{
-											href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact`,
+											href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
 											text: 'Change',
 											visuallyHiddenText: 'redacted final comments'
 										}
@@ -101,7 +101,7 @@ export const summaryList = (
 					actions: {
 						items: [
 							{
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}`,
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
 								text: 'Change',
 								visuallyHiddenText: 'review decision'
 							}
