@@ -19,7 +19,7 @@ export const mapS20LpaQuestionnaire = (data) => {
 	if (lpaQuestionnaire) {
 		return {
 			...sharedS78Mappers,
-			grantLoanPreserve: lpaQuestionnaire.grantLoanPreserve
+			preserveGrantLoan: lpaQuestionnaire.preserveGrantLoan
 		};
 	}
 };

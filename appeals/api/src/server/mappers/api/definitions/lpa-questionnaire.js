@@ -105,7 +105,7 @@ const updateableFields = {
 		type: 'string',
 		nullable: true
 	},
-	grantLoanPreserve: {
+	preserveGrantLoan: {
 		type: 'boolean',
 		nullable: true
 	},
