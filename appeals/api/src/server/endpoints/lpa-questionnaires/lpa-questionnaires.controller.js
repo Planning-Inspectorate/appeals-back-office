@@ -65,7 +65,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 			consultedBodiesDetails,
 			reasonForNeighbourVisits,
 			designatedSiteNames,
-			grantLoanPreserve
+			preserveGrantLoan
 		},
 		params,
 		validationOutcome
@@ -119,7 +119,7 @@ const updateLPAQuestionnaireById = async (req, res) => {
 					consultedBodiesDetails,
 					reasonForNeighbourVisits,
 					designatedSiteNames,
-					grantLoanPreserve
+					preserveGrantLoan
 			  });
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);

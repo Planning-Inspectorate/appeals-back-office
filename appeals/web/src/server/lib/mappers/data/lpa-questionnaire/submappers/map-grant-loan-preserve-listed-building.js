@@ -5,7 +5,7 @@ export const mapGrantLoanToPreserve = ({ lpaQuestionnaireData, currentRoute, use
 	booleanSummaryListItem({
 		id: 'grant-loan-preserve-listed-building',
 		text: 'Was a grant or loan made to preserve the listed building?',
-		value: lpaQuestionnaireData.grantLoanPreserve,
+		value: lpaQuestionnaireData.preserveGrantLoan,
 		defaultText: '',
 		addCyAttribute: true,
 		link: `${currentRoute}/grant-loan-preserve-listed-building/change`,
