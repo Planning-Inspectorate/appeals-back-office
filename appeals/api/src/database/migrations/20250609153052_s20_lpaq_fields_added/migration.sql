@@ -3,8 +3,8 @@ BEGIN TRY
 BEGIN TRAN;
 
 -- AlterTable
-ALTER TABLE [dbo].[LPAQuestionnaire] ADD [grantLoanPreserve] BIT,
-[historicEnglandConsultation] BIT;
+ALTER TABLE [dbo].[LPAQuestionnaire] ADD [historicEnglandConsultation] BIT,
+[preserveGrantLoan] BIT;
 
 COMMIT TRAN;
 

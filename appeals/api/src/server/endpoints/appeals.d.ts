@@ -367,7 +367,7 @@ interface SingleLPAQuestionnaireResponse {
 	eiaSensitiveAreaDetails: string | null;
 	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
-	grantLoanPreserve?: boolean;
+	preserveGrantLoan?: boolean;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -401,7 +401,7 @@ interface UpdateLPAQuestionnaireRequest {
 	eiaSensitiveAreaDetails: string | null;
 	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
-	grantLoanPreserve?: boolean;
+	preserveGrantLoan?: boolean;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {

@@ -9510,7 +9510,7 @@
 						"type": "string",
 						"example": "The inspector needs to access the neighbouring site"
 					},
-					"grantLoanPreserve": {
+					"preserveGrantLoan": {
 						"type": "boolean",
 						"example": true
 					}
@@ -9745,7 +9745,7 @@
 						"type": "boolean",
 						"example": true
 					},
-					"grantLoanPreserve": {
+					"preserveGrantLoan": {
 						"type": "boolean",
 						"example": true
 					}
@@ -17971,7 +17971,7 @@
 						"type": "string",
 						"nullable": true
 					},
-					"grantLoanPreserve": {
+					"preserveGrantLoan": {
 						"type": "boolean",
 						"nullable": true
 					},
@@ -32181,7 +32181,7 @@
 						"type": "string",
 						"nullable": true
 					},
-					"grantLoanPreserve": {
+					"preserveGrantLoan": {
 						"type": "boolean",
 						"nullable": true
 					},
