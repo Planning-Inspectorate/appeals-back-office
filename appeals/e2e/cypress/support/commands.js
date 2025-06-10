@@ -211,3 +211,13 @@ Cypress.Commands.add('deleteHearing', (reference) => {
 		return await appealsApiClient.deleteHearing(appealId, hearingId);
 	});
 });
+
+Cypress.Commands.add('checkNotifySent', (reference, templateName) => {
+	return cy.wrap(null).then(async () => {
+		reference = reference.slice(2);
+		const emails = await appealsApiClient.getNotifyEmails(reference);
+		const targetEmail = await emails.find((email) => email.template === templateName);
+
+		expect(targetEmail.template).to.eq(templateName);
+	});
+});
