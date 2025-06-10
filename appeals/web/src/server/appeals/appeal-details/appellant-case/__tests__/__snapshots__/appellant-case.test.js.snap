@@ -214,7 +214,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="appeal-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder</dd>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                     </dl>
                 </div>
@@ -494,7 +494,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="appeal-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder</dd>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                     </dl>
                 </div>
@@ -810,7 +810,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="appeal-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder</dd>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                     </dl>
                 </div>
@@ -1100,7 +1100,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="appeal-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder</dd>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                     </dl>
                 </div>
@@ -1461,7 +1461,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="appeal-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder</dd>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                     </dl>
                 </div>
@@ -1772,7 +1772,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="appeal-summary">
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Planning appeal</dd>
+                            <dd                             class="govuk-summary-list__value">Full planning</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How would you prefer us to decide your appeal?</dt>
                             <dd                             class="govuk-summary-list__value">Not answered</dd>
@@ -2088,7 +2088,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="appeal-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder</dd>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                     </dl>
                 </div>
@@ -2345,7 +2345,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="appeal-summary">
                         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Planning listed building and conservation area appeal</dd>
+                            <dd                             class="govuk-summary-list__value">Listed building</dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How would you prefer us to decide your appeal?</dt>
                             <dd                             class="govuk-summary-list__value">Not answered</dd>
@@ -4843,7 +4843,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="appeal-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder</dd>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
                         </div>
                     </dl>
                 </div>

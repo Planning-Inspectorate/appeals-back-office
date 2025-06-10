@@ -2,7 +2,8 @@ import {
 	APPEAL_REDACTED_STATUS,
 	APPEAL_VIRUS_CHECK_STATUS,
 	APPEAL_CASE_STATUS,
-	APPEAL_CASE_PROCEDURE
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from 'pins-data-model';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import {
@@ -402,6 +403,7 @@ export const appealDataListedBuilding = {
 export const appellantCaseDataNotValidated = {
 	appealId: 1,
 	appealReference: 'TEST/919276',
+	typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING,
 	appealSite: {
 		addressId: 1,
 		addressLine1: '96 The Avenue',
