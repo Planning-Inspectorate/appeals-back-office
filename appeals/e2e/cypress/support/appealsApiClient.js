@@ -286,5 +286,22 @@ export const appealsApiClient = {
 		} catch {
 			return false;
 		}
+	},
+
+	async getNotifyEmails(appealId) {
+		try {
+			const url = `${baseUrl}appeals/${appealId}/notifications`;
+			const response = await fetch(url, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).to.eq(201);
+			return await response.json();
+		} catch {
+			return false;
+		}
 	}
 };
