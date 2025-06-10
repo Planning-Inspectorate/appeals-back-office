@@ -25,6 +25,16 @@ export const localPlanningDepartmentList = [
 		email: 'planningappeals@bromley.gov.uk'
 	},
 	{
+		lpaCode: 'T1600',
+		name: 'Gloucestershire',
+		email: 'planningdc@gloucestershire.gov.uk'
+	},
+	{
+		lpaCode: 'J1725',
+		name: 'Gosport',
+		email: 'planning@gosport.gov.uk'
+	},
+	{
 		lpaCode: 'E5330',
 		name: 'Greenwich',
 		email: 'planning-enforcement@royalgreenwich.gov.uk'
@@ -38,5 +48,10 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'L5810',
 		name: 'Richmond',
 		email: 'richmondplanningappeals@richmondandwandsworth.gov.uk'
+	},
+	{
+		lpaCode: 'V3310',
+		name: 'Sedgemoor',
+		email: 'development.control@sedgemoor.gov.uk'
 	}
 ];
