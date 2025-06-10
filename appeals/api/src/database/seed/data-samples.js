@@ -9,7 +9,8 @@ import {
 	APPEAL_LPA_PROCEDURE_PREFERENCE,
 	APPEAL_APPELLANT_PROCEDURE_PREFERENCE,
 	APPEAL_DEVELOPMENT_TYPE,
-	APPEAL_CASE_TYPE
+	APPEAL_CASE_TYPE,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from 'pins-data-model';
 import { randomBool, randomEnumValue, randomArrayValue } from './data-utilities.js';
 
@@ -295,7 +296,8 @@ export const appellantCaseList = {
 		changedDevelopmentDescription: false,
 		isGreenBelt: randomBool(),
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
-		applicationDate: sub(new Date(), { weeks: 6 })
+		applicationDate: sub(new Date(), { weeks: 6 }),
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
 	},
 	[APPEAL_CASE_TYPE.W]: {
 		siteAreaSquareMetres: 30.9,
@@ -321,7 +323,8 @@ export const appellantCaseList = {
 		appellantProcedurePreferenceWitnessCount: 1,
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
 		applicationDate: sub(new Date(), { weeks: 6 }),
-		developmentType: randomEnumValue(APPEAL_DEVELOPMENT_TYPE)
+		developmentType: randomEnumValue(APPEAL_DEVELOPMENT_TYPE),
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
 	},
 	[APPEAL_CASE_TYPE.Y]: {
 		siteAreaSquareMetres: 30.9,
@@ -347,7 +350,8 @@ export const appellantCaseList = {
 		appellantProcedurePreferenceWitnessCount: 1,
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
 		applicationDate: sub(new Date(), { weeks: 6 }),
-		developmentType: randomEnumValue(APPEAL_DEVELOPMENT_TYPE)
+		developmentType: randomEnumValue(APPEAL_DEVELOPMENT_TYPE),
+		typeOfPlanningApplication: 'listed-building' // todo: use APPEAL_TYPE_OF_PLANNING_APPLICATION.LISTED_BUILDING when data model updated
 	}
 };
 

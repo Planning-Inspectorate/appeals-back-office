@@ -219,6 +219,7 @@ interface SingleAppellantCaseResponse {
 	appellantProcedurePreferenceDuration?: number | null;
 	appellantProcedurePreferenceWitnessCount?: number | null;
 	developmentType?: string | null;
+	typeOfPlanningApplication?: string | null;
 }
 
 interface UpdateAppellantCaseRequest {
