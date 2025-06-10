@@ -26,10 +26,7 @@ describe('link appeals', () => {
 				caseDetailsPage.selectRadioButtonByValue(caseRef);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.clickButtonByText('Add linked appeal');
-				caseDetailsPage.validateBannerMessage(
-					'Success',
-					`This appeal is now the lead for appeal ${caseRefToLink}`
-				);
+				caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
 				caseDetailsPage.checkStatusOfCase('Child', 1);
 			});
 		});
@@ -46,10 +43,7 @@ describe('link appeals', () => {
 				caseDetailsPage.selectRadioButtonByValue(caseRef);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.clickButtonByText('Add linked appeal');
-				caseDetailsPage.validateBannerMessage(
-					'Success',
-					`This appeal is now the lead for appeal ${caseRefToLink}`
-				);
+				caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
 				caseDetailsPage.checkStatusOfCase('Child', 1);
 				caseDetailsPage.clickLinkedAppeal(caseRefToLink);
 				caseDetailsPage.verifyAppealRefOnCaseDetails(caseRefToLink);

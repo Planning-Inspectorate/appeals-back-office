@@ -10,7 +10,7 @@ import { getLinkableAppealSummaryByCaseReference } from './linkable-appeal.servi
  * @returns {Promise<Response>}
  */
 export const getLinkableAppealById = async (req, res) => {
-	const { appealReference } = req.params;
+	const { appealReference, linkableType } = req.params;
 
 	try {
 		const linkableAppeal = await getLinkableAppealSummaryByCaseReference(appealReference);
@@ -19,7 +19,7 @@ export const getLinkableAppealById = async (req, res) => {
 			return res.send(linkableAppeal);
 		}
 
-		if (!canLinkAppeals(linkableAppeal, 'child')) {
+		if (!canLinkAppeals(linkableAppeal, linkableType, 'lead')) {
 			throw 409;
 		}
 
