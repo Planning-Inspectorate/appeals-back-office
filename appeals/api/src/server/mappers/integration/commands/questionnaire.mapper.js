@@ -1,7 +1,7 @@
 /** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@pins/appeals.api').Schema.DesignatedSite} DesignatedSite */
 
-import { createSharedS20S78Fields } from '../shared/s20s78/questionnaire-fields';
+import { createSharedS20S78Fields } from '#mappers/integration/shared/s20s78/questionnaire-fields.js';
 
 /**
  *
