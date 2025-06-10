@@ -36,7 +36,12 @@ import {
 	calculateIncompleteDueDate,
 	oneMonthBefore
 } from '#lib/dates.js';
-import { APPEAL_CASE_STATUS, APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import {
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_STAGE,
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
+} from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -116,7 +121,10 @@ describe('appellant-case', () => {
 				});
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+				});
 
 			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
 			const element = parseHtml(response.text);
@@ -166,7 +174,10 @@ describe('appellant-case', () => {
 				});
 			nock('http://test/')
 				.get('/appeals/3/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					typeOfPlanningApplication: 'listed-building'
+				});
 
 			const response = await request.get(`${baseUrl}/3${appellantCasePagePath}`);
 			const element = parseHtml(response.text);
