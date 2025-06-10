@@ -4,7 +4,7 @@
  * @returns {Promise<import('@pins/appeals.api').Appeals.LinkableAppealSummary>}
  */
 export async function getLinkableAppealByReference(apiClient, appealReference) {
-	return apiClient.get(`appeals/linkable-appeal/${appealReference}`).json();
+	return apiClient.get(`appeals/linkable-appeal/${appealReference}/linked`).json();
 }
 
 /**
@@ -24,7 +24,7 @@ export async function linkAppealToBackOfficeAppeal(
 		.post(`appeals/${appealId}/link-appeal`, {
 			json: {
 				linkedAppealId,
-				isCurrentAppealParent: targetAppealIsParent
+				isCurrentAppealParent: !targetAppealIsParent
 			}
 		})
 		.json();

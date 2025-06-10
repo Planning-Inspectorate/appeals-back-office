@@ -184,7 +184,8 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 			session.linkableAppeal?.linkableAppealSummary ?? {};
 
 		const targetIsLead =
-			session.linkableAppeal.leadAppeal === session.linkableAppeal.linkableAppealSummary.appealId;
+			session.linkableAppeal.leadAppeal ===
+			session.linkableAppeal.linkableAppealSummary.appealReference;
 
 		switch (source) {
 			case 'back-office':
@@ -209,11 +210,8 @@ export const postAddLinkedAppealCheckAndConfirm = async (request, response) => {
 
 		addNotificationBannerToSession({
 			session,
-			bannerDefinitionKey: 'appealLinked',
-			appealId,
-			text: targetIsLead
-				? `Appeal ${session.linkableAppeal?.linkableAppealSummary.appealReference} is now the lead for this appeal`
-				: `This appeal is now the lead for appeal ${session.linkableAppeal?.linkableAppealSummary.appealReference}`
+			bannerDefinitionKey: 'linkedAppealAdded',
+			appealId
 		});
 
 		delete session.linkableAppeal;

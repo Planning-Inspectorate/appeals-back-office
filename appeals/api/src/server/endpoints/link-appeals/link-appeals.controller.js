@@ -15,6 +15,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -33,13 +34,18 @@ export const linkAppeal = async (req, res) => {
 		return res.status(404).end();
 	}
 
-	const currentAppealType = isCurrentAppealParent ? 'lead' : 'child';
-	const linkedAppealType = !isCurrentAppealParent ? 'lead' : 'child';
+	const canLinkCurrentAppeal = canLinkAppeals(
+		currentAppeal,
+		'linked',
+		isCurrentAppealParent ? 'lead' : 'child'
+	);
+	const canLinkLinkedAppeal = canLinkAppeals(
+		linkedAppeal,
+		'linked',
+		isCurrentAppealParent ? 'child' : 'lead'
+	);
 
-	if (
-		!canLinkAppeals(currentAppeal, currentAppealType) ||
-		!canLinkAppeals(linkedAppeal, linkedAppealType)
-	) {
+	if (!(canLinkCurrentAppeal && canLinkLinkedAppeal)) {
 		return res.status(409).send({
 			errors: {
 				body: ERROR_LINKING_APPEALS
@@ -66,10 +72,17 @@ export const linkAppeal = async (req, res) => {
 		  };
 
 	const result = await appealRepository.linkAppeal(relationship);
+
 	await createAuditTrail({
 		appealId: currentAppeal.id,
 		azureAdUserId: req.get('azureAdUserId'),
-		details: AUDIT_TRAIL_APPEAL_LINK_ADDED
+		details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_ADDED, [linkedAppeal.reference])
+	});
+
+	await createAuditTrail({
+		appealId: linkedAppeal.id,
+		azureAdUserId: req.get('azureAdUserId'),
+		details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_ADDED, [currentAppeal.reference])
 	});
 
 	await broadcasters.broadcastAppeal(currentAppeal.id);
@@ -85,7 +98,7 @@ export const linkExternalAppeal = async (req, res) => {
 	const { isCurrentAppealParent, linkedAppealReference } = req.body;
 	const currentAppeal = req.appeal;
 	const currentAppealType = isCurrentAppealParent ? 'lead' : 'child';
-	if (!canLinkAppeals(currentAppeal, currentAppealType)) {
+	if (!canLinkAppeals(currentAppeal, 'linked', currentAppealType)) {
 		return res.status(409).send({
 			errors: {
 				body: ERROR_LINKING_APPEALS
@@ -124,7 +137,9 @@ export const linkExternalAppeal = async (req, res) => {
 	await createAuditTrail({
 		appealId: currentAppeal.id,
 		azureAdUserId: req.get('azureAdUserId'),
-		details: AUDIT_TRAIL_APPEAL_LINK_ADDED
+		details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_ADDED, [
+			formattedLinkedAppeal.appealReference || linkedAppealReference
+		])
 	});
 
 	await broadcasters.broadcastAppeal(currentAppeal.id);

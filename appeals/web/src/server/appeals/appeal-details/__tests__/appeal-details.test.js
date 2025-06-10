@@ -339,12 +339,12 @@ describe('appeal-details', () => {
 				expect(notificationBannerElementHTML).toContain('Address removed</p>');
 			});
 
-			it('should render a "This appeal is now the lead for appeal" success notification banner when the appeal was successfully linked as the lead of a back-office appeal', async () => {
+			it('should render a "Linked appeal added" success notification banner when the appeal was successfully linked as the lead of a back-office appeal', async () => {
 				const appealReference = '1234567';
 
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/linkable-appeal/${appealReference}`)
+					.get(`/appeals/linkable-appeal/${appealReference}/linked`)
 					.reply(200, linkableAppealSummaryBackOffice);
 				nock('http://test/')
 					.get(`/appeals/${appealData.appealId}`)
@@ -385,7 +385,7 @@ describe('appeal-details', () => {
 				const element = parseHtml(response.text, { rootElement: notificationBannerElement });
 				expect(element.innerHTML).toMatchSnapshot();
 				expect(element.innerHTML).toContain('Success</h3>');
-				expect(element.innerHTML).toContain('This appeal is now the lead for appeal');
+				expect(element.innerHTML).toContain('Linked appeal added');
 			});
 
 			it('should render a success notification banner with appropriate content if the appeal was just linked as the lead of a legacy (Horizon) appeal', async () => {
@@ -393,7 +393,7 @@ describe('appeal-details', () => {
 
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/linkable-appeal/${appealReference}`)
+					.get(`/appeals/linkable-appeal/${appealReference}/linked`)
 					.reply(200, linkableAppealSummaryHorizon);
 				nock('http://test/')
 					.get(`/appeals/${appealData.appealId}`)
@@ -437,7 +437,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('This appeal is now the lead for appeal');
+				expect(notificationBannerElementHTML).toContain('Linked appeal added');
 			});
 
 			it('should render a success notification banner when a user was successfully unassigned as inspector', async () => {
