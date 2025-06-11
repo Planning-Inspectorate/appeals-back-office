@@ -64,6 +64,9 @@ describe('Issue Decision', () => {
 				caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
 				caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
 				caseDetailsPage.viewDecisionLetter('View decision');
+
+				//Notify
+				cy.checkNotifySent(caseRef, 'decision-is-allowed-split-dismissed-lpa');
 			});
 		});
 	});
