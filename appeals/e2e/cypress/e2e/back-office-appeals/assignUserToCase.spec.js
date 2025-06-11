@@ -31,7 +31,7 @@ describe('Assign user to case', () => {
 				caseDetailsPage.clickLinkByText('Choose');
 				caseDetailsPage.selectRadioButtonByValue('Yes');
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage('Case officer has been assigned');
+				caseDetailsPage.validateBannerMessage('Success', 'Case officer has been assigned');
 				caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 			});
 		}

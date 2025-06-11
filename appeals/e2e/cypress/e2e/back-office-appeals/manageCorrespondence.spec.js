@@ -27,7 +27,7 @@ describe('Manage correspondence', () => {
 			caseDetailsPage.verifyCheckYourAnswerDate('Date received', uploadDate);
 			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'No redaction required');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Cross-team correspondence documents uploaded');
+			caseDetailsPage.validateBannerMessage('Success', 'Cross-team correspondence added');
 			caseDetailsPage.clickManageCrossTeamCorrespondence();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('Upload a new version');
@@ -38,7 +38,7 @@ describe('Manage correspondence', () => {
 			caseDetailsPage.verifyCheckYourAnswerDate('Date received', uploadDate);
 			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'No redaction required');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Document updated');
+			caseDetailsPage.validateBannerMessage('Success', 'Document updated');
 		});
 	});
 
@@ -55,13 +55,13 @@ describe('Manage correspondence', () => {
 			caseDetailsPage.verifyCheckYourAnswerDate('Date received', uploadDate);
 			caseDetailsPage.checkCorrectAnswerDisplays('Redaction status', 'No redaction required');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Inspector correspondence documents uploaded');
+			caseDetailsPage.validateBannerMessage('Success', 'Inspector correspondence added');
 			caseDetailsPage.clickManageInspectorCorrespondence();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('Remove current version');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Document removed');
+			caseDetailsPage.validateBannerMessage('Success', 'Document removed');
 		});
 	});
 });
