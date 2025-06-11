@@ -288,9 +288,9 @@ export const appealsApiClient = {
 		}
 	},
 
-	async getNotifyEmails(appealId) {
+	async getNotifyEmails(reference) {
 		try {
-			const url = `${baseUrl}appeals/${appealId}/notifications`;
+			const url = `${baseUrl}/appeals/${reference}/notify-emails-sent`;
 			const response = await fetch(url, {
 				method: 'GET',
 				headers: {
@@ -298,7 +298,7 @@ export const appealsApiClient = {
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				}
 			});
-			expect(response.status).to.eq(201);
+			expect(response.status).to.eq(200);
 			return await response.json();
 		} catch {
 			return false;
