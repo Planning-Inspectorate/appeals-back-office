@@ -2724,7 +2724,6 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain('Date day must be a number</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		describe('should re-render the update date page with the expected error message if an invalid month was provided', () => {
@@ -2772,7 +2771,6 @@ describe('appellant-case', () => {
 
 					expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 					expect(unprettifiedErrorSummaryHtml).toContain(expectedErrorMessageHtml);
-					expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 				});
 			});
 		});
@@ -2800,7 +2798,6 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be 4 digits</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid year "abc" was provided', async () => {
@@ -2826,7 +2823,6 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be a number</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid date was provided', async () => {

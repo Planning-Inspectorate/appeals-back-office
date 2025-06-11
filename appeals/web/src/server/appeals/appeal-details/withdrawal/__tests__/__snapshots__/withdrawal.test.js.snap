@@ -235,31 +235,31 @@ exports[`withdrawal GET /withdrawal-request-date should render the withdrawal re
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="withdrawal-request-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Enter date</legend>
-                                <div id="withdrawal-request-date-hint" class="govuk-hint">For example, 27 11 2023</div>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Enter date</legend>
+                                <div id="withdrawal-request-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="withdrawal-request-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="withdrawal-request-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="withdrawal-request-date-day" name="withdrawal-request-date-day" type="text"
-                                            value="" inputmode="numeric">
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="withdrawal-request-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="withdrawal-request-date-month" name="withdrawal-request-date-month"
-                                            type="text" value="" inputmode="numeric">
+                                            type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="withdrawal-request-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="withdrawal-request-date-year" name="withdrawal-request-date-year" type="text"
-                                            value="" inputmode="numeric">
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>

@@ -163,14 +163,14 @@ exports[`set up hearing GET /hearing/setup/date should match the snapshot 1`] = 
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="hearing-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="hearing-date-day" name="hearing-date-day" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="hearing-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="hearing-date-month" name="hearing-date-month" type="text" value=""
                                             inputmode="numeric">
                                         </div>
@@ -178,7 +178,7 @@ exports[`set up hearing GET /hearing/setup/date should match the snapshot 1`] = 
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="hearing-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="hearing-date-year" name="hearing-date-year" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>

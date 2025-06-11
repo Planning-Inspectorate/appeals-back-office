@@ -20,14 +20,14 @@ exports[`infrastructure-levy-adopted-date GET /change should render the infrastr
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-day" name="levy-adopted-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-month" name="levy-adopted-date-month" type="text"
                                             inputmode="numeric">
                                         </div>
@@ -35,7 +35,7 @@ exports[`infrastructure-levy-adopted-date GET /change should render the infrastr
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
@@ -61,7 +61,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must include a day</a>
+                            <li><a href="#levy-adopted-date-day">Date must include a day</a>
                             </li>
                         </ul>
                     </div>
@@ -87,14 +87,14 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-day" name="levy-adopted-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-month" name="levy-adopted-date-month" type="text"
                                             inputmode="numeric">
                                         </div>
@@ -102,7 +102,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
@@ -130,7 +130,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#levy-adopted-date-day">Date day must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
+                            <li><a href="#levy-adopted-date">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -156,14 +156,14 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-day" name="levy-adopted-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-month" name="levy-adopted-date-month" type="text"
                                             inputmode="numeric">
                                         </div>
@@ -171,7 +171,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
@@ -199,7 +199,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#levy-adopted-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
+                            <li><a href="#levy-adopted-date">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -225,14 +225,14 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-day" name="levy-adopted-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-month" name="levy-adopted-date-month" type="text"
                                             inputmode="numeric">
                                         </div>
@@ -240,7 +240,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
@@ -268,7 +268,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#levy-adopted-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
+                            <li><a href="#levy-adopted-date">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -294,14 +294,14 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-day" name="levy-adopted-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-month" name="levy-adopted-date-month" type="text"
                                             inputmode="numeric">
                                         </div>
@@ -309,7 +309,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
@@ -335,7 +335,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must include a month</a>
+                            <li><a href="#levy-adopted-date-month">Date must include a month</a>
                             </li>
                         </ul>
                     </div>
@@ -361,14 +361,14 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-day" name="levy-adopted-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-month" name="levy-adopted-date-month" type="text"
                                             inputmode="numeric">
                                         </div>
@@ -376,7 +376,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
@@ -404,7 +404,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#levy-adopted-date-month">Date month must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
+                            <li><a href="#levy-adopted-date">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -430,14 +430,14 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-day" name="levy-adopted-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-month" name="levy-adopted-date-month" type="text"
                                             inputmode="numeric">
                                         </div>
@@ -445,7 +445,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
@@ -473,7 +473,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#levy-adopted-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
+                            <li><a href="#levy-adopted-date">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -499,14 +499,14 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-day" name="levy-adopted-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-month" name="levy-adopted-date-month" type="text"
                                             inputmode="numeric">
                                         </div>
@@ -514,7 +514,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
@@ -542,7 +542,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#levy-adopted-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
+                            <li><a href="#levy-adopted-date">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -568,14 +568,14 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-day" name="levy-adopted-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-month" name="levy-adopted-date-month" type="text"
                                             inputmode="numeric">
                                         </div>
@@ -583,7 +583,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
@@ -609,7 +609,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must include a year</a>
+                            <li><a href="#levy-adopted-date-year">Date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -635,14 +635,14 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-day" name="levy-adopted-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-month" name="levy-adopted-date-month" type="text"
                                             inputmode="numeric">
                                         </div>
@@ -650,7 +650,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
@@ -678,7 +678,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#levy-adopted-date-year">Date year must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
+                            <li><a href="#levy-adopted-date">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -704,14 +704,14 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-day" name="levy-adopted-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-month" name="levy-adopted-date-month" type="text"
                                             inputmode="numeric">
                                         </div>
@@ -719,7 +719,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
@@ -747,7 +747,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#levy-adopted-date-year">Date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
+                            <li><a href="#levy-adopted-date">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -773,14 +773,14 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-day" name="levy-adopted-date-day" type="text" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-month" name="levy-adopted-date-month" type="text"
                                             inputmode="numeric">
                                         </div>
@@ -788,7 +788,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
