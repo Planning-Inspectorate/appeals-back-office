@@ -294,7 +294,6 @@ export const createDateInputDateInPastValidator = (
  */
 export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
 	return (req, res, next) => {
-		console.log(req.errors);
 		if (!req.errors) {
 			return next();
 		}
@@ -343,16 +342,17 @@ export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
  */
 export const extractAndProcessDocumentDateErrors = () => {
 	return (req, res, next) => {
-		console.log(req.errors);
 		if (!req.errors) {
 			return next();
 		}
 		for (const key in req.errors) {
 			if (Object.hasOwnProperty.call(req.errors, key)) {
 				const errorDetails = req.errors[key];
-				const [cause, message] = errorDetails.msg.split('::');
-				errorDetails.param = `${cause}`;
-				errorDetails.msg = message;
+				if (errorDetails.msg.includes('::')) {
+					const [cause, message] = errorDetails.msg.split('::');
+					errorDetails.param = `${cause}`;
+					errorDetails.msg = message;
+				}
 			}
 		}
 		return next();

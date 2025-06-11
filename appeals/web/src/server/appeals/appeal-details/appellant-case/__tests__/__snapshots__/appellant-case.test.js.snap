@@ -3457,21 +3457,21 @@ exports[`appellant-case GET /appellant-case/incomplete/date should render the up
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" value="2" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" value="10" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="2024" inputmode="numeric">
                     </div>
                 </div>
@@ -3501,21 +3501,21 @@ exports[`appellant-case GET /appellant-case/incomplete/date should render the up
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" inputmode="numeric">
                     </div>
                 </div>
@@ -4617,32 +4617,30 @@ exports[`appellant-case GET /appellant-case/valid/date should render the valid d
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="21" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="5" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="2023" inputmode="numeric">
-                                        </div>
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <div class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="21" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="5" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="2023" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -6246,7 +6244,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be a real date</a>
+                            <li><a href="#due-date-day">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6263,31 +6261,32 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <div class="govuk-date-input" id="due-date">
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date must be a real date</p>
+            <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="29" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-month" name="due-date-month" type="text" value="2" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
-            </div>
+        </div>
         </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
@@ -6307,8 +6306,6 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -6324,27 +6321,29 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be between
+                1 and 31</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="0" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
@@ -6368,8 +6367,6 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -6385,27 +6382,29 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be between
+                1 and 31</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="32" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
@@ -6429,8 +6428,6 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -6446,31 +6443,32 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <div class="govuk-date-input" id="due-date">
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be a number</p>
+            <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" value="NaN" inputmode="numeric">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-day" name="due-date-day" type="text" value="first" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
-            </div>
+        </div>
         </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
@@ -6490,8 +6488,6 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -6507,27 +6503,29 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be between
+                1 and 12</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-month" name="due-date-month" type="text" value="0" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
@@ -6551,8 +6549,6 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -6568,27 +6564,29 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be between
+                1 and 12</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-month" name="due-date-month" type="text" value="13" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
@@ -6612,8 +6610,6 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -6629,27 +6625,29 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be a
+                number</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-month" name="due-date-month" type="text" value="NaN" inputmode="numeric">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-month" name="due-date-month" type="text" value="dec" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
@@ -6673,8 +6671,6 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-year">Date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -6690,31 +6686,32 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <div class="govuk-date-input" id="due-date">
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date year must be 4 digits</p>
+            <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-year" name="due-date-year" type="text" value="23" inputmode="numeric">
                     </div>
                 </div>
-            </div>
+        </div>
         </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
@@ -6734,8 +6731,6 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-year">Date year must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -6751,31 +6746,32 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <div class="govuk-date-input" id="due-date">
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date year must be a number</p>
+            <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="due-date-year" name="due-date-year" type="text" value="NaN" inputmode="numeric">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-year" name="due-date-year" type="text" value="abc" inputmode="numeric">
                     </div>
                 </div>
-            </div>
+        </div>
         </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
@@ -6793,7 +6789,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter the date</a>
+                            <li><a href="#due-date-day">Enter the date</a>
                             </li>
                         </ul>
                     </div>
@@ -6810,31 +6806,32 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <div class="govuk-date-input" id="due-date">
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the date</p>
+            <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" value="NaN" inputmode="numeric">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                        id="due-date-day" name="due-date-day" type="text" value="" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-month" name="due-date-month" type="text" value="NaN" inputmode="numeric">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-month" name="due-date-month" type="text" value="" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="due-date-year" name="due-date-year" type="text" value="NaN" inputmode="numeric">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-year" name="due-date-year" type="text" value="" inputmode="numeric">
                     </div>
                 </div>
-            </div>
+        </div>
         </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
@@ -6852,7 +6849,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">The date must be in the future</a>
+                            <li><a href="#due-date-day">The date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -6869,27 +6866,29 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
         <div class="govuk-grid-column-full"></div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
+        <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be in the
+                future</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-month" name="due-date-month" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-year" name="due-date-year" type="text" value="2000" inputmode="numeric">
                     </div>
                 </div>
@@ -7635,8 +7634,6 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -7659,33 +7656,33 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="0" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
-                                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be between
+                                1 and 12</p>
+                            <div class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="0" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -7708,8 +7705,6 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -7732,33 +7727,33 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="13" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
-                                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be between
+                                1 and 12</p>
+                            <div class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="13" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -7781,8 +7776,6 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-month">Date month must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -7805,33 +7798,33 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="dec" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
-                                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be a
+                                number</p>
+                            <div class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="dec" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -7852,7 +7845,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be a real date</a>
+                            <li><a href="#valid-date-day">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -7876,40 +7869,39 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="29" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="2" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
-                                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date must be a real date</p>
+                            <div                             class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="29" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="2" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
+                                    </div>
+                                </div>
                         </div>
-                        <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
-                    </form>
                 </div>
+                <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
             </div>
         </div>
+    </div>
     </div>
 </main>"
 `;
@@ -7925,8 +7917,6 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -7949,33 +7939,33 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="0" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
-                                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be between
+                                1 and 31</p>
+                            <div class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="0" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -7998,8 +7988,6 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -8022,33 +8010,33 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="32" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
-                                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be between
+                                1 and 31</p>
+                            <div class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="32" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -8071,8 +8059,6 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-day">Date day must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -8095,40 +8081,39 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="first" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
-                                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be a number</p>
+                            <div                             class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="first" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
+                                    </div>
+                                </div>
                         </div>
-                        <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
-                    </form>
                 </div>
+                <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
             </div>
         </div>
+    </div>
     </div>
 </main>"
 `;
@@ -8144,8 +8129,6 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-year">Date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -8168,40 +8151,39 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="23" inputmode="numeric">
-                                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date year must be 4 digits</p>
+                            <div                             class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="23" inputmode="numeric">
+                                    </div>
+                                </div>
                         </div>
-                        <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
-                    </form>
                 </div>
+                <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
             </div>
         </div>
+    </div>
     </div>
 </main>"
 `;
@@ -8217,8 +8199,6 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#valid-date-year">Date year must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -8241,40 +8221,39 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="abc" inputmode="numeric">
-                                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date year must be a number</p>
+                            <div                             class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="abc" inputmode="numeric">
+                                    </div>
+                                </div>
                         </div>
-                        <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
-                    </form>
                 </div>
+                <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
             </div>
         </div>
+    </div>
     </div>
 </main>"
 `;
@@ -8288,7 +8267,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#0">The valid date must be on or after the date the case was received.</a>
+                            <li><a href="#valid-date-day">The valid date must be on or after the date the case was received.</a>
                             </li>
                         </ul>
                     </div>
@@ -8312,33 +8291,34 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="2023" inputmode="numeric">
-                                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The valid date must be
+                                on or after the date the case was received.</p>
+                            <div class="govuk-date-input"
+                            id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="2023" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -8359,7 +8339,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter the date</a>
+                            <li><a href="#valid-date-day">Enter the date</a>
                             </li>
                         </ul>
                     </div>
@@ -8383,40 +8363,39 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="21" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="5" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="2023" inputmode="numeric">
-                                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the date</p>
+                            <div                             class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="21" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="5" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="2023" inputmode="numeric">
+                                    </div>
+                                </div>
                         </div>
-                        <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
-                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
-                    </form>
                 </div>
+                <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
             </div>
         </div>
+    </div>
     </div>
 </main>"
 `;
@@ -8430,7 +8409,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be today or in the past</a>
+                            <li><a href="#valid-date-day">Date must be today or in the past</a>
                             </li>
                         </ul>
                     </div>
@@ -8454,33 +8433,33 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="valid-date-hint">
-                                <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="valid-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
-                                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date must be today or
+                                in the past</p>
+                            <div class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
                                     </div>
                                 </div>
-                            </fieldset>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>

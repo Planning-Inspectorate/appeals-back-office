@@ -2193,26 +2193,26 @@ exports[`LPA Questionnaire review GET /appeals-service/appeal-details/1/lpa-ques
     </div>
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" value="11" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" value="10" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="2024" inputmode="numeric">
                     </div>
                 </div>
@@ -5636,7 +5636,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be a real date</a>
+                            <li><a href="#due-date-day">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -5655,31 +5655,32 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <div class="govuk-date-input" id="due-date">
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date must be a real date</p>
+            <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="29" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-month" name="due-date-month" type="text" value="2" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
-            </div>
+        </div>
         </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
@@ -5699,8 +5700,6 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -5718,27 +5717,29 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be between
+                1 and 31</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="0" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
@@ -5762,8 +5763,6 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -5781,27 +5780,29 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be between
+                1 and 31</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="32" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
@@ -5825,8 +5826,6 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-day">Date day must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -5844,31 +5843,32 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <div class="govuk-date-input" id="due-date">
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date day must be a number</p>
+            <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" value="NaN" inputmode="numeric">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-day" name="due-date-day" type="text" value="first" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
-            </div>
+        </div>
         </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
@@ -5888,8 +5888,6 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -5907,27 +5905,29 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be between
+                1 and 12</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-month" name="due-date-month" type="text" value="0" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
@@ -5951,8 +5951,6 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -5970,27 +5968,29 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be between
+                1 and 12</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-month" name="due-date-month" type="text" value="13" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
@@ -6014,8 +6014,6 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-month">Date month must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -6033,27 +6031,29 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be a
+                number</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-month" name="due-date-month" type="text" value="NaN" inputmode="numeric">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-month" name="due-date-month" type="text" value="dec" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
@@ -6077,8 +6077,6 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-year">Date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -6096,31 +6094,32 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <div class="govuk-date-input" id="due-date">
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date year must be 4 digits</p>
+            <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-year" name="due-date-year" type="text" value="23" inputmode="numeric">
                     </div>
                 </div>
-            </div>
+        </div>
         </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
@@ -6140,8 +6139,6 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#due-date-year">Date year must be a number</a>
                             </li>
-                            <li><a href="#">Date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -6159,31 +6156,32 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <div class="govuk-date-input" id="due-date">
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date year must be a number</p>
+            <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                         id="due-date-month" name="due-date-month" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="due-date-year" name="due-date-year" type="text" value="NaN" inputmode="numeric">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-year" name="due-date-year" type="text" value="abc" inputmode="numeric">
                     </div>
                 </div>
-            </div>
+        </div>
         </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
@@ -6201,7 +6199,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter the date</a>
+                            <li><a href="#due-date-day">Enter the date</a>
                             </li>
                         </ul>
                     </div>
@@ -6220,31 +6218,32 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <div class="govuk-date-input" id="due-date">
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the date</p>
+            <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-day" name="due-date-day" type="text" value="NaN" inputmode="numeric">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                        id="due-date-day" name="due-date-day" type="text" value="" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
-                        id="due-date-month" name="due-date-month" type="text" value="NaN" inputmode="numeric">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-month" name="due-date-month" type="text" value="" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
-                        id="due-date-year" name="due-date-year" type="text" value="NaN" inputmode="numeric">
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-year" name="due-date-year" type="text" value="" inputmode="numeric">
                     </div>
                 </div>
-            </div>
+        </div>
         </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
@@ -6262,7 +6261,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">The date must be in the future</a>
+                            <li><a href="#due-date-day">The date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -6281,27 +6280,29 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
         </div>
     </div>
     <form method="post" novalidate="novalidate">
-        <div class="govuk-form-group">
-            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be in the
+                future</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-month" name="due-date-month" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-year" name="due-date-year" type="text" value="2000" inputmode="numeric">
                     </div>
                 </div>

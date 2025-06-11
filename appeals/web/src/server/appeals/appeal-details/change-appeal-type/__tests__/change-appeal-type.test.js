@@ -148,9 +148,7 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'What is the final date the appellant must resubmit by?</h1>'
-			);
+			expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -209,9 +207,7 @@ describe('change-appeal-type', () => {
 
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain(
-			'What is the final date the appellant must resubmit by?</h1>'
-		);
+		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 			rootElement: '.govuk-error-summary',
@@ -235,9 +231,7 @@ describe('change-appeal-type', () => {
 
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain(
-			'What is the final date the appellant must resubmit by?</h1>'
-		);
+		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 			rootElement: '.govuk-error-summary',
@@ -263,9 +257,7 @@ describe('change-appeal-type', () => {
 
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain(
-			'What is the final date the appellant must resubmit by?</h1>'
-		);
+		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 			rootElement: '.govuk-error-summary',
@@ -291,9 +283,7 @@ describe('change-appeal-type', () => {
 
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain(
-			'What is the final date the appellant must resubmit by?</h1>'
-		);
+		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 			rootElement: '.govuk-error-summary',
@@ -319,9 +309,7 @@ describe('change-appeal-type', () => {
 
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain(
-			'What is the final date the appellant must resubmit by?</h1>'
-		);
+		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 			rootElement: '.govuk-error-summary',
@@ -347,9 +335,7 @@ describe('change-appeal-type', () => {
 
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain(
-			'What is the final date the appellant must resubmit by?</h1>'
-		);
+		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 			rootElement: '.govuk-error-summary',
