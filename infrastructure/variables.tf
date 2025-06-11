@@ -47,6 +47,7 @@ variable "apps_config" {
       featureFlagLinkedAppeals = bool
       featureFlagS20           = bool
       featureFlagIssueDecision = bool
+      featureFlagReIssueDecision = bool
     })
 
     logging = object({

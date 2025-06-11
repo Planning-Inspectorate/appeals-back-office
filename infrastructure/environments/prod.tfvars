@@ -38,6 +38,7 @@ apps_config = {
     featureFlagLinkedAppeals = false
     featureFlagS20           = false
     featureFlagIssueDecision = false
+    featureFlagReIssueDecision = false
   }
 
   use_system_test_bc_for_change_lpa = false
