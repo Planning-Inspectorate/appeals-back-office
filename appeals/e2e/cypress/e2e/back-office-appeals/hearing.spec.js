@@ -385,6 +385,46 @@ describe('Setup hearing and add hearing estimates', () => {
 		});
 	});
 
+	it('should automatically prompt to set up hearing when statements and IP comments are shared', () => {
+		deleteHearingIfExists(caseRef);
+		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+		happyPathHelper.reviewS78Lpaq(caseRef);
+		caseDetailsPage.checkStatusOfCase('Statements', 0);
+		happyPathHelper.addLpaStatement(caseRef);
+
+		cy.simulateStatementsDeadlineElapsed(caseRef);
+		cy.reload();
+		caseDetailsPage.shareIpAndLpaComments();
+		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
+		caseDetailsPage.validateBannerMessage('Important', 'Set up hearing');
+		caseDetailsPage.checkStatusOfCase('Hearing ready to set up', 0);
+
+		// add hearing via banner
+		caseDetailsPage.clickHearingBannerLink();
+
+		cy.getBusinessActualDate(currentDate, 2).then((hearingDate) => {
+			hearingDate.setHours(currentDate.getHours(), currentDate.getMinutes());
+			hearingSectionPage.setUpHearing(
+				hearingDate,
+				hearingDate.getHours(),
+				hearingDate.getMinutes()
+			);
+		});
+		hearingSectionPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+		hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
+		caseDetailsPage.clickButtonByText('Set up hearing');
+		caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
+		caseDetailsPage.validateBannerMessage('Important', 'Add hearing address');
+
+		// add hearing address via the banner
+		caseDetailsPage.clickHearingBannerLink();
+		hearingSectionPage.addHearingLocationAddress(originalAddress);
+		hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
+		caseDetailsPage.clickButtonByText('Update hearing');
+		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
+	});
+
 	const setupTestCase = () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.createCase({ caseType: 'W' }).then((ref) => {
@@ -394,7 +434,10 @@ describe('Setup hearing and add hearing estimates', () => {
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+
 			happyPathHelper.startS78Case(caseRef, 'hearing');
+			caseDetailsPage.validateBannerMessage('Success', 'Case started');
+			caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 		});
 	};
 
@@ -431,6 +474,17 @@ describe('Setup hearing and add hearing estimates', () => {
 					expect(hearingDetails.hearingStartTime).to.be.eq(date.toISOString());
 					expect(hearingDetails.hearingEndTime).to.be.eq(date.toISOString());
 					return cy.addHearingDetails(caseRef, date);
+				});
+			}
+		});
+	};
+
+	const deleteHearingIfExists = (caseRef) => {
+		return cy.loadAppealDetails(caseRef).then((appealDetails) => {
+			if (appealDetails.hearing !== undefined) {
+				cy.deleteHearing(caseRef).then((hearingDetails) => {
+					expect(hearingDetails.appealId).to.be.eq(appealDetails.appealId);
+					expect(hearingDetails.hearingId).to.be.eq(appealDetails.hearing.hearingId);
 				});
 			}
 		});

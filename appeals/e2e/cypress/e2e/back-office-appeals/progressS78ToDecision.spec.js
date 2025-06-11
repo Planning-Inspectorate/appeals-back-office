@@ -74,10 +74,10 @@ describe('Progress S78 to decision', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectCheckbox();
 			caseDetailsPage.clickButtonByText('Send Decision');
-			caseDetailsPage.validateBannerMessage('Success', 'Decision sent');
+			caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
 			caseDetailsPage.checkStatusOfCase('Complete', 0);
 			caseDetailsPage.checkDecisionOutcome('Allowed');
-			caseDetailsPage.viewDecisionLetter('View decision letter');
+			caseDetailsPage.viewDecisionLetter('View decision');
 		});
 	});
 });
