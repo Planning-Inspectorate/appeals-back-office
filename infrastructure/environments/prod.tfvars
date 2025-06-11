@@ -32,12 +32,12 @@ apps_config = {
   }
 
   featureFlags = {
-    featureFlagS78Written    = true
-    featureFlagS78Hearing    = false
-    featureFlagS78Inquiry    = false
-    featureFlagLinkedAppeals = false
-    featureFlagS20           = false
-    featureFlagIssueDecision = false
+    featureFlagS78Written      = true
+    featureFlagS78Hearing      = false
+    featureFlagS78Inquiry      = false
+    featureFlagLinkedAppeals   = false
+    featureFlagS20             = false
+    featureFlagIssueDecision   = false
     featureFlagReIssueDecision = false
   }
 
