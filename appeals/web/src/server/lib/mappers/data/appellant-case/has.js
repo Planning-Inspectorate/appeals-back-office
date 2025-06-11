@@ -14,7 +14,7 @@ import { mapDevelopmentDescription } from './submappers/development-description.
 import { mapApplicationDecision } from './submappers/application-decision.js';
 import { mapChangedDevelopmentDescriptionDocument } from './submappers/changed-development-description-document.js';
 import { mapLocalPlanningAuthority } from './submappers/local-planning-authority.js';
-import { mapAppealType } from './submappers/appeal-type.js';
+import { mapApplicationType } from './submappers/application-type.js';
 import { mapInspectorAccess } from './submappers/inspector-access.js';
 import { mapHealthAndSafetyIssues } from './submappers/health-and-safety-issues.js';
 import { mapApplicationForm } from './submappers/application-form.js';
@@ -41,7 +41,7 @@ export const submaps = {
 	applicationDecisionDate: mapApplicationDecisionDate,
 	decisionLetter: mapDecisionLetter,
 	applicationDecision: mapApplicationDecision,
-	appealType: mapAppealType,
+	applicationType: mapApplicationType,
 	appealStatement: mapAppealStatement,
 	costsDocument: mapCostsDocument,
 	additionalDocuments: mapAdditionalDocuments,

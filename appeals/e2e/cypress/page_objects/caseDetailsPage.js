@@ -11,7 +11,7 @@ export class CaseDetailsPage extends Page {
 	 *********************************************************/
 
 	_cyDataSelectors = {
-		reviewLpaQuestionnaire: 'review-lpa-questionnaire',
+		reviewLpaQuestionnaire: 'review-lpa-questionnaire-banner',
 		changeCaseOfficer: 'change-case-officer',
 		assignCaseOfficer: 'assign-case-officer',
 		assignInspector: 'assign-inspector',
@@ -48,7 +48,7 @@ export class CaseDetailsPage extends Page {
 		changeAgent: 'change-agent',
 		setupSiteVisitBanner: 'set-up-site-visit-banner',
 		reviewIpComments: 'review-ip-comments',
-		reviewLpaStatement: 'review-lpa-statement',
+		reviewLpaStatement: 'banner-review-lpa-statement',
 		changeApplicationReference: 'change-application-reference',
 		viewCaseHistory: 'view-case-history',
 		uploadFile: 'upload-file-button'
@@ -159,7 +159,8 @@ export class CaseDetailsPage extends Page {
 			cy.getByData(this._cyDataSelectors.changeApplicationReference),
 		planningApplicationReferenceField: () => cy.get('#planning-application-reference'),
 		viewCaseHistory: () => cy.getByData(this._cyDataSelectors.viewCaseHistory),
-		cancelHearing: () => cy.get('#cancelHearing')
+		cancelHearing: () => cy.get('#cancelHearing'),
+		hearingBannerLink: () => cy.get('.govuk-notification-banner__content .govuk-link')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -442,6 +443,10 @@ export class CaseDetailsPage extends Page {
 		this.elements.cancelHearing().click();
 	}
 
+	clickHearingBannerLink() {
+		this.elements.hearingBannerLink().click();
+	}
+
 	/***************************************************************
 	 ************************ Verification ************************
 	 ****************************************************************/
@@ -658,5 +663,10 @@ export class CaseDetailsPage extends Page {
 	updatePlanningApplicationReference(reference) {
 		this.elements.planningApplicationReferenceField().clear().type(reference);
 		this.clickButtonByText('Continue');
+	}
+
+	shareIpAndLpaComments() {
+		this.basePageElements.bannerLink().click();
+		this.clickButtonByText('Confirm');
 	}
 }

@@ -24,7 +24,7 @@ describe('Update LPAQ Due date', () => {
 				dateTimeSection.enterDate(futureDate);
 			});
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Timetable updated');
+			caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.reviewLpaq(caseRef);
 		});
@@ -40,7 +40,7 @@ describe('Update LPAQ Due date', () => {
 				dateTimeSection.enterDate(futureDate);
 			});
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Timetable updated');
+			caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.reviewS78Lpaq(caseRef);
 		});

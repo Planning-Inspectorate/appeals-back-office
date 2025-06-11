@@ -32,6 +32,8 @@ export const mapAppellantCase = (data) => {
 		knowsOtherOwners: casedata?.knowsOtherOwners?.name ?? null,
 		ownersInformed: casedata?.ownersInformed ?? null,
 		enforcementNotice: casedata?.enforcementNotice ?? null,
-		isGreenBelt: casedata?.isGreenBelt ?? null
+		isGreenBelt: casedata?.isGreenBelt ?? null,
+		// @ts-ignore
+		typeOfPlanningApplication: casedata?.typeOfPlanningApplication ?? null
 	};
 };
