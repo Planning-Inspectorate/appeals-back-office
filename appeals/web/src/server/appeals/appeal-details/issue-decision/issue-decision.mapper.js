@@ -1,6 +1,9 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import {
+	preRenderPageComponents,
+	renderPageComponentsToHtml
+} from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import {
 	mapDocumentDownloadUrl,
@@ -19,7 +22,6 @@ import {
 	mapDecisionOutcome
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import nunjucksEnvironments from '#app/config/nunjucks.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -132,8 +134,8 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl, err
 					text: 'Invalid',
 					checked: inspectorDecision?.outcome === 'Invalid',
 					conditional: {
-						html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
-							component: {
+						html: renderPageComponentsToHtml([
+							{
 								type: 'textarea',
 								parameters: {
 									name: 'invalidReason',
@@ -151,7 +153,7 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl, err
 										: null
 								}
 							}
-						})
+						])
 					}
 				}
 			],
@@ -311,8 +313,8 @@ function checkAndConfirmPageRows(appealData, request) {
 		if (decisionOutcome) {
 			let invalidReasonHtml = inspectorDecision.invalidReason ? `Reason: ` : '';
 			if (invalidReasonHtml) {
-				invalidReasonHtml = nunjucksEnvironments.render('appeals/components/page-component.njk', {
-					component: {
+				invalidReasonHtml = renderPageComponentsToHtml([
+					{
 						type: 'show-more',
 						parameters: {
 							text: `${invalidReasonHtml}${inspectorDecision.invalidReason}`,
@@ -321,7 +323,7 @@ function checkAndConfirmPageRows(appealData, request) {
 							toggleTextExpanded: 'Show less'
 						}
 					}
-				});
+				]);
 			}
 			rows.push({
 				key: 'Decision',
@@ -514,8 +516,8 @@ export function viewDecisionPageRows(appealData) {
 		const decisionOutcome = mapDecisionOutcome(outcome);
 		let invalidReasonHtml = invalidReason ? `Reason: ` : '';
 		if (invalidReasonHtml) {
-			invalidReasonHtml = nunjucksEnvironments.render('appeals/components/page-component.njk', {
-				component: {
+			invalidReasonHtml = renderPageComponentsToHtml([
+				{
 					type: 'show-more',
 					parameters: {
 						text: `${invalidReasonHtml}${invalidReason}`,
@@ -524,7 +526,7 @@ export function viewDecisionPageRows(appealData) {
 						toggleTextExpanded: 'Show less'
 					}
 				}
-			});
+			]);
 		}
 		rows.push({
 			key: 'Decision',
