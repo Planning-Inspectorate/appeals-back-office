@@ -79,15 +79,14 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the final date the appellant must resubmit by?</h1>
-                                </legend>
-                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <div id="change-appeal-final-date-hint"
+                                class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
                                             value="" inputmode="numeric">
                                         </div>
@@ -95,7 +94,7 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="change-appeal-final-date-month" name="change-appeal-final-date-month"
                                             type="text" value="" inputmode="numeric">
                                         </div>
@@ -103,7 +102,7 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="change-appeal-final-date-year" name="change-appeal-final-date-year"
                                             type="text" value="" inputmode="numeric">
                                         </div>
@@ -562,17 +561,16 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the final date the appellant must resubmit by?</h1>
-                                </legend>
-                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <div id="change-appeal-final-date-hint"
+                                class="govuk-hint">For example, 27 3 2023</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
                                     the appeal must be a real date</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                                             id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
                                             value="29" inputmode="numeric">
                                         </div>
@@ -580,7 +578,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="change-appeal-final-date-month" name="change-appeal-final-date-month"
                                             type="text" value="2" inputmode="numeric">
                                         </div>
@@ -588,7 +586,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="change-appeal-final-date-year" name="change-appeal-final-date-year"
                                             type="text" value="3000" inputmode="numeric">
                                         </div>
@@ -617,7 +615,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter the deadline to resubmit the appeal</a>
+                            <li><a href="#change-appeal-final-date-day">Enter the deadline to resubmit the appeal</a>
                             </li>
                         </ul>
                     </div>
@@ -636,17 +634,16 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the final date the appellant must resubmit by?</h1>
-                                </legend>
-                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <div id="change-appeal-final-date-hint"
+                                class="govuk-hint">For example, 27 3 2023</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the deadline to
                                     resubmit the appeal</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                                             id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
                                             value="" inputmode="numeric">
                                         </div>
@@ -654,7 +651,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="change-appeal-final-date-month" name="change-appeal-final-date-month"
                                             type="text" value="" inputmode="numeric">
                                         </div>
@@ -662,7 +659,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="change-appeal-final-date-year" name="change-appeal-final-date-year"
                                             type="text" value="" inputmode="numeric">
                                         </div>
@@ -710,10 +707,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the final date the appellant must resubmit by?</h1>
-                                </legend>
-                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <div id="change-appeal-final-date-hint"
+                                class="govuk-hint">For example, 27 3 2023</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
                                     the appeal day must be between 1 and 31</p>
                                 <div class="govuk-date-input"
@@ -721,7 +717,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
                                             value="32" inputmode="numeric">
                                         </div>
@@ -729,7 +725,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="change-appeal-final-date-month" name="change-appeal-final-date-month"
                                             type="text" value="11" inputmode="numeric">
                                         </div>
@@ -737,7 +733,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="change-appeal-final-date-year" name="change-appeal-final-date-year"
                                             type="text" value="2024" inputmode="numeric">
                                         </div>
@@ -785,17 +781,16 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the final date the appellant must resubmit by?</h1>
-                                </legend>
-                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <div id="change-appeal-final-date-hint"
+                                class="govuk-hint">For example, 27 3 2023</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be a business
                                     day</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                                             id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
                                             value="4" inputmode="numeric">
                                         </div>
@@ -803,7 +798,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="change-appeal-final-date-month" name="change-appeal-final-date-month"
                                             type="text" value="1" inputmode="numeric">
                                         </div>
@@ -811,7 +806,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="change-appeal-final-date-year" name="change-appeal-final-date-year"
                                             type="text" value="2030" inputmode="numeric">
                                         </div>
@@ -859,10 +854,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the final date the appellant must resubmit by?</h1>
-                                </legend>
-                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <div id="change-appeal-final-date-hint"
+                                class="govuk-hint">For example, 27 3 2023</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
                                     the appeal month must be between 1 and 12</p>
                                 <div class="govuk-date-input"
@@ -870,7 +864,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
                                             value="1" inputmode="numeric">
                                         </div>
@@ -878,7 +872,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="change-appeal-final-date-month" name="change-appeal-final-date-month"
                                             type="text" value="13" inputmode="numeric">
                                         </div>
@@ -886,7 +880,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="change-appeal-final-date-year" name="change-appeal-final-date-year"
                                             type="text" value="2024" inputmode="numeric">
                                         </div>
@@ -934,17 +928,16 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the final date the appellant must resubmit by?</h1>
-                                </legend>
-                                <div id="change-appeal-final-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <div id="change-appeal-final-date-hint"
+                                class="govuk-hint">For example, 27 3 2023</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
                                     the appeal year must be a number</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
                                             value="11" inputmode="numeric">
                                         </div>
@@ -952,7 +945,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="change-appeal-final-date-month" name="change-appeal-final-date-month"
                                             type="text" value="11" inputmode="numeric">
                                         </div>
@@ -960,7 +953,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="change-appeal-final-date-year" name="change-appeal-final-date-year"
                                             type="text" value="x" inputmode="numeric">
                                         </div>

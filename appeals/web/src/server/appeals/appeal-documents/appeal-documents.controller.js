@@ -38,7 +38,6 @@ import { permissionNames } from '#environment/permissions.js';
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  */
 export const mapErrorsForDocumentDates = (errors) => {
-	console.log(errors);
 	if (!errors) {
 		return;
 	}

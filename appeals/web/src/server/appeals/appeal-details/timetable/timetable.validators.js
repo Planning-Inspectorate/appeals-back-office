@@ -62,10 +62,6 @@ export const selectTimetableValidators = (req) => {
 		const { id, label } = validatorsMap[timetableType];
 		validatorsList.push(...createTimetableValidators(id, label));
 	});
-
-	validatorsList.push(
-		...createTimetableValidators('final-comments-due-date', 'Final comments due date')
-	);
 	validatorsList.push(
 		extractAndProcessDateErrors({
 			fieldNamePrefix: 'lpa-questionnaire-due-date'

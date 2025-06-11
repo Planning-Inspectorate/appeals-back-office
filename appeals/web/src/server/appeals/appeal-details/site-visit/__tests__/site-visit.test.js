@@ -461,7 +461,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('start time must be before end time</a>');
+			expect(errorSummaryHtml).toContain('Start time must be before end time</a>');
 		});
 
 		it('should redirect to the site appeal details page if all required fields are populated and valid', async () => {
@@ -1059,7 +1059,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('start time must be before end time</a>');
+			expect(errorSummaryHtml).toContain('Start time must be before end time</a>');
 		});
 
 		it('should redirect to the appeal details page if all required fields are populated and valid', async () => {
