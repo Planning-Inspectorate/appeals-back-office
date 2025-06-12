@@ -173,17 +173,17 @@ export const notificationBannerDefinitions = {
 	neighbouringSiteAdded: {
 		type: 'success',
 		pages: ['appealDetails', 'lpaQuestionnaire'],
-		text: 'Neighbouring site added'
+		text: 'Address added'
 	},
 	neighbouringSiteUpdated: {
 		type: 'success',
 		pages: ['appealDetails', 'lpaQuestionnaire'],
-		text: 'Neighbouring site updated'
+		text: 'Address updated'
 	},
 	neighbouringSiteRemoved: {
 		type: 'success',
 		pages: ['appealDetails', 'lpaQuestionnaire', 'manageNeighbouringSites'],
-		text: 'Neighbouring site removed'
+		text: 'Address removed'
 	},
 	appealValidAndReadyToStart: {
 		type: 'important',
