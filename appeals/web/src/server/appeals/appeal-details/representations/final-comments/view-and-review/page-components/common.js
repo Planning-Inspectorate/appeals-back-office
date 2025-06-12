@@ -25,9 +25,10 @@ function mapRepresentationTypeToPath(representationType) {
  * Generates the comment summary list used in both view and review pages.
  * @param {number} appealId
  * @param {Representation} comment - The comment object.
+ * @param {boolean} [isReview=false] - Indicates if the component is for review.
  * @returns {PageComponent} The generated comment summary list component.
  */
-export function generateCommentsSummaryList(appealId, comment) {
+export function generateCommentsSummaryList(appealId, comment, isReview = false) {
 	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length > 0;
 	const folderId = comment.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
@@ -80,7 +81,7 @@ export function generateCommentsSummaryList(appealId, comment) {
 				  },
 			actions: {
 				items:
-					!redactedCommentDifferent || !comment.redactedRepresentation
+					(!redactedCommentDifferent || !comment.redactedRepresentation) && !isReview
 						? [
 								{
 									text: 'Redact',
