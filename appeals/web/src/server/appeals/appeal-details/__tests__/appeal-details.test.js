@@ -206,7 +206,7 @@ describe('appeal-details', () => {
 				);
 			});
 
-			it('should render a "Neighbouring site added" success notification banner when an inspector/3rd party neighbouring site was added', async () => {
+			it('should render a "Address added" success notification banner when an inspector/3rd party neighbouring site was added', async () => {
 				const appealReference = '1';
 				const appealId = appealData.appealId;
 				nock.cleanAll();
@@ -254,10 +254,10 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('Neighbouring site added</p>');
+				expect(notificationBannerElementHTML).toContain('Address added</p>');
 			});
 
-			it('should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
+			it('should render a "Address updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
 				const appealReference = '1';
 
 				nock.cleanAll();
@@ -298,10 +298,10 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('Neighbouring site updated</p>');
+				expect(notificationBannerElementHTML).toContain('Address updated</p>');
 			});
 
-			it('should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
+			it('should render a "Address removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
 				const appealReference = '1';
 
 				nock.cleanAll();
@@ -336,7 +336,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('Neighbouring site removed</p>');
+				expect(notificationBannerElementHTML).toContain('Address removed</p>');
 			});
 
 			it('should render a "This appeal is now the lead for appeal" success notification banner when the appeal was successfully linked as the lead of a back-office appeal', async () => {
