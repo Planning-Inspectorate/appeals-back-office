@@ -52,7 +52,7 @@ export const appealDecisionPage = (appealId, appealReference, decision) => {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealId}`,
+								href: `/appeals-service/appeal-details/${appealId}/update-decision-letter/upload-decision-letter`,
 								visuallyHiddenText: 'decision letter'
 							}
 						]
