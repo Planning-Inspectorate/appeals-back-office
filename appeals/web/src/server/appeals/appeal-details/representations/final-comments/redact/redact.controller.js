@@ -3,6 +3,7 @@ import { redactFinalCommentPage, confirmRedactFinalCommentPage } from './redact.
 import { redactAndAccept } from '#appeals/appeal-details/representations/representations.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getRedactFinalComment = async (request, response) => {
@@ -85,7 +86,11 @@ export const postConfirmRedactFinalComment = async (request, response) => {
 			apiClient,
 			currentRepresentation
 		} = request;
-
+		//TODO: add accept comments flow
+		const isRedacted = checkRedactedText(
+			session.redactedRepresentation || '',
+			currentRepresentation?.originalRepresentation || ''
+		);
 		await redactAndAccept(
 			apiClient,
 			appealId,
@@ -94,16 +99,28 @@ export const postConfirmRedactFinalComment = async (request, response) => {
 		);
 
 		delete session.redactedRepresentation;
+		if (!isRedacted) {
+			const acceptFinalCommentsBannerType =
+				currentRepresentation.representationType === 'appellant_final_comment'
+					? 'appellantFinalCommentsAcceptSuccess'
+					: 'lpaFinalCommentsAcceptSuccess';
 
-		addNotificationBannerToSession({
-			session,
-			bannerDefinitionKey: 'finalCommentsRedactionSuccess',
-			appealId,
-			text: `${formatFinalCommentsTypeText(
-				finalCommentsType,
-				true
-			)} final comments redacted and accepted`
-		});
+			addNotificationBannerToSession({
+				session: session,
+				bannerDefinitionKey: acceptFinalCommentsBannerType,
+				appealId
+			});
+		} else {
+			addNotificationBannerToSession({
+				session,
+				bannerDefinitionKey: 'finalCommentsRedactionSuccess',
+				appealId,
+				text: `${formatFinalCommentsTypeText(
+					finalCommentsType,
+					true
+				)} final comments redacted and accepted`
+			});
+		}
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

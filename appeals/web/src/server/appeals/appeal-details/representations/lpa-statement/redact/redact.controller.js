@@ -9,6 +9,7 @@ import {
 	allocationLevelPage,
 	allocationSpecialismsPage
 } from '../allocation/allocation.mapper.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
 export const renderRedact = render(redactLpaStatementPage, 'patterns/display-page.pattern.njk');
 
@@ -207,21 +208,31 @@ export async function postConfirm(request, response) {
 			specialisms
 		});
 	}
-
+	const isRedacted = checkRedactedText(
+		session.redactLPAStatement.redactedRepresentation || '',
+		currentRepresentation?.originalRepresentation || ''
+	);
 	await redactAndAccept(
 		apiClient,
 		parseInt(appealId),
 		currentRepresentation.id,
 		session.redactLPAStatement.redactedRepresentation
 	);
-
 	delete session.redactLPAStatement;
 
-	addNotificationBannerToSession({
-		session,
-		bannerDefinitionKey: 'lpaStatementRedactedAndAccepted',
-		appealId
-	});
+	if (!isRedacted) {
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'lpaStatementAccepted',
+			appealId
+		});
+	} else {
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'lpaStatementRedactedAndAccepted',
+			appealId
+		});
+	}
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 }
