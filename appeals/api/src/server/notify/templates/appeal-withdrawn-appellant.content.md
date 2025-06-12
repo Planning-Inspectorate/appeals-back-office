@@ -2,15 +2,11 @@
 
 # Appeal withdrawn
 
-We have withdrawn this appeal following your request on {{withdrawal_date}}.
+We have withdrawn the appeal following your request on {{withdrawal_date}}.
 
-# Next steps
+# What happens next
 
-Your case will be closed.
-
-Any appointments made for this appeal will be cancelled.
-
-The planning department that refused your application has been informed.
+We have closed the appeal and cancelled the {{event_type}}.
 
 # Feedback
 
