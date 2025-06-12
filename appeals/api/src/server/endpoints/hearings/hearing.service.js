@@ -1,6 +1,9 @@
 import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import hearingRepository from '#repositories/hearing.repository.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { EventType } from '@pins/event-client';
+import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Hearing} Hearing */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateHearing} CreateHearing */
@@ -42,12 +45,14 @@ const createHearing = async (createHearingData) => {
 		const hearingEndTime = createHearingData.hearingEndTime;
 		const address = createHearingData.address;
 
-		await hearingRepository.createHearingById({
+		const hearing = await hearingRepository.createHearingById({
 			appealId,
 			hearingStartTime,
 			hearingEndTime,
 			address
 		});
+
+		await broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create);
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
@@ -76,6 +81,8 @@ const updateHearing = async (updateHearingData) => {
 
 		const result = await hearingRepository.updateHearingById(hearingId, updateData);
 
+		await broadcasters.broadcastEvent(updateData.hearingId, EVENT_TYPE.HEARING, EventType.Update);
+
 		return result;
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
@@ -90,6 +97,8 @@ const deleteHearing = async (deleteHearingData) => {
 		const { hearingId } = deleteHearingData;
 
 		await hearingRepository.deleteHearingById(hearingId);
+
+		await broadcasters.broadcastEvent(hearingId, EVENT_TYPE.HEARING, EventType.Delete);
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
