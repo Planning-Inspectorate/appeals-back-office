@@ -1,6 +1,6 @@
 We need more information before we can review your statement.
 
-The statement is incomplete because:{% for reason in reasons %}
+{% for reason in reasons %}
 - {{reason}}
 {%- endfor %}
 
