@@ -487,10 +487,24 @@ export function checkAndConfirmPage(appealData, request) {
 		? specificDecisionType.replaceAll('-', ' ')
 		: 'decision';
 
+	const baseRoute = baseUrl(currentAppeal);
+
+	let backUrl = getBackLinkUrlFromQuery(request);
+	if (!backUrl) {
+		if (specificDecisionType) {
+			backUrl = `${addBackLinkQueryToUrl(
+				request,
+				`${baseRoute}/issue-${specificDecisionType}-letter-upload`
+			)}`;
+		} else {
+			backUrl = `${baseRoute}/decision`;
+		}
+	}
+
 	const title = `Check details and issue ${decisionTypeText}`;
 	const pageContent = {
 		title,
-		backLinkUrl: getBackLinkUrlFromQuery(request) || `${baseUrl(currentAppeal)}/decision`,
+		backLinkUrl: backUrl,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
 		submitButtonText: `Issue ${decisionTypeText}`,
@@ -528,10 +542,12 @@ export function viewDecisionPageRows(appealData) {
 				}
 			]);
 		}
-		rows.push({
-			key: 'Decision',
-			html: `${decisionOutcome}${invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''}`
-		});
+		if (decisionOutcome) {
+			rows.push({
+				key: 'Decision',
+				html: `${decisionOutcome}${invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''}`
+			});
+		}
 		if (documentName) {
 			rows.push({
 				key: 'Decision letter',
