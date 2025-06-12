@@ -5,6 +5,9 @@ import { notifySend } from '#notify/notify-send.js';
 import { ERROR_NO_RECIPIENT_EMAIL } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { dateISOStringToDisplayDate, formatTime12h } from '#utils/date-formatter.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { EventType } from '@pins/event-client';
+import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Hearing} Hearing */
@@ -99,7 +102,7 @@ const createHearing = async (createHearingData, appeal, notifyClient) => {
 		const hearingEndTime = createHearingData.hearingEndTime;
 		const address = createHearingData.address;
 
-		await hearingRepository.createHearingById({
+		const hearing = await hearingRepository.createHearingById({
 			appealId,
 			hearingStartTime,
 			hearingEndTime,
@@ -107,6 +110,7 @@ const createHearing = async (createHearingData, appeal, notifyClient) => {
 		});
 
 		if (address) {
+			await broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create);
 			await sendHearingDetailsNotifications(notifyClient, 'hearing-set-up', appeal, hearingStartTime, address);
 		}
 	} catch (error) {
@@ -140,6 +144,7 @@ const updateHearing = async (updateHearingData, appeal, notifyClient) => {
 		const result = await hearingRepository.updateHearingById(hearingId, updateData);
 
 		if (result.address) {
+			await broadcasters.broadcastEvent(updateData.hearingId, EVENT_TYPE.HEARING, EventType.Update);
 			await sendHearingDetailsNotifications(notifyClient, 'hearing-updated', appeal, hearingStartTime, result.address);
 		}
 
@@ -160,6 +165,7 @@ const deleteHearing = async (deleteHearingData, notifyClient, appeal) => {
 
 		await hearingRepository.deleteHearingById(hearingId);
 
+		await broadcasters.broadcastEvent(hearingId, EVENT_TYPE.HEARING, EventType.Delete);
 		await sendHearingNotifications(notifyClient, 'hearing-cancelled', appeal);
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
