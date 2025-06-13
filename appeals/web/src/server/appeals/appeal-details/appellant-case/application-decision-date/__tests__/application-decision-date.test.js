@@ -24,7 +24,7 @@ describe('application-decision-date', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'What’s the date on the decision letter from the local planning authority?​</h1>'
+				'What’s the date on the decision letter from the local planning authority?​'
 			);
 		});
 	});
@@ -70,7 +70,7 @@ describe('application-decision-date', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'What’s the date on the decision letter from the local planning authority?​</h1>'
+				'What’s the date on the decision letter from the local planning authority?​'
 			);
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
@@ -100,7 +100,7 @@ describe('application-decision-date', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'What’s the date on the decision letter from the local planning authority?​</h1>'
+				'What’s the date on the decision letter from the local planning authority?​'
 			);
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
@@ -130,7 +130,7 @@ describe('application-decision-date', () => {
 
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain(
-				'What’s the date on the decision letter from the local planning authority?​</h1>'
+				'What’s the date on the decision letter from the local planning authority?​'
 			);
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
@@ -160,7 +160,7 @@ describe('application-decision-date', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toContain(
-				'What’s the date on the decision letter from the local planning authority?​</h1>'
+				'What’s the date on the decision letter from the local planning authority?​'
 			);
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
@@ -189,7 +189,7 @@ describe('application-decision-date', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toContain(
-				'What’s the date on the decision letter from the local planning authority?​</h1>'
+				'What’s the date on the decision letter from the local planning authority?​'
 			);
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {

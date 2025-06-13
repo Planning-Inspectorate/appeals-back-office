@@ -1,6 +1,8 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { createDateInputFieldsValidator } from '#lib/validators/date-input.validator.js';
+import // createDateInputFieldsValidator,
+//createDocumentDateInputFieldsValidator
+'#lib/validators/date-input.validator.js';
 import { dateIsValid, dateIsTodayOrInThePast } from '#lib/dates.js';
 import { folderPathToFolderNameText } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 
@@ -64,59 +66,112 @@ export const validateDocumentDetailsBodyFormat = createValidator(
 		.withMessage('There is a problem with the service')
 );
 
-export const validateDocumentDetailsReceivedDatesFields = createDateInputFieldsValidator(
-	'',
-	'Received date',
-	'day',
-	'month',
-	'year',
-	'items.*.receivedDate'
+export const validateDocumentDetailsReceivedDatesFields = createValidator(
+	body('items.*.receivedDate').custom((value) => {
+		const day = value.day;
+		const month = value.month;
+		const year = value.year;
+
+		if (!day && !month && !year) {
+			throw new Error('all-fields-day::Enter the received date');
+		}
+
+		if (!day && !month) {
+			throw new Error('all-fields-day::Received date must include a day and a month');
+		}
+
+		if (!day && !year) {
+			throw new Error('all-fields-day::Received date must include a day and a year');
+		}
+
+		if (!month && !year) {
+			throw new Error('all-fields-month::Received date must include a month and a year');
+		}
+
+		if (!day) {
+			throw new Error('day::Received date must include a day');
+		}
+
+		if (!month) {
+			throw new Error('month::Received date must include a month');
+		}
+
+		if (!year) {
+			throw new Error('year::Received date must include a year');
+		}
+
+		const dayStr = String(day);
+		const monthStr = String(month);
+		const yearStr = String(year);
+
+		if (!/^\d+$/.test(dayStr)) {
+			throw new Error('day::Received date day must be a number');
+		}
+		if (dayStr.length < 1 || dayStr.length > 2) {
+			throw new Error('day::Received date day must be 1 or 2 digits');
+		}
+		if (!/^(0?[1-9]|[12]\d|3[01])$/.test(dayStr)) {
+			throw new Error('day::Received date day must be between 1 and 31');
+		}
+
+		if (!/^\d+$/.test(monthStr)) {
+			throw new Error('month::Received date month must be a number');
+		}
+		if (monthStr.length < 1 || monthStr.length > 2) {
+			throw new Error('month::Received date month must be 1 or 2 digits');
+		}
+		if (!/^(0?[1-9]|1[0-2])$/.test(monthStr)) {
+			throw new Error('month::Received date month must be between 1 and 12');
+		}
+
+		if (!/^\d+$/.test(yearStr)) {
+			throw new Error('year::Received date year must be a number');
+		}
+		if (yearStr.length !== 4) {
+			throw new Error('year::Received date year must be 4 digits');
+		}
+		return true;
+	})
 );
 
 export const validateDocumentDetailsReceivedDateValid = createValidator(
-	body()
-		.custom((bodyFields) => {
-			for (const item of bodyFields.items) {
-				const day = item?.receivedDate?.day;
-				const month = item?.receivedDate?.month;
-				const year = item?.receivedDate?.year;
+	body('items.*.receivedDate')
+		.custom((value) => {
+			const day = value.day;
+			const month = value.month;
+			const year = value.year;
 
-				if (!day || !month || !year) {
-					return false;
-				}
+			if (!day || !month || !year) {
+				return false;
+			}
 
-				const dayNumber = Number.parseInt(day, 10);
-				const monthNumber = Number.parseInt(month, 10);
-				const yearNumber = Number.parseInt(year, 10);
+			const dayNumber = Number.parseInt(day, 10);
+			const monthNumber = Number.parseInt(month, 10);
+			const yearNumber = Number.parseInt(year, 10);
 
-				if (!dateIsValid({ day: dayNumber, month: monthNumber, year: yearNumber })) {
-					return false;
-				}
+			if (!dateIsValid({ day: dayNumber, month: monthNumber, year: yearNumber })) {
+				return false;
 			}
 
 			return true;
 		})
-		.withMessage('Received date must be a valid date')
+		.withMessage('all-fields-day::Received date must be a valid date')
 );
 
 export const validateDocumentDetailsReceivedDateIsNotFutureDate = createValidator(
-	body()
-		.custom((bodyFields) => {
-			for (const item of bodyFields.items) {
-				const day = item?.receivedDate?.day;
-				const month = item?.receivedDate?.month;
-				const year = item?.receivedDate?.year;
+	body('items.*.receivedDate')
+		.custom((value) => {
+			const day = value.day;
+			const month = value.month;
+			const year = value.year;
 
-				if (!day || !month || !year) {
-					return false;
-				}
-
-				return dateIsTodayOrInThePast({ day, month, year });
+			if (!day || !month || !year) {
+				return false;
 			}
 
-			return true;
+			return dateIsTodayOrInThePast({ day, month, year });
 		})
-		.withMessage('Received date cannot be a future date')
+		.withMessage('all-fields-day::Received date cannot be a future date')
 );
 
 export const validateDocumentDetailsRedactionStatuses = createValidator(

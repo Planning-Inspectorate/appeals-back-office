@@ -2,6 +2,9 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { logger } from '@azure/storage-blob';
+import { issueDecisionDateField } from './issue-decision.constants.js';
+import { dateInput } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -103,50 +106,32 @@ export function decisionLetterUploadPageBodyComponents() {
  * @param {string} decisionLetterDay
  * @param {string} decisionLetterMonth
  * @param {string} decisionLetterYear
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
 export function dateDecisionLetterPage(
 	appealData,
 	decisionLetterDay,
 	decisionLetterMonth,
-	decisionLetterYear
+	decisionLetterYear,
+	errors
 ) {
 	const title = 'Enter date of decision letter';
 
-	/** @type {PageComponent} */
-	const selectDateComponent = {
-		type: 'date-input',
-		parameters: {
-			id: 'decision-letter-date',
-			namePrefix: 'decision-letter-date',
-			fieldset: {
-				legend: {
-					text: '',
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
-			hint: {
-				text: 'For example, 27 3 2023'
-			},
-			items: [
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'day',
-					value: decisionLetterDay || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'month',
-					value: decisionLetterMonth || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-					name: 'year',
-					value: decisionLetterYear || ''
-				}
-			]
-		}
-	};
+	// /** @type {PageComponent} */
+	const selectDateComponent = dateInput({
+		name: issueDecisionDateField,
+		id: issueDecisionDateField,
+		namePrefix: issueDecisionDateField,
+		value: {
+			day: decisionLetterDay,
+			month: decisionLetterMonth,
+			year: decisionLetterYear
+		},
+		legendText: 'Select date',
+		hint: 'For example, 27 3 2023',
+		errors: errors
+	});
 
 	return {
 		title,
@@ -168,7 +153,9 @@ export function checkAndConfirmPage(request, appealData, session) {
 	const decisionOutcome = mapDecisionOutcome(session.inspectorDecision?.outcome);
 	const decisionLetter = session.fileUploadInfo?.files[0]?.name;
 	const letterDate = session.inspectorDecision?.letterDate;
-
+	logger.info(
+		`checkAndConfirmPage: decisionOutcome=${decisionOutcome}, decisionLetter=${decisionLetter}, letterDate=${letterDate}`
+	);
 	/** @type {PageComponent} */
 	const summaryListComponent = {
 		type: 'summary-list',

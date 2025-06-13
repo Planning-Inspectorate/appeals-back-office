@@ -204,21 +204,21 @@ exports[`add-ip-comment GET /date-submitted should match the snapshot 1`] = `
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="day" name="day" type="text" value="30" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="month" name="month" type="text" value="10" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="year" name="year" type="text" value="2024" inputmode="numeric">
                                         </div>
                                     </div>

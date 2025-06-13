@@ -1,6 +1,8 @@
 import { dateISOStringToDisplayDate, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { capitalize } from 'lodash-es';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { dateInput } from '#lib/mappers/index.js';
+import { dueDateFieledName } from './appeal-timetable.constants.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -32,9 +34,10 @@ export const routeToObjectMapper = {
  * @param {import('./appeal-timetables.service.js').AppealTimetables} appealTimetables
  * @param {AppealTimetableType} timetableType
  * @param {Appeal} appealDetails
+ * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export const mapUpdateDueDatePage = (appealTimetables, timetableType, appealDetails) => {
+export const mapUpdateDueDatePage = (appealTimetables, timetableType, appealDetails, errors) => {
 	const currentDueDateIso = appealTimetables && appealTimetables[timetableType];
 	const currentDueDate = currentDueDateIso && dateISOStringToDisplayDate(currentDueDateIso);
 	const currentDueDateDayMonthYear =
@@ -53,35 +56,21 @@ export const mapUpdateDueDatePage = (appealTimetables, timetableType, appealDeta
 			type: 'submit'
 		},
 		pageComponents: [
-			{
-				type: 'date-input',
-				parameters: {
-					id: 'due-date',
-					namePrefix: 'due-date',
-					hint: {
-						text: 'For example, 27 3 2007'
-					},
-					...(currentDueDateDayMonthYear && {
-						items: [
-							{
-								name: 'day',
-								classes: 'govuk-input--width-2',
-								value: currentDueDateDayMonthYear.day
-							},
-							{
-								name: 'month',
-								classes: 'govuk-input--width-2',
-								value: currentDueDateDayMonthYear.month
-							},
-							{
-								name: 'year',
-								classes: 'govuk-input--width-4',
-								value: currentDueDateDayMonthYear.year
-							}
-						]
-					})
-				}
-			}
+			dateInput({
+				name: dueDateFieledName,
+				id: dueDateFieledName,
+				namePrefix: dueDateFieledName,
+				value: currentDueDateDayMonthYear
+					? {
+							day: currentDueDateDayMonthYear?.day,
+							month: currentDueDateDayMonthYear?.month,
+							year: currentDueDateDayMonthYear?.year
+					  }
+					: {},
+				legendText: ``,
+				hint: 'For example, 27 3 2007',
+				errors: errors
+			})
 		]
 	};
 
@@ -101,7 +90,8 @@ export const mapUpdateDueDatePage = (appealTimetables, timetableType, appealDeta
 /**
  * @param { number } updatedDueDateDay
  * @param { string } apiError
- * @returns { object }
+ * @returns {import("@pins/express").ValidationErrors | undefined}
+
  */
 export const apiErrorMapper = (updatedDueDateDay, apiError) => ({
 	'due-date-day': {

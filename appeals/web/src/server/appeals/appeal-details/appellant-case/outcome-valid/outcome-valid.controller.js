@@ -30,7 +30,14 @@ export const postValidDate = async (request, response) => {
 			Number.isNaN(updatedValidDateMonth) ||
 			Number.isNaN(updatedValidDateYear)
 		) {
-			let errorMessage = [{ msg: 'The valid date must be a valid date.' }];
+			let /** @type {import('@pins/express').ValidationErrors} */ errorMessage = {
+					'valid-date-day': {
+						location: 'body',
+						param: 'all-fields',
+						value: '',
+						msg: 'The valid date must be a valid date.'
+					}
+				};
 
 			return renderValidDatePage(request, response, errorMessage);
 		}
@@ -54,9 +61,14 @@ export const postValidDate = async (request, response) => {
 		});
 
 		if (isBefore(new Date(validDateISOString), new Date(createdAtDateAtMidnight))) {
-			let errorMessage = [
-				{ msg: 'The valid date must be on or after the date the case was received.' }
-			];
+			let /** @type {import('@pins/express').ValidationErrors} */ errorMessage = {
+					'valid-date-day': {
+						location: 'body',
+						param: 'all-fields',
+						value: '',
+						msg: 'The valid date must be on or after the date the case was received.'
+					}
+				};
 
 			return renderValidDatePage(request, response, errorMessage);
 		}
@@ -89,7 +101,7 @@ export const postValidDate = async (request, response) => {
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {object} [apiErrors]
+ * @param {import('@pins/express').ValidationErrors} [apiErrors]
  */
 const renderValidDatePage = async (request, response, apiErrors) => {
 	const {
@@ -108,7 +120,8 @@ const renderValidDatePage = async (request, response, apiErrors) => {
 		appealReference,
 		dateValidDay,
 		dateValidMonth,
-		dateValidYear
+		dateValidYear,
+		errors
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {

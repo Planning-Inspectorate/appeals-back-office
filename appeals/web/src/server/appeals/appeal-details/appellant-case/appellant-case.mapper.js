@@ -1,5 +1,5 @@
 import config from '#environment/config.js';
-import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/index.js';
+import { dateInput, inputInstructionIsRadiosInputInstruction } from '#lib/mappers/index.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
@@ -246,13 +246,21 @@ export function getValidationOutcomeFromAppellantCase(appellantCaseData) {
 
 /**
  * @param {Appeal} appealData
- * @param {number|string} [dueDateDay]
- * @param {number|string} [dueDateMonth]
- * @param {number|string} [dueDateYear]
+ * @param {number | string} [dueDateDay]
+ * @param {number | string} [dueDateMonth]
+ * @param {number | string} [dueDateYear]
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {boolean} [errorsOnPage]
  * @returns {PageContent}
  */
-export function updateDueDatePage(appealData, dueDateDay, dueDateMonth, dueDateYear, errorsOnPage) {
+export function updateDueDatePage(
+	appealData,
+	errors,
+	dueDateDay,
+	dueDateMonth,
+	dueDateYear,
+	errorsOnPage
+) {
 	let existingDueDateDayMonthYear = {
 		day: dueDateDay,
 		month: dueDateMonth,
@@ -279,35 +287,19 @@ export function updateDueDatePage(appealData, dueDateDay, dueDateMonth, dueDateY
 			type: 'submit'
 		},
 		pageComponents: [
-			{
-				type: 'date-input',
-				parameters: {
-					id: 'due-date',
-					namePrefix: 'due-date',
-					hint: {
-						text: 'For example, 27 3 2007'
-					},
-					...(existingDueDateDayMonthYear && {
-						items: [
-							{
-								name: 'day',
-								classes: 'govuk-input--width-2',
-								value: existingDueDateDayMonthYear.day
-							},
-							{
-								name: 'month',
-								classes: 'govuk-input--width-2',
-								value: existingDueDateDayMonthYear.month
-							},
-							{
-								name: 'year',
-								classes: 'govuk-input--width-4',
-								value: existingDueDateDayMonthYear.year
-							}
-						]
-					})
-				}
-			}
+			dateInput({
+				name: 'due-date',
+				id: 'due-date',
+				namePrefix: 'due-date',
+				hint: 'For example, 27 3 2007',
+				value: {
+					day: existingDueDateDayMonthYear.day,
+					month: existingDueDateDayMonthYear.month,
+					year: existingDueDateDayMonthYear.year
+				},
+				legendText: '',
+				errors: errors
+			})
 		]
 	};
 

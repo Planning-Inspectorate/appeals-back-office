@@ -3,6 +3,8 @@
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+import { dateInput } from '#lib/mappers/index.js';
+import { applicaitonDecisionDateField } from './application-decision-date.constants.js';
 
 /**
  * @typedef {import('../../../../appeals/appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
@@ -12,12 +14,14 @@ import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
  * @param {Appeal} appealData
  * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} appellantCaseData
  * @param {DayMonthYearHourMinute} storedSessionData
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
 export const changeApplicationDecisionDatePage = (
 	appealData,
 	appellantCaseData,
-	storedSessionData
+	storedSessionData,
+	errors
 ) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
@@ -45,41 +49,19 @@ export const changeApplicationDecisionDatePage = (
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
-			{
-				type: 'date-input',
-				parameters: {
-					name: 'applicationDecisionDate',
-					id: 'application-decision-date',
-					namePrefix: 'application-decision-date',
-					fieldset: {
-						legend: {
-							text: 'What’s the date on the decision letter from the local planning authority?​',
-							isPageHeading: true,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
-					hint: {
-						text: 'For example, 27 3 2007'
-					},
-					items: [
-						{
-							classes: 'govuk-input--width-2',
-							name: 'day',
-							value: day
-						},
-						{
-							classes: 'govuk-input--width-2',
-							name: 'month',
-							value: month
-						},
-						{
-							classes: 'govuk-input--width-4',
-							name: 'year',
-							value: year
-						}
-					]
-				}
-			}
+			dateInput({
+				name: applicaitonDecisionDateField,
+				id: applicaitonDecisionDateField,
+				namePrefix: applicaitonDecisionDateField,
+				value: {
+					day: day,
+					month: month,
+					year: year
+				},
+				legendText: 'What’s the date on the decision letter from the local planning authority?​',
+				hint: 'For example, 27 3 2007',
+				errors: errors
+			})
 		]
 	};
 

@@ -74,27 +74,27 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="9" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="10" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="2023" inputmode="numeric">
                                         </div>
                                     </div>
@@ -206,27 +206,27 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="9" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="10" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="2023" inputmode="numeric">
                                         </div>
                                     </div>
@@ -353,7 +353,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Visit date must be a real date</a>
+                            <li><a href="#visit-date-day">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -431,29 +431,31 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date must be a
+                                    real date</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="29" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-month" name="visit-date-month" type="text" value="2" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -500,7 +502,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">The visit date must be in the future</a>
+                            <li><a href="#visit-date-day">The visit date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -578,29 +580,31 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The visit date must be
+                                    in the future</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="29" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-month" name="visit-date-month" type="text" value="2" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-year" name="visit-date-year" type="text" value="2000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -649,8 +653,6 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-day">Visit date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Visit date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -727,29 +729,31 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date day must be
+                                    between 1 and 31</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="0" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -798,8 +802,6 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-day">Visit date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Visit date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -876,29 +878,31 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date day must be
+                                    between 1 and 31</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="32" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -947,8 +951,6 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-month">Visit date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Visit date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1025,29 +1027,31 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date month must
+                                    be between 1 and 12</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-month" name="visit-date-month" type="text" value="0" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -1096,8 +1100,6 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-month">Visit date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Visit date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1174,29 +1176,31 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date month must
+                                    be between 1 and 12</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-month" name="visit-date-month" type="text" value="13" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -1245,8 +1249,6 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-year">Visit date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Visit date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1323,29 +1325,31 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date year must
+                                    be 4 digits</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-year" name="visit-date-year" type="text" value="202" inputmode="numeric">
                                         </div>
                                     </div>
@@ -1394,8 +1398,6 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-year">Visit date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Visit date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1472,29 +1474,31 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date year must
+                                    be 4 digits</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-year" name="visit-date-year" type="text" value="30003" inputmode="numeric">
                                         </div>
                                     </div>
@@ -1621,27 +1625,27 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -1768,27 +1772,27 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -1836,8 +1840,6 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-start-time-hour">Start time hour cannot be less than 0 or greater than 23</a>
-                            </li>
-                            <li><a href="#">start time must be before end time</a>
                             </li>
                         </ul>
                     </div>
@@ -1917,27 +1919,27 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -1984,7 +1986,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">start time must be before end time</a>
+                            <li><a href="#visit-start-time-hour">Start time must be before end time</a>
                             </li>
                         </ul>
                     </div>
@@ -2064,27 +2066,27 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -2211,27 +2213,27 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -2280,11 +2282,11 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-type">Please select a visit type</a>
                             </li>
-                            <li><a href="#">Enter the visit date</a>
-                            </li>
                             <li><a href="#visit-start-time-hour">Start time must include an hour</a>
                             </li>
                             <li><a href="#visit-start-time-minute">Start time must include a minute</a>
+                            </li>
+                            <li><a href="#visit-date-day">Enter the visit date</a>
                             </li>
                         </ul>
                     </div>
@@ -2362,62 +2364,63 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="visit-date">
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the visit date</p>
+                                <div                                 class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-month" name="visit-date-month" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-year" name="visit-date-year" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
-                                </div>
-                            </fieldset>
                         </div>
-                        <h2>Select time</h2>
-                        <p class="govuk-hint">Optional for unaccompanied visits</p>
-                        <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="">
                         </fieldset>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="">
-                        </fieldset>
-                        <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
-                    </form>
                 </div>
+                <h2>Select time</h2>
+                <p class="govuk-hint">Optional for unaccompanied visits</p>
+                <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
+                <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
+                    <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                    name="visit-start-time-hour" type="number" value="">:
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                    <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                    name="visit-start-time-minute" type="number" value="">
+                </fieldset>
+                <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
+                    <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
+                    name="visit-end-time-hour" type="number" value="">:
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
+                    <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
+                    name="visit-end-time-minute" type="number" value="">
+                </fieldset>
+                <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
             </div>
         </div>
+    </div>
     </div>
 </main>"
 `;
@@ -2431,7 +2434,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Visit date must be a real date</a>
+                            <li><a href="#visit-date-day">Visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -2509,29 +2512,31 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date must be a
+                                    real date</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="29" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-month" name="visit-date-month" type="text" value="2" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -2578,7 +2583,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">The visit date must be in the future</a>
+                            <li><a href="#visit-date-day">The visit date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -2656,29 +2661,31 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The visit date must be
+                                    in the future</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="29" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-month" name="visit-date-month" type="text" value="2" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-year" name="visit-date-year" type="text" value="2000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -2727,8 +2734,6 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-day">Visit date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Visit date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -2805,29 +2810,31 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date day must be
+                                    between 1 and 31</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="0" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -2876,8 +2883,6 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-day">Visit date day must be between 1 and 31</a>
                             </li>
-                            <li><a href="#">Visit date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -2954,29 +2959,31 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date day must be
+                                    between 1 and 31</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="32" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -3025,8 +3032,6 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-month">Visit date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Visit date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -3103,29 +3108,31 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date month must
+                                    be between 1 and 12</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-month" name="visit-date-month" type="text" value="0" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -3174,8 +3181,6 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-month">Visit date month must be between 1 and 12</a>
                             </li>
-                            <li><a href="#">Visit date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -3252,29 +3257,31 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date month must
+                                    be between 1 and 12</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-month" name="visit-date-month" type="text" value="13" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -3323,8 +3330,6 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-year">Visit date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Visit date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -3401,29 +3406,31 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date year must
+                                    be 4 digits</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-year" name="visit-date-year" type="text" value="202" inputmode="numeric">
                                         </div>
                                     </div>
@@ -3472,8 +3479,6 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-date-year">Visit date year must be 4 digits</a>
                             </li>
-                            <li><a href="#">Visit date must be a real date</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -3550,29 +3555,31 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date year must
+                                    be 4 digits</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-year" name="visit-date-year" type="text" value="30003" inputmode="numeric">
                                         </div>
                                     </div>
@@ -3699,27 +3706,27 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -3846,27 +3853,27 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -3914,8 +3921,6 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-start-time-hour">Start time hour cannot be less than 0 or greater than 23</a>
-                            </li>
-                            <li><a href="#">start time must be before end time</a>
                             </li>
                         </ul>
                     </div>
@@ -3995,27 +4000,27 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -4062,7 +4067,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">start time must be before end time</a>
+                            <li><a href="#visit-start-time-hour">Start time must be before end time</a>
                             </li>
                         </ul>
                     </div>
@@ -4142,27 +4147,27 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -4289,27 +4294,27 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -4360,7 +4365,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             </li>
                             <li><a href="#visit-end-time-minute">End time must include a minute</a>
                             </li>
-                            <li><a href="#">start time must be before end time</a>
+                            <li><a href="#visit-start-time-hour">Start time must be before end time</a>
                             </li>
                         </ul>
                     </div>
@@ -4440,27 +4445,27 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -4589,27 +4594,27 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -4738,27 +4743,27 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         </div>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-day" name="visit-date-day" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="visit-date-month" name="visit-date-month" type="text" value="1" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="visit-date-year" name="visit-date-year" type="text" value="3000" inputmode="numeric">
                                         </div>
                                     </div>
@@ -4807,11 +4812,11 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-type">Please select a visit type</a>
                             </li>
-                            <li><a href="#">Enter the visit date</a>
-                            </li>
                             <li><a href="#visit-start-time-hour">Start time must include an hour</a>
                             </li>
                             <li><a href="#visit-start-time-minute">Start time must include a minute</a>
+                            </li>
+                            <li><a href="#visit-date-day">Enter the visit date</a>
                             </li>
                         </ul>
                     </div>
@@ -4889,62 +4894,63 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select date</legend>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="visit-date">
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the visit date</p>
+                                <div                                 class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-month" name="visit-date-month" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-year" name="visit-date-year" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
-                                </div>
-                            </fieldset>
                         </div>
-                        <h2>Select time</h2>
-                        <p class="govuk-hint">Optional for unaccompanied visits</p>
-                        <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="">
                         </fieldset>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="">
-                        </fieldset>
-                        <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
-                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
-                    </form>
                 </div>
+                <h2>Select time</h2>
+                <p class="govuk-hint">Optional for unaccompanied visits</p>
+                <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
+                <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
+                    <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                    name="visit-start-time-hour" type="number" value="">:
+                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                    <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                    name="visit-start-time-minute" type="number" value="">
+                </fieldset>
+                <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
+                    <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
+                    name="visit-end-time-hour" type="number" value="">:
+                    <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
+                    <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
+                    name="visit-end-time-minute" type="number" value="">
+                </fieldset>
+                <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
+                <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
             </div>
         </div>
+    </div>
     </div>
 </main>"
 `;

@@ -8,7 +8,11 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import { kilobyte, megabyte, gigabyte } from '#appeals/appeal.constants.js';
-import { mapNotificationBannersFromSession, createNotificationBanner } from '#lib/mappers/index.js';
+import {
+	mapNotificationBannersFromSession,
+	createNotificationBanner,
+	documentDateInput
+} from '#lib/mappers/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -328,6 +332,7 @@ function stripFileExtension(fileName) {
  * @param {string} [params.pageHeadingTextOverride]
  * @param {string} [params.dateLabelTextOverride]
  * @param {string} [params.documentId]
+ * @param {import("@pins/express").ValidationErrors | undefined} [params.errors]
  * @returns {PageContent}
  */
 export function addDocumentDetailsPage({
@@ -338,7 +343,8 @@ export function addDocumentDetailsPage({
 	redactionStatuses,
 	pageHeadingTextOverride,
 	dateLabelTextOverride,
-	documentId
+	documentId,
+	errors
 }) {
 	/** @type {PageContent} */
 	const pageContent = {
@@ -354,7 +360,8 @@ export function addDocumentDetailsPage({
 				bodyItems,
 				index,
 				redactionStatuses,
-				dateLabelTextOverride
+				dateLabelTextOverride,
+				errors
 			});
 		})
 	};
@@ -370,6 +377,7 @@ export function addDocumentDetailsPage({
  * @param {number} params.index
  * @param {RedactionStatus[]} params.redactionStatuses
  * @param {string} [params.dateLabelTextOverride]
+ * @param {import("@pins/express").ValidationErrors | undefined} params.errors
  * @returns {PageComponent[]}
  */
 function mapFileUploadInfoItemToDocumentDetailsPageComponents({
@@ -378,7 +386,8 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents({
 	bodyItems,
 	index,
 	redactionStatuses,
-	dateLabelTextOverride
+	dateLabelTextOverride,
+	errors
 }) {
 	const receivedDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(
 		uncommittedFile.receivedDate
@@ -404,50 +413,26 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents({
 				value: uncommittedFile.GUID
 			}
 		},
-		{
-			type: 'date-input',
-			parameters: {
-				id: `items[${index}]receivedDate`,
-				namePrefix: `items[${index}][receivedDate]`,
-				fieldset: {
-					legend: {
-						text: dateLabelTextOverride || 'Date received'
-					}
-				},
-				items: [
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-						id: `items[${index}].receivedDate.day`,
-						name: '[day]',
-						label: 'Day',
-						value:
-							(bodyRecievedDateDay !== undefined
-								? bodyRecievedDateDay
-								: receivedDateDayMonthYear?.day) || ''
-					},
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-						id: `items[${index}].receivedDate.month`,
-						name: '[month]',
-						label: 'Month',
-						value:
-							(bodyRecievedDateMonth !== undefined
-								? bodyRecievedDateMonth
-								: receivedDateDayMonthYear?.month) || ''
-					},
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-						id: `items[${index}].receivedDate.year`,
-						name: '[year]',
-						label: 'Year',
-						value:
-							(bodyRecievedDateYear !== undefined
-								? bodyRecievedDateYear
-								: receivedDateDayMonthYear?.year) || ''
-					}
-				]
-			}
-		},
+		documentDateInput({
+			value: {
+				day:
+					(bodyRecievedDateDay !== undefined
+						? bodyRecievedDateDay
+						: receivedDateDayMonthYear?.day) || '',
+				month:
+					(bodyRecievedDateMonth !== undefined
+						? bodyRecievedDateMonth
+						: receivedDateDayMonthYear?.month) || '',
+				year:
+					(bodyRecievedDateYear !== undefined
+						? bodyRecievedDateYear
+						: receivedDateDayMonthYear?.year) || ''
+			},
+			legendText: dateLabelTextOverride || 'Date received',
+			hint: 'For example, 27 3 2007',
+			appealDocumentIndex: index,
+			errors: errors
+		}),
 		{
 			wrapperHtml: {
 				opening: '',
@@ -502,9 +487,10 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents({
 /**
  * @param {DocumentVersionInfo} item
  * @param {RedactionStatus[]} redactionStatuses
+ * @param {import("@pins/express").ValidationErrors | undefined} [errors]
  * @returns {PageComponent[]}
  */
-function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionStatuses) {
+function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionStatuses, errors) {
 	const dateReceived = dateISOStringToDayMonthYearHourMinute(item.dateReceived);
 	const bodyRecievedDateDay = dateReceived?.day;
 	const bodyRecievedDateMonth = dateReceived?.month;
@@ -525,41 +511,17 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
 				value: item.documentId
 			}
 		},
-		{
-			type: 'date-input',
-			parameters: {
-				id: `items[0]receivedDate`,
-				namePrefix: `items[0][receivedDate]`,
-				fieldset: {
-					legend: {
-						text: 'Date received'
-					}
-				},
-				items: [
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-						id: `items[0].receivedDate.day`,
-						name: '[day]',
-						label: 'Day',
-						value: bodyRecievedDateDay || ''
-					},
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-						id: `items[0].receivedDate.month`,
-						name: '[month]',
-						label: 'Month',
-						value: bodyRecievedDateMonth || ''
-					},
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-						id: `items[0].receivedDate.year`,
-						name: '[year]',
-						label: 'Year',
-						value: bodyRecievedDateYear || ''
-					}
-				]
-			}
-		},
+		documentDateInput({
+			value: {
+				day: bodyRecievedDateDay || '',
+				month: bodyRecievedDateMonth || '',
+				year: bodyRecievedDateYear || ''
+			},
+			legendText: 'Date received',
+			hint: '',
+			appealDocumentIndex: 0,
+			errors: errors
+		}),
 		{
 			wrapperHtml: {
 				opening: '',
@@ -1895,9 +1857,10 @@ export function changeDocumentFileNamePage(backLinkUrl, folder, file) {
  * @param {FolderInfo} folder
  * @param {Document} file
  * @param {RedactionStatus[]} redactionStatuses
+ * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export function changeDocumentDetailsPage(backLinkUrl, folder, file, redactionStatuses) {
+export function changeDocumentDetailsPage(backLinkUrl, folder, file, redactionStatuses, errors) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Change document details',
@@ -1907,7 +1870,8 @@ export function changeDocumentDetailsPage(backLinkUrl, folder, file, redactionSt
 		heading: `${folderPathToFolderNameText(folder.path)} documents`,
 		pageComponents: mapDocumentDetailsItemToDocumentDetailsPageComponents(
 			file.latestDocumentVersion,
-			redactionStatuses
+			redactionStatuses,
+			errors
 		)
 	};
 

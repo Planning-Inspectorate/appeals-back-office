@@ -29,7 +29,7 @@ describe('Timetable', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('LPA questionnaire due</h1>');
+			expect(element.innerHTML).toContain('LPA questionnaire due');
 			expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-day');
 			expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-month"');
 			expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-year"');
@@ -162,7 +162,7 @@ describe('Timetable', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Final comments due</h1>');
+			expect(element.innerHTML).toContain('Final comments due');
 			expect(element.innerHTML).toContain('name="final-comments-due-date-day');
 			expect(element.innerHTML).toContain('name="final-comments-due-date-month"');
 			expect(element.innerHTML).toContain('name="final-comments-due-date-year"');
@@ -330,7 +330,7 @@ describe('Timetable', () => {
 					expect(element.innerHTML).toContain(
 						'<h2 class="govuk-error-summary__title"> There is a problem</h2>'
 					);
-					expect(element.innerHTML).toContain('LPA questionnaire due</h1>');
+					expect(element.innerHTML).toContain('LPA questionnaire due');
 					expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-day');
 					expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-month"');
 					expect(element.innerHTML).toContain('name="lpa-questionnaire-due-date-year"');
@@ -342,7 +342,8 @@ describe('Timetable', () => {
 				const response = await request.post(`${baseUrl}/edit`).send({
 					'lpa-questionnaire-due-date-day': '10',
 					'lpa-questionnaire-due-date-month': '10',
-					'lpa-questionnaire-due-date-year': '2050'
+					'lpa-questionnaire-due-date-year': '2050',
+					'final-comments-due-date': { day: '04', month: '10', year: '2050' }
 				});
 
 				expect(response.statusCode).toBe(302);

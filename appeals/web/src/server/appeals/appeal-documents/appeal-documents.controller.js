@@ -34,7 +34,45 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
+/**
+ * @param {import("@pins/express").ValidationErrors | undefined} errors
+ */
+export const mapErrorsForDocumentDates = (errors) => {
+	if (!errors) {
+		return;
+	}
 
+	/** @type {import("@pins/express").ValidationErrors | undefined} */
+	const newErrors = {};
+
+	for (const key in errors) {
+		if (Object.hasOwn(errors, key)) {
+			const error = errors[key];
+			const objectKey = key;
+
+			if (error.param === 'month') {
+				newErrors[`${objectKey}.month`] = error;
+			} else if (error.param === 'day') {
+				newErrors[`${objectKey}.day`] = error;
+			} else if (error.param === 'year') {
+				newErrors[`${objectKey}.year`] = error;
+			} else if (error.param === 'all-fields-day') {
+				newErrors[`${objectKey}.day`] = error;
+				delete errors[key];
+			} else if (error.param === 'all-fields-month') {
+				newErrors[`${objectKey}.month`] = error;
+				delete errors[key];
+			} else if (error.param === 'all-fields-year') {
+				newErrors[`${objectKey}.year`] = error;
+				delete errors[key];
+			} else {
+				newErrors[key] = error;
+			}
+		}
+	}
+
+	return newErrors;
+};
 /**
  * @param {Object} params
  * @param {import('@pins/express/types/express.js').Request} params.request
@@ -233,7 +271,8 @@ export const renderDocumentDetails = async ({
 		redactionStatuses,
 		pageHeadingTextOverride,
 		dateLabelTextOverride,
-		documentId
+		documentId,
+		errors
 	});
 
 	const isAdditionalDocument = folderIsAdditionalDocuments(currentFolder.path);
@@ -241,7 +280,7 @@ export const renderDocumentDetails = async ({
 	return response.render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,
 		displayLateEntryContent: isAdditionalDocument && isLateEntry,
-		errors
+		errors: mapErrorsForDocumentDates(errors)
 	});
 };
 
@@ -828,12 +867,12 @@ export const renderChangeDocumentDetails = async ({ request, response, backButto
 		backButtonUrl,
 		currentFolder,
 		currentFile,
-		redactionStatuses
+		redactionStatuses,
+		errors
 	);
-
 	return response.status(200).render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,
-		errors
+		errors: mapErrorsForDocumentDates(errors)
 	});
 };
 
