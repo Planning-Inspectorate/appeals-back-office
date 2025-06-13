@@ -9,6 +9,7 @@ import { kebabCase } from 'lodash-es';
  * @param {boolean} [params.labelIsPageHeading]
  * @param {string} [params.labelClasses]
  * @param {boolean} [params.readonly]
+ * @param {import('@pins/express').ValidationErrors|null|undefined} [params.errorMsg]
  * @returns {PageComponent}
  */
 export function textareaInput({
@@ -18,7 +19,8 @@ export function textareaInput({
 	labelText,
 	labelIsPageHeading = false,
 	labelClasses,
-	readonly
+	readonly,
+	errorMsg
 }) {
 	/** @type {PageComponent} */
 	const component = {
@@ -32,7 +34,12 @@ export function textareaInput({
 				isPageHeading: labelIsPageHeading,
 				classes: labelClasses || 'govuk-label--l'
 			},
-			attributes: { ...(readonly && { readonly }) }
+			attributes: { ...(readonly && { readonly }) },
+			errorMessage: errorMsg
+				? {
+						text: errorMsg
+				  }
+				: null
 		}
 	};
 
