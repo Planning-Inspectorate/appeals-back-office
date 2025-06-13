@@ -92,8 +92,6 @@ export async function initialiseAndMapAppealData(
 	/** @type {Record<string, SubMapper>} */
 	const submappers = submaps[appealDetails.appealType];
 
-	console.log(appealDetails.appealType);
-
 	/** @type {{appeal: MappedInstructions}} */
 	const mappedData = {
 		appeal: {}
