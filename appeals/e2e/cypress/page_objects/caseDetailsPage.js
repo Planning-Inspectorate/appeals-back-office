@@ -621,9 +621,9 @@ export class CaseDetailsPage extends Page {
 		this.elements.getTimetableDate(row).should('be.visible');
 	}
 
-	changeTimetableDate(date) {
-		dateTimeSection.enterDate(date);
-		this.clickButtonByText('Confirm');
+	changeTimetableDate(field, date) {
+		dateTimeSection.enterTimeTableDueDate(field, date);
+		this.clickButtonByText('Continue');
 	}
 
 	acceptLpaStatement(caseRef, updateAllocation, representation) {

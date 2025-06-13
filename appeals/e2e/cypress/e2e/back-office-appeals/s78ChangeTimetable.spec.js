@@ -52,8 +52,10 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		navigateToTimeTableSection();
 		caseDetailsPage.checkTimetableDueDateIsDisplayed(timetableItems.lpaQuestionnaire);
 		caseDetailsPage.clickRowChangeLink(timetableItems.lpaQuestionnaire);
-		caseDetailsPage.changeTimetableDate(new Date());
-		caseDetailsPage.checkErrorMessageDisplays('Date must be in the future');
+		caseDetailsPage.changeTimetableDate(timetableItems.lpaQuestionnaire, new Date());
+		caseDetailsPage.checkErrorMessageDisplays(
+			'The lpa questionnaire due date must be in the future'
+		);
 	});
 
 	it('should not accept non business date', () => {
@@ -62,8 +64,10 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		caseDetailsPage.clickRowChangeLink(timetableItems.interestedParty);
 		const nextYear = new Date().getFullYear() + 1;
 		const nonBusinessDate = new Date(nextYear, 0, 1);
-		caseDetailsPage.changeTimetableDate(nonBusinessDate);
-		caseDetailsPage.checkErrorMessageDisplays('Date must be a business day');
+		caseDetailsPage.changeTimetableDate(timetableItems.interestedParty, nonBusinessDate);
+		caseDetailsPage.checkErrorMessageDisplays(
+			'The interested party comments due date must be a business day'
+		);
 	});
 
 	const setupTestCase = () => {
@@ -83,7 +87,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.login(users.appeals.caseAdmin);
 		caseDetailsPage.navigateToAppealsService();
 		listCasesPage.clickAppealByRef(caseRef);
-		caseDetailsPage.clickAccordionByText('Timetable');
+		caseDetailsPage.clickAccordionByButton('Timetable');
 	};
 
 	const verifyDateChange = (timetableItem) => {
@@ -94,9 +98,9 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			new Date(new Date().getFullYear() + futureDate.years, 0, 1),
 			futureDate.days
 		).then((date) => {
-			caseDetailsPage.changeTimetableDate(date);
-			caseDetailsPage.verifyDateChanges(timetableItem, date);
-			caseDetailsPage.validateBannerMessage('Success', 'Timetable updated');
+			caseDetailsPage.changeTimetableDate(timetableItem, date);
+			caseDetailsPage.clickButtonByText('Update timetable due dates');
+			caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
 		});
 	};
 });
