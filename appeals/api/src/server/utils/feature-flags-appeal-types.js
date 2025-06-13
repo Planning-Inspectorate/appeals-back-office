@@ -18,6 +18,10 @@ export const isAppealTypeEnabled = (type) => {
 		case APPEAL_CASE_TYPE.Y: {
 			return isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20);
 		}
+
+		case APPEAL_CASE_TYPE.Z: {
+			return isFeatureActive(FEATURE_FLAG_NAMES.CAS);
+		}
 	}
 
 	return false;
@@ -31,6 +35,10 @@ export const getEnabledAppealTypes = () => {
 	}
 	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.Y)) {
 		enabledAppeals.push(APPEAL_CASE_TYPE.Y);
+	}
+
+	if (isAppealTypeEnabled(APPEAL_CASE_TYPE.Z)) {
+		enabledAppeals.push(APPEAL_CASE_TYPE.Z);
 	}
 
 	return enabledAppeals;
