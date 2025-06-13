@@ -250,21 +250,21 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 			let whatHappensNextLpa;
 			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
 				if (appeal.hearing?.hearingStartTime) {
-					whatHappensNextAppellant =
-						`Your hearing is on ${formatDate(appeal.hearing?.hearingStartTime, false)}.\n\nWe will contact you if we need any more information.`
-					whatHappensNextLpa =
-						`The hearing is on ${formatDate(appeal.hearing?.hearingStartTime, false)}.`
+					whatHappensNextAppellant = `Your hearing is on ${formatDate(
+						appeal.hearing?.hearingStartTime,
+						false
+					)}.\n\nWe will contact you if we need any more information.`;
+					whatHappensNextLpa = `The hearing is on ${formatDate(
+						appeal.hearing?.hearingStartTime,
+						false
+					)}.`;
 				} else {
-					whatHappensNextAppellant =
-						`We will contact you if we need any more information.`
-					whatHappensNextLpa =
-						`We will contact you when the hearing has been set up.`
+					whatHappensNextAppellant = `We will contact you if we need any more information.`;
+					whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
 				}
 			} else {
-				whatHappensNextAppellant =
-					`You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`
-				whatHappensNextLpa =
-					`You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`
+				whatHappensNextAppellant = `You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
+				whatHappensNextLpa = `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
 			}
 
 			await notifyPublished(

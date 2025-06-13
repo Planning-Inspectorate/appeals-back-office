@@ -22,7 +22,8 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
 				final_comments_deadline: '30 January 2025',
-				we_will_email_when: 'when you can view information from other parties in the appeals service.'
+				we_will_email_when:
+					'when you can view information from other parties in the appeals service.'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',

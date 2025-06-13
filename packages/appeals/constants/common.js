@@ -2,7 +2,8 @@ export const ODW_SYSTEM_ID = 'back-office-appeals';
 export const APPEAL_START_RANGE = 6000000;
 
 export const EVENT_TYPE = Object.freeze({
-	SITE_VISIT: 'siteVisit'
+	SITE_VISIT: 'siteVisit',
+	HEARING: 'hearing'
 });
 
 export const FEATURE_FLAG_NAMES = Object.freeze({

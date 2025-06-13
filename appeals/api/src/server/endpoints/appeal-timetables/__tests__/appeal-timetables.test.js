@@ -447,7 +447,8 @@ describe('appeal timetables routes', () => {
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						start_date: '5 June 2024',
-						we_will_email_when: 'when you can view information from other parties in the appeals service.',
+						we_will_email_when:
+							'when you can view information from other parties in the appeals service.',
 						site_visit: true,
 						costs_info: true
 					},
@@ -516,7 +517,8 @@ describe('appeal timetables routes', () => {
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						start_date: '5 June 2024',
-						we_will_email_when: 'when you can view information from other parties in the appeals service.',
+						we_will_email_when:
+							'when you can view information from other parties in the appeals service.',
 						site_visit: true,
 						costs_info: true
 					},

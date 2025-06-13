@@ -845,8 +845,7 @@ describe('/appeals/:id/reps/publish', () => {
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
-					what_happens_next:
-						'We will contact you when the hearing has been set up.'
+					what_happens_next: 'We will contact you when the hearing has been set up.'
 				},
 				recipientEmail: appealS78.lpa.email,
 				templateName: 'received-statement-and-ip-comments-lpa'
@@ -857,8 +856,7 @@ describe('/appeals/:id/reps/publish', () => {
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
-					what_happens_next:
-						'We will contact you if we need any more information.'
+					what_happens_next: 'We will contact you if we need any more information.'
 				},
 				recipientEmail: appealS78.appellant.email,
 				templateName: 'received-statement-and-ip-comments-appellant'

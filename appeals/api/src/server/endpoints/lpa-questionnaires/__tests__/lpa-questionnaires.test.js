@@ -401,7 +401,8 @@ describe('lpa questionnaires routes', () => {
 						lpa_reference: fullPlanningAppeal.applicationReference,
 						appeal_reference_number: householdAppeal.reference,
 						site_address: expectedSiteAddress,
-						what_happens_next: 'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
+						what_happens_next:
+							'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
 					},
 					recipientEmail: fullPlanningAppeal.appellant.email,
 					templateName: 'lpaq-complete-appellant'
