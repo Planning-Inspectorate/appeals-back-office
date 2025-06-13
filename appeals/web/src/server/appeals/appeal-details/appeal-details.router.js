@@ -41,6 +41,7 @@ import changeAppealDetailsRouter from './change-appeal-details/change-appeal-det
 import hearingRouter from './hearing/hearing.router.js';
 import siteAddressRouter from './appellant-case/address/address.router.js';
 import timetableRouter from './timetable/timetable.router.js';
+import appealDecisionRouter from './appeal-decision/appeal-decison.router.js';
 
 const router = createRouter();
 
@@ -197,6 +198,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	siteAddressRouter
+);
+
+router.use(
+	'/:appealId/appeal-decision',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	appealDecisionRouter
 );
 
 router.use('/:appealId', validateAppeal, representationsRouter);
