@@ -212,11 +212,21 @@ Cypress.Commands.add('deleteHearing', (reference) => {
 	});
 });
 
-Cypress.Commands.add('checkNotifySent', (reference, templateName) => {
-	return cy.wrap(null).then(async () => {
-		const emails = await appealsApiClient.getNotifyEmails(reference);
-		const targetEmail = await emails.find((email) => email.template === templateName);
+Cypress.Commands.add('checkNotifySent', (reference, templates) => {
+	const expectedTemplates = [].concat(templates);
 
-		expect(targetEmail.template).to.eq(templateName);
+	return cy.wrap(null).then(async () => {
+		// returns an array of email objects sent for the given reference
+		const emails = await appealsApiClient.getNotifyEmails(reference);
+
+		// creates an array of unique sent email templates that match expected
+		const foundTemplateNames = [...new Set(emails.map((email) => email.template))];
+
+		// creates a list of expected templates that were not found
+		const missingTemplates = expectedTemplates.filter(
+			(expected) => !foundTemplateNames.includes(expected)
+		);
+
+		expect(missingTemplates, `Expected, but not found:${missingTemplates}`).to.be.empty;
 	});
 });
