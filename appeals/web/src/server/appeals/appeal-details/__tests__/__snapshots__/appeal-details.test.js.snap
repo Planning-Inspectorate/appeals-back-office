@@ -238,6 +238,45 @@ exports[`appeal-details GET /:appealId LPA costs decision should render a row in
 
 exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (issue_determination) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/issue-lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-lpa-costs-decision">Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>"`;
 
+exports[`appeal-details GET /:appealId Notification banners should render a "Address added" success notification banner when an inspector/3rd party neighbouring site was added 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Address added</p>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Notification banners should render a "Address removed" success notification banner when an inspector/3rd party neighbouring site was removed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Address removed</p>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Notification banners should render a "Address updated" success notification banner when an inspector/3rd party neighbouring site was updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Address updated</p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Notification banners should render a "Appeal ready for validation" important notification banner with a link to validate the appeal when the appeal status is "validation" 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
 aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
@@ -303,45 +342,6 @@ data-index="0">
         <p><a class="govuk-notification-banner__link" data-cy="review-lpa-questionnaire-banner"
             href="/appeals-service/appeal-details/2/lpa-questionnaire/123?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Review <span class="govuk-visually-hidden">LPA questionnaire</span></a>
         </p>
-    </div>
-</div>"
-`;
-
-exports[`appeal-details GET /:appealId Notification banners should render a "Neighbouring site added" success notification banner when an inspector/3rd party neighbouring site was added 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
-data-index="0">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Neighbouring site added</p>
-    </div>
-</div>"
-`;
-
-exports[`appeal-details GET /:appealId Notification banners should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
-data-index="0">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Neighbouring site removed</p>
-    </div>
-</div>"
-`;
-
-exports[`appeal-details GET /:appealId Notification banners should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
-data-index="0">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Neighbouring site updated</p>
     </div>
 </div>"
 `;

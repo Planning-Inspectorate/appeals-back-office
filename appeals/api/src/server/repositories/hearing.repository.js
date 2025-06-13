@@ -29,8 +29,8 @@ const getHearingById = async (id) => {
 /**
  * @param {{
  *  appealId: number;
- * 	hearingStartTime: Date;
- * 	hearingEndTime?: Date ;
+ * 	hearingStartTime: Date | string;
+ * 	hearingEndTime?: Date | string;
  *  address?: Omit<Address, 'id'>
  * }} data
  * @returns
@@ -67,12 +67,11 @@ const createHearingById = (data) => {
  * @param {number} id
  * @param {{
  *  appealId: number;
- * 	hearingStartTime: Date;
- * 	hearingEndTime?: Date ;
+ * 	hearingStartTime: Date | string;
+ * 	hearingEndTime?: Date | string;
  *  address?: Omit<Address, 'id'> | null
  *  addressId?: number
  * }} data
- * @returns {PrismaPromise<object>}
  */
 const updateHearingById = (id, data) => {
 	const { appealId, hearingStartTime, hearingEndTime, address, addressId } = data;
@@ -111,7 +110,10 @@ const updateHearingById = (id, data) => {
 
 	return databaseConnector.hearing.update({
 		where: { id },
-		data: hearingData
+		data: hearingData,
+		include: {
+			address: true
+		}
 	});
 };
 

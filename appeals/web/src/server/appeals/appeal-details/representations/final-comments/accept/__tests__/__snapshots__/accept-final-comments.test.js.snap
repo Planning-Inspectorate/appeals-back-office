@@ -10,9 +10,11 @@ exports[`final-comments GET / should render the accept appellant final comments 
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Original final comments</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original final comments</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-statement/redact">Redact<span class="govuk-visually-hidden"> Redact statement</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -60,9 +62,11 @@ exports[`final-comments GET / should render the accept lpa final comments page w
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Original final comments</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original final comments</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-statement/redact">Redact<span class="govuk-visually-hidden"> Redact statement</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>

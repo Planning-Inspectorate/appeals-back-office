@@ -3811,6 +3811,45 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/2/change-document-name/
 </main>"
 `;
 
+exports[`LPA Questionnaire review Notification banners should render a "Address added" success notification banner when a neighbouring site was added 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Address added</p>
+    </div>
+</div>"
+`;
+
+exports[`LPA Questionnaire review Notification banners should render a "Address removed" success notification banner when an inspector/3rd party neighbouring site was removed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Address removed</p>
+    </div>
+</div>"
+`;
+
+exports[`LPA Questionnaire review Notification banners should render a "Address updated" success notification banner when an inspector/3rd party neighbouring site was updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Address updated</p>
+    </div>
+</div>"
+`;
+
 exports[`LPA Questionnaire review Notification banners should render a "Column 2 threshold criteria status changed" success notification banner when meets eia column two threshold is changed 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
@@ -3859,45 +3898,6 @@ data-index="0">
     </div>
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">Inspector access (lpa) updated</p>
-    </div>
-</div>"
-`;
-
-exports[`LPA Questionnaire review Notification banners should render a "Neighbouring site added" success notification banner when a neighbouring site was added 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
-data-index="0">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Neighbouring site added</p>
-    </div>
-</div>"
-`;
-
-exports[`LPA Questionnaire review Notification banners should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
-data-index="0">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Neighbouring site removed</p>
-    </div>
-</div>"
-`;
-
-exports[`LPA Questionnaire review Notification banners should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
-data-index="0">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Neighbouring site updated</p>
     </div>
 </div>"
 `;

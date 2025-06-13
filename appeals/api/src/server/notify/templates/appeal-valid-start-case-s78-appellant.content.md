@@ -2,7 +2,7 @@ We have reviewed your appeal and supporting documents.
 
 Your appeal started on {{start_date}}. The timetable for the appeal begins from this date.
 
-Your appeal procedure is written representations.
+Your appeal procedure is {{procedure_type}}.
 
 {% include 'parts/appeal-details.md' %}
 
@@ -20,13 +20,23 @@ Due by {{lpa_statement_deadline}}.
 
 Due by {{ip_comments_deadline}}.
 
+{% if final_comments_deadline -%}
 ## Final comments from you and the local planning authority
 
 Due by {{final_comments_deadline}}.
 
+{% endif -%}
+
 # What happens next
 
-We will send you an email when you can view information from other parties in the appeals service.
+{% if we_will_email_when is string -%}
+We will send you an email {{ we_will_email_when }}
+{%- else -%}
+We will send you another email:
+{% for line in we_will_email_when %}
+- {{ line }}
+{%- endfor %}
+{%- endif %}
 
 # Appeal costs
 

@@ -29,6 +29,15 @@ export const summaryList = (appealDetails, comment, finalCommentsType, attachmen
 							}
 						}
 					]
+				},
+				actions: {
+					items: [
+						{
+							href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
+							text: 'Redact',
+							visuallyHiddenText: 'Redact statement'
+						}
+					]
 				}
 			},
 			{

@@ -133,7 +133,19 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 									}
 								}
 							]
-						}
+						},
+
+						...(!shouldShowRedactedRow && {
+							actions: {
+								items: [
+									{
+										href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
+										text: 'Redact',
+										visuallyHiddenText: 'Redact statement'
+									}
+								]
+							}
+						})
 					},
 					...(shouldShowRedactedRow
 						? [

@@ -191,7 +191,7 @@ describe('LPA Questionnaire review', () => {
 			);
 		}, 10000);
 
-		it('should render a "Neighbouring site added" success notification banner when a neighbouring site was added', async () => {
+		it('should render a "Address added" success notification banner when a neighbouring site was added', async () => {
 			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
@@ -226,11 +226,11 @@ describe('LPA Questionnaire review', () => {
 				rootElement: notificationBannerElement
 			}).innerHTML;
 			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Neighbouring site added');
+			expect(notificationBannerElementHTML).toContain('Address added');
 			expect(notificationBannerElementHTML).toContain('Success');
 		});
 
-		it('should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
+		it('should render a "Address updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
 			nock('http://test/').patch(`/appeals/1/neighbouring-sites`).reply(200, {
 				siteId: 1
 			});
@@ -255,11 +255,11 @@ describe('LPA Questionnaire review', () => {
 				rootElement: notificationBannerElement
 			}).innerHTML;
 			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Neighbouring site updated');
+			expect(notificationBannerElementHTML).toContain('Address updated');
 			expect(notificationBannerElementHTML).toContain('Success');
 		});
 
-		it('should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
+		it('should render a "Address removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
 			const appealReference = '1';
 
 			nock('http://test/').delete(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
@@ -281,7 +281,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 			expect(notificationBannerElementHTML).toMatchSnapshot();
 			expect(notificationBannerElementHTML).toContain('Success');
-			expect(notificationBannerElementHTML).toContain('Neighbouring site removed');
+			expect(notificationBannerElementHTML).toContain('Address removed');
 		});
 
 		it('should render an "LPA questionnaire incomplete" notification banner, including the LPA questionnaire due date, when the LPA questionnaire is marked as incomplete', async () => {

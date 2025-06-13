@@ -67,6 +67,15 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 									}
 								}
 							]
+						},
+						actions: {
+							items: [
+								{
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
+									text: 'Redact',
+									visuallyHiddenText: 'Redact statement'
+								}
+							]
 						}
 					},
 					{

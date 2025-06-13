@@ -198,9 +198,10 @@ function neighbouringSiteTableRowFormatter(site) {
  * @param {Appeal} appealData
  * @param {string} siteId
  * @param {string} origin
+ * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export function removeNeighbouringSitePage(appealData, origin, siteId) {
+export function removeNeighbouringSitePage(appealData, origin, siteId, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	let siteAddress;
@@ -241,7 +242,10 @@ export function removeNeighbouringSitePage(appealData, origin, siteId) {
 		pageComponents: [
 			yesNoInput({
 				name: 'remove-neighbouring-site',
-				legendText: 'Do you want to remove this site?'
+				legendText: 'Do you want to remove this site?',
+				errorMessage: errors?.['remove-neighbouring-site']
+					? errors['remove-neighbouring-site'].msg
+					: undefined
 			})
 		]
 	};

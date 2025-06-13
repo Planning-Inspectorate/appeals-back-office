@@ -111,6 +111,10 @@ export function nationalListPage(
 	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20)) {
 		enabledAppealTypes.push(APPEAL_CASE_TYPE.Y);
 	}
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
+		enabledAppealTypes.push(APPEAL_CASE_TYPE.Z);
+	}
 	const appealTypeFilterItemsArray = [
 		{
 			text: 'All',

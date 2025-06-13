@@ -3,6 +3,7 @@ import { confirmRedactInterestedPartyCommentPage } from './confirm.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { redactAndAcceptComment } from './redact.service.js';
 import { render } from '#appeals/appeal-details/representations/common/render.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -43,9 +44,14 @@ export const postConfirmRedactInterestedPartyComment = async (request, response)
 	const {
 		params: { appealId, commentId },
 		session,
-		apiClient
+		apiClient,
+		currentRepresentation
 	} = request;
 
+	const isRedacted = checkRedactedText(
+		session.redactedRepresentation || '',
+		currentRepresentation?.originalRepresentation || ''
+	);
 	await redactAndAcceptComment(
 		apiClient,
 		appealId,
@@ -56,12 +62,19 @@ export const postConfirmRedactInterestedPartyComment = async (request, response)
 
 	delete session.redactedRepresentation;
 	delete session.siteVisitRequested;
-
-	addNotificationBannerToSession({
-		session,
-		bannerDefinitionKey: 'interestedPartyCommentsRedactionSuccess',
-		appealId
-	});
+	if (isRedacted) {
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'interestedPartyCommentsRedactionSuccess',
+			appealId
+		});
+	} else {
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'interestedPartyCommentsValidSuccess',
+			appealId
+		});
+	}
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/interested-party-comments`);
 };

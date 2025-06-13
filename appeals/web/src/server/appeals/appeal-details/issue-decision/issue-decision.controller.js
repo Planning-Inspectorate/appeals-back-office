@@ -20,7 +20,10 @@ import { cloneDeep } from 'lodash-es';
 import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
 import { createNewDocument } from '#app/components/file-uploader.component.js';
 import { getTodaysISOString } from '#lib/dates.js';
-import { DECISION_TYPE_INSPECTOR } from '@pins/appeals/constants/support.js';
+import {
+	DECISION_TYPE_APPELLANT_COSTS,
+	DECISION_TYPE_INSPECTOR
+} from '@pins/appeals/constants/support.js';
 import {
 	baseUrl,
 	buildLogicData,
@@ -526,7 +529,7 @@ export const renderCheckDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postCostsCheckDecision = async (request, response) => {
-	const { errors, currentAppeal, session, params, apiClient } = request;
+	const { errors, currentAppeal, session, params, apiClient, specificDecisionType } = request;
 	const { appealId } = params;
 
 	if (!currentAppeal) {
@@ -556,9 +559,14 @@ export const postCostsCheckDecision = async (request, response) => {
 
 	await postInspectorDecision(apiClient, appealId, [decisionToPost]);
 
+	const bannerDefinitionKey =
+		specificDecisionType === DECISION_TYPE_APPELLANT_COSTS
+			? 'appellantCostsDecisionIssued'
+			: 'lpaCostsDecisionIssued';
+
 	addNotificationBannerToSession({
 		session: request.session,
-		bannerDefinitionKey: 'issuedDecisionValid',
+		bannerDefinitionKey,
 		appealId
 	});
 

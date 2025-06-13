@@ -515,7 +515,7 @@ const clientActions = (container) => {
 					message: 'NO_FILE',
 					formId: formId || '',
 					metadata: {
-						fileTitle: documentTitle ? `the ${documentTitle}` : 'a file'
+						fileTitle: documentTitle ? documentTitle : 'a file'
 					}
 				},
 				container

@@ -19,9 +19,24 @@ Due by {{lpa_statement_deadline}}.
 
 Due by {{ip_comments_deadline}}.
 
+{% if final_comments_deadline -%}
 ## Final comments from the local planning authority
 
 Due by {{final_comments_deadline}}.
+
+{% endif -%}
+{% if statement_of_common_ground_deadline -%}
+## Statement of common ground
+
+Due by {{statement_of_common_ground_deadline}}.
+
+{% endif -%}
+{% if planning_obligation_deadline -%}
+## Planning obligation
+
+Due by {{planning_obligation_deadline}}.
+
+{% endif -%}
 
 # Next steps
 

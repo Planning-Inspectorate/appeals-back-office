@@ -65,6 +65,7 @@ export function conditionalFormatter(id, name, hint, details, type = 'textarea')
  * @param {string} [params.customYesLabel]
  * @param {string} [params.customNoLabel]
  * @param {string|Object} [params.hint]
+ * @param {string|undefined|null} [params.errorMessage]
  * @returns {RadiosPageComponent}
  */
 export function yesNoInput({
@@ -77,7 +78,8 @@ export function yesNoInput({
 	yesConditional,
 	customYesLabel,
 	customNoLabel,
-	hint
+	hint,
+	errorMessage
 }) {
 	/** @type {RadioItem} */
 	const yes = {
@@ -108,7 +110,8 @@ export function yesNoInput({
 					text: customNoLabel || 'No',
 					checked: value === false || value === 'false' || value === 'no'
 				}
-			]
+			],
+			errorMessage: errorMessage ? { text: errorMessage } : undefined
 		}
 	};
 	if (legendText) {
