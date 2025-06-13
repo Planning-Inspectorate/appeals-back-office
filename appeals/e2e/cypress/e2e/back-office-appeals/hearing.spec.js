@@ -148,6 +148,8 @@ describe('Setup hearing and add hearing estimates', () => {
 			expect(hearingEstimates.sittingTime).to.eq(finalEstimates.sittingTime);
 			expect(hearingEstimates.reportingTime).to.eq(finalEstimates.reportingTime);
 		});
+
+		verifyCaseHistory(['Hearing estimates added', 'Hearing estimates updated']);
 	});
 
 	it('should not accept invalid input - Hearing Address', () => {
@@ -247,7 +249,12 @@ describe('Setup hearing and add hearing estimates', () => {
 			// Set exact time and format for assertions
 			date.setHours(currentDate.getHours(), currentDate.getMinutes());
 			const expectedDateTime = formatDateAndTime(date);
-			const getTimeUpToMinutes = (isoString) => isoString.slice(0, 16);
+			const getTimeUpToMinutes = (isoString) => {
+				const date = new Date(isoString);
+				return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
+					.toISOString()
+					.slice(0, 16);
+			};
 
 			// Set Up Initial Hearing (No Address)
 			hearingSectionPage.setUpHearing(date, date.getHours(), date.getMinutes());
@@ -308,11 +315,11 @@ describe('Setup hearing and add hearing estimates', () => {
 		});
 	});
 
-	it('should update existing hearing address from overview page', () => {
+	it('should update existing hearing address and date from overview page', () => {
 		// First ensure a hearing exists with a known address
 		cy.getBusinessActualDate(new Date(), 2).then((date) => {
 			date.setHours(currentDate.getHours(), currentDate.getMinutes());
-			ensureHearingExists(caseRef, date).then((appealDetails) => {});
+			ensureHearingExists(caseRef, date).then(() => {});
 			cy.reload();
 
 			// Now proceed with the test
@@ -332,15 +339,20 @@ describe('Setup hearing and add hearing estimates', () => {
 				hearingSectionPage.verifyHearingValues('address', 'Yes', true, expectedAddress);
 			});
 
-			caseDetailsPage.clickRowChangeLink('whether-the-address-is-known-or-not');
-			hearingSectionPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickRowChangeLink('date');
+			const newHearingDate = new Date(date.getFullYear() + 1, 0, 1);
+			hearingSectionPage.setUpHearing(newHearingDate, date.getHours(), date.getMinutes());
 			caseDetailsPage.clickButtonByText('Continue');
+
+			// Update Address and Date
+			const updatedAddress = {
+				...originalAddress,
+				line1: 'e2e Hearing Test Address - Overview Page',
+				postcode: 'SW1A 2AA'
+			};
+			hearingSectionPage.addHearingLocationAddress(updatedAddress);
 			caseDetailsPage.clickButtonByText('Update hearing');
 			caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
-
-			hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
-			hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
-			hearingSectionPage.verifyHearingValues('whether-the-address-is-known-or-not', 'No');
 
 			// Remove Address
 			caseDetailsPage.clickRowChangeLink('whether-the-address-is-known-or-not');
@@ -349,21 +361,11 @@ describe('Setup hearing and add hearing estimates', () => {
 			caseDetailsPage.clickButtonByText('Update hearing');
 			caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
 
-			hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
-			hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
-			hearingSectionPage.verifyHearingValues('whether-the-address-is-known-or-not', 'No');
-
-			// Add address
-			caseDetailsPage.clickRowChangeLink('whether-the-address-is-known-or-not');
-			hearingSectionPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-			// Update Address
-			const updatedAddress = {
-				...originalAddress,
-				line1: 'e2e Hearing Test Address - Overview Page',
-				postcode: 'SW1A 2AA'
-			};
-			hearingSectionPage.addHearingLocationAddress(updatedAddress);
+			const expectedUpdatedAddress = `Hearing address updated to ${updatedAddress.line1}, ${updatedAddress.line2}, ${updatedAddress.town}, ${updatedAddress.county}, ${updatedAddress.postcode}`;
+			verifyCaseHistory([
+				expectedUpdatedAddress,
+				`Hearing date updated to ${formatDateAndTime(newHearingDate).date}`
+			]);
 		});
 	});
 
@@ -383,6 +385,8 @@ describe('Setup hearing and add hearing estimates', () => {
 			caseDetailsPage.validateBannerMessage('Success', 'Hearing cancelled');
 			caseDetailsPage.verifyHearingSectionIsDisplayed();
 		});
+
+		verifyCaseHistory(['Hearing cancelled']);
 	});
 
 	it('should automatically prompt to set up hearing when statements and IP comments are shared', () => {
@@ -409,22 +413,31 @@ describe('Setup hearing and add hearing estimates', () => {
 				hearingDate.getHours(),
 				hearingDate.getMinutes()
 			);
+
+			hearingSectionPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+			hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
+			caseDetailsPage.clickButtonByText('Set up hearing');
+			caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
+			caseDetailsPage.validateBannerMessage('Important', 'Add hearing address');
+
+			// add hearing address via the banner
+			caseDetailsPage.clickHearingBannerLink();
+			hearingSectionPage.addHearingLocationAddress(originalAddress);
+			hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
+			caseDetailsPage.clickButtonByText('Update hearing');
+			caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
+
+			verifyCaseHistory([
+				'Case started',
+				'Appeal procedure: hearing',
+				'The case has progressed to Hearing ready to set up',
+				`Hearing set up on ${formatDateAndTime(hearingDate).date}`,
+				'The case has progressed to Awaiting hearing',
+				'The hearing address has been added'
+			]);
 		});
-		hearingSectionPage.selectRadioButtonByValue('No');
-		caseDetailsPage.clickButtonByText('Continue');
-		hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
-		caseDetailsPage.clickButtonByText('Set up hearing');
-		caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
-		caseDetailsPage.validateBannerMessage('Important', 'Add hearing address');
-
-		// add hearing address via the banner
-		caseDetailsPage.clickHearingBannerLink();
-		hearingSectionPage.addHearingLocationAddress(originalAddress);
-		hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
-		caseDetailsPage.clickButtonByText('Update hearing');
-		caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
 	});
-
 	const setupTestCase = () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.createCase({ caseType: 'W' }).then((ref) => {
@@ -447,7 +460,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.login(users.appeals.caseAdmin);
 		caseDetailsPage.navigateToAppealsService();
 		listCasesPage.clickAppealByRef(caseRef);
-		caseDetailsPage.clickAccordionByText('Hearing');
+		caseDetailsPage.clickAccordionByButton('Hearing');
 	};
 
 	const verifyErrorMessages = (options) => {
@@ -487,6 +500,14 @@ describe('Setup hearing and add hearing estimates', () => {
 					expect(hearingDetails.hearingId).to.be.eq(appealDetails.hearing.hearingId);
 				});
 			}
+		});
+	};
+
+	const verifyCaseHistory = (hearingInformation) => {
+		caseDetailsPage.clickAccordionByButton('Case management');
+		caseDetailsPage.clickViewCaseHistory();
+		hearingInformation.forEach((info) => {
+			caseDetailsPage.verifyTableCellTextCaseHistory(info);
 		});
 	};
 });

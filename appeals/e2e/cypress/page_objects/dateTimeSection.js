@@ -60,6 +60,10 @@ export class DateTimeSection extends Page {
 		this.#setAllDateFields(this.selectorPrefix.visitDate, date);
 	}
 
+	enterTimeTableDueDate(field, date) {
+		this.#setAllDateFields(`#${field}-`, date);
+	}
+
 	clearWithdrawalDate() {
 		cy.get('#withdrawal-request-date-day').clear();
 		cy.get('#withdrawal-request-date-month').clear();
