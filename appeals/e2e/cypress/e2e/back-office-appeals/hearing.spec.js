@@ -319,7 +319,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		// First ensure a hearing exists with a known address
 		cy.getBusinessActualDate(new Date(), 2).then((date) => {
 			date.setHours(currentDate.getHours(), currentDate.getMinutes());
-			ensureHearingExists(caseRef, date).then(() => {});
+			ensureHearingExists(caseRef, date);
 			cy.reload();
 
 			// Now proceed with the test
