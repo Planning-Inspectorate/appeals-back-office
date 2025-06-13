@@ -168,7 +168,8 @@ describe('hearing routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: fullPlanningAppeal.id,
-						details: 'Hearing address updated to 96 The Avenue, Leftfield, MD21 5XY',
+						details:
+							'Hearing address updated to 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						loggedAt: expect.any(Date),
 						userId: 1
 					}
