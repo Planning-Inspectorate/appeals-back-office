@@ -52,7 +52,9 @@ const createHearing = async (createHearingData) => {
 			address
 		});
 
-		await broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create);
+		if (hearing && address) {
+			await broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create);
+		}
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
@@ -81,7 +83,9 @@ const updateHearing = async (updateHearingData) => {
 
 		const result = await hearingRepository.updateHearingById(hearingId, updateData);
 
-		await broadcasters.broadcastEvent(updateData.hearingId, EVENT_TYPE.HEARING, EventType.Update);
+		if (result && address) {
+			await broadcasters.broadcastEvent(updateData.hearingId, EVENT_TYPE.HEARING, EventType.Update);
+		}
 
 		return result;
 	} catch (error) {
