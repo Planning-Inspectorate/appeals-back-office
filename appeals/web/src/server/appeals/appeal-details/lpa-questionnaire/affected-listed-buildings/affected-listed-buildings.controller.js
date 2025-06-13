@@ -127,7 +127,7 @@ export const postAddAffectedListedBuildingCheckAndConfirm = async (request, resp
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Listed building added'
+			text: 'Affected listed building added'
 		});
 
 		delete request.session.affectedListedBuilding;
@@ -207,7 +207,6 @@ const renderRemoveAffectedListedBuilding = async (request, response) => {
  */
 export const postRemoveAffectedListedBuilding = async (request, response) => {
 	const {
-		body,
 		errors,
 		params: { appealId, lpaQuestionnaireId, listedBuildingId },
 		apiClient
@@ -217,34 +216,22 @@ export const postRemoveAffectedListedBuilding = async (request, response) => {
 		return renderRemoveAffectedListedBuilding(request, response);
 	}
 
-	if (
-		!body['removeAffectedListedBuilding'] ||
-		!appealId ||
-		!listedBuildingId ||
-		!lpaQuestionnaireId
-	) {
+	if (!appealId || !listedBuildingId || !lpaQuestionnaireId) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	if (body['removeAffectedListedBuilding'] === 'no') {
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/affected-listed-buildings/manage`
-		);
-	} else if (body['removeAffectedListedBuilding'] === 'yes') {
-		await removeAffectedListedBuilding(apiClient, appealId, listedBuildingId);
-		addNotificationBannerToSession({
-			session: request.session,
-			bannerDefinitionKey: 'changePage',
-			appealId,
-			text: 'Listed building removed'
-		});
+	await removeAffectedListedBuilding(apiClient, appealId, listedBuildingId);
 
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
-		);
-	}
+	addNotificationBannerToSession({
+		session: request.session,
+		bannerDefinitionKey: 'changePage',
+		appealId,
+		text: 'Affected listed building removed'
+	});
 
-	return response.status(500).render('app/500.njk');
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
+	);
 };
 
 /**
@@ -365,7 +352,7 @@ export const postChangeAffectedListedBuildingCheckAndConfirm = async (request, r
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Listed building updated'
+			text: 'Affected listed building updated'
 		});
 
 		delete request.session.affectedListedBuilding;
