@@ -30,7 +30,7 @@ export const APPEAL_TYPE = Object.freeze({
 
 /** @type {Object<string, string>} */
 export const PROCEDURE_TYPE_MAP = Object.freeze({
-	written: 'a written procedure',
+	written: 'written representations',
 	hearing: 'a hearing',
 	inquiry: 'an inquiry'
 });
