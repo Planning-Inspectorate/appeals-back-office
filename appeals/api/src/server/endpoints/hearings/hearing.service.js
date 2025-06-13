@@ -143,7 +143,8 @@ const updateHearing = async (updateHearingData, appeal, notifyClient) => {
 
 		const result = await hearingRepository.updateHearingById(hearingId, updateData);
 
-		if (result.address) {
+		// @ts-ignore
+		if (result.addressId) {
 			await broadcasters.broadcastEvent(updateData.hearingId, EVENT_TYPE.HEARING, EventType.Update);
 			await sendHearingDetailsNotifications(notifyClient, 'hearing-updated', appeal, hearingStartTime, result.address);
 		}
@@ -163,9 +164,16 @@ const deleteHearing = async (deleteHearingData, notifyClient, appeal) => {
 	try {
 		const { hearingId } = deleteHearingData;
 
+		const existingHearing = await hearingRepository.getHearingById(hearingId);
+
 		await hearingRepository.deleteHearingById(hearingId);
 
-		await broadcasters.broadcastEvent(hearingId, EVENT_TYPE.HEARING, EventType.Delete);
+		await broadcasters.broadcastEvent(
+			hearingId,
+			EVENT_TYPE.HEARING,
+			EventType.Delete,
+			existingHearing
+		);
 		await sendHearingNotifications(notifyClient, 'hearing-cancelled', appeal);
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
