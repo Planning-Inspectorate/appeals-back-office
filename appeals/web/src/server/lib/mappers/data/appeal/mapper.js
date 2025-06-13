@@ -37,6 +37,7 @@ import { submaps as hasSubmaps } from './has.js';
 /** @type {Record<string, Record<string, SubMapper>>} */
 const submaps = {
 	[APPEAL_TYPE.HOUSEHOLDER]: hasSubmaps,
+	[APPEAL_TYPE.COMMERCIAL]: hasSubmaps,
 	[APPEAL_TYPE.S78]: s78Submaps,
 	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s78Submaps
 };
@@ -90,6 +91,8 @@ export async function initialiseAndMapAppealData(
 
 	/** @type {Record<string, SubMapper>} */
 	const submappers = submaps[appealDetails.appealType];
+
+	console.log(appealDetails.appealType);
 
 	/** @type {{appeal: MappedInstructions}} */
 	const mappedData = {
