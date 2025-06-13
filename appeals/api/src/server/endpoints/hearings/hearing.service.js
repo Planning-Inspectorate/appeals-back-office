@@ -1,7 +1,12 @@
 import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import hearingRepository from '#repositories/hearing.repository.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
+import { notifySend } from '#notify/notify-send.js';
+import { ERROR_NO_RECIPIENT_EMAIL } from '@pins/appeals/constants/support.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { dateISOStringToDisplayDate, formatTime12h } from '#utils/date-formatter.js';
 
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Hearing} Hearing */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateHearing} CreateHearing */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateHearing} UpdateHearing */
@@ -32,10 +37,62 @@ const checkHearingExists = async (req, res, next) => {
 };
 
 /**
- * @param {CreateHearing} createHearingData
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} templateName
+ * @param {Appeal} appeal
+ * @param {string | Date} hearingStartTime
+ * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'>} address
  * @returns {Promise<void>}
  */
-const createHearing = async (createHearingData) => {
+const sendHearingDetailsNotifications = async (notifyClient, templateName, appeal, hearingStartTime, address) => {
+	const personalisation = {
+		hearing_date: dateISOStringToDisplayDate(
+			typeof hearingStartTime === 'string' ? hearingStartTime : hearingStartTime.toISOString()
+		),
+		hearing_time: formatTime12h(
+			typeof hearingStartTime === 'string' ? new Date(hearingStartTime) : hearingStartTime
+		),
+		hearing_address: formatAddressSingleLine({ ...address, id: 0 }),
+	}
+	await sendHearingNotifications(notifyClient, templateName, appeal, personalisation);
+}
+
+/**
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} templateName
+ * @param {Appeal} appeal
+ * @param {Record<string, string>} [personalisation]
+ * @returns {Promise<void>}
+ */
+const sendHearingNotifications = async (notifyClient, templateName, appeal, personalisation = {}) => {
+	const appellantEmail = appeal.appellant?.email ?? appeal.agent?.email;
+	const lpaEmail = appeal.lpa?.email;
+	if (!appellantEmail || !lpaEmail) {
+		throw new Error(ERROR_NO_RECIPIENT_EMAIL);
+	}
+
+	[appellantEmail, lpaEmail].forEach(async (email) => {
+		await notifySend({
+			notifyClient,
+			templateName,
+			personalisation: {
+				appeal_reference_number: appeal.reference,
+				site_address: appeal.address ? formatAddressSingleLine(appeal.address) : '',
+				lpa_reference: appeal.applicationReference ?? '',
+				...personalisation,
+			},
+			recipientEmail: email
+		});
+	});
+};
+
+/**
+ * @param {CreateHearing} createHearingData
+ * @param {Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @returns {Promise<void>}
+ */
+const createHearing = async (createHearingData, appeal, notifyClient) => {
 	try {
 		const appealId = createHearingData.appealId;
 		const hearingStartTime = createHearingData.hearingStartTime;
@@ -48,6 +105,10 @@ const createHearing = async (createHearingData) => {
 			hearingEndTime,
 			address
 		});
+
+		if (address) {
+			await sendHearingDetailsNotifications(notifyClient, 'hearing-set-up', appeal, hearingStartTime, address);
+		}
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
@@ -55,8 +116,10 @@ const createHearing = async (createHearingData) => {
 
 /**
  * @param {UpdateHearing} updateHearingData
+ * @param {Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  */
-const updateHearing = async (updateHearingData) => {
+const updateHearing = async (updateHearingData, appeal, notifyClient) => {
 	try {
 		const appealId = updateHearingData.appealId;
 		const hearingId = Number(updateHearingData.hearingId);
@@ -76,6 +139,10 @@ const updateHearing = async (updateHearingData) => {
 
 		const result = await hearingRepository.updateHearingById(hearingId, updateData);
 
+		if (result.address) {
+			await sendHearingDetailsNotifications(notifyClient, 'hearing-updated', appeal, hearingStartTime, result.address);
+		}
+
 		return result;
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
@@ -84,12 +151,16 @@ const updateHearing = async (updateHearingData) => {
 
 /**
  * @param {CancelHearing} deleteHearingData
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {Appeal} appeal
  */
-const deleteHearing = async (deleteHearingData) => {
+const deleteHearing = async (deleteHearingData, notifyClient, appeal) => {
 	try {
 		const { hearingId } = deleteHearingData;
 
 		await hearingRepository.deleteHearingById(hearingId);
+
+		await sendHearingNotifications(notifyClient, 'hearing-cancelled', appeal);
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}

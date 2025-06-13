@@ -16,6 +16,20 @@ export const formatAddress = (address) => ({
 });
 
 /**
+ * @param {SingleAddressResponse} address
+ * @returns {Address}
+ */
+export const formatAddressForDb = (address) => ({
+	id: address.addressId,
+	addressLine1: address.addressLine1,
+	addressLine2: address.addressLine2,
+	addressTown: address.town,
+	addressCounty: address.county,
+	postcode: address.postcode,
+	addressCountry: address.country
+});
+
+/**
  * @param {Address} address
  * @returns {string}
  */

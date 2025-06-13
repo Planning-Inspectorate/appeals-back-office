@@ -1,11 +1,11 @@
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
-describe('received-statement-and-ip-comments-appellant.md', () => {
+describe('hearing-set-up.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {
 		const notifySendData = {
 			doNotMockNotifySend: true,
-			templateName: 'received-statement-and-ip-comments-appellant',
+			templateName: 'hearing-set-up',
 			notifyClient: {
 				sendEmail: jest.fn()
 			},
@@ -14,26 +14,34 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 				appeal_reference_number: 'ABC45678',
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
-				final_comments_deadline: '01 January 2021',
-				what_happens_next:
-					'You need to [submit your final comments](/mock-front-office-url/appeals/ABC45678) by 01 January 2021.'
+				hearing_date: '31 January 2025',
+				hearing_time: '1:30pm',
+				hearing_address: '24, Court Street',
 			}
 		};
 
 		const expectedContent = [
-			'We have received the local planning authority’s questionnaire, all statements and comments from interested parties.',
-			'',
-			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
-			'',
 			'# Appeal details',
 			'',
 			'^Appeal reference number: ABC45678',
 			'Address: 10, Test Street',
 			'Planning application reference: 12345XYZ',
 			'',
+			'# About the hearing',
+			'',
+			'^Date: 31 January 2025',
+			'Time: 1:30pm',
+			'Venue address: 24, Court Street',
+			'',
 			'# What happens next',
 			'',
-			'You need to [submit your final comments](/mock-front-office-url/appeals/ABC45678) by 01 January 2021.',
+			'You need to attend the hearing on 31 January 2025.',
+			'',
+			'The details of the hearing are subject to change. We will contact you by',
+			'email if we make any changes.',
+			'',
+			'We expect the hearing to finish on the same day. If the hearing needs',
+			'more time, you will arrange the next steps on the day.',
 			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
@@ -48,7 +56,7 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'Submit your final comments: ABC45678'
+				subject: 'Hearing details: ABC45678'
 			}
 		);
 	});

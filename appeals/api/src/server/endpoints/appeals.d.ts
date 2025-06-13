@@ -881,16 +881,16 @@ type UpdateDocumentAvCheckRequest = {
 
 type CreateHearing = {
 	appealId: number;
-	hearingStartTime: Date;
-	hearingEndTime: Date | undefined;
+	hearingStartTime: Date | string;
+	hearingEndTime: Date | string | undefined;
 	address: Omit<Schema.Address, 'id'> | undefined;
 };
 
 type UpdateHearing = {
 	appealId: number;
 	hearingId: number;
-	hearingStartTime: Date;
-	hearingEndTime: Date | undefined;
+	hearingStartTime: Date | string;
+	hearingEndTime: Date | string | undefined;
 	addressId?: number;
 	address?: Omit<Schema.Address, 'id'> | null;
 };
