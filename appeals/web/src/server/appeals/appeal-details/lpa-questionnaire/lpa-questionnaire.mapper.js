@@ -746,6 +746,12 @@ function generateCaseTypeSpecificComponents(appealDetails, mappedAppealDetails, 
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.HOUSEHOLDER:
 			return generateHASLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
+		case APPEAL_TYPE.COMMERCIAL:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.COMMERCIAL_APPEAL)) {
+				return generateHASLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
+			} else {
+				throw new Error('Feature flag inactive for CAS');
+			}
 		case APPEAL_TYPE.S78:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				return generateS78LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
