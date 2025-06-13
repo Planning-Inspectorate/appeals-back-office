@@ -166,7 +166,7 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		case 'addHearingAddress': {
 			return createNotificationBanner({
 				bannerDefinitionKey,
-				html: `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				html: `<a class="govuk-link" data-cy="add-hearing-address" href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/hearing/change/address-details`
 				)}">Add hearing address</a>`
@@ -175,7 +175,7 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		case 'setupHearing': {
 			return createNotificationBanner({
 				bannerDefinitionKey,
-				html: `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				html: `<a class="govuk-link" data-cy="setup-hearing" href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/hearing/setup/date`
 				)}">Set up hearing</a>`
