@@ -149,7 +149,15 @@ export const rearrangeHearing = async (req, res) => {
 		if (address) {
 			const details = existingHearing?.address
 				? stringTokenReplacement(AUDIT_TRAIL_HEARING_ADDRESS_UPDATED, [
-						formatAddressSingleLine(address)
+						formatAddressSingleLine({
+							addressLine1: address.addressLine1,
+							addressLine2: address.addressLine2,
+							addressTown: address.town,
+							addressCounty: address.county,
+							postcode: address.postcode,
+							id: addressId,
+							addressCountry: address.country
+						})
 				  ])
 				: AUDIT_TRAIL_HEARING_ADDRESS_ADDED;
 			await createAuditTrail({
