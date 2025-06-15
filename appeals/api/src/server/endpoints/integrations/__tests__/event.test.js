@@ -140,26 +140,112 @@ describe('broadcastEvent', () => {
 	});
 
 	describe('Hearing', () => {
-		it('should broadcast a valid hearing event', async () => {
+		it('should broadcast a valid create hearing event', async () => {
 			databaseConnector.hearing.findUnique.mockResolvedValue(mockHearing);
+			eventClient.sendEvents.mockResolvedValue(true);
+
+			const result = await broadcastEvent(2, EVENT_TYPE.HEARING, EventType.Create);
+
+			expect(databaseConnector.hearing.findUnique).toHaveBeenCalled();
+			expect(eventClient.sendEvents).toHaveBeenCalledWith(
+				expect.anything(),
+				[
+					{
+						addressCounty: 'London',
+						addressLine1: '1',
+						addressLine2: 'Bishopsgate',
+						addressPostcode: 'LA23 5GH',
+						addressTown: 'London City',
+						caseReference: '6000002',
+						eventEndDateTime: '2025-07-01T11:00:00.000Z',
+						eventId: '6000002-1',
+						eventName: 'Hearing #1',
+						eventPublished: true,
+						eventStartDateTime: '2025-07-01T10:00:00.000Z',
+						eventStatus: 'offered',
+						eventType: 'hearing',
+						isUrgent: false,
+						notificationOfSiteVisit: null
+					}
+				],
+				EventType.Create,
+				expect.anything()
+			);
+			expect(result).toBe(true);
+		});
+
+		it('should broadcast a valid update hearing event', async () => {
+			databaseConnector.hearing.findUnique.mockResolvedValue({
+				...mockHearing,
+				address: { ...mockHearing.address, addressLine1: '5' }
+			});
 			eventClient.sendEvents.mockResolvedValue(true);
 
 			const result = await broadcastEvent(2, EVENT_TYPE.HEARING, EventType.Update);
 
 			expect(databaseConnector.hearing.findUnique).toHaveBeenCalled();
-			expect(eventClient.sendEvents).toHaveBeenCalled();
+			expect(eventClient.sendEvents).toHaveBeenCalledWith(
+				expect.anything(),
+				[
+					{
+						addressCounty: 'London',
+						addressLine1: '5',
+						addressLine2: 'Bishopsgate',
+						addressPostcode: 'LA23 5GH',
+						addressTown: 'London City',
+						caseReference: '6000002',
+						eventEndDateTime: '2025-07-01T11:00:00.000Z',
+						eventId: '6000002-1',
+						eventName: 'Hearing #1',
+						eventPublished: true,
+						eventStartDateTime: '2025-07-01T10:00:00.000Z',
+						eventStatus: 'offered',
+						eventType: 'hearing',
+						isUrgent: false,
+						notificationOfSiteVisit: null
+					}
+				],
+				EventType.Update,
+				expect.anything()
+			);
 			expect(result).toBe(true);
 		});
 
 		it('should handle delete hearing with existing hearing and appeal', async () => {
 			databaseConnector.hearing.findUnique.mockResolvedValue(null);
-			databaseConnector.appeal.findUnique.mockResolvedValue({ id: 1, reference: 'APP/123' });
+			databaseConnector.appeal.findUnique.mockResolvedValue({ id: 1, reference: '6000002' });
 
 			eventClient.sendEvents.mockResolvedValue(true);
 
 			const existingHearing = { appealId: 1, hearingStartTime: new Date('2025-01-01T13:00') };
 			const result = await broadcastEvent(2, EVENT_TYPE.HEARING, EventType.Delete, existingHearing);
 			expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({ where: { id: 1 } });
+
+			expect(eventClient.sendEvents).toHaveBeenCalledWith(
+				expect.anything(),
+				[
+					{
+						addressCounty: '',
+						addressLine1: '',
+						addressLine2: '',
+						addressPostcode: '',
+						addressTown: '',
+						caseReference: '6000002',
+						eventEndDateTime: null,
+						eventId: '6000002-1',
+						eventName: 'Hearing #2',
+						eventPublished: true,
+						eventStartDateTime: '2025-01-01T13:00:00.000Z',
+						eventStatus: 'withdrawn',
+						eventType: 'hearing',
+						isUrgent: false,
+						notificationOfSiteVisit: null
+					}
+				],
+				EventType.Delete,
+				expect.anything()
+			);
+
 			expect(result).toBe(true);
 		});
 
