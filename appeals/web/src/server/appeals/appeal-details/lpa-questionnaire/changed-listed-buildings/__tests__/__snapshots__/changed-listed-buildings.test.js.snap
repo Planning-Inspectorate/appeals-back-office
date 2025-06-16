@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`affected-listed-buildings GET /add should render the add affected listed building page 1`] = `
+exports[`changed-listed-buildings GET /add should render the add changed listed building page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add affected listed building</span>
-            <h1             class="govuk-heading-l">Affected listed building entry number</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add changed listed building</span>
+            <h1             class="govuk-heading-l">Changed listed building entry number</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -13,10 +13,10 @@ exports[`affected-listed-buildings GET /add should render the add affected liste
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
+                            <div id="changedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
                             <input class="govuk-input"
-                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value=""
-                            aria-describedby="affectedListedBuilding-hint">
+                            id="changedListedBuilding" name="changedListedBuilding" type="text" value=""
+                            aria-describedby="changedListedBuilding-hint">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -28,28 +28,28 @@ exports[`affected-listed-buildings GET /add should render the add affected liste
 </main>"
 `;
 
-exports[`affected-listed-buildings GET /add/check-and-confirm should render the add affected listed building check and confirm page 1`] = `
+exports[`changed-listed-buildings GET /add/check-and-confirm should render the add changed listed building check and confirm page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check details and add affected listed building</h1>
+            <h1 class="govuk-heading-l">Check details and add changed listed building</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed building</dt>
-                    <dd                     class="govuk-summary-list__value"><a href="https://historicengland.org.uk/listing/the-list/list-entry/12345"
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Changed listed building</dt>
+                    <dd class="govuk-summary-list__value"><a href="https://historicengland.org.uk/listing/the-list/list-entry/12345"
                         class="govuk-link" target="_blank">12345</a>
-                        </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/add">Change<span class="govuk-visually-hidden"> listed building number</span></a>
-                        </dd>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/changed-listed-buildings/add">Change<span class="govuk-visually-hidden"> listed building number</span></a>
+                    </dd>
                 </div>
             </dl>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
-                        <button type="submit" class="govuk-button" data-module="govuk-button">Add affected listed building</button>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Add changed listed building</button>
                     </form>
                 </div>
             </div>
@@ -58,11 +58,11 @@ exports[`affected-listed-buildings GET /add/check-and-confirm should render the 
 </main>"
 `;
 
-exports[`affected-listed-buildings GET /change/:listedBuildingId should render the change listed building page 1`] = `
+exports[`changed-listed-buildings GET /change/:listedBuildingId should render the change listed building page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update affected listed building</span>
-            <h1             class="govuk-heading-l">Affected listed building entry number</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update changed listed building</span>
+            <h1             class="govuk-heading-l">Changed listed building entry number</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -71,10 +71,10 @@ exports[`affected-listed-buildings GET /change/:listedBuildingId should render t
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
+                            <div id="changedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
                             <input class="govuk-input"
-                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="123456"
-                            aria-describedby="affectedListedBuilding-hint">
+                            id="changedListedBuilding" name="changedListedBuilding" type="text" value="123456"
+                            aria-describedby="changedListedBuilding-hint">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -86,28 +86,29 @@ exports[`affected-listed-buildings GET /change/:listedBuildingId should render t
 </main>"
 `;
 
-exports[`affected-listed-buildings GET /change/:listedBuildingId/check-and-confirm should render the check and confirm page 1`] = `
+exports[`changed-listed-buildings GET /change/:listedBuildingId/check-and-confirm should render the check and confirm page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check details and update affected listed building</h1>
+            <h1 class="govuk-heading-l">Check details and update changed listed building</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed building</dt>
-                    <dd                     class="govuk-summary-list__value"><a href="https://historicengland.org.uk/listing/the-list/list-entry/12345"
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Changed listed building</dt>
+                    <dd class="govuk-summary-list__value"><a href="https://historicengland.org.uk/listing/the-list/list-entry/12345"
                         class="govuk-link" target="_blank">12345</a>
-                        </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/change/1">Change<span class="govuk-visually-hidden"> affected listed building</span></a>
-                        </dd>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/changed-listed-buildings/change/1">Change<span class="govuk-visually-hidden"> changed listed building</span></a>
+                    </dd>
                 </div>
             </dl>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
-                        <button type="submit" class="govuk-button" data-module="govuk-button">Update affected listed building</button>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Update changed listed building</button>
                     </form>
                 </div>
             </div>
@@ -116,11 +117,11 @@ exports[`affected-listed-buildings GET /change/:listedBuildingId/check-and-confi
 </main>"
 `;
 
-exports[`affected-listed-buildings GET /remove/:listedBuildingId should render the remove affected listed building page 1`] = `
+exports[`changed-listed-buildings GET /remove/:listedBuildingId should render the remove changed listed building page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Confirm that you want to remove the affected listed building</h1>
+            <h1 class="govuk-heading-l">Confirm that you want to remove the changed listed building</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -132,13 +133,13 @@ exports[`affected-listed-buildings GET /remove/:listedBuildingId should render t
                             class="govuk-link" target="_blank">123456</a>
                         </p>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Remove affected listed building</button>
+                        data-module="govuk-button">Remove changed listed building</button>
                     </form>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
-                    <p class="govuk-body"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/manage"
+                    <p class="govuk-body"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/1/changed-listed-buildings/manage"
                         class="govuk-link" target="_blank">Cancel</a>
                     </p>
                 </div>
@@ -148,7 +149,7 @@ exports[`affected-listed-buildings GET /remove/:listedBuildingId should render t
 </main>"
 `;
 
-exports[`affected-listed-buildings POST /add should re-render the add affected listed building page with an error when listed building is empty 1`] = `
+exports[`changed-listed-buildings POST /add should re-render the add changed listed building page with an error when listed building is empty 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -157,7 +158,7 @@ exports[`affected-listed-buildings POST /add should re-render the add affected l
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#affected-listed-building">Provide a listed building entry list number</a>
+                            <li><a href="#changed-listed-building">Provide a listed building entry list number</a>
                             </li>
                         </ul>
                     </div>
@@ -166,8 +167,8 @@ exports[`affected-listed-buildings POST /add should re-render the add affected l
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add affected listed building</span>
-            <h1             class="govuk-heading-l">Affected listed building entry number</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add changed listed building</span>
+            <h1             class="govuk-heading-l">Changed listed building entry number</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -176,10 +177,10 @@ exports[`affected-listed-buildings POST /add should re-render the add affected l
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
+                            <div id="changedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
                             <input class="govuk-input"
-                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value=""
-                            aria-describedby="affectedListedBuilding-hint">
+                            id="changedListedBuilding" name="changedListedBuilding" type="text" value=""
+                            aria-describedby="changedListedBuilding-hint">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -191,7 +192,7 @@ exports[`affected-listed-buildings POST /add should re-render the add affected l
 </main>"
 `;
 
-exports[`affected-listed-buildings POST /change/:listedBuildingId should re-render the change listed building page when the data is invalid 1`] = `
+exports[`changed-listed-buildings POST /change/:listedBuildingId should re-render the change listed building page when the data is invalid 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -200,7 +201,7 @@ exports[`affected-listed-buildings POST /change/:listedBuildingId should re-rend
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#affected-listed-building">Provide a listed building entry list number</a>
+                            <li><a href="#changed-listed-building">Provide a listed building entry list number</a>
                             </li>
                         </ul>
                     </div>
@@ -209,8 +210,8 @@ exports[`affected-listed-buildings POST /change/:listedBuildingId should re-rend
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update affected listed building</span>
-            <h1             class="govuk-heading-l">Affected listed building entry number</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update changed listed building</span>
+            <h1             class="govuk-heading-l">Changed listed building entry number</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -219,10 +220,10 @@ exports[`affected-listed-buildings POST /change/:listedBuildingId should re-rend
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
+                            <div id="changedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
                             <input class="govuk-input"
-                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="123456"
-                            aria-describedby="affectedListedBuilding-hint">
+                            id="changedListedBuilding" name="changedListedBuilding" type="text" value="123456"
+                            aria-describedby="changedListedBuilding-hint">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
