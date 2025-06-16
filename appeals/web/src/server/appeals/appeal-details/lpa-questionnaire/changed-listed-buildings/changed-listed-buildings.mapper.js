@@ -65,7 +65,7 @@ export function addChangedListedBuildingCheckAndConfirmPage(appealData, currentL
 								text: 'Changed listed building'
 							},
 							value: {
-								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${currentListedBuilding}" target="_blank">${currentListedBuilding}</a>`
+								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${currentListedBuilding}" class="govuk-link" target="_blank">${currentListedBuilding}</a>`
 							},
 							actions: {
 								items: [
@@ -291,7 +291,7 @@ export function changeChangedListedBuildingCheckAndConfirmPage(
 								text: 'Changed listed building'
 							},
 							value: {
-								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuildingData}" target="_blank">${listedBuildingData}</a>`
+								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuildingData}" class="govuk-link" target="_blank">${listedBuildingData}</a>`
 							},
 							actions: {
 								items: [

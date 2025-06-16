@@ -873,6 +873,11 @@ export const lpaQuestionnaireData = {
 			id: 2,
 			listEntry: '123457',
 			affectsListedBuilding: true
+		},
+		{
+			id: 3,
+			listEntry: '123458',
+			affectsListedBuilding: false
 		}
 	],
 	localPlanningDepartment: 'Dorset Council',
