@@ -15,7 +15,7 @@ import { textareaInput } from '#lib/mappers/index.js';
  * @returns {PageContent}
  */
 export const correctionNoticePage = (appealId, appealReference, correctionNotice, errors) => {
-	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/update-decision-letter/upload-decision-letter?backUrl=/appeals-service/appeal-details/415/appeal-decision`;
+	const backLinkUrl = `/appeals-service/appeal-details/${appealId}/update-decision-letter/upload-decision-letter?backUrl=/appeals-service/appeal-details/${appealId}/appeal-decision`;
 
 	/** @type {PageContent} */
 	const pageContent = {
