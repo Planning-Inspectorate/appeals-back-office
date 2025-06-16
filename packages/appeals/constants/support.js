@@ -82,8 +82,8 @@ export const AUDIT_TRAIL_REMOVED_INSPECTOR =
 	'The inspector {replacement0} was removed from the case';
 export const AUDIT_TRAIL_SITE_VISIT_ARRANGED = 'The site visit was arranged for {replacement0}';
 export const AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED = 'The site visit type was selected';
-export const AUDIT_TRAIL_APPEAL_LINK_ADDED = 'A linked appeal was added';
-export const AUDIT_TRAIL_APPEAL_LINK_REMOVED = 'A linked appeal was removed';
+export const AUDIT_TRAIL_APPEAL_LINK_ADDED = 'Linked appeal {replacement0} added';
+export const AUDIT_TRAIL_APPEAL_LINK_REMOVED = 'Linked appeal {replacement0} removed';
 export const AUDIT_TRAIL_APPEAL_RELATION_ADDED = 'A related appeal was added';
 export const AUDIT_TRAIL_APPEAL_RELATION_REMOVED = 'A related appeal was removed';
 export const AUDIT_TRAIL_APPLICATION_REFERENCE_UPDATED = 'Planning application reference updated';

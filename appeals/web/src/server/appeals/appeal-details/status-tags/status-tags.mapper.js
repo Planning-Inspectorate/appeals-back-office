@@ -6,6 +6,7 @@ import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
+import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
@@ -14,38 +15,40 @@ import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue
  * @returns {Promise<PageComponent[]>}
  */
 export const generateStatusTags = async (mappedData, appealDetails, request) => {
-	/** @type {PageComponent|undefined} */
-	let statusTag;
+	/** @type {PageComponent[]} */
+	const statusTags = [];
 
 	if (mappedData.appeal.appealStatus.display?.statusTag) {
-		statusTag = {
+		statusTags.push({
 			type: 'status-tag',
+			parameters: {
+				...mappedData.appeal.appealStatus.display.statusTag,
+				classes: 'pins-status-tag--full-width'
+			}
+		});
+	}
+	if (mappedData.appeal.leadOrChild.display?.statusTag) {
+		statusTags.push({
+			type: 'status-tag',
+			parameters: {
+				...mappedData.appeal.leadOrChild.display.statusTag
+			}
+		});
+	}
+
+	const statusTagsComponentGroup = [];
+
+	if (statusTags.length) {
+		statusTagsComponentGroup.push({
+			type: 'html',
 			wrapperHtml: {
 				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
 				closing: '</div></div>'
 			},
 			parameters: {
-				...mappedData.appeal.appealStatus.display.statusTag
+				html: renderPageComponentsToHtml(statusTags)
 			}
-		};
-	}
-
-	/** @type {PageComponent|undefined} */
-	let leadOrChildTag;
-
-	if (mappedData.appeal.leadOrChild.display?.statusTag) {
-		leadOrChildTag = {
-			type: 'status-tag',
-			parameters: {
-				...mappedData.appeal.leadOrChild.display.statusTag
-			}
-		};
-	}
-
-	const statusTagsComponentGroup = statusTag ? [statusTag] : [];
-
-	if (leadOrChildTag) {
-		statusTagsComponentGroup.push(leadOrChildTag);
+		});
 	}
 
 	const isAppealWithdrawn = appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
@@ -54,7 +57,6 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 	if (
 		isAppealInvalid ||
 		(isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
-			statusTag &&
 			(appealDetails.decision.documentId ||
 				appealDetails.costs.appellantDecisionFolder?.documents?.length ||
 				appealDetails.costs.lpaDecisionFolder?.documents?.length))
@@ -101,11 +103,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 				html
 			}
 		});
-	} else if (
-		isAppealWithdrawn &&
-		statusTag &&
-		appealDetails?.withdrawal?.withdrawalFolder?.documents?.length
-	) {
+	} else if (isAppealWithdrawn && appealDetails?.withdrawal?.withdrawalFolder?.documents?.length) {
 		const withdrawalRequestDate =
 			appealDetails.withdrawal?.withdrawalRequestDate &&
 			dateISOStringToDisplayDate(appealDetails.withdrawal?.withdrawalRequestDate);
@@ -183,5 +181,6 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		}
 	}
 
+	// @ts-ignore
 	return statusTagsComponentGroup;
 };

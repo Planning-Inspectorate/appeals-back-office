@@ -443,10 +443,13 @@ describe('appeal timetables routes', () => {
 						local_planning_authority: 'Maidstone Borough Council',
 						lpa_reference: '48269/APP/2021/1482',
 						lpa_statement_deadline: '',
-						procedure_type: 'a written procedure',
+						procedure_type: 'written representations',
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024'
+						start_date: '5 June 2024',
+						we_will_email_when: 'when you can view information from other parties in the appeals service.',
+						site_visit: true,
+						costs_info: true
 					},
 					recipientEmail: householdAppeal.appellant.email,
 					templateName: 'appeal-start-date-change-appellant'
@@ -465,7 +468,7 @@ describe('appeal timetables routes', () => {
 						local_planning_authority: 'Maidstone Borough Council',
 						lpa_reference: '48269/APP/2021/1482',
 						lpa_statement_deadline: '',
-						procedure_type: 'a written procedure',
+						procedure_type: 'written representations',
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						start_date: '5 June 2024'
@@ -509,10 +512,13 @@ describe('appeal timetables routes', () => {
 						local_planning_authority: 'Maidstone Borough Council',
 						lpa_reference: '48269/APP/2021/1482',
 						lpa_statement_deadline: '',
-						procedure_type: 'a written procedure',
+						procedure_type: 'written representations',
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024'
+						start_date: '5 June 2024',
+						we_will_email_when: 'when you can view information from other parties in the appeals service.',
+						site_visit: true,
+						costs_info: true
 					},
 					recipientEmail: householdAppeal.appellant.email,
 					templateName: 'appeal-valid-start-case-appellant'
@@ -531,7 +537,7 @@ describe('appeal timetables routes', () => {
 						local_planning_authority: 'Maidstone Borough Council',
 						lpa_reference: '48269/APP/2021/1482',
 						lpa_statement_deadline: '',
-						procedure_type: 'a written procedure',
+						procedure_type: 'written representations',
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						start_date: '5 June 2024'
@@ -543,7 +549,10 @@ describe('appeal timetables routes', () => {
 
 			test('start an s78 appeal timetable with a hearing procedure type', async () => {
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					procedureType: { key: 'hearing' }
+				});
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
@@ -609,7 +618,13 @@ describe('appeal timetables routes', () => {
 						procedure_type: 'a hearing',
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024'
+						start_date: '5 June 2024',
+						we_will_email_when: [
+							'to let you know when you can view information from other parties in the appeals service',
+							'when we set up your hearing'
+						],
+						site_visit: false,
+						costs_info: false
 					},
 					recipientEmail: householdAppeal.appellant.email,
 					templateName: 'appeal-valid-start-case-s78-appellant'
@@ -631,7 +646,9 @@ describe('appeal timetables routes', () => {
 						procedure_type: 'a hearing',
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024'
+						start_date: '5 June 2024',
+						statement_of_common_ground_deadline: '10 July 2024',
+						planning_obligation_deadline: ''
 					},
 					recipientEmail: householdAppeal.lpa.email,
 					templateName: 'appeal-valid-start-case-s78-lpa'
