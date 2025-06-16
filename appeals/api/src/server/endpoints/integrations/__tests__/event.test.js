@@ -5,6 +5,7 @@ import { eventClient } from '#infrastructure/event-client.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import { EventType } from '@pins/event-client';
 import { jest } from '@jest/globals';
+import config from '#config/config.js';
 
 // Mocks
 jest.mock('#utils/database-connector.js', () => ({
@@ -30,8 +31,11 @@ jest.mock('#utils/logger.js', () => ({
 }));
 
 jest.mock('#config/config.js', () => ({
-	serviceBusEnabled: true,
-	NODE_ENV: 'test'
+	__esModule: true,
+	default: {
+		serviceBusEnabled: true, // default value for all tests
+		NODE_ENV: 'production'
+	}
 }));
 
 const mockHearing = {
@@ -73,6 +77,11 @@ const mockSiteVisit = {
 
 describe('broadcastEvent', () => {
 	beforeEach(() => {
+		config.serviceBusEnabled = true;
+		jest.clearAllMocks();
+	});
+
+	afterAll(() => {
 		jest.clearAllMocks();
 	});
 
