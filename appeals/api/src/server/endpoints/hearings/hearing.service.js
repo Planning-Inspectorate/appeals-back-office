@@ -47,7 +47,13 @@ const checkHearingExists = async (req, res, next) => {
  * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'>} address
  * @returns {Promise<void>}
  */
-const sendHearingDetailsNotifications = async (notifyClient, templateName, appeal, hearingStartTime, address) => {
+const sendHearingDetailsNotifications = async (
+	notifyClient,
+	templateName,
+	appeal,
+	hearingStartTime,
+	address
+) => {
 	const personalisation = {
 		hearing_date: dateISOStringToDisplayDate(
 			typeof hearingStartTime === 'string' ? hearingStartTime : hearingStartTime.toISOString()
@@ -55,10 +61,10 @@ const sendHearingDetailsNotifications = async (notifyClient, templateName, appea
 		hearing_time: formatTime12h(
 			typeof hearingStartTime === 'string' ? new Date(hearingStartTime) : hearingStartTime
 		),
-		hearing_address: formatAddressSingleLine({ ...address, id: 0 }),
-	}
+		hearing_address: formatAddressSingleLine({ ...address, id: 0 })
+	};
 	await sendHearingNotifications(notifyClient, templateName, appeal, personalisation);
-}
+};
 
 /**
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
@@ -67,7 +73,12 @@ const sendHearingDetailsNotifications = async (notifyClient, templateName, appea
  * @param {Record<string, string>} [personalisation]
  * @returns {Promise<void>}
  */
-const sendHearingNotifications = async (notifyClient, templateName, appeal, personalisation = {}) => {
+const sendHearingNotifications = async (
+	notifyClient,
+	templateName,
+	appeal,
+	personalisation = {}
+) => {
 	const appellantEmail = appeal.appellant?.email ?? appeal.agent?.email;
 	const lpaEmail = appeal.lpa?.email;
 	if (!appellantEmail || !lpaEmail) {
@@ -82,7 +93,7 @@ const sendHearingNotifications = async (notifyClient, templateName, appeal, pers
 				appeal_reference_number: appeal.reference,
 				site_address: appeal.address ? formatAddressSingleLine(appeal.address) : '',
 				lpa_reference: appeal.applicationReference ?? '',
-				...personalisation,
+				...personalisation
 			},
 			recipientEmail: email
 		});
@@ -111,7 +122,13 @@ const createHearing = async (createHearingData, appeal, notifyClient) => {
 
 		if (address) {
 			await broadcasters.broadcastEvent(hearing.id, EVENT_TYPE.HEARING, EventType.Create);
-			await sendHearingDetailsNotifications(notifyClient, 'hearing-set-up', appeal, hearingStartTime, address);
+			await sendHearingDetailsNotifications(
+				notifyClient,
+				'hearing-set-up',
+				appeal,
+				hearingStartTime,
+				address
+			);
 		}
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
@@ -144,9 +161,15 @@ const updateHearing = async (updateHearingData, appeal, notifyClient) => {
 		const result = await hearingRepository.updateHearingById(hearingId, updateData);
 
 		// @ts-ignore
-		if (result.addressId) {
+		if (result.address) {
 			await broadcasters.broadcastEvent(updateData.hearingId, EVENT_TYPE.HEARING, EventType.Update);
-			await sendHearingDetailsNotifications(notifyClient, 'hearing-updated', appeal, hearingStartTime, result.address);
+			await sendHearingDetailsNotifications(
+				notifyClient,
+				'hearing-updated',
+				appeal,
+				hearingStartTime,
+				result.address
+			);
 		}
 
 		return result;
