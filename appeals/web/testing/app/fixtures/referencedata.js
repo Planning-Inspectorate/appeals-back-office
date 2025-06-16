@@ -876,17 +876,17 @@ export const lpaQuestionnaireData = {
 	listedBuildingDetails: [
 		{
 			id: 1,
-			listEntry: '123456',
+			listEntry: '1234567',
 			affectsListedBuilding: true
 		},
 		{
 			id: 2,
-			listEntry: '123457',
+			listEntry: '1234568',
 			affectsListedBuilding: true
 		},
 		{
 			id: 3,
-			listEntry: '123458',
+			listEntry: '1234569',
 			affectsListedBuilding: false
 		}
 	],
