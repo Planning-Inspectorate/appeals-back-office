@@ -37,7 +37,6 @@ export const postCorrectionNotice = async (request, response) => {
 
 		/** @type {import('./update-decision-letter.types.js').UpdateDecisionLetterRequest} */
 		request.session.updateDecisionLetter = {
-			appealId: appealId,
 			...request.session.updateDecisionLetter,
 			correctionNotice: correctionNotice
 		};

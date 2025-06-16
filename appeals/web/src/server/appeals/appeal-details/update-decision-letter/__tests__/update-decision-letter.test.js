@@ -1,15 +1,11 @@
 // @ts-nocheck
 import { parseHtml } from '@pins/platform';
-// import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
-// import { documentFileInfo, inspectorDecisionData } from '#testing/appeals/appeals.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
-// const issueDecisionPath = '/issue-decision';
-// const decisionPath = '/decision';
 const oneThousdandAndOneCharacterString = 'a'.repeat(1001);
 const oneThousdandCharacterString = 'a'.repeat(1000);
 
@@ -31,12 +27,6 @@ describe('update-decision-letter', () => {
 	});
 
 	describe('POST /upload-decision-letter/correction-notice', () => {
-		// beforeEach(() => {
-		// 	nock('http://test/').get('/appeals/1').reply(200, inspectorDecisionData);
-		// 	nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
-		// });
-		// afterEach(teardown);
-
 		it(`should return 'Enter the correction notice' when nothing value provided`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/update-decision-letter/correction-notice`)
@@ -44,10 +34,8 @@ describe('update-decision-letter', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			//test link in banner
 			expect(unprettifiedElement.innerHTML).toContain('Enter the correction notice</a>');
 			expect(unprettifiedElement.innerHTML).toContain('href="#correction-notice"');
-			//test inline error message
 			expect(unprettifiedElement.innerHTML).toContain('Enter the correction notice</p>');
 		});
 		it(`should return expected error message if invalid character entered(non ascii)`, async () => {
@@ -57,12 +45,10 @@ describe('update-decision-letter', () => {
 				.expect(200);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			//test link in banner
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Correction notice must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes</a>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('href="#correction-notice"');
-			//test inline error message
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Correction notice must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes</p>'
 			);
@@ -76,12 +62,10 @@ describe('update-decision-letter', () => {
 				.expect(200);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			//test link in banner
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Correction notice must be 1000 characters or less</a>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('href="#correction-notice"');
-			//test inline error message
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Correction notice must be 1000 characters or less</p>'
 			);

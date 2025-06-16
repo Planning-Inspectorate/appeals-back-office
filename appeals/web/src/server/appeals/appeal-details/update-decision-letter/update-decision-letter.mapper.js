@@ -1,7 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { textareaInput } from '#lib/mappers/index.js';
-// import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-//import { buildDecisionDocumentLinkHtml } from '#lib/mappers/data/appeal/common.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} AppellantCase */
 /** @typedef {import('../appeal-details.types.js').WebAppeal} Appeal */
@@ -17,8 +15,6 @@ import { textareaInput } from '#lib/mappers/index.js';
  * @returns {PageContent}
  */
 export const correctionNoticePage = (appealId, appealReference, correctionNotice, errors) => {
-	// = lpaQuestionnaireData.lpaProcedurePreferenceDetails;
-
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Appeal decision',
