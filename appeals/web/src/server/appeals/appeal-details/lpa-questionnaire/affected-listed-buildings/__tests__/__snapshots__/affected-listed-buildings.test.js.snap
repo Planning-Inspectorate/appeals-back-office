@@ -39,8 +39,8 @@ exports[`affected-listed-buildings GET /add/check-and-confirm should render the 
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed building</dt>
-                    <dd                     class="govuk-summary-list__value"><a href="https://historicengland.org.uk/listing/the-list/list-entry/12345"
-                        class="govuk-link" target="_blank">12345</a>
+                    <dd                     class="govuk-summary-list__value"><a href="https://historicengland.org.uk/listing/the-list/list-entry/1234567"
+                        class="govuk-link" target="_blank">1234567</a>
                         </dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/add">Change<span class="govuk-visually-hidden"> listed building number</span></a>
                         </dd>
@@ -73,7 +73,7 @@ exports[`affected-listed-buildings GET /change/:listedBuildingId should render t
                         <div class="govuk-form-group">
                             <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
                             <input class="govuk-input"
-                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="123456"
+                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="1234567"
                             aria-describedby="affectedListedBuilding-hint">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
@@ -97,8 +97,8 @@ exports[`affected-listed-buildings GET /change/:listedBuildingId/check-and-confi
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-!-margin-bottom-9">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Affected listed building</dt>
-                    <dd                     class="govuk-summary-list__value"><a href="https://historicengland.org.uk/listing/the-list/list-entry/12345"
-                        class="govuk-link" target="_blank">12345</a>
+                    <dd                     class="govuk-summary-list__value"><a href="https://historicengland.org.uk/listing/the-list/list-entry/1234567"
+                        class="govuk-link" target="_blank">1234567</a>
                         </dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/change/1">Change<span class="govuk-visually-hidden"> affected listed building</span></a>
                         </dd>
@@ -128,8 +128,8 @@ exports[`affected-listed-buildings GET /remove/:listedBuildingId should render t
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <p class="govuk-body"><a href="https://historicengland.org.uk/listing/the-list/list-entry/123456"
-                            class="govuk-link" target="_blank">123456</a>
+                        <p class="govuk-body"><a href="https://historicengland.org.uk/listing/the-list/list-entry/1234567"
+                            class="govuk-link" target="_blank">1234567</a>
                         </p>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Remove affected listed building</button>
@@ -141,6 +141,92 @@ exports[`affected-listed-buildings GET /remove/:listedBuildingId should render t
                     <p class="govuk-body"><a href="/appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/manage"
                         class="govuk-link" target="_blank">Cancel</a>
                     </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`affected-listed-buildings POST /add should re-render the add affected listed building page with an error when listed building contains a letter 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#affected-listed-building">Listed building entry number must be 7 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add affected listed building</span>
+            <h1             class="govuk-heading-l">Affected listed building entry number</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
+                            <input class="govuk-input"
+                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="A123456"
+                            aria-describedby="affectedListedBuilding-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`affected-listed-buildings POST /add should re-render the add affected listed building page with an error when listed building contains a special character 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#affected-listed-building">Listed building entry number must be 7 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add affected listed building</span>
+            <h1             class="govuk-heading-l">Affected listed building entry number</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
+                            <input class="govuk-input"
+                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="*123456"
+                            aria-describedby="affectedListedBuilding-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -191,7 +277,265 @@ exports[`affected-listed-buildings POST /add should re-render the add affected l
 </main>"
 `;
 
-exports[`affected-listed-buildings POST /change/:listedBuildingId should re-render the change listed building page when the data is invalid 1`] = `
+exports[`affected-listed-buildings POST /add should re-render the add affected listed building page with an error when listed building is less than seven digits 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#affected-listed-building">Listed building entry number must be 7 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add affected listed building</span>
+            <h1             class="govuk-heading-l">Affected listed building entry number</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
+                            <input class="govuk-input"
+                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="12345"
+                            aria-describedby="affectedListedBuilding-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`affected-listed-buildings POST /add should re-render the add affected listed building page with an error when listed building is more than seven digits 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#affected-listed-building">Listed building entry number must be 7 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add affected listed building</span>
+            <h1             class="govuk-heading-l">Affected listed building entry number</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
+                            <input class="govuk-input"
+                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="12345678"
+                            aria-describedby="affectedListedBuilding-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`affected-listed-buildings POST /change/:listedBuildingId should re-render the change affected listed building page with an error when listed building contains a letter 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#affected-listed-building">Listed building entry number must be 7 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update affected listed building</span>
+            <h1             class="govuk-heading-l">Affected listed building entry number</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
+                            <input class="govuk-input"
+                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="A123456"
+                            aria-describedby="affectedListedBuilding-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`affected-listed-buildings POST /change/:listedBuildingId should re-render the change affected listed building page with an error when listed building contains a special character 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#affected-listed-building">Listed building entry number must be 7 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update affected listed building</span>
+            <h1             class="govuk-heading-l">Affected listed building entry number</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
+                            <input class="govuk-input"
+                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="*123456"
+                            aria-describedby="affectedListedBuilding-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`affected-listed-buildings POST /change/:listedBuildingId should re-render the change affected listed building page with an error when listed building is less than seven digits 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#affected-listed-building">Listed building entry number must be 7 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update affected listed building</span>
+            <h1             class="govuk-heading-l">Affected listed building entry number</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
+                            <input class="govuk-input"
+                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="12345"
+                            aria-describedby="affectedListedBuilding-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`affected-listed-buildings POST /change/:listedBuildingId should re-render the change affected listed building page with an error when listed building is more than seven digits 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#affected-listed-building">Listed building entry number must be 7 digits</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update affected listed building</span>
+            <h1             class="govuk-heading-l">Affected listed building entry number</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
+                            <input class="govuk-input"
+                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="12345678"
+                            aria-describedby="affectedListedBuilding-hint">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`affected-listed-buildings POST /change/:listedBuildingId should re-render the change listed building page when the listed building is empty 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -221,7 +565,7 @@ exports[`affected-listed-buildings POST /change/:listedBuildingId should re-rend
                         <div class="govuk-form-group">
                             <div id="affectedListedBuilding-hint" class="govuk-hint">This is a 7 digit number from Historic England</div>
                             <input class="govuk-input"
-                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="123456"
+                            id="affectedListedBuilding" name="affectedListedBuilding" type="text" value="1234567"
                             aria-describedby="affectedListedBuilding-hint">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
