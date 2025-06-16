@@ -322,7 +322,7 @@ describe('Setup hearing and add hearing estimates', () => {
 			ensureHearingExists(caseRef, date);
 			cy.reload();
 
-			// Now proceed with the test
+			//Now proceed with the test
 			const expectedDateTime = formatDateAndTime(date);
 			hearingSectionPage.verifyHearingValues('date', expectedDateTime.date);
 			hearingSectionPage.verifyHearingValues('time', expectedDateTime.time);
