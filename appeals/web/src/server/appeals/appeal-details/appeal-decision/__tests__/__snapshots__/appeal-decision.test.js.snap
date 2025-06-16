@@ -18,7 +18,7 @@ exports[`Appeal decision should render "Appeal decision" Page 1`] = `
             <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/1/download/e1e90a49-fab3-44b8-a21a-bb73af089f6b/decision-letter.pdf"
                 target="_blank">decision-letter.pdf</a>
             </dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/update-decision-letter/upload-decision-letter">Change<span class="govuk-visually-hidden"> decision letter</span></a>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/update-decision-letter/upload-decision-letter?backUrl=/appeals-service/appeal-details/1/appeal-decision">Change<span class="govuk-visually-hidden"> decision letter</span></a>
             </dd>
         </div>
     </dl>
