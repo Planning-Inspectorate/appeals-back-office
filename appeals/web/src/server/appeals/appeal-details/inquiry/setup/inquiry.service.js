@@ -1,16 +1,29 @@
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {{inquiryStartTime: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}} hearingDetails
- * @returns {Promise<{hearingEstimateId: number}>}
+ * @typedef {object} InquiryAddress
+ * @property {string} addressLine1
+ * @property {string} addressLine2
+ * @property {string} town
+ * @property {string} county
+ * @property {string} postcode
  */
-export const createInquiry = async (request, hearingDetails) => {
+
+/**
+ * @typedef {object} InquiryDetails
+ * @property {string} inquiryStartTime
+ * @property {InquiryAddress} address
+ */
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {InquiryDetails} inquiryDetails
+ * @returns {Promise<{inquiryEstimateId: number}>}
+ */
+export const createInquiry = async (request, inquiryDetails) => {
 	const { appealId } = request.currentAppeal;
 
-	const response = await request.apiClient
+	return await request.apiClient
 		.post(`appeals/${appealId}/inquiry`, {
-			json: hearingDetails
+			json: inquiryDetails
 		})
 		.json();
-
-	return response;
 };
