@@ -43,6 +43,7 @@ import siteAddressRouter from './appellant-case/address/address.router.js';
 import timetableRouter from './timetable/timetable.router.js';
 import appealDecisionRouter from './appeal-decision/appeal-decison.router.js';
 import updateDecisionLetterRouter from './update-decision-letter/update-decision-letter.router.js';
+import inquiryRouter from './inquiry/inquiry.router.js';
 
 const router = createRouter();
 
@@ -192,6 +193,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	hearingRouter
+);
+
+router.use(
+	'/:appealId/inquiry',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	inquiryRouter
 );
 
 router.use(
