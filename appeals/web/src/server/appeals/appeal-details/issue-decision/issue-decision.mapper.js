@@ -44,54 +44,43 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 export function issueDecisionPage(appealDetails, inspectorDecision, backUrl, errors) {
 	/** @type {PageComponent} */
 	const summaryBlock = {
-		type: 'inset-text',
+		type: 'summary-list',
 		parameters: {
-			classes: 'govuk-!-margin-top-0',
-			html: '',
-			pageComponents: [
-				{
-					type: 'summary-list',
-					parameters: {
-						rows: [
-							...(appealDetails.appellant
-								? [
-										{
-											key: {
-												text: 'Appellant'
-											},
-											value: {
-												text: `${appealDetails.appellant.firstName} ${appealDetails.appellant.lastName}`
-											}
-										}
-								  ]
-								: []),
-							...(appealDetails.appealSite
-								? [
-										{
-											key: {
-												text: 'Site address'
-											},
-											value: {
-												html: appealDetails.appealSite
-													? addressToMultilineStringHtml(
-															/** @type {import('@pins/appeals').Address} */ (
-																appealDetails.appealSite
-															)
-													  )
-													: null
-											}
-										}
-								  ]
-								: []),
+			rows: [
+				...(appealDetails.appellant
+					? [
 							{
 								key: {
-									text: 'Appeal type'
+									text: 'Appellant'
 								},
 								value: {
-									text: appealDetails.appealType
+									text: `${appealDetails.appellant.firstName} ${appealDetails.appellant.lastName}`
 								}
 							}
-						]
+					  ]
+					: []),
+				...(appealDetails.appealSite
+					? [
+							{
+								key: {
+									text: 'Site address'
+								},
+								value: {
+									html: appealDetails.appealSite
+										? addressToMultilineStringHtml(
+												/** @type {import('@pins/appeals').Address} */ (appealDetails.appealSite)
+										  )
+										: null
+								}
+							}
+					  ]
+					: []),
+				{
+					key: {
+						text: 'Appeal type'
+					},
+					value: {
+						text: appealDetails.appealType
 					}
 				}
 			]
