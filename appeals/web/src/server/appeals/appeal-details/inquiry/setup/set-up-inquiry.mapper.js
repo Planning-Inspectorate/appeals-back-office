@@ -1,6 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateInput } from '#lib/mappers/components/page-components/date.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
+import { addressInputs } from '#lib/mappers/index.js';
+import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
@@ -45,6 +47,56 @@ export function inquiryDatePage(appealData, values) {
 		preHeading: `Appeal ${shortAppealReference} - start case`,
 		heading: 'Inquiry date and time',
 		pageComponents: [dateComponent, timeComponent]
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealData
+ * @param {string} action
+ * @param {{ addressKnown: string }} [values]
+ * @returns {PageContent}
+ */
+export function addressKnownPage(appealData, action, values) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+
+	const addressKnownComponent = yesNoInput({
+		name: 'addressKnown',
+		id: 'address-known',
+		legendText: 'Do you know the address of where the inquiry will take place?',
+		legendIsPageHeading: true,
+		value: values?.addressKnown
+	});
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: `Address - start case - ${shortAppealReference}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/${action}/date`,
+		preHeading: `Appeal ${shortAppealReference} - start case`,
+		pageComponents: [addressKnownComponent]
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealData
+ * @param {import('@pins/appeals').Address} currentAddress
+ * @param {'setup' | 'change'} action
+ * @param {import("@pins/express").ValidationErrors | undefined} errors
+ * @returns {PageContent}
+ */
+export function addressDetailsPage(appealData, action, currentAddress, errors) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: `Address - start case - ${shortAppealReference}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/${action}/address`,
+		preHeading: `Appeal ${shortAppealReference}`,
+		heading: 'Inquiry address',
+		pageComponents: addressInputs({ address: currentAddress, errors })
 	};
 
 	return pageContent;
