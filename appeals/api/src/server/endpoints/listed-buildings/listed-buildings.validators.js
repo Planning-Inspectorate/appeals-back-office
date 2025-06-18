@@ -21,8 +21,14 @@ const removeListedBuildingValidator = composeMiddleware(
 	validationErrorHandler
 );
 
+const getListedBuildingValidator = composeMiddleware(
+	validateRequiredStringParameter('listedBuildingId'),
+	validationErrorHandler
+);
+
 export {
 	createListedBuildingValidator,
 	updateListedBuildingValidator,
-	removeListedBuildingValidator
+	removeListedBuildingValidator,
+	getListedBuildingValidator
 };

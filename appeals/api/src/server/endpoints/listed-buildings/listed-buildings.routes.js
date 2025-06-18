@@ -4,12 +4,14 @@ import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-e
 import {
 	addListedBuilding,
 	removeListedBuilding,
-	updateListedBuilding
+	updateListedBuilding,
+	getListedBuilding
 } from './listed-buildings.controller.js';
 import {
 	createListedBuildingValidator,
 	updateListedBuildingValidator,
-	removeListedBuildingValidator
+	removeListedBuildingValidator,
+	getListedBuildingValidator
 } from './listed-buildings.validators.js';
 const router = createRouter();
 
@@ -101,6 +103,12 @@ router.delete(
 	checkAppealExistsByIdAndAddToRequest,
 	removeListedBuildingValidator,
 	asyncHandler(removeListedBuilding)
+);
+
+router.get(
+	'/listed-buildings/:listedBuildingId',
+	getListedBuildingValidator,
+	asyncHandler(getListedBuilding)
 );
 
 export { router as listedBuildingRoutes };

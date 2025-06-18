@@ -104,3 +104,24 @@ export const removeListedBuilding = async (req, res) => {
 		listedBuildingId
 	});
 };
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const getListedBuilding = async (req, res) => {
+	const {
+		params: { listedBuildingId }
+	} = req;
+
+	const result = await listedBuildingRepository.getListedBuilding(listedBuildingId);
+
+	if (!result) {
+		return res.status(404).send({ errors: { listedBuildingId: ERROR_NOT_FOUND } });
+	}
+
+	return res.status(200).send({
+		result
+	});
+};

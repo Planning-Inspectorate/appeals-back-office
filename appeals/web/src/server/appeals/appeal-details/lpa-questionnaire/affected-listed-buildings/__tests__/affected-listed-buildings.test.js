@@ -87,6 +87,33 @@ describe('affected-listed-buildings', () => {
 			expect(errorSummaryHtml).toContain('Listed building entry number must be 7 digits</a>');
 		});
 
+		it('should re-render the add affected listed building page with an error when listed building is seven digits but not in historic england', async () => {
+			const invalidData = {
+				affectedListedBuilding: '9999999'
+			};
+
+			const response = await request
+				.post(
+					`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/affected-listed-buildings/add`
+				)
+				.send(invalidData);
+			expect(response.statusCode).toBe(200);
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('- add affected listed building</span>');
+			expect(elementInnerHtml).toContain('Affected listed building entry number</h1>');
+			expect(elementInnerHtml).toContain('This is a 7 digit number from Historic England</div>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter a real listed building entry number</a>');
+		});
+
 		it('should re-render the add affected listed building page with an error when listed building is more than seven digits', async () => {
 			const invalidData = {
 				affectedListedBuilding: '12345678'
