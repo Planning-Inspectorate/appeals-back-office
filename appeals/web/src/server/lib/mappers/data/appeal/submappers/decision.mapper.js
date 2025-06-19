@@ -24,6 +24,8 @@ export const mapDecision = ({ appealDetails, session, request }) => {
 
 	const link = canIssueDecision
 		? addBackLinkQueryToUrl(request, generateIssueDecisionUrl(appealId))
+		: config.featureFlags.featureFlagReIssueDecision
+		? `${appealDetails.appealId}/appeal-decision`
 		: addBackLinkQueryToUrl(request, `${baseUrl(appealDetails)}/view-decision`);
 
 	return textSummaryListItem({

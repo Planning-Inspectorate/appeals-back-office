@@ -59,7 +59,7 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute, request }) =>
 		const id = 'start-case-date';
 		return { id, display: {} };
 	} else {
-		const ret = documentationFolderTableItem({
+		return documentationFolderTableItem({
 			id: 'lpa-final-comments',
 			text: 'LPA final comments',
 			statusText,
@@ -72,8 +72,5 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute, request }) =>
 				request
 			)
 		});
-		console.log(`[lpa-final-comments.mapper.js] ret: ${ret}`);
-		console.log(ret);
-		return ret;
 	}
 };

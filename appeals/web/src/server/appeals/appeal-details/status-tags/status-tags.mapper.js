@@ -7,6 +7,7 @@ import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.s
 import { isStatePassed } from '#lib/appeal-status.js';
 import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import config from '#environment/config.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
@@ -86,7 +87,13 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 
 		if (appealDetails.decision.documentId) {
 			if (virusCheckStatus.checked && virusCheckStatus.safe) {
-				insetTextRows.push(generateDecisionDocumentDownloadHtml(appealDetails, 'View decision'));
+				config.featureFlags.featureFlagReIssueDecision
+					? insetTextRows.push(
+							`<a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/appeal-decision">View decision</a>`
+					  )
+					: insetTextRows.push(
+							generateDecisionDocumentDownloadHtml(appealDetails, 'View decision')
+					  );
 			} else {
 				insetTextRows.push(
 					`<span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>`
