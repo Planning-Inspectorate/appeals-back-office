@@ -995,5 +995,6 @@ export {
 	CreateHearing,
 	UpdateHearing,
 	CancelHearing,
-	HearingResponse
+	HearingResponse,
+	UpdateAppealDecisionRequest
 };

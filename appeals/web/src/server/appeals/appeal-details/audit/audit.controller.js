@@ -4,6 +4,7 @@ import { dateISOStringToDisplayDate, dateISOStringToDisplayTime24hr } from '#lib
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getAppealCaseNotes } from '#appeals/appeal-details/case-notes/case-notes.service.js';
 import { utcToZonedTime } from 'date-fns-tz';
+import nunjucksEnvironments from '#app/config/nunjucks.js';
 
 /**
  *
@@ -24,12 +25,25 @@ export const renderAudit = async (request, response) => {
 	const auditTrails = await Promise.all(
 		auditInfo.map(async (audit) => {
 			const details = await mapMessageContent(appeal, audit.details, audit.doc, request.session);
+			let detailsHtml = details || '';
+			if (detailsHtml.length > 300) {
+				detailsHtml = nunjucksEnvironments.render('appeals/components/page-component.njk', {
+					component: {
+						type: 'show-more',
+						parameters: {
+							text: detailsHtml,
+							toggleTextCollapsed: 'Show more',
+							toggleTextExpanded: 'Show less'
+						}
+					}
+				});
+			}
 			const loggedDate = utcToZonedTime(audit.loggedDate, 'Europe/London');
 			return {
 				dateTime: loggedDate.getTime(),
 				date: dateISOStringToDisplayDate(audit.loggedDate),
 				time: dateISOStringToDisplayTime24hr(audit.loggedDate),
-				details,
+				details: detailsHtml,
 				user: await tryMapUsers(audit.azureAdUserId, request.session)
 			};
 		})

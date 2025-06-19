@@ -8,6 +8,7 @@ export interface AddDocumentVersionRequest {
 	blobStorageHost: string;
 	blobStorageContainer: string;
 	document: MappedDocument;
+	correctionNotice?: string | null;
 }
 
 export interface MappedDocument {

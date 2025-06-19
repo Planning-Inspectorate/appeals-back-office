@@ -20,6 +20,9 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import { formatDocument } from './documents.formatter.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
+import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { AUDIT_TRAIL_DECISION_LETTER_UPDATED } from '@pins/appeals/constants/support.js';
+import { sendNewDecisionLetter } from '#endpoints/decision/decision.service.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /** @typedef {import('@pins/appeals.api').Schema.AuditTrail} AuditTrail */
@@ -98,14 +101,32 @@ const addDocuments = async (req, res) => {
 
 		const auditTrails = await Promise.all(
 			documentInfo.documents.filter(Boolean).map(async (document) => {
-				const auditTrail = await createAuditTrail({
-					appealId: appeal.id,
-					azureAdUserId: req.get('azureAdUserId'),
-					details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [
-						DOCUMENT_FOLDER_DISPLAY_LABELS[document.documentType],
-						document.documentName
-					])
-				});
+				let auditTrail;
+				if (document.documentType === APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER) {
+					const decisionLetterHtmlLink = buildDecisionDocumentLinkHtml(
+						appeal.id,
+						document.GUID,
+						document.documentName,
+						document.documentName,
+						1
+					);
+					auditTrail = await createAuditTrail({
+						appealId: appeal.id,
+						azureAdUserId: req.get('azureAdUserId'),
+						details: stringTokenReplacement(AUDIT_TRAIL_DECISION_LETTER_UPDATED, [
+							decisionLetterHtmlLink
+						])
+					});
+				} else {
+					auditTrail = await createAuditTrail({
+						appealId: appeal.id,
+						azureAdUserId: req.get('azureAdUserId'),
+						details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [
+							DOCUMENT_FOLDER_DISPLAY_LABELS[document.documentType],
+							document.documentName
+						])
+					});
+				}
 
 				return {
 					guid: document.GUID,
@@ -153,16 +174,36 @@ const addDocumentVersion = async (req, res) => {
 	if (!updatedDocument) {
 		return res.sendStatus(404);
 	}
-
 	(async () => {
-		const auditTrail = await createAuditTrail({
-			appealId: appeal.id,
-			azureAdUserId: req.get('azureAdUserId'),
-			details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [
-				DOCUMENT_FOLDER_DISPLAY_LABELS[updatedDocument.documentType],
-				updatedDocument.documentName
-			])
-		});
+		let auditTrail;
+		if (updatedDocument.documentType === APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER) {
+			const decisionLetterHtmlLink = buildDecisionDocumentLinkHtml(
+				appeal.id,
+				document.guid,
+				body.document.documentName,
+				updatedDocument.documentName,
+				updatedDocument.versionId
+			);
+			auditTrail = await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId: req.get('azureAdUserId'),
+				details: stringTokenReplacement(AUDIT_TRAIL_DECISION_LETTER_UPDATED, [
+					decisionLetterHtmlLink
+				])
+			});
+			if (body.correctionNotice) {
+				sendNewDecisionLetter(appeal, body.correctionNotice, req.get('azureAdUserId') || '');
+			}
+		} else {
+			auditTrail = await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId: req.get('azureAdUserId'),
+				details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [
+					DOCUMENT_FOLDER_DISPLAY_LABELS[updatedDocument.documentType],
+					updatedDocument.documentName
+				])
+			});
+		}
 
 		if (auditTrail) {
 			service.addDocumentAudit(document.guid, updatedDocument.versionId, auditTrail, 'Create');
@@ -433,4 +474,39 @@ export {
 	updateDocumentFileName,
 	updateDocumentsAvCheckStatus,
 	deleteDocumentVersion
+};
+
+/**
+ * @param {number} appealId
+ * @param {string} documentId
+ * @param {string} documentName
+ * @param {string} linkText
+ * @param {number} [documentVersion]
+ * @returns {string}
+ */
+export const buildDecisionDocumentLinkHtml = (
+	appealId,
+	documentId,
+	documentName,
+	linkText,
+	documentVersion
+) => {
+	return `<a class="govuk-link" href="${
+		documentId && documentName
+			? mapDocumentDownloadUrl(appealId, documentId, documentName, documentVersion)
+			: '#'
+	}" target="_blank">${linkText}</a>`;
+};
+
+/**
+ * @param {string|number} appealId
+ * @param {string} documentId
+ * @param {string} filename
+ * @param {number} [documentVersion]
+ */
+export const mapDocumentDownloadUrl = (appealId, documentId, filename, documentVersion) => {
+	if (documentVersion) {
+		return `/documents/${appealId}/download/${documentId}/${documentVersion}/${filename}`;
+	}
+	return `/documents/${appealId}/download/${documentId}/${filename}`;
 };
