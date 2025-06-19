@@ -199,6 +199,33 @@ describe('buildNotificationBanners', () => {
 			}
 		]);
 	});
+
+	it('should return a notification banner for decisionLetterUpdated', () => {
+		session.notificationBanners = {
+			[appealId]: [
+				{
+					key: 'decisionLetterUpdated'
+				}
+			]
+		};
+
+		const result = mapNotificationBannersFromSession(session, 'appealDecision', appealId);
+
+		expect(result).toEqual([
+			{
+				type: 'notification-banner',
+				parameters: {
+					titleText: 'Success',
+					titleHeadingLevel: 3,
+					type: 'success',
+					text: 'Decision letter updated',
+					attributes: {
+						'data-index': 0
+					}
+				}
+			}
+		]);
+	});
 });
 
 describe('sortNotificationBanners', () => {

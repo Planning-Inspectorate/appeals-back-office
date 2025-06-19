@@ -1,5 +1,98 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`update-decision-letter GET /decision-letter-upload should render the decision letter upload page with a file upload component 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update decision letter</span>
+            <h1             class="govuk-heading-l">Decision letter</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/issue-decision/decision"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="123" data-document-type="caseDecisionLetter" data-document-stage="appeal-decision"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="decision letter" data-allowed-types="application/pdf"
+            data-formatted-allowed-types="PDF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload decision letter</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`update-decision-letter GET /issue-decision/check-your-decision should render the check your decision page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and update decision letter</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
+                    <dd class="govuk-summary-list__value"><a href="/documents/APP/Q9999/D/21/351062/download-uncommitted/100/test-document2.txt"
+                        class="govuk-link">test-document2.txt</a>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/update-decision-letter/upload-decision-letter">Change <span class="govuk-visually-hidden">decision letter</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Correction notice</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Correction notice" data-mode="text">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+                    </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/update-decision-letter/correction-notice">Change <span class="govuk-visually-hidden">correction notice</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <p class="govuk-body">We will send the updated decision letter to the relevant parties.</p>
+            <p             class="govuk-body"><a href="/appeals-service/appeal-details/1/update-decision-letter/preview-email"
+                class="govuk-link">Preview email</a>
+                </p>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-full">
+                        <form method="post" novalidate="novalidate">
+                            <button type="submit" class="govuk-button" data-module="govuk-button">Update decision letter</button>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`update-decision-letter GET /update-decision-letter/correction-notice should render the 'correction-notice' page with the expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -21,6 +114,40 @@ exports[`update-decision-letter GET /update-decision-letter/correction-notice sh
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`update-decision-letter POST /decision-letter-upload should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`update-decision-letter POST /decision-letter-upload should render a 500 error page if upload-info is not present in the request body 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
         </div>
     </div>
 </main>"

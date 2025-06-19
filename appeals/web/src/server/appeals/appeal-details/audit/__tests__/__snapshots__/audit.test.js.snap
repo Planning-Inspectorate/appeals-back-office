@@ -30,6 +30,21 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:55</span>
                         </td>
+                        <td class="govuk-table__cell">
+                            <div class="pins-show-more" data-label="" data-mode="text" data-toggle-text-collapsed="Show more"
+                            data-toggle-text-expanded="Show less">Thise case has over 300 characters in the details field. This is a test
+                                to ensure that the system can handle long text entries without issues.
+                                The case has progressed to &lt;strong class=&quot;govuk-tag govuk-tag--grey&quot;&gt;Awaiting
+                                LPA questionnaire&lt;/strong&gt;. There should be over 300 character in
+                                this field to test the system&#39;s ability to handle long text entries
+                                without truncation or errors. - it should show the show more compoonent</div>
+                        </td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:55</span>
+                        </td>
                         <td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--yellow">Awaiting site visit</strong>
                         </td>
                         <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
