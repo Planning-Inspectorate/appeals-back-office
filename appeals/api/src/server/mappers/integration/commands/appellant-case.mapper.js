@@ -60,6 +60,10 @@ export const mapAppellantCaseIn = (command) => {
 		...(knowsOtherOwners && { knowsOtherOwners }),
 		isGreenBelt: casedata.isGreenBelt,
 		typeOfPlanningApplication: casedata.typeOfPlanningApplication,
+		appellantProcedurePreference: casedata.appellantProcedurePreference,
+		appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
+		appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
+		appellantProcedurePreferenceWitnessCount: casedata.appellantProcedurePreferenceWitnessCount,
 		...(isS20 && { ...sharedFields }),
 		...(isS78 && {
 			...sharedFields,
