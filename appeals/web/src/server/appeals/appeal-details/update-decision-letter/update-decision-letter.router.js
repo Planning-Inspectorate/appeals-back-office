@@ -28,6 +28,21 @@ router
 		updateCorrectionNoticeValidator,
 		asyncHandler(updateDecisionLetterController.postCorrectionNotice)
 	);
+router
+	.route('/check-details')
+	.get(
+		validateAppeal,
+		assertUserHasPermission(
+			permissionNames.viewCaseDetails,
+			permissionNames.viewAssignedCaseDetails
+		),
+		asyncHandler(updateDecisionLetterController.getUpdateDocumentCheckDetails)
+	)
+	.post(
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(updateDecisionLetterController.postUpdateDocumentCheckDetails)
+	);
 
 router
 	.route('/upload-decision-letter')

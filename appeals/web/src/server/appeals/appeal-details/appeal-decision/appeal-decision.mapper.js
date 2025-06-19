@@ -13,11 +13,23 @@ import { buildDecisionDocumentLinkHtml } from '#lib/mappers/data/appeal/common.j
  * @param {number} appealId
  * @param {string} appealReference
  * @param {Decision} decision
+ * @param {string | undefined} firstdocumentDate
+ * @param {number } version
  * @returns {PageContent}
  */
-export const appealDecisionPage = (appealId, appealReference, decision) => {
+export const appealDecisionPage = (
+	appealId,
+	appealReference,
+	decision,
+	firstdocumentDate,
+	version
+) => {
 	const letterDate = decision?.letterDate
-		? dateISOStringToDisplayDate(decision.letterDate)
+		? version > 1 && firstdocumentDate
+			? `${dateISOStringToDisplayDate(firstdocumentDate)} (reissued on ${dateISOStringToDisplayDate(
+					decision.letterDate
+			  )})`
+			: dateISOStringToDisplayDate(decision.letterDate)
 		: dateISOStringToDisplayDate(getTodaysISOString());
 
 	const baseUrl = `/appeals-service/appeal-details/${appealId}`;

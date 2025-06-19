@@ -186,6 +186,8 @@ export const AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED = 'Hearing estimates updated'
 export const AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED = 'Hearing estimates removed';
 
 export const AUDIT_TRAIL_DECISION_ISSUED = 'Decision issued: {replacement0}';
+export const AUDIT_TRAIL_DECISION_LETTER_UPDATED = 'Decision letter: {replacement0} updated';
+export const AUDIT_TRAIL_CORRECTION_NOTICE_ADDED = 'Correction notice added: {replacement0} ';
 export const AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED = 'Appellant costs decision issued';
 export const AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED = 'LPA costs decision issued';
 

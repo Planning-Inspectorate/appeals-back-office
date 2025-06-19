@@ -8,6 +8,7 @@ import { loadEnvironment } from '@pins/platform';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { AUDIT_TRAIL_DECISION_ISSUED } from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { AUDIT_TRAIL_CORRECTION_NOTICE_ADDED } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} Decision */
@@ -84,4 +85,23 @@ export const publishDecision = async (
 	}
 
 	return null;
+};
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {string} correctionNotice
+ * @param {string} azureUserId
+ * @returns
+ */
+export const sendNewDecisionLetter = async (appeal, correctionNotice, azureUserId) => {
+	//TODO: add notify emails
+
+	await createAuditTrail({
+		appealId: appeal.id,
+		azureAdUserId: azureUserId,
+		details: stringTokenReplacement(AUDIT_TRAIL_CORRECTION_NOTICE_ADDED, [correctionNotice])
+	});
+
+	await broadcasters.broadcastAppeal(appeal.id);
 };
