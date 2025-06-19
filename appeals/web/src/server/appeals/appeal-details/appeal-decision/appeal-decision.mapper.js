@@ -13,7 +13,7 @@ import { buildDecisionDocumentLinkHtml } from '#lib/mappers/data/appeal/common.j
  * @param {number} appealId
  * @param {string} appealReference
  * @param {Decision} decision
- * @param {string | undefined} firstdocumentDate
+ * @param {string | undefined} firstDocumentDate
  * @param {number } version
  * @returns {PageContent}
  */
@@ -21,12 +21,12 @@ export const appealDecisionPage = (
 	appealId,
 	appealReference,
 	decision,
-	firstdocumentDate,
+	firstDocumentDate,
 	version
 ) => {
 	const letterDate = decision?.letterDate
-		? version > 1 && firstdocumentDate
-			? `${dateISOStringToDisplayDate(firstdocumentDate)} (reissued on ${dateISOStringToDisplayDate(
+		? version > 1 && firstDocumentDate
+			? `${dateISOStringToDisplayDate(firstDocumentDate)} (reissued on ${dateISOStringToDisplayDate(
 					decision.letterDate
 			  )})`
 			: dateISOStringToDisplayDate(decision.letterDate)

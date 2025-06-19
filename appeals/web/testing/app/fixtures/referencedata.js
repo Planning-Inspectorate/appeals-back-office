@@ -371,6 +371,11 @@ export const appealData = {
 	}
 };
 
+export const appealDataIssuedDecision = {
+	...appealData,
+	completedStateList: ['final_comments', 'event', 'awaiting_event', 'issue_determination']
+};
+
 export const publishedAppealData = {
 	...appealData,
 	appealId: 2,
@@ -1496,6 +1501,13 @@ export const inspectorDecisionData = {
 	outcome: 'dismissed',
 	documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
 	letterDate: '2023-12-25T00:00:00.000Z'
+};
+
+export const inspectorDecisionfile = {
+	outcome: 'dismissed',
+	GUID: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
+	letterDate: '2023-12-25T00:00:00.000Z',
+	name: 'Decision letter'
 };
 
 export const allocationDetailsData = {
@@ -2931,6 +2943,9 @@ export const appealCostsDocumentItem = {
 export const fileUploadInfo =
 	'[{"name": "test-document.txt", "GUID": "1", "fileRowId": "1", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case", "redactionStatus": 3}]';
 
+export const fileUploadInfo2 =
+	'[{"name": "test-document2.txt", "GUID": "100", "fileRowId": "2", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case", "redactionStatus": 3}]';
+
 export const withdrawalRequestData = {
 	withdrawal: {
 		withdrawalFolder: {
@@ -3904,6 +3919,12 @@ export const designatedSiteNames = [
 ];
 
 export const caseAuditLog = [
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details:
+			"Thise case has over 300 characters in the details field. This is a test to ensure that the system can handle long text entries without issues. The case has progressed to awaiting_lpa_questionnaire. There should be over 300 character in this field to test the system's ability to handle long text entries without truncation or errors. - it should show the show more compoonent",
+		loggedDate: '2025-05-27T09:55:30.175Z'
+	},
 	{
 		azureAdUserId: '00000000-0000-0000-0000-000000000000',
 		details: 'The case has progressed to issue_determination',
