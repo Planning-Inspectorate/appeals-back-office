@@ -139,7 +139,7 @@ describe('appeal-details', () => {
 					'Appeal ready to be assigned to case officer</p>'
 				);
 				expect(notificationBannerElementHTML).toContain(
-					`href="/appeals-service/appeal-details/2/assign-user/case-officer?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
+					`href="/appeals-service/appeal-details/2/assign-case-officer/search-case-officer?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
 				);
 				expect(notificationBannerElementHTML).toContain('Assign case officer</a>');
 			});
