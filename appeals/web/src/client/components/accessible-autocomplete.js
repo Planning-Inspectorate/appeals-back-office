@@ -1,17 +1,11 @@
-// progressively enhance all <select> elements with the "accessible-autocomplete" class
-const selectElements = document.querySelectorAll('select.accessible-autocomplete');
+import accessibleAutocomplete from 'accessible-autocomplete';
 
-if (selectElements.length > 0) {
-	import('accessible-autocomplete')
-		.then(() => {
-			for (const selectElement of selectElements) {
-				window.accessibleAutocomplete.enhanceSelectElement({
-					defaultValue: '',
-					selectElement
-				});
-			}
-		})
-		.catch(() => {
-			// do nothing, as any page will remain functional
+document.addEventListener('DOMContentLoaded', function () {
+	const selectElements = document.querySelectorAll('select.accessible-autocomplete');
+	for (const selectElement of selectElements) {
+		accessibleAutocomplete.enhanceSelectElement({
+			selectElement,
+			defaultValue: ''
 		});
-}
+	}
+});

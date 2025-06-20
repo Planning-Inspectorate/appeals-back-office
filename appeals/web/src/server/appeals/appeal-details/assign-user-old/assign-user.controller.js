@@ -2,16 +2,30 @@ import logger from '#lib/logger.js';
 import usersService from '../../appeal-users/users-service.js';
 import config from '#environment/config.js';
 import { setAppealAssignee } from './assign-user.service.js';
-import { assignOrUnassignUserCheckAndConfirmPage, assignUserPage } from './assign-user.mapper.js';
+import {
+	assignOrUnassignUserCheckAndConfirmPage,
+	assignUserPage,
+	assignNewUserPage
+} from './assign-user.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
+ *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {boolean} [isInspector]
+ * @param {Object<string, any>[]} [usersMatchingSearchTerm]
  */
-const renderAssignUser = async (request, response, isInspector = false) => {
-	const { errors } = request;
+const renderAssignUser = async (
+	request,
+	response,
+	isInspector = false,
+	usersMatchingSearchTerm
+) => {
+	const {
+		errors,
+		body: { searchTerm }
+	} = request;
 
 	const appealDetails = request.currentAppeal;
 
@@ -19,7 +33,15 @@ const renderAssignUser = async (request, response, isInspector = false) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const mappedPageContent = await assignUserPage(appealDetails, isInspector, request.session);
+	const mappedPageContent = await assignUserPage(
+		appealDetails,
+		isInspector,
+		Array.isArray(usersMatchingSearchTerm),
+		searchTerm,
+		usersMatchingSearchTerm || [],
+		appealDetails[isInspector ? 'inspector' : 'caseOfficer'],
+		request.session
+	);
 
 	return response.status(200).render('appeals/appeal/assign-user.njk', {
 		pageContent: mappedPageContent,
@@ -28,6 +50,7 @@ const renderAssignUser = async (request, response, isInspector = false) => {
 };
 
 /**
+ *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {boolean} [isInspector]
@@ -98,6 +121,7 @@ export const getAssignInspector = async (request, response) => {
 };
 
 /**
+ *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {boolean} [isInspector]
@@ -110,7 +134,19 @@ export const postAssignUser = async (request, response, isInspector = false) => 
 	}
 
 	try {
-		//something
+		const { searchTerm } = request.body;
+		const lowerCaseSearchTerm = searchTerm.toLowerCase();
+		const userGroupId = isInspector
+			? config.referenceData.appeals.inspectorGroupId
+			: config.referenceData.appeals.caseOfficerGroupId;
+		const users = await usersService.getUsersByRole(userGroupId, request.session);
+		const matchingUsers = users.filter(
+			(user) =>
+				user.name?.toLowerCase().includes(lowerCaseSearchTerm) ||
+				user.email?.toLowerCase().includes(lowerCaseSearchTerm)
+		);
+
+		return renderAssignUser(request, response, isInspector, matchingUsers);
 	} catch (error) {
 		logger.error(error, error instanceof Error ? error.message : 'Something went wrong');
 
@@ -208,4 +244,106 @@ export const postAssignCaseOfficerCheckAndConfirm = async (request, response) =>
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const postAssignInspectorCheckAndConfirm = async (request, response) => {
 	postAssignOrUnassignUserCheckAndConfirm(request, response, true);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getUnassignCaseOfficerCheckAndConfirm = async (request, response) => {
+	renderAssignOrUnassignUserCheckAndConfirm(request, response, false, true);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getUnassignInspectorCheckAndConfirm = async (request, response) => {
+	renderAssignOrUnassignUserCheckAndConfirm(request, response, true, true);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const postUnassignCaseOfficerCheckAndConfirm = async (request, response) => {
+	postAssignOrUnassignUserCheckAndConfirm(request, response, false, true);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const postUnassignInspectorCheckAndConfirm = async (request, response) => {
+	postAssignOrUnassignUserCheckAndConfirm(request, response, true, true);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {boolean} [isInspector]
+ */
+const renderAssignNewUser = async (request, response, isInspector = false) => {
+	const { errors } = request;
+
+	const appealDetails = request.currentAppeal;
+
+	if (appealDetails) {
+		const mappedPageContent = assignNewUserPage(
+			request.params.appealId,
+			appealDetails?.appealReference,
+			isInspector,
+			errors
+		);
+
+		if (appealDetails) {
+			return response.status(200).render('appeals/appeal/assign-new-user.njk', mappedPageContent);
+		}
+	}
+
+	return response.status(404).render('app/404.njk');
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getAssignNewCaseOfficer = async (request, response) => {
+	renderAssignNewUser(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getAssignNewInspector = async (request, response) => {
+	renderAssignNewUser(request, response, true);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {boolean} [isInspector]
+ */
+export const postAssignNewUser = async (request, response, isInspector = false) => {
+	const { errors } = request;
+
+	if (errors) {
+		return renderAssignNewUser(request, response, isInspector);
+	}
+
+	try {
+		const {
+			body: { confirm },
+			params: { appealId }
+		} = request;
+
+		if (confirm === 'yes') {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/assign-user/${
+					isInspector ? 'inspector' : 'case-officer'
+				}`
+			);
+		}
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(error, error instanceof Error ? error.message : 'Something went wrong');
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const postAssignNewCaseOfficer = async (request, response) => {
+	postAssignNewUser(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const postAssignNewInspector = async (request, response) => {
+	postAssignNewUser(request, response, true);
 };

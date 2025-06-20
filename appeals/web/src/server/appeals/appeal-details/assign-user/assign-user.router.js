@@ -5,28 +5,19 @@ import * as controller from './assign-user.controller.js';
 import * as validators from './assign-user.validator.js';
 import { permissionNames } from '#environment/permissions.js';
 
-const assignUserRouter = createRouter({ mergeParams: true });
+const router = createRouter({ mergeParams: true });
 
-assignUserRouter
-	.route('/case-officer')
+router
+	.route('/search-case-officer')
 	.get(asyncHandler(controller.getAssignCaseOfficer))
 	.post(
 		assertUserHasPermission(permissionNames.updateCase),
-		validators.validateSearchTerm,
+		validators.validateSearchTerm(),
 		asyncHandler(controller.postAssignCaseOfficer)
 	);
 
-assignUserRouter
-	.route('/inspector')
-	.get(asyncHandler(controller.getAssignInspector))
-	.post(
-		assertUserHasPermission(permissionNames.updateCase),
-		validators.validateSearchTerm,
-		asyncHandler(controller.postAssignInspector)
-	);
-
-assignUserRouter
-	.route('/case-officer/:assigneeId/confirm')
+router
+	.route('/check-details')
 	.get(asyncHandler(controller.getAssignCaseOfficerCheckAndConfirm))
 	.post(
 		assertUserHasPermission(permissionNames.updateCase),
@@ -34,7 +25,7 @@ assignUserRouter
 		asyncHandler(controller.postAssignCaseOfficerCheckAndConfirm)
 	);
 
-assignUserRouter
+router
 	.route('/inspector/:assigneeId/confirm')
 	.get(asyncHandler(controller.getAssignInspectorCheckAndConfirm))
 	.post(
@@ -43,35 +34,4 @@ assignUserRouter
 		asyncHandler(controller.postAssignInspectorCheckAndConfirm)
 	);
 
-const unassignUserRouter = createRouter({ mergeParams: true });
-
-unassignUserRouter
-	.route('/inspector/:assigneeId/confirm')
-	.get(asyncHandler(controller.getUnassignInspectorCheckAndConfirm))
-	.post(
-		assertUserHasPermission(permissionNames.updateCase),
-		validators.validatePostConfirmation(true, true),
-		asyncHandler(controller.postUnassignInspectorCheckAndConfirm)
-	);
-
-const assignNewUserRouter = createRouter({ mergeParams: true });
-
-assignNewUserRouter
-	.route('/case-officer')
-	.get(asyncHandler(controller.getAssignNewCaseOfficer))
-	.post(
-		assertUserHasPermission(permissionNames.updateCase),
-		validators.validateNewUserPostConfirmation(),
-		asyncHandler(controller.postAssignNewCaseOfficer)
-	);
-
-assignNewUserRouter
-	.route('/inspector')
-	.get(asyncHandler(controller.getAssignNewInspector))
-	.post(
-		assertUserHasPermission(permissionNames.updateCase),
-		validators.validateNewUserPostConfirmation(true),
-		asyncHandler(controller.postAssignNewInspector)
-	);
-
-export { assignUserRouter, unassignUserRouter, assignNewUserRouter };
+export default router;
