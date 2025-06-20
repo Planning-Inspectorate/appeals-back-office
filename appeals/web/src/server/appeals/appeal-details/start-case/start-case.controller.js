@@ -194,6 +194,13 @@ export const postSelectProcedure = async (request, response) => {
 			return response.status(500).render('app/500.njk');
 		}
 
+		if (
+			session.startCaseAppealProcedure?.[appealId]?.appealProcedure ===
+			APPEAL_CASE_PROCEDURE.INQUIRY
+		) {
+			return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/setup/date`);
+		}
+
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure/check-and-confirm`
 		);

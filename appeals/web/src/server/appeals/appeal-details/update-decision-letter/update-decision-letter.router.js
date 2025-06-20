@@ -5,6 +5,10 @@ import { validateAppeal } from '../appeal-details.middleware.js';
 import { permissionNames } from '#environment/permissions.js';
 import * as updateDecisionLetterController from './update-decision-letter.controller.js';
 import { updateCorrectionNoticeValidator } from './update-decision-letter.validator.js';
+import {
+	postDecisionLetterUpload,
+	renderDecisionLetterUpload
+} from '../issue-decision/issue-decision.controller.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -23,6 +27,17 @@ router
 		assertUserHasPermission(permissionNames.updateCase),
 		updateCorrectionNoticeValidator,
 		asyncHandler(updateDecisionLetterController.postCorrectionNotice)
+	);
+
+router
+	.route('/upload-decision-letter')
+	.get(
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(renderDecisionLetterUpload)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(postDecisionLetterUpload)
 	);
 
 export default router;

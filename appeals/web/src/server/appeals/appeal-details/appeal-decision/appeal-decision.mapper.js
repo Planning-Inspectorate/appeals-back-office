@@ -20,6 +20,7 @@ export const appealDecisionPage = (appealId, appealReference, decision) => {
 		? dateISOStringToDisplayDate(decision.letterDate)
 		: dateISOStringToDisplayDate(getTodaysISOString());
 
+	const baseUrl = `/appeals-service/appeal-details/${appealId}`;
 	/** @type {PageComponent} */
 	const summaryListComponent = {
 		type: 'summary-list',
@@ -52,7 +53,7 @@ export const appealDecisionPage = (appealId, appealReference, decision) => {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealId}/update-decision-letter/upload-decision-letter`,
+								href: `${baseUrl}/update-decision-letter/upload-decision-letter?backUrl=${baseUrl}/appeal-decision`,
 								visuallyHiddenText: 'decision letter'
 							}
 						]

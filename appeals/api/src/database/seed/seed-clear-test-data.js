@@ -55,6 +55,22 @@ const deleteAppealData = async (
 	documentIDs,
 	representationIDs
 ) => {
+	const deleteHearing = databaseConnector.hearing.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteHearingEstimate = databaseConnector.hearingEstimate.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
 	const deleteAppeals = databaseConnector.appeal.deleteMany({
 		where: {
 			id: {
@@ -394,6 +410,8 @@ const deleteAppealData = async (
 		deleteSiteVisits,
 		deleteReps,
 		deleteRepsAttachments,
+		deleteHearingEstimate,
+		deleteHearing,
 		deleteAppeals
 	]);
 };
