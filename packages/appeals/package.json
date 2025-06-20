@@ -8,6 +8,11 @@
     "node": ">=22.0.0 <= 22.14.0"
   },
   "scripts": {
+    "lint:js": "npx eslint .",
+    "lint:js:fix": "npx eslint . --fix",
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci",
+    "test:cov": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci --coverage",
+    "tscheck": "npx tsc -p jsconfig.json --maxNodeModuleJsDepth 0"
   },
   "dependencies": {
   },

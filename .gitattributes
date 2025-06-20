@@ -146,7 +146,7 @@ Procfile    text
 *.tiff binary
 *.wbmp binary
 *.webp binary
-*.doc  text
+*.doc  binary
 
 ## AUDIO
 *.kar  binary

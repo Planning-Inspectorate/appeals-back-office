@@ -16,7 +16,7 @@ import {
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
-import formatDate from '#utils/date-formatter.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { notifySend } from '#notify/notify-send.js';
 import { EventType } from '@pins/event-client';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';

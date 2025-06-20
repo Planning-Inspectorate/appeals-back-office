@@ -4,7 +4,7 @@ import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { notifySend } from '#notify/notify-send.js';
 import { ERROR_NO_RECIPIENT_EMAIL } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { dateISOStringToDisplayDate, formatTime12h } from '#utils/date-formatter.js';
+import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/date-formatter.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';

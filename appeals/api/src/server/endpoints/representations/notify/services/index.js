@@ -8,6 +8,7 @@
 
 import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
 import { notifySend } from '#notify/notify-send.js';
+import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js';
 
 /**
  * @typedef {object} ServiceArgs
@@ -31,10 +32,12 @@ export const ipCommentRejection = async ({
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
 	const { ipCommentsDueDate = null } = appeal.appealTimetable || {};
-	const extendedDeadline = await formatExtendedDeadline(allowResubmit, ipCommentsDueDate, 7);
+	const { ipCommentDueBeforeResubmissionDeadline, resubmissionDueDate } =
+		await getDetailsForCommentResubmission(allowResubmit, ipCommentsDueDate);
 	const recipientEmail = representation.represented?.email;
+
 	if (recipientEmail) {
-		const templateName = extendedDeadline
+		const templateName = resubmissionDueDate
 			? 'ip-comment-rejected-deadline-extended'
 			: 'ip-comment-rejected';
 
@@ -43,7 +46,8 @@ export const ipCommentRejection = async ({
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
 			reasons,
-			deadline_date: extendedDeadline
+			deadline_date: resubmissionDueDate,
+			ip_comment_due_before_resubmission_deadline: ipCommentDueBeforeResubmissionDeadline
 		};
 
 		await notifySend({

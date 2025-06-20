@@ -1,4 +1,4 @@
-import isFPA from '#utils/is-fpa.js';
+import isFPA from '@pins/appeals/utils/is-fpa.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.Timetable} Timetable */

@@ -16,7 +16,7 @@ import transitionState from '../../state/transition-state.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import formatDate from '#utils/date-formatter.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
 import * as documentRepository from '#repositories/document.repository.js';

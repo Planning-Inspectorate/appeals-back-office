@@ -1,3 +1,4 @@
+// @ts-nocheck
 import formatDate, { formatTime, formatTime12h } from '../date-formatter.js';
 import { zonedTimeToUtc } from 'date-fns-tz';
 

@@ -1,4 +1,4 @@
-import { addDays } from '#utils/business-days.js';
+import { addDays } from '@pins/appeals/utils/business-days.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

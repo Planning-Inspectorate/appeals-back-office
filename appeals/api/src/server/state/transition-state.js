@@ -12,7 +12,7 @@ import {
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
-import isFPA from '#utils/is-fpa.js';
+import isFPA from '@pins/appeals/utils/is-fpa.js';
 import { currentStatus } from '#utils/current-status.js';
 
 /** @typedef {import('#db-client').AppealType} AppealType */

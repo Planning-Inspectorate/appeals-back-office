@@ -14,11 +14,14 @@ import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { add } from 'date-fns';
-import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
+import {
+	recalculateDateIfNotBusinessDay,
+	setTimeInTimeZone
+} from '@pins/appeals/utils/business-days.js';
 import { DEADLINE_HOUR } from '@pins/appeals/constants/dates.js';
 import { DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
-import { dateISOStringToDisplayDate } from '#utils/date-formatter.js';
+import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 

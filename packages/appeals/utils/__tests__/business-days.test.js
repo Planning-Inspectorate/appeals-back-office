@@ -1,4 +1,4 @@
-import { calculateTimetable } from '#utils/business-days.js';
+import { calculateTimetable } from '../business-days.js';
 
 describe('business-days', () => {
 	describe('calculateTimetable', () => {
@@ -55,6 +55,7 @@ describe('business-days', () => {
 		for (const t of tests) {
 			it('' + t.name, async () => {
 				const timetable = await calculateTimetable(t.appealType, t.startedAt);
+				// @ts-ignore
 				expect(timetable).toEqual(t.timetable);
 			});
 		}

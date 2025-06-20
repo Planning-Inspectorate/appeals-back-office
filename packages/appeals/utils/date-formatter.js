@@ -1,6 +1,6 @@
 import { formatInTimeZone } from 'date-fns-tz';
 import enGB from 'date-fns/locale/en-GB/index.js';
-import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
+import { DEFAULT_TIMEZONE } from '../constants/dates.js';
 
 /**
  * Format the given date as a string in Europe/London

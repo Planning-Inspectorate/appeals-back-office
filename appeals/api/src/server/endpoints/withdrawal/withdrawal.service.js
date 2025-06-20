@@ -2,7 +2,7 @@ import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import formatDate from '#utils/date-formatter.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { notifySend } from '#notify/notify-send.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */

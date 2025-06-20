@@ -1,6 +1,6 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { addDays } from '#utils/business-days.js';
-import formatDate from '#utils/date-formatter.js';
+import { addDays } from '@pins/appeals/utils/business-days.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('#endpoints/representations/representations.service.js').UpdatedDBRepresentation} Representation */

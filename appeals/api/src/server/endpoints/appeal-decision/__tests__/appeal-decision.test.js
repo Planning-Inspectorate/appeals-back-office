@@ -4,7 +4,7 @@ import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
-import formatDate from '#utils/date-formatter.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { add, sub } from 'date-fns';
 import {
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
@@ -13,7 +13,10 @@ import {
 	ERROR_INVALID_APPEAL_STATE
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
+import {
+	recalculateDateIfNotBusinessDay,
+	setTimeInTimeZone
+} from '@pins/appeals/utils/business-days.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 

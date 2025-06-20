@@ -1,7 +1,7 @@
 import { countBy } from 'lodash-es';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import formatAddress from '#utils/format-address.js';
-import isFPA from '#utils/is-fpa.js';
+import isFPA from '@pins/appeals/utils/is-fpa.js';
 import {
 	formatAppellantCaseDocumentationStatus,
 	formatLpaQuestionnaireDocumentationStatus,
