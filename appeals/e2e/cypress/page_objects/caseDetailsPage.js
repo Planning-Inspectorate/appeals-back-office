@@ -39,6 +39,8 @@ export class CaseDetailsPage extends Page {
 		manageNotifyingParties: 'manage-notifying-parties',
 		manageAgreementToChangeDescriptionEvidence: 'manage-agreement-to-change-description-evidence',
 		addCostsDecision: 'add-costs-decision',
+		issueAppellantCostsDecision: 'issue-appellant-costs-decision',
+		issueLpaCostsDecision: 'issue-lpa-costs-decision',
 		changeSiteOwnership: 'change-site-ownership',
 		changeLpaqDueDate: 'change-lpa-questionnaire-due-date',
 		changeStartDate: 'change-start-case-date',
@@ -79,6 +81,9 @@ export class CaseDetailsPage extends Page {
 		arrangeScheduleVisit: () => cy.getByData(this._cyDataSelectors.arrangeScheduleVisit),
 		readyToStart: () => cy.getByData(this._cyDataSelectors.readyToStart),
 		issueDecision: () => cy.getByData(this._cyDataSelectors.issueDetermination),
+		issueAppellantCostsDecision: () =>
+			cy.getByData(this._cyDataSelectors.issueAppellantCostsDecision),
+		issueLpaCostsDecision: () => cy.getByData(this._cyDataSelectors.issueLpaCostsDecision),
 		addLinkedAppeal: () => cy.getByData(this._cyDataSelectors.addLinkedAppeal),
 		addRelatedAppeals: () => cy.getByData(this._cyDataSelectors.addRelatedAppeals),
 		addCrossTeamCorrespondence: () =>
@@ -445,6 +450,14 @@ export class CaseDetailsPage extends Page {
 
 	clickHearingBannerLink() {
 		this.elements.hearingBannerLink().click();
+	}
+
+	clickIssueAppellantCostsDecision() {
+		this.elements.issueAppellantCostsDecision().click({ force: true });
+	}
+
+	clickIssueLpaCostsDecision() {
+		this.elements.issueLpaCostsDecision().click({ force: true });
 	}
 
 	/***************************************************************
