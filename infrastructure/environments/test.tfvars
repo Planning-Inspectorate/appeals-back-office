@@ -32,14 +32,15 @@ apps_config = {
   }
 
   featureFlags = {
-    featureFlagS78Written      = true
-    featureFlagS78Hearing      = true
-    featureFlagS78Inquiry      = true
-    featureFlagLinkedAppeals   = true
-    featureFlagS20             = true
-    featureFlagCAS             = true
-    featureFlagIssueDecision   = true
-    featureFlagReIssueDecision = true
+    featureFlagS78Written             = true
+    featureFlagS78Hearing             = true
+    featureFlagS78Inquiry             = true
+    featureFlagLinkedAppeals          = true
+    featureFlagS20                    = true
+    featureFlagCAS                    = true
+    featureFlagIssueDecision          = true
+    featureFlagReIssueDecision        = true
+    featureFlagSimplifyTeamAssignment = true
   }
 
   use_system_test_bc_for_change_lpa = true

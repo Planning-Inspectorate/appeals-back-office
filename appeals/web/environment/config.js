@@ -60,6 +60,7 @@ export function loadConfig() {
 		FEATURE_FLAG_CAS,
 		FEATURE_FLAG_ISSUE_DECISION,
 		FEATURE_FLAG_RE_ISSUE_DECISION,
+		FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
 		HTTPS_ENABLED,
@@ -135,7 +136,8 @@ export function loadConfig() {
 			featureFlagS20: FEATURE_FLAG_S20 === 'true',
 			featureFlagCAS: FEATURE_FLAG_CAS === 'true',
 			featureFlagIssueDecision: FEATURE_FLAG_ISSUE_DECISION === 'true',
-			featureFlagReIssueDecision: FEATURE_FLAG_RE_ISSUE_DECISION === 'true'
+			featureFlagReIssueDecision: FEATURE_FLAG_RE_ISSUE_DECISION === 'true',
+			featureFlagSimplifyTeamAssignment: FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA
 	};
