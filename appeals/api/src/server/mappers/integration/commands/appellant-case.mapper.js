@@ -2,7 +2,7 @@
 /** @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase */
 
 import { APPEAL_CASE_TYPE } from 'pins-data-model';
-import { createSharedS20S78Fields } from '#mappers/integration/shared/s20s78/questionnaire-fields.js';
+import { createSharedS20S78Fields } from '#mappers/integration/shared/s20s78/appellant-case-fields.js';
 
 /**
  *

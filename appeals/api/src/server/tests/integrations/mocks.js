@@ -61,6 +61,25 @@ export const validAppellantCase = {
 	]
 };
 
+export const validAppellantCaseS78 = {
+	...validAppellantCase,
+	casedata: {
+		...validAppellantCase.casedata,
+		caseType: 'W',
+		appellantProcedurePreference: 'inquiry',
+		appellantProcedurePreferenceDetails: 'Reason for preference',
+		appellantProcedurePreferenceDuration: 3,
+		appellantProcedurePreferenceWitnessCount: 2,
+		agriculturalHolding: false,
+		tenantAgriculturalHolding: null,
+		otherTenantsAgriculturalHolding: null,
+		informedTenantsAgriculturalHolding: null,
+		planningObligation: false,
+		statusPlanningObligation: null,
+		developmentType: 'minor-dwellings'
+	}
+};
+
 export const validLpaQuestionnaire = {
 	casedata: {
 		caseReference: '6000000',
@@ -250,11 +269,7 @@ export const appealIngestionInput = {
 					key: 'Some'
 				}
 			},
-			isGreenBelt: false,
-			appellantProcedurePreference: undefined,
-			appellantProcedurePreferenceDetails: undefined,
-			appellantProcedurePreferenceDuration: undefined,
-			appellantProcedurePreferenceWitnessCount: undefined
+			isGreenBelt: false
 		}
 	},
 	neighbouringSites: {
@@ -264,6 +279,37 @@ export const appealIngestionInput = {
 		create: FOLDERS.map((/** @type {{ path: string; }} */ f) => {
 			return { path: f };
 		})
+	}
+};
+
+export const appealIngestionInputS78 = {
+	...appealIngestionInput,
+	appealType: {
+		connect: {
+			key: 'W'
+		}
+	},
+	appellantCase: {
+		create: {
+			...appealIngestionInput.appellantCase.create,
+			appellantProcedurePreference: 'inquiry',
+			appellantProcedurePreferenceDetails: 'Reason for preference',
+			appellantProcedurePreferenceDuration: 3,
+			appellantProcedurePreferenceWitnessCount: 2,
+			agriculturalHolding: false,
+			caseworkReason: undefined,
+			developmentType: 'minor-dwellings',
+			informedTenantsAgriculturalHolding: null,
+			planningObligation: false,
+			statusPlanningObligation: null,
+			siteViewableFromRoad: undefined,
+			siteGridReferenceEasting: undefined,
+			siteGridReferenceNorthing: undefined,
+			numberOfResidencesNetChange: undefined,
+			otherTenantsAgriculturalHolding: null,
+			tenantAgriculturalHolding: null,
+			typeOfPlanningApplication: undefined
+		}
 	}
 };
 
