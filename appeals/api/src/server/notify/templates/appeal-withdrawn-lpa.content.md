@@ -4,11 +4,7 @@ We have withdrawn the appeal after the appellant's request.
 
 # What happens next
 
-The appeal is closed.
-
-{% if event_set %}
-We have cancelled the {{event_type}}.
-{% endif %}
+We have closed the appeal{% if event_set %} and cancelled the {{event_type}}{% endif %}.
 
 # Feedback
 
