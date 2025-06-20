@@ -37,6 +37,7 @@ apps_config = {
     featureFlagS78Inquiry      = true
     featureFlagLinkedAppeals   = true
     featureFlagS20             = true
+    featureFlagCAS             = true
     featureFlagIssueDecision   = true
     featureFlagReIssueDecision = true
   }
