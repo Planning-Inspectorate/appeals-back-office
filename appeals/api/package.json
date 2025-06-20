@@ -68,7 +68,7 @@
 		"pino": "^8.1.0",
 		"pino-http": "^8.1.0",
 		"pino-pretty": "^8.1.0",
-		"pins-data-model": "github:Planning-Inspectorate/data-model#1.10.2",
+		"pins-data-model": "github:Planning-Inspectorate/data-model#1.10.3",
 		"rhea": "3.0.1",
 		"swagger-ui-express": "^5.0.1",
 		"xstate": "4.32.1"
