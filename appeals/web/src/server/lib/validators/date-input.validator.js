@@ -42,9 +42,6 @@ export const createDateInputFieldsValidator = (
 			if (!month) missingParts.push('a month');
 			if (!year) missingParts.push('a year');
 
-			if (missingParts.length === 1) {
-				return true;
-			}
 			const messageSuffix = missingParts.reduce((acc, part, index) => {
 				if (index === missingParts.length - 1) {
 					return `${acc}${part}`;
@@ -54,8 +51,10 @@ export const createDateInputFieldsValidator = (
 				}
 				return `${acc}${part}, `;
 			}, '');
-			stopValidation = true;
-			throw new Error(`${messageFieldNamePrefix} must include ${messageSuffix}`);
+			if (missingParts.length > 1) {
+				stopValidation = true;
+				throw new Error(`${messageFieldNamePrefix} must include ${messageSuffix}`);
+			}
 		}),
 		body(`${bodyScope}${fieldNamePrefix}${_day}`).custom((value) => {
 			if (!value && !stopValidation) {
