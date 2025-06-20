@@ -38,6 +38,7 @@ export const getAssignInspector = async (request, response) => {
  */
 export const postAssignUser = async (request, response, isInspector = false) => {
 	const { errors, currentAppeal } = request;
+	const userTypeText = isInspector ? 'inspector' : 'case-officer';
 
 	if (errors) {
 		return renderAssignUser(request, response, isInspector);
@@ -45,7 +46,7 @@ export const postAssignUser = async (request, response, isInspector = false) => 
 
 	request.session.assigneeId = request.body.user;
 	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/assign-case-officer/check-details`
+		`/appeals-service/appeal-details/${currentAppeal.appealId}/assign-${userTypeText}/check-details`
 	);
 };
 
