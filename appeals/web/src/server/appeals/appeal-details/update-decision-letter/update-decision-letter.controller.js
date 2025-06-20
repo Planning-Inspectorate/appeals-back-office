@@ -138,6 +138,7 @@ export const postUpdateDocumentCheckDetails = async (request, response) => {
 		} = request;
 		const uploadInfo = inspectorDecision.files[0];
 		const currentDecision = currentAppeal.decision;
+		const notRedactedStatusID = 2;
 
 		if (errors) {
 			return renderUpdateDocumentCheckDetails(request, response);
@@ -158,7 +159,7 @@ export const postUpdateDocumentCheckDetails = async (request, response) => {
 				folderId: inspectorDecision.folderId,
 				GUID: uploadInfo.GUID,
 				receivedDate: uploadInfo.receivedDate,
-				redactionStatusId: 2,
+				redactionStatusId: notRedactedStatusID,
 				blobStoragePath: uploadInfo.blobStoreUrl
 			},
 			correctionNotice
