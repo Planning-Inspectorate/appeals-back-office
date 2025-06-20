@@ -8,6 +8,7 @@ import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
+// TODO add test here
 describe('/appeals/:id/reps', () => {
 	beforeEach(() => {});
 	afterEach(() => {
@@ -304,7 +305,8 @@ describe('/appeals/:id/reps', () => {
 
 			const expectedEmailPayload = {
 				lpa_reference: mockAppealS78.applicationReference,
-				deadline_date: '20 December 2024',
+				deadline_date: '16 December 2024',
+				ip_comment_due_before_resubmission_deadline: true,
 				appeal_reference_number: mockAppealS78.reference,
 				reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
 				site_address: expectedSiteAddress

@@ -51,3 +51,21 @@ export interface Pagination {
 	previous: PaginationItem;
 	next: PaginationItem;
 }
+
+export type BankHolidayFeedDivisions =
+	| 'england-and-wales'
+	| 'northern-ireland'
+	| 'scotland'
+	| 'united-kingdom';
+
+interface BankHolidayFeedEvent {
+	title: string;
+	date: string;
+	notes: string;
+}
+
+export interface BankHolidayFeedEvents extends Array<BankHolidayFeedEvent> {}
+
+export interface TimetableDeadlineDate {
+	[key: string]: Date;
+}

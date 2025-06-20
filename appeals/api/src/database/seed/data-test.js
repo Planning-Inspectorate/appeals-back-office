@@ -11,7 +11,7 @@ import {
 	createLPAQuestionnaireForAppealType
 } from './data-samples.js';
 import { localPlanningDepartmentList } from './LPAs/dev.js';
-import { calculateTimetable } from '#utils/business-days.js';
+import { calculateTimetable } from '@pins/appeals/utils/business-days.js';
 
 import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
 import { createAppealReference } from '#utils/appeal-reference.js';
@@ -26,7 +26,7 @@ import {
 import { sub } from 'date-fns';
 
 import { randomBool } from './data-utilities.js';
-import isFPA from '#utils/is-fpa.js';
+import isFPA from '@pins/appeals/utils/is-fpa.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite */
 

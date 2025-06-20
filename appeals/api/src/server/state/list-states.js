@@ -5,7 +5,7 @@ import {
 	APPEAL_TYPE_SHORTHAND_HAS,
 	APPEAL_TYPE_SHORTHAND_FPA
 } from '@pins/appeals/constants/support.js';
-import isFPA from '#utils/is-fpa.js';
+import isFPA from '@pins/appeals/utils/is-fpa.js';
 
 /** @typedef {import('#db-client').AppealType} AppealType */
 /** @typedef {import('#db-client').ProcedureType} ProcedureType */

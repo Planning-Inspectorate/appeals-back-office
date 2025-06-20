@@ -24,9 +24,9 @@ import {
 	APPEAL_TYPE_SHORTHAND_INQUIRY
 } from '@pins/appeals/constants/support.js';
 
-/** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedEvents} BankHolidayFeedEvents */
-/** @typedef {import('@pins/appeals.api').Appeals.BankHolidayFeedDivisions} BankHolidayFeedDivisions */
-/** @typedef {import('@pins/appeals.api').Appeals.TimetableDeadlineDate} TimetableDeadlineDate */
+/** @typedef {import('../types/appeal.js').BankHolidayFeedEvents } BankHolidayFeedEvents */
+/** @typedef {import('../types/appeal.js').BankHolidayFeedDivisions } BankHolidayFeedDivisions */
+/** @typedef {import('../types/appeal.js').TimetableDeadlineDate} TimetableDeadlineDate */
 
 /**
  * Count the number of bank holidays between two dates

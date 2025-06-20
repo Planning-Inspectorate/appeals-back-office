@@ -12,7 +12,7 @@ import {
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { AUDIT_TRAIL_HEARING_SET_UP } from '@pins/appeals/constants/support.js';
-import { dateISOStringToDisplayDate } from '#utils/date-formatter.js';
+import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 import {
 	AUDIT_TRAIL_HEARING_ADDRESS_ADDED,
 	AUDIT_TRAIL_HEARING_DATE_UPDATED,

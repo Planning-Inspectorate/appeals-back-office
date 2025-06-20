@@ -23,7 +23,7 @@ import { listedBuildingAppeal as listedBuildingAppealData } from '#tests/appeals
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { format, parseISO } from 'date-fns';
-import { formatTime, dateISOStringToDisplayDate } from '#utils/date-formatter.js';
+import { formatTime, dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
 import {

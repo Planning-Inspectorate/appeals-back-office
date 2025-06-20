@@ -3,7 +3,7 @@ import { request } from '#tests/../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { fullPlanningAppeal, householdAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
-import formatDate from '#utils/date-formatter.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import {
 	ERROR_NOT_FOUND,
 	ERROR_INVALID_APPEAL_STATE,

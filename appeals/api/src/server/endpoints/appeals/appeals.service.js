@@ -8,7 +8,7 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import {
 	fetchBankHolidaysForDivision,
 	getNumberOfBankHolidaysBetweenDates
-} from '#utils/business-days.js';
+} from '@pins/appeals/utils/business-days.js';
 import { addBusinessDays } from 'date-fns';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */

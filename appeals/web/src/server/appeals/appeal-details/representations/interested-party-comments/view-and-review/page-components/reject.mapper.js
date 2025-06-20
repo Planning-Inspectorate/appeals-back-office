@@ -1,10 +1,10 @@
-import { dateISOStringToDisplayDate, addBusinessDays } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { simpleHtmlComponent } from '#lib/mappers/components/page-components/html.js';
 import { rejectionReasonHtml } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { getAttachmentList } from '../../../common/document-attachment-list.js';
+import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -39,8 +39,9 @@ export function rejectInterestedPartyCommentPage(appealDetails, comment) {
  * */
 export async function rejectAllowResubmitPage(apiClient, appealDetails, comment, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-	const deadline = await addBusinessDays(apiClient, new Date(), 7);
-	const deadlineString = dateISOStringToDisplayDate(deadline.toISOString());
+	const { ipCommentsDueDate = null } = appealDetails.appealTimetable || {};
+	const dueDate = ipCommentsDueDate ? new Date(ipCommentsDueDate) : null;
+	const { resubmissionDueDate } = await getDetailsForCommentResubmission(true, dueDate);
 
 	const sessionValue = (() => {
 		if (session?.rejectIpComment?.commentId !== comment.id) {
@@ -63,7 +64,7 @@ export async function rejectAllowResubmitPage(apiClient, appealDetails, comment,
 				value: sessionValue,
 				legendText: 'Do you want to allow the interested party to resubmit a comment?',
 				legendIsPageHeading: true,
-				hint: `The interested party can resubmit their comment by ${deadlineString}.`
+				hint: `The interested party can resubmit their comment by ${resubmissionDueDate}.`
 			})
 		]
 	};

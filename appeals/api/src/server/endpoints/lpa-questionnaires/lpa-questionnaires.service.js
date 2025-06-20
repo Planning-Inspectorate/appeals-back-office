@@ -1,6 +1,6 @@
 import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
-import { recalculateDateIfNotBusinessDay } from '#utils/business-days.js';
+import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 import { isOutcomeComplete, isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
 import transitionState from '#state/transition-state.js';
 import {
@@ -10,7 +10,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import formatDate from '#utils/date-formatter.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
