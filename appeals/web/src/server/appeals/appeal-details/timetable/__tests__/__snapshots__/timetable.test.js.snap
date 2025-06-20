@@ -3347,6 +3347,8 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#planning-obligation-due-date">Invalid value</a>
+                            </li>
                             <li><a href="#planning-obligation-due-date-day">Planning obligation due date must include a day</a>
                             </li>
                         </ul>
@@ -3547,6 +3549,8 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#planning-obligation-due-date">Invalid value</a>
+                            </li>
                             <li><a href="#planning-obligation-due-date-month">Planning obligation due date must include a month</a>
                             </li>
                         </ul>
@@ -3747,6 +3751,8 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#planning-obligation-due-date">Invalid value</a>
+                            </li>
                             <li><a href="#planning-obligation-due-date-year">Planning obligation due date must include a year</a>
                             </li>
                         </ul>
@@ -4341,6 +4347,8 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#statement-of-common-ground-due-date">Invalid value</a>
+                            </li>
                             <li><a href="#statement-of-common-ground-due-date-day">Statement of common ground due date must include a day</a>
                             </li>
                         </ul>
@@ -4541,6 +4549,8 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#statement-of-common-ground-due-date">Invalid value</a>
+                            </li>
                             <li><a href="#statement-of-common-ground-due-date-month">Statement of common ground due date must include a month</a>
                             </li>
                         </ul>
@@ -4741,6 +4751,8 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#statement-of-common-ground-due-date">Invalid value</a>
+                            </li>
                             <li><a href="#statement-of-common-ground-due-date-year">Statement of common ground due date must include a year</a>
                             </li>
                         </ul>

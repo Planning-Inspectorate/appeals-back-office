@@ -25,7 +25,8 @@ const renderChangeInfrastructureLevyExpectedDate = async (request, response) => 
 			dayMonthYearHourMinuteToISOString(session.infrastructureLevyExpectedDate) ||
 				lpaQuestionnaireData.infrastructureLevyExpectedDate ||
 				null,
-			origin
+			origin,
+			errors
 		);
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {
