@@ -28,7 +28,7 @@ export const mapCaseOfficer = ({
 		value: {
 			html: caseOfficerRowValue
 		},
-		link: `${currentRoute}/assign-user/case-officer`,
+		link: `${currentRoute}/assign-case-officer/search-case-officer`,
 		editable: userHasUpdateCasePermission,
 		classes: 'appeal-case-officer',
 		actionText: caseOfficerUser ? 'Change' : 'Assign'

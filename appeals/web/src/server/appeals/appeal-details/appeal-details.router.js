@@ -8,10 +8,10 @@ import appealTimetablesRouter from './appeal-timetables/appeal-timetables.router
 import appellantCaseRouter from './appellant-case/appellant-case.router.js';
 import siteVisitRouter from './site-visit/site-visit.router.js';
 import {
-	assignUserRouter,
+	assignUserRouterOld,
 	unassignUserRouter,
 	assignNewUserRouter
-} from './assign-user/assign-user.router.js';
+} from './assign-user-old/assign-user.router.js';
 import { auditRouter } from './audit/audit.router.js';
 import * as controller from './appeal-details.controller.js';
 import issueDecisionRouter from './issue-decision/issue-decision.router.js';
@@ -43,6 +43,7 @@ import siteAddressRouter from './appellant-case/address/address.router.js';
 import timetableRouter from './timetable/timetable.router.js';
 import updateDecisionLetterRouter from './update-decision-letter/update-decision-letter.router.js';
 import inquiryRouter from './inquiry/inquiry.router.js';
+import assignUserRouter from './assign-user/assign-user.router.js';
 
 import appealDecisionRouter from './appeal-decision/appeal-decison.router.js';
 const router = createRouter();
@@ -84,7 +85,7 @@ router.use(
 	'/:appealId/assign-user',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
-	assignUserRouter
+	assignUserRouterOld
 );
 router.use(
 	'/:appealId/unassign-user',
@@ -220,6 +221,20 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	updateDecisionLetterRouter
+);
+
+router.use(
+	'/:appealId/assign-case-officer',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	assignUserRouter
+);
+
+router.use(
+	'/:appealId/assign-inspector',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	assignUserRouter
 );
 
 router.use('/:appealId', validateAppeal, representationsRouter);

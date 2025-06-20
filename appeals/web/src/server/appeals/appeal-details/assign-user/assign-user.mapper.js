@@ -1,52 +1,55 @@
-import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import usersService from '../../appeal-users/users-service.js';
 import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 
-/** @typedef {import('../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
+/** @typedef {import('../../../app/auth/auth-session.service.js').SessionWithAuth} SessionWithAuth */
 
 /**
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {boolean} isInspector
- * @param {boolean} searchPerformed
- * @param {string|undefined} searchTerm
- * @param {Object<string, any>[]} searchResults
- * @param {string|null|undefined} assignedUserId
  * @param {SessionWithAuth} session
  * @returns {Promise<PageContent>}
  */
-export async function assignUserPage(
-	appealDetails,
-	isInspector,
-	searchPerformed,
-	searchTerm,
-	searchResults,
-	assignedUserId,
-	session
-) {
-	const userTypeRoute = isInspector ? 'inspector' : 'case-officer';
+export async function assignUserPage(appealDetails, isInspector, session) {
 	const userTypeText = isInspector ? 'inspector' : 'case officer';
-	const userTypeArticle = isInspector
-		? `${assignedUserId ? 'a new' : 'an'}`
-		: `a${assignedUserId ? ' new' : ''}`;
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
+	const users = await usersService.getUsersByRole(
+		isInspector
+			? config.referenceData.appeals.inspectorGroupId
+			: config.referenceData.appeals.caseOfficerGroupId,
+		session
+	);
+
+	const userArray = [
+		{ value: { id: '', name: '', email: '' }, text: '' },
+		...users
+			.filter((user) => user.email && user.name)
+			.map((user) => ({
+				value: user,
+				text: `${user.name} (${user.email})`
+			}))
+	];
+
 	/** @type {PageComponent} */
-	const searchInputPageComponent = {
-		type: 'input',
+	const selectSearchPageComponent = {
+		type: 'select',
 		wrapperHtml: {
-			opening:
-				'<form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">',
+			opening: '<form method="post" novalidate class="govuk-!-margin-bottom-5">',
 			closing: ''
 		},
 		parameters: {
-			id: 'search-term',
-			name: 'searchTerm',
+			name: 'users',
+			id: 'users',
 			label: {
-				text: 'Search by name or email address',
-				classes: 'govuk-caption-m govuk-!-margin-bottom-3 colour--secondary'
+				classes: 'govuk-fieldset__legend--l',
+				text: 'Search for case officer by name or email address',
+				isPageHeading: true
 			},
-			value: searchTerm || ''
+			value: 'all',
+			items: userArray,
+			attributes: { 'data-cy': 'search-case-officer' },
+			classes: 'accessible-autocomplete'
 		}
 	};
 
@@ -58,131 +61,20 @@ export async function assignUserPage(
 			closing: '</form>'
 		},
 		parameters: {
-			text: 'Search'
+			text: 'Continue'
 		}
 	};
-
-	const searchResultsSummaryListSubtitle =
-		searchResults && searchResults.length > 0 ? 'Matches' : 'No matches';
-
-	/** @type {PageComponent} */
-	const searchResultsPageComponent = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: `<div class="govuk-grid-row"><div class="govuk-grid-column-full govuk-!-margin-bottom-5"><h2 class="govuk-heading-m">Results</h2><p class="govuk-body">${searchResultsSummaryListSubtitle} for <strong>${searchTerm}</strong></p>`,
-			closing: '</div></div>'
-		},
-		parameters: {
-			rows: searchResults.map((result) => ({
-				key: {
-					text: result.name
-				},
-				value: {
-					text: result.email
-				},
-				actions: {
-					items: [
-						{
-							text: 'Choose',
-							href: `/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/${userTypeRoute}/${result.id}/confirm`,
-							attributes: { 'data-cy': result.email.toLocaleLowerCase() },
-							visuallyHiddenText: result.name
-						}
-					]
-				}
-			}))
-		}
-	};
-
-	/** @type {PageComponent|undefined} */
-	const currentAssigneeComponent = await buildCurrentAssigneeComponent(
-		assignedUserId,
-		appealDetails.appealId,
-		isInspector,
-		session,
-		userTypeText
-	);
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Assign ${userTypeText} - ${shortAppealReference}`,
+		title: `Search for ${userTypeText} by name or email address`,
 		backLinkText: 'Back',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Find ${userTypeArticle} ${userTypeText}`,
-		pageComponents: [
-			searchInputPageComponent,
-			searchButtonPageComponent,
-			...(searchPerformed ? [searchResultsPageComponent] : []),
-			...(currentAssigneeComponent ? [currentAssigneeComponent] : [])
-		]
+		preHeading: `Appeal ${shortAppealReference}  - Assign ${userTypeText}`,
+		pageComponents: [selectSearchPageComponent, searchButtonPageComponent]
 	};
 
 	return pageContent;
-}
-
-/**
- * @param {string|null|undefined} assignedUserId
- * @param {number} appealId
- * @param {boolean} isInspector
- * @param {SessionWithAuth} session
- * @param {string} userTypeText
- * @returns {Promise<PageComponent|undefined>}
- */
-async function buildCurrentAssigneeComponent(
-	assignedUserId,
-	appealId,
-	isInspector,
-	session,
-	userTypeText
-) {
-	if (!assignedUserId) {
-		return;
-	}
-
-	const user = await usersService.getUserByRoleAndId(
-		isInspector
-			? config.referenceData.appeals.inspectorGroupId
-			: config.referenceData.appeals.caseOfficerGroupId,
-		session,
-		assignedUserId
-	);
-
-	if (!user) {
-		return;
-	}
-
-	/** @type {PageComponent} */
-	return {
-		wrapperHtml: {
-			opening: `<h2 class="govuk-heading-s">Current ${userTypeText}</h2>`,
-			closing: ''
-		},
-		type: 'summary-list',
-		parameters: {
-			rows: [
-				{
-					key: {
-						text: surnameFirstToFullName(user.name)
-					},
-					value: {
-						text: user.email
-					},
-					actions: {
-						...(isInspector && {
-							items: [
-								{
-									text: 'Remove',
-									href: `/appeals-service/appeal-details/${appealId}/unassign-user/inspector/${assignedUserId}/confirm`,
-									visuallyHiddenText: user.name
-								}
-							]
-						})
-					}
-				}
-			]
-		}
-	};
 }
 
 /**
@@ -214,25 +106,6 @@ export function assignOrUnassignUserCheckAndConfirmPage(
 		existingUser,
 		isInspector,
 		isUnassign,
-		errors
-	};
-}
-
-/**
- * @param {string} appealId
- * @param {string} appealReference
- * @param {boolean} isInspector
- * @param {import('@pins/express/types/express.js').ValidationErrors | undefined} errors
- * @returns {import('./assign-user.types.js').AssignNewUserPageContent}
- */
-export function assignNewUserPage(appealId, appealReference, isInspector, errors) {
-	return {
-		appeal: {
-			id: appealId,
-			reference: appealReference,
-			shortReference: appealShortReference(appealReference)
-		},
-		isInspector,
 		errors
 	};
 }
