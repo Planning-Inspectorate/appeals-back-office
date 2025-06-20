@@ -46,6 +46,7 @@ variable "apps_config" {
       featureFlagS78Inquiry      = bool
       featureFlagLinkedAppeals   = bool
       featureFlagS20             = bool
+      featureFlagCAS             = bool
       featureFlagIssueDecision   = bool
       featureFlagReIssueDecision = bool
     })

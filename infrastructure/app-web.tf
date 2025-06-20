@@ -85,6 +85,7 @@ module "app_web" {
     FEATURE_FLAG_S78_INQUIRY       = var.apps_config.featureFlags.featureFlagS78Inquiry
     FEATURE_FLAG_LINKED_APPEALS    = var.apps_config.featureFlags.featureFlagLinkedAppeals
     FEATURE_FLAG_S20               = var.apps_config.featureFlags.featureFlagS20
+    FEATURE_FLAG_CAS               = var.apps_config.featureFlags.featureFlagCAS
     FEATURE_FLAG_ISSUE_DECISION    = var.apps_config.featureFlags.featureFlagIssueDecision
     FEATURE_FLAG_RE_ISSUE_DECISION = var.apps_config.featureFlags.featureFlagReIssueDecision
 
