@@ -12,7 +12,7 @@ export class CaseDetailsPage extends Page {
 	 *********************************************************/
 
 	_cyDataSelectors = {
-		reviewLpaQuestionnaire: 'review-lpa-questionnaire',
+		reviewLpaQuestionnaire: 'review-lpa-questionnaire-banner',
 		changeCaseOfficer: 'change-case-officer',
 		assignCaseOfficer: 'assign-case-officer',
 		assignInspector: 'assign-inspector',
