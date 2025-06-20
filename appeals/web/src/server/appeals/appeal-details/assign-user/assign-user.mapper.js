@@ -22,11 +22,11 @@ export async function assignUserPage(appealDetails, isInspector, session) {
 	);
 
 	const userArray = [
-		{ value: { id: '', name: '', email: '' }, text: '' },
+		{ value: '', text: '' },
 		...users
 			.filter((user) => user.email && user.name)
 			.map((user) => ({
-				value: user,
+				value: user.id,
 				text: `${user.name} (${user.email})`
 			}))
 	];
@@ -39,7 +39,7 @@ export async function assignUserPage(appealDetails, isInspector, session) {
 			closing: ''
 		},
 		parameters: {
-			name: 'users',
+			name: 'user',
 			id: 'users',
 			label: {
 				classes: 'govuk-fieldset__legend--l',
@@ -48,7 +48,7 @@ export async function assignUserPage(appealDetails, isInspector, session) {
 			},
 			value: 'all',
 			items: userArray,
-			attributes: { 'data-cy': 'search-case-officer' },
+			attributes: { 'data-cy': 'search-users' },
 			classes: 'accessible-autocomplete'
 		}
 	};
@@ -75,37 +75,4 @@ export async function assignUserPage(appealDetails, isInspector, session) {
 	};
 
 	return pageContent;
-}
-
-/**
- * @param {string} appealId
- * @param {string} appealReference
- * @param {Object|undefined} user
- * @param {Object|null|undefined} existingUser
- * @param {boolean} isInspector
- * @param {boolean} isUnassign
- * @param {import('@pins/express/types/express.js').ValidationErrors | undefined} errors
- * @returns {import('./assign-user.types.js').AssignUserCheckAndConfirmPageContent}
- */
-export function assignOrUnassignUserCheckAndConfirmPage(
-	appealId,
-	appealReference,
-	user,
-	existingUser,
-	isInspector,
-	isUnassign,
-	errors
-) {
-	return {
-		appeal: {
-			id: appealId,
-			reference: appealReference,
-			shortReference: appealShortReference(appealReference)
-		},
-		user,
-		existingUser,
-		isInspector,
-		isUnassign,
-		errors
-	};
 }

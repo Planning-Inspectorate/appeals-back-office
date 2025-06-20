@@ -1,10 +1,9 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
 
-export const validateSearchTerm = (isInspector = false) =>
+export const validateUser = (isInspector = false) =>
 	createValidator(
-		body('searchTerm')
+		body('user')
 			.trim()
 			.notEmpty()
 			.withMessage(
@@ -12,19 +11,4 @@ export const validateSearchTerm = (isInspector = false) =>
 					? 'Enter a inspectors’s name or email address'
 					: 'Enter a case officer’s name or email address'
 			)
-			.bail()
-	);
-
-export const validatePostConfirmation = (isUnassign = false, isInspector = false) =>
-	createYesNoRadioValidator(
-		'confirm',
-		`Select yes if you would like to ${isUnassign ? 'unassign' : 'assign'} this ${
-			isInspector ? 'inspector' : 'case officer'
-		}`
-	);
-
-export const validateNewUserPostConfirmation = (isInspector = false) =>
-	createYesNoRadioValidator(
-		'confirm',
-		`Select yes if you would like to assign a new ${isInspector ? 'inspector' : 'case officer'}`
 	);

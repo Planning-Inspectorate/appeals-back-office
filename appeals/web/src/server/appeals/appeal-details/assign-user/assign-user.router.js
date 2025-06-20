@@ -12,26 +12,8 @@ router
 	.get(asyncHandler(controller.getAssignCaseOfficer))
 	.post(
 		assertUserHasPermission(permissionNames.updateCase),
-		validators.validateSearchTerm(),
+		validators.validateUser(),
 		asyncHandler(controller.postAssignCaseOfficer)
-	);
-
-router
-	.route('/check-details')
-	.get(asyncHandler(controller.getAssignCaseOfficerCheckAndConfirm))
-	.post(
-		assertUserHasPermission(permissionNames.updateCase),
-		validators.validatePostConfirmation(),
-		asyncHandler(controller.postAssignCaseOfficerCheckAndConfirm)
-	);
-
-router
-	.route('/inspector/:assigneeId/confirm')
-	.get(asyncHandler(controller.getAssignInspectorCheckAndConfirm))
-	.post(
-		assertUserHasPermission(permissionNames.updateCase),
-		validators.validatePostConfirmation(false, true),
-		asyncHandler(controller.postAssignInspectorCheckAndConfirm)
 	);
 
 export default router;
