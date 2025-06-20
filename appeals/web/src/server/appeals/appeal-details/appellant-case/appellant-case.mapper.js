@@ -30,6 +30,7 @@ import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { generateHASComponents } from './page-components/has.mapper.js';
 import { generateS78Components } from './page-components/s78.mapper.js';
+import { generateCASComponents } from './page-components/cas.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { generateS20Components } from './page-components/s20.mapper.js';
@@ -725,6 +726,12 @@ function generateCaseTypeSpecificComponents(
 				);
 			} else {
 				throw new Error('Feature flag inactive for S20');
+			}
+		case APPEAL_TYPE.COMMERCIAL:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
+				return generateCASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
+			} else {
+				throw new Error('Feature flag inactive for CAS');
 			}
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');

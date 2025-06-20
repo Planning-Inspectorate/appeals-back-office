@@ -351,7 +351,34 @@ export const appellantCaseList = {
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
 		applicationDate: sub(new Date(), { weeks: 6 }),
 		developmentType: randomEnumValue(APPEAL_DEVELOPMENT_TYPE),
-		typeOfPlanningApplication: 'listed-building' // todo: use APPEAL_TYPE_OF_PLANNING_APPLICATION.LISTED_BUILDING when data model updated
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LISTED_BUILDING
+	},
+	[APPEAL_CASE_TYPE.Z]: {
+		siteAreaSquareMetres: 30.9,
+		floorSpaceSquareMetres: 9.7,
+		ownsAllLand: true,
+		ownsSomeLand: false,
+		hasAdvertisedAppeal: false,
+		originalDevelopmentDescription: 'lorem ipsum',
+		changedDevelopmentDescription: false,
+		isGreenBelt: randomBool(),
+		planningObligation: true,
+		statusPlanningObligation: null,
+		agriculturalHolding: randomBool(),
+		tenantAgriculturalHolding: false,
+		otherTenantsAgriculturalHolding: false,
+		informedTenantsAgriculturalHolding: false,
+		appellantProcedurePreference: randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE),
+		appellantProcedurePreferenceDetails: randomArrayValue([
+			'Need for a detailed examination',
+			null
+		]),
+		appellantProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
+		appellantProcedurePreferenceWitnessCount: 1,
+		applicationDecisionDate: sub(new Date(), { months: 1 }),
+		applicationDate: sub(new Date(), { weeks: 6 }),
+		developmentType: randomEnumValue(APPEAL_DEVELOPMENT_TYPE),
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
 	}
 };
 
