@@ -1,11 +1,10 @@
 // accessible-autocomplete
 
-declare module 'accessible-autocomplete' {}
-
-declare interface Window {
-	accessibleAutocomplete: {
+declare module 'accessible-autocomplete' {
+	const accessibleAutocomplete: {
 		enhanceSelectElement(options: { selectElement: Element; defaultValue?: string }): void;
 	};
+	export default accessibleAutocomplete;
 }
 
 // govuk-frontend

@@ -1,5 +1,6 @@
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import config from '#environment/config.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapInspector = ({
@@ -22,6 +23,9 @@ export const mapInspector = ({
 			inspectorUser.email
 		}</li></ul>`;
 	})();
+	const inspectorRoute = config.featureFlags.featureFlagSimplifyTeamAssignment
+		? 'assign-inspector/search-inspector'
+		: 'assign-user/inspector';
 
 	return textSummaryListItem({
 		id: 'inspector',
@@ -29,7 +33,7 @@ export const mapInspector = ({
 		value: {
 			html: inspectorRowValue
 		},
-		link: `${currentRoute}/assign-user/inspector`,
+		link: `${currentRoute}/${inspectorRoute}`,
 		editable: userHasUpdateCasePermission,
 		classes: 'appeal-inspector',
 		actionText: appealDetails.inspector ? 'Change' : 'Assign'
