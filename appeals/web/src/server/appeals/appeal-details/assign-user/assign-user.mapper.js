@@ -43,7 +43,7 @@ export async function assignUserPage(appealDetails, isInspector, session) {
 			id: 'users',
 			label: {
 				classes: 'govuk-fieldset__legend--l',
-				text: 'Search for case officer by name or email address',
+				text: `Search for ${userTypeText} by name or email address`,
 				isPageHeading: true
 			},
 			value: 'all',

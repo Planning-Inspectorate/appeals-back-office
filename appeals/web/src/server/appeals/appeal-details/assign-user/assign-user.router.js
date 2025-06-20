@@ -16,4 +16,13 @@ router
 		asyncHandler(controller.postAssignCaseOfficer)
 	);
 
+router
+	.route('/search-inspector')
+	.get(asyncHandler(controller.getAssignInspector))
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		validators.validateUser(true),
+		asyncHandler(controller.postAssignInspector)
+	);
+
 export default router;
