@@ -9,9 +9,15 @@ import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
  * @param {Appeal} appealData
  * @param {string|null} existingValue
  * @param {string} backLinkUrl
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export const changeInfrastructureLevyExpectedDate = (appealData, existingValue, backLinkUrl) => {
+export const changeInfrastructureLevyExpectedDate = (
+	appealData,
+	existingValue,
+	backLinkUrl,
+	errors
+) => {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -25,7 +31,8 @@ export const changeInfrastructureLevyExpectedDate = (appealData, existingValue, 
 				namePrefix: 'levy-expected-date',
 				legendText: 'When do you expect to formally adopt the community infrastructure levy?',
 				legendIsPageHeading: true,
-				value: dateISOStringToDayMonthYearHourMinute(existingValue)
+				value: dateISOStringToDayMonthYearHourMinute(existingValue),
+				errors
 			})
 		]
 	};

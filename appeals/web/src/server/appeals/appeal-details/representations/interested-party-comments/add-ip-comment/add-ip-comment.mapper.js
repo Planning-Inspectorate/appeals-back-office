@@ -204,13 +204,15 @@ export const dateSubmitted = (appealDetails, errors, commentData, backLinkUrl) =
 		dateInput({
 			id: 'date',
 			name: 'date',
+			namePrefix: 'date',
 			value:
 				commentData.day && commentData.month && commentData.year
 					? { day: commentData.day, month: commentData.month, year: commentData.year }
 					: dateISOStringToDayMonthYearHourMinute(getTodaysISOString()),
 			legendText: 'When did the interested party submit the comment?',
 			legendIsPageHeading: true,
-			hint: 'For example, 27 3 2024'
+			hint: 'For example, 27 3 2024',
+			errors
 		})
 	]
 });

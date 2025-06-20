@@ -248,7 +248,17 @@ export async function postIPComment(request, response) {
 		const { apiClient, currentAppeal } = request;
 
 		const { folderId } = await getAttachmentsFolder(request.apiClient, currentAppeal.appealId);
-
+		if (request.session?.addIpComment) {
+			request.session.addIpComment = {
+				...request.session.addIpComment,
+				day: request.session.addIpComment['date-day'],
+				month: request.session.addIpComment['date-month'],
+				year: request.session.addIpComment['date-year']
+			};
+			delete request.session.addIpComment['date-day'];
+			delete request.session.addIpComment['date-month'];
+			delete request.session.addIpComment['date-year'];
+		}
 		const payload = mapSessionToRepresentationRequest(
 			request.session?.addIpComment,
 			request.session?.fileUploadInfo
@@ -328,9 +338,9 @@ export async function renderCheckYourAnswers(
 			},
 			addIpComment: {
 				[redactionStatusFieldName]: redactionStatus,
-				day,
-				month,
-				year,
+				'date-day': day,
+				'date-month': month,
+				'date-year': year,
 				firstName,
 				lastName,
 				emailAddress,
@@ -342,9 +352,9 @@ export async function renderCheckYourAnswers(
 				postCode
 			} = {
 				redactionStatus: APPEAL_REDACTED_STATUS.NOT_REDACTED,
-				day: '',
-				month: '',
-				year: '',
+				'date-day': '',
+				'date-month': '',
+				'date-year': '',
 				firstName: '',
 				lastName: '',
 				emailAddress: '',
