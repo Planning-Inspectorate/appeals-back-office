@@ -4,6 +4,7 @@ import { userHasPermission } from '../../utils/permissions.mapper.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as s78Submaps } from './s78.js';
 import { submaps as s20Submaps } from './s20.js';
+import { submaps as casSubmaps } from './cas.js';
 
 /**
  * @typedef SubMapperParams
@@ -21,7 +22,8 @@ import { submaps as s20Submaps } from './s20.js';
 const submaps = {
 	[APPEAL_TYPE.HOUSEHOLDER]: hasSubmaps,
 	[APPEAL_TYPE.S78]: s78Submaps,
-	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s20Submaps
+	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s20Submaps,
+	[APPEAL_TYPE.COMMERCIAL]: casSubmaps
 };
 
 /**

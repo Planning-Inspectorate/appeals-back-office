@@ -405,6 +405,11 @@ export const appealDataListedBuilding = {
 	appealType: 'Planning listed building and conservation area appeal'
 };
 
+export const appealDataCasPlanning = {
+	...appealData,
+	appealType: 'Commercial (CAS) appeal'
+};
+
 export const appellantCaseDataNotValidated = {
 	appealId: 1,
 	appealReference: 'TEST/919276',

@@ -644,6 +644,18 @@ const appealsLpaQuestionnaireDue = [
 		validAt: getPastDate({ weeks: 1 }),
 		siteAddressList: addressListForTrainers,
 		assignCaseOfficer: true
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.Z,
+		status: {
+			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			createdAt: getPastDate({ weeks: 1 })
+		},
+		lpaQuestionnaire: true,
+		startedAt: new Date(),
+		validAt: getPastDate({ weeks: 1 }),
+		siteAddressList: addressListForTrainers,
+		assignCaseOfficer: true
 	})
 ];
 
