@@ -8,9 +8,5 @@ The new start date is {{start_date}}.
 
 We will decide the appeal by {{procedure_type}}. You can tell us if you think a different procedure is more appropriate in the questionnaire.
 
-# Next steps
-
-[Submit your questionnaire]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}) by {{questionnaire_due_date}}.
-
 The Planning Inspectorate
 caseofficers@planninginspectorate.gov.uk
