@@ -135,7 +135,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Will an inspector need to access your land or property?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answered</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/inspector-access/change/appellant"
                                     data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
@@ -412,7 +412,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Will an inspector need to access your land or property?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answered</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/inspector-access/change/appellant"
                                     data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
@@ -731,7 +731,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Will an inspector need to access your land or property?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answered</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/inspector-access/change/appellant"
                                     data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
@@ -1021,7 +1021,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Will an inspector need to access your land or property?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answered</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/inspector-access/change/appellant"
                                     data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
@@ -1382,7 +1382,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Will an inspector need to access your land or property?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answered</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/inspector-access/change/appellant"
                                     data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
@@ -1686,7 +1686,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Will an inspector need to access your land or property?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answered</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/inspector-access/change/appellant"
                                     data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
@@ -2009,7 +2009,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Will an inspector need to access your land or property?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answered</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/inspector-access/change/appellant"
                                     data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
@@ -2259,7 +2259,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Will an inspector need to access your land or property?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answered</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/inspector-access/change/appellant"
                                     data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>
@@ -4762,7 +4762,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row appellantcase-inspector-access"><dt class="govuk-summary-list__key"> Will an inspector need to access your land or property?</dt>
-                            <dd                             class="govuk-summary-list__value"><span>No answered</span>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
                                 </dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/inspector-access/change/appellant"
                                     data-cy="change-inspector-access">Change<span class="govuk-visually-hidden"> Will an inspector need to access your land or property? (2. Site details)</span></a>

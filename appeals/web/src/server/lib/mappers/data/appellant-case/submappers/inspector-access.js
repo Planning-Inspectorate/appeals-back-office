@@ -7,7 +7,7 @@ export const mapInspectorAccess = ({ appellantCaseData, currentRoute, userHasUpd
 		text: 'Will an inspector need to access your land or property?',
 		value: appellantCaseData.siteAccessRequired?.isRequired,
 		valueDetails: appellantCaseData.siteAccessRequired?.details,
-		defaultText: 'No answered',
+		defaultText: 'No',
 		link: `${currentRoute}/inspector-access/change/appellant`,
 		editable: userHasUpdateCase,
 		classes: 'appellantcase-inspector-access',
