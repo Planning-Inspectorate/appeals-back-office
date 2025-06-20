@@ -3,6 +3,7 @@
 import { Page } from './basePage';
 import { DateTimeSection } from './dateTimeSection.js';
 import { formatDateAndTime } from '../support/utils/formatDateAndTime';
+import { forEach } from 'lodash';
 
 const dateTimeSection = new DateTimeSection();
 export class CaseDetailsPage extends Page {
@@ -11,7 +12,7 @@ export class CaseDetailsPage extends Page {
 	 *********************************************************/
 
 	_cyDataSelectors = {
-		reviewLpaQuestionnaire: 'review-lpa-questionnaire-banner',
+		reviewLpaQuestionnaire: 'review-lpa-questionnaire',
 		changeCaseOfficer: 'change-case-officer',
 		assignCaseOfficer: 'assign-case-officer',
 		assignInspector: 'assign-inspector',
@@ -47,7 +48,7 @@ export class CaseDetailsPage extends Page {
 		changeAppellant: 'change-appellant',
 		changeAgent: 'change-agent',
 		setupSiteVisitBanner: 'set-up-site-visit-banner',
-		reviewIpComments: 'review-ip-comments',
+		reviewIpComments: 'banner-review-ip-comments',
 		reviewLpaStatement: 'banner-review-lpa-statement',
 		changeApplicationReference: 'change-application-reference',
 		viewCaseHistory: 'view-case-history',
@@ -105,6 +106,8 @@ export class CaseDetailsPage extends Page {
 		changeStartDate: () => cy.getByData(this._cyDataSelectors.changeStartDate),
 		getTimetableDate: (timeTableRow) =>
 			cy.get(`.appeal-${timeTableRow} > .govuk-summary-list__value`),
+		getTimetableChangeLink: (timeTableRow) =>
+			cy.get(`.appeal-${timeTableRow} > .govuk-summary-list__actions`),
 		startAppealWithdrawal: () => cy.getByData(this._cyDataSelectors.startAppealWithdrawal),
 		getAppealRefCaseDetails: () => cy.get('.govuk-caption-l'),
 		removeFileUpload: () => cy.get('Button').contains('Remove'),
@@ -548,6 +551,20 @@ export class CaseDetailsPage extends Page {
 			});
 	}
 
+	verifyDatesChanged(timeTableRows, date) {
+		const formattedDate = formatDateAndTime(date).date;
+		timeTableRows.forEach((timeTableRow) => {
+			if (timeTableRow.editable) {
+				this.elements
+					.getTimetableDate(timeTableRow.row)
+					.invoke('text')
+					.then((dateText) => {
+						expect(dateText.trim()).to.equal(formattedDate);
+					});
+			}
+		});
+	}
+
 	verifyAppellantEmailAddress(rowName, text) {
 		this.basePageElements
 			.summaryListKey()
@@ -617,13 +634,22 @@ export class CaseDetailsPage extends Page {
 		this.clickButtonByText(`Accept ${type} final comment`);
 	}
 
-	checkTimetableDueDateIsDisplayed(row) {
-		this.elements.getTimetableDate(row).should('be.visible');
+	checkTimetableDueDatesAndChangeLinks(timetableItems) {
+		timetableItems.forEach((timetableItem) => {
+			this.elements.getTimetableDate(timetableItem.row).should('be.visible');
+			if (timetableItem.editable) {
+				this.elements.getTimetableChangeLink(timetableItem.row).should('be.visible');
+			}
+		});
 	}
 
-	changeTimetableDate(field, date) {
-		dateTimeSection.enterTimeTableDueDate(field, date);
+	changeTimetableDates(timetableItems, date) {
+		dateTimeSection.enterDueDates(timetableItems, date);
 		this.clickButtonByText('Continue');
+	}
+
+	clickUpdateTimetableDueDates(date) {
+		this.clickButtonByText('Update timetable due dates');
 	}
 
 	acceptLpaStatement(caseRef, updateAllocation, representation) {
