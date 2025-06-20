@@ -186,7 +186,8 @@ export const postAssignOrUnassignUserCheckAndConfirm = async (
 	try {
 		const {
 			body: { confirm },
-			params: { appealId, assigneeId }
+			params: { assigneeId },
+			currentAppeal: { appealId }
 		} = request;
 
 		if (confirm === 'yes') {
