@@ -75,7 +75,7 @@ export const summaryList = (
 								actions: {
 									items: [
 										{
-											href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
+											href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact?backUrl=/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact/confirm`,
 											text: 'Change',
 											visuallyHiddenText: 'redacted final comments'
 										}
@@ -93,14 +93,14 @@ export const summaryList = (
 								? [
 										{
 											text: 'Manage',
-											href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
+											href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact/confirm`,
 											visuallyHiddenText: 'supporting documents'
 										}
 								  ]
 								: []),
 							{
 								text: 'Add',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/add-document/?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/add-document/?backUrl=/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact/confirm`,
 								visuallyHiddenText: 'supporting documents'
 							}
 						]
@@ -112,7 +112,7 @@ export const summaryList = (
 					actions: {
 						items: [
 							{
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}?backUrl=/final-comments/${finalCommentsType}/redact/confirm`,
+								href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}?backUrl=/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact/confirm`,
 								text: 'Change',
 								visuallyHiddenText: 'review decision'
 							}
