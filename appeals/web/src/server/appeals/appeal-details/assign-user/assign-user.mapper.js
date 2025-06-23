@@ -26,7 +26,7 @@ export async function assignUserPage(appealDetails, isInspector, session) {
 		...users
 			.filter((user) => user.email && user.name)
 			.map((user) => ({
-				value: user.id,
+				value: JSON.stringify(user),
 				text: `${user.name} (${user.email})`
 			}))
 	];
@@ -46,7 +46,7 @@ export async function assignUserPage(appealDetails, isInspector, session) {
 				text: `Search for ${userTypeText} by name or email address`,
 				isPageHeading: true
 			},
-			value: 'all',
+			value: '',
 			items: userArray,
 			attributes: { 'data-cy': 'search-users' },
 			classes: 'accessible-autocomplete'

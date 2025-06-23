@@ -49,7 +49,7 @@ export const postAssignUser = async (request, response, isInspector = false) => 
 		return renderAssignUser(request, response, isInspector);
 	}
 
-	request.session.assigneeId = request.body.user;
+	request.session.user = JSON.parse(request.body.user);
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${currentAppeal.appealId}/assign-${userTypeText}/check-details`
@@ -111,10 +111,15 @@ export const getCheckDetails = async (request, response) => {
  */
 export const postCheckDetails = async (request, response) => {
 	const {
-		body: { assigneeId },
-		currentAppeal: { appealId }
+		session: {
+			user: { assigneeId }
+		},
+		currentAppeal: { appealId },
+		baseUrl
 	} = request;
-	const isInspector = false;
+
+	const isInspector = baseUrl.includes('inspector');
+
 	try {
 		await setAppealAssignee(request.apiClient, appealId, assigneeId, isInspector);
 
