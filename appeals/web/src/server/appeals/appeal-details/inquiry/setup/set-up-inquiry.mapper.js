@@ -3,6 +3,7 @@ import { dateInput } from '#lib/mappers/components/page-components/date.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
 import { addressInputs } from '#lib/mappers/index.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
+import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
@@ -41,15 +42,74 @@ export function inquiryDatePage(appealData, values) {
 	});
 
 	/** @type {PageContent} */
-	const pageContent = {
+	return {
 		title: `Date and time - set up inquiry - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/start-case/select-procedure`,
 		preHeading: `Appeal ${shortAppealReference} - start case`,
 		heading: 'Inquiry date and time',
 		pageComponents: [dateComponent, timeComponent]
 	};
+}
 
-	return pageContent;
+/**
+ * @param {Appeal} appealData
+ * @param {string} action
+ * @returns {{backLinkUrl: string, title: string, pageComponents: {type: string, parameters: {name: string, fieldset: {legend: {classes: string, text: string, isPageHeading: boolean}}, idPrefix: string, items: [{conditional: {html: string}, text: string, value: string},{text: string, value: string}]}}[], preHeading: string}}
+ */
+export function inquiryEstimationPage(appealData, action) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const inquiryEstimationComponent = {
+		type: 'radios',
+		parameters: {
+			idPrefix: 'inquiry-estimation-yes-no',
+			name: 'inquiryEstimationYesNo',
+			fieldset: {
+				legend: {
+					text: 'Do you know the expected number of days to carry out the inquiry?',
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
+				}
+			},
+			items: [
+				{
+					value: 'yes',
+					text: 'Yes',
+					conditional: {
+						html: renderPageComponentsToHtml([
+							{
+								type: 'input',
+								parameters: {
+									id: 'inquiry-estimation-days',
+									name: 'inquiryEstimationDays',
+									label: {
+										text: 'Expected number of days to carry out the inquiry',
+										classes: 'govuk-label--s'
+									},
+									suffix: {
+										text: 'Days'
+									},
+									classes: 'govuk-input--width-3'
+								}
+							}
+						])
+					}
+				},
+				{
+					value: 'no',
+					text: 'No'
+				}
+			]
+		}
+	};
+
+	/** @type {PageContent} */
+	return {
+		title: `Appeal - ${shortAppealReference} start case`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/${action}/date`,
+		preHeading: `Appeal ${shortAppealReference} - set up inquiry`,
+		// @ts-ignore
+		pageComponents: [inquiryEstimationComponent]
+	};
 }
 
 /**
@@ -70,14 +130,12 @@ export function addressKnownPage(appealData, action, values) {
 	});
 
 	/** @type {PageContent} */
-	const pageContent = {
+	return {
 		title: `Address - start case - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/${action}/date`,
 		preHeading: `Appeal ${shortAppealReference} - start case`,
 		pageComponents: [addressKnownComponent]
 	};
-
-	return pageContent;
 }
 
 /**
@@ -91,13 +149,11 @@ export function addressDetailsPage(appealData, action, currentAddress, errors) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
-	const pageContent = {
+	return {
 		title: `Address - start case - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/${action}/address`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Inquiry address',
 		pageComponents: addressInputs({ address: currentAddress, errors })
 	};
-
-	return pageContent;
 }

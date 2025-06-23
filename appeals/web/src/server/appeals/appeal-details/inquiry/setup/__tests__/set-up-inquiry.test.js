@@ -112,7 +112,7 @@ describe('set up inquiry', () => {
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/inquiry/setup/address`);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/inquiry/setup/estimation`);
 		});
 
 		it('should return 400 on invalid date with appropriate error message', async () => {
@@ -213,7 +213,91 @@ describe('set up inquiry', () => {
 		});
 	});
 
-	describe('GET /Inquiry/setup/address', () => {
+	describe('GET /inquiry/setup/estimation', () => {
+		const appealId = 2;
+
+		let pageHtml;
+
+		beforeAll(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.twice()
+				.reply(200, { ...appealData, appealId });
+
+			// set session data with post request
+			await request.post(`${baseUrl}/${appealId}/Inquiry/setup/estimation`).send({
+				inquiryEstimationYesNo: 'yes'
+			});
+
+			const response = await request.get(`${baseUrl}/${appealId}/Inquiry/setup/estimation`);
+			pageHtml = parseHtml(response.text);
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the correct heading', () => {
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe(
+				'Do you know the expected number of days to carry out the inquiry?'
+			);
+		});
+
+		it('should render a radio button for inquiry estimation', () => {
+			expect(pageHtml.querySelector('input[name="inquiryEstimationYesNo"]')).not.toBeNull();
+		});
+
+		it('should render an input for inquiry estimation days', () => {
+			expect(pageHtml.querySelector('input[name="inquiryEstimationDays"]')).not.toBeNull();
+		});
+	});
+
+	describe('POST /inquiry/setup/estimation', () => {
+		const appealId = 2;
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+		});
+
+		it('should redirect to /Inquiry/setup/address when answering no', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/estimation`).send({
+				inquiryEstimationYesNo: 'no'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/inquiry/setup/address`);
+		});
+
+		it('should redirect to /Inquiry/setup/address when answering yes', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/estimation`).send({
+				inquiryEstimationYesNo: 'yes',
+				inquiryEstimationDays: 12
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/inquiry/setup/address`);
+		});
+
+		it('should return 400 on missing inquiryEstimationYesNo with appropriate error message', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'Select yes if you know the address of where the inquiry will take place'
+			);
+		});
+	});
+
+	describe('GET /inquiry/setup/address', () => {
 		const appealId = 2;
 
 		let pageHtml;
@@ -258,7 +342,7 @@ describe('set up inquiry', () => {
 		});
 	});
 
-	describe('POST /Inquiry/setup/address', () => {
+	describe('POST /inquiry/setup/address', () => {
 		const appealId = 2;
 
 		beforeEach(() => {
@@ -304,7 +388,7 @@ describe('set up inquiry', () => {
 		});
 	});
 
-	describe('GET /Inquiry/setup/address-details', () => {
+	describe('GET /inquiry/setup/address-details', () => {
 		const appealId = 2;
 
 		let pageHtml;
@@ -347,7 +431,7 @@ describe('set up inquiry', () => {
 		});
 	});
 
-	describe('POST /Inquiry/setup/address-details', () => {
+	describe('POST /inquiry/setup/address-details', () => {
 		const appealId = 2;
 
 		beforeEach(() => {

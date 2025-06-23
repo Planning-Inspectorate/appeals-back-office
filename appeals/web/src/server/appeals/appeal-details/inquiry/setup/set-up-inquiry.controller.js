@@ -1,4 +1,5 @@
 import { inquiryDatePage, addressDetailsPage, addressKnownPage } from './set-up-inquiry.mapper.js';
+import { inquiryEstimationPage } from './set-up-inquiry.mapper.js';
 import { isEmpty, has, pick } from 'lodash-es';
 
 /**
@@ -69,6 +70,46 @@ export const postInquiryDate = async (request, response) => {
 
 	const { appealId } = request.currentAppeal;
 
+	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/setup/estimation`);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getInquiryEstimation = async (request, response) => {
+	return renderInquiryEstimation(request, response, 'setup');
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {'change' | 'setup'} action
+ */
+export const renderInquiryEstimation = async (request, response, action) => {
+	const { errors } = request;
+
+	const appealDetails = request.currentAppeal;
+
+	const mappedPageContent = await inquiryEstimationPage(appealDetails, action);
+
+	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postInquiryEstimation = async (request, response) => {
+	if (request.errors) {
+		return renderInquiryEstimation(request, response, 'setup');
+	}
+
+	const { appealId } = request.currentAppeal;
+
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/setup/address`);
 };
 
@@ -78,21 +119,6 @@ export const postInquiryDate = async (request, response) => {
  */
 export const getInquiryAddress = async (request, response) => {
 	return renderInquiryAddress(request, response, 'setup', request.session.setUpInquiry || {});
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const getChangeInquiryAddress = async (request, response) => {
-	const appealDetails = request.currentAppeal;
-	const sessionValues = request.session.changeInquiry || {};
-
-	const values = has(sessionValues, 'addressKnown')
-		? sessionValues
-		: { addressKnown: appealDetails.inquiry?.address ? 'yes' : 'no' };
-
-	return renderInquiryAddress(request, response, 'change', values);
 };
 
 /**
@@ -138,50 +164,10 @@ export const postInquiryAddress = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postChangeInquiryAddress = async (request, response) => {
-	if (request.errors) {
-		return renderInquiryAddress(request, response, 'change');
-	}
-
-	const { appealId } = request.currentAppeal;
-
-	if (request.body.addressKnown === 'yes') {
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/inquiry/change/address-details`
-		);
-	}
-
-	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/change/timetable`);
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
 export const getInquiryAddressDetails = async (request, response) => {
 	const values = request.session['setUpInquiry'] || {};
 
 	return renderInquiryAddressDetails(request, response, values, 'setup');
-};
-
-/**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- */
-export const getChangeInquiryAddressDetails = async (request, response) => {
-	const existingAddress = request.currentAppeal.inquiry.address;
-	const sessionValues = pick(request.session['changeInquiry'], [
-		'addressLine1',
-		'addressLine2',
-		'town',
-		'county',
-		'postCode'
-	]);
-	const values = isEmpty(sessionValues)
-		? { ...existingAddress, postCode: existingAddress?.postcode }
-		: sessionValues;
-
-	return renderInquiryAddressDetails(request, response, values, 'change');
 };
 
 /**
@@ -214,6 +200,61 @@ export const postInquiryAddressDetails = async (request, response) => {
 	const { appealId } = request.currentAppeal;
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable`);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getChangeInquiryAddress = async (request, response) => {
+	const appealDetails = request.currentAppeal;
+	const sessionValues = request.session.changeInquiry || {};
+
+	const values = has(sessionValues, 'addressKnown')
+		? sessionValues
+		: { addressKnown: appealDetails.inquiry?.address ? 'yes' : 'no' };
+
+	return renderInquiryAddress(request, response, 'change', values);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postChangeInquiryAddress = async (request, response) => {
+	if (request.errors) {
+		return renderInquiryAddress(request, response, 'change');
+	}
+
+	const { appealId } = request.currentAppeal;
+
+	if (request.body.addressKnown === 'yes') {
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/inquiry/change/address-details`
+		);
+	}
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/change/timetable`);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getChangeInquiryAddressDetails = async (request, response) => {
+	const existingAddress = request.currentAppeal.inquiry.address;
+	const sessionValues = pick(request.session['changeInquiry'], [
+		'addressLine1',
+		'addressLine2',
+		'town',
+		'county',
+		'postCode'
+	]);
+	const values = isEmpty(sessionValues)
+		? { ...existingAddress, postCode: existingAddress?.postcode }
+		: sessionValues;
+
+	return renderInquiryAddressDetails(request, response, values, 'change');
 };
 
 /**
