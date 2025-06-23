@@ -1253,7 +1253,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         <ul class="govuk-list">
             <li>Decision: Dismissed</li>
             <li>Decision issued on 25 December 2023</li>
-            <li><span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
+            <li><a class="govuk-link" href="/appeals-service/appeal-details/1/appeal-decision">View decision</a>
             </li>
         </ul>
     </div>
