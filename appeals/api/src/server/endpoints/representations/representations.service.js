@@ -238,51 +238,56 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		false
 	);
 
+	const [hasLpaStatement, hasLpaComment, hasIpComments] = [
+		'LPA_STATEMENT',
+		'COMMENT',
+		'APPELLANT_FINAL_COMMENT'
+	].map((type) =>
+		result.some((rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE[type])
+	);
+
 	try {
-		if (
-			result.some((rep) =>
-				[APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT || APPEAL_REPRESENTATION_TYPE.COMMENT].includes(
-					rep.representationType
-				)
-			)
-		) {
+		if (hasLpaStatement || hasLpaComment) {
 			let whatHappensNextAppellant;
 			let whatHappensNextLpa;
 			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
 				if (appeal.hearing?.hearingStartTime) {
-					whatHappensNextAppellant =
-						`Your hearing is on ${formatDate(appeal.hearing?.hearingStartTime, false)}.\n\nWe will contact you if we need any more information.`
-					whatHappensNextLpa =
-						`The hearing is on ${formatDate(appeal.hearing?.hearingStartTime, false)}.`
+					whatHappensNextAppellant = `Your hearing is on ${formatDate(
+						appeal.hearing?.hearingStartTime,
+						false
+					)}.\n\nWe will contact you if we need any more information.`;
+					whatHappensNextLpa = `The hearing is on ${formatDate(
+						appeal.hearing?.hearingStartTime,
+						false
+					)}.`;
 				} else {
-					whatHappensNextAppellant =
-						`We will contact you if we need any more information.`
-					whatHappensNextLpa =
-						`We will contact you when the hearing has been set up.`
+					whatHappensNextAppellant = `We will contact you if we need any more information.`;
+					whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
 				}
 			} else {
-				whatHappensNextAppellant =
-					`You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`
-				whatHappensNextLpa =
-					`You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`
+				whatHappensNextAppellant = `You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
+				whatHappensNextLpa = `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
 			}
 
-			await notifyPublished(
+			await notifyPublished({
 				appeal,
 				notifyClient,
-				'received-statement-and-ip-comments-lpa',
-				appeal.lpa?.email,
+				hasLpaStatement,
+				hasIpComments,
+				templateName: 'received-statement-and-ip-comments-lpa',
+				recipientEmail: appeal.lpa?.email,
 				finalCommentsDueDate,
-				whatHappensNextLpa
-			);
-			await notifyPublished(
+				whatHappensNext: whatHappensNextLpa
+			});
+
+			await notifyPublished({
 				appeal,
 				notifyClient,
-				'received-statement-and-ip-comments-appellant',
-				appeal.agent?.email || appeal.appellant?.email,
+				templateName: 'received-statement-and-ip-comments-appellant',
+				recipientEmail: appeal.agent?.email || appeal.appellant?.email,
 				finalCommentsDueDate,
-				whatHappensNextAppellant
-			);
+				whatHappensNext: whatHappensNextAppellant
+			});
 		}
 	} catch (error) {
 		logger.error(error);
@@ -340,21 +345,31 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 }
 
 /**
- * @param {Appeal} appeal
- * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
- * @param {string} templateName
- * @param {string | null} [recipientEmail]
- * @param {string} [finalCommentsDueDate]
- * @param {string} [whatHappensNext]
- * */
-async function notifyPublished(
+ * @typedef {object} NotifyPublished
+ * @property {Appeal} appeal
+ * @property {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @property {string} templateName
+ * @property {string | null} [recipientEmail]
+ * @property {string} [finalCommentsDueDate]
+ * @property {string} [whatHappensNext]
+ * @property {boolean} [hasLpaStatement]
+ * @property {boolean} [hasIpComments]
+ */
+
+/**
+ * @param {NotifyPublished} options
+ * @returns {Promise<void>}
+ */
+async function notifyPublished({
 	appeal,
 	notifyClient,
 	templateName,
 	recipientEmail,
 	finalCommentsDueDate = '',
-	whatHappensNext = ''
-) {
+	whatHappensNext = '',
+	hasLpaStatement = false,
+	hasIpComments = false
+}) {
 	const lpaReference = appeal.applicationReference;
 	if (!lpaReference) {
 		throw new Error(
@@ -380,7 +395,9 @@ async function notifyPublished(
 			site_address: siteAddress,
 			lpa_reference: lpaReference,
 			final_comments_deadline: finalCommentsDueDate,
-			what_happens_next: whatHappensNext
+			what_happens_next: whatHappensNext,
+			has_ip_comments: hasIpComments,
+			has_statement: hasLpaStatement
 		}
 	});
 }
@@ -395,7 +412,12 @@ function notifyLpaFinalCommentsPublished(appeal, notifyClient) {
 		throw new Error(`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no LPA email address in appeal`);
 	}
 
-	return notifyPublished(appeal, notifyClient, 'final-comments-done-lpa', recipientEmail);
+	return notifyPublished({
+		appeal,
+		notifyClient,
+		templateName: 'final-comments-done-lpa',
+		recipientEmail
+	});
 }
 
 /**
@@ -410,5 +432,10 @@ function notifyAppellantFinalCommentsPublished(appeal, notifyClient) {
 		);
 	}
 
-	return notifyPublished(appeal, notifyClient, 'final-comments-done-appellant', recipientEmail);
+	return notifyPublished({
+		appeal,
+		notifyClient,
+		templateName: 'final-comments-done-appellant',
+		recipientEmail
+	});
 }

@@ -1,9 +1,13 @@
+// @ts-nocheck
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
 describe('received-statement-and-ip-comments-appellant.md', () => {
-	test('should call notify sendEmail with the correct data', async () => {
-		const notifySendData = {
+	let notifySendData;
+	let expectedTailContent;
+
+	beforeEach(() => {
+		notifySendData = {
 			doNotMockNotifySend: true,
 			templateName: 'received-statement-and-ip-comments-appellant',
 			notifyClient: {
@@ -15,16 +19,13 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
 				final_comments_deadline: '01 January 2021',
+				has_statement: true,
+				has_ip_comments: true,
 				what_happens_next:
 					'You need to [submit your final comments](/mock-front-office-url/appeals/ABC45678) by 01 January 2021.'
 			}
 		};
-
-		const expectedContent = [
-			'We have received the local planning authority’s questionnaire, all statements and comments from interested parties.',
-			'',
-			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
-			'',
+		expectedTailContent = [
 			'# Appeal details',
 			'',
 			'^Appeal reference number: ABC45678',
@@ -37,7 +38,66 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
+		];
+	});
+
+	test('should call notify sendEmail with the correct data when there is both a statement and ip comments', async () => {
+		const expectedContent = [
+			'We have received the local planning authority’s questionnaire, all statements and comments from interested parties.',
+			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
+			'',
+			...expectedTailContent
 		].join('\n');
+
+		await notifySend(notifySendData);
+
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{
+				id: 'mock-appeal-generic-id'
+			},
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject: 'Submit your final comments: ABC45678'
+			}
+		);
+	});
+
+	test('should call notify sendEmail with the correct data when there is a statement but no ip comments', async () => {
+		const expectedContent = [
+			'We have received comments from interested parties.',
+			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
+			'',
+			'The local planning authority did not submit a statement.',
+			...expectedTailContent
+		].join('\n');
+
+		notifySendData.personalisation.has_statement = false;
+
+		await notifySend(notifySendData);
+
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{
+				id: 'mock-appeal-generic-id'
+			},
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject: 'Submit your final comments: ABC45678'
+			}
+		);
+	});
+
+	test('should call notify sendEmail with the correct data when there are ip comments but no statement', async () => {
+		const expectedContent = [
+			'We have received a statement from the local planning authority.',
+			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
+			'',
+			'We did not receive any comments from interested parties.',
+			...expectedTailContent
+		].join('\n');
+
+		notifySendData.personalisation.has_ip_comments = false;
 
 		await notifySend(notifySendData);
 
