@@ -19,10 +19,8 @@ export const happyPathHelper = {
 		caseDetailsPage.clickAssignCaseOfficer();
 		caseDetailsPage.searchForCaseOfficer('case');
 		caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
-		caseDetailsPage.clickLinkByText('Choose');
-		caseDetailsPage.selectRadioButtonByValue('Yes');
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.validateBannerMessage('Success', 'Case officer has been assigned');
+		caseDetailsPage.clickButtonByText('Assign case officer');
+		caseDetailsPage.validateBannerMessage('Success', 'Case officer assigned');
 		caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 	},
 	reviewAppellantCase(caseRef) {

@@ -28,10 +28,8 @@ describe('Assign user to case', () => {
 				caseDetailsPage.clickAssignCaseOfficer();
 				caseDetailsPage.searchForCaseOfficer('case');
 				caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
-				caseDetailsPage.clickLinkByText('Choose');
-				caseDetailsPage.selectRadioButtonByValue('Yes');
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage('Success', 'Case officer has been assigned');
+				caseDetailsPage.clickButtonByText('Assign case officer');
+				caseDetailsPage.validateBannerMessage('Success', 'Case officer assigned');
 				caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 			});
 		}
@@ -47,10 +45,8 @@ describe('Assign user to case', () => {
 				caseDetailsPage.clickAssignInspector();
 				caseDetailsPage.searchForCaseOfficer('Mctester');
 				caseDetailsPage.chooseSummaryListValue(users.appeals.inspector.email);
-				caseDetailsPage.clickLinkByText('Choose');
-				caseDetailsPage.selectRadioButtonByValue('Yes');
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage('Success', 'Inspector has been assigned');
+				caseDetailsPage.clickButtonByText('Assign inspector');
+				caseDetailsPage.validateBannerMessage('Success', 'Inspector assigned');
 				caseDetailsPage.verifyAnswerSummaryValue(users.appeals.inspector.email);
 			});
 		}
@@ -63,10 +59,8 @@ describe('Assign user to case', () => {
 			caseDetailsPage.clickAssignCaseOfficer();
 			caseDetailsPage.searchForCaseOfficer('case');
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
-			caseDetailsPage.clickChooseCaseOfficerResult(users.appeals.caseAdmin.email);
-			caseDetailsPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Success', 'Case officer has been assigned');
+			caseDetailsPage.clickButtonByText('Assign case officer');
+			caseDetailsPage.validateBannerMessage('Success', 'Case officer assigned');
 			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 		});
 	});
@@ -78,10 +72,8 @@ describe('Assign user to case', () => {
 			caseDetailsPage.clickAssignInspector();
 			caseDetailsPage.searchForCaseOfficer('case');
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
-			caseDetailsPage.clickLinkByText('Choose');
-			caseDetailsPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Success', 'Inspector has been assigned');
+			caseDetailsPage.clickButtonByText('Assign inspector');
+			caseDetailsPage.validateBannerMessage('Success', 'Inspector assigned');
 			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 		});
 	});

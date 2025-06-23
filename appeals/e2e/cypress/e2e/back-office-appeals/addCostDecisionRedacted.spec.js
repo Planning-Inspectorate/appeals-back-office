@@ -22,18 +22,21 @@ describe('add cost decision and redact', () => {
 
 	it('add costs decsion and redact', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
+			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
-			caseDetailsPage.clickAccordionByButton('Costs');
-			caseDetailsPage.clickAddCostsDecision();
-			caseDetailsPage.uploadSampleFile(sampleFiles.document);
+			happyPathHelper.reviewLpaq(caseRef);
+			happyPathHelper.setupSiteVisitFromBanner(caseRef);
+			cy.simulateSiteVisit(caseRef).then((caseRef) => {
+				cy.reload();
+			});
+			caseDetailsPage.clickAccordionByButton('Overview');
+			caseDetailsPage.clickIssueCostsDecision();
+			caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('Redacted');
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkEmailRelevantParties(0);
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Costs decision uploaded');
+			caseDetailsPage.clickButtonByText('Issue appellant costs decision');
+			caseDetailsPage.validateSuccessPanelBody('Appellant costs decision issued');
 		});
 	});
 
@@ -43,12 +46,11 @@ describe('add cost decision and redact', () => {
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
 			caseDetailsPage.clickAccordionByButton('Costs');
-			caseDetailsPage.clickAddCostsDecision();
+			caseDetailsPage.clickAddAppellantApplication();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Redacted');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkEmailRelevantParties(0);
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickManageDocsCostDecision();
 			cy.reloadUntilVirusCheckComplete();
@@ -67,31 +69,29 @@ describe('add cost decision and redact', () => {
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
 			caseDetailsPage.clickAccordionByButton('Costs');
-			caseDetailsPage.clickAddCostsDecision();
+			caseDetailsPage.clickAddAppellantApplication();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Redacted');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkEmailRelevantParties(0);
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickManageDocsCostDecision();
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('upload a new version');
-			caseDetailsPage.uploadSampleFile(sampleFiles.img);
+			caseDetailsPage.uploadSampleFile(sampleFiles.document2);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Unredacted');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkEmailRelevantParties(0);
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickManageDocsCostDecision();
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.checkDocVersionNumber('2');
 			caseDetailsPage.clickChangeFileName();
-			caseDetailsPage.updateFileName('sample-file123.img');
+			caseDetailsPage.updateFileName('sample-file');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkFileName('sample-file123.img');
+			caseDetailsPage.checkFileName('sample-file.doc');
 		});
 	});
 });

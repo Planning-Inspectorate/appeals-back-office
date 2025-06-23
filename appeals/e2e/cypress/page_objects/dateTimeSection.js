@@ -18,6 +18,7 @@ export class DateTimeSection extends Page {
 	// Prefix of date selector which is expected to end in 'day', 'month' and 'year' for each dropdown in the HTML
 	selectorPrefix = {
 		dueDate: '#due-date-',
+		lpaqDate: '#lpa-questionnaire-due-date-',
 		validDate: '#valid-date-',
 		visitDate: '#visit-date-',
 		decisionLetterDate: '#decision-letter-date-',
@@ -47,7 +48,6 @@ export class DateTimeSection extends Page {
 	enterDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.dueDate, date);
 	}
-
 	enterDueDates(timetableItems, date) {
 		timetableItems.forEach((timetableItem) => {
 			if (timetableItem.editable) {
@@ -55,7 +55,9 @@ export class DateTimeSection extends Page {
 			}
 		});
 	}
-
+	enterLpaqDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.lpaqDate, date);
+	}
 	enterWithdrawalRequestDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.withdrawalRequestDate, date);
 	}

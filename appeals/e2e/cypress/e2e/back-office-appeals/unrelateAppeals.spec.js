@@ -30,7 +30,7 @@ describe('unrelate appeals', () => {
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
 						'Success',
-						'This appeal is now related to ' + caseRef
+						'This appeal is now related to ' + caseRefToRelate
 					);
 					caseDetailsPage.clickAddRelatedAppeals();
 					caseDetailsPage.fillInput(secondCaseRefToRelate);
@@ -39,7 +39,7 @@ describe('unrelate appeals', () => {
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
 						'Success',
-						'This appeal is now related to ' + caseRef
+						'This appeal is now related to ' + secondCaseRefToRelate
 					);
 					caseDetailsPage.clickManageRelatedAppeals();
 					caseDetailsPage.clickRemoveRelatedAppealByRef(caseRefToRelate);
@@ -47,38 +47,40 @@ describe('unrelate appeals', () => {
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
 						'Success',
-						'You have removed the relationship between this appeal and appeal' + caseRefToRelate
+						'You have removed the relationship between this appeal and appeal ' + caseRefToRelate
 					);
 				});
 			});
 		});
+	});
 
-		it('unrelate a BO appeal to a Horizon appeal', () => {
-			const horizonAppealId =
-				Cypress.config('apiBaseUrl').indexOf('test') > -1
-					? horizonTestAppeals.horizonAppealTest
-					: horizonTestAppeals.horizonAppealMock;
+	it('unrelate a BO appeal to a Horizon appeal', () => {
+		const horizonAppealId =
+			Cypress.config('apiBaseUrl').indexOf('test') > -1
+				? horizonTestAppeals.horizonAppealTest
+				: horizonTestAppeals.horizonAppealMock;
 
-			cy.createCase().then((caseRef) => {
-				happyPathHelper.assignCaseOfficer(caseRef);
-				caseDetailsPage.clickAccordionByButton('Overview');
-				caseDetailsPage.clickAddRelatedAppeals();
-				caseDetailsPage.fillInput(horizonAppealId);
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage(
-					'Success',
-					'This appeal is now related to ' + caseRef
-				);
-				caseDetailsPage.clickManageRelatedAppeals();
-				caseDetailsPage.clickRemoveRelatedAppealByRef(horizonAppealId);
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage(
-					'Success',
-					'You have removed the relationship between this appeal and appeal' + horizonAppealId
-				);
-			});
+		cy.createCase().then((caseRef) => {
+			happyPathHelper.assignCaseOfficer(caseRef);
+			caseDetailsPage.clickAccordionByButton('Overview');
+			caseDetailsPage.clickAddRelatedAppeals();
+			caseDetailsPage.fillInput(horizonAppealId);
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.validateBannerMessage(
+				'Success',
+				'This appeal is now related to ' + horizonAppealId
+			);
+			caseDetailsPage.clickManageRelatedAppeals();
+			caseDetailsPage.clickRemoveRelatedAppealByRef(horizonAppealId);
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue('Yes');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.validateBannerMessage(
+				'Success',
+				'You have removed the relationship between this appeal and appeal ' + horizonAppealId
+			);
 		});
 	});
 });

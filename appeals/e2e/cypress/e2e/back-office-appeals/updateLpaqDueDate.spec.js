@@ -23,8 +23,9 @@ describe('Update LPAQ Due date', () => {
 			happyPathHelper.startCase(caseRef);
 			caseDetailsPage.clickChangeLpaqDueDate();
 			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
-				caseDetailsPage.changeTimetableDate(lpaQuestionnaire, futureDate);
+				dateTimeSection.enterLpaqDate(futureDate);
 			});
+			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Update timetable due dates');
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
 			cy.addLpaqSubmissionToCase(caseRef);
@@ -39,8 +40,9 @@ describe('Update LPAQ Due date', () => {
 			happyPathHelper.startS78Case(caseRef, 'written');
 			caseDetailsPage.clickChangeLpaqDueDate();
 			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
-				caseDetailsPage.changeTimetableDate(lpaQuestionnaire, futureDate);
+				dateTimeSection.enterLpaqDate(futureDate);
 			});
+			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Update timetable due dates');
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
 			cy.addLpaqSubmissionToCase(caseRef);
