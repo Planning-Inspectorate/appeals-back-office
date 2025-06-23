@@ -1,13 +1,11 @@
 import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
-import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import config from '#environment/config.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
@@ -66,10 +64,6 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 			? dateISOStringToDisplayDate(appealDetails.decision.letterDate)
 			: dateISOStringToDisplayDate(getTodaysISOString());
 
-		const virusCheckStatus = mapVirusCheckStatus(
-			appealDetails.decision.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
-		);
-
 		const insetTextRows = [];
 
 		if (appealDetails.decision?.outcome) {
@@ -86,19 +80,9 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		}
 
 		if (appealDetails.decision.documentId) {
-			if (virusCheckStatus.checked && virusCheckStatus.safe) {
-				config.featureFlags.featureFlagReIssueDecision
-					? insetTextRows.push(
-							`<a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/appeal-decision">View decision</a>`
-					  )
-					: insetTextRows.push(
-							generateDecisionDocumentDownloadHtml(appealDetails, 'View decision')
-					  );
-			} else {
-				insetTextRows.push(
-					`<span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>`
-				);
-			}
+			insetTextRows.push(
+				`<a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/appeal-decision">View decision</a>`
+			);
 		}
 
 		const html =
