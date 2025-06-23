@@ -742,6 +742,8 @@ describe('/appeals/:id/reps/publish', () => {
 			const expectedEmailPayload = {
 				lpa_reference: mockAppeal.applicationReference,
 				appeal_reference_number: mockAppeal.reference,
+				has_ip_comments: false,
+				has_statement: false,
 				final_comments_deadline: '4 December 2024',
 				site_address: expectedSiteAddress
 			};
@@ -750,7 +752,8 @@ describe('/appeals/:id/reps/publish', () => {
 			databaseConnector.appealStatus.create.mockResolvedValue({});
 			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 			databaseConnector.representation.findMany.mockResolvedValue([
-				{ representationType: 'lpa_statement' }
+				{ representationType: 'lpa_statement' },
+				{ representationType: 'appellant_final_comment' }
 			]);
 			databaseConnector.representation.updateMany.mockResolvedValue([]);
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
@@ -773,6 +776,8 @@ describe('/appeals/:id/reps/publish', () => {
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
+					has_ip_comments: true,
+					has_statement: true,
 					what_happens_next:
 						'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.'
 				},
@@ -808,6 +813,8 @@ describe('/appeals/:id/reps/publish', () => {
 
 			const expectedEmailPayload = {
 				lpa_reference: mockAppeal.applicationReference,
+				has_ip_comments: false,
+				has_statement: false,
 				appeal_reference_number: mockAppeal.reference,
 				final_comments_deadline: '4 December 2024',
 				site_address: expectedSiteAddress
@@ -822,7 +829,8 @@ describe('/appeals/:id/reps/publish', () => {
 			databaseConnector.appealStatus.create.mockResolvedValue({});
 			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 			databaseConnector.representation.findMany.mockResolvedValue([
-				{ representationType: 'lpa_statement' }
+				{ representationType: 'lpa_statement' },
+				{ representationType: 'appellant_final_comment' }
 			]);
 			databaseConnector.representation.updateMany.mockResolvedValue([]);
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
@@ -845,8 +853,9 @@ describe('/appeals/:id/reps/publish', () => {
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
-					what_happens_next:
-						'We will contact you when the hearing has been set up.'
+					has_ip_comments: true,
+					has_statement: true,
+					what_happens_next: 'We will contact you when the hearing has been set up.'
 				},
 				recipientEmail: appealS78.lpa.email,
 				templateName: 'received-statement-and-ip-comments-lpa'
@@ -857,8 +866,7 @@ describe('/appeals/:id/reps/publish', () => {
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
-					what_happens_next:
-						'We will contact you if we need any more information.'
+					what_happens_next: 'We will contact you if we need any more information.'
 				},
 				recipientEmail: appealS78.appellant.email,
 				templateName: 'received-statement-and-ip-comments-appellant'
@@ -880,6 +888,8 @@ describe('/appeals/:id/reps/publish', () => {
 
 			const expectedEmailPayload = {
 				lpa_reference: mockAppeal.applicationReference,
+				has_ip_comments: false,
+				has_statement: false,
 				appeal_reference_number: mockAppeal.reference,
 				final_comments_deadline: '4 December 2024',
 				site_address: expectedSiteAddress
@@ -897,7 +907,8 @@ describe('/appeals/:id/reps/publish', () => {
 			databaseConnector.appealStatus.create.mockResolvedValue({});
 			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 			databaseConnector.representation.findMany.mockResolvedValue([
-				{ representationType: 'lpa_statement' }
+				{ representationType: 'lpa_statement' },
+				{ representationType: 'appellant_final_comment' }
 			]);
 			databaseConnector.representation.updateMany.mockResolvedValue([]);
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
@@ -920,6 +931,8 @@ describe('/appeals/:id/reps/publish', () => {
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
+					has_ip_comments: true,
+					has_statement: true,
 					what_happens_next: 'The hearing is on 31 January 2025.'
 				},
 				recipientEmail: appealS78.lpa.email,
@@ -1002,6 +1015,8 @@ describe('/appeals/:id/reps/publish', () => {
 
 			const expectedEmailPayload = {
 				lpa_reference: mockAppeal.applicationReference,
+				has_ip_comments: false,
+				has_statement: false,
 				appeal_reference_number: mockAppeal.reference,
 				final_comments_deadline: '',
 				site_address: expectedSiteAddress
