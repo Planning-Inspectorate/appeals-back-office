@@ -110,6 +110,7 @@ const mockCaseNotesCreate = jest.fn().mockResolvedValue({});
 const mockRepresentationRejectionReasonFindMany = jest.fn().mockResolvedValue({});
 const mockRepresentationCreate = jest.fn().mockResolvedValue({});
 const mockRepresentationAttachmentCreateMany = jest.fn().mockResolvedValue({});
+const mockRepresentationCount = jest.fn().mockResolvedValue({});
 const mockLpaFindMany = jest.fn().mockResolvedValue({});
 const mockLpaFindUnique = jest.fn().mockResolvedValue({});
 
@@ -130,7 +131,8 @@ class MockPrismaClient {
 			findMany: mockRepFindMany,
 			updateMany: mockRepUpdateMany,
 			groupBy: mockRepGroupBy,
-			create: mockRepresentationCreate
+			create: mockRepresentationCreate,
+			count: mockRepresentationCount
 		};
 	}
 	get representationAttachment() {

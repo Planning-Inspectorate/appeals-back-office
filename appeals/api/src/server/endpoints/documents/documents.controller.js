@@ -191,8 +191,14 @@ const addDocumentVersion = async (req, res) => {
 					decisionLetterHtmlLink
 				])
 			});
-			if (body.correctionNotice) {
-				sendNewDecisionLetter(appeal, body.correctionNotice, req.get('azureAdUserId') || '');
+			if (body.correctionNotice && auditTrail) {
+				sendNewDecisionLetter(
+					appeal,
+					body.correctionNotice,
+					req.get('azureAdUserId') || '',
+					req.notifyClient,
+					req.body.document.receivedDate
+				);
 			}
 		} else {
 			auditTrail = await createAuditTrail({
