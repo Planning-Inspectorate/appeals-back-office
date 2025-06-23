@@ -25,4 +25,12 @@ router
 		asyncHandler(controller.postAssignInspector)
 	);
 
+router
+	.route('/check-details')
+	.get(asyncHandler(controller.getCheckDetails))
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postCheckDetails)
+	);
+
 export default router;
