@@ -194,6 +194,7 @@ export const addressListForTrainers = addressesList.map((address) => ({
  * @param {string} appealTypeShorthand
  * @returns {import('#db-client').Prisma.LPAQuestionnaireCreateWithoutAppealInput | undefined}
  */
+/* eslint-disable no-fallthrough */
 export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 	switch (appealTypeShorthand) {
 		case APPEAL_CASE_TYPE.D:
@@ -211,6 +212,38 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 				isGreenBelt: randomBool()
 			};
 		case APPEAL_CASE_TYPE.W:
+			return {
+				siteSafetyDetails: 'There may be no mobile reception at the site',
+				siteAccessDetails:
+					'There is a tall hedge around the site which obstructs the view of the site',
+				inConservationArea: true,
+				isCorrectAppealType: true,
+				lpaStatement: null,
+				newConditionDetails: null,
+				lpaCostsAppliedFor: false,
+				lpaqCreatedDate: new Date(2023, 4, 9),
+				lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9),
+				isGreenBelt: randomBool(),
+				isAonbNationalLandscape: randomBool(),
+				affectsScheduledMonument: randomBool(),
+				hasProtectedSpecies: randomBool(),
+				isGypsyOrTravellerSite: randomBool(),
+				eiaColumnTwoThreshold: randomBool(),
+				eiaRequiresEnvironmentalStatement: randomBool(),
+				hasInfrastructureLevy: randomBool(),
+				isInfrastructureLevyFormallyAdopted: randomBool(),
+				infrastructureLevyAdoptedDate: randomBool() ? new Date(2023, 4, 9) : null,
+				infrastructureLevyExpectedDate: randomBool() ? new Date(2023, 4, 9) : null,
+				eiaEnvironmentalImpactSchedule: randomEnumValue(APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE),
+				eiaDevelopmentDescription: randomEnumValue(APPEAL_EIA_DEVELOPMENT_DESCRIPTION, false),
+				lpaProcedurePreference: randomEnumValue(APPEAL_LPA_PROCEDURE_PREFERENCE),
+				lpaProcedurePreferenceDetails: randomArrayValue(['Need for a detailed examination', null]),
+				lpaProcedurePreferenceDuration: randomArrayValue(procedureDurationPossibleValues),
+				eiaSensitiveAreaDetails: randomArrayValue(['test sensitive area details text', null]),
+				consultedBodiesDetails: randomArrayValue(['test consulted bodies details text', null]),
+				reasonForNeighbourVisits: randomArrayValue(['test reason for neighbour visits text', null]),
+				designatedSiteNameCustom: 'A custom value'
+			};
 		case APPEAL_CASE_TYPE.Y:
 			return {
 				siteSafetyDetails: 'There may be no mobile reception at the site',
@@ -227,6 +260,12 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 				eiaColumnTwoThreshold: randomBool(),
 				eiaRequiresEnvironmentalStatement: randomBool(),
 				hasInfrastructureLevy: randomBool(),
+				preserveGrantLoan: randomBool(),
+				historicEnglandConsultation: randomBool(),
+				isAonbNationalLandscape: randomBool(),
+				affectsScheduledMonument: randomBool(),
+				hasProtectedSpecies: randomBool(),
+				isGypsyOrTravellerSite: randomBool(),
 				isInfrastructureLevyFormallyAdopted: randomBool(),
 				infrastructureLevyAdoptedDate: randomBool() ? new Date(2023, 4, 9) : null,
 				infrastructureLevyExpectedDate: randomBool() ? new Date(2023, 4, 9) : null,
@@ -244,6 +283,7 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 			return;
 	}
 }
+/* eslint-disable no-fallthrough */
 
 /**
  * Sample incomplete review questionnaire data.
@@ -393,14 +433,12 @@ export const getRandomisedAppellantCaseCreateInput = (appealTypeShorthand) => {
 
 	switch (appealTypeShorthand) {
 		case APPEAL_CASE_TYPE.W:
-		case APPEAL_CASE_TYPE.Y:
 			appellantCaseCreateInput.agriculturalHolding = randomBool();
 			appellantCaseCreateInput.tenantAgriculturalHolding =
 				appellantCaseCreateInput.agriculturalHolding && randomBool();
 			appellantCaseCreateInput.otherTenantsAgriculturalHolding =
 				appellantCaseCreateInput.agriculturalHolding && randomBool();
 			appellantCaseCreateInput.informedTenantsAgriculturalHolding = true;
-			break;
 		default:
 			break;
 	}
