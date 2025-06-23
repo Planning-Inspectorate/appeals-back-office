@@ -18,6 +18,16 @@ router
 	);
 
 router
+	.route('/estimation')
+	.get(asyncHandler(controller.getInquiryEstimation))
+	.post(
+		validators.validateYesNoInput,
+		validators.validateEstimationInput,
+		saveBodyToSession('setUpInquiry'),
+		asyncHandler(controller.postInquiryEstimation)
+	);
+
+router
 	.route('/address')
 	.get(asyncHandler(controller.getInquiryAddress))
 	.post(
