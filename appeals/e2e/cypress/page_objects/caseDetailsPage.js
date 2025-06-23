@@ -30,6 +30,7 @@ export class CaseDetailsPage extends Page {
 		addCrossTeamCorrespondence: 'add-cross-team-correspondence',
 		addInspectorCorrespondence: 'add-inspector-correspondence',
 		addMainPartyCorrespondence: 'add-main-party-correspondence',
+		addCostsDecision: 'issue-appellant-costs-decision',
 		manageCrossTeamCorrespondence: 'manage-cross-team-correspondence',
 		manageInspectorCorrespondence: 'manage-inspector-correspondence',
 		manageMainPartyCorrespondence: 'manage-main-party-correspondence',
@@ -39,7 +40,8 @@ export class CaseDetailsPage extends Page {
 		addNotifyingParties: 'add-notifying-parties',
 		manageNotifyingParties: 'manage-notifying-parties',
 		manageAgreementToChangeDescriptionEvidence: 'manage-agreement-to-change-description-evidence',
-		addCostsDecision: 'add-costs-decision',
+		issueCostsDecision: 'issue-appellant-costs-decision',
+		addAppellantApplication: 'add-costs-appellant-application',
 		changeSiteOwnership: 'change-site-ownership',
 		changeLpaqDueDate: 'change-lpa-questionnaire-due-date',
 		changeStartDate: 'change-start-case-date',
@@ -99,7 +101,8 @@ export class CaseDetailsPage extends Page {
 		addNotifiyingParties: () => cy.getByData(this._cyDataSelectors.addNotifyingParties),
 		manageAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.manageAgreementToChangeDescriptionEvidence),
-		addCostsDecision: () => cy.getByData(this._cyDataSelectors.addCostsDecision),
+		issueCostsDecision: () => cy.getByData(this._cyDataSelectors.addCostsDecision),
+		addAppellantApplication: () => cy.getByData(this._cyDataSelectors.addAppellantApplication),
 		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status'),
 		changeSiteOwnership: () => cy.getByData(this._cyDataSelectors.changeSiteOwnership),
 		changeLpaqDueDate: () => cy.getByData(this._cyDataSelectors.changeLpaqDueDate), // refactor this
@@ -131,7 +134,7 @@ export class CaseDetailsPage extends Page {
 		manageCostDecision: () =>
 			cy
 				.get('.govuk-table__row')
-				.contains('Costs decision')
+				.contains('Appellant application')
 				.siblings()
 				.eq(1)
 				.children()
@@ -202,8 +205,8 @@ export class CaseDetailsPage extends Page {
 	}
 
 	searchForCaseOfficer(text) {
-		this.fillInput(text);
-		this.clickButtonByText('Search');
+		this.fillUsersInput(text);
+		this.clickButtonByText('Continue');
 	}
 
 	clickAddAdditionalDocs() {
@@ -324,8 +327,12 @@ export class CaseDetailsPage extends Page {
 		this.elements.changeAppealType().click();
 	}
 
-	clickAddCostsDecision() {
-		this.elements.addCostsDecision().click();
+	clickIssueCostsDecision() {
+		this.elements.issueCostsDecision().click();
+	}
+
+	clickAddAppellantApplication() {
+		this.elements.addAppellantApplication().click();
 	}
 
 	clickChangeSiteOwnership() {

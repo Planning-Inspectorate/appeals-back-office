@@ -37,8 +37,11 @@ describe('Issue Decision', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.fillTextArea('The appeal is invalid because of X reason', 0);
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.chooseCheckboxByIndex(0);
-			caseDetailsPage.clickButtonByText('Send Decision');
+			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.clickButtonByText('Issue decision');
 			caseDetailsPage.checkStatusOfCase('Invalid', 0);
 		});
 	});
