@@ -112,7 +112,7 @@ export const getCheckDetails = async (request, response) => {
 export const postCheckDetails = async (request, response) => {
 	const {
 		session: {
-			user: { assigneeId }
+			user: { id }
 		},
 		currentAppeal: { appealId },
 		baseUrl
@@ -121,7 +121,7 @@ export const postCheckDetails = async (request, response) => {
 	const isInspector = baseUrl.includes('inspector');
 
 	try {
-		await setAppealAssignee(request.apiClient, appealId, assigneeId, isInspector);
+		await setAppealAssignee(request.apiClient, appealId, id, isInspector);
 
 		addNotificationBannerToSession({
 			session: request.session,
