@@ -157,7 +157,9 @@ export const postInquiryAddress = async (request, response) => {
 		);
 	}
 
-	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable`);
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/inquiry/setup/address-details`
+	);
 };
 
 /**
@@ -199,7 +201,9 @@ export const postInquiryAddressDetails = async (request, response) => {
 
 	const { appealId } = request.currentAppeal;
 
-	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable`);
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable-due-dates`
+	);
 };
 
 /**
@@ -234,7 +238,9 @@ export const postChangeInquiryAddress = async (request, response) => {
 		);
 	}
 
-	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/change/timetable`);
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/inquiry/change/address-details`
+	);
 };
 
 /**
@@ -269,5 +275,7 @@ export const postChangeInquiryAddressDetails = async (request, response) => {
 
 	const { appealId } = request.currentAppeal;
 
-	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/change/timetable`);
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/inquiry/change/timetable-due-dates`
+	);
 };

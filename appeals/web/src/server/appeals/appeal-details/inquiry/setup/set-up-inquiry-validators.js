@@ -23,7 +23,7 @@ export const validateYesNoInput = createYesNoRadioValidator(
 
 export const validateEstimationInput = createValidator(
 	body('inquiryEstimationDays')
-		.if(body('inquiryEstimationYesNo').notEmpty().bail())
+		.if(body('inquiryEstimationYesNo').equals('yes'))
 		.trim()
 		.notEmpty()
 		.withMessage(capitalize('Enter the expected number of days to carry out the inquiry'))
