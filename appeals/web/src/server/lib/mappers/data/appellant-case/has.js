@@ -21,6 +21,7 @@ import { mapApplicationForm } from './submappers/application-form.js';
 import { mapDecisionLetter } from './submappers/decision-letter.js';
 import { mapAppealStatement } from './submappers/appeal-statement.js';
 import { mapCostsDocument } from './submappers/costs-document.js';
+import { mapRelatedAppeals } from './submappers/related-appeals.js';
 
 export const submaps = {
 	appellant: mapAppellant,
@@ -45,5 +46,6 @@ export const submaps = {
 	appealStatement: mapAppealStatement,
 	costsDocument: mapCostsDocument,
 	additionalDocuments: mapAdditionalDocuments,
-	reviewOutcome: mapReviewOutcome
+	reviewOutcome: mapReviewOutcome,
+	relatedAppeals: mapRelatedAppeals
 };

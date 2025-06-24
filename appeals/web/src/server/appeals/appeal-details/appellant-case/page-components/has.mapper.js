@@ -100,9 +100,10 @@ export function generateHASComponents(
 				mappedAppellantCaseData.applicationReference.display.summaryListItem,
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
+				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
+				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
-				mappedAppellantCaseData.decisionLetter.display.summaryListItem,
-				mappedAppellantCaseData.applicationDecision.display.summaryListItem
+				mappedAppellantCaseData.decisionLetter.display.summaryListItem
 			]
 		}
 	};
