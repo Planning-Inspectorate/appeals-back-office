@@ -27,6 +27,7 @@ export class Page {
 		errorMessage: '.govuk-error-message',
 		formGroup: '.govuk-form-group',
 		fullColumn: '.govuk-grid-column-full',
+		twoThirdColumn: '.govuk-grid-column-two-thirds',
 		headingLeft: '.govuk-heading-l',
 		input: '.govuk-input',
 		leftCol: '.pins-column--left',
@@ -116,7 +117,10 @@ export class Page {
 		projectManagement: () => cy.get(this.selectors.projectManagement),
 		unpublishLink: () => cy.get(this.selectors.unpublish),
 		errorMessageLink: (link) => cy.get(`a[href='#${link}']`),
-		serviceHeader: () => cy.get(this.selectors.serviceHeader)
+		serviceHeader: () => cy.get(this.selectors.serviceHeader),
+		xlHeader: () => cy.get(this.selectors.xlHeader),
+		twoThirdColumn: () => cy.get(this.selectors.twoThirdColumn),
+		link: () => cy.get(this.selectors.link)
 	};
 
 	/********************************************************

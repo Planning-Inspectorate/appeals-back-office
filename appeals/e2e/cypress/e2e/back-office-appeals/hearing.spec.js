@@ -1,3 +1,4 @@
+// @ts-nocheck
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
@@ -232,6 +233,24 @@ describe('Setup hearing and add hearing estimates', () => {
 			hearingSectionPage.verifyHearingHeader(headers.hearing.dateTime);
 			caseDetailsPage.clickBackLink();
 			caseDetailsPage.verifyAppealRefOnCaseDetails(`Appeal ${caseRef}`);
+		});
+	});
+	// Verify you see "You cannot check these answers"
+	it('should not allow re-setup of hearing if already submitted', () => {
+		const date = cy.getBusinessActualDate(currentDate, 2).then((date) => {
+			date.setHours(currentDate.getHours(), currentDate.getMinutes());
+			//caseDetailsPage.clickAccordionByButton('Hearing');
+			caseDetailsPage.clickButtonByText('Set up hearing');
+			hearingSectionPage.setUpHearing(date, '10', '30');
+			hearingSectionPage.selectRadioButtonByValue('No');
+			hearingSectionPage.clickButtonByText('Continue');
+			hearingSectionPage.clickButtonByText('Set up hearing');
+			caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
+			cy.go('back');
+			//hearingSectionPage.clickButtonByText('Set up hearing');
+			//caseDetailsPage.validateSectionHeader('You cannot check these answers')
+			//caseDetailsPage.validatebo
+			hearingSectionPage.verifyYouCannotCheckTheseAnswersPage();
 		});
 	});
 

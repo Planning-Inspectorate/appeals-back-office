@@ -1,4 +1,5 @@
 // @ts-nocheck
+
 import { CaseDetailsPage } from '../caseDetailsPage';
 import { DateTimeSection } from '../dateTimeSection.js';
 
@@ -92,5 +93,11 @@ export class HearingSectionPage extends CaseDetailsPage {
 
 	verifyHearingHeader(sectionHeader) {
 		this.hearingSectionElements.hearingSectionHeader().should('contain.text', sectionHeader);
+	}
+
+	verifyYouCannotCheckTheseAnswersPage() {
+		this.basePageElements.xlHeader().contains('You cannot check these answers');
+		this.basePageElements.twoThirdColumn();
+		this.basePageElements.link().contains('appeal details');
 	}
 }
