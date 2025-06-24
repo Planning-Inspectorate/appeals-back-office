@@ -40,6 +40,7 @@ export const validateCaseDocumentId = async (req, res, next) => {
 export const clearUncommittedFilesFromSession = (req, res, next) => {
 	if (req.session.fileUploadInfo) {
 		delete req.session.fileUploadInfo;
+		delete req.session.inspectorDecision;
 	}
 	next();
 };

@@ -4882,7 +4882,7 @@
 					}
 				],
 				"responses": {
-					"201": {
+					"200": {
 						"description": "Returns the notification list",
 						"content": {
 							"application/json": {
@@ -5257,7 +5257,40 @@
 				}
 			}
 		},
-		"/appeals/linkable-appeal/{appealReference}": {
+		"/appeals/{appealReference}/notify-emails-sent": {
+			"get": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to retrieve an array of notify emails sent for this appeal reference",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/linkable-appeal/{appealReference}/{linkableType}": {
 			"get": {
 				"tags": ["Linkable appeals"],
 				"description": "Gets a single related appeal by id from BO or Horizon. If mocking use 1000000 for valid case on horizon, 2000000 for unpublished case on horizon, any for case not found on horizon",
@@ -5270,6 +5303,14 @@
 							"type": "string"
 						},
 						"description": "Appeal Reference"
+					},
+					{
+						"name": "linkableType",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
 					},
 					{
 						"name": "azureAdUserId",
@@ -13213,6 +13254,18 @@
 							"minor-traveller-caravan",
 							"other-major",
 							"other-minor"
+						]
+					},
+					"typeOfPlanningApplication": {
+						"type": "string",
+						"nullable": true,
+						"enum": [
+							"full-appeal",
+							"householder-planning",
+							"outline-planning",
+							"prior-approval",
+							"removal-or-variation-of-conditions",
+							"reserved-matters"
 						]
 					},
 					"validation": {
@@ -31992,6 +32045,18 @@
 							"minor-traveller-caravan",
 							"other-major",
 							"other-minor"
+						]
+					},
+					"typeOfPlanningApplication": {
+						"type": "string",
+						"nullable": true,
+						"enum": [
+							"full-appeal",
+							"householder-planning",
+							"outline-planning",
+							"prior-approval",
+							"removal-or-variation-of-conditions",
+							"reserved-matters"
 						]
 					},
 					"appellantCaseValidationOutcomeId": {

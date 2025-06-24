@@ -67,6 +67,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "typeOfPlanningApplication": "householder-planning",
 }
 `;
 
@@ -144,6 +145,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "typeOfPlanningApplication": "full-appeal",
 }
 `;
 
@@ -214,6 +216,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "typeOfPlanningApplication": "householder-planning",
   "validation": {
     "outcome": "Valid",
   },
@@ -294,6 +297,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "typeOfPlanningApplication": "full-appeal",
   "validation": {
     "incompleteReasons": [
       {
@@ -383,6 +387,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "typeOfPlanningApplication": "householder-planning",
   "validation": {
     "incompleteReasons": [
       {
@@ -479,6 +484,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "typeOfPlanningApplication": "full-appeal",
   "validation": {
     "invalidReasons": [
       {
@@ -568,6 +574,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsAllLand": true,
     "ownsSomeLand": true,
   },
+  "typeOfPlanningApplication": "householder-planning",
   "validation": {
     "invalidReasons": [
       {

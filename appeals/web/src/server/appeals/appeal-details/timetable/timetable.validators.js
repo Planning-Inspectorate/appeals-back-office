@@ -2,7 +2,8 @@ import {
 	createDateInputFieldsValidator,
 	createDateInputDateValidityValidator,
 	createDateInputDateInFutureValidator,
-	createDateInputDateBusinessDayValidator
+	createDateInputDateBusinessDayValidator,
+	extractAndProcessDateErrors
 } from '#lib/validators/date-input.validator.js';
 import { getAppealTimetableTypes } from './timetable.mapper.js';
 
@@ -61,6 +62,19 @@ export const selectTimetableValidators = (req) => {
 		const { id, label } = validatorsMap[timetableType];
 		validatorsList.push(...createTimetableValidators(id, label));
 	});
-
+	validatorsList.push(
+		extractAndProcessDateErrors({
+			fieldNamePrefix: 'lpa-questionnaire-due-date'
+		}),
+		extractAndProcessDateErrors({
+			fieldNamePrefix: 'lpa-statement-due-date'
+		}),
+		extractAndProcessDateErrors({
+			fieldNamePrefix: 'ip-comments-due-date'
+		}),
+		extractAndProcessDateErrors({
+			fieldNamePrefix: 'final-comments-due-date'
+		})
+	);
 	return validatorsList;
 };

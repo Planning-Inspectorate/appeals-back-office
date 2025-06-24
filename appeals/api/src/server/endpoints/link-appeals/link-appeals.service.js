@@ -2,27 +2,32 @@
 
 /**
  * Checks if an appeal is linked to other appeals as a parent.
- * @param {{ childAppeals?: unknown[] }} appeal The appeal to check for linked appeals.
+ * @param {{ childAppeals?: any[] }} appeal The appeal to check for linked appeals.
+ * @param {string} type The linkable type to check for.
  * @returns {boolean}
  */
-const isAppealLead = (appeal) => (appeal.childAppeals || []).length > 0;
+const isAppealLead = (appeal, type) =>
+	Boolean(appeal.childAppeals?.some((childAppeal) => childAppeal.type === type));
 
 /**
  * Checks if an appeal is linked to other appeals as a child.
- * @param {{ parentAppeals?: unknown[] }} appeal The appeal to check for linked appeals.
+ * @param {{ parentAppeals?: any[] }} appeal The appeal to check for linked appeals.
+ * @param {string} type The linkable type to check for.
  * @returns {boolean}
  */
-const isAppealChild = (appeal) => (appeal.parentAppeals || []).length > 0;
+const isAppealChild = (appeal, type) =>
+	Boolean(appeal.parentAppeals?.some((parentAppeal) => parentAppeal.type === type));
 
 /**
  * Checks if an appeal can be linked, with a specific relationship type (parent/child).
  * @param {{ childAppeals?: unknown[], parentAppeals?: unknown[] }} appeal The appeal to check for linked appeals.
+ * @param {string} type The linkable type to check for.
  * @param {'lead'|'child'} relationship The relationship to check for.
  * @returns {boolean}
  */
-export const canLinkAppeals = (appeal, relationship) => {
-	const isLead = isAppealLead(appeal);
-	const isChild = isAppealChild(appeal);
+export const canLinkAppeals = (appeal, type, relationship) => {
+	const isLead = isAppealLead(appeal, type);
+	const isChild = isAppealChild(appeal, type);
 
 	return relationship === 'lead' ? !isChild : !isChild && !isLead;
 };

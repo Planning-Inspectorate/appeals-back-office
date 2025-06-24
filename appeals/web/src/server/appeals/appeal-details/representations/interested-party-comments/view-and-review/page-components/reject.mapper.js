@@ -131,11 +131,15 @@ export function rejectCheckYourAnswersPage(
 					value: { html: attachmentsList || 'No documents' },
 					actions: {
 						items: [
-							{
-								text: 'Manage',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/manage-documents/${folderId}/?backUrl=/interested-party-comments/${comment.id}/reject/check-your-answers`,
-								visuallyHiddenText: 'supporting documents'
-							},
+							...(attachmentsList && attachmentsList.length > 0
+								? [
+										{
+											text: 'Manage',
+											href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/manage-documents/${folderId}/?backUrl=/interested-party-comments/${comment.id}/reject/check-your-answers`,
+											visuallyHiddenText: 'supporting documents'
+										}
+								  ]
+								: []),
 							{
 								text: 'Add',
 								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/add-document/?backUrl=/interested-party-comments/${comment.id}/reject/check-your-answers`,

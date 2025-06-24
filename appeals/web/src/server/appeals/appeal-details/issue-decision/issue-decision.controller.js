@@ -12,7 +12,7 @@ import {
 } from '../../appeal-documents/appeal-documents.controller.js';
 
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
@@ -20,7 +20,10 @@ import { cloneDeep } from 'lodash-es';
 import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
 import { createNewDocument } from '#app/components/file-uploader.component.js';
 import { getTodaysISOString } from '#lib/dates.js';
-import { DECISION_TYPE_INSPECTOR } from '@pins/appeals/constants/support.js';
+import {
+	DECISION_TYPE_APPELLANT_COSTS,
+	DECISION_TYPE_INSPECTOR
+} from '@pins/appeals/constants/support.js';
 import {
 	baseUrl,
 	buildLogicData,
@@ -28,11 +31,13 @@ import {
 	getDecisions,
 	mapDecisionOutcome
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
+import { isStatePassed } from '#lib/appeal-status.js';
 
 /**
  * @typedef {import('../../../appeals/appeal-documents/appeal-documents.types.js').FileUploadInfoItem} FileUploadInfoItem
  * @typedef {import('@pins/express/types/express.js').Request & {specificDecisionType?: string}} Request
  * @typedef {import("express-session").Session & Partial<import("express-session").SessionData>} Session
+ * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
  */
 
 /**
@@ -151,7 +156,9 @@ export const postDecisionLetterUpload = async (request, response) => {
 
 	let nextPageUrl;
 
-	if (appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued) {
+	if (shouldFollowReIssueDecisionFlow(currentAppeal)) {
+		nextPageUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/update-decision-letter/correction-notice`;
+	} else if (appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued) {
 		nextPageUrl = `${baseUrl(currentAppeal)}/appellant-costs-decision`;
 	} else if (lpaHasAppliedForCosts && !lpaDecisionHasAlreadyBeenIssued) {
 		nextPageUrl = `${baseUrl(currentAppeal)}/lpa-costs-decision`;
@@ -183,6 +190,9 @@ export const renderDecisionLetterUpload = async (request, response) => {
 	};
 
 	restoreFileUploadInfo(request.session, 'inspectorDecision');
+	const captionSuffix = shouldFollowReIssueDecisionFlow(currentAppeal)
+		? 'update decision letter'
+		: 'issue decision';
 
 	await renderDocumentUpload({
 		request,
@@ -194,7 +204,7 @@ export const renderDecisionLetterUpload = async (request, response) => {
 		pageHeadingTextOverride: 'Decision letter',
 		preHeadingTextOverride: `Appeal ${appealShortReference(
 			currentAppeal.appealReference
-		)} - issue decision`,
+		)} - ${captionSuffix}`,
 		uploadContainerHeadingTextOverride: 'Upload decision letter',
 		documentTitle: 'decision letter',
 		allowMultipleFiles: false,
@@ -526,7 +536,7 @@ export const renderCheckDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postCostsCheckDecision = async (request, response) => {
-	const { errors, currentAppeal, session, params, apiClient } = request;
+	const { errors, currentAppeal, session, params, apiClient, specificDecisionType } = request;
 	const { appealId } = params;
 
 	if (!currentAppeal) {
@@ -556,9 +566,14 @@ export const postCostsCheckDecision = async (request, response) => {
 
 	await postInspectorDecision(apiClient, appealId, [decisionToPost]);
 
+	const bannerDefinitionKey =
+		specificDecisionType === DECISION_TYPE_APPELLANT_COSTS
+			? 'appellantCostsDecisionIssued'
+			: 'lpaCostsDecisionIssued';
+
 	addNotificationBannerToSession({
 		session: request.session,
-		bannerDefinitionKey: 'issuedDecisionValid',
+		bannerDefinitionKey,
 		appealId
 	});
 
@@ -601,4 +616,12 @@ export const renderViewDecision = async (request, response) => {
 		pageContent: mappedPageContent,
 		viewOnly: true
 	});
+};
+
+/**
+ * entering re-issue decision flow if appeal state is already complete
+ * @param {Appeal} currentAppeal
+ */
+const shouldFollowReIssueDecisionFlow = (currentAppeal) => {
+	return isStatePassed(currentAppeal, APPEAL_CASE_STATUS.ISSUE_DETERMINATION);
 };

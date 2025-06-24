@@ -43,7 +43,18 @@ export const summaryList = (
 								}
 							}
 						]
-					}
+					},
+					...(!displayRedactedComment && {
+						actions: {
+							items: [
+								{
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
+									text: 'Redact',
+									visuallyHiddenText: 'Redact statement'
+								}
+							]
+						}
+					})
 				},
 				...(displayRedactedComment
 					? [

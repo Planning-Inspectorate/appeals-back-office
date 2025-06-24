@@ -5,6 +5,7 @@ import {
 import { getRequiredActionsForAppeal } from './required-actions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
+import config from '../../../../../environment/config.js';
 
 /** @typedef {import('./required-actions.js').AppealRequiredAction} AppealRequiredAction */
 /** @typedef {import('../components/index.js').NotificationBannerDefinitionKey} NotificationBannerDefinitionKey */
@@ -56,7 +57,9 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				bannerDefinitionKey,
 				html: `<p class="govuk-notification-banner__heading">Appeal ready to be assigned to case officer</p><p><a class="govuk-notification-banner__link" href="${addBackLinkQueryToUrl(
 					request,
-					`/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/case-officer`
+					config.featureFlags.featureFlagSimplifyTeamAssignment
+						? `/appeals-service/appeal-details/${appealDetails.appealId}/assign-case-officer/search-case-officer`
+						: `/appeals-service/appeal-details/${appealDetails.appealId}/assign-user/case-officer`
 				)}" data-cy="banner-assign-case-officer">Assign case officer</a></p>`
 			});
 		case 'readyForDecision':
@@ -166,7 +169,7 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		case 'addHearingAddress': {
 			return createNotificationBanner({
 				bannerDefinitionKey,
-				html: `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				html: `<a class="govuk-link" data-cy="add-hearing-address" href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/hearing/change/address-details`
 				)}">Add hearing address</a>`
@@ -175,7 +178,7 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		case 'setupHearing': {
 			return createNotificationBanner({
 				bannerDefinitionKey,
-				html: `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				html: `<a class="govuk-link" data-cy="setup-hearing" href="${addBackLinkQueryToUrl(
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/hearing/setup/date`
 				)}">Set up hearing</a>`

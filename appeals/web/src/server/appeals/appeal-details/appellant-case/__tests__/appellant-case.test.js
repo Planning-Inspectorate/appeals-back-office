@@ -25,7 +25,8 @@ import {
 	fileUploadInfo,
 	text300Characters,
 	text301Characters,
-	appealDataListedBuilding
+	appealDataListedBuilding,
+	appealDataCasPlanning
 } from '#testing/app/fixtures/referencedata.js';
 import { cloneDeep } from 'lodash-es';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
@@ -36,7 +37,12 @@ import {
 	calculateIncompleteDueDate,
 	oneMonthBefore
 } from '#lib/dates.js';
-import { APPEAL_CASE_STATUS, APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import {
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_STAGE,
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
+} from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -116,7 +122,10 @@ describe('appellant-case', () => {
 				});
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+				});
 
 			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
 			const element = parseHtml(response.text);
@@ -166,7 +175,10 @@ describe('appellant-case', () => {
 				});
 			nock('http://test/')
 				.get('/appeals/3/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LISTED_BUILDING
+				});
 
 			const response = await request.get(`${baseUrl}/3${appellantCasePagePath}`);
 			const element = parseHtml(response.text);
@@ -206,6 +218,37 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'How many witnesses would you expect to give evidence at the inquiry?</dt>'
 			);
+		});
+
+		it('should render the appellant case page with the expected content (CAS planning)', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataCasPlanning,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					typeOfPlanningApplication:
+						APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
+				});
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('1. Appellant details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('2. Site details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('4. Appeal details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('5. Upload documents</h2>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Additional documents</h2>');
 		});
 
 		it('should render review outcome form fields and controls when the appeal is in "validation" status', async () => {
@@ -2713,7 +2756,6 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain('Date day must be a number</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		describe('should re-render the update date page with the expected error message if an invalid month was provided', () => {
@@ -2761,7 +2803,6 @@ describe('appellant-case', () => {
 
 					expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 					expect(unprettifiedErrorSummaryHtml).toContain(expectedErrorMessageHtml);
-					expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 				});
 			});
 		});
@@ -2789,7 +2830,6 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be 4 digits</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid year "abc" was provided', async () => {
@@ -2815,7 +2855,6 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be a number</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid date was provided', async () => {

@@ -20,6 +20,7 @@ function formatDate(date, shortened = true) {
 
 /**
  * Format the given date as an HH:mm string in Europe/London
+ * Example return value: 13:00
  *
  * @param {Date | undefined} date
  * @returns {string} formatted time string,'HH:mm'
@@ -29,6 +30,20 @@ export const formatTime = (date) => {
 		return '';
 	}
 	return formatInTimeZone(new Date(date), DEFAULT_TIMEZONE, 'HH:mm');
+};
+
+/**
+ * Format the given date as an HH:mm string in Europe/London
+ * Example return value: 1:00pm
+ *
+ * @param {Date | undefined} date
+ * @returns {string} formatted time string,'HH:mm'
+ */
+export const formatTime12h = (date) => {
+	if (!date) {
+		return '';
+	}
+	return formatInTimeZone(new Date(date), DEFAULT_TIMEZONE, 'h:mmaaa');
 };
 
 /**

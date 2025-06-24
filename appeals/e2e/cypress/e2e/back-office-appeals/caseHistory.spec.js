@@ -48,12 +48,12 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 				caseDetailsPage.clickChangeSiteOwnership();
 				caseDetailsPage.selectRadioButtonByValue('Owns some of the land');
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage('Site ownership updated');
+				caseDetailsPage.validateBannerMessage('Success', 'Site ownership updated');
 				caseDetailsPage.clickBackLink();
 				caseDetailsPage.clickAccordionByButton('Case management');
 				caseDetailsPage.clickViewCaseHistory();
 				caseDetailsPage.verifyTableCellTextCaseHistory(
-					'Document sample-file.doc uploaded (version 2)'
+					`'Agreement to change description evidence' updated to sample-file.doc`
 				);
 				caseDetailsPage.verifyTableCellTextCaseHistory('Site ownership updated');
 			});

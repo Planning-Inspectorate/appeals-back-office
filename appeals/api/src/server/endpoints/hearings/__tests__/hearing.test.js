@@ -1,9 +1,9 @@
+// @ts-nocheck
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 
 import { fullPlanningAppeal as fullPlanningAppealData } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { omit } from 'lodash-es';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -126,25 +126,38 @@ describe('hearing routes', () => {
 		});
 
 		describe('PATCH', () => {
-			test('updates a single hearing with address', async () => {
-				const { hearing } = fullPlanningAppeal;
+			const hearingAddress = {
+				addressLine1: 'Court 2',
+				addressLine2: '24 Court Street',
+				country: 'United Kingdom',
+				county: 'Test County',
+				postcode: 'AB12 3CD',
+				town: 'Test Town'
+			};
+			const hearing = {
+				id: 1,
+				hearingStartTime: new Date('2999-01-01T12:00:00.000Z'),
+				hearingEndTime: new Date('2999-01-01T13:00:00.000Z'),
+				address: {
+					addressLine1: hearingAddress.addressLine1,
+					addressLine2: hearingAddress.addressLine2,
+					addressTown: hearingAddress.town,
+					addressCounty: hearingAddress.county,
+					postcode: hearingAddress.postcode,
+					addressCountry: hearingAddress.country
+				}
+			};
 
-				// @ts-ignore
+			test('updates a single hearing with address', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.hearing.update.mockResolvedValue(hearing);
 
 				const response = await request
 					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
 					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: hearing.address.postcode,
-							town: hearing.address.addressTown
-						}
+						hearingStartTime: '2999-01-01T12:00:00.000Z',
+						hearingEndTime: '2999-01-01T13:00:00.000Z',
+						address: hearingAddress
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -155,39 +168,73 @@ describe('hearing routes', () => {
 								id: fullPlanningAppeal.id
 							}
 						},
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
+						hearingStartTime: '2999-01-01T12:00:00.000Z',
+						hearingEndTime: '2999-01-01T13:00:00.000Z',
 						address: {
-							create: omit(hearing.address, 'id')
+							create: {
+								addressLine1: hearingAddress.addressLine1,
+								addressLine2: hearingAddress.addressLine2,
+								addressTown: hearingAddress.town,
+								addressCounty: hearingAddress.county,
+								postcode: hearingAddress.postcode,
+								addressCountry: hearingAddress.country
+							}
 						}
 					},
 					where: {
 						id: hearing.id
+					},
+					include: {
+						address: true
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: fullPlanningAppeal.id,
-						details: 'Hearing address updated to 96 The Avenue, Leftfield, MD21 5XY',
+						details:
+							'Hearing address updated to Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
 						loggedAt: expect.any(Date),
 						userId: 1
 					}
+				});
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					hearing_date: '1 January 2999',
+					hearing_time: '12:00pm',
+					hearing_address:
+						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom'
+				};
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'hearing-updated'
+				});
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'hearing-updated'
 				});
 
 				expect(response.status).toEqual(201);
 			});
 
 			test('updates a single hearing with addressId', async () => {
-				const { hearing } = fullPlanningAppeal;
-
-				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.hearing.update.mockResolvedValue(hearing);
 
 				const response = await request
 					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
 					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
+						hearingStartTime: '2999-01-01T12:00:00.000Z',
+						hearingEndTime: '2999-01-01T13:00:00.000Z',
 						addressId: 42
 					})
 					.set('azureAdUserId', azureAdUserId);
@@ -199,8 +246,8 @@ describe('hearing routes', () => {
 								id: fullPlanningAppeal.id
 							}
 						},
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
+						hearingStartTime: '2999-01-01T12:00:00.000Z',
+						hearingEndTime: '2999-01-01T13:00:00.000Z',
 						address: {
 							connect: {
 								id: 42
@@ -209,6 +256,9 @@ describe('hearing routes', () => {
 					},
 					where: {
 						id: hearing.id
+					},
+					include: {
+						address: true
 					}
 				});
 
@@ -216,10 +266,8 @@ describe('hearing routes', () => {
 			});
 
 			test('updates a single hearing with no address or hearingEndTime', async () => {
-				const { hearing } = fullPlanningAppeal;
-
-				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.hearing.update.mockResolvedValue(hearing);
 
 				const response = await request
 					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
@@ -238,6 +286,9 @@ describe('hearing routes', () => {
 					},
 					where: {
 						id: hearing.id
+					},
+					include: {
+						address: true
 					}
 				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -248,6 +299,31 @@ describe('hearing routes', () => {
 						userId: 1
 					}
 				});
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					hearing_date: '2 January 2999',
+					hearing_time: '12:00pm',
+					hearing_address:
+						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom'
+				};
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'hearing-updated'
+				});
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'hearing-updated'
+				});
 
 				expect(response.status).toEqual(201);
 			});
@@ -257,6 +333,7 @@ describe('hearing routes', () => {
 
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.hearing.update.mockResolvedValue({ ...hearing, address: null });
 
 				const response = await request
 					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
@@ -278,8 +355,13 @@ describe('hearing routes', () => {
 					},
 					where: {
 						id: hearing.id
+					},
+					include: {
+						address: true
 					}
 				});
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(201);
 			});
@@ -919,6 +1001,15 @@ describe('hearing routes', () => {
 
 	describe('/:appealId/hearing', () => {
 		describe('POST', () => {
+			const hearingAddress = {
+				addressLine1: 'Court 2',
+				addressLine2: '24 Court Street',
+				country: 'United Kingdom',
+				county: 'Test County',
+				postcode: 'AB12 3CD',
+				town: 'Test Town'
+			};
+
 			test('creates a single hearing with address', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
@@ -926,16 +1017,8 @@ describe('hearing routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/hearing`)
 					.send({
-						hearingStartTime: hearing.hearingStartTime,
-						hearingEndTime: hearing.hearingEndTime,
-						address: {
-							addressLine1: hearing.address.addressLine1,
-							addressLine2: hearing.address.addressLine2,
-							country: hearing.address.addressCountry,
-							county: hearing.address.addressCounty,
-							postcode: hearing.address.postcode,
-							town: hearing.address.addressTown
-						}
+						hearingStartTime: '2999-01-01T13:00:00.000Z',
+						address: hearingAddress
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -946,10 +1029,17 @@ describe('hearing routes', () => {
 								id: fullPlanningAppeal.id
 							}
 						},
-						hearingStartTime: hearing.hearingStartTime.toISOString(),
-						hearingEndTime: hearing.hearingEndTime.toISOString(),
+						hearingStartTime: '2999-01-01T13:00:00.000Z',
+						hearingEndTime: undefined,
 						address: {
-							create: omit(hearing.address, 'id')
+							create: {
+								addressLine1: hearingAddress.addressLine1,
+								addressLine2: hearingAddress.addressLine2,
+								addressTown: hearingAddress.town,
+								addressCounty: hearingAddress.county,
+								postcode: hearingAddress.postcode,
+								addressCountry: hearingAddress.country
+							}
 						}
 					}
 				});
@@ -965,6 +1055,31 @@ describe('hearing routes', () => {
 						});
 					}
 				);
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482',
+					hearing_date: '1 January 2999',
+					hearing_time: '1:00pm',
+					hearing_address:
+						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom'
+				};
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'hearing-set-up'
+				});
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'hearing-set-up'
+				});
 
 				expect(response.status).toEqual(201);
 			});
@@ -997,6 +1112,9 @@ describe('hearing routes', () => {
 						userId: 1
 					}
 				});
+
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(201);
 			});
@@ -1598,8 +1716,6 @@ describe('hearing routes', () => {
 					.delete(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(200);
-
 				expect(databaseConnector.hearing.delete).toHaveBeenCalledWith({
 					where: {
 						id: hearing.id
@@ -1613,6 +1729,29 @@ describe('hearing routes', () => {
 						userId: 1
 					}
 				});
+				const personalisation = {
+					appeal_reference_number: '1345264',
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					lpa_reference: '48269/APP/2021/1482'
+				};
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: fullPlanningAppeal.appellant.email,
+					templateName: 'hearing-cancelled'
+				});
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					notifyClient: expect.anything(),
+					personalisation,
+					recipientEmail: fullPlanningAppeal.lpa.email,
+					templateName: 'hearing-cancelled'
+				});
+
+				expect(response.status).toEqual(200);
 			});
 
 			test('returns an error if appealId is not a number', async () => {

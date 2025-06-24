@@ -726,7 +726,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(response.status).toEqual(400);
 		});
 
-		test('send notify comments and statements', async () => {
+		test('send notify comments and statements (written)', async () => {
 			const expectedSiteAddress = [
 				'addressLine1',
 				'addressLine2',
@@ -771,7 +771,11 @@ describe('/appeals/:id/reps/publish', () => {
 			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				notifyClient: expect.anything(),
-				personalisation: expectedEmailPayload,
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next:
+						'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.'
+				},
 				recipientEmail: appealS78.lpa.email,
 				templateName: 'received-statement-and-ip-comments-lpa'
 			});
@@ -779,7 +783,157 @@ describe('/appeals/:id/reps/publish', () => {
 			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 				notifyClient: expect.anything(),
-				personalisation: expectedEmailPayload,
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next:
+						'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.'
+				},
+				recipientEmail: appealS78.appellant.email,
+				templateName: 'received-statement-and-ip-comments-appellant'
+			});
+		});
+
+		test('send notify comments and statements (hearing not yet set up)', async () => {
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => mockAppeal.address[key])
+				.filter((value) => value)
+				.join(', ');
+
+			const expectedEmailPayload = {
+				lpa_reference: mockAppeal.applicationReference,
+				appeal_reference_number: mockAppeal.reference,
+				final_comments_deadline: '4 December 2024',
+				site_address: expectedSiteAddress
+			};
+
+			const appeal = {
+				...mockAppeal,
+				procedureType: 'hearing'
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ representationType: 'lpa_statement' }
+			]);
+			databaseConnector.representation.updateMany.mockResolvedValue([]);
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+				{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+			]);
+			databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'statements' })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			// eslint-disable-next-line no-undef
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+			// eslint-disable-next-line no-undef
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next:
+						'We will contact you when the hearing has been set up.'
+				},
+				recipientEmail: appealS78.lpa.email,
+				templateName: 'received-statement-and-ip-comments-lpa'
+			});
+
+			// eslint-disable-next-line no-undef
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next:
+						'We will contact you if we need any more information.'
+				},
+				recipientEmail: appealS78.appellant.email,
+				templateName: 'received-statement-and-ip-comments-appellant'
+			});
+		});
+
+		test('send notify comments and statements (hearing already set up)', async () => {
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => mockAppeal.address[key])
+				.filter((value) => value)
+				.join(', ');
+
+			const expectedEmailPayload = {
+				lpa_reference: mockAppeal.applicationReference,
+				appeal_reference_number: mockAppeal.reference,
+				final_comments_deadline: '4 December 2024',
+				site_address: expectedSiteAddress
+			};
+
+			const appeal = {
+				...mockAppeal,
+				procedureType: 'hearing',
+				hearing: {
+					hearingStartTime: new Date('2025-01-31')
+				}
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ representationType: 'lpa_statement' }
+			]);
+			databaseConnector.representation.updateMany.mockResolvedValue([]);
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+				{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+			]);
+			databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'statements' })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			// eslint-disable-next-line no-undef
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+			// eslint-disable-next-line no-undef
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next: 'The hearing is on 31 January 2025.'
+				},
+				recipientEmail: appealS78.lpa.email,
+				templateName: 'received-statement-and-ip-comments-lpa'
+			});
+
+			// eslint-disable-next-line no-undef
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next:
+						'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.'
+				},
 				recipientEmail: appealS78.appellant.email,
 				templateName: 'received-statement-and-ip-comments-appellant'
 			});
@@ -877,7 +1031,10 @@ describe('/appeals/:id/reps/publish', () => {
 			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				notifyClient: expect.anything(),
-				personalisation: expectedEmailPayload,
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next: ''
+				},
 				recipientEmail: appealS78.lpa.email,
 				templateName: 'final-comments-done-lpa'
 			});
@@ -885,7 +1042,10 @@ describe('/appeals/:id/reps/publish', () => {
 			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 				notifyClient: expect.anything(),
-				personalisation: expectedEmailPayload,
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next: ''
+				},
 				recipientEmail: appealS78.appellant.email,
 				templateName: 'final-comments-done-appellant'
 			});

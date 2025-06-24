@@ -124,6 +124,14 @@ const startCase = async (
 			const { type } = appeal.appealType || {};
 			const appealType = type?.endsWith(' appeal') ? type.replace(' appeal', '') : type;
 
+			const weWillEmailWhen =
+				procedureType === APPEAL_CASE_PROCEDURE.HEARING
+					? [
+							'to let you know when you can view information from other parties in the appeals service',
+							'when we set up your hearing'
+						]
+					: 'when you can view information from other parties in the appeals service.';
+
 			// Note that those properties not used within the specified template will be ignored
 			const commonEmailVariables = {
 				appeal_reference_number: appeal.reference,
@@ -142,7 +150,7 @@ const startCase = async (
 				comment_deadline: formatDate(new Date(timetable.commentDeadline || ''), false),
 				lpa_statement_deadline: formatDate(new Date(timetable.lpaStatementDueDate || ''), false),
 				ip_comments_deadline: formatDate(new Date(timetable.ipCommentsDueDate || ''), false),
-				final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false)
+				final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false),
 			};
 
 			if (appellantEmail) {
@@ -150,7 +158,12 @@ const startCase = async (
 					templateName: appellantTemplate,
 					notifyClient,
 					recipientEmail: appellantEmail,
-					personalisation: commonEmailVariables
+					personalisation: {
+						...commonEmailVariables,
+						we_will_email_when: weWillEmailWhen,
+						site_visit: appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN,
+						costs_info: appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN
+					}
 				});
 			}
 
@@ -159,7 +172,13 @@ const startCase = async (
 					templateName: lpaTemplate,
 					notifyClient,
 					recipientEmail: lpaEmail,
-					personalisation: commonEmailVariables
+					personalisation: {
+						...commonEmailVariables,
+						...(appeal.appealType?.key === APPEAL_CASE_TYPE.W && {
+							statement_of_common_ground_deadline: formatDate(new Date(timetable.statementOfCommonGroundDueDate || ''), false),
+							planning_obligation_deadline: formatDate(new Date(timetable.planningObligationDueDate || ''), false)
+						})
+					}
 				});
 			}
 

@@ -14,7 +14,7 @@ import {
 	completeLPAQuestionnaireOutcome,
 	incompleteLPAQuestionnaireOutcome
 } from '#tests/shared/mocks.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS, APPEAL_TYPE_OF_PLANNING_APPLICATION } from 'pins-data-model';
 
 export const auditTrails = [
 	{
@@ -173,7 +173,8 @@ export const householdAppeal = {
 		appellantProcedurePreference: 'Hearing',
 		appellantProcedurePreferenceDetails: 'Reason for preference',
 		appellantProcedurePreferenceDuration: 5,
-		appellantProcedurePreferenceWitnessCount: 1
+		appellantProcedurePreferenceWitnessCount: 1,
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
 	},
 	caseOfficer: {
 		id: 1,
@@ -267,7 +268,8 @@ export const fullPlanningAppeal = {
 		isAgriculturalHolding: true,
 		isAgriculturalHoldingTenant: true,
 		isDevelopmentDescriptionStillCorrect: false,
-		newDevelopmentDescription: 'A new extension has been added at the back'
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
 	},
 	representations: []
 };

@@ -52,7 +52,8 @@ const renderScheduleOrManageSiteVisit = async (request, response, pageType) => {
 			visitStartTimeHour,
 			visitStartTimeMinute,
 			visitEndTimeHour,
-			visitEndTimeMinute
+			visitEndTimeMinute,
+			errors
 		);
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {

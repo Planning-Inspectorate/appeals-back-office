@@ -9,6 +9,7 @@ import {
 	mapRepresentationDocumentSummaryActionLink,
 	mapFinalCommentRepresentationStatusToLabelText
 } from '#lib/representation-utilities.js';
+import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLPAFinalComments = ({ appealDetails, currentRoute, request }) => {
@@ -54,17 +55,22 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute, request }) =>
 		return dateISOStringToDisplayDate(receivedAt);
 	})();
 
-	return documentationFolderTableItem({
-		id: 'lpa-final-comments',
-		text: 'LPA final comments',
-		statusText,
-		receivedText,
-		actionHtml: mapRepresentationDocumentSummaryActionLink(
-			currentRoute,
-			appealDetails?.documentationSummary?.lpaFinalComments?.status,
-			appealDetails?.documentationSummary?.lpaFinalComments?.representationStatus,
-			'lpa-final-comments',
-			request
-		)
-	});
+	if (appealDetails?.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
+		const id = 'start-case-date';
+		return { id, display: {} };
+	} else {
+		return documentationFolderTableItem({
+			id: 'lpa-final-comments',
+			text: 'LPA final comments',
+			statusText,
+			receivedText,
+			actionHtml: mapRepresentationDocumentSummaryActionLink(
+				currentRoute,
+				appealDetails?.documentationSummary?.lpaFinalComments?.status,
+				appealDetails?.documentationSummary?.lpaFinalComments?.representationStatus,
+				'lpa-final-comments',
+				request
+			)
+		});
+	}
 };

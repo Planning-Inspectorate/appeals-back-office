@@ -2,14 +2,16 @@ export const ODW_SYSTEM_ID = 'back-office-appeals';
 export const APPEAL_START_RANGE = 6000000;
 
 export const EVENT_TYPE = Object.freeze({
-	SITE_VISIT: 'siteVisit'
+	SITE_VISIT: 'siteVisit',
+	HEARING: 'hearing'
 });
 
 export const FEATURE_FLAG_NAMES = Object.freeze({
 	SECTION_78: 'featureFlagS78Written',
 	SECTION_78_HEARING: 'featureFlagS78Hearing',
 	SECTION_78_INQUIRY: 'featureFlagS78Inquiry',
-	SECTION_20: 'featureFlagS20'
+	SECTION_20: 'featureFlagS20',
+	CAS: 'featureFlagCAS'
 });
 
 export const APPEAL_TYPE = Object.freeze({
@@ -30,7 +32,7 @@ export const APPEAL_TYPE = Object.freeze({
 
 /** @type {Object<string, string>} */
 export const PROCEDURE_TYPE_MAP = Object.freeze({
-	written: 'a written procedure',
+	written: 'written representations',
 	hearing: 'a hearing',
 	inquiry: 'an inquiry'
 });

@@ -23,5 +23,8 @@ export const validateAddNeighbouringSite = createValidator(
 );
 
 export const validateNeighbouringSiteDeleteAnswer = createValidator(
-	body('remove-neighbouring-site').trim().notEmpty().withMessage('Answer must be provided')
+	body('remove-neighbouring-site')
+		.trim()
+		.notEmpty()
+		.withMessage('Select yes if you want to remove this site')
 );

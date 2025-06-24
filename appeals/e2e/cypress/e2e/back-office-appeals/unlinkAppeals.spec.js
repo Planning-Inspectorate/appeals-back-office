@@ -24,6 +24,7 @@ describe('unlink appeals', () => {
 				caseDetailsPage.selectRadioButtonByValue('Yes, make this the lead appeal for ' + caseRef);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage(
+					'Success',
 					'This appeal is now a child appeal of ' + caseRefToLink
 				);
 				caseDetailsPage.checkStatusOfCase('Child', 1);
@@ -32,6 +33,7 @@ describe('unlink appeals', () => {
 				caseDetailsPage.selectRadioButtonByValue('Yes');
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage(
+					'Success',
 					'You have unlinked this appeal from appeal  ' + caseRef
 				);
 			});
@@ -50,6 +52,7 @@ describe('unlink appeals', () => {
 					caseDetailsPage.selectRadioButtonByValue('Yes, this is a child appeal of ' + caseRef);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
+						'Success',
 						'This appeal is now a lead appeal of ' + caseRefToLinkAsLead
 					);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
@@ -58,6 +61,7 @@ describe('unlink appeals', () => {
 					caseDetailsPage.selectRadioButtonByValue('Yes');
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
+						'Success',
 						'You have unlinked this appeal from appeal  ' + caseRef
 					);
 				});
@@ -79,6 +83,7 @@ describe('unlink appeals', () => {
 					);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
+						'Success',
 						'This appeal is now a child appeal of ' + caseRefToLinkAsLead
 					);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
@@ -90,6 +95,7 @@ describe('unlink appeals', () => {
 					);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
+						'Success',
 						'This appeal is now a child appeal of ' + caseRefToLinkAsLead
 					);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
@@ -98,6 +104,7 @@ describe('unlink appeals', () => {
 					caseDetailsPage.selectRadioButtonByValue('Yes');
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
+						'Success',
 						'You have unlinked this appeal from appeal  ' + caseRefToLinkAsLead
 					);
 				});

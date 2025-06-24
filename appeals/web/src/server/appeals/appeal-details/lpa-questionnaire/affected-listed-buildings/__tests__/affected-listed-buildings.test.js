@@ -30,7 +30,9 @@ describe('affected-listed-buildings', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Add affected listed building</h1>');
+			expect(elementInnerHtml).toContain('- add affected listed building</span>');
+			expect(elementInnerHtml).toContain('Affected listed building entry number</h1>');
+			expect(elementInnerHtml).toContain('This is a 7 digit number from Historic England</div>');
 		});
 	});
 
@@ -45,7 +47,9 @@ describe('affected-listed-buildings', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Add affected listed building</h1>');
+			expect(elementInnerHtml).toContain('- add affected listed building</span>');
+			expect(elementInnerHtml).toContain('Affected listed building entry number</h1>');
+			expect(elementInnerHtml).toContain('This is a 7 digit number from Historic England</div>');
 
 			const errorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -93,17 +97,17 @@ describe('affected-listed-buildings', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Check your answer</h1>');
-			expect(elementInnerHtml).toContain('Confirm</button>');
+			expect(elementInnerHtml).toContain('Check details and add affected listed building</h1>');
 
 			const summaryListHtml = parseHtml(response.text, {
 				rootElement: '.govuk-summary-list',
 				skipPrettyPrint: true
 			}).innerHTML;
-			expect(summaryListHtml).toContain('Listed building number</dt>');
+			expect(summaryListHtml).toContain('Affected listed building</dt>');
 			expect(summaryListHtml).toContain(
 				'<a href="https://historicengland.org.uk/listing/the-list/list-entry/12345" class="govuk-link" target="_blank">12345</a>'
 			);
+			expect(elementInnerHtml).toContain('Add affected listed building</button>');
 		});
 	});
 
@@ -138,11 +142,10 @@ describe('affected-listed-buildings', () => {
 			);
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-			expect(elementInnerHtml).toContain('Add affected listed buildings</h1>');
+			expect(elementInnerHtml).toContain('Affected listed buildings</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
-			expect(unprettifiedElement).toContain('Listed buildings</caption>');
-			expect(unprettifiedElement).toContain('Listed building</th>');
+			expect(unprettifiedElement).toContain('Listed building number</th>');
 			expect(unprettifiedElement).toContain('Action</th>');
 			expect(unprettifiedElement).toContain(
 				'Change<span class="govuk-visually-hidden"> listed building 123456</span></a>'
@@ -160,7 +163,10 @@ describe('affected-listed-buildings', () => {
 			);
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
-			expect(elementInnerHtml).toContain('Change affected listed building</h1>');
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('- update affected listed building</span>');
+			expect(elementInnerHtml).toContain('Affected listed building entry number</h1>');
+			expect(elementInnerHtml).toContain('This is a 7 digit number from Historic England</div>');
 		});
 	});
 
@@ -179,7 +185,9 @@ describe('affected-listed-buildings', () => {
 			expect(response.statusCode).toBe(200);
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Change affected listed building</h1>');
+			expect(elementInnerHtml).toContain('- update affected listed building</span>');
+			expect(elementInnerHtml).toContain('Affected listed building entry number</h1>');
+			expect(elementInnerHtml).toContain('This is a 7 digit number from Historic England</div>');
 		});
 
 		it('should redirect to to the check and confirm page if the data is valid', async () => {
@@ -219,12 +227,13 @@ describe('affected-listed-buildings', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 			expect(elementInnerHtml).toMatchSnapshot();
 
-			expect(elementInnerHtml).toContain('Check your answer</h1>');
+			expect(elementInnerHtml).toContain('Check details and update affected listed building</h1>');
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
-			expect(unprettifiedElement).toContain('Listed building</dt>');
+			expect(unprettifiedElement).toContain('Affected listed building</dt>');
 			expect(unprettifiedElement).toContain(
 				'<a href="https://historicengland.org.uk/listing/the-list/list-entry/12345" class="govuk-link" target="_blank">12345</a>'
 			);
+			expect(elementInnerHtml).toContain('Update affected listed building</button>');
 		});
 	});
 
@@ -260,39 +269,21 @@ describe('affected-listed-buildings', () => {
 
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
+			expect(elementInnerHtml).toMatchSnapshot();
 			expect(response.statusCode).toBe(200);
-			expect(elementInnerHtml).toContain('Remove affected listed building</h1>');
+			expect(elementInnerHtml).toContain(
+				'Confirm that you want to remove the affected listed building</h1>'
+			);
+			expect(elementInnerHtml).toContain('Remove affected listed building</button>');
 		});
 	});
 
 	describe('POST /remove/:listedBuildingId', () => {
-		it('should redirect to manage listed building if the answer is no', async () => {
-			const validData = {
-				removeAffectedListedBuilding: 'no'
-			};
+		it('should redirect to manage listed building', async () => {
 			nock('http://test/').delete(`/appeals/${appealId}/listed-buildings`).reply(200, {});
-			const response = await request
-				.post(
-					`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/affected-listed-buildings/remove/1`
-				)
-				.send(validData);
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				`Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/1/affected-listed-buildings/manage`
+			const response = await request.post(
+				`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/affected-listed-buildings/remove/1`
 			);
-		});
-
-		it('should redirect to manage listed building if the answer is yes', async () => {
-			const validData = {
-				removeAffectedListedBuilding: 'yes'
-			};
-			nock('http://test/').delete(`/appeals/${appealId}/listed-buildings`).reply(200, {});
-			const response = await request
-				.post(
-					`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/affected-listed-buildings/remove/1`
-				)
-				.send(validData);
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(

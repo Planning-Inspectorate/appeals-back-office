@@ -295,8 +295,6 @@ exports[`final-comments GET /review-comments with data should render review LPA 
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Redact<span class="govuk-visually-hidden"> final comments</span></a>
-                    </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
                     <dd class="govuk-summary-list__value">
@@ -363,8 +361,6 @@ exports[`final-comments GET /review-comments with data should render review appe
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Final comments</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Redact<span class="govuk-visually-hidden"> final comments</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -487,29 +483,29 @@ exports[`final-comments GET change-document-details/:folderId/:documentId should
                     </div>
                     <div class="govuk-form-group">
                         <fieldset class="govuk-fieldset" role="group">
-                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Date received</legend>
                             <div class="govuk-date-input" id="items[0]receivedDate">
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        <label class="govuk-label govuk-date-input__label" for="items-0-received-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="items-0-received-date-day" name="items[0][receivedDate]-[day]" type="text"
                                         value="11" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        <label class="govuk-label govuk-date-input__label" for="items-0-received-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="items-0-received-date-month" name="items[0][receivedDate]-[month]"
                                         type="text" value="10" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        <label class="govuk-label govuk-date-input__label" for="items-0-received-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                        id="items-0-received-date-year" name="items[0][receivedDate]-[year]" type="text"
                                         value="2023" inputmode="numeric">
                                     </div>
                                 </div>
@@ -604,8 +600,6 @@ exports[`final-comments POST /review-comments with data should render review LPA
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Final comments</dt>
                     <dd class="govuk-summary-list__value">
                         <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Redact<span class="govuk-visually-hidden"> final comments</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>

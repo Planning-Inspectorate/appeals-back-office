@@ -31,7 +31,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Document updated');
+			caseDetailsPage.validateBannerMessage('Success', 'Document updated');
 		});
 	});
 
@@ -115,7 +115,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.changeFileManageDocuments('Name');
 			caseDetailsPage.fillInput('new-file', 1);
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Document filename updated');
+			caseDetailsPage.validateBannerMessage('Success', 'Document filename updated');
 		});
 	});
 });

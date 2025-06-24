@@ -263,7 +263,7 @@ describe('neighbouring-sites', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Answer must be provided</a>');
+			expect(errorSummaryHtml).toContain('Select yes if you want to remove this site</a>');
 		});
 
 		it('should redirect to the manage page if you select no', async () => {

@@ -204,13 +204,7 @@ exports[`interested-party-comments GET /reject/check-your-answers should render 
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
             <dd class="govuk-summary-list__value">No documents</dd>
-            <dd class="govuk-summary-list__actions">
-                <ul class="govuk-summary-list__actions-list">
-                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/manage-documents/1234/?backUrl=/interested-party-comments/3670/reject/check-your-answers">Manage<span class="govuk-visually-hidden"> supporting documents</span></a>
-                    </li>
-                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/add-document/?backUrl=/interested-party-comments/3670/reject/check-your-answers">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
-                    </li>
-                </ul>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/add-document/?backUrl=/interested-party-comments/3670/reject/check-your-answers">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
             </dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
@@ -531,29 +525,29 @@ exports[`interested-party-comments GET change-document-details/:folderId/:docume
                     </div>
                     <div class="govuk-form-group">
                         <fieldset class="govuk-fieldset" role="group">
-                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Date received</legend>
                             <div class="govuk-date-input" id="items[0]receivedDate">
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        <label class="govuk-label govuk-date-input__label" for="items-0-received-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="items-0-received-date-day" name="items[0][receivedDate]-[day]" type="text"
                                         value="11" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        <label class="govuk-label govuk-date-input__label" for="items-0-received-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="items-0-received-date-month" name="items[0][receivedDate]-[month]"
                                         type="text" value="10" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        <label class="govuk-label govuk-date-input__label" for="items-0-received-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                        id="items-0-received-date-year" name="items[0][receivedDate]-[year]" type="text"
                                         value="2023" inputmode="numeric">
                                     </div>
                                 </div>

@@ -28,18 +28,25 @@ describe('unrelate appeals', () => {
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
+					caseDetailsPage.validateBannerMessage(
+						'Success',
+						'This appeal is now related to ' + caseRef
+					);
 					caseDetailsPage.clickAddRelatedAppeals();
 					caseDetailsPage.fillInput(secondCaseRefToRelate);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
+					caseDetailsPage.validateBannerMessage(
+						'Success',
+						'This appeal is now related to ' + caseRef
+					);
 					caseDetailsPage.clickManageRelatedAppeals();
 					caseDetailsPage.clickRemoveRelatedAppealByRef(caseRefToRelate);
 					caseDetailsPage.selectRadioButtonByValue('Yes');
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage(
+						'Success',
 						'You have removed the relationship between this appeal and appeal' + caseRefToRelate
 					);
 				});
@@ -60,11 +67,15 @@ describe('unrelate appeals', () => {
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
+				caseDetailsPage.validateBannerMessage(
+					'Success',
+					'This appeal is now related to ' + caseRef
+				);
 				caseDetailsPage.clickManageRelatedAppeals();
 				caseDetailsPage.clickRemoveRelatedAppealByRef(horizonAppealId);
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage(
+					'Success',
 					'You have removed the relationship between this appeal and appeal' + horizonAppealId
 				);
 			});

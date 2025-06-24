@@ -197,7 +197,8 @@ const renderDateWithdrawalRequest = async (request, response) => {
 		currentAppeal,
 		withdrawalRequestDay,
 		withdrawalRequestMonth,
-		withdrawalRequestYear
+		withdrawalRequestYear,
+		errors
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {

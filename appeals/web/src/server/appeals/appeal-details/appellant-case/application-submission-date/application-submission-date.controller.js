@@ -31,7 +31,8 @@ const renderChangeApplicationSubmissionDate = async (request, response) => {
 		const mappedPageContents = changeApplicationSubmissionDatePage(
 			currentAppeal,
 			appellantCaseData,
-			request.session.applicationSubmissionDate
+			request.session.applicationSubmissionDate,
+			errors
 		);
 
 		delete request.session.applicationSubmissionDate;

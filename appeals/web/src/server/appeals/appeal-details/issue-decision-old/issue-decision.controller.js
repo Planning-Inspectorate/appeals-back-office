@@ -236,7 +236,8 @@ const renderDateDecisionLetter = async (request, response) => {
 		currentAppeal,
 		decisionLetterDay,
 		decisionLetterMonth,
-		decisionLetterYear
+		decisionLetterYear,
+		errors
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {

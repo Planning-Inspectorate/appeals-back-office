@@ -1,6 +1,9 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import {
+	preRenderPageComponents,
+	renderPageComponentsToHtml
+} from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import {
 	mapDocumentDownloadUrl,
@@ -19,7 +22,6 @@ import {
 	mapDecisionOutcome
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import nunjucksEnvironments from '#app/config/nunjucks.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -42,54 +44,43 @@ import nunjucksEnvironments from '#app/config/nunjucks.js';
 export function issueDecisionPage(appealDetails, inspectorDecision, backUrl, errors) {
 	/** @type {PageComponent} */
 	const summaryBlock = {
-		type: 'inset-text',
+		type: 'summary-list',
 		parameters: {
-			classes: 'govuk-!-margin-top-0',
-			html: '',
-			pageComponents: [
-				{
-					type: 'summary-list',
-					parameters: {
-						rows: [
-							...(appealDetails.appellant
-								? [
-										{
-											key: {
-												text: 'Appellant'
-											},
-											value: {
-												text: `${appealDetails.appellant.firstName} ${appealDetails.appellant.lastName}`
-											}
-										}
-								  ]
-								: []),
-							...(appealDetails.appealSite
-								? [
-										{
-											key: {
-												text: 'Site address'
-											},
-											value: {
-												html: appealDetails.appealSite
-													? addressToMultilineStringHtml(
-															/** @type {import('@pins/appeals').Address} */ (
-																appealDetails.appealSite
-															)
-													  )
-													: null
-											}
-										}
-								  ]
-								: []),
+			rows: [
+				...(appealDetails.appellant
+					? [
 							{
 								key: {
-									text: 'Appeal type'
+									text: 'Appellant'
 								},
 								value: {
-									text: appealDetails.appealType
+									text: `${appealDetails.appellant.firstName} ${appealDetails.appellant.lastName}`
 								}
 							}
-						]
+					  ]
+					: []),
+				...(appealDetails.appealSite
+					? [
+							{
+								key: {
+									text: 'Site address'
+								},
+								value: {
+									html: appealDetails.appealSite
+										? addressToMultilineStringHtml(
+												/** @type {import('@pins/appeals').Address} */ (appealDetails.appealSite)
+										  )
+										: null
+								}
+							}
+					  ]
+					: []),
+				{
+					key: {
+						text: 'Appeal type'
+					},
+					value: {
+						text: appealDetails.appealType
 					}
 				}
 			]
@@ -132,8 +123,8 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl, err
 					text: 'Invalid',
 					checked: inspectorDecision?.outcome === 'Invalid',
 					conditional: {
-						html: nunjucksEnvironments.render('appeals/components/page-component.njk', {
-							component: {
+						html: renderPageComponentsToHtml([
+							{
 								type: 'textarea',
 								parameters: {
 									name: 'invalidReason',
@@ -151,7 +142,7 @@ export function issueDecisionPage(appealDetails, inspectorDecision, backUrl, err
 										: null
 								}
 							}
-						})
+						])
 					}
 				}
 			],
@@ -311,8 +302,8 @@ function checkAndConfirmPageRows(appealData, request) {
 		if (decisionOutcome) {
 			let invalidReasonHtml = inspectorDecision.invalidReason ? `Reason: ` : '';
 			if (invalidReasonHtml) {
-				invalidReasonHtml = nunjucksEnvironments.render('appeals/components/page-component.njk', {
-					component: {
+				invalidReasonHtml = renderPageComponentsToHtml([
+					{
 						type: 'show-more',
 						parameters: {
 							text: `${invalidReasonHtml}${inspectorDecision.invalidReason}`,
@@ -321,7 +312,7 @@ function checkAndConfirmPageRows(appealData, request) {
 							toggleTextExpanded: 'Show less'
 						}
 					}
-				});
+				]);
 			}
 			rows.push({
 				key: 'Decision',
@@ -485,10 +476,24 @@ export function checkAndConfirmPage(appealData, request) {
 		? specificDecisionType.replaceAll('-', ' ')
 		: 'decision';
 
+	const baseRoute = baseUrl(currentAppeal);
+
+	let backUrl = getBackLinkUrlFromQuery(request);
+	if (!backUrl) {
+		if (specificDecisionType) {
+			backUrl = `${addBackLinkQueryToUrl(
+				request,
+				`${baseRoute}/issue-${specificDecisionType}-letter-upload`
+			)}`;
+		} else {
+			backUrl = `${baseRoute}/decision`;
+		}
+	}
+
 	const title = `Check details and issue ${decisionTypeText}`;
 	const pageContent = {
 		title,
-		backLinkUrl: getBackLinkUrlFromQuery(request) || `${baseUrl(currentAppeal)}/decision`,
+		backLinkUrl: backUrl,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
 		submitButtonText: `Issue ${decisionTypeText}`,
@@ -514,8 +519,8 @@ export function viewDecisionPageRows(appealData) {
 		const decisionOutcome = mapDecisionOutcome(outcome);
 		let invalidReasonHtml = invalidReason ? `Reason: ` : '';
 		if (invalidReasonHtml) {
-			invalidReasonHtml = nunjucksEnvironments.render('appeals/components/page-component.njk', {
-				component: {
+			invalidReasonHtml = renderPageComponentsToHtml([
+				{
 					type: 'show-more',
 					parameters: {
 						text: `${invalidReasonHtml}${invalidReason}`,
@@ -524,12 +529,14 @@ export function viewDecisionPageRows(appealData) {
 						toggleTextExpanded: 'Show less'
 					}
 				}
+			]);
+		}
+		if (decisionOutcome) {
+			rows.push({
+				key: 'Decision',
+				html: `${decisionOutcome}${invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''}`
 			});
 		}
-		rows.push({
-			key: 'Decision',
-			html: `${decisionOutcome}${invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''}`
-		});
 		if (documentName) {
 			rows.push({
 				key: 'Decision letter',

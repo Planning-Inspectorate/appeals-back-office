@@ -10,6 +10,8 @@ const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
 describe('Update LPAQ Due date', () => {
+	const lpaQuestionnaire = 'lpa-questionnaire-due-date';
+
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
@@ -21,10 +23,10 @@ describe('Update LPAQ Due date', () => {
 			happyPathHelper.startCase(caseRef);
 			caseDetailsPage.clickChangeLpaqDueDate();
 			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
-				dateTimeSection.enterDate(futureDate);
+				caseDetailsPage.changeTimetableDate(lpaQuestionnaire, futureDate);
 			});
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Timetable updated');
+			caseDetailsPage.clickButtonByText('Update timetable due dates');
+			caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.reviewLpaq(caseRef);
 		});
@@ -37,10 +39,10 @@ describe('Update LPAQ Due date', () => {
 			happyPathHelper.startS78Case(caseRef, 'written');
 			caseDetailsPage.clickChangeLpaqDueDate();
 			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
-				dateTimeSection.enterDate(futureDate);
+				caseDetailsPage.changeTimetableDate(lpaQuestionnaire, futureDate);
 			});
-			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Timetable updated');
+			caseDetailsPage.clickButtonByText('Update timetable due dates');
+			caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.reviewS78Lpaq(caseRef);
 		});

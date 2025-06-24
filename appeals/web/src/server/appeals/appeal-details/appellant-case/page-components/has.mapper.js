@@ -125,7 +125,9 @@ export function generateHASComponents(
 					text: '4. Appeal details'
 				}
 			},
-			rows: [removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem)]
+			rows: [
+				removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem)
+			]
 		}
 	};
 

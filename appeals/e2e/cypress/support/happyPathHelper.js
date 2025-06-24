@@ -22,7 +22,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickLinkByText('Choose');
 		caseDetailsPage.selectRadioButtonByValue('Yes');
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.validateBannerMessage('Case officer has been assigned');
+		caseDetailsPage.validateBannerMessage('Success', 'Case officer has been assigned');
 		caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 	},
 	reviewAppellantCase(caseRef) {
@@ -94,7 +94,10 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.validateBannerMessage('Document added');
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'Agreement to change description evidence added'
+		);
 	},
 
 	manageDocsAppellantCase(caseRef) {
@@ -109,7 +112,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.validateBannerMessage('Document updated');
+		caseDetailsPage.validateBannerMessage('Success', 'Document updated');
 	},
 
 	uploadDocsLpaq(bannerMessage = 'Document added') {

@@ -41,12 +41,15 @@ variable "apps_config" {
     })
 
     featureFlags = object({
-      featureFlagS78Written    = bool
-      featureFlagS78Hearing    = bool
-      featureFlagS78Inquiry    = bool
-      featureFlagLinkedAppeals = bool
-      featureFlagS20           = bool
-      featureFlagIssueDecision = bool
+      featureFlagS78Written             = bool
+      featureFlagS78Hearing             = bool
+      featureFlagS78Inquiry             = bool
+      featureFlagLinkedAppeals          = bool
+      featureFlagS20                    = bool
+      featureFlagCAS                    = bool
+      featureFlagIssueDecision          = bool
+      featureFlagReIssueDecision        = bool
+      featureFlagSimplifyTeamAssignment = bool
     })
 
     logging = object({

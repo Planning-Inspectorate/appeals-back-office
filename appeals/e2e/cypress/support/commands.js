@@ -211,3 +211,22 @@ Cypress.Commands.add('deleteHearing', (reference) => {
 		return await appealsApiClient.deleteHearing(appealId, hearingId);
 	});
 });
+
+Cypress.Commands.add('checkNotifySent', (reference, templates) => {
+	const expectedTemplates = [].concat(templates);
+
+	return cy.wrap(null).then(async () => {
+		// returns an array of email objects sent for the given reference
+		const emails = await appealsApiClient.getNotifyEmails(reference);
+
+		// creates an array of unique sent email templates that match expected
+		const foundTemplateNames = [...new Set(emails.map((email) => email.template))];
+
+		// creates a list of expected templates that were not found
+		const missingTemplates = expectedTemplates.filter(
+			(expected) => !foundTemplateNames.includes(expected)
+		);
+
+		expect(missingTemplates, `Expected, but not found:${missingTemplates}`).to.be.empty;
+	});
+});

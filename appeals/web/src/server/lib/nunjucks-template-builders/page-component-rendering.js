@@ -74,7 +74,7 @@ function preRenderHtmlProperty(htmlProperty, recursions, maximumRecursions) {
  * @param {PageComponentWrapperHtml} [wrapperHtml]
  * @returns {string}
  */
-function renderPageComponentsToHtml(pageComponents, wrapperHtml) {
+export function renderPageComponentsToHtml(pageComponents, wrapperHtml) {
 	let renderedHtml = pageComponents
 		.map((pageComponent) =>
 			nunjucks.render('appeals/components/page-component.njk', { component: pageComponent }).trim()

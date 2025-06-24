@@ -112,7 +112,7 @@ describe('linked-appeals', () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 
 			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
@@ -136,7 +136,7 @@ describe('linked-appeals', () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 
 			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
@@ -160,7 +160,7 @@ describe('linked-appeals', () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 
 			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
@@ -184,7 +184,7 @@ describe('linked-appeals', () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testInvalidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testInvalidLinkableAppealReference}/linked`)
 				.reply(404);
 
 			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
@@ -209,7 +209,7 @@ describe('linked-appeals', () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 
 			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
@@ -226,7 +226,7 @@ describe('linked-appeals', () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(409);
 
 			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
@@ -252,7 +252,7 @@ describe('linked-appeals', () => {
 					appealReference: linkableAppealSummaryBackOffice.appealReference
 				});
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 
 			const addLinkedAppealReferenceResponse = await request
@@ -296,7 +296,7 @@ describe('linked-appeals', () => {
 					appealReference: linkableAppealSummaryBackOffice.appealReference
 				});
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 
 			const addLinkedAppealReferenceResponse = await request
@@ -327,7 +327,7 @@ describe('linked-appeals', () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, {
 					...linkableAppealSummaryBackOffice,
 					appealReference: testValidLinkableAppealReference
@@ -366,7 +366,7 @@ describe('linked-appeals', () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, {
 					...linkableAppealSummaryBackOffice,
 					appealReference: testValidLinkableAppealReference
@@ -414,7 +414,7 @@ describe('linked-appeals', () => {
 				})
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, {
 					...linkableAppealSummaryBackOffice,
 					appealReference: testValidLinkableAppealReference
@@ -483,7 +483,7 @@ describe('linked-appeals', () => {
 				})
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 			nock('http://test/').post('/appeals/1/link-appeal').reply(200, {});
 
@@ -527,7 +527,7 @@ describe('linked-appeals', () => {
 				})
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 			nock('http://test/').post('/appeals/1/link-appeal').reply(200, {});
 
@@ -571,7 +571,7 @@ describe('linked-appeals', () => {
 				})
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryHorizon);
 			nock('http://test/').post('/appeals/1/link-legacy-appeal').reply(200, {});
 
@@ -615,7 +615,7 @@ describe('linked-appeals', () => {
 				})
 				.persist();
 			nock('http://test/')
-				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}`)
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryHorizon);
 			nock('http://test/').post('/appeals/1/link-legacy-appeal').reply(200, {});
 

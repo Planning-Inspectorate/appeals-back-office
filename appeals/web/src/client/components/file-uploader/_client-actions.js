@@ -398,10 +398,6 @@ const clientActions = (container) => {
 			return { message: 'SIZE_SINGLE_FILE' };
 		}
 
-		if (container.dataset?.documentStage === 'representation' && !isNewVersionOfExistingFile()) {
-			return null;
-		}
-
 		if ([...filenamesInStagedFiles, ...filenamesInFolder].includes(selectedFile.name)) {
 			return { message: 'DUPLICATE_NAME_SINGLE_FILE' };
 		}
@@ -515,7 +511,7 @@ const clientActions = (container) => {
 					message: 'NO_FILE',
 					formId: formId || '',
 					metadata: {
-						fileTitle: documentTitle ? `the ${documentTitle}` : 'a file'
+						fileTitle: documentTitle ? documentTitle : 'a file'
 					}
 				},
 				container

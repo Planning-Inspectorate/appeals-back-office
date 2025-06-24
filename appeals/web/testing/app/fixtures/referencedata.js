@@ -2,7 +2,8 @@ import {
 	APPEAL_REDACTED_STATUS,
 	APPEAL_VIRUS_CHECK_STATUS,
 	APPEAL_CASE_STATUS,
-	APPEAL_CASE_PROCEDURE
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from 'pins-data-model';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import {
@@ -370,6 +371,11 @@ export const appealData = {
 	}
 };
 
+export const appealDataIssuedDecision = {
+	...appealData,
+	completedStateList: ['final_comments', 'event', 'awaiting_event', 'issue_determination']
+};
+
 export const publishedAppealData = {
 	...appealData,
 	appealId: 2,
@@ -399,9 +405,15 @@ export const appealDataListedBuilding = {
 	appealType: 'Planning listed building and conservation area appeal'
 };
 
+export const appealDataCasPlanning = {
+	...appealData,
+	appealType: 'Commercial (CAS) appeal'
+};
+
 export const appellantCaseDataNotValidated = {
 	appealId: 1,
 	appealReference: 'TEST/919276',
+	typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING,
 	appealSite: {
 		addressId: 1,
 		addressLine1: '96 The Avenue',
@@ -871,6 +883,11 @@ export const lpaQuestionnaireData = {
 			id: 2,
 			listEntry: '123457',
 			affectsListedBuilding: true
+		},
+		{
+			id: 3,
+			listEntry: '123458',
+			affectsListedBuilding: false
 		}
 	],
 	localPlanningDepartment: 'Dorset Council',
@@ -1489,6 +1506,13 @@ export const inspectorDecisionData = {
 	outcome: 'dismissed',
 	documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
 	letterDate: '2023-12-25T00:00:00.000Z'
+};
+
+export const inspectorDecisionfile = {
+	outcome: 'dismissed',
+	GUID: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
+	letterDate: '2023-12-25T00:00:00.000Z',
+	name: 'Decision letter'
 };
 
 export const allocationDetailsData = {
@@ -2924,6 +2948,9 @@ export const appealCostsDocumentItem = {
 export const fileUploadInfo =
 	'[{"name": "test-document.txt", "GUID": "1", "fileRowId": "1", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case", "redactionStatus": 3}]';
 
+export const fileUploadInfo2 =
+	'[{"name": "test-document2.txt", "GUID": "100", "fileRowId": "2", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case", "redactionStatus": 3}]';
+
 export const withdrawalRequestData = {
 	withdrawal: {
 		withdrawalFolder: {
@@ -3897,6 +3924,12 @@ export const designatedSiteNames = [
 ];
 
 export const caseAuditLog = [
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details:
+			"Thise case has over 300 characters in the details field. This is a test to ensure that the system can handle long text entries without issues. The case has progressed to awaiting_lpa_questionnaire. There should be over 300 character in this field to test the system's ability to handle long text entries without truncation or errors. - it should show the show more compoonent",
+		loggedDate: '2025-05-27T09:55:30.175Z'
+	},
 	{
 		azureAdUserId: '00000000-0000-0000-0000-000000000000',
 		details: 'The case has progressed to issue_determination',

@@ -43,6 +43,10 @@ export const mapDocumentationSummary = (data) => {
 
 	const mostRecentIpComment = maxBy(ipComments, (comment) => new Date(comment.dateCreated));
 
+	const redactLPAStatementMatching = checkRedactedText(
+		lpaStatement?.redactedRepresentation || '',
+		lpaStatement?.originalRepresentation || ''
+	);
 	return {
 		appellantCase: {
 			status: formatAppellantCaseDocumentationStatus(appeal),
@@ -69,7 +73,7 @@ export const mapDocumentationSummary = (data) => {
 				status: lpaStatement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 				receivedAt: lpaStatement?.dateCreated.toISOString() ?? null,
 				representationStatus: lpaStatement?.status ?? null,
-				isRedacted: Boolean(lpaStatement?.redactedRepresentation)
+				isRedacted: Boolean(lpaStatement?.redactedRepresentation && redactLPAStatementMatching)
 			},
 			lpaFinalComments: {
 				status: lpaFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
@@ -87,4 +91,16 @@ export const mapDocumentationSummary = (data) => {
 			}
 		})
 	};
+};
+/**
+ * @param {string} originalRepresentation
+ * @param {string | undefined} redactedRepresentation
+ * @returns {boolean}
+ */
+export const checkRedactedText = (originalRepresentation, redactedRepresentation) => {
+	const normalizeNewlines = (/** @type {string | undefined} */ str) =>
+		(str || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+	const normalizedOriginal = normalizeNewlines(originalRepresentation);
+	const normalizedRedacted = normalizeNewlines(redactedRepresentation);
+	return normalizedOriginal !== normalizedRedacted;
 };

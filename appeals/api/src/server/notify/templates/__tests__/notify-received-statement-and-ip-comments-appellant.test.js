@@ -14,12 +14,14 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 				appeal_reference_number: 'ABC45678',
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
-				final_comments_deadline: '01 January 2021'
+				final_comments_deadline: '01 January 2021',
+				what_happens_next:
+					'You need to [submit your final comments](/mock-front-office-url/appeals/ABC45678) by 01 January 2021.'
 			}
 		};
 
 		const expectedContent = [
-			'We have received the local planning authority’s statement and any comments from interested parties.',
+			'We have received the local planning authority’s questionnaire, all statements and comments from interested parties.',
 			'',
 			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
 			'',

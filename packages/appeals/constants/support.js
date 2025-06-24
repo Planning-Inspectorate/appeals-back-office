@@ -58,7 +58,8 @@ export const AUDIT_TRAIL_CASE_TIMELINE_CREATED = 'The case timeline was created'
 export const AUDIT_TRAIL_CASE_TIMELINE_UPDATED = 'The case timeline was updated';
 export const AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED =
 	'{replacement0} due date changed to {replacement1}';
-export const AUDIT_TRAIL_DOCUMENT_UPLOADED = "'{replacement0}' updated to {replacement1}";
+export const AUDIT_TRAIL_DOCUMENT_UPLOADED =
+	'Document {replacement0} uploaded (version {replacement1}, {replacement2})';
 export const AUDIT_TRAIL_DOCUMENT_IMPORTED = 'The document {replacement0} was received';
 export const AUDIT_TRAIL_DOCUMENT_DELETED =
 	'Version {replacement1} of document {replacement0} was removed';
@@ -82,8 +83,8 @@ export const AUDIT_TRAIL_REMOVED_INSPECTOR =
 	'The inspector {replacement0} was removed from the case';
 export const AUDIT_TRAIL_SITE_VISIT_ARRANGED = 'The site visit was arranged for {replacement0}';
 export const AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED = 'The site visit type was selected';
-export const AUDIT_TRAIL_APPEAL_LINK_ADDED = 'A linked appeal was added';
-export const AUDIT_TRAIL_APPEAL_LINK_REMOVED = 'A linked appeal was removed';
+export const AUDIT_TRAIL_APPEAL_LINK_ADDED = 'Linked appeal {replacement0} added';
+export const AUDIT_TRAIL_APPEAL_LINK_REMOVED = 'Linked appeal {replacement0} removed';
 export const AUDIT_TRAIL_APPEAL_RELATION_ADDED = 'A related appeal was added';
 export const AUDIT_TRAIL_APPEAL_RELATION_REMOVED = 'A related appeal was removed';
 export const AUDIT_TRAIL_APPLICATION_REFERENCE_UPDATED = 'Planning application reference updated';
@@ -186,6 +187,8 @@ export const AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED = 'Hearing estimates updated'
 export const AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED = 'Hearing estimates removed';
 
 export const AUDIT_TRAIL_DECISION_ISSUED = 'Decision issued: {replacement0}';
+export const AUDIT_TRAIL_DECISION_LETTER_UPDATED = 'Decision letter: {replacement0} updated';
+export const AUDIT_TRAIL_CORRECTION_NOTICE_ADDED = 'Correction notice added: {replacement0} ';
 export const AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED = 'Appellant costs decision issued';
 export const AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED = 'LPA costs decision issued';
 

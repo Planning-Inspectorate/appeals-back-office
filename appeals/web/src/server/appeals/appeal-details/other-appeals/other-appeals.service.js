@@ -5,7 +5,7 @@
  * @returns {Promise<import('@pins/appeals.api').Appeals.LinkableAppealSummary>}
  */
 export function getLinkableAppealSummaryFromReference(apiClient, appealReference) {
-	return apiClient.get(`appeals/linkable-appeal/${appealReference}`).json();
+	return apiClient.get(`appeals/linkable-appeal/${appealReference}/related`).json();
 }
 
 /**

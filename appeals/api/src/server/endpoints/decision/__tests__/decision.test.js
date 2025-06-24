@@ -22,9 +22,9 @@ import {
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-
+import { AUDIT_TRAIL_CORRECTION_NOTICE_ADDED } from '@pins/appeals/constants/support.js';
+import { sendNewDecisionLetter } from '../decision.service';
 const { databaseConnector } = await import('#utils/database-connector.js');
-
 describe('decision routes', () => {
 	beforeEach(() => {
 		// @ts-ignore
@@ -298,6 +298,141 @@ describe('decision routes', () => {
 			});
 
 			expect(response.status).toEqual(201);
+		});
+	});
+
+	describe('sendNewDecisionLetter', () => {
+		let mockNotifyClient;
+
+		beforeEach(() => {
+			mockNotifyClient = {
+				mockNotifySend: jest.fn().mockResolvedValue({})
+			};
+		});
+
+		afterEach(() => {
+			mockNotifyClient = null;
+		});
+
+		test('sends correction notice to all unique emails and creates audit trail', async () => {
+			const correctAppealState = {
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			databaseConnector.representation.count.mockResolvedValue(2);
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{
+					represented: {
+						email: 'commenter1@test.com'
+					}
+				},
+				{
+					represented: {
+						email: 'commenter2@test.com'
+					}
+				}
+			]);
+
+			const correctionNotice = 'Test correction notice';
+			const decisionDate = new Date('2023-11-10');
+
+			await sendNewDecisionLetter(
+				correctAppealState,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				decisionDate
+			);
+
+			// eslint-disable-next-line no-undef
+			expect(mockNotifySend).toHaveBeenCalledTimes(5);
+
+			const expectedRecipients = [
+				{ type: 'agent', email: correctAppealState.agent.email },
+				{ type: 'appellant', email: correctAppealState.appellant.email },
+				{ type: 'lpa', email: correctAppealState.lpa.email },
+				{ type: 'commenter', email: 'commenter2@test.com' },
+				{ type: 'commenter', email: 'commenter1@test.com' }
+			];
+
+			expectedRecipients.forEach((recipient) => {
+				// eslint-disable-next-line no-undef
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					notifyClient: expect.any(Object),
+					templateName: 'correction-notice-decision',
+					recipientEmail: recipient.email,
+					personalisation: {
+						appeal_reference_number: correctAppealState.reference,
+						lpa_reference: correctAppealState.applicationReference,
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						correction_notice_reason: correctionNotice,
+						decision_date: formatDate(decisionDate, false)
+					}
+				});
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+				data: {
+					appealId: correctAppealState.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_CORRECTION_NOTICE_ADDED, [correctionNotice]),
+					loggedAt: expect.any(Date),
+					userId: correctAppealState.caseOfficer.id
+				}
+			});
+		});
+
+		test('handles missing emails correctly', async () => {
+			const appealWithMissingEmails = {
+				...householdAppeal,
+				agent: null,
+				appellant: null,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithMissingEmails);
+			databaseConnector.representation.count.mockResolvedValue(0);
+			databaseConnector.representation.findMany.mockResolvedValue([]);
+
+			const correctionNotice = 'Test correction notice';
+			const decisionDate = new Date('2023-11-10');
+
+			await sendNewDecisionLetter(
+				appealWithMissingEmails,
+				correctionNotice,
+				azureAdUserId,
+				mockNotifyClient,
+				decisionDate
+			);
+
+			// eslint-disable-next-line no-undef
+			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+			// eslint-disable-next-line no-undef
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				notifyClient: expect.any(Object),
+				templateName: 'correction-notice-decision',
+				recipientEmail: appealWithMissingEmails.lpa.email,
+				personalisation: {
+					appeal_reference_number: appealWithMissingEmails.reference,
+					lpa_reference: appealWithMissingEmails.applicationReference,
+					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					correction_notice_reason: correctionNotice,
+					decision_date: formatDate(decisionDate, false)
+				}
+			});
 		});
 	});
 });

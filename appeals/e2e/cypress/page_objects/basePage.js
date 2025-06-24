@@ -10,7 +10,7 @@ export class Page {
 	 *********************************************************/
 
 	selectors = {
-		accordion: '.govuk-accordion',
+		accordion: '.govuk-accordion__section-heading-text-focus',
 		accordionButton: '.govuk-accordion__section-button',
 		accordionToggleText: '.govuk-accordion__section-toggle-text',
 		accordionSectionHeader: '.govuk-accordion__section-header',
@@ -256,22 +256,16 @@ export class Page {
 	}
 
 	validateBannerMessage(title, message) {
-		// this.basePageElements.bannerHeader().then(($banner) => {
-		// 	expect($banner.text().trim()).eq(successMessage);
-		// });
+		cy.get('.govuk-notification-banner').then(($banners) => {
+			const matchingBanners = $banners.filter((index, banner) => {
+				const bannerText = Cypress.$(banner).text().trim();
+				return bannerText.includes(title) && bannerText.includes(message);
+			});
 
-		// Allow for multiple banners on a page
-		// TODO Move selectors out
-		cy.get('.govuk-notification-banner').each(($banner) => {
-			cy.wrap($banner)
-				.find('.govuk-notification-banner__title')
-				.then(($title) => {
-					if ($title.text().includes(title)) {
-						cy.wrap($banner)
-							.find('.govuk-notification-banner__heading')
-							.should('contain.text', message);
-					}
-				});
+			expect(
+				matchingBanners.length,
+				`Expected to find a banner with title "${title}" and message "${message}"`
+			).to.be.at.eq(1);
 		});
 	}
 

@@ -139,7 +139,7 @@ describe('appeal-details', () => {
 					'Appeal ready to be assigned to case officer</p>'
 				);
 				expect(notificationBannerElementHTML).toContain(
-					`href="/appeals-service/appeal-details/2/assign-user/case-officer?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
+					`href="/appeals-service/appeal-details/2/assign-case-officer/search-case-officer?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}"`
 				);
 				expect(notificationBannerElementHTML).toContain('Assign case officer</a>');
 			});
@@ -206,7 +206,7 @@ describe('appeal-details', () => {
 				);
 			});
 
-			it('should render a "Neighbouring site added" success notification banner when an inspector/3rd party neighbouring site was added', async () => {
+			it('should render a "Address added" success notification banner when an inspector/3rd party neighbouring site was added', async () => {
 				const appealReference = '1';
 				const appealId = appealData.appealId;
 				nock.cleanAll();
@@ -254,10 +254,10 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('Neighbouring site added</p>');
+				expect(notificationBannerElementHTML).toContain('Address added</p>');
 			});
 
-			it('should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
+			it('should render a "Address updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
 				const appealReference = '1';
 
 				nock.cleanAll();
@@ -298,10 +298,10 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('Neighbouring site updated</p>');
+				expect(notificationBannerElementHTML).toContain('Address updated</p>');
 			});
 
-			it('should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
+			it('should render a "Address removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
 				const appealReference = '1';
 
 				nock.cleanAll();
@@ -336,15 +336,15 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('Neighbouring site removed</p>');
+				expect(notificationBannerElementHTML).toContain('Address removed</p>');
 			});
 
-			it('should render a "This appeal is now the lead for appeal" success notification banner when the appeal was successfully linked as the lead of a back-office appeal', async () => {
+			it('should render a "Linked appeal added" success notification banner when the appeal was successfully linked as the lead of a back-office appeal', async () => {
 				const appealReference = '1234567';
 
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/linkable-appeal/${appealReference}`)
+					.get(`/appeals/linkable-appeal/${appealReference}/linked`)
 					.reply(200, linkableAppealSummaryBackOffice);
 				nock('http://test/')
 					.get(`/appeals/${appealData.appealId}`)
@@ -385,7 +385,7 @@ describe('appeal-details', () => {
 				const element = parseHtml(response.text, { rootElement: notificationBannerElement });
 				expect(element.innerHTML).toMatchSnapshot();
 				expect(element.innerHTML).toContain('Success</h3>');
-				expect(element.innerHTML).toContain('This appeal is now the lead for appeal');
+				expect(element.innerHTML).toContain('Linked appeal added');
 			});
 
 			it('should render a success notification banner with appropriate content if the appeal was just linked as the lead of a legacy (Horizon) appeal', async () => {
@@ -393,7 +393,7 @@ describe('appeal-details', () => {
 
 				nock.cleanAll();
 				nock('http://test/')
-					.get(`/appeals/linkable-appeal/${appealReference}`)
+					.get(`/appeals/linkable-appeal/${appealReference}/linked`)
 					.reply(200, linkableAppealSummaryHorizon);
 				nock('http://test/')
 					.get(`/appeals/${appealData.appealId}`)
@@ -437,7 +437,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('This appeal is now the lead for appeal');
+				expect(notificationBannerElementHTML).toContain('Linked appeal added');
 			});
 
 			it('should render a success notification banner when a user was successfully unassigned as inspector', async () => {
@@ -1902,7 +1902,7 @@ describe('appeal-details', () => {
 			expect(insetTextElementHTML).toContain('<li>Decision: Dismissed</li>');
 			expect(insetTextElementHTML).toContain('<li>Decision issued on 25 December 2023</li>');
 			expect(insetTextElementHTML).toContain(
-				'<li><span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></li>'
+				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/appeal-decision">View decision</a></li>'
 			);
 		});
 

@@ -133,7 +133,7 @@ export function generateS20Components(
 					}
 				},
 				rows: [
-					removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem),
+					removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem),
 					mappedAppellantCaseData.procedurePreference.display.summaryListItem,
 					mappedAppellantCaseData.procedurePreferenceDetails.display.summaryListItem,
 					mappedAppellantCaseData.procedurePreferenceDuration.display.summaryListItem,

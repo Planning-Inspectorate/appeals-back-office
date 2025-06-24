@@ -3,6 +3,7 @@ import { sub } from 'date-fns';
 import { updateCompletedEvents } from '#endpoints/appeals/appeals.service.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
 import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
+import { getAppealNotifications } from '#repositories/appeal-notification.repository.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -108,4 +109,16 @@ export const simulateFinalCommentsElapsed = async (req, res) => {
 	}
 
 	return res.send(false);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const retrieveNotifyEmails = async (req, res) => {
+	const { appealReference } = req.params;
+	const notifications = await getAppealNotifications(appealReference);
+
+	return res.status(200).send(notifications);
 };

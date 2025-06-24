@@ -12,5 +12,5 @@ export const getNotifications = async (req, res) => {
 	const { appeal } = req;
 	const notifications = await getAppealNotifications(appeal.reference);
 
-	return res.status(201).send(notifications);
+	return res.status(200).send(notifications);
 };

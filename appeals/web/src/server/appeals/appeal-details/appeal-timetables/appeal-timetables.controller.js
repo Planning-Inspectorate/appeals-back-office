@@ -13,7 +13,8 @@ import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
  *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {object} [apiErrors]
+ * @param {import("@pins/express").ValidationErrors | undefined} [apiErrors]
+
  */
 const renderUpdateDueDate = async (request, response, apiErrors) => {
 	const appealDetails = request.currentAppeal;
@@ -24,18 +25,20 @@ const renderUpdateDueDate = async (request, response, apiErrors) => {
 
 	const appealId = appealDetails.appealId;
 	const { timetableType } = request.params;
+
+	let errors = request.errors || apiErrors;
+
 	const timetableProperty = routeToObjectMapper[timetableType];
 	const mappedPageContent = mapUpdateDueDatePage(
 		appealDetails?.appealTimetable,
 		timetableProperty,
-		appealDetails
+		appealDetails,
+		errors
 	);
 
 	if (!appealId || !timetableProperty || !mappedPageContent) {
 		return response.status(500).render('app/500.njk');
 	}
-
-	let errors = request.errors || apiErrors;
 
 	return response.status(200).render('appeals/appeal/update-date.njk', {
 		pageContent: mappedPageContent,

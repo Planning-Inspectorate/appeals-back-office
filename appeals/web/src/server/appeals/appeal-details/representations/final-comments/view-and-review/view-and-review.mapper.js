@@ -24,7 +24,6 @@ export function reviewFinalCommentsPage(
 	backUrl
 ) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-	const commentSummaryList = generateCommentsSummaryList(appealDetails.appealId, comment);
 
 	const notificationBanners = mapNotificationBannersFromSession(
 		session,
@@ -33,6 +32,12 @@ export function reviewFinalCommentsPage(
 	);
 
 	const reviewRequired = isRepresentationReviewRequired(comment.status);
+
+	const commentSummaryList = generateCommentsSummaryList(
+		appealDetails.appealId,
+		comment,
+		reviewRequired
+	);
 
 	const title = reviewRequired
 		? `Review ${finalCommentsType} final comments`

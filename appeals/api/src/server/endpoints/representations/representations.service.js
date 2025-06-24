@@ -15,12 +15,13 @@ import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 import formatDate from '#utils/date-formatter.js';
 import { notifySend } from '#notify/notify-send.js';
 import { EventType } from '@pins/event-client';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { isCurrentStatus } from '#utils/current-status.js';
+import config from '#config/config.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -245,19 +246,42 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 				)
 			)
 		) {
+			let whatHappensNextAppellant;
+			let whatHappensNextLpa;
+			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
+				if (appeal.hearing?.hearingStartTime) {
+					whatHappensNextAppellant =
+						`Your hearing is on ${formatDate(appeal.hearing?.hearingStartTime, false)}.\n\nWe will contact you if we need any more information.`
+					whatHappensNextLpa =
+						`The hearing is on ${formatDate(appeal.hearing?.hearingStartTime, false)}.`
+				} else {
+					whatHappensNextAppellant =
+						`We will contact you if we need any more information.`
+					whatHappensNextLpa =
+						`We will contact you when the hearing has been set up.`
+				}
+			} else {
+				whatHappensNextAppellant =
+					`You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`
+				whatHappensNextLpa =
+					`You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`
+			}
+
 			await notifyPublished(
 				appeal,
 				notifyClient,
 				'received-statement-and-ip-comments-lpa',
 				appeal.lpa?.email,
-				finalCommentsDueDate
+				finalCommentsDueDate,
+				whatHappensNextLpa
 			);
 			await notifyPublished(
 				appeal,
 				notifyClient,
 				'received-statement-and-ip-comments-appellant',
 				appeal.agent?.email || appeal.appellant?.email,
-				finalCommentsDueDate
+				finalCommentsDueDate,
+				whatHappensNextAppellant
 			);
 		}
 	} catch (error) {
@@ -321,13 +345,15 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
  * @param {string} templateName
  * @param {string | null} [recipientEmail]
  * @param {string} [finalCommentsDueDate]
+ * @param {string} [whatHappensNext]
  * */
 async function notifyPublished(
 	appeal,
 	notifyClient,
 	templateName,
 	recipientEmail,
-	finalCommentsDueDate = ''
+	finalCommentsDueDate = '',
+	whatHappensNext = ''
 ) {
 	const lpaReference = appeal.applicationReference;
 	if (!lpaReference) {
@@ -353,7 +379,8 @@ async function notifyPublished(
 			appeal_reference_number: appeal.reference,
 			site_address: siteAddress,
 			lpa_reference: lpaReference,
-			final_comments_deadline: finalCommentsDueDate
+			final_comments_deadline: finalCommentsDueDate,
+			what_happens_next: whatHappensNext
 		}
 	});
 }
