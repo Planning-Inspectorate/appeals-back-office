@@ -247,9 +247,6 @@ describe('Setup hearing and add hearing estimates', () => {
 			hearingSectionPage.clickButtonByText('Set up hearing');
 			caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
 			cy.go('back');
-			//hearingSectionPage.clickButtonByText('Set up hearing');
-			//caseDetailsPage.validateSectionHeader('You cannot check these answers')
-			//caseDetailsPage.validatebo
 			hearingSectionPage.verifyYouCannotCheckTheseAnswersPage();
 		});
 	});
