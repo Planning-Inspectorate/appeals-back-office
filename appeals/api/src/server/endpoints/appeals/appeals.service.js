@@ -9,7 +9,7 @@ import {
 	fetchBankHolidaysForDivision,
 	getNumberOfBankHolidaysBetweenDates
 } from '#utils/business-days.js';
-import { add, addBusinessDays } from 'date-fns';
+import { addBusinessDays } from 'date-fns';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
@@ -66,9 +66,7 @@ async function calculateIssueDecisionDeadline(eventDate, businessDays) {
 		deadline,
 		await fetchBankHolidaysForDivision()
 	);
-	return add(new Date(deadline), {
-		days: numberOfBankHolidays
-	});
+	return addBusinessDays(new Date(deadline), numberOfBankHolidays);
 }
 
 /**
