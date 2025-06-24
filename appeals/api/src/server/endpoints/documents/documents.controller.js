@@ -11,7 +11,7 @@ import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
+
 import logger from '#utils/logger.js';
 import * as service from './documents.service.js';
 import * as documentRepository from '#repositories/document.repository.js';
@@ -122,8 +122,9 @@ const addDocuments = async (req, res) => {
 						appealId: appeal.id,
 						azureAdUserId: req.get('azureAdUserId'),
 						details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [
-							DOCUMENT_FOLDER_DISPLAY_LABELS[document.documentType],
-							document.documentName
+							document.documentName,
+							1,
+							document.redactionStatus
 						])
 					});
 				}
@@ -191,7 +192,7 @@ const addDocumentVersion = async (req, res) => {
 					decisionLetterHtmlLink
 				])
 			});
-			if (body.correctionNotice && auditTrail) {
+			if (body.correctionNotice) {
 				sendNewDecisionLetter(
 					appeal,
 					body.correctionNotice,
@@ -205,8 +206,9 @@ const addDocumentVersion = async (req, res) => {
 				appealId: appeal.id,
 				azureAdUserId: req.get('azureAdUserId'),
 				details: stringTokenReplacement(AUDIT_TRAIL_DOCUMENT_UPLOADED, [
-					DOCUMENT_FOLDER_DISPLAY_LABELS[updatedDocument.documentType],
-					updatedDocument.documentName
+					updatedDocument.documentName,
+					updatedDocument.versionId,
+					updatedDocument.redactionStatus
 				])
 			});
 		}

@@ -211,5 +211,5 @@ const tryMapRepresentationType = (log) =>
 const tryMapDocumentRedactionStatus = (log) =>
 	log
 		.replace(APPEAL_REDACTED_STATUS.REDACTED, 'redacted')
-		.replace(APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED, 'unredacted')
-		.replace(APPEAL_REDACTED_STATUS.NOT_REDACTED, 'no redaction required');
+		.replace(APPEAL_REDACTED_STATUS.NOT_REDACTED, 'unredacted')
+		.replace(APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED, 'no redaction required');

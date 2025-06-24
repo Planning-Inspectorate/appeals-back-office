@@ -58,7 +58,8 @@ export const AUDIT_TRAIL_CASE_TIMELINE_CREATED = 'The case timeline was created'
 export const AUDIT_TRAIL_CASE_TIMELINE_UPDATED = 'The case timeline was updated';
 export const AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED =
 	'{replacement0} due date changed to {replacement1}';
-export const AUDIT_TRAIL_DOCUMENT_UPLOADED = "'{replacement0}' updated to {replacement1}";
+export const AUDIT_TRAIL_DOCUMENT_UPLOADED =
+	'Document {replacement0} uploaded (version {replacement1}, {replacement2})';
 export const AUDIT_TRAIL_DOCUMENT_IMPORTED = 'The document {replacement0} was received';
 export const AUDIT_TRAIL_DOCUMENT_DELETED =
 	'Version {replacement1} of document {replacement0} was removed';
