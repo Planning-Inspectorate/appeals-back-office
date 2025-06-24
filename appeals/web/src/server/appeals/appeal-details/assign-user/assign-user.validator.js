@@ -8,7 +8,7 @@ export const validateUser = (isInspector = false) =>
 			.notEmpty()
 			.withMessage(
 				isInspector
-					? 'Enter a inspectors’s name or email address'
+					? 'Enter an inspector’s name or email address'
 					: 'Enter a case officer’s name or email address'
 			)
 	);
