@@ -158,7 +158,7 @@ export const postInquiryAddress = async (request, response) => {
 	}
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/inquiry/setup/address-details`
+		`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable-due-dates`
 	);
 };
 

@@ -351,13 +351,15 @@ describe('set up inquiry', () => {
 				.reply(200, { ...appealData, appealId });
 		});
 
-		it('should redirect to /Inquiry/setup/confirmation when answering no', async () => {
+		it('should redirect to /inquiry/setup/timetable-due-dates when answering no', async () => {
 			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({
 				addressKnown: 'no'
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/inquiry/setup/timetable`);
+			expect(response.headers.location).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
+			);
 		});
 
 		it('should redirect to /Inquiry/setup/address-details when answering yes', async () => {
@@ -440,7 +442,7 @@ describe('set up inquiry', () => {
 				.reply(200, { ...appealData, appealId });
 		});
 
-		it('should redirect to /Inquiry/setup/timetable with valid inputs', async () => {
+		it('should redirect to /Inquiry/setup/timetable-due-dates with valid inputs', async () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/Inquiry/setup/address-details`)
 				.send({
@@ -452,7 +454,9 @@ describe('set up inquiry', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/inquiry/setup/timetable`);
+			expect(response.headers.location).toBe(
+				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
+			);
 		});
 
 		behavesLikeAddressForm({
