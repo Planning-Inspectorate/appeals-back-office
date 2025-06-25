@@ -22,6 +22,10 @@ import {
 	householdAppeal,
 	householdAppealAppellantCaseIncomplete,
 	householdAppealAppellantCaseInvalid,
+	listedBuildingAppeal,
+	listedBuildingAppealAppellantCaseValid,
+	listedBuildingAppealAppellantCaseIncomplete,
+	listedBuildingAppealAppellantCaseInvalid,
 	householdAppealAppellantCaseValid
 } from '#tests/appeals/mocks.js';
 
@@ -44,7 +48,8 @@ describe('appellant cases routes', () => {
 		describe('GET', () => {
 			test.each([
 				['householdAppeal', householdAppeal],
-				['fullPlanningAppeal', fullPlanningAppeal]
+				['fullPlanningAppeal', fullPlanningAppeal],
+				['listedBuildingAppeal', listedBuildingAppeal]
 			])(
 				'gets a single appellant case for an appeal with no validation outcome',
 				async (_, appeal) => {
@@ -64,7 +69,8 @@ describe('appellant cases routes', () => {
 
 			test.each([
 				['householdAppeal', householdAppealAppellantCaseValid],
-				['fullPlanningAppeal', fullPlanningAppealCaseValid]
+				['fullPlanningAppeal', fullPlanningAppealCaseValid],
+				['listedBuildingAppeal', listedBuildingAppealAppellantCaseValid]
 			])('gets a single appellant case for a valid appeal: %s', async (_, appeal) => {
 				// @ts-ignore
 				databaseConnector.folder.findMany.mockResolvedValue([]);
@@ -81,7 +87,8 @@ describe('appellant cases routes', () => {
 
 			test.each([
 				['householdAppeal', householdAppealAppellantCaseIncomplete],
-				['fullPlanningAppeal', fullPlanningAppealAppellantCaseIncomplete]
+				['fullPlanningAppeal', fullPlanningAppealAppellantCaseIncomplete],
+				['listedBuildingAppeal', listedBuildingAppealAppellantCaseIncomplete]
 			])('gets a single appellant case for an incomplete appeal: %s', async (_, appeal) => {
 				// @ts-ignore
 				databaseConnector.folder.findMany.mockResolvedValue([]);
@@ -98,7 +105,8 @@ describe('appellant cases routes', () => {
 
 			test.each([
 				['householdAppeal', householdAppealAppellantCaseInvalid],
-				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid]
+				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid],
+				['listedBuildingAppeal', listedBuildingAppealAppellantCaseInvalid]
 			])('gets a single appellant case for an invalid appeal: %s', async (_, appeal) => {
 				// @ts-ignore
 				databaseConnector.folder.findMany.mockResolvedValue([]);
