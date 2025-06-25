@@ -2,7 +2,7 @@
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
+import { fullPlanningAppeal, householdAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
 import formatDate from '#utils/date-formatter.js';
 import { add, sub } from 'date-fns';
 import {
@@ -61,7 +61,8 @@ describe('appeal withdrawal routes', () => {
 
 		test.each([
 			['household', householdAppeal],
-			['fullPlanning', fullPlanningAppeal]
+			['fullPlanning', fullPlanningAppeal],
+			['listedBuilding', listedBuildingAppeal]
 		])('returns 200 when appeal: %s is withdrawn', async (_, appeal) => {
 			const correctAppealState = {
 				...appeal,

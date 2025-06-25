@@ -2,7 +2,7 @@
 import { request } from '#tests/../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
+import { fullPlanningAppeal, householdAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
 import formatDate from '#utils/date-formatter.js';
 import {
 	ERROR_NOT_FOUND,
@@ -207,7 +207,8 @@ describe('appeal change type resubmit routes', () => {
 		});
 		test.each([
 			['household', householdAppeal, 13],
-			['fullPlanning', fullPlanningAppeal, 1]
+			['fullPlanning', fullPlanningAppeal, 1],
+			['listedBuilding', listedBuildingAppeal, 1]
 		])('returns 200 when appeal status is correct: %s', async (_, appeal, newType) => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);

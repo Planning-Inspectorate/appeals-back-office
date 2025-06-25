@@ -274,6 +274,94 @@ export const fullPlanningAppeal = {
 	representations: []
 };
 
+export const listedBuildingAppeal = {
+	...fullPlanningAppeal,
+	id: 3,
+	appealType: {
+		id: 12,
+		type: 'Planning listed building and conservation area',
+		key: 'Y'
+	},
+	representations: []
+};
+
+export const listedBuildingAppealAppellantCaseValid = {
+	...fullPlanningAppeal,
+	id: 3,
+	appealType: {
+		id: 12,
+		type: 'Planning listed building and conservation area',
+		key: 'Y'
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true,
+		hasOtherTenants: true,
+		hasPlanningObligation: true,
+		hasSeparateOwnershipCertificate: true,
+		hasToldTenants: false,
+		isAgriculturalHolding: true,
+		isAgriculturalHoldingTenant: true,
+		isDevelopmentDescriptionStillCorrect: false,
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		...validAppellantCaseOutcome
+	},
+	representations: []
+};
+export const listedBuildingAppealAppellantCaseIncomplete = {
+	...fullPlanningAppeal,
+	id: 3,
+	appealType: {
+		id: 12,
+		type: 'Planning listed building and conservation area',
+		key: 'Y'
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true,
+		hasOtherTenants: true,
+		hasPlanningObligation: true,
+		hasSeparateOwnershipCertificate: true,
+		hasToldTenants: false,
+		isAgriculturalHolding: true,
+		isAgriculturalHoldingTenant: true,
+		isDevelopmentDescriptionStillCorrect: false,
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		...incompleteAppellantCaseOutcome
+	},
+	representations: []
+};
+
+export const listedBuildingAppealAppellantCaseInvalid = {
+	...fullPlanningAppeal,
+	id: 3,
+	appealType: {
+		id: 12,
+		type: 'Planning listed building and conservation area',
+		key: 'Y'
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true,
+		hasOtherTenants: true,
+		hasPlanningObligation: true,
+		hasSeparateOwnershipCertificate: true,
+		hasToldTenants: false,
+		isAgriculturalHolding: true,
+		isAgriculturalHoldingTenant: true,
+		isDevelopmentDescriptionStillCorrect: false,
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		...invalidAppellantCaseOutcome
+	},
+	representations: []
+};
+
 export const fullPlanningAppealCaseValid = {
 	...householdAppeal,
 	id: 2,

@@ -27,7 +27,8 @@ import {
 	fullPlanningAppeal,
 	householdAppeal,
 	householdAppealLPAQuestionnaireComplete,
-	householdAppealLPAQuestionnaireIncomplete
+	householdAppealLPAQuestionnaireIncomplete,
+	listedBuildingAppeal
 } from '#tests/appeals/mocks.js';
 import createManyToManyRelationData from '#utils/create-many-to-many-relation-data.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -258,6 +259,17 @@ describe('lpa questionnaires routes', () => {
 						lpa_reference: fullPlanningAppeal.applicationReference,
 						appeal_reference_number: fullPlanningAppeal.reference,
 						site_address: `${fullPlanningAppeal.address.addressLine1}, ${fullPlanningAppeal.address.addressLine2}, ${fullPlanningAppeal.address.addressTown}, ${fullPlanningAppeal.address.addressCounty}, ${fullPlanningAppeal.address.postcode}, ${fullPlanningAppeal.address.addressCountry}`,
+						what_happens_next:
+							'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
+					}
+				},
+				{
+					appeal: listedBuildingAppeal,
+					templateName: 'lpaq-complete-appellant',
+					personalisation: {
+						lpa_reference: listedBuildingAppeal.applicationReference,
+						appeal_reference_number: listedBuildingAppeal.reference,
+						site_address: `${listedBuildingAppeal.address.addressLine1}, ${listedBuildingAppeal.address.addressLine2}, ${listedBuildingAppeal.address.addressTown}, ${listedBuildingAppeal.address.addressCounty}, ${listedBuildingAppeal.address.postcode}, ${listedBuildingAppeal.address.addressCountry}`,
 						what_happens_next:
 							'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
 					}
