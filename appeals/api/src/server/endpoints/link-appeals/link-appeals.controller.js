@@ -16,6 +16,8 @@ import {
 import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { notifySend } from '#notify/notify-send.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -26,8 +28,8 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
  * @returns {Promise<Response>}
  */
 export const linkAppeal = async (req, res) => {
+	const { appeal: currentAppeal, notifyClient } = req;
 	const { linkedAppealId, isCurrentAppealParent } = req.body;
-	const currentAppeal = req.appeal;
 	const linkedAppeal = await appealRepository.getAppealById(Number(linkedAppealId));
 
 	if (!linkedAppeal) {
@@ -73,17 +75,49 @@ export const linkAppeal = async (req, res) => {
 
 	const result = await appealRepository.linkAppeal(relationship);
 
-	await createAuditTrail({
-		appealId: currentAppeal.id,
-		azureAdUserId: req.get('azureAdUserId'),
-		details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_ADDED, [linkedAppeal.reference])
-	});
+	const siteAddress = currentAppeal.address
+		? formatAddressSingleLine(currentAppeal.address)
+		: 'Address not available';
 
-	await createAuditTrail({
-		appealId: linkedAppeal.id,
-		azureAdUserId: req.get('azureAdUserId'),
-		details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_ADDED, [currentAppeal.reference])
-	});
+	const personalisation = {
+		appeal_reference_number: currentAppeal.reference,
+		lead_appeal_reference_number: relationship.parentRef,
+		child_appeal_reference_number: relationship.childRef,
+		lpa_reference: currentAppeal.applicationReference || '',
+		site_address: siteAddress,
+		event_type: 'site visit'
+	};
+
+	const appellantEmail = currentAppeal.agent?.email || currentAppeal.appellant?.email;
+	const lpaEmail = currentAppeal.lpa?.email || '';
+
+	await Promise.all([
+		notifySend({
+			templateName: 'link-appeal',
+			notifyClient,
+			recipientEmail: appellantEmail,
+			personalisation
+		}),
+
+		notifySend({
+			templateName: 'link-appeal',
+			notifyClient,
+			recipientEmail: lpaEmail,
+			personalisation
+		}),
+
+		createAuditTrail({
+			appealId: currentAppeal.id,
+			azureAdUserId: req.get('azureAdUserId'),
+			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_ADDED, [linkedAppeal.reference])
+		}),
+
+		createAuditTrail({
+			appealId: linkedAppeal.id,
+			azureAdUserId: req.get('azureAdUserId'),
+			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_ADDED, [currentAppeal.reference])
+		})
+	]);
 
 	await broadcasters.broadcastAppeal(currentAppeal.id);
 	return res.status(201).send(result);
