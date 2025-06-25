@@ -48,6 +48,7 @@ export const mapEnvironmentalAssessment = (data) => {
 			link: `${currentRoute}/${id}`,
 			editable: true,
 			folderId: environmentalAssessment.folderId
-		})
+		}),
+		actionHtmlClasses: 'govuk-!-width-one-quarter'
 	});
 };
