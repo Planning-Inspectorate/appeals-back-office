@@ -84,6 +84,7 @@ const renderEditTimetable = async (request, response) => {
 		appealTimetable,
 		currentAppeal,
 		appellantCase,
+		request.body,
 		errors
 	);
 

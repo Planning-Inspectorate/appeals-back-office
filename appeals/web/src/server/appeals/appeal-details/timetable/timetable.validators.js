@@ -3,7 +3,8 @@ import {
 	createDateInputDateValidityValidator,
 	createDateInputDateInFutureValidator,
 	createDateInputDateBusinessDayValidator,
-	extractAndProcessDateErrors
+	extractAndProcessDateErrors,
+	createDateInputDateInFutureOfDateValidator
 } from '#lib/validators/date-input.validator.js';
 import { getAppealTimetableTypes } from './timetable.mapper.js';
 
@@ -11,13 +12,16 @@ import { getAppealTimetableTypes } from './timetable.mapper.js';
  *
  * @param {string} fieldName
  * @param {string} label
+ * @param {string} fieldNameToCompare
+ * @param {string} labelToCompare
  * @returns
  */
-export const createTimetableValidators = (fieldName, label) => [
+export const createTimetableValidators = (fieldName, label, fieldNameToCompare, labelToCompare) => [
 	createDateInputFieldsValidator(fieldName, label),
 	createDateInputDateValidityValidator(fieldName, label),
 	createDateInputDateInFutureValidator(fieldName, label),
-	createDateInputDateBusinessDayValidator(fieldName, label)
+	createDateInputDateBusinessDayValidator(fieldName, label),
+	createDateInputDateInFutureOfDateValidator(fieldName, label, fieldNameToCompare, labelToCompare)
 ];
 
 /**
@@ -38,15 +42,21 @@ export const selectTimetableValidators = (req) => {
 		},
 		lpaStatementDueDate: {
 			id: 'lpa-statement-due-date',
-			label: 'Statements due date'
+			label: 'Statements due date',
+			idToCompare: 'lpa-questionnaire-due-date',
+			labelToCompare: 'LPA questionnaire due date'
 		},
 		ipCommentsDueDate: {
 			id: 'ip-comments-due-date',
-			label: 'Interested party comments due date'
+			label: 'Interested party comments due date',
+			idToCompare: 'lpa-questionnaire-due-date',
+			labelToCompare: 'LPA questionnaire due date'
 		},
 		finalCommentsDueDate: {
 			id: 'final-comments-due-date',
-			label: 'Final comments due date'
+			label: 'Final comments due date',
+			idToCompare: 'lpa-statement-due-date',
+			labelToCompare: 'statements due date'
 		},
 		statementOfCommonGroundDueDate: {
 			id: 'statement-of-common-ground-due-date',
@@ -59,8 +69,18 @@ export const selectTimetableValidators = (req) => {
 	};
 
 	timetableTypes.forEach((timetableType) => {
-		const { id, label } = validatorsMap[timetableType];
-		validatorsList.push(...createTimetableValidators(id, label));
+		const validatorConfig = validatorsMap[timetableType];
+		const idToCompare = 'idToCompare' in validatorConfig ? validatorConfig.idToCompare : '';
+		const labelToCompare =
+			'labelToCompare' in validatorConfig ? validatorConfig.labelToCompare : '';
+		validatorsList.push(
+			...createTimetableValidators(
+				validatorConfig.id,
+				validatorConfig.label,
+				idToCompare,
+				labelToCompare
+			)
+		);
 	});
 	validatorsList.push(
 		extractAndProcessDateErrors({

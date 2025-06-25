@@ -5,9 +5,11 @@ import {
 	dateIsInTheFuture,
 	dateIsTodayOrInThePast,
 	dateIsInThePast,
-	dayMonthYearHourMinuteToISOString
+	dayMonthYearHourMinuteToISOString,
+	dateIsAfter
 } from '../dates.js';
 import { capitalize, lowerCase } from 'lodash-es';
+import { toCamelCase } from '#lib/string-utilities.js';
 
 export const createDateInputFieldsValidator = (
 	fieldNamePrefix = 'date',
@@ -189,8 +191,8 @@ export const createDateInputDateInFutureValidator = (
 	dayFieldName = '-day',
 	monthFieldName = '-month',
 	yearFieldName = '-year'
-) => {
-	return createValidator(
+) =>
+	createValidator(
 		body(`${fieldNamePrefix}`)
 			.custom((bodyFields, { req }) => {
 				const day = req.body[`${fieldNamePrefix}${dayFieldName}`];
@@ -209,7 +211,7 @@ export const createDateInputDateInFutureValidator = (
 			})
 			.withMessage(`The ${lowerCase(messageFieldNamePrefix || '')} must be in the future`)
 	);
-};
+
 export const createDateInputDateInPastOrTodayValidator = (
 	fieldNamePrefix = 'date',
 	messageFieldNamePrefix = 'date',
@@ -272,6 +274,73 @@ export const createDateInputDateInPastValidator = (
 					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}must in the past`
 				)
 			)
+	);
+
+export const createDateInputDateInFutureOfDateValidator = (
+	fieldNamePrefix = 'date',
+	messageFieldNamePrefix = 'Date',
+	fieldNameToComparePrefix = '',
+	messageFieldNameToComparePrefix = '',
+	dayFieldName = '-day',
+	monthFieldName = '-month',
+	yearFieldName = '-year'
+) =>
+	createValidator(
+		body(`${fieldNamePrefix}`).custom((bodyFields, { req }) => {
+			if (!fieldNameToComparePrefix) return true;
+
+			const getDateParts = (/** @type {string} */ prefix) => ({
+				day: req.body[`${prefix}${dayFieldName}`],
+				month: req.body[`${prefix}${monthFieldName}`],
+				year: req.body[`${prefix}${yearFieldName}`]
+			});
+
+			const currentParts = getDateParts(fieldNamePrefix);
+			const compareParts = getDateParts(fieldNameToComparePrefix);
+
+			// If any part of the current date is missing, skip validation
+			if (!currentParts.day || !currentParts.month || !currentParts.year) {
+				return true;
+			}
+
+			const storedDateToCompare = new Date(
+				req.currentAppeal.appealTimetable[toCamelCase(fieldNameToComparePrefix)]
+			);
+
+			if (!storedDateToCompare || isNaN(storedDateToCompare.getTime())) {
+				return true;
+			}
+
+			const parseOrFallback = (
+				/** @type {string | undefined} */ value,
+				/** @type {number} */ fallback
+			) => (value !== undefined && value !== '' ? Number.parseInt(value, 10) : fallback);
+
+			const compareDay = parseOrFallback(compareParts.day, storedDateToCompare.getDate());
+			const compareMonth = parseOrFallback(compareParts.month, storedDateToCompare.getMonth() + 1); // getMonth() is 0-based
+			const compareYear = parseOrFallback(compareParts.year, storedDateToCompare.getFullYear());
+
+			const currentDay = Number.parseInt(currentParts.day, 10);
+			const currentMonth = Number.parseInt(currentParts.month, 10);
+			const currentYear = Number.parseInt(currentParts.year, 10);
+
+			if (
+				!dateIsAfter(
+					{ day: currentDay, month: currentMonth, year: currentYear },
+					{ day: compareDay, month: compareMonth, year: compareYear }
+				)
+			) {
+				const formattedDate = storedDateToCompare.toLocaleDateString('en-GB', {
+					day: 'numeric',
+					month: 'long',
+					year: 'numeric'
+				});
+				throw new Error(
+					`${messageFieldNamePrefix} must be after the ${messageFieldNameToComparePrefix} on ${formattedDate}`
+				);
+			}
+			return true;
+		})
 	);
 
 /**

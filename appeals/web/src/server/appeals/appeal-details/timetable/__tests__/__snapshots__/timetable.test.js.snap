@@ -9633,3 +9633,351 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
     </form>
 </main>"
 `;
+
+exports[`Timetable POST /edit S78 written should re-render edit timetable page and replay entered dates to the user 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#lpa-statement-due-date-day">Enter the statements due date</a>
+                            </li>
+                            <li><a href="#ip-comments-due-date-day">Enter the interested party comments due date</a>
+                            </li>
+                            <li><a href="#final-comments-due-date-day">Enter the final comments due date</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
+                <div id="lpa-questionnaire-due-date-hint"
+                class="govuk-hint">For example, 27 3 2007</div>
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
+                            type="text" value="5" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-questionnaire-due-date-month" name="lpa-questionnaire-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-questionnaire-due-date-year" name="lpa-questionnaire-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the statements
+                    due date</p>
+                <div class="govuk-date-input" id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="25" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="7" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2025" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">For example, 27 3 2007</div>
+                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the interested
+                    party comments due date</p>
+                <div class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="26" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="8" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2025" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the final comments
+                    due date</p>
+                <div class="govuk-date-input" id="final-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            id="final-comments-due-date-day" name="final-comments-due-date-day" type="text"
+                            value="7" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="final-comments-due-date-month" name="final-comments-due-date-month"
+                            type="text" value="8" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="final-comments-due-date-year" name="final-comments-due-date-year" type="text"
+                            value="2025" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`Timetable POST /edit S78 written should re-render edit timetable page with date has to be after error 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#lpa-statement-due-date-day">Statements due date must be after the LPA questionnaire due date on 27 June 2025</a>
+                            </li>
+                            <li><a href="#ip-comments-due-date-day">Interested party comments due date must be after the LPA questionnaire due date on 27 June 2025</a>
+                            </li>
+                            <li><a href="#final-comments-due-date-day">Final comments due date must be after the statements due date on 25 July 2025</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
+                <div id="lpa-questionnaire-due-date-hint"
+                class="govuk-hint">For example, 27 3 2007</div>
+                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
+                            type="text" value="5" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                            id="lpa-questionnaire-due-date-month" name="lpa-questionnaire-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                            id="lpa-questionnaire-due-date-year" name="lpa-questionnaire-due-date-year"
+                            type="text" value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
+                    be after the LPA questionnaire due date on 27 June 2025</p>
+                <div class="govuk-date-input"
+                id="lpa-statement-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
+                            value="4" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-month" name="lpa-statement-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="lpa-statement-due-date-year" name="lpa-statement-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
+                <div id="ip-comments-due-date-hint"
+                class="govuk-hint">For example, 27 3 2007</div>
+                <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
+                    due date must be after the LPA questionnaire due date on 27 June 2025</p>
+                <div                 class="govuk-date-input" id="ip-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                            value="4" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                            value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+        </div>
+        </fieldset>
+        </div>
+        <div class="govuk-form-group govuk-form-group--error">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
+                    must be after the statements due date on 25 July 2025</p>
+                <div class="govuk-date-input"
+                id="final-comments-due-date">
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            id="final-comments-due-date-day" name="final-comments-due-date-day" type="text"
+                            value="3" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-month">Month</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            id="final-comments-due-date-month" name="final-comments-due-date-month"
+                            type="text" value="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div class="govuk-date-input__item">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-year">Year</label>
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            id="final-comments-due-date-year" name="final-comments-due-date-year" type="text"
+                            value="2050" inputmode="numeric">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+        </div>
+    </form>
+</main>"
+`;
