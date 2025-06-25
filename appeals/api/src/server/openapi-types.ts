@@ -3657,6 +3657,8 @@ export type AppellantCase = {
 	typeOfPlanningApplication?:
 		| 'full-appeal'
 		| 'householder-planning'
+		| 'listed-building'
+		| 'minor-commercial-development'
 		| 'outline-planning'
 		| 'prior-approval'
 		| 'removal-or-variation-of-conditions'
@@ -11726,6 +11728,8 @@ export interface AppellantCaseUpdateRequest {
 	typeOfPlanningApplication?:
 		| 'full-appeal'
 		| 'householder-planning'
+		| 'listed-building'
+		| 'minor-commercial-development'
 		| 'outline-planning'
 		| 'prior-approval'
 		| 'removal-or-variation-of-conditions'

@@ -769,7 +769,7 @@
 					}
 				],
 				"responses": {
-					"201": {
+					"200": {
 						"description": "Returns the listedBuilding data",
 						"content": {
 							"application/json": {
@@ -13262,6 +13262,8 @@
 						"enum": [
 							"full-appeal",
 							"householder-planning",
+							"listed-building",
+							"minor-commercial-development",
 							"outline-planning",
 							"prior-approval",
 							"removal-or-variation-of-conditions",
@@ -32053,6 +32055,8 @@
 						"enum": [
 							"full-appeal",
 							"householder-planning",
+							"listed-building",
+							"minor-commercial-development",
 							"outline-planning",
 							"prior-approval",
 							"removal-or-variation-of-conditions",

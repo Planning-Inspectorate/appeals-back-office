@@ -1,5 +1,6 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
+import { getChangedListedBuilding } from '#appeals/appeal-details/lpa-questionnaire/changed-listed-buildings/changed-listed-buildings.service.js';
 
 export const validateChangedListedBuilding = createValidator(
 	body('changedListedBuilding')
@@ -9,4 +10,16 @@ export const validateChangedListedBuilding = createValidator(
 		.withMessage('Listed building entry number must be 7 digits')
 		.isLength({ min: 7, max: 7 })
 		.withMessage('Listed building entry number must be 7 digits')
+		.custom(async (reference, { req }) => {
+			try {
+				const result = await getChangedListedBuilding(req.apiClient, reference);
+
+				if (!result) {
+					throw new Error('Listed building entry number is not valid');
+				}
+			} catch (error) {
+				throw new Error('Listed building entry number is not valid');
+			}
+		})
+		.withMessage('Enter a real listed building entry number')
 );

@@ -60,3 +60,13 @@ export function removeAffectedListedBuilding(apiClient, appealId, listedBuilding
 		}
 	});
 }
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} listedBuildingId
+ * @returns {Promise<{}>}
+ */
+export function getAffectedListedBuilding(apiClient, listedBuildingId) {
+	return apiClient.get(`appeals/listed-buildings/${listedBuildingId}`);
+}

@@ -21,7 +21,7 @@ router.get(
 			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 		}
 		#swagger.responses[400] = {}
-		#swagger.responses[201] = {
+		#swagger.responses[200] = {
 			description: 'Returns the listedBuilding data',
 			schema: { $ref: '#/components/schemas/ListedBuilding' }
 		}

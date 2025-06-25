@@ -9,6 +9,8 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 const appealId = appealData.appealId;
 const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+const validListedBuilding = '1234567';
+const invalidListedBuilding = '9999999';
 
 describe('changed-listed-buildings', () => {
 	beforeEach(() => {
@@ -18,6 +20,8 @@ describe('changed-listed-buildings', () => {
 			.reply(200, {
 				...lpaQuestionnaireData
 			});
+		nock('http://test/').get(`/appeals/listed-buildings/${validListedBuilding}`).reply(200, {});
+		nock('http://test/').get(`/appeals/listed-buildings/${invalidListedBuilding}`).reply(404, {});
 	});
 	afterEach(teardown);
 
@@ -169,9 +173,36 @@ describe('changed-listed-buildings', () => {
 			expect(errorSummaryHtml).toContain('Listed building entry number must be 7 digits</a>');
 		});
 
+		it('should re-render the add changed listed building page with an error when listed building is seven digits but not in historic england', async () => {
+			const invalidData = {
+				changedListedBuilding: invalidListedBuilding
+			};
+
+			const response = await request
+				.post(
+					`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/changed-listed-buildings/add`
+				)
+				.send(invalidData);
+			expect(response.statusCode).toBe(200);
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('- add changed listed building</span>');
+			expect(elementInnerHtml).toContain('Changed listed building entry number</h1>');
+			expect(elementInnerHtml).toContain('This is a 7 digit number from Historic England</div>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter a real listed building entry number</a>');
+		});
+
 		it('should redirect to the check-and-confirm page when data is valid', async () => {
 			const validData = {
-				changedListedBuilding: '1234567'
+				changedListedBuilding: validListedBuilding
 			};
 
 			const response = await request
@@ -190,7 +221,7 @@ describe('changed-listed-buildings', () => {
 	describe('GET /add/check-and-confirm', () => {
 		it('should render the add changed listed building check and confirm page', async () => {
 			const validData = {
-				changedListedBuilding: '1234567'
+				changedListedBuilding: validListedBuilding
 			};
 
 			await request
@@ -214,7 +245,7 @@ describe('changed-listed-buildings', () => {
 			}).innerHTML;
 			expect(summaryListHtml).toContain('Changed listed building</dt>');
 			expect(summaryListHtml).toContain(
-				'<a href="https://historicengland.org.uk/listing/the-list/list-entry/1234567" class="govuk-link" target="_blank">1234567</a>'
+				`<a href="https://historicengland.org.uk/listing/the-list/list-entry/${validListedBuilding}" class="govuk-link" target="_blank">${validListedBuilding}</a>`
 			);
 			expect(elementInnerHtml).toContain('Add changed listed building</button>');
 		});
@@ -223,7 +254,7 @@ describe('changed-listed-buildings', () => {
 	describe('POST /add/check-and-confirm', () => {
 		it('should redirect to the lpa questionnaire page', async () => {
 			const validData = {
-				changedListedBuilding: '1234567'
+				changedListedBuilding: validListedBuilding
 			};
 			nock('http://test/').post(`/appeals/${appealId}/listed-buildings`).reply(200, {});
 
@@ -408,9 +439,36 @@ describe('changed-listed-buildings', () => {
 			expect(errorSummaryHtml).toContain('Listed building entry number must be 7 digits</a>');
 		});
 
+		it('should re-render the change changed listed building page with an error when listed building is seven digits but not in historic england', async () => {
+			const invalidData = {
+				changedListedBuilding: invalidListedBuilding
+			};
+
+			const response = await request
+				.post(
+					`${baseUrl}/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/changed-listed-buildings/change/1`
+				)
+				.send(invalidData);
+			expect(response.statusCode).toBe(200);
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('- update changed listed building</span>');
+			expect(elementInnerHtml).toContain('Changed listed building entry number</h1>');
+			expect(elementInnerHtml).toContain('This is a 7 digit number from Historic England</div>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter a real listed building entry number</a>');
+		});
+
 		it('should redirect to to the check and confirm page if the data is valid', async () => {
 			const validData = {
-				changedListedBuilding: '1234567'
+				changedListedBuilding: validListedBuilding
 			};
 
 			const response = await request
@@ -429,7 +487,7 @@ describe('changed-listed-buildings', () => {
 	describe('GET /change/:listedBuildingId/check-and-confirm', () => {
 		it('should render the check and confirm page', async () => {
 			const validData = {
-				changedListedBuilding: '1234567'
+				changedListedBuilding: validListedBuilding
 			};
 			await request
 				.post(
@@ -449,7 +507,7 @@ describe('changed-listed-buildings', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 			expect(unprettifiedElement).toContain('Changed listed building</dt>');
 			expect(unprettifiedElement).toContain(
-				'<a href="https://historicengland.org.uk/listing/the-list/list-entry/1234567" class="govuk-link" target="_blank">1234567</a>'
+				`<a href="https://historicengland.org.uk/listing/the-list/list-entry/${validListedBuilding}" class="govuk-link" target="_blank">${validListedBuilding}</a>`
 			);
 			expect(elementInnerHtml).toContain('Update changed listed building</button>');
 		});
@@ -458,7 +516,7 @@ describe('changed-listed-buildings', () => {
 	describe('POST /change/:listedBuildingId/check-and-confirm', () => {
 		it('should redirect to lpa questionnaire', async () => {
 			const validData = {
-				changedListedBuilding: '1234567'
+				changedListedBuilding: validListedBuilding
 			};
 
 			nock('http://test/').patch(`/appeals/${appealId}/listed-buildings/1`).reply(200, {});
