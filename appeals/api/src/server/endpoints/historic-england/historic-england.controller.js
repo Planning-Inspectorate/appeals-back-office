@@ -15,7 +15,7 @@ export const findListedBuilding = async (req, res) => {
 	if (!result) {
 		return res.status(404).send();
 	}
-	return res.status(201).send(result);
+	return res.status(200).send(result);
 };
 
 /**

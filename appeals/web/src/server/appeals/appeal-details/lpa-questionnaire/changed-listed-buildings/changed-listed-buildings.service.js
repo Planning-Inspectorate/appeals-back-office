@@ -60,3 +60,13 @@ export function removeChangedListedBuilding(apiClient, appealId, listedBuildingI
 		}
 	});
 }
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} listedBuildingId
+ * @returns {Promise<{}>}
+ */
+export function getChangedListedBuilding(apiClient, listedBuildingId) {
+	return apiClient.get(`appeals/listed-buildings/${listedBuildingId}`);
+}
