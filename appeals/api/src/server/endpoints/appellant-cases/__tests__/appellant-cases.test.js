@@ -18,6 +18,7 @@ import {
 	fullPlanningAppeal,
 	fullPlanningAppealAppellantCaseIncomplete,
 	fullPlanningAppealAppellantCaseInvalid,
+	fullPlanningAppealCaseValid,
 	householdAppeal,
 	householdAppealAppellantCaseIncomplete,
 	householdAppealAppellantCaseInvalid,
@@ -41,12 +42,35 @@ describe('appellant cases routes', () => {
 
 	describe('/appeals/:appealId/appellant-cases/:appellantCaseId', () => {
 		describe('GET', () => {
-			test('gets a single appellant case for a household appeal with no validation outcome', async () => {
+			test.each([
+				['householdAppeal', householdAppeal],
+				['fullPlanningAppeal', fullPlanningAppeal]
+			])(
+				'gets a single appellant case for an appeal with no validation outcome',
+				async (_, appeal) => {
+					// @ts-ignore
+					databaseConnector.folder.findMany.mockResolvedValue([]);
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+
+					const { appellantCase, id } = appeal;
+					const response = await request
+						.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(200);
+					expect(response.body).toMatchSnapshot();
+				}
+			);
+
+			test.each([
+				['householdAppeal', householdAppealAppellantCaseValid],
+				['fullPlanningAppeal', fullPlanningAppealCaseValid]
+			])('gets a single appellant case for a valid appeal: %s', async (_, appeal) => {
 				// @ts-ignore
 				databaseConnector.folder.findMany.mockResolvedValue([]);
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 
-				const { appellantCase, id } = householdAppeal;
+				const { appellantCase, id } = appeal;
 				const response = await request
 					.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
 					.set('azureAdUserId', azureAdUserId);
@@ -55,100 +79,34 @@ describe('appellant cases routes', () => {
 				expect(response.body).toMatchSnapshot();
 			});
 
-			test('gets a single appellant case for a valid household appeal', async () => {
+			test.each([
+				['householdAppeal', householdAppealAppellantCaseIncomplete],
+				['fullPlanningAppeal', fullPlanningAppealAppellantCaseIncomplete]
+			])('gets a single appellant case for an incomplete appeal: %s', async (_, appeal) => {
 				// @ts-ignore
 				databaseConnector.folder.findMany.mockResolvedValue([]);
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppealAppellantCaseValid);
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 
-				const { appellantCase } = householdAppealAppellantCaseValid;
+				const { appellantCase, id } = appeal;
 				const response = await request
-					.get(
-						`/appeals/${householdAppealAppellantCaseValid.id}/appellant-cases/${appellantCase.id}`
-					)
+					.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toMatchSnapshot();
 			});
 
-			test('gets a single appellant case for an incomplete household appeal', async () => {
+			test.each([
+				['householdAppeal', householdAppealAppellantCaseInvalid],
+				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid]
+			])('gets a single appellant case for an invalid appeal: %s', async (_, appeal) => {
 				// @ts-ignore
 				databaseConnector.folder.findMany.mockResolvedValue([]);
-				databaseConnector.appeal.findUnique.mockResolvedValue(
-					householdAppealAppellantCaseIncomplete
-				);
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 
-				const { appellantCase } = householdAppealAppellantCaseIncomplete;
+				const { appellantCase, id } = appeal;
 				const response = await request
-					.get(
-						`/appeals/${householdAppealAppellantCaseIncomplete.id}/appellant-cases/${appellantCase.id}`
-					)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(200);
-				expect(response.body).toMatchSnapshot();
-			});
-
-			test('gets a single appellant case for an invalid household appeal', async () => {
-				// @ts-ignore
-				databaseConnector.folder.findMany.mockResolvedValue([]);
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppealAppellantCaseInvalid);
-
-				const { appellantCase } = householdAppealAppellantCaseInvalid;
-				const response = await request
-					.get(
-						`/appeals/${householdAppealAppellantCaseInvalid.id}/appellant-cases/${appellantCase.id}`
-					)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(200);
-				expect(response.body).toMatchSnapshot();
-			});
-
-			test('gets a single appellant case for a valid full planning appeal', async () => {
-				// @ts-ignore
-				databaseConnector.folder.findMany.mockResolvedValue([]);
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-
-				const { appellantCase } = fullPlanningAppeal;
-				const response = await request
-					.get(`/appeals/${fullPlanningAppeal.id}/appellant-cases/${appellantCase.id}`)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(200);
-				expect(response.body).toMatchSnapshot();
-			});
-
-			test('gets a single appellant case for an incomplete full planning appeal', async () => {
-				// @ts-ignore
-				databaseConnector.folder.findMany.mockResolvedValue([]);
-				databaseConnector.appeal.findUnique.mockResolvedValue(
-					fullPlanningAppealAppellantCaseIncomplete
-				);
-
-				const { appellantCase } = fullPlanningAppealAppellantCaseIncomplete;
-				const response = await request
-					.get(
-						`/appeals/${fullPlanningAppealAppellantCaseIncomplete.id}/appellant-cases/${appellantCase.id}`
-					)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(200);
-				expect(response.body).toMatchSnapshot();
-			});
-
-			test('gets a single appellant case for an invalid full planning appeal', async () => {
-				// @ts-ignore
-				databaseConnector.folder.findMany.mockResolvedValue([]);
-				databaseConnector.appeal.findUnique.mockResolvedValue(
-					fullPlanningAppealAppellantCaseInvalid
-				);
-
-				const { appellantCase } = fullPlanningAppealAppellantCaseInvalid;
-				const response = await request
-					.get(
-						`/appeals/${fullPlanningAppealAppellantCaseInvalid.id}/appellant-cases/${appellantCase.id}`
-					)
+					.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(200);

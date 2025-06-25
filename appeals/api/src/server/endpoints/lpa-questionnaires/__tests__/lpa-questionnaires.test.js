@@ -241,174 +241,110 @@ describe('lpa questionnaires routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			test('sends a correctly formatted notify email when the outcome is complete for a household appeal', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique
-					.mockResolvedValueOnce({
-						...householdAppeal,
-						appealStatus: [
-							{
-								status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
-								valid: true
-							}
-						]
-					})
-					.mockResolvedValue({
-						...householdAppeal,
-						appealStatus: [
-							{
-								status: APPEAL_CASE_STATUS.EVENT,
-								valid: true
-							}
-						]
-					});
-				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[0]
-				);
-				// @ts-ignore
-				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
-				// @ts-ignore
-				databaseConnector.documentVersion.update.mockResolvedValue([]);
-				// @ts-ignore
-				databaseConnector.document.findUnique.mockResolvedValue(null);
-				// @ts-ignore
-				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
-					{ id: 1, key: 'no_redaction_required' }
-				]);
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => test.appeal.address[key])
+				.join(', ');
 
-				const body = {
-					validationOutcome: 'complete'
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				const expectedSiteAddress = [
-					'addressLine1',
-					'addressLine2',
-					'addressTown',
-					'addressCounty',
-					'postcode',
-					'addressCountry'
-				]
-					.map((key) => householdAppeal.address[key])
-					.join(', ');
-
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					notifyClient: expect.anything(),
+			test.each([
+				{
+					appeal: householdAppeal,
+					templateName: 'lpaq-complete-has-appellant',
 					personalisation: {
 						lpa_reference: householdAppeal.applicationReference,
 						appeal_reference_number: householdAppeal.reference,
 						site_address: expectedSiteAddress
-					},
-					recipientEmail: householdAppeal.lpa.email,
-					templateName: 'lpaq-complete-lpa'
-				});
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						lpa_reference: householdAppeal.applicationReference,
-						appeal_reference_number: householdAppeal.reference,
-						site_address: expectedSiteAddress
-					},
-					recipientEmail: householdAppeal.appellant.email,
-					templateName: 'lpaq-complete-has-appellant'
-				});
-
-				expect(response.status).toEqual(200);
-			});
-
-			test('sends a correctly formatted notify email when the outcome is complete for a full planning appeal', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique
-					.mockResolvedValueOnce({
-						...fullPlanningAppeal,
-						appealStatus: [
-							{
-								status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
-								valid: true
-							}
-						]
-					})
-					.mockResolvedValue({
-						...fullPlanningAppeal,
-						appealStatus: [
-							{
-								status: APPEAL_CASE_STATUS.EVENT,
-								valid: true
-							}
-						]
-					});
-				// @ts-ignore
-				databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
-					lpaQuestionnaireValidationOutcomes[0]
-				);
-				// @ts-ignore
-				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
-				// @ts-ignore
-				databaseConnector.documentVersion.update.mockResolvedValue([]);
-				// @ts-ignore
-				databaseConnector.document.findUnique.mockResolvedValue(null);
-				// @ts-ignore
-				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
-					{ id: 1, key: 'no_redaction_required' }
-				]);
-
-				const body = {
-					validationOutcome: 'complete'
-				};
-				const { id, lpaQuestionnaire } = fullPlanningAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				const expectedSiteAddress = [
-					'addressLine1',
-					'addressLine2',
-					'addressTown',
-					'addressCounty',
-					'postcode',
-					'addressCountry'
-				]
-					.map((key) => fullPlanningAppeal.address[key])
-					.join(', ');
-
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					notifyClient: expect.anything(),
+					}
+				},
+				{
+					appeal: fullPlanningAppeal,
+					templateName: 'lpaq-complete-appellant',
 					personalisation: {
 						lpa_reference: fullPlanningAppeal.applicationReference,
 						appeal_reference_number: fullPlanningAppeal.reference,
-						site_address: expectedSiteAddress
-					},
-					recipientEmail: fullPlanningAppeal.lpa.email,
-					templateName: 'lpaq-complete-lpa'
-				});
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						lpa_reference: fullPlanningAppeal.applicationReference,
-						appeal_reference_number: householdAppeal.reference,
 						site_address: expectedSiteAddress,
-						what_happens_next: 'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
-					},
-					recipientEmail: fullPlanningAppeal.appellant.email,
-					templateName: 'lpaq-complete-appellant'
-				});
+						what_happens_next:
+							'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
+					}
+				}
+			])(
+				'sends a correctly formatted notify email when the outcome is complete for an appeal of type %s',
+				async (test) => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique
+						.mockResolvedValueOnce({
+							...test.appeal,
+							appealStatus: [
+								{
+									status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+									valid: true
+								}
+							]
+						})
+						.mockResolvedValue({
+							...test.appeal,
+							appealStatus: [
+								{
+									status: APPEAL_CASE_STATUS.EVENT,
+									valid: true
+								}
+							]
+						});
+					// @ts-ignore
+					databaseConnector.lPAQuestionnaireValidationOutcome.findUnique.mockResolvedValue(
+						lpaQuestionnaireValidationOutcomes[0]
+					);
+					// @ts-ignore
+					databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+					// @ts-ignore
+					databaseConnector.documentVersion.update.mockResolvedValue([]);
+					// @ts-ignore
+					databaseConnector.document.findUnique.mockResolvedValue(null);
+					// @ts-ignore
+					databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+						{ id: 1, key: 'no_redaction_required' }
+					]);
 
-				expect(response.status).toEqual(200);
-			});
+					const body = {
+						validationOutcome: 'complete'
+					};
+					const { id, lpaQuestionnaire } = test.appeal;
+					const response = await request
+						.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+						.send(body)
+						.set('azureAdUserId', azureAdUserId);
+
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							lpa_reference: test.appeal.applicationReference,
+							appeal_reference_number: test.appeal.reference,
+							site_address: expectedSiteAddress
+						},
+						recipientEmail: test.appeal.lpa.email,
+						templateName: 'lpaq-complete-lpa'
+					});
+
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						notifyClient: expect.anything(),
+						personalisation: test.personalisation,
+						recipientEmail: test.appeal.appellant.email,
+						templateName: test.templateName
+					});
+
+					expect(response.status).toEqual(200);
+				}
+			);
 
 			test('updates an lpa questionnaire when the validation outcome is complete for a full planning appeal', async () => {
 				// @ts-ignore

@@ -2,7 +2,7 @@
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal } from '#tests/appeals/mocks.js';
+import { fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
 import formatDate from '#utils/date-formatter.js';
 import { add, sub } from 'date-fns';
 import {
@@ -59,9 +59,12 @@ describe('appeal withdrawal routes', () => {
 			});
 		});
 
-		test('returns 200 when all good', async () => {
+		test.each([
+			['household', householdAppeal],
+			['fullPlanning', fullPlanningAppeal]
+		])('returns 200 when appeal: %s is withdrawn', async (_, appeal) => {
 			const correctAppealState = {
-				...householdAppeal,
+				...appeal,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.EVENT,
@@ -76,7 +79,7 @@ describe('appeal withdrawal routes', () => {
 			const utcDate = setTimeInTimeZone(withoutWeekends, 10, 0);
 
 			const response = await request
-				.post(`/appeals/${householdAppeal.id}/withdrawal`)
+				.post(`/appeals/${appeal.id}/withdrawal`)
 				.send({
 					withdrawalRequestDate: utcDate.toISOString()
 				})
@@ -89,9 +92,9 @@ describe('appeal withdrawal routes', () => {
 			expect(mockNotifySend).toHaveBeenCalledWith({
 				notifyClient: expect.anything(),
 				personalisation: {
-					appeal_reference_number: '1345264',
-					lpa_reference: '48269/APP/2021/1482',
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					withdrawal_date: formatDate(utcDate, false),
 					event_set: true,
 					event_type: 'site visit'
@@ -104,9 +107,9 @@ describe('appeal withdrawal routes', () => {
 			expect(mockNotifySend).toHaveBeenCalledWith({
 				notifyClient: expect.anything(),
 				personalisation: {
-					appeal_reference_number: '1345264',
-					lpa_reference: '48269/APP/2021/1482',
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					withdrawal_date: formatDate(utcDate, false),
 					event_set: true,
 					event_type: 'site visit'

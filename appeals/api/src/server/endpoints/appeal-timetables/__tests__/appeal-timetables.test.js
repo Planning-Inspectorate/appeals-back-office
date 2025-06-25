@@ -17,6 +17,7 @@ import { add } from 'date-fns';
 import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
 import { DEADLINE_HOUR } from '@pins/appeals/constants/dates.js';
 import { DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
+import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -447,7 +448,8 @@ describe('appeal timetables routes', () => {
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						start_date: '5 June 2024',
-						we_will_email_when: 'when you can view information from other parties in the appeals service.',
+						we_will_email_when:
+							'when you can view information from other parties in the appeals service.',
 						site_visit: true,
 						costs_info: true
 					},
@@ -516,7 +518,8 @@ describe('appeal timetables routes', () => {
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						start_date: '5 June 2024',
-						we_will_email_when: 'when you can view information from other parties in the appeals service.',
+						we_will_email_when:
+							'when you can view information from other parties in the appeals service.',
 						site_visit: true,
 						costs_info: true
 					},
@@ -547,11 +550,13 @@ describe('appeal timetables routes', () => {
 				});
 			});
 
-			test('start an s78 appeal timetable with a hearing procedure type', async () => {
+			test.each([
+				['fullPlanning', { ...fullPlanningAppeal, procedureType: { key: 'hearing' } }],
+				['listedBuilding', { ...fullPlanningAppeal, procedureType: { key: 'hearing' } }]
+			])('start an %s appeal timetable with a hearing procedure type', async (_, appeal) => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue({
-					...fullPlanningAppeal,
-					procedureType: { key: 'hearing' }
+					...appeal
 				});
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
@@ -570,7 +575,7 @@ describe('appeal timetables routes', () => {
 				};
 				const s78timetable = mapValues(s78timetableDto, (date) => new Date(date));
 
-				const { id } = fullPlanningAppeal;
+				const { id } = appeal;
 				const response = await request
 					.post(`/appeals/${id}/appeal-timetables/`)
 					.send({ procedureType: 'hearing' })
@@ -605,19 +610,19 @@ describe('appeal timetables routes', () => {
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation: {
-						appeal_reference_number: '1345264',
-						appeal_type: 'Full Planning',
-						appellant_email_address: householdAppeal.appellant.email,
+						appeal_reference_number: appeal.reference,
+						appeal_type: appeal.appealType.type,
+						appellant_email_address: appeal.appellant.email,
 						comment_deadline: '',
 						due_date: '12 June 2024',
 						final_comments_deadline: '24 July 2024',
 						ip_comments_deadline: '10 July 2024',
-						local_planning_authority: 'Maidstone Borough Council',
-						lpa_reference: '48269/APP/2021/1482',
+						local_planning_authority: appeal.lpa.name,
+						lpa_reference: appeal.applicationReference,
 						lpa_statement_deadline: '10 July 2024',
-						procedure_type: 'a hearing',
+						procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
 						questionnaire_due_date: '12 June 2024',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 						start_date: '5 June 2024',
 						we_will_email_when: [
 							'to let you know when you can view information from other parties in the appeals service',
@@ -626,31 +631,31 @@ describe('appeal timetables routes', () => {
 						site_visit: false,
 						costs_info: false
 					},
-					recipientEmail: householdAppeal.appellant.email,
+					recipientEmail: appeal.appellant.email,
 					templateName: 'appeal-valid-start-case-s78-appellant'
 				});
 				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
 					personalisation: {
-						appeal_reference_number: '1345264',
-						appeal_type: 'Full Planning',
-						appellant_email_address: householdAppeal.appellant.email,
+						appeal_reference_number: appeal.reference,
+						appeal_type: appeal.appealType.type,
+						appellant_email_address: appeal.appellant.email,
 						comment_deadline: '',
 						due_date: '12 June 2024',
 						final_comments_deadline: '24 July 2024',
 						ip_comments_deadline: '10 July 2024',
-						local_planning_authority: 'Maidstone Borough Council',
-						lpa_reference: '48269/APP/2021/1482',
+						local_planning_authority: appeal.lpa.name,
+						lpa_reference: appeal.applicationReference,
 						lpa_statement_deadline: '10 July 2024',
-						procedure_type: 'a hearing',
+						procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
 						questionnaire_due_date: '12 June 2024',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 						start_date: '5 June 2024',
 						statement_of_common_ground_deadline: '10 July 2024',
 						planning_obligation_deadline: ''
 					},
-					recipientEmail: householdAppeal.lpa.email,
+					recipientEmail: appeal.lpa.email,
 					templateName: 'appeal-valid-start-case-s78-lpa'
 				});
 			});
