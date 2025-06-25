@@ -241,17 +241,6 @@ describe('lpa questionnaires routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			const expectedSiteAddress = [
-				'addressLine1',
-				'addressLine2',
-				'addressTown',
-				'addressCounty',
-				'postcode',
-				'addressCountry'
-			]
-				.map((key) => test.appeal.address[key])
-				.join(', ');
-
 			test.each([
 				{
 					appeal: householdAppeal,
@@ -259,7 +248,7 @@ describe('lpa questionnaires routes', () => {
 					personalisation: {
 						lpa_reference: householdAppeal.applicationReference,
 						appeal_reference_number: householdAppeal.reference,
-						site_address: expectedSiteAddress
+						site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`
 					}
 				},
 				{
@@ -268,7 +257,7 @@ describe('lpa questionnaires routes', () => {
 					personalisation: {
 						lpa_reference: fullPlanningAppeal.applicationReference,
 						appeal_reference_number: fullPlanningAppeal.reference,
-						site_address: expectedSiteAddress,
+						site_address: `${fullPlanningAppeal.address.addressLine1}, ${fullPlanningAppeal.address.addressLine2}, ${fullPlanningAppeal.address.addressTown}, ${fullPlanningAppeal.address.addressCounty}, ${fullPlanningAppeal.address.postcode}, ${fullPlanningAppeal.address.addressCountry}`,
 						what_happens_next:
 							'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
 					}
@@ -328,7 +317,7 @@ describe('lpa questionnaires routes', () => {
 						personalisation: {
 							lpa_reference: test.appeal.applicationReference,
 							appeal_reference_number: test.appeal.reference,
-							site_address: expectedSiteAddress
+							site_address: `${test.appeal.address.addressLine1}, ${test.appeal.address.addressLine2}, ${test.appeal.address.addressTown}, ${test.appeal.address.addressCounty}, ${test.appeal.address.postcode}, ${test.appeal.address.addressCountry}`
 						},
 						recipientEmail: test.appeal.lpa.email,
 						templateName: 'lpaq-complete-lpa'
