@@ -274,6 +274,32 @@ export const fullPlanningAppeal = {
 	representations: []
 };
 
+export const fullPlanningAppealCaseValid = {
+	...householdAppeal,
+	id: 2,
+	appealType: {
+		id: 1,
+		key: APPEAL_TYPE_SHORTHAND_FPA,
+		type: 'Full Planning'
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true,
+		hasOtherTenants: true,
+		hasPlanningObligation: true,
+		hasSeparateOwnershipCertificate: true,
+		hasToldTenants: false,
+		isAgriculturalHolding: true,
+		isAgriculturalHoldingTenant: true,
+		isDevelopmentDescriptionStillCorrect: false,
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		...validAppellantCaseOutcome
+	},
+	representations: []
+};
+
 export const householdAppealAppellantCaseValid = {
 	...householdAppeal,
 	appellantCase: {
