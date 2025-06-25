@@ -57,6 +57,18 @@ export const dateIsTodayOrInThePast = (dayMonthYearHourMinute) => {
 };
 
 /**
+ * @param {DayMonthYearHourMinute} dayMonthYearHourMinute
+ * @param {DayMonthYearHourMinute} dateToCompare
+ * @returns {boolean}
+ */
+export const dateIsAfter = (dayMonthYearHourMinute, dateToCompare) => {
+	const date = new Date(dayMonthYearHourMinuteToISOString(dayMonthYearHourMinute));
+	const dateAfter = new Date(dayMonthYearHourMinuteToISOString(dateToCompare));
+
+	return isAfter(date, dateAfter);
+};
+
+/**
  * @param {string | null | undefined} dateISOString
  * @returns {string}
  */

@@ -555,6 +555,110 @@ describe('Timetable', () => {
 					'Found. Redirecting to /appeals-service/appeal-details/1/timetable/edit/check'
 				);
 			});
+
+			it('should re-render edit timetable page with date has to be after error', async () => {
+				const appeal = {
+					...baseAppealData,
+					appealTimetable: {
+						appealTimetableId: 1,
+						finalCommentsDueDate: '2025-08-07T22:59:00.000Z',
+						ipCommentsDueDate: '2025-08-26T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2025-06-27T22:59:00.000Z',
+						lpaStatementDueDate: '2025-07-25T22:59:00.000Z'
+					},
+					appealType: 'Planning appeal',
+					appealStatus: 'lpa_questionnaire'
+				};
+
+				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: false } });
+				nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+				nock('http://test/')
+					.post(`/appeals/validate-business-date`)
+					.reply(200, { result: true })
+					.persist();
+
+				const payload = {
+					'lpa-questionnaire-due-date-day': '5',
+					'lpa-questionnaire-due-date-month': '10',
+					'lpa-questionnaire-due-date-year': '2050',
+					'lpa-statement-due-date-day': '4',
+					'lpa-statement-due-date-month': '10',
+					'lpa-statement-due-date-year': '2050',
+					'ip-comments-due-date-day': '4',
+					'ip-comments-due-date-month': '10',
+					'ip-comments-due-date-year': '2050',
+					'final-comments-due-date-day': '3',
+					'final-comments-due-date-month': '10',
+					'final-comments-due-date-year': '2050'
+				};
+
+				const response = await request.post(`${baseUrl}/edit`).send(payload);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain(
+					'<h2 class="govuk-error-summary__title"> There is a problem</h2>'
+				);
+				expect(element.innerHTML).toContain(
+					'Statements due date must be after the LPA questionnaire due date on 27 June 2025</a>'
+				);
+				expect(element.innerHTML).toContain(
+					'Interested party comments due date must be after the LPA questionnaire due date on 27 June 2025</a>'
+				);
+				expect(element.innerHTML).toContain(
+					'Final comments due date must be after the statements due date on 25 July 2025</a>'
+				);
+			});
+
+			it('should re-render edit timetable page and replay entered dates to the user', async () => {
+				const appeal = {
+					...baseAppealData,
+					appealTimetable: {
+						appealTimetableId: 1,
+						finalCommentsDueDate: '2025-08-07T22:59:00.000Z',
+						ipCommentsDueDate: '2025-08-26T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2025-06-27T22:59:00.000Z',
+						lpaStatementDueDate: '2025-07-25T22:59:00.000Z'
+					},
+					appealType: 'Planning appeal',
+					appealStatus: 'lpa_questionnaire'
+				};
+
+				nock.cleanAll();
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: false } });
+				nock('http://test/').get('/appeals/1').reply(200, appeal).persist();
+				nock('http://test/')
+					.post(`/appeals/validate-business-date`)
+					.reply(200, { result: true })
+					.persist();
+
+				const payload = {
+					'lpa-questionnaire-due-date-day': '5',
+					'lpa-questionnaire-due-date-month': '10',
+					'lpa-questionnaire-due-date-year': '2050'
+				};
+
+				const response = await request.post(`${baseUrl}/edit`).send(payload);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				//Removing white spaces for multi-line check
+				expect(element.innerHTML.replace(/\s+/g, ' ')).toContain(
+					'id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day" type="text" value="5" inputmode="numeric">'
+				);
+				expect(element.innerHTML.replace(/\s+/g, ' ')).toContain(
+					'id="lpa-questionnaire-due-date-month" name="lpa-questionnaire-due-date-month" type="text" value="10" inputmode="numeric">'
+				);
+				expect(element.innerHTML.replace(/\s+/g, ' ')).toContain(
+					'id="lpa-questionnaire-due-date-year" name="lpa-questionnaire-due-date-year" type="text" value="2050" inputmode="numeric">'
+				);
+			});
 		});
 
 		describe('S78 hearing', () => {

@@ -18,6 +18,7 @@ import { dateInput } from '#lib/mappers/index.js';
  * @param {import('./timetable.service.js').AppealTimetables} appealTimetable
  * @param {Appeal} appealDetails
  * @param {AppellantCase} appellantCase
+ * @param {Record<string, any>} body
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
@@ -25,6 +26,7 @@ export const mapEditTimetablePage = (
 	appealTimetable,
 	appealDetails,
 	appellantCase,
+	body,
 	errors = undefined
 ) => {
 	const timeTableTypes = getAppealTimetableTypes(appealDetails, appellantCase);
@@ -56,9 +58,9 @@ export const mapEditTimetablePage = (
 			namePrefix: `${idText}-due-date`,
 			value: currentDueDateDayMonthYear
 				? {
-						day: currentDueDateDayMonthYear?.day,
-						month: currentDueDateDayMonthYear?.month,
-						year: currentDueDateDayMonthYear?.year
+						day: body[`${idText}-due-date-day`] ?? currentDueDateDayMonthYear?.day,
+						month: body[`${idText}-due-date-month`] ?? currentDueDateDayMonthYear?.month,
+						year: body[`${idText}-due-date-year`] ?? currentDueDateDayMonthYear?.year
 				  }
 				: {},
 			legendText: `${timetableTypeText} due`,
