@@ -11,7 +11,7 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal, fullPlanningAppeal } from '#tests/appeals/mocks.js';
+import { householdAppeal, fullPlanningAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { add } from 'date-fns';
 import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
@@ -551,48 +551,58 @@ describe('appeal timetables routes', () => {
 			});
 
 			test.each([
-				['fullPlanning', { ...fullPlanningAppeal, procedureType: { key: 'hearing' } }],
-				['listedBuilding', { ...fullPlanningAppeal, procedureType: { key: 'hearing' } }]
-			])('start an %s appeal timetable with a hearing procedure type', async (_, appeal) => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue({
-					...appeal
-				});
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+				[
+					'fullPlanning',
+					{ ...fullPlanningAppeal, procedureType: { key: 'hearing' } },
+					{ statement_of_common_ground_deadline: '10 July 2024', planning_obligation_deadline: '' }
+				],
+				['listedBuilding', { ...listedBuildingAppeal, procedureType: { key: 'hearing' } }, {}]
+			])(
+				'start an %s appeal timetable with a hearing procedure type',
+				async (appealType, appeal, personalisation) => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal
+					});
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				const s78timetableDto = {
-					appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
-					finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
-					ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
-					lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
-					lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
-					s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
-					statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
-				};
-				const s78timetable = mapValues(s78timetableDto, (date) => new Date(date));
+					const s78timetableDto = {
+						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
+						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+					};
+					const s78timetable = mapValues(s78timetableDto, (date) => new Date(date));
 
-				const { id } = appeal;
-				const response = await request
-					.post(`/appeals/${id}/appeal-timetables/`)
-					.send({ procedureType: 'hearing' })
-					.set('azureAdUserId', azureAdUserId);
+					const { id } = appeal;
+					const response = await request
+						.post(`/appeals/${id}/appeal-timetables/`)
+						.send({ procedureType: 'hearing' })
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(201);
-				expect(response.body).toEqual(s78timetableDto);
+					expect(response.status).toEqual(201);
+					expect(response.body).toEqual(s78timetableDto);
 
-				expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
-					create: { ...s78timetable, appealId: id },
-					update: { ...s78timetable },
-					where: { appealId: id },
-					include: { appeal: true }
-				});
+					expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
+						create: { ...s78timetable, appealId: id },
+						update: { ...s78timetable },
+						where: { appealId: id },
+						include: { appeal: true }
+					});
 
-				['The case timeline was created', 'Case started\nAppeal procedure: hearing'].forEach(
-					(details) => {
+					const auditDetails =
+						appealType === 'fullPlanning'
+							? ['The case timeline was created', 'Case started\nAppeal procedure: hearing']
+							: ['The case timeline was created'];
+
+					auditDetails.forEach((details) => {
 						expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 							data: {
 								appealId: id,
@@ -601,64 +611,63 @@ describe('appeal timetables routes', () => {
 								userId: 1
 							}
 						});
-					}
-				);
+					});
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						appeal_reference_number: appeal.reference,
-						appeal_type: appeal.appealType.type,
-						appellant_email_address: appeal.appellant.email,
-						comment_deadline: '',
-						due_date: '12 June 2024',
-						final_comments_deadline: '24 July 2024',
-						ip_comments_deadline: '10 July 2024',
-						local_planning_authority: appeal.lpa.name,
-						lpa_reference: appeal.applicationReference,
-						lpa_statement_deadline: '10 July 2024',
-						procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
-						questionnaire_due_date: '12 June 2024',
-						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-						start_date: '5 June 2024',
-						we_will_email_when: [
-							'to let you know when you can view information from other parties in the appeals service',
-							'when we set up your hearing'
-						],
-						site_visit: false,
-						costs_info: false
-					},
-					recipientEmail: appeal.appellant.email,
-					templateName: 'appeal-valid-start-case-s78-appellant'
-				});
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						appeal_reference_number: appeal.reference,
-						appeal_type: appeal.appealType.type,
-						appellant_email_address: appeal.appellant.email,
-						comment_deadline: '',
-						due_date: '12 June 2024',
-						final_comments_deadline: '24 July 2024',
-						ip_comments_deadline: '10 July 2024',
-						local_planning_authority: appeal.lpa.name,
-						lpa_reference: appeal.applicationReference,
-						lpa_statement_deadline: '10 July 2024',
-						procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
-						questionnaire_due_date: '12 June 2024',
-						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-						start_date: '5 June 2024',
-						statement_of_common_ground_deadline: '10 July 2024',
-						planning_obligation_deadline: ''
-					},
-					recipientEmail: appeal.lpa.email,
-					templateName: 'appeal-valid-start-case-s78-lpa'
-				});
-			});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							comment_deadline: '',
+							due_date: '12 June 2024',
+							final_comments_deadline: '24 July 2024',
+							ip_comments_deadline: '10 July 2024',
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: '10 July 2024',
+							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+							questionnaire_due_date: '12 June 2024',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							we_will_email_when: [
+								'to let you know when you can view information from other parties in the appeals service',
+								'when we set up your hearing'
+							],
+							site_visit: false,
+							costs_info: false
+						},
+						recipientEmail: appeal.appellant.email,
+						templateName: 'appeal-valid-start-case-s78-appellant'
+					});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							comment_deadline: '',
+							due_date: '12 June 2024',
+							final_comments_deadline: '24 July 2024',
+							ip_comments_deadline: '10 July 2024',
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: '10 July 2024',
+							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+							questionnaire_due_date: '12 June 2024',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							...personalisation
+						},
+						recipientEmail: appeal.lpa.email,
+						templateName: 'appeal-valid-start-case-s78-lpa'
+					});
+				}
+			);
 
 			test('empty object', async () => {
 				// @ts-ignore
