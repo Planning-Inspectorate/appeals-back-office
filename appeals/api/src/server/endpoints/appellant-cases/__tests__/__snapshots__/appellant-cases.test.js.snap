@@ -155,7 +155,78 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
 }
 `;
 
-exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCaseId GET gets a single appellant case for a valid full planning appeal 1`] = `
+exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCaseId GET gets a single appellant case for an appeal with no validation outcome 1`] = `
+{
+  "agent": {
+    "email": "test@136s7.com",
+    "firstName": "John",
+    "lastName": "Smith",
+    "organisationName": "Smith Inc.",
+    "phoneNumber": "09876 543 210",
+    "serviceUserId": 1,
+  },
+  "appealId": 1,
+  "appealReference": "1345264",
+  "appealSite": {
+    "addressId": 1,
+    "addressLine1": "96 The Avenue",
+    "addressLine2": "Leftfield",
+    "county": "Kent",
+    "postCode": "MD21 5XY",
+    "town": "Maidstone",
+  },
+  "appealType": "Householder",
+  "appellant": {
+    "email": "test@1367.com",
+    "firstName": "Lee",
+    "lastName": "Thornton",
+    "organisationName": "Thornton LTD",
+    "phoneNumber": "01234 567 890",
+    "serviceUserId": 1,
+  },
+  "appellantCaseId": 1,
+  "appellantCostsAppliedFor": null,
+  "applicant": {
+    "firstName": "Lee",
+    "surname": "Thornton",
+  },
+  "applicationDate": "2022-03-18T00:00:00.000Z",
+  "applicationDecision": "refused",
+  "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
+  "createdAt": "2024-03-25T23:59:59.999Z",
+  "developmentDescription": {
+    "details": "A test description",
+    "isChanged": false,
+  },
+  "documents": {},
+  "enforcementNotice": null,
+  "floorSpaceSquareMetres": null,
+  "hasAdvertisedAppeal": true,
+  "healthAndSafety": {
+    "details": "Small dog big character",
+    "hasIssues": true,
+  },
+  "isAppellantNamedOnApplication": false,
+  "localPlanningDepartment": "Maidstone Borough Council",
+  "planningApplicationReference": "48269/APP/2021/1482",
+  "procedureType": "Written",
+  "siteAccessRequired": {
+    "details": "There is no mobile reception at the site",
+    "isRequired": true,
+  },
+  "siteAreaSquareMetres": 100,
+  "siteOwnership": {
+    "areAllOwnersKnown": null,
+    "knowsOtherLandowners": null,
+    "ownersInformed": true,
+    "ownsAllLand": true,
+    "ownsSomeLand": true,
+  },
+  "typeOfPlanningApplication": "householder-planning",
+}
+`;
+
+exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCaseId GET gets a single appellant case for an appeal with no validation outcome 2`] = `
 {
   "agent": {
     "email": "test@136s7.com",
@@ -420,103 +491,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
 }
 `;
 
-exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCaseId GET gets a single appellant case for an incomplete full planning appeal 1`] = `
-{
-  "agent": {
-    "email": "test@136s7.com",
-    "firstName": "John",
-    "lastName": "Smith",
-    "organisationName": "Smith Inc.",
-    "phoneNumber": "09876 543 210",
-    "serviceUserId": 1,
-  },
-  "agriculturalHolding": {},
-  "appealId": 5,
-  "appealReference": "1345264",
-  "appealSite": {
-    "addressId": 1,
-    "addressLine1": "96 The Avenue",
-    "addressLine2": "Leftfield",
-    "county": "Kent",
-    "postCode": "MD21 5XY",
-    "town": "Maidstone",
-  },
-  "appealType": "Full Planning",
-  "appellant": {
-    "email": "test@1367.com",
-    "firstName": "Lee",
-    "lastName": "Thornton",
-    "organisationName": "Thornton LTD",
-    "phoneNumber": "01234 567 890",
-    "serviceUserId": 1,
-  },
-  "appellantCaseId": 1,
-  "appellantCostsAppliedFor": null,
-  "appellantProcedurePreference": "Hearing",
-  "appellantProcedurePreferenceDetails": "Reason for preference",
-  "appellantProcedurePreferenceDuration": 5,
-  "appellantProcedurePreferenceWitnessCount": 1,
-  "applicant": {
-    "firstName": "Lee",
-    "surname": "Thornton",
-  },
-  "applicationDate": "2022-03-18T00:00:00.000Z",
-  "applicationDecision": "refused",
-  "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
-  "createdAt": "2024-03-25T23:59:59.999Z",
-  "developmentDescription": {
-    "details": "A test description",
-    "isChanged": false,
-  },
-  "developmentType": null,
-  "documents": {},
-  "enforcementNotice": null,
-  "floorSpaceSquareMetres": null,
-  "hasAdvertisedAppeal": true,
-  "healthAndSafety": {
-    "details": "Small dog big character",
-    "hasIssues": true,
-  },
-  "isAppellantNamedOnApplication": false,
-  "localPlanningDepartment": "Maidstone Borough Council",
-  "planningApplicationReference": "48269/APP/2021/1482",
-  "planningObligation": {},
-  "procedureType": "Written",
-  "siteAccessRequired": {
-    "details": "There is no mobile reception at the site",
-    "isRequired": true,
-  },
-  "siteAreaSquareMetres": 100,
-  "siteOwnership": {
-    "areAllOwnersKnown": null,
-    "knowsOtherLandowners": null,
-    "ownersInformed": true,
-    "ownsAllLand": true,
-    "ownsSomeLand": true,
-  },
-  "typeOfPlanningApplication": "full-appeal",
-  "validation": {
-    "incompleteReasons": [
-      {
-        "name": {
-          "name": "The original application form is incomplete",
-        },
-        "text": [],
-      },
-      {
-        "name": {
-          "name": "Other",
-        },
-        "text": [
-          "Appellant contact information is incorrect or missing",
-        ],
-      },
-    ],
-    "outcome": "Incomplete",
-  },
-}
-`;
-
 exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCaseId GET gets a single appellant case for an invalid appeal: fullPlanningAppeal 1`] = `
 {
   "agent": {
@@ -682,103 +656,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsSomeLand": true,
   },
   "typeOfPlanningApplication": "householder-planning",
-  "validation": {
-    "invalidReasons": [
-      {
-        "name": {
-          "name": "Appeal has not been submitted on time",
-        },
-        "text": [],
-      },
-      {
-        "name": {
-          "name": "Other",
-        },
-        "text": [
-          "The appeal site address does not match",
-        ],
-      },
-    ],
-    "outcome": "Invalid",
-  },
-}
-`;
-
-exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCaseId GET gets a single appellant case for an invalid full planning appeal 1`] = `
-{
-  "agent": {
-    "email": "test@136s7.com",
-    "firstName": "John",
-    "lastName": "Smith",
-    "organisationName": "Smith Inc.",
-    "phoneNumber": "09876 543 210",
-    "serviceUserId": 1,
-  },
-  "agriculturalHolding": {},
-  "appealId": 6,
-  "appealReference": "1345264",
-  "appealSite": {
-    "addressId": 1,
-    "addressLine1": "96 The Avenue",
-    "addressLine2": "Leftfield",
-    "county": "Kent",
-    "postCode": "MD21 5XY",
-    "town": "Maidstone",
-  },
-  "appealType": "Full Planning",
-  "appellant": {
-    "email": "test@1367.com",
-    "firstName": "Lee",
-    "lastName": "Thornton",
-    "organisationName": "Thornton LTD",
-    "phoneNumber": "01234 567 890",
-    "serviceUserId": 1,
-  },
-  "appellantCaseId": 1,
-  "appellantCostsAppliedFor": null,
-  "appellantProcedurePreference": "Hearing",
-  "appellantProcedurePreferenceDetails": "Reason for preference",
-  "appellantProcedurePreferenceDuration": 5,
-  "appellantProcedurePreferenceWitnessCount": 1,
-  "applicant": {
-    "firstName": "Lee",
-    "surname": "Thornton",
-  },
-  "applicationDate": "2022-03-18T00:00:00.000Z",
-  "applicationDecision": "refused",
-  "applicationDecisionDate": "2022-03-18T00:00:00.000Z",
-  "createdAt": "2024-03-25T23:59:59.999Z",
-  "developmentDescription": {
-    "details": "A test description",
-    "isChanged": false,
-  },
-  "developmentType": null,
-  "documents": {},
-  "enforcementNotice": null,
-  "floorSpaceSquareMetres": null,
-  "hasAdvertisedAppeal": true,
-  "healthAndSafety": {
-    "details": "Small dog big character",
-    "hasIssues": true,
-  },
-  "isAppellantNamedOnApplication": false,
-  "localPlanningDepartment": "Maidstone Borough Council",
-  "planningApplicationReference": "48269/APP/2021/1482",
-  "planningObligation": {},
-  "procedureType": "Written",
-  "siteAccessRequired": {
-    "details": "There is no mobile reception at the site",
-    "isRequired": true,
-  },
-  "siteAreaSquareMetres": 100,
-  "siteOwnership": {
-    "areAllOwnersKnown": null,
-    "knowsOtherLandowners": null,
-    "ownersInformed": true,
-    "ownsAllLand": true,
-    "ownsSomeLand": true,
-  },
-  "typeOfPlanningApplication": "full-appeal",
   "validation": {
     "invalidReasons": [
       {
