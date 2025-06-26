@@ -30,15 +30,6 @@ const appealWithHearingEstimate = {
 };
 
 describe('appeal hearing estimates routes', () => {
-	beforeEach(() => {
-		databaseConnector.hearingEstimate = {
-			findUnique: jest.fn(),
-			create: jest.fn(),
-			update: jest.fn(),
-			delete: jest.fn()
-		};
-	});
-
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
