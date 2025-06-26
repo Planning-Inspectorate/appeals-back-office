@@ -279,7 +279,13 @@ describe('linked-appeals', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Which is the lead appeal?</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(`<span>${appealData.appealReference}</span>`);
 			expect(unprettifiedElement.innerHTML).toContain(
-				`${linkableAppealSummaryBackOffice.appealType}</span>`
+				`${appealData.appealSite.addressLine1}</span>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<span>${linkableAppealSummaryBackOffice.appealReference}</span>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`${linkableAppealSummaryBackOffice.siteAddress.addressLine1}</span>`
 			);
 		});
 	});
@@ -318,7 +324,13 @@ describe('linked-appeals', () => {
 
 			expect(element.innerHTML).toContain('Which is the lead appeal?</h1>');
 			expect(element.innerHTML).toContain(`<span>${appealData.appealReference}</span>`);
-			expect(element.innerHTML).toContain(`${linkableAppealSummaryBackOffice.appealType}</span>`);
+			expect(element.innerHTML).toContain(`${appealData.appealSite.addressLine1}</span>`);
+			expect(element.innerHTML).toContain(
+				`<span>${linkableAppealSummaryBackOffice.appealReference}</span>`
+			);
+			expect(element.innerHTML).toContain(
+				`${linkableAppealSummaryBackOffice.siteAddress.addressLine1}</span>`
+			);
 		});
 	});
 

@@ -59,13 +59,18 @@ export function addLinkedAppealCheckAndConfirmPage(request) {
 
 	const { leadAppeal: leadAppealRef, linkableAppealSummary } = sessionData;
 
-	const linkCandidateHtml = `
-		<span>${linkableAppealSummary.appealReference}${
-		linkableAppealSummary.source === 'horizon' ? ' (Horizon)' : ''
-	}</span>
-		<br>
-		<span>${linkableAppealSummary.appealType}</span>
-	`;
+	const linkCandidateSource = linkableAppealSummary.source === 'horizon' ? ' (Horizon)' : '';
+	const linkCandidate = [
+		`<span>${linkableAppealSummary.appealReference}${linkCandidateSource}</span>`
+	];
+	if (linkableAppealSummary.siteAddress?.addressLine1) {
+		linkCandidate.push(
+			`<span class="govuk-hint">${linkableAppealSummary.siteAddress.addressLine1}</span>`
+		);
+	}
+	if (linkableAppealSummary.appealType) {
+		linkCandidate.push(`<span class="govuk-hint">${linkableAppealSummary.appealType}</span>`);
+	}
 
 	const [leadAppeal, childAppeal] = (() => {
 		switch (leadAppealRef) {
@@ -80,11 +85,16 @@ export function addLinkedAppealCheckAndConfirmPage(request) {
 		}
 	})();
 
-	const leadAppealHtml = `
-		<span>${leadAppeal.appealReference}${leadAppeal.source === 'horizon' ? ' (Horizon)' : ''}</span>
-		<br>
-		<span>${leadAppeal.appealType}</span>
-	`;
+	const leadAppealSource = leadAppeal.source === 'horizon' ? ' (Horizon)' : '';
+	const leadAppealLines = [`<span>${leadAppeal.appealReference}${leadAppealSource}</span>`];
+	const { addressLine1: leadAppealAddressLine1 } =
+		leadAppeal.siteAddress || leadAppeal.appealSite || {};
+	if (leadAppealAddressLine1) {
+		leadAppealLines.push(`<span class="govuk-hint">${leadAppealAddressLine1}</span>`);
+	}
+	if (leadAppeal.appealType) {
+		leadAppealLines.push(`<span class="govuk-hint">${leadAppeal.appealType}</span>`);
+	}
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -106,7 +116,7 @@ export function addLinkedAppealCheckAndConfirmPage(request) {
 								text: 'Appeal reference'
 							},
 							value: {
-								html: linkCandidateHtml
+								html: linkCandidate.join('\n<br>\n')
 							},
 							actions: {
 								items: [
@@ -125,7 +135,7 @@ export function addLinkedAppealCheckAndConfirmPage(request) {
 								text: 'Which is the lead appeal?'
 							},
 							value: {
-								html: leadAppealHtml
+								html: leadAppealLines.join('\n<br>\n')
 							},
 							actions: {
 								items: [
@@ -197,15 +207,21 @@ export function changeLeadAppealPage(
 	/**
 	 * @param {string | undefined | null} appealReference
 	 * @param {string | undefined | null} appealType
+	 * @param {string | undefined | null} appealSiteAddress
 	 * */
-	const radioItem = (appealReference, appealType) => ({
-		value: appealReference,
-		html: `
-			<span>${appealReference}</span>
-			<br>
-			<span class="govuk-caption-m">${appealType}</span>
-		`
-	});
+	const radioItem = (appealReference, appealType, appealSiteAddress) => {
+		const content = [`<span>${appealReference}</span>`];
+		if (appealSiteAddress) {
+			content.push(`<span class="govuk-hint">${appealSiteAddress}</span>`);
+		}
+		if (appealType) {
+			content.push(`<span class="govuk-hint">${appealType}</span>`);
+		}
+		return {
+			value: appealReference,
+			html: content.join('\n<br>')
+		};
+	};
 
 	const pageContent = {
 		title,
@@ -219,8 +235,16 @@ export function changeLeadAppealPage(
 				legendIsPageHeading: true,
 				value: leadAppeal,
 				items: [
-					radioItem(appealData.appealReference, appealData.appealType),
-					radioItem(linkCandidateSummary.appealReference, linkCandidateSummary.appealType)
+					radioItem(
+						appealData.appealReference,
+						appealData.appealType,
+						appealData.appealSite && appealData.appealSite.addressLine1
+					),
+					radioItem(
+						linkCandidateSummary.appealReference,
+						linkCandidateSummary.appealType,
+						linkCandidateSummary.siteAddress && linkCandidateSummary.siteAddress.addressLine1
+					)
 				],
 				errorMessage
 			})
