@@ -2,7 +2,7 @@
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal } from '#tests/appeals/mocks.js';
+import { householdAppeal, fullPlanningAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
 import formatDate from '#utils/date-formatter.js';
 import { add, sub } from 'date-fns';
@@ -182,9 +182,14 @@ describe('decision routes', () => {
 				}
 			});
 		});
-		test('returns 200 when all good', async () => {
+
+		test.each([
+			['householdAppeal', householdAppeal],
+			['fullPlanningAppeal', fullPlanningAppeal],
+			['listedBuildingAppeal', listedBuildingAppeal]
+		])('returns 200 when all good, appeal type: %s', async (_, appeal) => {
 			const correctAppealState = {
-				...householdAppeal,
+				...appeal,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -205,7 +210,7 @@ describe('decision routes', () => {
 			const outcome = 'allowed';
 
 			const response = await request
-				.post(`/appeals/${householdAppeal.id}/decision`)
+				.post(`/appeals/${appeal.id}/decision`)
 				.send({
 					decisions: [
 						{
@@ -236,64 +241,64 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
 				personalisation: {
-					appeal_reference_number: '1345264',
-					lpa_reference: '48269/APP/2021/1482',
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
-					front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264'
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
 				},
-				recipientEmail: householdAppeal.agent.email
+				recipientEmail: appeal.agent.email
 			});
 
 			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 				notifyClient: expect.any(Object),
 				personalisation: {
-					appeal_reference_number: '1345264',
-					lpa_reference: '48269/APP/2021/1482',
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
-					front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264'
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
 				},
 				templateName: 'decision-is-allowed-split-dismissed-lpa',
-				recipientEmail: householdAppeal.lpa.email
+				recipientEmail: appeal.lpa.email
 			});
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 				data: {
-					appealId: householdAppeal.id,
+					appealId: appeal.id,
 					details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 					loggedAt: expect.any(Date),
-					userId: householdAppeal.caseOfficer.id
+					userId: appeal.caseOfficer.id
 				}
 			});
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 				data: {
-					appealId: householdAppeal.id,
+					appealId: appeal.id,
 					details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
 					loggedAt: expect.any(Date),
-					userId: householdAppeal.caseOfficer.id
+					userId: appeal.caseOfficer.id
 				}
 			});
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 				data: {
-					appealId: householdAppeal.id,
+					appealId: appeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [outcome]),
 					loggedAt: expect.any(Date),
-					userId: householdAppeal.caseOfficer.id
+					userId: appeal.caseOfficer.id
 				}
 			});
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(4, {
 				data: {
-					appealId: householdAppeal.id,
+					appealId: appeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
 					loggedAt: expect.any(Date),
-					userId: householdAppeal.caseOfficer.id
+					userId: appeal.caseOfficer.id
 				}
 			});
 
