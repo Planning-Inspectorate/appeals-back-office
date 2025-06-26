@@ -53,6 +53,7 @@ export const publishInvalidDecision = async (
 
 	if (result) {
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+		const lpaEmail = appeal.lpa?.email || '';
 		const siteAddress = appeal.address
 			? formatAddressSingleLine(appeal.address)
 			: 'Address not available';
@@ -87,7 +88,7 @@ export const publishInvalidDecision = async (
 			await notifySend({
 				templateName: 'decision-is-invalid-lpa',
 				notifyClient,
-				recipientEmail,
+				recipientEmail: lpaEmail,
 				personalisation: { ...personalisation, has_costs_decision: hasLpaCostsDecision }
 			})
 		]);
