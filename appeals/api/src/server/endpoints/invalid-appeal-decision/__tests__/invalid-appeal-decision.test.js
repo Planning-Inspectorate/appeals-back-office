@@ -2,7 +2,7 @@
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal } from '#tests/appeals/mocks.js';
+import { householdAppeal, fullPlanningAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { ERROR_CANNOT_BE_EMPTY_STRING } from '@pins/appeals/constants/support.js';
@@ -80,9 +80,14 @@ describe('invalid appeal decision routes', () => {
 				}
 			});
 		});
-		test('returns 200 and send 2 notify emails when all good', async () => {
+
+		test.each([
+			['householdAppeal', householdAppeal],
+			['fullPlanningAppeal', fullPlanningAppeal],
+			['listedBuildingAppeal', listedBuildingAppeal]
+		])('returns 200 and send 2 notify emails when all good, appeal type: %s', async (_, appeal) => {
 			const correctAppealState = {
-				...householdAppeal,
+				...appeal,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -104,7 +109,7 @@ describe('invalid appeal decision routes', () => {
 			});
 
 			const response = await request
-				.post(`/appeals/${householdAppeal.id}/inspector-decision-invalid`)
+				.post(`/appeals/${appeal.id}/inspector-decision-invalid`)
 				.send({
 					invalidDecisionReason: 'Invalid reason'
 				})
@@ -120,10 +125,10 @@ describe('invalid appeal decision routes', () => {
 					appeal_reference_number: correctAppealState.reference,
 					has_costs_decision: false,
 					lpa_reference: correctAppealState.applicationReference,
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					site_address: `${correctAppealState.address.addressLine1}, ${correctAppealState.address.addressLine2}, ${correctAppealState.address.addressTown}, ${correctAppealState.address.addressCounty}, ${correctAppealState.address.postcode}, ${correctAppealState.address.addressCountry}`,
 					reasons: ['Invalid reason']
 				},
-				recipientEmail: 'test@136s7.com',
+				recipientEmail: correctAppealState.agent.email,
 				templateName: 'decision-is-invalid-appellant'
 			});
 
@@ -134,10 +139,10 @@ describe('invalid appeal decision routes', () => {
 					appeal_reference_number: correctAppealState.reference,
 					has_costs_decision: false,
 					lpa_reference: correctAppealState.applicationReference,
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					site_address: `${correctAppealState.address.addressLine1}, ${correctAppealState.address.addressLine2}, ${correctAppealState.address.addressTown}, ${correctAppealState.address.addressCounty}, ${correctAppealState.address.postcode}, ${correctAppealState.address.addressCountry}`,
 					reasons: ['Invalid reason']
 				},
-				recipientEmail: 'test@136s7.com',
+				recipientEmail: correctAppealState.lpa.email,
 				templateName: 'decision-is-invalid-lpa'
 			});
 			expect(response.status).toEqual(201);
