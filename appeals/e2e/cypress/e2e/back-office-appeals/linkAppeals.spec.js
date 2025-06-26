@@ -15,22 +15,25 @@ describe('link appeals', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	// it('Link an unlinked appeal to an unlinked appeal', { tags: tag.smoke }, () => {
-	// 	cy.createCase().then((caseRef) => {
-	// 		cy.createCase().then((caseRefToLink) => {
-	// 			happyPathHelper.assignCaseOfficer(caseRef);
-	// 			caseDetailsPage.clickAccordionByButton('Overview');
-	// 			caseDetailsPage.clickAddLinkedAppeal();
-	// 			caseDetailsPage.fillInput(caseRefToLink);
-	// 			caseDetailsPage.clickButtonByText('Continue');
-	// 			caseDetailsPage.selectRadioButtonByValue(caseRef);
-	// 			caseDetailsPage.clickButtonByText('Continue');
-	// 			caseDetailsPage.clickButtonByText('Add linked appeal');
-	// 			caseDetailsPage.validateBannerMessage('Success', 'This appeal is now the lead for appeal ' + caseRefToLink);
-	// 			caseDetailsPage.checkStatusOfCase('Child', 1);
-	// 		});
-	// 	});
-	// });
+	it('Link an unlinked appeal to an unlinked appeal', { tags: tag.smoke }, () => {
+		cy.createCase().then((caseRef) => {
+			cy.createCase().then((caseRefToLink) => {
+				happyPathHelper.assignCaseOfficer(caseRef);
+				caseDetailsPage.clickAccordionByButton('Overview');
+				caseDetailsPage.clickAddLinkedAppeal();
+				caseDetailsPage.fillInput(caseRefToLink);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue(caseRef);
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.clickButtonByText('Add linked appeal');
+				caseDetailsPage.validateBannerMessage(
+					'Success',
+					'This appeal is now the lead for appeal ' + caseRefToLink
+				);
+				caseDetailsPage.checkStatusOfCase('Child', 1);
+			});
+		});
+	});
 
 	it('click on the first linked appeal', () => {
 		cy.createCase().then((caseRef) => {
