@@ -18,24 +18,24 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	// it(
-	// 	'view case history after assigning a case officer and validating a case',
-	// 	{ tags: tag.smoke },
-	// 	() => {
-	// 		let dueDate = new Date();
+	it(
+		'view case history after assigning a case officer and validating a case',
+		{ tags: tag.smoke },
+		() => {
+			let dueDate = new Date();
 
-	// 		cy.createCase().then((caseRef) => {
-	// 			happyPathHelper.assignCaseOfficer(caseRef);
-	// 			happyPathHelper.reviewAppellantCase(caseRef);
-	// 			caseDetailsPage.clickAccordionByButton('Case management');
-	// 			caseDetailsPage.clickViewCaseHistory();
-	// 			caseDetailsPage.verifyTableCellTextCaseHistory(
-	// 				users.appeals.caseAdmin.email + ' was added to the team'
-	// 			);
-	// 			caseDetailsPage.verifyTableCellTextCaseHistory('The case has progressed to validation');
-	// 		});
-	// 	}
-	// );
+			cy.createCase().then((caseRef) => {
+				happyPathHelper.assignCaseOfficer(caseRef);
+				happyPathHelper.reviewAppellantCase(caseRef);
+				caseDetailsPage.clickAccordionByButton('Case management');
+				caseDetailsPage.clickViewCaseHistory();
+				caseDetailsPage.verifyTableCellTextCaseHistory(
+					users.appeals.caseAdmin.email + ' was added to the team'
+				);
+				caseDetailsPage.verifyTableCellTextCaseHistory('The case has progressed to validation');
+			});
+		}
+	);
 
 	it(
 		'view case history after amending a document and updating the appellant case',
