@@ -18,9 +18,12 @@ import {
 } from '@pins/appeals/constants/support.js';
 
 import { householdAppeal as householdAppealData } from '#tests/appeals/mocks.js';
+import { fullPlanningAppeal as fullPlanningAppealData } from '#tests/appeals/mocks.js';
+import { listedBuildingAppeal as listedBuildingAppealData } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { format, parseISO } from 'date-fns';
+import { formatTime, dateISOStringToDisplayDate } from '#utils/date-formatter.js';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
 import {
@@ -291,172 +294,193 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(201);
 			});
 
-			test('creates an Unaccompanied site visit and sends notify email to appellant/agent', async () => {
-				const { siteVisit } = householdAppeal;
+			test.each([
+				['householdAppeal', householdAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])(
+				'creates an Unaccompanied site visit and sends notify email to appellant/agent, appeal type: %s',
+				async (_, appeal) => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore`
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore`
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
 
-				// Send request using siteVisitData fields
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/site-visits`)
-					.send({
+					// Send request using siteVisitData fields
+					const response = await request
+						.post(`/appeals/${appeal.id}/site-visits`)
+						.send({
+							visitDate: siteVisit.visitDate,
+							visitEndTime: siteVisit.visitEndTime,
+							visitStartTime: siteVisit.visitStartTime,
+							visitType: siteVisit.siteVisitType.name
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.body).toEqual({
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-schedule-unaccompanied-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							lpa_reference: appeal.applicationReference,
+							inspector_name: '',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.agent.email
+					});
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-schedule-unaccompanied-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						inspector_name: '',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
+					expect(response.status).toEqual(201);
+				}
+			);
 
-				expect(response.status).toEqual(201);
-			});
+			test.each([
+				['householdAppeal', householdAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])(
+				'creates an Accompanied site visit and sends GMT date and time notify email to appellant/agent and lpa, appeal type: %s',
+				async (_, appeal) => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 
-			test('creates an Accompanied site visit and sends GMT date and time notify email to appellant/agent and lpa', async () => {
-				const { siteVisit } = householdAppeal;
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
 
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					const response = await request
+						.post(`/appeals/${appeal.id}/site-visits`)
+						.send({
+							visitDate: '2022-03-01T00:00:00.000Z',
+							visitEndTime: '2022-03-01T12:00:00.000Z',
+							visitStartTime: '2022-01-31T11:00:00.000Z',
+							visitType: siteVisit.siteVisitType.name
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/site-visits`)
-					.send({
+					expect(response.body).toEqual({
 						visitDate: '2022-03-01T00:00:00.000Z',
 						visitEndTime: '2022-03-01T12:00:00.000Z',
 						visitStartTime: '2022-01-31T11:00:00.000Z',
 						visitType: siteVisit.siteVisitType.name
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(response.body).toEqual({
-					visitDate: '2022-03-01T00:00:00.000Z',
-					visitEndTime: '2022-03-01T12:00:00.000Z',
-					visitStartTime: '2022-01-31T11:00:00.000Z',
-					visitType: siteVisit.siteVisitType.name
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-schedule-accompanied-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							end_time: '12:00',
+							lpa_reference: appeal.applicationReference,
+							inspector_name: '',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: '11:00',
+							visit_date: '1 March 2022'
+						},
+						recipientEmail: appeal.agent.email
+					});
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-schedule-accompanied-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						end_time: '12:00',
-						lpa_reference: '48269/APP/2021/1482',
-						inspector_name: '',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '11:00',
-						visit_date: '1 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-schedule-accompanied-lpa',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							end_time: '12:00',
+							lpa_reference: appeal.applicationReference,
+							inspector_name: '',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: '11:00',
+							visit_date: '1 March 2022'
+						},
+						recipientEmail: appeal.lpa.email
+					});
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-schedule-accompanied-lpa',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						end_time: '12:00',
-						lpa_reference: '48269/APP/2021/1482',
-						inspector_name: '',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '11:00',
-						visit_date: '1 March 2022'
-					},
-					recipientEmail: householdAppeal.lpa.email
-				});
+					expect(response.status).toEqual(201);
+				}
+			);
 
-				expect(response.status).toEqual(201);
-			});
+			test.each([
+				['householdAppeal', householdAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])(
+				'creates an Access Required site visit and sends notify email to appellant/agent, appeal type: %s',
+				async (_, appeal) => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 
-			test('creates an Access Required site visit and sends notify email to appellant/agent', async () => {
-				const { siteVisit } = householdAppeal;
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
 
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					const visitData = {
+						visitEndTime: '2022-03-31T12:00:00.000Z',
+						visitStartTime: '2022-03-31T11:00:00.000Z',
+						visitType: siteVisit.siteVisitType.name
+					};
 
-				const visitData = {
-					visitEndTime: '2022-03-31T12:00:00.000Z',
-					visitStartTime: '2022-03-31T11:00:00.000Z',
-					visitType: siteVisit.siteVisitType.name
-				};
+					const response = await request
+						.post(`/appeals/${appeal.id}/site-visits`)
+						.send({
+							visitDate: siteVisit.visitDate,
+							inspectorName,
+							...visitData
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.post(`/appeals/${householdAppeal.id}/site-visits`)
-					.send({
+					expect(response.body).toEqual({
 						visitDate: siteVisit.visitDate,
-						inspectorName,
 						...visitData
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					...visitData
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-schedule-access-required-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							end_time: '13:00',
+							lpa_reference: appeal.applicationReference,
+							inspector_name: inspectorName,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: '12:00',
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.agent.email
+					});
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-schedule-access-required-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						end_time: '13:00',
-						lpa_reference: '48269/APP/2021/1482',
-						inspector_name: inspectorName,
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '12:00',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
-
-				expect(response.status).toEqual(201);
-			});
+					expect(response.status).toEqual(201);
+				}
+			);
 
 			test('returns an error if appealId is not numeric', async () => {
 				const response = await request
@@ -1264,761 +1288,824 @@ describe('site visit routes', () => {
 				});
 			});
 
-			test('updates an Accompanied site visit to Unaccompanied and changing time and date, sends notify emails', async () => {
-				const { siteVisit } = householdAppeal;
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
+			test.each([
+				['householdAppeal', householdAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])(
+				'updates an Accompanied site visit to Unaccompanied and changing time and date, sends notify emails, appeal type: %s',
+				async (_, appeal) => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
-					.send({
+					const response = await request
+						.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+						.send({
+							visitDate: siteVisit.visitDate,
+							visitEndTime: siteVisit.visitEndTime,
+							visitStartTime: siteVisit.visitStartTime,
+							visitType: siteVisit.siteVisitType.name,
+							previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
+							siteVisitChangeType: 'all'
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: siteVisit.id },
+						data: {
+							visitDate: new Date(siteVisit.visitDate),
+							visitEndTime: new Date(siteVisit.visitEndTime),
+							visitStartTime: new Date(siteVisit.visitStartTime),
+							siteVisitTypeId: siteVisit.siteVisitType.id
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
-						previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
+						previousVisitType: 'Accompanied',
 						siteVisitChangeType: 'all'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
-					where: { id: siteVisit.id },
-					data: {
-						visitDate: new Date(siteVisit.visitDate),
-						visitEndTime: new Date(siteVisit.visitEndTime),
-						visitStartTime: new Date(siteVisit.visitStartTime),
-						siteVisitTypeId: siteVisit.siteVisitType.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name,
-					previousVisitType: 'Accompanied',
-					siteVisitChangeType: 'all'
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-accompanied-to-unaccompanied-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.agent.email
+					});
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-accompanied-to-unaccompanied-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-accompanied-to-unaccompanied-lpa',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.lpa.email
+					});
+				}
+			);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-accompanied-to-unaccompanied-lpa',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.lpa.email
-				});
-			});
+			test.each([
+				['householdAppeal', householdAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])(
+				'updates an Access required site visit to changing time and date, sends notify emails to Appellant, appeal type: %s',
+				async (_, appeal) => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
 
-			test('updates an Access required site visit to changing time and date, sends notify emails to Appellant', async () => {
-				const { siteVisit } = householdAppeal;
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+					const response = await request
+						.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+						.send({
+							visitDate: siteVisit.visitDate,
+							visitEndTime: siteVisit.visitEndTime,
+							visitStartTime: siteVisit.visitStartTime,
+							visitType: siteVisit.siteVisitType.name,
+							previousVisitType: 'Access required',
+							inspectorName,
+							siteVisitChangeType: 'date-time'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
-					.send({
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: siteVisit.id },
+						data: {
+							visitDate: new Date(siteVisit.visitDate),
+							visitEndTime: new Date(siteVisit.visitEndTime),
+							visitStartTime: new Date(siteVisit.visitStartTime),
+							siteVisitTypeId: siteVisit.siteVisitType.id
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: 'Access required',
-						inspectorName,
 						siteVisitChangeType: 'date-time'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
-					where: { id: siteVisit.id },
-					data: {
-						visitDate: new Date(siteVisit.visitDate),
-						visitEndTime: new Date(siteVisit.visitEndTime),
-						visitStartTime: new Date(siteVisit.visitStartTime),
-						siteVisitTypeId: siteVisit.siteVisitType.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name,
-					previousVisitType: 'Access required',
-					siteVisitChangeType: 'date-time'
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-access-required-date-change-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: inspectorName,
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.agent.email
+					});
+				}
+			);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-access-required-date-change-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: 'Jane Smith',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
-			});
+			test.each([
+				['householdAppeal', householdAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])(
+				'updates an Accompanied site visit to changing time and date, sends notify emails to Appellant & LPA, appeal type: %s',
+				async (_, appeal) => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
 
-			test('updates an Accompanied site visit to changing time and date, sends notify emails to Appellant & LPA', async () => {
-				const { siteVisit } = householdAppeal;
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+					const response = await request
+						.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+						.send({
+							visitDate: siteVisit.visitDate,
+							visitEndTime: siteVisit.visitEndTime,
+							visitStartTime: siteVisit.visitStartTime,
+							visitType: siteVisit.siteVisitType.name,
+							previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
+							siteVisitChangeType: 'date-time'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
-					.send({
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: siteVisit.id },
+						data: {
+							visitDate: new Date(siteVisit.visitDate),
+							visitEndTime: new Date(siteVisit.visitEndTime),
+							visitStartTime: new Date(siteVisit.visitStartTime),
+							siteVisitTypeId: siteVisit.siteVisitType.id
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
 						siteVisitChangeType: 'date-time'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
-					where: { id: siteVisit.id },
-					data: {
-						visitDate: new Date(siteVisit.visitDate),
-						visitEndTime: new Date(siteVisit.visitEndTime),
-						visitStartTime: new Date(siteVisit.visitStartTime),
-						siteVisitTypeId: siteVisit.siteVisitType.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name,
-					previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
-					siteVisitChangeType: 'date-time'
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-accompanied-date-change-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.agent.email
+					});
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-accompanied-date-change-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-accompanied-date-change-lpa',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.lpa.email
+					});
+				}
+			);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-accompanied-date-change-lpa',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.lpa.email
-				});
-			});
+			test.each([
+				['householdAppeal', householdAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])(
+				'updates an Accompanied site visit to Unaccompanied, sends notify emails to Appellant & LPA, appeal type: %s',
+				async (_, appeal) => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
 
-			test('updates an Accompanied site visit to Unaccompanied, sends notify emails to Appellant & LPA', async () => {
-				const { siteVisit } = householdAppeal;
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+					const response = await request
+						.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+						.send({
+							visitDate: siteVisit.visitDate,
+							visitEndTime: siteVisit.visitEndTime,
+							visitStartTime: siteVisit.visitStartTime,
+							visitType: siteVisit.siteVisitType.name,
+							previousVisitType: 'Accompanied',
+							siteVisitChangeType: 'visit-type'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
-					.send({
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: siteVisit.id },
+						data: {
+							visitDate: new Date(siteVisit.visitDate),
+							visitEndTime: new Date(siteVisit.visitEndTime),
+							visitStartTime: new Date(siteVisit.visitStartTime),
+							siteVisitTypeId: siteVisit.siteVisitType.id
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: 'Accompanied',
 						siteVisitChangeType: 'visit-type'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
-					where: { id: siteVisit.id },
-					data: {
-						visitDate: new Date(siteVisit.visitDate),
-						visitEndTime: new Date(siteVisit.visitEndTime),
-						visitStartTime: new Date(siteVisit.visitStartTime),
-						siteVisitTypeId: siteVisit.siteVisitType.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name,
-					previousVisitType: 'Accompanied',
-					siteVisitChangeType: 'visit-type'
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-accompanied-to-unaccompanied-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.agent.email
+					});
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-accompanied-to-unaccompanied-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-accompanied-to-unaccompanied-lpa',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.lpa.email
+					});
+				}
+			);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-accompanied-to-unaccompanied-lpa',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.lpa.email
-				});
-			});
+			test.each([
+				['householdAppeal', householdAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])(
+				'updates an Unaccompanied site visit to Accompanied, sends notify emails to Appellant & LPA, appeal type: %s',
+				async (_, appeal) => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
 
-			test('updates an Unaccompanied site visit to Accompanied, sends notify emails to Appellant & LPA', async () => {
-				const { siteVisit } = householdAppeal;
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+					const response = await request
+						.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+						.send({
+							visitDate: siteVisit.visitDate,
+							visitEndTime: siteVisit.visitEndTime,
+							visitStartTime: siteVisit.visitStartTime,
+							visitType: siteVisit.siteVisitType.name,
+							previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
+							siteVisitChangeType: 'visit-type'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
-					.send({
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: siteVisit.id },
+						data: {
+							visitDate: new Date(siteVisit.visitDate),
+							visitEndTime: new Date(siteVisit.visitEndTime),
+							visitStartTime: new Date(siteVisit.visitStartTime),
+							siteVisitTypeId: siteVisit.siteVisitType.id
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
 						siteVisitChangeType: 'visit-type'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
-					where: { id: siteVisit.id },
-					data: {
-						visitDate: new Date(siteVisit.visitDate),
-						visitEndTime: new Date(siteVisit.visitEndTime),
-						visitStartTime: new Date(siteVisit.visitStartTime),
-						siteVisitTypeId: siteVisit.siteVisitType.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name,
-					previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
-					siteVisitChangeType: 'visit-type'
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-unaccompanied-to-accompanied-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.agent.email
+					});
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-unaccompanied-to-accompanied-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-unaccompanied-to-accompanied-lpa',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.lpa.email
+					});
+				}
+			);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-unaccompanied-to-accompanied-lpa',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.lpa.email
-				});
-			});
+			test.each([
+				['householdAppeal', householdAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])(
+				'updates an Access required site visit to Accompanied, sends notify emails to Appellant & LPA, appeal type: %s',
+				async (_, appeal) => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
 
-			test('updates an Access required site visit to Accompanied, sends notify emails to Appellant & LPA', async () => {
-				const { siteVisit } = householdAppeal;
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+					const response = await request
+						.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+						.send({
+							visitDate: siteVisit.visitDate,
+							visitEndTime: siteVisit.visitEndTime,
+							visitStartTime: siteVisit.visitStartTime,
+							visitType: siteVisit.siteVisitType.name,
+							previousVisitType: SITE_VISIT_TYPE_ACCESS_REQUIRED,
+							inspectorName,
+							siteVisitChangeType: 'visit-type'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
-					.send({
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: siteVisit.id },
+						data: {
+							visitDate: new Date(siteVisit.visitDate),
+							visitEndTime: new Date(siteVisit.visitEndTime),
+							visitStartTime: new Date(siteVisit.visitStartTime),
+							siteVisitTypeId: siteVisit.siteVisitType.id
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: SITE_VISIT_TYPE_ACCESS_REQUIRED,
-						inspectorName,
 						siteVisitChangeType: 'visit-type'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
-					where: { id: siteVisit.id },
-					data: {
-						visitDate: new Date(siteVisit.visitDate),
-						visitEndTime: new Date(siteVisit.visitEndTime),
-						visitStartTime: new Date(siteVisit.visitStartTime),
-						siteVisitTypeId: siteVisit.siteVisitType.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name,
-					previousVisitType: SITE_VISIT_TYPE_ACCESS_REQUIRED,
-					siteVisitChangeType: 'visit-type'
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-access-required-to-accompanied-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: inspectorName,
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.agent.email
+					});
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-access-required-to-accompanied-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: 'Jane Smith',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-access-required-to-accompanied-lpa',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: inspectorName,
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.lpa.email
+					});
+				}
+			);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-access-required-to-accompanied-lpa',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: 'Jane Smith',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.lpa.email
-				});
-			});
+			test.each([
+				['householdAppeal', householdAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])(
+				'updates an Accompanied site visit to Access Required, sends notify emails to Appellant & LPA, appeal type: %s',
+				async (_, appeal) => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
 
-			test('updates an Accompanied site visit to Access Required, sends notify emails to Appellant & LPA', async () => {
-				const { siteVisit } = householdAppeal;
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+					const response = await request
+						.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+						.send({
+							visitDate: siteVisit.visitDate,
+							visitEndTime: siteVisit.visitEndTime,
+							visitStartTime: siteVisit.visitStartTime,
+							visitType: siteVisit.siteVisitType.name,
+							previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
+							siteVisitChangeType: 'visit-type'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
-					.send({
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: siteVisit.id },
+						data: {
+							visitDate: new Date(siteVisit.visitDate),
+							visitEndTime: new Date(siteVisit.visitEndTime),
+							visitStartTime: new Date(siteVisit.visitStartTime),
+							siteVisitTypeId: siteVisit.siteVisitType.id
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
 						siteVisitChangeType: 'visit-type'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
-					where: { id: siteVisit.id },
-					data: {
-						visitDate: new Date(siteVisit.visitDate),
-						visitEndTime: new Date(siteVisit.visitEndTime),
-						visitStartTime: new Date(siteVisit.visitStartTime),
-						siteVisitTypeId: siteVisit.siteVisitType.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name,
-					previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED,
-					siteVisitChangeType: 'visit-type'
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-accompanied-to-access-required-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.agent.email
+					});
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-accompanied-to-access-required-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-accompanied-to-access-required-lpa',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.lpa.email
+					});
+				}
+			);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-accompanied-to-access-required-lpa',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.lpa.email
-				});
-			});
+			test.each([
+				['householdAppeal', householdAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])(
+				'updates an Access Required site visit to Unaccompanied, sends notify emails to Appellant, appeal type: %s',
+				async (_, appeal) => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
 
-			test('updates an Access Required site visit to Unaccompanied, sends notify emails to Appellant', async () => {
-				const { siteVisit } = householdAppeal;
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+					const response = await request
+						.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+						.send({
+							visitDate: siteVisit.visitDate,
+							visitEndTime: siteVisit.visitEndTime,
+							visitStartTime: siteVisit.visitStartTime,
+							visitType: siteVisit.siteVisitType.name,
+							previousVisitType: SITE_VISIT_TYPE_ACCESS_REQUIRED,
+							siteVisitChangeType: 'visit-type'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
-					.send({
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: siteVisit.id },
+						data: {
+							visitDate: new Date(siteVisit.visitDate),
+							visitEndTime: new Date(siteVisit.visitEndTime),
+							visitStartTime: new Date(siteVisit.visitStartTime),
+							siteVisitTypeId: siteVisit.siteVisitType.id
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: SITE_VISIT_TYPE_ACCESS_REQUIRED,
 						siteVisitChangeType: 'visit-type'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
-					where: { id: siteVisit.id },
-					data: {
-						visitDate: new Date(siteVisit.visitDate),
-						visitEndTime: new Date(siteVisit.visitEndTime),
-						visitStartTime: new Date(siteVisit.visitStartTime),
-						siteVisitTypeId: siteVisit.siteVisitType.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name,
-					previousVisitType: SITE_VISIT_TYPE_ACCESS_REQUIRED,
-					siteVisitChangeType: 'visit-type'
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-access-required-to-unaccompanied-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.agent.email
+					});
+				}
+			);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-access-required-to-unaccompanied-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
-			});
+			test.each([
+				['householdAppeal', householdAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])(
+				'updates an Unaccompanied site visit to Access Required, sends notify emails to Appellant, appeal type: %s',
+				async (_, appeal) => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
 
-			test('updates an Unaccompanied site visit to Access Required, sends notify emails to Appellant', async () => {
-				const { siteVisit } = householdAppeal;
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+					const response = await request
+						.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+						.send({
+							visitDate: siteVisit.visitDate,
+							visitEndTime: siteVisit.visitEndTime,
+							visitStartTime: siteVisit.visitStartTime,
+							visitType: siteVisit.siteVisitType.name,
+							previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
+							siteVisitChangeType: 'visit-type'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
-					.send({
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledTimes(1);
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: siteVisit.id },
+						data: {
+							visitDate: new Date(siteVisit.visitDate),
+							visitEndTime: new Date(siteVisit.visitEndTime),
+							visitStartTime: new Date(siteVisit.visitStartTime),
+							siteVisitTypeId: siteVisit.siteVisitType.id
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
 						siteVisitChangeType: 'visit-type'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(databaseConnector.siteVisit.update).toHaveBeenCalledTimes(1);
-				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
-					where: { id: siteVisit.id },
-					data: {
-						visitDate: new Date(siteVisit.visitDate),
-						visitEndTime: new Date(siteVisit.visitEndTime),
-						visitStartTime: new Date(siteVisit.visitStartTime),
-						siteVisitTypeId: siteVisit.siteVisitType.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name,
-					previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
-					siteVisitChangeType: 'visit-type'
-				});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
-
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-unaccompanied-to-access-required-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
-			});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-unaccompanied-to-access-required-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.agent.email
+					});
+				}
+			);
 
 			test('returns an error if appealId is not numeric', async () => {
 				const response = await request
