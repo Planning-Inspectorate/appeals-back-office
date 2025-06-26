@@ -10,6 +10,10 @@ import { mapAppellantCaseSharedFields } from '#mappers/integration/shared/s20s78
  */
 export const mapAppellantCase = (data) => {
 	return {
-		...mapAppellantCaseSharedFields(data)
+		...mapAppellantCaseSharedFields(data),
+		informedTenantsAgriculturalHolding: null,
+		agriculturalHolding: null,
+		tenantAgriculturalHolding: null,
+		otherTenantsAgriculturalHolding: null
 	};
 };

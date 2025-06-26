@@ -37,6 +37,7 @@ import eiaDevelopmentDescriptionRouter from './environmental-impact-assessment/e
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
 import designatedSitesRouter from './designated-sites/designated-sites.router.js';
+import preserveGrantLoanRouter from './preserve-grant-loan/preserve-grant-loan.router.js';
 import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
 import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
 
@@ -217,6 +218,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	changeLpaRouter
+);
+router.use(
+	'/:lpaQuestionnaireId/preserve-grant-loan',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	preserveGrantLoanRouter
 );
 
 router

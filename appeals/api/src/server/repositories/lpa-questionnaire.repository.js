@@ -51,6 +51,7 @@ const updateLPAQuestionnaireById = (id, data) => {
 				eiaSensitiveAreaDetails: data.eiaSensitiveAreaDetails,
 				consultedBodiesDetails: data.consultedBodiesDetails,
 				reasonForNeighbourVisits: data.reasonForNeighbourVisits,
+				preserveGrantLoan: data.preserveGrantLoan,
 				...processDesignatedSites(id, data, transaction)
 			}
 		})
