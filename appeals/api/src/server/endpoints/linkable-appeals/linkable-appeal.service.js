@@ -3,6 +3,7 @@ import appealRepository from '#repositories/appeal.repository.js';
 import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
 import { formatLinkableAppealSummary } from './linkable-appeal.formatter.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  *
@@ -17,6 +18,8 @@ export const getLinkableAppealSummaryByCaseReference = async (appealReference) =
 			throw error;
 		});
 		return formatHorizonGetCaseData(horizonAppeal);
+	} else if (appeal.appealStatus.some(({ status }) => status === APPEAL_CASE_STATUS.STATEMENTS)) {
+		throw 432;
 	} else {
 		return formatLinkableAppealSummary(appeal);
 	}

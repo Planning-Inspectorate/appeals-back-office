@@ -1,6 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/index.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { appealStatusToStatusText } from '#lib/nunjucks-filters/status-tag.js';
 
 /** @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal */
 
@@ -178,6 +180,48 @@ export function alreadyLinkedPage(appealData, linkCandidateSummary) {
 		title,
 		heading: title,
 		preHeading: `Appeal ${shortAppealReference}`,
+		submitButtonProperties: {
+			text: 'Add a different linked appeal'
+		}
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealData
+ * @param {import('@pins/appeals.api').Appeals.LinkableAppealSummary} linkCandidateSummary
+ * @returns {PageContent}
+ * */
+export function invalidCaseStatusPage(appealData, linkCandidateSummary) {
+	const shortAppealReference = appealShortReference(appealData.appealReference);
+	const title = `You cannot link appeal ${linkCandidateSummary.appealReference}`;
+
+	const linkableCaseStatuses = [
+		APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+		APPEAL_CASE_STATUS.VALIDATION,
+		APPEAL_CASE_STATUS.READY_TO_START,
+		APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+	];
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title,
+		heading: title,
+		preHeading: `Appeal ${shortAppealReference}`,
+		pageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: [
+						'<p class="govuk-body">This is because you can only link an appeal when the status is:</p>',
+						'<ul class="govuk-list govuk-list--bullet">',
+						...linkableCaseStatuses.map((status) => `<li>${appealStatusToStatusText(status)}</li>`),
+						'</ul>'
+					].join('\n')
+				}
+			}
+		],
 		submitButtonProperties: {
 			text: 'Add a different linked appeal'
 		}

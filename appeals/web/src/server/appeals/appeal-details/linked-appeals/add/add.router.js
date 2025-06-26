@@ -19,6 +19,11 @@ router
 	.post(asyncHandler(controller.postAlreadyLinked));
 
 router
+	.route('/invalid-case-status')
+	.get(asyncHandler(controller.renderInvalidCaseStatus))
+	.post(asyncHandler(controller.postInvalidCaseStatus));
+
+router
 	.route('/lead-appeal')
 	.get(asyncHandler(controller.renderLeadAppeal))
 	.post(validators.validateChangeLeadAppeal, asyncHandler(controller.postLeadAppeal));
