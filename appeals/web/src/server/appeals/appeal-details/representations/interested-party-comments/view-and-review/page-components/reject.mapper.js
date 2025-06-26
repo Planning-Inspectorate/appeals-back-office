@@ -39,7 +39,7 @@ export function rejectInterestedPartyCommentPage(appealDetails, comment) {
  * */
 export async function rejectAllowResubmitPage(apiClient, appealDetails, comment, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-	const deadline = await addBusinessDays(apiClient, new Date(), 7);
+	const deadline = await addBusinessDays(apiClient, new Date(), 3);
 	const deadlineString = dateISOStringToDisplayDate(deadline.toISOString());
 
 	const sessionValue = (() => {
