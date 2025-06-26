@@ -42,7 +42,7 @@ describe('Appeal decision', () => {
 		expect(element.innerHTML).toMatchSnapshot();
 		expect(element.innerHTML).toContain('Appeal decision</h1>');
 		expect(element.innerHTML).toContain('Dismissed</dd>');
-		expect(element.innerHTML).toContain('12 June 2022 (reissued on 25 December 2023)</dd>');
+		expect(element.innerHTML).toContain('12 June 2022 (updated on 25 December 2023)</dd>');
 		expect(element.innerHTML).toContain('decision-letter.pdf</a>');
 	});
 });

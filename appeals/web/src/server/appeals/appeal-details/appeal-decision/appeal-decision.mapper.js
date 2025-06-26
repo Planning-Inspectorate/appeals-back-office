@@ -26,7 +26,7 @@ export const appealDecisionPage = (
 ) => {
 	const letterDate = decision?.letterDate
 		? version > 1 && firstDocumentDate
-			? `${dateISOStringToDisplayDate(firstDocumentDate)} (reissued on ${dateISOStringToDisplayDate(
+			? `${dateISOStringToDisplayDate(firstDocumentDate)} (updated on ${dateISOStringToDisplayDate(
 					decision.letterDate
 			  )})`
 			: dateISOStringToDisplayDate(decision.letterDate)
