@@ -12,9 +12,9 @@ export const mapHearingEstimate = (data) => {
 
 	if (appeal.hearingEstimate) {
 		return {
-			preparationTime: appeal.hearingEstimate.preparationTime,
-			sittingTime: appeal.hearingEstimate.sittingTime,
-			reportingTime: appeal.hearingEstimate.reportingTime
+			preparationTime: Number(appeal.hearingEstimate.preparationTime),
+			sittingTime: Number(appeal.hearingEstimate.sittingTime),
+			reportingTime: Number(appeal.hearingEstimate.reportingTime)
 		};
 	}
 };

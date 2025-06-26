@@ -17,7 +17,8 @@ export const schemas = {
 		appealS78: 'appeal-s78',
 		appealEvent: 'appeal-event',
 		appealRepresentation: 'appeal-representation',
-		listedBuilding: 'listed-building'
+		listedBuilding: 'listed-building',
+		appealEventEstimate: 'appeal-event-estimate'
 	}
 };
 

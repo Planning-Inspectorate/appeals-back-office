@@ -5191,6 +5191,39 @@
 				}
 			}
 		},
+		"/appeals/{appealReference}/hearing-elapsed": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the completion of a hearing event",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals/{appealReference}/statements-elapsed": {
 			"post": {
 				"tags": ["Test Utilities"],
