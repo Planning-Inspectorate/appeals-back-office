@@ -6,6 +6,7 @@ import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.s
 import { isStatePassed } from '#lib/appeal-status.js';
 import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { getFileVersionsInfo } from '#appeals/appeal-documents/appeal.documents.service.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
@@ -60,7 +61,15 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 				appealDetails.costs.appellantDecisionFolder?.documents?.length ||
 				appealDetails.costs.lpaDecisionFolder?.documents?.length))
 	) {
-		const letterDate = appealDetails.decision?.letterDate
+		const { latestDocumentVersion: latestFileVersion, allVersions = [] } =
+			(await getFileVersionsInfo(
+				request.apiClient,
+				appealDetails.appealId.toString(),
+				appealDetails.decision.documentId || ''
+			)) || {};
+		const originalLetterDate = dateISOStringToDisplayDate(allVersions[0]?.dateReceived);
+
+		const latestLetterDate = appealDetails.decision?.letterDate
 			? dateISOStringToDisplayDate(appealDetails.decision.letterDate)
 			: dateISOStringToDisplayDate(getTodaysISOString());
 
@@ -68,7 +77,11 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 
 		if (appealDetails.decision?.outcome) {
 			insetTextRows.push(`Decision: ${mapDecisionOutcome(appealDetails.decision.outcome)}`);
-			insetTextRows.push(`Decision issued on ${letterDate}`);
+			insetTextRows.push(
+				latestFileVersion && latestFileVersion?.version > 1
+					? `Decision issued on ${originalLetterDate} (updated on ${latestLetterDate})`
+					: `Decision issued on ${latestLetterDate}`
+			);
 		}
 
 		if (appealDetails.costs.appellantDecisionFolder?.documents?.length) {

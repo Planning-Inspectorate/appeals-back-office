@@ -37,7 +37,7 @@ exports[`Appeal decision should render "Appeal decision" with content 1`] = `
             <dd class="govuk-summary-list__value">Dismissed</dd>
         </div>
         <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Decision issued date</dt>
-            <dd class="govuk-summary-list__value">12 June 2022 (reissued on 25 December 2023)</dd>
+            <dd class="govuk-summary-list__value">12 June 2022 (updated on 25 December 2023)</dd>
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
             <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/1/download/e1e90a49-fab3-44b8-a21a-bb73af089f6b/decision-letter.pdf"
