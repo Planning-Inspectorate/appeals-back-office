@@ -118,7 +118,8 @@ const getAllAppeals = async (
 					lpaQuestionnaireValidationOutcome: true
 				}
 			},
-			siteVisit: true
+			siteVisit: true,
+			hearing: true
 		},
 		orderBy: { caseUpdatedDate: 'desc' }
 	});
@@ -223,7 +224,8 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 				representations: true,
 				siteVisit: {
 					include: { siteVisitType: true }
-				}
+				},
+				hearing: true
 			},
 			skip: getSkipValue(pageNumber, pageSize),
 			take: pageSize

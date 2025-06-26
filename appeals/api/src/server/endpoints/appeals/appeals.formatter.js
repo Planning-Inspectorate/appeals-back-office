@@ -8,7 +8,7 @@ import {
 	formatLpaStatementStatus
 } from '#utils/format-documentation-status.js';
 import { add } from 'date-fns';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED
@@ -256,7 +256,13 @@ export const mapAppealToDueDate = async (appeal, appellantCaseStatus, appellantC
 			});
 		}
 		case APPEAL_CASE_STATUS.AWAITING_EVENT: {
-			return new Date(appeal.siteVisit?.visitDate || 0);
+			if (appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN) {
+				return appeal.siteVisit ? new Date(appeal.siteVisit?.visitDate || 0) : undefined;
+			}
+			if (appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.HEARING) {
+				return appeal.hearing ? new Date(appeal.hearing?.hearingStartTime || 0) : undefined;
+			}
+			return undefined;
 		}
 		case APPEAL_CASE_STATUS.EVENT: {
 			return new Date(
