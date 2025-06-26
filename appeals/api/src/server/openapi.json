@@ -5379,6 +5379,9 @@
 					},
 					"409": {
 						"description": "Conflict"
+					},
+					"432": {
+						"description": ""
 					}
 				}
 			}

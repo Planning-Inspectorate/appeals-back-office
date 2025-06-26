@@ -4,7 +4,8 @@ import {
 	addLinkedAppealPage,
 	addLinkedAppealCheckAndConfirmPage,
 	alreadyLinkedPage,
-	changeLeadAppealPage
+	changeLeadAppealPage,
+	invalidCaseStatusPage
 } from './add.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
@@ -50,6 +51,12 @@ export const postAddLinkedAppeal = (request, response) => {
 		);
 	}
 
+	if (request.body.linkInvalidCaseStatus) {
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/linked-appeals/add/invalid-case-status`
+		);
+	}
+
 	if (request.body.problemWithHorizon) {
 		return response.status(500).render('app/500.njk', {
 			titleCopy: 'Sorry, there is a problem with Horizon',
@@ -91,6 +98,36 @@ export function renderAlreadyLinked(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export function postAlreadyLinked(request, response) {
+	const { params, session } = request;
+
+	delete session.linkableAppeal;
+
+	return response.redirect(`/appeals-service/appeal-details/${params.appealId}/linked-appeals/add`);
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export function renderInvalidCaseStatus(request, response) {
+	const { currentAppeal, session, errors } = request;
+
+	const pageContent = invalidCaseStatusPage(
+		currentAppeal,
+		session.linkableAppeal?.linkableAppealSummary
+	);
+
+	return response.render('patterns/check-and-confirm-page.pattern.njk', {
+		pageContent,
+		errors
+	});
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export function postInvalidCaseStatus(request, response) {
 	const { params, session } = request;
 
 	delete session.linkableAppeal;

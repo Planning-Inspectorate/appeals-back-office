@@ -24,6 +24,9 @@ export const validateAddLinkedAppealReference = createValidator(
 						case 409:
 							req.body.linkConflict = true;
 							return { appealReference: reference };
+						case 432:
+							req.body.linkInvalidCaseStatus = true;
+							return { appealReference: reference };
 						case 500:
 							req.body.problemWithHorizon = true;
 							return true; // avoids failing validation chain (scenario where Horizon is down is handled by rendering a special error page instead of a validation error)

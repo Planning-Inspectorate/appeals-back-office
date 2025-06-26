@@ -222,7 +222,7 @@ describe('linked-appeals', () => {
 			);
 		});
 
-		it('should redirect to a drop out page if the appeal cannot be linked', async () => {
+		it('should redirect to a drop out page if the appeal is already linked', async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
 			nock('http://test/')
@@ -236,6 +236,23 @@ describe('linked-appeals', () => {
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual(
 				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/already-linked'
+			);
+		});
+
+		it('should redirect to a drop out page if the appeal cannot be linked due to an invalid case status', async () => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
+				.reply(432);
+
+			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(
+				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/invalid-case-status'
 			);
 		});
 	});
