@@ -14,7 +14,7 @@ import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal } from '#tests/appeals/mocks.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.service.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -1268,10 +1268,25 @@ describe('mapAppealToDueDate Tests', () => {
 	test('handles STATE_TARGET_AWAITING_SITE_VISIT', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
 		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
+		mockAppeal.procedureType = {
+			key: APPEAL_CASE_PROCEDURE.WRITTEN
+		};
 
 		// @ts-ignore
 		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(mockAppeal.siteVisit.visitDate);
+	});
+
+	test('handles STATE_TARGET_AWAITING_HEARING', async () => {
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
+		mockAppeal.hearing = { hearingStartTime: new Date('2023-02-01T00:00:00.000Z') };
+		mockAppeal.procedureType = {
+			key: APPEAL_CASE_PROCEDURE.HEARING
+		};
+
+		// @ts-ignore
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
+		expect(dueDate).toEqual(mockAppeal.hearing.hearingStartTime);
 	});
 
 	describe('handles STATE_TARGET_SITE_VISIT', () => {
