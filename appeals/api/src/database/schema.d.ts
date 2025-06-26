@@ -178,3 +178,4 @@ export interface RepresentationRejectionReasonText
 }
 
 export interface AppealNotification extends schema.AppealNotification {}
+export interface HearingEstimate extends schema.HearingEstimate {}

@@ -7,6 +7,8 @@ import {
 	AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED,
 	AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED
 } from '@pins/appeals/constants/support.js';
+import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
+import { EventType } from '@pins/event-client';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -35,6 +37,12 @@ export const addHearingEstimate = async (req, res) => {
 		});
 
 		await broadcasters.broadcastAppeal(appeal.id);
+		await broadcasters.broadcastEventEstimates(
+			result.id,
+			EVENT_TYPE.HEARING,
+			EventType.Create,
+			null
+		);
 	}
 
 	return res.status(201).send({
@@ -71,6 +79,7 @@ export const updateHearingEstimate = async (req, res) => {
 	});
 
 	await broadcasters.broadcastAppeal(appeal.id);
+	await broadcasters.broadcastEventEstimates(result.id, EVENT_TYPE.HEARING, EventType.Update, null);
 	return res.send({
 		hearingEstimateId: result.id
 	});
@@ -99,6 +108,12 @@ export const removeHearingEstimate = async (req, res) => {
 	});
 
 	await broadcasters.broadcastAppeal(appeal.id);
+	await broadcasters.broadcastEventEstimates(
+		existingEstimate.id,
+		EVENT_TYPE.HEARING,
+		EventType.Delete,
+		existingEstimate
+	);
 	return res.send({
 		hearingEstimateId: result.id
 	});

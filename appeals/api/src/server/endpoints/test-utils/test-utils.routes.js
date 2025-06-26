@@ -2,6 +2,7 @@ import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import {
 	simulateSiteVisitElapsed,
+	simulateHearingElapsed,
 	simulateStatementsElapsed,
 	simulateFinalCommentsElapsed,
 	retrieveNotifyEmails
@@ -75,6 +76,23 @@ router.get(
 		#swagger.responses[400] = {}
 	 */
 	asyncHandler(retrieveNotifyEmails)
+);
+
+router.post(
+	'/:appealReference/hearing-elapsed',
+	/*
+		#swagger.tags = ['Test Utilities']
+		#swagger.path = '/appeals/{appealReference}/hearing-elapsed'
+		#swagger.description = 'A test endpoint to simulate the completion of a hearing event'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.responses[200] = {}
+		#swagger.responses[400] = {}
+	 */
+	asyncHandler(simulateHearingElapsed)
 );
 
 export { router as testUtilsRoutes };

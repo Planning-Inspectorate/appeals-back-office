@@ -122,3 +122,39 @@ export const retrieveNotifyEmails = async (req, res) => {
 
 	return res.status(200).send(notifications);
 };
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const simulateHearingElapsed = async (req, res) => {
+	const { appealReference } = req.params;
+	const reference = Number(appealReference);
+	const appealId = reference - APPEAL_START_RANGE;
+
+	const event = await databaseConnector.hearing.findFirst({
+		where: { appealId }
+	});
+
+	if (event !== null) {
+		const { id, ...hearingData } = event;
+
+		if (hearingData.hearingStartTime !== null) {
+			hearingData.hearingStartTime = sub(new Date(), { days: 3 });
+		}
+		if (hearingData.hearingEndTime !== null) {
+			hearingData.hearingEndTime = sub(new Date(), { days: 3 });
+		}
+
+		await databaseConnector.hearing.update({
+			where: { id },
+			data: hearingData
+		});
+
+		await updateCompletedEvents(AUDIT_TRAIL_SYSTEM_UUID);
+		return res.send(true);
+	}
+
+	return res.send(false);
+};
