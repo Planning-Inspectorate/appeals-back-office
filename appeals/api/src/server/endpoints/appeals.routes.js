@@ -47,6 +47,7 @@ import { hearingRoutes } from './hearings/hearing.routes.js';
 import { historicEnglandRoutes } from './historic-england/historic-england.routes.js';
 import { hearingEstimatesRoutes } from './hearing-estimates/hearing-estimates.routes.js';
 import { default as appealDetailsRoutes } from './appeal-details/appeal-details.routes.js';
+import { notifyPreviewRouter } from './notify-preview/notify-preview.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
@@ -95,6 +96,7 @@ router.use(listedBuildingRoutes);
 router.use(caseNotesRoutes);
 router.use(appealNotificationRouter);
 router.use(hearingRoutes);
+router.use(notifyPreviewRouter);
 
 if (config.enableTestEndpoints) {
 	router.use(testUtilsRoutes);

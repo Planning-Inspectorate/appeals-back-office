@@ -91,7 +91,7 @@ export const notifySend = async (options) => {
  * @param {Personalisation} personalisation
  * @returns {string}
  */
-function renderTemplate(name, personalisation) {
+export const renderTemplate = (name, personalisation) => {
 	try {
 		// note that nunjucks returns a string with EOL characters specific to the os; we want to replace them with \n to make them the same in the logs and tests.
 		return nunjucksEnv.render(name, personalisation).trim().split(EOL).join('\n');
@@ -132,10 +132,11 @@ function renderTemplate(name, personalisation) {
 			])
 		);
 	}
-}
+};
 
 export default {
 	templatesDir,
 	nunjucksEnv,
-	notifySend
+	notifySend,
+	renderTemplate
 };

@@ -4006,3 +4006,26 @@ export const caseAuditLog = [
 		loggedDate: '2025-05-27T09:52:23.597Z'
 	}
 ];
+
+export const template = {
+	renderedHtml: [
+		`<div class="pins-notify-preview-border">`,
+		`We have corrected the appeal decision letter.<br><br>`,
+		`<h2>Appeal details</h2>`,
+		`<div class="govuk-inset-text">`,
+		`  Appeal reference number: 12345 <br>`,
+		`  Address: 2222<br>`,
+		`  Planning application reference: planningApplicationReference<br>`,
+		`</div>`,
+		`<h2>Why we corrected the appeal decision letter</h2>`,
+		`correctionNotice<br><br>`,
+		`<a href="https://appeals-service-test.planninginspectorate.gov.uk/manage-appeals/12345" class="govuk-link">Sign in to our service</a> to view the decision letter dated dateISOStringToDisplayDate(file.receivedDate).<br><br>`,
+		`<h2>The Planning Inspectorate's role</h2>`,
+		`The Planning Inspectorate cannot change or revoke the decision. Only the High Court can change this decision.<br><br>`,
+		`<h2>Feedback</h2>`,
+		`We welcome your feedback on our appeals service. Tell us on this short <a href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u" class="govuk-link">feedback form</a>.<br><br>`,
+		`The Planning Inspectorate<br><br>`,
+		`caseofficers@planninginspectorate.gov.uk<br><br>`,
+		`</div>`
+	].join('\n')
+};

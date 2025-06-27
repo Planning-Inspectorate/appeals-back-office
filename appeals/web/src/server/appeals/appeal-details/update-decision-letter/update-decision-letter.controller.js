@@ -2,11 +2,14 @@ import logger from '#lib/logger.js';
 import { correctionNoticePage } from './update-decision-letter.mapper.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { simpleHtmlComponent, wrapComponents } from '#lib/mappers/index.js';
+import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { mapUncommittedDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { createNewDocumentVersion } from '#app/components/file-uploader.component.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getCorrectionNotice = async (request, response) => {
@@ -43,7 +46,7 @@ export const renderCorrectionNotice = async (request, response) => {
 export const renderUpdateDocumentCheckDetails = async (request, response) => {
 	const {
 		errors,
-		currentAppeal: { appealReference },
+		currentAppeal: { appealSite, appealReference, planningApplicationReference },
 		session: {
 			updateDecisionLetter: { correctionNotice },
 			inspectorDecision
@@ -51,6 +54,15 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 	} = request;
 	const baseUrl = request.baseUrl;
 	const file = inspectorDecision?.files?.[0];
+	const personalisation = {
+		appeal_reference_number: appealReference,
+		site_address: appealSiteToAddressString(appealSite),
+		lpa_reference: planningApplicationReference,
+		correction_notice_reason: correctionNotice,
+		decision_date: dateISOStringToDisplayDate(file.receivedDate)
+	};
+	const templateName = 'correction-notice-decision.content.md';
+	const template = await generateNotifyPreview(request.apiClient, templateName, personalisation);
 
 	return renderCheckYourAnswersComponent(
 		{
@@ -98,22 +110,18 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 					{ class: 'govuk-body' },
 					'We will send the updated decision letter to the relevant parties.'
 				),
-				wrapComponents(
-					[
-						simpleHtmlComponent(
-							'a',
-							{
-								href: `${baseUrl}/preview-email`,
-								class: 'govuk-link'
-							},
-							'Preview email'
-						)
-					],
-					{
-						opening: '<p class="govuk-body">',
-						closing: '</p>'
+
+				{
+					type: 'details',
+					wrapperHtml: {
+						opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+						closing: '</div></div>'
+					},
+					parameters: {
+						summaryText: `Preview`,
+						html: template.renderedHtml
 					}
-				)
+				}
 			]
 		},
 		response,

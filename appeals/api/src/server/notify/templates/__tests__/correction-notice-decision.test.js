@@ -39,7 +39,7 @@ describe('correction-notice-decision.md', () => {
 			'',
 			'There has been a mistake - but we fixed it thanks',
 			'',
-			'[Sign in to our service](https://appeals-service-test.planninginspectorate.gov.uk/manage-appeals/134526) to view the decision letter dated 01 January 2025.',
+			'[Sign in to our service](/mock-front-office-url/manage-appeals/134526) to view the decision letter dated 01 January 2025.',
 			'',
 			'# The Planning Inspectorate’s role',
 			'',
