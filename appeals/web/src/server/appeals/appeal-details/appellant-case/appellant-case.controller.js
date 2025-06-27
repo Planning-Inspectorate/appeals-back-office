@@ -32,7 +32,6 @@ import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /**
  *
@@ -352,7 +351,10 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 					session: request.session,
 					bannerDefinitionKey: 'documentAdded',
 					appealId: currentAppeal.appealId,
-					text: `${mapFolderNameToDisplayLabel(currentFolder?.path) || 'Documents'} added`
+					text: `${
+						mapFolderNameToDisplayLabel({ folderPath: currentFolder?.path, capitalise: true }) ||
+						'Documents'
+					} added`
 				});
 			}
 		});
@@ -446,8 +448,6 @@ export const getAddDocumentVersion = async (request, response) => {
 		request.params.documentId
 	);
 
-	const documentName = getDocumentNameFromFolder(currentFolder.path);
-
 	await renderDocumentUpload({
 		request,
 		response,
@@ -455,11 +455,7 @@ export const getAddDocumentVersion = async (request, response) => {
 		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/manage-documents/${request.params.folderId}/${request.params.documentId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${request.params.appealId}/appellant-case/add-document-details/${request.params.folderId}/${request.params.documentId}`,
 		isLateEntry: getValidationOutcomeFromAppellantCase(appellantCaseDetails) === 'valid',
-		allowedTypes: allowedType ? [allowedType] : undefined,
-		...(documentName && {
-			pageHeadingTextOverride: capitalizeFirstLetter(documentName),
-			uploadContainerHeadingTextOverride: `Upload ${documentName}`
-		})
+		allowedTypes: allowedType ? [allowedType] : undefined
 	});
 };
 

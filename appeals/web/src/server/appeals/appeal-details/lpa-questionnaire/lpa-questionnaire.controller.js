@@ -29,7 +29,6 @@ import {
 import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
 import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
@@ -474,7 +473,10 @@ export const postAddDocumentsCheckAndConfirm = async (request, response) => {
 					session: request.session,
 					bannerDefinitionKey: 'documentAdded',
 					appealId: currentAppeal.appealId,
-					text: `${mapFolderNameToDisplayLabel(currentFolder?.path) || 'Documents'} added`
+					text: `${
+						mapFolderNameToDisplayLabel({ folderPath: currentFolder?.path, capitalise: true }) ||
+						'Documents'
+					} added`
 				});
 			}
 		});
@@ -583,7 +585,7 @@ export const getAddDocumentVersion = async (request, response) => {
 		request.params.documentId
 	);
 
-	const pageHeading = DOCUMENT_FOLDER_DISPLAY_LABELS[currentFolder.path.split('/')[1]];
+	const pageHeading = mapFolderNameToDisplayLabel({	folderPath: currentFolder.path,	capitalise: true });
 
 	await renderDocumentUpload({
 		request,

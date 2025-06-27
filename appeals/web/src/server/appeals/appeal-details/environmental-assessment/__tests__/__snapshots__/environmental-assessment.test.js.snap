@@ -313,7 +313,7 @@ exports[`environmental-assessment GET /environmental-assessment/upload-documents
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/environmental-assessment/check-your-answers/2864/15d19184-155b-4b6c-bba6-2bd2a61ca9a3"
             data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
-            data-folder-id="2864" data-document-type="newSupportingDocuments" data-document-stage="appellant-case"
+            data-folder-id="2864" data-document-type="otherNewDocuments" data-document-stage="appellant-case"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
             data-document-id="15d19184-155b-4b6c-bba6-2bd2a61ca9a3" data-document-original-file-name="test-pdf-documentFileVersionsInfo.pdf"
             data-document-version="1" data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
