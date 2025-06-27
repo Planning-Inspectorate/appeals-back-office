@@ -1,4 +1,5 @@
-@use "../../../node_modules/govuk-frontend/dist/govuk/settings/_colours-applied" as colors;
+@use "../../../node_modules/govuk-frontend/dist/govuk/settings/_colours-applied"
+	as colors;
 
 .pins-related {
 	border: 1px solid colors.$govuk-border-colour;

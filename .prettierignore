@@ -4,3 +4,7 @@ package-lock.json
 README.md
 *.njk
 appeals/api/src/server/notify/**/*.md
+*.yml
+*.yaml
+appeals/api/src/server/utils/db-client/*
+appeals/e2e/cypress/fixtures/*
