@@ -2242,6 +2242,26 @@ describe('appeal-details', () => {
 			);
 		});
 
+		it('should not render a "Appeal valid" notification banner when status is "READY_TO_START" and appeal is a linked child appeal', async () => {
+			const appealId = 2;
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealData,
+					appealId,
+					appealStatus: 'ready_to_start',
+					isChildAppeal: true
+				});
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			expect(response.statusCode).toBe(200);
+			const element = parseHtml(response.text, { rootElement: '.govuk-main-wrapper' });
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).not.toContain('govuk-notification-banner');
+		});
+
 		describe('"Progress case" important banners', () => {
 			const appealId = 1;
 			const appealStatus = 'final_comments';

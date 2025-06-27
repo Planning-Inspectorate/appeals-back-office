@@ -151,6 +151,9 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				)}" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`
 			});
 		case 'appealValidAndReadyToStart':
+			if (appealDetails.isChildAppeal) {
+				return;
+			}
 			return createNotificationBanner({
 				bannerDefinitionKey,
 				html: `<p class="govuk-notification-banner__heading">Appeal valid</p><p><a class="govuk-notification-banner__link" data-cy="ready-to-start" href="${addBackLinkQueryToUrl(

@@ -15,7 +15,7 @@ export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePer
 		link: appealDetails.startedAt
 			? `${currentRoute}/start-case/change`
 			: `${currentRoute}/start-case/add?backUrl=${currentRoute}`,
-		editable: Boolean(userHasUpdateCasePermission),
+		editable: !appealDetails.isChildAppeal && Boolean(userHasUpdateCasePermission),
 		classes: 'appeal-start-date',
 		actionText:
 			appealDetails.documentationSummary.lpaQuestionnaire?.status !== 'not_received'

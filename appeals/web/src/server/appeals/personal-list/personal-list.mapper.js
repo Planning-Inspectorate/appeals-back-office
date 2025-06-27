@@ -238,14 +238,16 @@ export function personalListPage(
 /**
  * @param {import('#lib/mappers/index.js').AppealRequiredAction} action
  * @param {boolean} isCaseOfficer
+ * @param {boolean} isChildAppeal
  * @param {number} appealId
  * @param {number|null|undefined} lpaQuestionnaireId
  * @param {import('@pins/express/types/express.js').Request} request
- * @returns {string}
+ * @returns {string|undefined}
  */
 function mapRequiredActionToPersonalListActionHtml(
 	action,
 	isCaseOfficer,
+	isChildAppeal,
 	appealId,
 	lpaQuestionnaireId,
 	request
@@ -364,6 +366,9 @@ function mapRequiredActionToPersonalListActionHtml(
 			)}">Share IP comments and LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'startAppeal': {
+			if (isChildAppeal) {
+				return;
+			}
 			return isCaseOfficer
 				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 						request,
@@ -401,7 +406,7 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 		appealTimetable: appeal.appealTimetable || {}
 	});
 
-	const { appealId, lpaQuestionnaireId } = appeal;
+	const { appealId, lpaQuestionnaireId, isChildAppeal = false } = appeal;
 
 	if (appealId === undefined) {
 		return '';
@@ -412,10 +417,12 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 			return mapRequiredActionToPersonalListActionHtml(
 				action,
 				isCaseOfficer,
+				isChildAppeal,
 				appealId,
 				lpaQuestionnaireId,
 				request
 			);
 		})
+		.filter((action) => action !== undefined)
 		.join('<br>');
 }
