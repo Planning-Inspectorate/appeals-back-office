@@ -16,7 +16,7 @@ describe('hearing-updated.md', () => {
 				lpa_reference: '12345XYZ',
 				hearing_date: '31 January 2025',
 				hearing_time: '1:30pm',
-				hearing_address: '24, Court Street',
+				hearing_address: '24, Court Street'
 			}
 		};
 

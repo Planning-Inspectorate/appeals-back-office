@@ -3,6 +3,7 @@ export default function () {
 	const presets = [
 		[
 			'@babel/preset-env',
+			// some comments
 			{
 				// Do not transform modules to CJS, Webpack, Rollup will take care of that
 				modules: false,
