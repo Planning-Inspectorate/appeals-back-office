@@ -30,7 +30,8 @@ export class CaseDetailsPage extends Page {
 		addCrossTeamCorrespondence: 'add-cross-team-correspondence',
 		addInspectorCorrespondence: 'add-inspector-correspondence',
 		addMainPartyCorrespondence: 'add-main-party-correspondence',
-		addCostsDecision: 'issue-appellant-costs-decision',
+		issueAppellantCostsDecision: 'issue-appellant-costs-decision',
+		issueLpaCostsDecision: 'issue-lpa-costs-decision',
 		manageCrossTeamCorrespondence: 'manage-cross-team-correspondence',
 		manageInspectorCorrespondence: 'manage-inspector-correspondence',
 		manageMainPartyCorrespondence: 'manage-main-party-correspondence',
@@ -101,7 +102,9 @@ export class CaseDetailsPage extends Page {
 		addNotifiyingParties: () => cy.getByData(this._cyDataSelectors.addNotifyingParties),
 		manageAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.manageAgreementToChangeDescriptionEvidence),
-		issueCostsDecision: () => cy.getByData(this._cyDataSelectors.addCostsDecision),
+		issueAppellantCostsDecision: () =>
+			cy.getByData(this._cyDataSelectors.issueAppellantCostsDecision),
+		issueLpaCostsDecision: () => cy.getByData(this._cyDataSelectors.issueLpaCostsDecision),
 		addAppellantApplication: () => cy.getByData(this._cyDataSelectors.addAppellantApplication),
 		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status'),
 		changeSiteOwnership: () => cy.getByData(this._cyDataSelectors.changeSiteOwnership),
@@ -253,6 +256,14 @@ export class CaseDetailsPage extends Page {
 		this.elements.caseNotes().click();
 	}
 
+	clickIssueAppellantCostsDecision() {
+		this.elements.issueAppellantCostsDecision().click({ force: true });
+	}
+
+	clickIssueLpaCostsDecision() {
+		this.elements.issueLpaCostsDecision().click({ force: true });
+	}
+
 	inputCaseNotes(text, index = 0) {
 		this.elements.inputCaseNotes().eq(index).clear().type(text);
 	}
@@ -327,8 +338,8 @@ export class CaseDetailsPage extends Page {
 		this.elements.changeAppealType().click();
 	}
 
-	clickIssueCostsDecision() {
-		this.elements.issueCostsDecision().click();
+	clickIssueAppellantCostsDecision() {
+		this.elements.issueAppellantCostsDecision().click();
 	}
 
 	clickAddAppellantApplication() {
