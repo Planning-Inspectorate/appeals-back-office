@@ -381,7 +381,8 @@ describe('personal-list', () => {
 				requiredAction: 'startAppeal',
 				expectedHtml: {
 					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/start-case/add?backUrl=%2Fappeals-service%2Fpersonal-list">Start case<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`,
-					nonCaseOfficer: 'Start case'
+					nonCaseOfficer: 'Start case',
+					childAppeal: ''
 				}
 			},
 			{
@@ -413,6 +414,18 @@ describe('personal-list', () => {
 					);
 
 					expect(result).toBe(testCase.expectedHtml.nonCaseOfficer);
+				});
+			}
+
+			if ('childAppeal' in testCase.expectedHtml) {
+				it(`should not return an action link HTML when getRequiredActionsForAppeal returns "${testCase.requiredAction}" and "isChildAppeal" is true`, async () => {
+					const result = mapActionLinksForAppeal(
+						{ ...appealDataToGetRequiredActions[testCase.requiredAction], isChildAppeal: true },
+						true,
+						{ originalUrl: baseUrl }
+					);
+
+					expect(result).toBe(testCase.expectedHtml.childAppeal);
 				});
 			}
 		}
