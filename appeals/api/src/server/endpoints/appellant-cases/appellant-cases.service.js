@@ -23,7 +23,7 @@ import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { notifySend } from '#notify/notify-send.js';
-import { APPEAL_DEVELOPMENT_TYPES } from './appellant-cases.constants.js';
+import { APPEAL_DEVELOPMENT_TYPES } from '@pins/appeals/constants/appealant-cases.constants.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -215,7 +215,8 @@ export function renderAuditTrailDetail(data) {
 		AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED: () => data.knowsOtherOwners,
 		AUDIT_TRAIL_SITE_ACCESS_DETAILS_UPDATED: () =>
 			data.siteAccessDetails ? `Yes\n${data.siteAccessDetails}` : 'No',
-		AUDIT_TRAIL_SITE_SAFETY_DETAILS_UPDATED: () => (data.siteSafetyDetails ? 'Yes' : 'No'),
+		AUDIT_TRAIL_SITE_SAFETY_DETAILS_UPDATED: () =>
+			data.siteSafetyDetails ? `Yes\n${data.siteSafetyDetails}` : 'No',
 		AUDIT_TRAIL_APPLICATION_DATE_UPDATED: () =>
 			data.applicationDate
 				? formatDate(new Date(/** @type {string} */ (data.applicationDate)))

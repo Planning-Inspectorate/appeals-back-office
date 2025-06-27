@@ -2,7 +2,7 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { APPEAL_DEVELOPMENT_TYPES } from './appeal-development-type.constants.js';
+import { APPEAL_DEVELOPMENT_TYPES } from '@pins/appeals/constants/appealant-cases.constants.js';
 
 /**
  * @param {Appeal} appealData

@@ -1,4 +1,4 @@
-import { APPEAL_DEVELOPMENT_TYPES } from '#appeals/appeal-details/appellant-case/application-development-type/appeal-development-type.constants.js';
+import { APPEAL_DEVELOPMENT_TYPES } from '@pins/appeals/constants/appealant-cases.constants.js';
 import { textSummaryListItem } from '#lib/mappers/components/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */

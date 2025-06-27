@@ -1,6 +1,6 @@
 import { body } from 'express-validator';
 import { createValidator } from '@pins/express';
-import { APPEAL_DEVELOPMENT_TYPES } from './appeal-development-type.constants.js';
+import { APPEAL_DEVELOPMENT_TYPES } from '@pins/appeals/constants/appealant-cases.constants.js';
 
 const allowedDevelopmentTypes = APPEAL_DEVELOPMENT_TYPES.map(({ value }) => value);
 
