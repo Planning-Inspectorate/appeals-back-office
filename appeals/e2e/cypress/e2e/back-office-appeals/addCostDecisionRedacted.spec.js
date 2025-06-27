@@ -32,7 +32,7 @@ describe('add cost decision and redact', () => {
 				cy.reload();
 			});
 			caseDetailsPage.clickAccordionByButton('Overview');
-			caseDetailsPage.clickIssueCostsDecision();
+			caseDetailsPage.clickIssueAppellantCostsDecision();
 			caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Issue appellant costs decision');
