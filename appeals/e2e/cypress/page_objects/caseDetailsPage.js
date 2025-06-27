@@ -39,8 +39,6 @@ export class CaseDetailsPage extends Page {
 		manageNotifyingParties: 'manage-notifying-parties',
 		manageAgreementToChangeDescriptionEvidence: 'manage-agreement-to-change-description-evidence',
 		addCostsDecision: 'add-costs-decision',
-		issueAppellantCostsDecision: 'issue-appellant-costs-decision',
-		issueLpaCostsDecision: 'issue-lpa-costs-decision',
 		changeSiteOwnership: 'change-site-ownership',
 		changeLpaqDueDate: 'change-lpa-questionnaire-due-date',
 		changeStartDate: 'change-start-case-date',
