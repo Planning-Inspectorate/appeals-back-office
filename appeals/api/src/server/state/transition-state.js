@@ -73,11 +73,12 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	});
 
 	if (
-		currentState !== APPEAL_CASE_STATUS.AWAITING_EVENT &&
 		newState === APPEAL_CASE_STATUS.EVENT &&
-		// newState === APPEAL_CASE_STATUS.ISSUE_DETERMINATION &&
 		[APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA].includes(appealType.key) &&
-		appeal.siteVisit
+		((appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN && appeal.siteVisit) ||
+			(appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.HEARING &&
+				appeal.hearing &&
+				appeal.hearing?.addressId))
 	) {
 		transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
