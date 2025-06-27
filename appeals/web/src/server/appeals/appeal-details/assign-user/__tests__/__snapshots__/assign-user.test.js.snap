@@ -136,10 +136,12 @@ exports[`assign-user POST /assign-case-officer/search-case-officer should re-ren
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <form method="post" novalidate class="govuk-!-margin-bottom-5">
-                <div class="govuk-form-group">
+                <div class="govuk-form-group govuk-form-group--error">
                     <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-fieldset__legend--l" for="users"> Search for case officer by name or email address</label></h1>
-                    <select class="govuk-select accessible-autocomplete" id="users" name="user"
-                    data-cy="search-users">
+                    <p id="users-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a case officer’s
+                        name or email address</p>
+                    <select class="govuk-select accessible-autocomplete govuk-select--error"
+                    id="users" name="user" aria-describedby="users-error" data-cy="search-users">
                         <option value=""></option>
                         <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;923ac03b-9031-4cf4-8b17-348c274321f9&quot;,&quot;name&quot;:&quot;Smith, John&quot;,&quot;email&quot;:&quot;John.Smith@planninginspectorate.gov.uk&quot;}">Smith, John (John.Smith@planninginspectorate.gov.uk)</option>
                         <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Doe, Jane&quot;,&quot;email&quot;:&quot;Jane.Doe@planninginspectorate.gov.uk&quot;}">Doe, Jane (Jane.Doe@planninginspectorate.gov.uk)</option>
@@ -178,10 +180,12 @@ exports[`assign-user POST /assign-inspector/search-inspector should re-render th
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <form method="post" novalidate class="govuk-!-margin-bottom-5">
-                <div class="govuk-form-group">
+                <div class="govuk-form-group govuk-form-group--error">
                     <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-fieldset__legend--l" for="users"> Search for inspector by name or email address</label></h1>
-                    <select class="govuk-select accessible-autocomplete" id="users" name="user"
-                    data-cy="search-users">
+                    <p id="users-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter an inspector’s
+                        name or email address</p>
+                    <select class="govuk-select accessible-autocomplete govuk-select--error"
+                    id="users" name="user" aria-describedby="users-error" data-cy="search-users">
                         <option value=""></option>
                         <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;923ac03b-9031-4cf4-8b17-348c274321f9&quot;,&quot;name&quot;:&quot;Smith, John&quot;,&quot;email&quot;:&quot;John.Smith@planninginspectorate.gov.uk&quot;}">Smith, John (John.Smith@planninginspectorate.gov.uk)</option>
                         <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Doe, Jane&quot;,&quot;email&quot;:&quot;Jane.Doe@planninginspectorate.gov.uk&quot;}">Doe, Jane (Jane.Doe@planninginspectorate.gov.uk)</option>

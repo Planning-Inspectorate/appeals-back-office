@@ -8,9 +8,10 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {boolean} isInspector
  * @param {SessionWithAuth} session
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {Promise<PageContent>}
  */
-export async function assignUserPage(appealDetails, isInspector, session) {
+export async function assignUserPage(appealDetails, isInspector, session, errors = undefined) {
 	const userTypeText = isInspector ? 'inspector' : 'case officer';
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
@@ -49,7 +50,12 @@ export async function assignUserPage(appealDetails, isInspector, session) {
 			value: '',
 			items: userArray,
 			attributes: { 'data-cy': 'search-users' },
-			classes: 'accessible-autocomplete'
+			classes: 'accessible-autocomplete',
+			errorMessage: errors
+				? {
+						text: errors?.user.msg
+				  }
+				: undefined
 		}
 	};
 

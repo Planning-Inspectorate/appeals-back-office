@@ -18,7 +18,12 @@ const renderAssignUser = async (request, response, isInspector = false) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const mappedPageContent = await assignUserPage(appealDetails, isInspector, request.session);
+	const mappedPageContent = await assignUserPage(
+		appealDetails,
+		isInspector,
+		request.session,
+		errors
+	);
 
 	return response.status(200).render('appeals/appeal/assign-user.njk', {
 		pageContent: mappedPageContent,
