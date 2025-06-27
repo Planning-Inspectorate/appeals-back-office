@@ -378,6 +378,7 @@ describe('decision routes', () => {
 						appeal_reference_number: correctAppealState.reference,
 						lpa_reference: correctAppealState.applicationReference,
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
 						correction_notice_reason: correctionNotice,
 						decision_date: formatDate(decisionDate, false)
 					}
@@ -434,6 +435,7 @@ describe('decision routes', () => {
 					appeal_reference_number: appealWithMissingEmails.reference,
 					lpa_reference: appealWithMissingEmails.applicationReference,
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
 					correction_notice_reason: correctionNotice,
 					decision_date: formatDate(decisionDate, false)
 				}
