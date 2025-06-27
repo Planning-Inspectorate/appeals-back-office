@@ -25,6 +25,7 @@ import { EventType } from '@pins/event-client';
 import { notifySend } from '#notify/notify-send.js';
 import { APPEAL_DEVELOPMENT_TYPES } from '@pins/appeals/constants/appellant-cases.constants.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('express').Request} Request */
@@ -216,7 +217,8 @@ export function renderAuditTrailDetail(data) {
 		AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED: () => data.knowsOtherOwners,
 		AUDIT_TRAIL_SITE_ACCESS_DETAILS_UPDATED: () =>
 			data.siteAccessDetails ? `Yes\n${data.siteAccessDetails}` : 'No',
-		AUDIT_TRAIL_SITE_SAFETY_DETAILS_UPDATED: () => (data.siteSafetyDetails ? 'Yes' : 'No'),
+		AUDIT_TRAIL_SITE_SAFETY_DETAILS_UPDATED: () =>
+			data.siteSafetyDetails ? `Yes\n${data.siteSafetyDetails}` : 'No',
 		AUDIT_TRAIL_APPLICATION_DATE_UPDATED: () =>
 			data.applicationDate
 				? formatDate(new Date(/** @type {string} */ (data.applicationDate)))
@@ -232,7 +234,8 @@ export function renderAuditTrailDetail(data) {
 			data.tenantAgriculturalHolding ? 'Yes' : 'No',
 		AUDIT_TRAIL_OTHER_TENANTS_AGRICULTURAL_HOLDING_UPDATED: () =>
 			data.otherTenantsAgriculturalHolding,
-		AUDIT_TRAIL_APPLICATION_DECISION_UPDATED: () => data.applicationDecision,
+		AUDIT_TRAIL_APPLICATION_DECISION_UPDATED: () =>
+			auditApplicationDecisionMapper(/** @type {string} */ (data.applicationDecision)),
 		AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_UPDATED: () => data.appellantProcedurePreference,
 		AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_DETAILS_UPDATED: () =>
 			data.appellantProcedurePreferenceDetails,

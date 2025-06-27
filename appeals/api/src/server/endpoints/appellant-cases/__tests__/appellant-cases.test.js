@@ -1124,7 +1124,7 @@ describe('appellant cases routes', () => {
 			const patchBody = {
 				developmentType: 'other-minor'
 			};
-			const expectedLabel = 'other minor developments';
+			const expectedLabel = 'Other minor developments';
 
 			const { appellantCase, id } = householdAppeal;
 			const response = await request
