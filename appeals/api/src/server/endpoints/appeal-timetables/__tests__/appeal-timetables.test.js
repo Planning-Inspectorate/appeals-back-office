@@ -18,6 +18,7 @@ import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/busin
 import { DEADLINE_HOUR } from '@pins/appeals/constants/dates.js';
 import { DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
+import { dateISOStringToDisplayDate } from '#utils/date-formatter.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -54,6 +55,19 @@ const fullPlanningAppealWithTimetable = {
 	}
 };
 
+const listedBuildingAppealWithTimetable = {
+	...listedBuildingAppeal,
+	caseStartedDate: new Date(2022, 4, 22),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 1,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
+		lpaStatementDueDate: null
+	}
+};
+
 describe('appeal timetables routes', () => {
 	beforeEach(() => {
 		// @ts-ignore
@@ -73,7 +87,7 @@ describe('appeal timetables routes', () => {
 				lpaStatementDueDate: utcDate.toISOString()
 			};
 
-			const householdAppealReponseBody = {
+			const householdAppealResponseBody = {
 				lpaQuestionnaireDueDate: responseDateSet
 			};
 			const fullPlanningAppealResponseBody = {
@@ -98,7 +112,7 @@ describe('appeal timetables routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
-					data: householdAppealReponseBody,
+					data: householdAppealResponseBody,
 					where: {
 						id: appealTimetable.id
 					}
@@ -115,31 +129,86 @@ describe('appeal timetables routes', () => {
 				expect(response.body).toEqual(householdAppealRequestBody);
 			});
 
-			test('updates a full planning appeal timetable', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+			test.each([
+				[
+					'full planning',
+					fullPlanningAppealWithTimetable,
+					fullPlanningAppealRequestBody,
+					fullPlanningAppealResponseBody
+				],
+				[
+					'listed building',
+					listedBuildingAppealWithTimetable,
+					fullPlanningAppealRequestBody,
+					fullPlanningAppealResponseBody
+				]
+			])(
+				'updates a %s appeal timetable and sends notify',
+				async (_, appealWithTimetable, requestBody, responseBody) => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appealWithTimetable);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send(fullPlanningAppealRequestBody)
-					.set('azureAdUserId', azureAdUserId);
+					const { appealTimetable, id } = appealWithTimetable;
+					const response = await request
+						.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
+						.send(requestBody)
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
-					data: fullPlanningAppealResponseBody,
-					where: {
-						id: appealTimetable.id
-					}
-				});
+					expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
+						data: responseBody,
+						where: {
+							id: appealTimetable.id
+						}
+					});
 
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(fullPlanningAppealRequestBody);
-			});
+					// eslint-disable-next-line no-undef
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.any(Object),
+						personalisation: {
+							appeal_reference_number: appealWithTimetable.reference,
+							final_comments_due_date: dateISOStringToDisplayDate(
+								responseBody?.finalCommentsDueDate
+							),
+							ip_comments_due_date: dateISOStringToDisplayDate(responseBody?.ipCommentsDueDate),
+							lpa_questionnaire_due_date: dateISOStringToDisplayDate(
+								responseBody?.lpaQuestionnaireDueDate
+							),
+							lpa_reference: appealWithTimetable.applicationReference,
+							lpa_statement_due_date: dateISOStringToDisplayDate(responseBody?.lpaStatementDueDate),
+							site_address: `${appealWithTimetable.address.addressLine1}, ${appealWithTimetable.address.addressLine2}, ${appealWithTimetable.address.addressTown}, ${appealWithTimetable.address.addressCounty}, ${appealWithTimetable.address.postcode}, ${appealWithTimetable.address.addressCountry}`
+						},
+						recipientEmail: appealWithTimetable.agent.email,
+						templateName: 'appeal-timetable-updated'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						notifyClient: expect.any(Object),
+						personalisation: {
+							appeal_reference_number: appealWithTimetable.reference,
+							final_comments_due_date: dateISOStringToDisplayDate(
+								responseBody?.finalCommentsDueDate
+							),
+							ip_comments_due_date: dateISOStringToDisplayDate(responseBody?.ipCommentsDueDate),
+							lpa_questionnaire_due_date: dateISOStringToDisplayDate(
+								responseBody?.lpaQuestionnaireDueDate
+							),
+							lpa_reference: appealWithTimetable.applicationReference,
+							lpa_statement_due_date: dateISOStringToDisplayDate(responseBody?.lpaStatementDueDate),
+							site_address: `${appealWithTimetable.address.addressLine1}, ${appealWithTimetable.address.addressLine2}, ${appealWithTimetable.address.addressTown}, ${appealWithTimetable.address.addressCounty}, ${appealWithTimetable.address.postcode}, ${appealWithTimetable.address.addressCountry}`
+						},
+						recipientEmail: appealWithTimetable.lpa.email,
+						templateName: 'appeal-timetable-updated'
+					});
+
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual(requestBody);
+				}
+			);
 
 			test('returns an error if appealId is not numeric', async () => {
 				// @ts-ignore
@@ -394,7 +463,7 @@ describe('appeal timetables routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
-					data: householdAppealReponseBody,
+					data: householdAppealResponseBody,
 					where: {
 						id: appealTimetable.id
 					}
