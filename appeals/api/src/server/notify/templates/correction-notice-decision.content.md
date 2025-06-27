@@ -10,7 +10,7 @@ Planning application reference: {{lpa_reference}}
 
 {{correction_notice_reason}}
 
-[Sign in to our service](https://appeals-service-test.planninginspectorate.gov.uk/manage-appeals/{{appeal_reference_number}}) to view the decision letter dated {{decision_date}}.
+[Sign in to our service]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}) to view the decision letter dated {{decision_date}}.
 
 # The Planning Inspectorate’s role
 

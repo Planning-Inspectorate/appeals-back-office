@@ -13,7 +13,8 @@ import {
 	documentRedactionStatuses,
 	fileUploadInfo,
 	documentFileInfo,
-	fileUploadInfo2
+	fileUploadInfo2,
+	template
 } from '../../../../../../../web/testing/app/fixtures/referencedata.js';
 
 describe('update-decision-letter', () => {
@@ -25,8 +26,8 @@ describe('update-decision-letter', () => {
 	 * @type {import("superagent").Response}
 	 */
 	let correctionNoticeResponse;
-	beforeEach(installMockApi);
 	beforeEach(() => {
+		installMockApi();
 		nock.cleanAll();
 		nock('http://test/').get('/appeals/1').reply(200, appealDataIssuedDecision).persist();
 	});
@@ -195,6 +196,9 @@ describe('update-decision-letter', () => {
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
+				.post(`/appeals/notify-preview/correction-notice-decision.content.md`)
+				.reply(200, template);
+			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
@@ -227,7 +231,7 @@ describe('update-decision-letter', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Check details and update decision letter');
 			expect(unprettifiedElement.innerHTML).toContain('Decision letter');
 			expect(unprettifiedElement.innerHTML).toContain('Correction notice');
-			expect(unprettifiedElement.innerHTML).toContain('Preview email');
+			expect(unprettifiedElement.innerHTML).toContain('Preview');
 			expect(unprettifiedElement.innerHTML).toContain('Update decision letter');
 		});
 		it('should render the check your view-decision page after submit', async () => {
