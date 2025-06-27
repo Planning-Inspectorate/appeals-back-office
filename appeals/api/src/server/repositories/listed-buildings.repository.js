@@ -47,7 +47,6 @@ export const upsertListedBuilding = async (data) => {
 	});
 };
 
-
 /**
  * Adds a listed building with a list entry
  * @param {number} lpaQuestionnaireId

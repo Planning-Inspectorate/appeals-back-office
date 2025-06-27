@@ -19,7 +19,10 @@ import {
 	AUDIT_TRAIL_HEARING_ADDRESS_UPDATED,
 	AUDIT_TRAIL_HEARING_CANCELLED
 } from '@pins/appeals/constants/support.js';
-import { formatAddressForDb, formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import {
+	formatAddressForDb,
+	formatAddressSingleLine
+} from '#endpoints/addresses/addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -53,21 +56,25 @@ export const postHearing = async (req, res) => {
 	const appealId = Number(params.appealId);
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	try {
-		await createHearing({
-			appealId,
-			hearingStartTime,
-			hearingEndTime,
-			...(address && {
-				address: {
-					addressLine1: address.addressLine1,
-					addressLine2: address.addressLine2,
-					addressTown: address.town,
-					addressCounty: address.county,
-					postcode: address.postcode,
-					addressCountry: address.country
-				}
-			})
-		}, appeal, req.notifyClient);
+		await createHearing(
+			{
+				appealId,
+				hearingStartTime,
+				hearingEndTime,
+				...(address && {
+					address: {
+						addressLine1: address.addressLine1,
+						addressLine2: address.addressLine2,
+						addressTown: address.town,
+						addressCounty: address.county,
+						postcode: address.postcode,
+						addressCountry: address.country
+					}
+				})
+			},
+			appeal,
+			req.notifyClient
+		);
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) && address) {
 			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
@@ -112,16 +119,20 @@ export const rearrangeHearing = async (req, res) => {
 	const hearingId = Number(params.hearingId);
 
 	try {
-		await updateHearing({
-			appealId,
-			hearingId,
-			hearingStartTime,
-			hearingEndTime,
-			addressId,
-			...(address !== undefined && {
-				address: address === null	? null : formatAddressForDb(address)
-			})
-		}, appeal, req.notifyClient);
+		await updateHearing(
+			{
+				appealId,
+				hearingId,
+				hearingStartTime,
+				hearingEndTime,
+				addressId,
+				...(address !== undefined && {
+					address: address === null ? null : formatAddressForDb(address)
+				})
+			},
+			appeal,
+			req.notifyClient
+		);
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) && address) {
 			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		}

@@ -149,7 +149,13 @@ const updateLPAQuestionnaireValidationOutcome = async (
  * */
 function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress) {
 	const email = appeal.lpa?.email;
-	return sendLpaqCompleteEmail(notifyClient, appeal, { site_address: siteAddress }, 'lpaq-complete-lpa', email);
+	return sendLpaqCompleteEmail(
+		notifyClient,
+		appeal,
+		{ site_address: siteAddress },
+		'lpaq-complete-lpa',
+		email
+	);
 }
 
 /**
@@ -161,23 +167,35 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress) {
 	const email = appeal.appellant?.email ?? appeal.agent?.email;
 	const whatHappensNext =
 		'We will send you another email when the local planning authority submits their statement ' +
-		'and we receive any comments from interested parties.'
+		'and we receive any comments from interested parties.';
 	const fields = { site_address: siteAddress };
 	const s78Fields = { ...fields, what_happens_next: whatHappensNext };
-	const s78Template = 'lpaq-complete-appellant'
+	const s78Template = 'lpaq-complete-appellant';
 
 	switch (appeal.appealType?.type) {
 		case APPEAL_TYPE.HOUSEHOLDER:
-			return sendLpaqCompleteEmail(notifyClient, appeal, fields, 'lpaq-complete-has-appellant', email);
+			return sendLpaqCompleteEmail(
+				notifyClient,
+				appeal,
+				fields,
+				'lpaq-complete-has-appellant',
+				email
+			);
 		case APPEAL_TYPE.S78:
 			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
 				const hearingStartTime = appeal.hearing?.hearingStartTime;
 				const hearingDate = hearingStartTime ? formatDate(hearingStartTime, false) : undefined;
-				return sendLpaqCompleteEmail(notifyClient, appeal, {
-					...s78Fields,
-					hearing_date: hearingDate,
-					what_happens_next: 'We will contact you if we need any more information.'
-				}, s78Template, email);
+				return sendLpaqCompleteEmail(
+					notifyClient,
+					appeal,
+					{
+						...s78Fields,
+						hearing_date: hearingDate,
+						what_happens_next: 'We will contact you if we need any more information.'
+					},
+					s78Template,
+					email
+				);
 			}
 			return sendLpaqCompleteEmail(notifyClient, appeal, s78Fields, s78Template, email);
 		default:
@@ -193,13 +211,7 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress) {
  * @param {string} templateName
  * @param {string | null | undefined} recipientEmail
  */
-async function sendLpaqCompleteEmail(
-	notifyClient,
-	appeal,
-	fields,
-	templateName,
-	recipientEmail
-) {
+async function sendLpaqCompleteEmail(notifyClient, appeal, fields, templateName, recipientEmail) {
 	const personalisation = {
 		...fields,
 		appeal_reference_number: appeal.reference,
