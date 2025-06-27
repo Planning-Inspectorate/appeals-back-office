@@ -129,7 +129,7 @@ const startCase = async (
 					? [
 							'to let you know when you can view information from other parties in the appeals service',
 							'when we set up your hearing'
-						]
+					  ]
 					: 'when you can view information from other parties in the appeals service.';
 
 			// Note that those properties not used within the specified template will be ignored
@@ -150,7 +150,7 @@ const startCase = async (
 				comment_deadline: formatDate(new Date(timetable.commentDeadline || ''), false),
 				lpa_statement_deadline: formatDate(new Date(timetable.lpaStatementDueDate || ''), false),
 				ip_comments_deadline: formatDate(new Date(timetable.ipCommentsDueDate || ''), false),
-				final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false),
+				final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false)
 			};
 
 			if (appellantEmail) {
@@ -175,8 +175,14 @@ const startCase = async (
 					personalisation: {
 						...commonEmailVariables,
 						...(appeal.appealType?.key === APPEAL_CASE_TYPE.W && {
-							statement_of_common_ground_deadline: formatDate(new Date(timetable.statementOfCommonGroundDueDate || ''), false),
-							planning_obligation_deadline: formatDate(new Date(timetable.planningObligationDueDate || ''), false)
+							statement_of_common_ground_deadline: formatDate(
+								new Date(timetable.statementOfCommonGroundDueDate || ''),
+								false
+							),
+							planning_obligation_deadline: formatDate(
+								new Date(timetable.planningObligationDueDate || ''),
+								false
+							)
 						})
 					}
 				});
@@ -336,6 +342,7 @@ const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 	return (
 		appealTypeShorthand === APPEAL_TYPE_SHORTHAND_HAS ||
 		(appealTypeShorthand === 'W' && procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
+		(appealTypeShorthand === 'Y' && procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
 		procedureType === undefined
 	);
 };
