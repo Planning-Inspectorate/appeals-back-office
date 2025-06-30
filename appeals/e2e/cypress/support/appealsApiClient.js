@@ -291,7 +291,7 @@ export const appealsApiClient = {
 
 	async deleteHearing(appealId, hearingId) {
 		try {
-			const url = `${baseUrl}appeals/${appealId}/hearting/${hearingId}`;
+			const url = `${baseUrl}appeals/${appealId}/hearing/${hearingId}`;
 			const response = await fetch(url, {
 				method: 'DELETE',
 				headers: {
@@ -317,6 +317,42 @@ export const appealsApiClient = {
 				}
 			});
 			expect(response.status).to.eq(200);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+
+	async updateAppealCases(appealId, requestBody) {
+		try {
+			const url = `${baseUrl}appeals/${appealId}/appellant-cases/${appealId}`;
+			const response = await fetch(url, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify(requestBody)
+			});
+			expect(response.status).eq(200);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+
+	async updateTimeTable(appealId, timeTableId, requestBody) {
+		try {
+			const url = `${baseUrl}appeals/${appealId}/appeal-timetables/${timeTableId}`;
+			const response = await fetch(url, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify(requestBody)
+			});
+			expect(response.status).eq(200);
 			return await response.json();
 		} catch {
 			return false;

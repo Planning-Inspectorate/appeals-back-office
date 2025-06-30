@@ -168,14 +168,6 @@ Cypress.Commands.add('setCurrentCookies', (cookies) => {
 	});
 });
 
-Cypress.Commands.add('populateTimetable', (reference) => {
-	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
-		const appealId = await details.appealId;
-		return await appealsApiClient.setAppealTimetables(appealId);
-	});
-});
-
 Cypress.Commands.add('getBusinessActualDate', (date, days) => {
 	return cy.wrap(null).then(() => {
 		const formattedDate = new Date(date).toISOString();
@@ -228,5 +220,24 @@ Cypress.Commands.add('checkNotifySent', (reference, templates) => {
 		);
 
 		expect(missingTemplates, `Expected, but not found:${missingTemplates}`).to.be.empty;
+	});
+});
+
+Cypress.Commands.add('updateAppealDetails', (reference, caseDetails) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		return await appealsApiClient.updateAppealCases(appealId, caseDetails);
+	});
+});
+
+Cypress.Commands.add('updateTimeTableDetails', (reference, timeTableDetails) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		const appealTimetableId = await details.appealTimetable.appealTimetableId;
+		console.log('This is time table update');
+		console.log(appealTimetableId);
+		return await appealsApiClient.updateTimeTable(appealId, appealTimetableId, timeTableDetails);
 	});
 });
