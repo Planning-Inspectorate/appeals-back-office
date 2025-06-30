@@ -10,8 +10,6 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { APPEAL_CASE_TYPE } from 'pins-data-model';
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
  * @type {import("express").RequestHandler}
@@ -136,10 +134,10 @@ export const validateRepresentation = async (req, res, next) => {
 		});
 	}
 
-	const validAppealTypesAcceptingReps = [];
-	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-		validAppealTypesAcceptingReps.push(APPEAL_CASE_TYPE.W);
-	}
+	const validAppealTypesAcceptingReps = [
+		APPEAL_CASE_TYPE.W, // S78
+		APPEAL_CASE_TYPE.Y // S20
+	];
 
 	if (validAppealTypesAcceptingReps.indexOf(referenceData.appeal.appealType?.key ?? '') === -1) {
 		pino.error(
