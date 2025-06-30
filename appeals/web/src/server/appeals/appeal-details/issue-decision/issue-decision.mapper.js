@@ -22,6 +22,7 @@ import {
 	mapDecisionOutcome
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import config from '#environment/config.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -541,7 +542,16 @@ export function viewDecisionPageRows(appealData) {
 			rows.push({
 				key: 'Decision letter',
 				value: decision.documentName,
-				href: mapDocumentDownloadUrl(appealId, documentId || '', documentName || '')
+				href: mapDocumentDownloadUrl(appealId, documentId || '', documentName || ''),
+				actions: config.featureFlags.featureFlagReIssueDecision
+					? [
+							{
+								text: 'Change',
+								href: `${baseUrl(appealData)}/decision-letter-upload`,
+								visuallyHiddenText: 'decision letter'
+							}
+					  ]
+					: null
 			});
 		}
 		if (letterDate) {
@@ -581,14 +591,17 @@ export function viewDecisionPageRows(appealData) {
 	}
 
 	// @ts-ignore
-	return rows.map(({ key, value, html, href }) => {
+	return rows.map(({ key, value, html, href, actions }) => {
 		return {
 			key: { text: key },
 			value: html
 				? { html }
 				: href
 				? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
-				: { text: value }
+				: { text: value },
+			actions: {
+				items: actions
+			}
 		};
 	});
 }
