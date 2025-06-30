@@ -45,7 +45,6 @@ import updateDecisionLetterRouter from './update-decision-letter/update-decision
 import inquiryRouter from './inquiry/inquiry.router.js';
 import assignUserRouter from './assign-user/assign-user.router.js';
 
-import appealDecisionRouter from './appeal-decision/appeal-decison.router.js';
 const router = createRouter();
 
 router
@@ -208,12 +207,6 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	siteAddressRouter
-);
-router.use(
-	'/:appealId/appeal-decision',
-	validateAppeal,
-	assertUserHasPermission(permissionNames.updateCase),
-	appealDecisionRouter
 );
 
 router.use(

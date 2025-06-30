@@ -1691,7 +1691,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         <ul class="govuk-list">
             <li>Decision: Dismissed</li>
             <li>Decision issued on 25 December 2023</li>
-            <li><a class="govuk-link" href="/appeals-service/appeal-details/1/appeal-decision">View decision</a>
+            <li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a>
             </li>
         </ul>
     </div>
@@ -1811,7 +1811,8 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             </div>
                             <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
                                 <dd class="govuk-summary-list__value">Dismissed</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="1/appeal-decision" data-cy="view-decision">View<span class="govuk-visually-hidden"> Decision</span></a>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                                    data-cy="view-decision">View<span class="govuk-visually-hidden"> Decision</span></a>
                                 </dd>
                             </div>
                         </dl>
