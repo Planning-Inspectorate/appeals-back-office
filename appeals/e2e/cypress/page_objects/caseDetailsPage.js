@@ -55,7 +55,8 @@ export class CaseDetailsPage extends Page {
 		reviewLpaStatement: 'banner-review-lpa-statement',
 		changeApplicationReference: 'change-application-reference',
 		viewCaseHistory: 'view-case-history',
-		uploadFile: 'upload-file-button'
+		uploadFile: 'upload-file-button',
+		setUpTimetableHearingDate: 'set up-timetable-hearing-date'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -169,7 +170,9 @@ export class CaseDetailsPage extends Page {
 		planningApplicationReferenceField: () => cy.get('#planning-application-reference'),
 		viewCaseHistory: () => cy.getByData(this._cyDataSelectors.viewCaseHistory),
 		cancelHearing: () => cy.get('#cancelHearing'),
-		hearingBannerLink: () => cy.get('.govuk-notification-banner__content .govuk-link')
+		hearingBannerLink: () => cy.get('.govuk-notification-banner__content .govuk-link'),
+		setUpTimetableHearingDate: () => cy.getByData(this._cyDataSelectors.setUpTimetableHearingDate),
+		timeTableRows: () => cy.get('.appeal-case-timetable dt')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -468,6 +471,10 @@ export class CaseDetailsPage extends Page {
 		this.elements.hearingBannerLink().click();
 	}
 
+	clickSetUpTimetableHearingDate() {
+		this.elements.setUpTimetableHearingDate().click();
+	}
+
 	/***************************************************************
 	 ************************ Verification ************************
 	 ****************************************************************/
@@ -713,4 +720,13 @@ export class CaseDetailsPage extends Page {
 		this.basePageElements.bannerLink().click();
 		this.clickButtonByText('Confirm');
 	}
+
+	verifyTimeTableRows = (expectedRows) => {
+		const actualRows = [];
+
+		this.elements
+			.timeTableRows()
+			.each(($el) => actualRows.push($el.text().trim()))
+			.then(() => expect(actualRows).to.deep.equal(expectedRows));
+	};
 }

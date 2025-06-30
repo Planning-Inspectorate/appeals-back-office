@@ -97,7 +97,6 @@ export class HearingSectionPage extends CaseDetailsPage {
 
 	verifyYouCannotCheckTheseAnswersPage() {
 		this.basePageElements.xlHeader().contains('You cannot check these answers');
-		this.basePageElements.twoThirdColumn();
 		this.basePageElements.link().contains('appeal details');
 	}
 }

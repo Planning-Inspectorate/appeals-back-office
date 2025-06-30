@@ -16,9 +16,9 @@ const currentDate = new Date();
 describe('Setup hearing and add hearing estimates', () => {
 	let caseRef;
 
-	const initialEstimates = { preparationTime: '0.50', sittingTime: '1.00', reportingTime: '99' };
-	const updatedEstimates = { preparationTime: '5.50', sittingTime: '1.50', reportingTime: '99' };
-	const finalEstimates = { preparationTime: '2', sittingTime: '3', reportingTime: '4.5' };
+	const initialEstimates = { preparationTime: 0.5, sittingTime: 1.0, reportingTime: 99 };
+	const updatedEstimates = { preparationTime: 5.5, sittingTime: 1.5, reportingTime: 99 };
+	const finalEstimates = { preparationTime: 2, sittingTime: 3, reportingTime: 4.5 };
 
 	const originalAddress = {
 		line1: 'e2e Hearing Test Address',
@@ -41,6 +41,17 @@ describe('Setup hearing and add hearing estimates', () => {
 			confirmHearingCancellation: 'Confirm that you want to cancel the hearing'
 		}
 	};
+
+	const timeTableRows = [
+		'Valid date',
+		'Start date',
+		'LPA questionnaire due',
+		'LPA statement due',
+		'Interested party comments due',
+		'Statement of common ground due',
+		'Planning obligation due',
+		'Hearing date'
+	];
 
 	before(() => {
 		setupTestCase();
@@ -235,11 +246,11 @@ describe('Setup hearing and add hearing estimates', () => {
 			caseDetailsPage.verifyAppealRefOnCaseDetails(`Appeal ${caseRef}`);
 		});
 	});
+
 	// Verify you see "You cannot check these answers"
 	it('should not allow re-setup of hearing if already submitted', () => {
-		const date = cy.getBusinessActualDate(currentDate, 2).then((date) => {
+		cy.getBusinessActualDate(currentDate, 2).then((date) => {
 			date.setHours(currentDate.getHours(), currentDate.getMinutes());
-			//caseDetailsPage.clickAccordionByButton('Hearing');
 			caseDetailsPage.clickButtonByText('Set up hearing');
 			hearingSectionPage.setUpHearing(date, '10', '30');
 			hearingSectionPage.selectRadioButtonByValue('No');
@@ -406,7 +417,7 @@ describe('Setup hearing and add hearing estimates', () => {
 	});
 
 	it('should automatically prompt to set up hearing when statements and IP comments are shared', () => {
-		deleteHearingIfExists(caseRef);
+		// deleteHearingIfExists(caseRef);
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 		happyPathHelper.reviewS78Lpaq(caseRef);
 		caseDetailsPage.checkStatusOfCase('Statements', 0);
@@ -419,7 +430,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		caseDetailsPage.validateBannerMessage('Important', 'Set up hearing');
 		caseDetailsPage.checkStatusOfCase('Hearing ready to set up', 0);
 
-		// add hearing via banner
+		// // add hearing via banner
 		caseDetailsPage.clickHearingBannerLink();
 
 		cy.getBusinessActualDate(currentDate, 2).then((hearingDate) => {
@@ -454,6 +465,46 @@ describe('Setup hearing and add hearing estimates', () => {
 			]);
 		});
 	});
+
+	it('should verify the timetable behaviour', () => {
+		caseDetailsPage.clickAccordionByButton('TimeTable');
+
+		// Initial verification without planning obligation
+		caseDetailsPage.elements
+			.setUpTimetableHearingDate()
+			.parent('dd')
+			.siblings('dd')
+			.should('contain.text', 'Not set up');
+		caseDetailsPage.verifyTimeTableRows(
+			timeTableRows.filter((item) => item !== 'Planning obligation due')
+		);
+
+		// Add planning obligation
+		cy.updateAppealDetails(caseRef, { planningObligation: true });
+		cy.getBusinessActualDate(currentDate, 1).then((date) => {
+			cy.updateTimeTableDetails(caseRef, { planningObligationDueDate: date });
+		});
+
+		// Setup and verify hearing
+		caseDetailsPage.clickSetUpTimetableHearingDate();
+		cy.getBusinessActualDate(currentDate, 2).then((hearingDate) => {
+			setupHearing(hearingDate);
+			caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
+
+			const expectedDate = `${formatDateAndTime(hearingDate).time} on ${
+				formatDateAndTime(hearingDate).date
+			}`;
+			caseDetailsPage.elements
+				.rowChangeLink('timetable-hearing-date')
+				.parent('dd')
+				.siblings('dd')
+				.should('be.visible')
+				.and('contain.text', expectedDate);
+		});
+
+		// Final timetable verification
+		caseDetailsPage.verifyTimeTableRows(timeTableRows);
+	});
 	const setupTestCase = () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.createCase({ caseType: 'W' }).then((ref) => {
@@ -473,6 +524,7 @@ describe('Setup hearing and add hearing estimates', () => {
 	const navigateToHearingSection = () => {
 		cy.clearAllSessionStorage();
 		cy.clearAllCookies();
+		deleteHearingIfExists(caseRef);
 		cy.login(users.appeals.caseAdmin);
 		caseDetailsPage.navigateToAppealsService();
 		listCasesPage.clickAppealByRef(caseRef);
@@ -512,8 +564,8 @@ describe('Setup hearing and add hearing estimates', () => {
 		return cy.loadAppealDetails(caseRef).then((appealDetails) => {
 			if (appealDetails.hearing !== undefined) {
 				cy.deleteHearing(caseRef).then((hearingDetails) => {
-					expect(hearingDetails.appealId).to.be.eq(appealDetails.appealId);
-					expect(hearingDetails.hearingId).to.be.eq(appealDetails.hearing.hearingId);
+					expect(Number(hearingDetails.appealId)).to.be.eq(appealDetails.appealId);
+					expect(Number(hearingDetails.hearingId)).to.be.eq(appealDetails.hearing.hearingId);
 				});
 			}
 		});
@@ -525,5 +577,16 @@ describe('Setup hearing and add hearing estimates', () => {
 		hearingInformation.forEach((info) => {
 			caseDetailsPage.verifyTableCellTextCaseHistory(info);
 		});
+	};
+
+	const setupHearing = (hearingDate) => {
+		hearingDate.setHours(currentDate.getHours(), currentDate.getMinutes());
+		hearingSectionPage.setUpHearing(hearingDate, hearingDate.getHours(), hearingDate.getMinutes());
+
+		hearingSectionPage.selectRadioButtonByValue('Yes');
+		caseDetailsPage.clickButtonByText('Continue');
+		hearingSectionPage.addHearingLocationAddress(originalAddress);
+		hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
+		caseDetailsPage.clickButtonByText('Set up hearing');
 	};
 });
