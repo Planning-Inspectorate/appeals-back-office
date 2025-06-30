@@ -126,7 +126,7 @@
     "sass": "^1.51.0",
     "signale": "1.4.0",
     "supertest": "^7.0.0",
-    "terser": "^5.13.1"
+    "terser": "^5.43.1"
   },
   "imports": {
     "#environment/*": "./environment/*",
