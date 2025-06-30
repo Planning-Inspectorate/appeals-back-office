@@ -1902,7 +1902,7 @@ describe('appeal-details', () => {
 			expect(insetTextElementHTML).toContain('<li>Decision: Dismissed</li>');
 			expect(insetTextElementHTML).toContain('<li>Decision issued on 25 December 2023</li>');
 			expect(insetTextElementHTML).toContain(
-				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/appeal-decision">View decision</a></li>'
+				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a></li>'
 			);
 		});
 

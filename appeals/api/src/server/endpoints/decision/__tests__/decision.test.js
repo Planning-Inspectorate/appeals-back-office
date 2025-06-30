@@ -287,7 +287,9 @@ describe('decision routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 				data: {
 					appealId: appeal.id,
-					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [outcome]),
+					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+						outcome[0].toUpperCase() + outcome.slice(1)
+					]),
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}

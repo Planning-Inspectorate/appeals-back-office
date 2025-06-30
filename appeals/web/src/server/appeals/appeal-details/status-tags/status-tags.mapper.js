@@ -84,17 +84,22 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 			);
 		}
 
-		if (appealDetails.costs.appellantDecisionFolder?.documents?.length) {
+		const hasCostsAppellantDecision = Boolean(
+			appealDetails.costs.appellantDecisionFolder?.documents?.length
+		);
+		const hasCostsLpaDecision = Boolean(appealDetails.costs.lpaDecisionFolder?.documents?.length);
+
+		if (hasCostsAppellantDecision) {
 			insetTextRows.push(`Appellant costs decision: Issued`);
 		}
 
-		if (appealDetails.costs.lpaDecisionFolder?.documents?.length) {
+		if (hasCostsLpaDecision) {
 			insetTextRows.push(`LPA costs decision: Issued`);
 		}
 
-		if (appealDetails.decision.documentId) {
+		if (appealDetails.decision?.outcome || hasCostsAppellantDecision || hasCostsLpaDecision) {
 			insetTextRows.push(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/appeal-decision">View decision</a>`
+				`<a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/issue-decision/view-decision">View decision</a>`
 			);
 		}
 

@@ -77,7 +77,9 @@ export const publishDecision = async (
 		await createAuditTrail({
 			appealId: appeal.id,
 			azureAdUserId: azureUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [outcome])
+			details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+				outcome[0].toUpperCase() + outcome.slice(1)
+			])
 		});
 
 		await transitionState(appeal.id, azureUserId, APPEAL_CASE_STATUS.COMPLETE);
