@@ -474,7 +474,7 @@ export function checkAndConfirmPage(appealData, request) {
 	};
 
 	const decisionTypeText = specificDecisionType
-		? specificDecisionType.replaceAll('-', ' ')
+		? specificDecisionType.replaceAll('-', ' ').replace('lpa', 'LPA')
 		: 'decision';
 
 	const baseRoute = baseUrl(currentAppeal);

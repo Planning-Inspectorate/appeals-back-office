@@ -1063,7 +1063,7 @@ describe('issue-decision', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Check details and issue lpa costs decision</h1>'
+				'Check details and issue LPA costs decision</h1>'
 			);
 
 			expect(unprettifiedElement.innerHTML).not.toContain('Decision</dt>');
@@ -1085,7 +1085,7 @@ describe('issue-decision', () => {
 
 			expect(unprettifiedElement.innerHTML).not.toContain('Appellant costs decision letter</dt>');
 
-			expect(unprettifiedElement.innerHTML).toContain('Issue lpa costs decision</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Issue LPA costs decision</button>');
 		});
 	});
 

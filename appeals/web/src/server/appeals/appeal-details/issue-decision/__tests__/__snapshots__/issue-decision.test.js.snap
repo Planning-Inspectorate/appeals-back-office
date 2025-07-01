@@ -354,7 +354,7 @@ exports[`issue-decision GET /issue-decision/check-your-lpa-costs-decision should
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check details and issue lpa costs decision</h1>
+            <h1 class="govuk-heading-l">Check details and issue LPA costs decision</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -370,7 +370,7 @@ exports[`issue-decision GET /issue-decision/check-your-lpa-costs-decision should
                     </div>
                 </dl>
                 <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the decision.</p>
-                <button                 type="submit" class="govuk-button" data-module="govuk-button">Issue lpa costs decision</button>
+                <button                 type="submit" class="govuk-button" data-module="govuk-button">Issue LPA costs decision</button>
             </form>
         </div>
     </div>
