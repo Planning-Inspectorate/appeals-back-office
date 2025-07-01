@@ -8,9 +8,10 @@ import { validateAppeal } from './appeal-details.middleware.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
 import { getAppellantCaseFromAppealId } from './appellant-case/appellant-case.service.js';
+import config from '#environment/config.js';
 
 const router = Router();
-const pdfServiceGenerateUrl = 'http://localhost:3001/generate-pdf';
+const pdfServiceGenerateUrl = config.pdfServiceUrl + '/generate-pdf';
 const FETCH_TIMEOUT_MS = 30000;
 
 // @ts-ignore
@@ -207,12 +208,10 @@ router.get(
 			// const failedPdfs = results.filter(r => !r.buffer);
 
 			if (successfulPdfs.length === 0) {
-				return res
-					.status(500)
-					.render('app/500.njk', {
-						heading: 'Document Generation Error',
-						message: 'Could not generate any of the requested documents.'
-					});
+				return res.status(500).render('app/500.njk', {
+					heading: 'Document Generation Error',
+					message: 'Could not generate any of the requested documents.'
+				});
 			}
 
 			res.setHeader('Content-Type', 'application/zip');

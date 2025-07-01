@@ -67,6 +67,7 @@ export function loadConfig() {
 		HTTPS_PORT,
 		LOG_LEVEL_STDOUT,
 		DISABLE_REDIS,
+		PDF_SERVICE_URL,
 		REDIS_CONNECTION_STRING,
 		SESSION_SECRET,
 		SESSION_MAX_AGE,
@@ -139,7 +140,8 @@ export function loadConfig() {
 			featureFlagReIssueDecision: FEATURE_FLAG_RE_ISSUE_DECISION === 'true',
 			featureFlagSimplifyTeamAssignment: FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT === 'true'
 		},
-		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA
+		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
+		pdfServiceUrl: PDF_SERVICE_URL
 	};
 
 	const { value: validatedConfig, error } = schema.validate(config);
