@@ -6,7 +6,7 @@ import logger from '#lib/logger.js';
  * Fetch unique representations (eg final comments) based on appeal id and representation type
  *
  * @param {import('got').Got} apiClient
- * @param {string} appealId
+ * @param {string|number} appealId
  * @param {string} type
  * @returns {Promise<Representation>}
  */

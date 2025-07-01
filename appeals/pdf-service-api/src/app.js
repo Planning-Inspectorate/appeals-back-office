@@ -1,9 +1,8 @@
 /* eslint-disable no-unused-vars */
-const express = require('express');
-const cors = require('cors');
-const routes = require('./routes');
-const config = require('./config');
-const logger = require('./lib/logger');
+import express from 'express';
+import cors from 'cors';
+import routes from './routes/index.js';
+import logger from './lib/logger.js';
 
 const app = express();
 app.use(
@@ -42,4 +41,4 @@ app.use((err, req, res, _next) => {
 	});
 });
 
-module.exports = app;
+export default app;

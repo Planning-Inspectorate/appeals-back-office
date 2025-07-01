@@ -1,12 +1,17 @@
 // @ts-nocheck
-const nunjucks = require('nunjucks');
-const path = require('path');
-const fs = require('fs');
-const { formatInTimeZone } = require('date-fns-tz');
-const generatePdfLib = require('../lib/generate-pdf');
-const logger = require('../lib/logger');
-const { getBrowserInstance } = require('../browser-instance');
+import nunjucks from 'nunjucks';
+import { formatInTimeZone } from 'date-fns-tz';
+import generatePdfLib from '../lib/generate-pdf.js';
+import logger from '../lib/logger.js';
+import { getBrowserInstance } from '../browser-instance.js';
 const UK_TIMEZONE = 'Europe/London';
+import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { createRequire } from 'node:module';
+import * as fs from 'node:fs';
+// import cssFileContents from 'govuk-frontend/dist/govuk/govuk-frontend.min.css';
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 const nunjucksEnv = nunjucks.configure(path.join(__dirname, '../views'), {
 	autoescape: true
 });
@@ -42,6 +47,7 @@ const generateDataUri = (relativePath, mimeType) => {
 
 let gdsCssFilePath = '';
 try {
+	const require = createRequire(import.meta.url);
 	const gdsCssSourcePath = require.resolve('govuk-frontend/dist/govuk/govuk-frontend.min.css');
 	const gdsCssContent = fs.readFileSync(gdsCssSourcePath, 'utf8');
 
@@ -70,12 +76,10 @@ const postGeneratePdfController = async (req, res, next) => {
 
 	if (!templateName || !templateData) {
 		logger.warn({ identifier }, 'PDF Generation request missing templateName or templateData');
-		return res
-			.status(400)
-			.json({
-				error: 'BAD_REQUEST',
-				message: 'Missing required data: templateName and templateData'
-			});
+		return res.status(400).json({
+			error: 'BAD_REQUEST',
+			message: 'Missing required data: templateName and templateData'
+		});
 	}
 	logger.info({ identifier, templateName }, 'Received request to generate PDF');
 
@@ -108,12 +112,10 @@ const postGeneratePdfController = async (req, res, next) => {
 			(err.message.includes('template not found') || err.name === 'TemplateNotFoundError')
 		) {
 			logger.error({ err, identifier, templateName }, `Template not found: ${templateName}.njk`);
-			return res
-				.status(400)
-				.json({
-					error: 'TEMPLATE_NOT_FOUND',
-					message: `Invalid template specified: ${templateName}`
-				});
+			return res.status(400).json({
+				error: 'TEMPLATE_NOT_FOUND',
+				message: `Invalid template specified: ${templateName}`
+			});
 		}
 		logger.error(
 			{ err, identifier, templateName },
@@ -123,6 +125,4 @@ const postGeneratePdfController = async (req, res, next) => {
 	}
 };
 
-module.exports = {
-	postGeneratePdfController
-};
+export { postGeneratePdfController };

@@ -1,24 +1,28 @@
 {
 	"name": "@pins/pdf-service-api",
-	"version": "1.0.0",
+	"version": "0.0.0",
+	"private": true,
 	"engines": {
 		"node": ">=22.0.0 <= 22.14.0",
 		"npm": ">=10.0.0 <11.0.0"
 	},
+	"type": "module",
 	"main": "src/main.js",
 	"scripts": {
 		"lint": "eslint ./",
 		"start": "node ./src/main.js",
 		"start:dev": "nodemon -e .js,.json,.yml,.yaml ./ | pino-pretty -tlc",
-		"test": "jest",
+		"test": "cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --logHeapUsage --ci",
 		"test:watch": "jest --watchAll --runInBand"
 	},
 	"dependencies": {
+		"@pins/platform": "^0.0.0",
 		"applicationinsights": "*",
 		"body-parser": "*",
 		"cors": "*",
 		"date-fns": "^2.30.0",
 		"date-fns-tz": "^2.0.0",
+		"dotenv": "16.0.3",
 		"express": "*",
 		"govuk-frontend": "^5.4.0",
 		"multer": "*",

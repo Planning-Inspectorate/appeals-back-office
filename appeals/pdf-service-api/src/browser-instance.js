@@ -1,5 +1,5 @@
-const puppeteer = require('puppeteer-core');
-const logger = require('./lib/logger');
+import puppeteer from 'puppeteer-core';
+import logger from './lib/logger.js';
 
 // @ts-ignore
 let browserInstance = null;
@@ -90,8 +90,4 @@ async function closeBrowser() {
 	}
 }
 
-module.exports = {
-	launchBrowser,
-	getBrowserInstance,
-	closeBrowser
-};
+export { launchBrowser, getBrowserInstance, closeBrowser };
