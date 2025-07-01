@@ -891,7 +891,7 @@ exports[`application-submission-date POST /change should re-render the Date page
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="application-submission-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="application-submission-date-day" name="application-submission-date-day"
                                             type="text" value="" inputmode="numeric">
                                         </div>

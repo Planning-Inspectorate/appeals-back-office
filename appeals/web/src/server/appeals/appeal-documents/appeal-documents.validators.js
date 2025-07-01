@@ -75,15 +75,15 @@ export const validateDocumentDetailsReceivedDatesFields = createValidator(
 		}
 
 		if (!day && !month) {
-			throw new Error('all-fields-day::Received date must include a day and a month');
+			throw new Error('day-month::Received date must include a day and a month');
 		}
 
 		if (!day && !year) {
-			throw new Error('all-fields-day::Received date must include a day and a year');
+			throw new Error('day-year::Received date must include a day and a year');
 		}
 
 		if (!month && !year) {
-			throw new Error('all-fields-month::Received date must include a month and a year');
+			throw new Error('month-year::Received date must include a month and a year');
 		}
 
 		if (!day) {

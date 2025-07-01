@@ -190,7 +190,7 @@ exports[`Appeal Timetables should render "Change final comments due date" with e
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="9" inputmode="numeric">
                     </div>
                 </div>

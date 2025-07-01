@@ -1249,7 +1249,7 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
                             type="text" inputmode="numeric">
                         </div>
@@ -1316,7 +1316,7 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
                             type="text" inputmode="numeric">
                         </div>
@@ -2047,7 +2047,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
                             inputmode="numeric">
                         </div>
@@ -2246,7 +2246,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
                             inputmode="numeric">
                         </div>
@@ -2977,7 +2977,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
                             type="text" inputmode="numeric">
                         </div>
@@ -3176,7 +3176,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
                             type="text" inputmode="numeric">
                         </div>
@@ -3347,9 +3347,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#planning-obligation-due-date">Invalid value</a>
-                            </li>
-                            <li><a href="#planning-obligation-due-date-day">Planning obligation due date must include a day</a>
+                            <li><a href="#planning-obligation-due-date">day::Planning obligation due date must include a day</a>
                             </li>
                         </ul>
                     </div>
@@ -3497,19 +3495,16 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint planning-obligation-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="planning-obligation-due-date-error"
-                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Planning obligation due
-                    date must include a day</p>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                             id="planning-obligation-due-date-day" name="planning-obligation-due-date-day"
                             type="text" inputmode="numeric">
                         </div>
@@ -3549,9 +3544,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#planning-obligation-due-date">Invalid value</a>
-                            </li>
-                            <li><a href="#planning-obligation-due-date-month">Planning obligation due date must include a month</a>
+                            <li><a href="#planning-obligation-due-date">month::Planning obligation due date must include a month</a>
                             </li>
                         </ul>
                     </div>
@@ -3699,14 +3692,11 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint planning-obligation-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="planning-obligation-due-date-error"
-                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Planning obligation due
-                    date must include a month</p>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3719,7 +3709,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-month">Month</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                             id="planning-obligation-due-date-month" name="planning-obligation-due-date-month"
                             type="text" inputmode="numeric">
                         </div>
@@ -3751,9 +3741,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#planning-obligation-due-date">Invalid value</a>
-                            </li>
-                            <li><a href="#planning-obligation-due-date-year">Planning obligation due date must include a year</a>
+                            <li><a href="#planning-obligation-due-date">year::Planning obligation due date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -3901,14 +3889,11 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint planning-obligation-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="planning-obligation-due-date-error"
-                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Planning obligation due
-                    date must include a year</p>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3929,7 +3914,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-year">Year</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                             id="planning-obligation-due-date-year" name="planning-obligation-due-date-year"
                             type="text" inputmode="numeric">
                         </div>
@@ -3953,7 +3938,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#planning-obligation-due-date">The planning obligation due date must be in the future</a>
+                            <li><a href="#planning-obligation-due-date">all-fields::The planning obligation due date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -4150,7 +4135,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#planning-obligation-due-date">Planning obligation due date must be a real date</a>
+                            <li><a href="#planning-obligation-due-date">all-fields::Planning obligation due date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -4347,9 +4332,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#statement-of-common-ground-due-date">Invalid value</a>
-                            </li>
-                            <li><a href="#statement-of-common-ground-due-date-day">Statement of common ground due date must include a day</a>
+                            <li><a href="#statement-of-common-ground-due-date">day::Statement of common ground due date must include a day</a>
                             </li>
                         </ul>
                     </div>
@@ -4464,19 +4447,16 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint statement-of-common-ground-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="statement-of-common-ground-due-date-error"
-                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statement of common ground
-                    due date must include a day</p>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                             id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
                             type="text" inputmode="numeric">
                         </div>
@@ -4549,9 +4529,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#statement-of-common-ground-due-date">Invalid value</a>
-                            </li>
-                            <li><a href="#statement-of-common-ground-due-date-month">Statement of common ground due date must include a month</a>
+                            <li><a href="#statement-of-common-ground-due-date">month::Statement of common ground due date must include a month</a>
                             </li>
                         </ul>
                     </div>
@@ -4666,14 +4644,11 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint statement-of-common-ground-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="statement-of-common-ground-due-date-error"
-                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statement of common ground
-                    due date must include a month</p>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4686,7 +4661,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                             id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
                             type="text" inputmode="numeric">
                         </div>
@@ -4751,9 +4726,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#statement-of-common-ground-due-date">Invalid value</a>
-                            </li>
-                            <li><a href="#statement-of-common-ground-due-date-year">Statement of common ground due date must include a year</a>
+                            <li><a href="#statement-of-common-ground-due-date">year::Statement of common ground due date must include a year</a>
                             </li>
                         </ul>
                     </div>
@@ -4868,14 +4841,11 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                 </div>
             </fieldset>
         </div>
-        <div class="govuk-form-group govuk-form-group--error">
-            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint statement-of-common-ground-due-date-error">
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
                 class="govuk-hint">For example, 27 3 2007</div>
-                <p id="statement-of-common-ground-due-date-error"
-                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statement of common ground
-                    due date must include a year</p>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4896,7 +4866,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                             id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
                             type="text" inputmode="numeric">
                         </div>
@@ -4953,7 +4923,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#statement-of-common-ground-due-date">The statement of common ground due date must be in the future</a>
+                            <li><a href="#statement-of-common-ground-due-date">all-fields::The statement of common ground due date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -5150,7 +5120,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#statement-of-common-ground-due-date">Statement of common ground due date must be a real date</a>
+                            <li><a href="#statement-of-common-ground-due-date">all-fields::Statement of common ground due date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6004,7 +5974,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
                             inputmode="numeric">
                         </div>
@@ -6203,7 +6173,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
                             inputmode="numeric">
                         </div>
@@ -6962,7 +6932,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="final-comments-due-date-day" name="final-comments-due-date-day" type="text"
                             inputmode="numeric">
                         </div>
@@ -7127,7 +7097,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="final-comments-due-date-day" name="final-comments-due-date-day" type="text"
                             inputmode="numeric">
                         </div>
@@ -7756,7 +7726,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
                             inputmode="numeric">
                         </div>
@@ -7921,7 +7891,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
                             inputmode="numeric">
                         </div>
@@ -8516,7 +8486,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
                             type="text" inputmode="numeric">
                         </div>
@@ -8681,7 +8651,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
                             type="text" inputmode="numeric">
                         </div>
@@ -9373,7 +9343,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
                             inputmode="numeric">
                         </div>
@@ -9538,7 +9508,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
                             inputmode="numeric">
                         </div>
@@ -9707,7 +9677,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page a
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
                             value="25" inputmode="numeric">
                         </div>
@@ -9742,7 +9712,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page a
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
                             value="26" inputmode="numeric">
                         </div>
@@ -9776,7 +9746,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page a
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="final-comments-due-date-day" name="final-comments-due-date-day" type="text"
                             value="7" inputmode="numeric">
                         </div>
@@ -9881,7 +9851,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page w
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="lpa-statement-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="lpa-statement-due-date-day" name="lpa-statement-due-date-day" type="text"
                             value="4" inputmode="numeric">
                         </div>
@@ -9916,7 +9886,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page w
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
                             value="4" inputmode="numeric">
                         </div>
@@ -9951,7 +9921,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page w
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
                             <label class="govuk-label govuk-date-input__label" for="final-comments-due-date-day">Day</label>
-                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                             id="final-comments-due-date-day" name="final-comments-due-date-day" type="text"
                             value="3" inputmode="numeric">
                         </div>

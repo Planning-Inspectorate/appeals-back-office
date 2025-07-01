@@ -441,7 +441,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="29" inputmode="numeric">
                                         </div>
                                     </div>
@@ -590,7 +590,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="29" inputmode="numeric">
                                         </div>
                                     </div>
@@ -2373,7 +2373,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
@@ -2522,7 +2522,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="29" inputmode="numeric">
                                         </div>
                                     </div>
@@ -2671,7 +2671,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="29" inputmode="numeric">
                                         </div>
                                     </div>
@@ -4903,7 +4903,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="visit-date-day" name="visit-date-day" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>

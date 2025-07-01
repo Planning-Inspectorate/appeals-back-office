@@ -5662,7 +5662,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="29" inputmode="numeric">
                     </div>
                 </div>
@@ -6225,7 +6225,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="" inputmode="numeric">
                     </div>
                 </div>
@@ -6288,7 +6288,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>

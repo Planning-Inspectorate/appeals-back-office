@@ -34,44 +34,43 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
+
+/** @typedef {'all-fields-day' | 'day-month' | 'month-year' | 'day-year' | 'day' | 'month' | 'year'} DateFieldKey */
+
 /**
  * @param {import("@pins/express").ValidationErrors | undefined} errors
+ * @returns {Record<string, { param: string; [key: string]: any; }> | undefined}
  */
 export const mapErrorsForDocumentDates = (errors) => {
 	if (!errors) {
 		return;
 	}
 
-	/** @type {import("@pins/express").ValidationErrors | undefined} */
-	const newErrors = {};
+	const dateFields = {
+		'all-fields-day': 'day',
+		'day-month': 'day',
+		'month-year': 'month',
+		'day-year': 'day',
+		day: 'day',
+		month: 'month',
+		year: 'year'
+	};
 
-	for (const key in errors) {
-		if (Object.hasOwn(errors, key)) {
-			const error = errors[key];
-			const objectKey = key;
+	return Object.entries(errors).reduce(
+		(/**@type {import("@pins/express").ValidationErrors} */ newErrors, [key, error]) => {
+			const { param } = error;
 
-			if (error.param === 'month') {
-				newErrors[`${objectKey}.month`] = error;
-			} else if (error.param === 'day') {
-				newErrors[`${objectKey}.day`] = error;
-			} else if (error.param === 'year') {
-				newErrors[`${objectKey}.year`] = error;
-			} else if (error.param === 'all-fields-day') {
-				newErrors[`${objectKey}.day`] = error;
-				delete errors[key];
-			} else if (error.param === 'all-fields-month') {
-				newErrors[`${objectKey}.month`] = error;
-				delete errors[key];
-			} else if (error.param === 'all-fields-year') {
-				newErrors[`${objectKey}.year`] = error;
-				delete errors[key];
+			if (param in dateFields) {
+				const newKey = `${key}.${dateFields[/** @type {DateFieldKey} */ (param)]}`;
+				newErrors[newKey] = error;
 			} else {
 				newErrors[key] = error;
 			}
-		}
-	}
 
-	return newErrors;
+			return newErrors;
+		},
+		{}
+	);
 };
 /**
  * @param {Object} params

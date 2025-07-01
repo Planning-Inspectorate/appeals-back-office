@@ -19,90 +19,71 @@ export const createDateInputFieldsValidator = (
 	yearFieldName = '-year',
 	bodyScope = ''
 ) => {
-	let stopValidation = false;
-	const _day = bodyScope ? `[${dayFieldName}]` : dayFieldName;
-	const _month = bodyScope ? `[${monthFieldName}]` : monthFieldName;
-	const _year = bodyScope ? `[${yearFieldName}]` : yearFieldName;
-
 	return createValidator(
 		body([`${bodyScope}${fieldNamePrefix}`]).custom((_, { req }) => {
 			const day = req.body[`${fieldNamePrefix}${dayFieldName}`];
 			const month = req.body[`${fieldNamePrefix}${monthFieldName}`];
 			const year = req.body[`${fieldNamePrefix}${yearFieldName}`];
 
-			if (day && month && year) {
-				return true;
-			}
-
 			if (!day && !month && !year) {
-				stopValidation = true;
-				throw new Error(`Enter the ${lowerCase(messageFieldNamePrefix)}`, { cause: 'all-fields' });
+				throw new Error(`all-fields::Enter the ${lowerCase(messageFieldNamePrefix)}`, {
+					cause: 'all-fields'
+				});
 			}
 
 			let missingParts = [];
-			if (!day) missingParts.push('a day');
-			if (!month) missingParts.push('a month');
-			if (!year) missingParts.push('a year');
+			let cause = [];
+			if (!day) {
+				missingParts.push('a day');
+				cause.push('day');
+			}
+			if (!month) {
+				missingParts.push('a month');
+				cause.push('month');
+			}
+			if (!year) {
+				missingParts.push('a year');
+				cause.push('year');
+			}
 
-			const messageSuffix = missingParts.reduce((acc, part, index) => {
-				if (index === missingParts.length - 1) {
-					return `${acc}${part}`;
-				}
-				if (index === missingParts.length - 2) {
-					return `${acc}${part} and `;
-				}
-				return `${acc}${part}, `;
-			}, '');
-			if (missingParts.length > 1) {
-				stopValidation = true;
-				throw new Error(`${messageFieldNamePrefix} must include ${messageSuffix}`);
+			if (missingParts.length > 0) {
+				const joinedCause = cause.join('-');
+				const messageSuffix = missingParts.reduce((acc, part, index) => {
+					if (index === missingParts.length - 1) return `${acc}${part}`;
+					if (index === missingParts.length - 2) return `${acc}${part} and `;
+					return `${acc}${part}, `;
+				}, '');
+				throw new Error(`${joinedCause}::${messageFieldNamePrefix} must include ${messageSuffix}`);
 			}
-		}),
-		body(`${bodyScope}${fieldNamePrefix}${_day}`).custom((value) => {
-			if (!value && !stopValidation) {
-				throw new Error(`${messageFieldNamePrefix} must include a day`);
+
+			if (!/^\d+$/.test(day)) {
+				throw new Error(`day::${messageFieldNamePrefix} day must be a number`);
 			}
+
+			if (!/^\d{1,2}$/.test(day)) {
+				throw new Error(`day::${messageFieldNamePrefix} day must be 1 or 2 digits`);
+			}
+			if (!/^0?[1-9]$|^1\d$|^2\d$|^3[01]$/.test(day)) {
+				throw new Error(`day::${messageFieldNamePrefix} day must be between 1 and 31`);
+			}
+			if (!/^\d+$/.test(month)) {
+				throw new Error(`month::${messageFieldNamePrefix} month must be a number`);
+			}
+			if (!/^\d{1,2}$/.test(month)) {
+				throw new Error(`month::${messageFieldNamePrefix} month must be 1 or 2 digits`);
+			}
+			if (!/^0?[1-9]$|^1[0-2]$/.test(month)) {
+				throw new Error(`month::${messageFieldNamePrefix} month must be between 1 and 12`);
+			}
+			if (!/^\d+$/.test(year)) {
+				throw new Error(`year::${messageFieldNamePrefix} year must be a number`);
+			}
+			if (!/^\d{4}$/.test(year)) {
+				throw new Error(`year::${messageFieldNamePrefix} year must be 4 digits`);
+			}
+
 			return true;
-		}),
-		body(`${bodyScope}${fieldNamePrefix}${_month}`).custom((value) => {
-			if (!value && !stopValidation) {
-				throw new Error(`${messageFieldNamePrefix} must include a month`);
-			}
-			return true;
-		}),
-		body(`${bodyScope}${fieldNamePrefix}${_year}`).custom((value) => {
-			if (!value && !stopValidation) {
-				throw new Error(`${messageFieldNamePrefix} must include a year`);
-			}
-			return true;
-		}),
-		body(`${bodyScope}${fieldNamePrefix}${_day}`)
-			.if(Boolean)
-			.isInt()
-			.withMessage(`${messageFieldNamePrefix} day must be a number`)
-			.bail()
-			.isLength({ min: 1, max: 2 })
-			.withMessage(`${messageFieldNamePrefix} day must be 1 or 2 digits`)
-			.bail()
-			.matches(/^0?[1-9]$|^1\d$|^2\d$|^3[01]$/)
-			.withMessage(`${messageFieldNamePrefix} day must be between 1 and 31`),
-		body(`${bodyScope}${fieldNamePrefix}${_month}`)
-			.if(Boolean)
-			.isInt()
-			.withMessage(`${messageFieldNamePrefix} month must be a number`)
-			.bail()
-			.isLength({ min: 1, max: 2 })
-			.withMessage(`${messageFieldNamePrefix} month must be 1 or 2 digits`)
-			.bail()
-			.matches(/^0?[1-9]$|^1[0-2]$/)
-			.withMessage(`${messageFieldNamePrefix} month must be between 1 and 12`),
-		body(`${bodyScope}${fieldNamePrefix}${_year}`)
-			.if(Boolean)
-			.isInt()
-			.withMessage(`${messageFieldNamePrefix} year must be a number`)
-			.bail()
-			.isLength({ min: 4, max: 4 })
-			.withMessage(`${messageFieldNamePrefix} year must be 4 digits`)
+		})
 	);
 };
 
@@ -131,7 +112,9 @@ export const createDateInputDateValidityValidator = (
 				return dateIsValid({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
 			.withMessage(
-				`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}must be a real date`
+				`all-fields::${
+					(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''
+				}must be a real date`
 			)
 	);
 /**
@@ -182,7 +165,9 @@ export const createDateInputDateBusinessDayValidator = (
 				}
 				return result;
 			})
-			.withMessage(`The ${lowerCase(messageFieldNamePrefix || '')} must be a business day`)
+			.withMessage(
+				`all-fields::The ${lowerCase(messageFieldNamePrefix || '')} must be a business day`
+			)
 	);
 
 export const createDateInputDateInFutureValidator = (
@@ -209,7 +194,9 @@ export const createDateInputDateInFutureValidator = (
 
 				return dateIsInTheFuture({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
-			.withMessage(`The ${lowerCase(messageFieldNamePrefix || '')} must be in the future`)
+			.withMessage(
+				`all-fields::The ${lowerCase(messageFieldNamePrefix || '')} must be in the future`
+			)
 	);
 
 export const createDateInputDateInPastOrTodayValidator = (
@@ -271,7 +258,9 @@ export const createDateInputDateInPastValidator = (
 			})
 			.withMessage(
 				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}must in the past`
+					`all-fields::${
+						(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''
+					}must in the past`
 				)
 			)
 	);
@@ -336,7 +325,7 @@ export const createDateInputDateInFutureOfDateValidator = (
 					year: 'numeric'
 				});
 				throw new Error(
-					`${messageFieldNamePrefix} must be after the ${messageFieldNameToComparePrefix} on ${formattedDate}`
+					`all-fields::${messageFieldNamePrefix} must be after the ${messageFieldNameToComparePrefix} on ${formattedDate}`
 				);
 			}
 			return true;
@@ -344,19 +333,6 @@ export const createDateInputDateInFutureOfDateValidator = (
 	);
 
 /**
- * This middelware will handle errors related to a date component
- * and processes them to ensure taht only one error is returned at the correct time for the component
- * It will rekey any error to the most relevant field for the date component,
- * ensuring that the UI is compatable with acceccibility criteria
- *
- * The middleware will:
- * 1. Identify all errors related to the date component based on the fieldNamePrefix.
- * 2. Select the first error encountered for the component.
- * 3. If the first error is a general error (keyed as ''), it will attempt to re-key it to a specific field
- *   within the component (e.g., 'prefix-day', 'prefix-month', 'prefix-year').
- * 4. If re-keying is not possible, it will default to the primary field key for the component (e.g., 'prefix-day').
- * 5. All other errors not related to this component will be preserved in the `req.errors` object.
- *
  * @param {{ fieldNamePrefix: string }} dateComponentConfig - Configuration for the date component.
  * @returns {import('express').RequestHandler} The configured Express middleware.
  */
@@ -367,10 +343,10 @@ export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
 		}
 
 		const dateFields = [
+			`${fieldNamePrefix}`,
 			`${fieldNamePrefix}-day`,
 			`${fieldNamePrefix}-month`,
-			`${fieldNamePrefix}-year`,
-			`${fieldNamePrefix}`
+			`${fieldNamePrefix}-year`
 		];
 
 		/**
@@ -387,9 +363,47 @@ export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
 
 		if (firstErrorKey && req.errors) {
 			if (firstErrorKey === `${fieldNamePrefix}`) {
-				req.errors[`${fieldNamePrefix}-day`] = req.errors[`${fieldNamePrefix}`];
-				req.errors[`${fieldNamePrefix}-day`].param = 'all-fields';
-				firstErrorKey = dateFields[0];
+				const errorDetails = req.errors[`${firstErrorKey}`];
+				if (errorDetails.msg.includes('::')) {
+					const [cause, message] = errorDetails.msg.split('::');
+					errorDetails.param = `${cause}`;
+					errorDetails.msg = message;
+					switch (cause) {
+						case 'all-fields':
+							req.errors[`${fieldNamePrefix}-day`] = errorDetails;
+							firstErrorKey = dateFields[1];
+							break;
+						case 'day':
+							req.errors[`${fieldNamePrefix}-day`] = errorDetails;
+							firstErrorKey = dateFields[1];
+							break;
+						case 'day-month':
+							req.errors[`${fieldNamePrefix}-day`] = errorDetails;
+							firstErrorKey = dateFields[1];
+							break;
+						case 'day-year':
+							req.errors[`${fieldNamePrefix}-day`] = errorDetails;
+							firstErrorKey = dateFields[1];
+							break;
+						case 'month':
+							req.errors[`${fieldNamePrefix}-month`] = errorDetails;
+							firstErrorKey = dateFields[2];
+							break;
+						case 'month-year':
+							req.errors[`${fieldNamePrefix}-month`] = errorDetails;
+							firstErrorKey = dateFields[2];
+							break;
+						case 'year':
+							req.errors[`${fieldNamePrefix}-year`] = errorDetails;
+							firstErrorKey = dateFields[3];
+							break;
+					}
+				} else {
+					req.errors[`${fieldNamePrefix}-day`] = req.errors[`${fieldNamePrefix}`];
+					req.errors[`${fieldNamePrefix}-day`].param = 'all-fields';
+					firstErrorKey = dateFields[1];
+				}
+
 				delete req.errors[`${fieldNamePrefix}`];
 			}
 
