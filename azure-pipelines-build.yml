@@ -11,6 +11,10 @@ parameters:
     displayName: Build All Functions
     type: boolean
     default: true
+  - name: buildAppealsBoPdf
+    displayName: Build Appeals BO PDF
+    type: boolean
+    default: true
 
 pr: none
 
@@ -62,6 +66,29 @@ extends:
                 TURBO_TEAM: $(TURBO_TEAM)
                 TURBO_API: $(TURBO_API)
                 TURBO_TOKEN: $(TURBO_TOKEN)
+      - name: Build Appeals BO PDF
+        condition: >-
+          and(
+            succeeded(),
+            or(
+              and(
+                eq(variables['Build.Reason'], 'Manual'),
+                eq(${{ parameters.buildAppealsBoPdf }}, 'true')
+              ),
+              ne(variables['Build.Reason'], 'Manual')
+            )
+          )
+        dependsOn:
+          - Run Linting & Tests
+        steps:
+          - template: ../steps/azure_web_app_docker_build_push.yml@templates
+            parameters:
+              azurecrName: $(azurecrName)
+              dockerfilePath: $(Build.SourcesDirectory)/appeals/pdf-service-api/Dockerfile
+              repository: back-office/back-office-appeals-pdf
+              buildArgs:
+                - GIT_SHA=$(Build.SourceVersion)
+
       - name: Build Appeals BO API
         condition: >-
           and(
