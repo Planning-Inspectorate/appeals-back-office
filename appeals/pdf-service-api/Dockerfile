@@ -5,7 +5,7 @@ RUN apk add --no-cache \
     freetype \
     harfbuzz \
     ttf-freefont \
-    nss # Often needed by Chromium
+    nss
 
 WORKDIR /opt
 
@@ -19,8 +19,16 @@ RUN echo "Running npm ci..." && \
     echo "npm ci completed."
 
 
-WORKDIR /opt/appeals/pdf-service-api
+	WORKDIR /opt/appeals/pdf-service-api
 COPY appeals/pdf-service-api/src ./src
+
+# *** CRUCIAL PERMISSION FIX FOR SERVER SIDE FIX BO ***
+# Ensure the 'public' directory exists for static assets
+# Change its owner to the 'node' user's UID and GID (1000)
+RUN mkdir -p /opt/appeals/pdf-service-api/src/public/assets && \
+    chown -R 1000:1000 /opt/appeals/pdf-service-api/src/public
+
+# Copy assets explicitly
 COPY appeals/pdf-service-api/src/assets ./src/assets
 
 ARG GIT_SHA

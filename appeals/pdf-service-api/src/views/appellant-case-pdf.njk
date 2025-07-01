@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "pdf-head.njk" %}
+</head>
+<body class="govuk-body">
+  {% include "pdf-header.njk" %}
+
+  <h1 class="govuk-heading-xl">Appellant Case</h1>
+
+  <p><strong>Site address</strong>
+    {% if appellantCaseData.appealSite %}
+        {{ appellantCaseData.appealSite.addressLine1 | default('') }}{% if appellantCaseData.appealSite.addressLine2 %}, {{ appellantCaseData.appealSite.addressLine2 }}{% endif %}{% if appellantCaseData.appealSite.town %}, {{ appellantCaseData.appealSite.town }}{% endif %}{% if appellantCaseData.appealSite.county %}, {{ appellantCaseData.appealSite.county }}{% endif %}, {{ appellantCaseData.appealSite.postCode | default('') }}
+    {% else %}
+        <span class="not-available">Not available</span>
+    {% endif %}
+  </p>
+  <p><strong>Local planning authority</strong> {{ appellantCaseData.localPlanningDepartment | default('N/A') }}</p>
+
+  <h2 class="govuk-heading-l">1. Appellant details</h2>
+  <div class="question-block">
+    <span class="question-title">Appellant details</span>
+    <div class="answer">
+        {% if appellantCaseData.appellant %}
+            {{ appellantCaseData.appellant.firstName }} {{ appellantCaseData.appellant.lastName }}<br>
+            {{ appellantCaseData.appellant.email }}
+        {% else %}
+            Not provided
+        {% endif %}
+    </div>
+  </div>
+
+  <h2 class="govuk-heading-l">2. Site details</h2>
+  <div class="question-block">
+    <span class="question-title">What is the address of the appeal site?</span>
+    <p class="answer">{% if appellantCaseData.appealSite %}{{ appellantCaseData.appealSite.addressLine1 | default('') }}{% if appellantCaseData.appealSite.addressLine2 %}, {{ appellantCaseData.appealSite.addressLine2 }}{% endif %}{% if appellantCaseData.appealSite.town %}, {{ appellantCaseData.appealSite.town }}{% endif %}{% if appellantCaseData.appealSite.county %}, {{ appellantCaseData.appealSite.county }}{% endif %}, {{ appellantCaseData.appealSite.postCode | default('') }}{% else %}<span class="not-available">Not available</span>{% endif %}</p>
+  </div>
+  <div class="question-block">
+    <span class="question-title">What is the area of the appeal site?</span>
+    <span class="answer">{{ appellantCaseData.siteAreaSquareMetres | default("Not provided") }} m²</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Is the appeal site in a green belt?</span>
+    <span class="answer">{{ "Yes" if appellantCaseData.isGreenBelt == true else "No" }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Does the appellant own all of the land involved in the appeal?</span>
+    <span class="answer">{{ "Fully owned" if appellantCaseData.siteOwnership.ownsAllLand == true else "No" }}</span>
+  </div>
+   <div class="question-block">
+    <span class="question-title">Does the appellant know who owns the land involved in the appeal?</span>
+    <span class="answer">{{ appellantCaseData.siteOwnership.knowsOtherLandowners | default("Not answered") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Is the appeal site part of an agricultural holding?</span>
+    <span class="answer">{{ "Yes" if appellantCaseData.agriculturalHolding.isPartOfAgriculturalHolding == true else "No" }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Are you a tenant of the agricultural holding?</span>
+    <span class="answer">{{ "Yes" if appellantCaseData.agriculturalHolding.isTenant == true else "No" }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Are there any other tenants?</span>
+    <span class="answer">{{ "Yes" if appellantCaseData.agriculturalHolding.hasOtherTenants == true else "No" }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Will an inspector need to access your land or property?</span>
+    <span class="answer">{{ "Yes" if appellantCaseData.siteAccessRequired.isRequired == true else "No" }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Are there any health and safety issues on the appeal site?</span>
+    <span class="answer">{{ "Yes" if appellantCaseData.healthAndSafety.hasIssues == true else "No" }}</span>
+  </div>
+
+  <h2 class="govuk-heading-l">3. Application details</h2>
+  <div class="question-block">
+    <span class="question-title">Which local planning authority (LPA) do you want to appeal against?</span>
+    <span class="answer">{{ appellantCaseData.localPlanningDepartment | default("Not provided") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">What is the application reference number?</span>
+    <span class="answer">{{ appellantCaseData.planningApplicationReference | default("Not provided") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">What date did you submit your application?</span>
+    <span class="answer">{{ appellantCaseData.applicationDate | date('d MMMM yyyy') if appellantCaseData.applicationDate else "Not provided" }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Enter the description of development that you submitted in your application</span>
+    <span class="answer">{{ appellantCaseData.developmentDescription.details | default("Not provided") }}</span>
+  </div>
+  <div class="question-block">
+      <span class="question-title">Are there other appeals linked to your development?</span>
+      <span class="answer">{{ "Yes" if appellantCaseData.otherAppeals and appellantCaseData.otherAppeals.length else "No" }}</span>
+  </div>
+  <div class="question-block">
+      <span class="question-title">Was your application granted or refused?</span>
+      <span class="answer">{{ appellantCaseData.applicationDecision | capitalize | default("Not answered") }}</span>
+  </div>
+  <div class="question-block">
+      <span class="question-title">What’s the date on the decision letter from the local planning authority?</span>
+      <span class="answer">{{ appellantCaseData.applicationDecisionDate | date('d MMMM yyyy') if appellantCaseData.applicationDecisionDate else "Not provided" }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">Development type</span>
+    <span class="answer">{{ appellantCaseData.developmentType | default("Not provided") }}</span>
+  </div>
+
+  <h2 class="govuk-heading-l">4. Appeal details</h2>
+  <div class="question-block">
+    <span class="question-title">What type of application is your appeal about?</span>
+    <span class="answer">{{ appellantCaseData.appealType | default("Not provided") }}</span>
+  </div>
+  <div class="question-block">
+    <span class="question-title">How would you prefer us to decide your appeal?</span>
+    <span class="answer">{{ appellantCaseData.appellantProcedurePreference | default("Not answered", true) }}</span>
+  </div>
+    <div class="question-block">
+      <span class="question-title">Why would you prefer this appeal procedure?</span>
+      <span class="answer">{{ appellantCaseData.appellantProcedurePreferenceDetails | default("Not provided", true) }}</span>
+    </div>
+    <div class="question-block">
+      <span class="question-title">How many days would you expect the inquiry to last?</span>
+      <span class="answer">{{ appellantCaseData.appellantProcedurePreferenceDuration | default("Not provided", true) }} day(s)</span>
+    </div>
+    <div class="question-block">
+      <span class="question-title">How many witnesses would you expect to give evidence at the inquiry?</span>
+      <span class="answer">{{ appellantCaseData.appellantProcedurePreferenceWitnessCount | default("Not provided", true) }}</span>
+    </div>
+
+  <h2 class="govuk-heading-l">5. Upload documents</h2>
+  <div class="question-block">
+      <span class="question-title">Application form</span>
+      {% set docs = appellantCaseData.documents.originalApplicationForm.documents %}
+      {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+      <span class="question-title">Agreement to change the description of development</span>
+      {% set docs = appellantCaseData.documents.changedDescription.documents %}
+      {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+      <span class="question-title">Decision letter from the local planning authority</span>
+      {% set docs = appellantCaseData.documents.applicationDecisionLetter.documents %}
+      {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+      <span class="question-title">Appeal statement</span>
+      {% set docs = appellantCaseData.documents.appellantStatement.documents %}
+      {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+    <span class="question-title">What is the status of your planning obligation?</span>
+    <span class="answer">{{ appellantCaseData.planningObligation.status | default("Not answered", true) | capitalize }}</span>
+  </div>
+  <div class="question-block">
+      <span class="question-title">Planning obligation</span>
+      {% set docs = appellantCaseData.documents.planningObligation.documents %}
+      {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+      <span class="question-title">Separate ownership certificate and agricultural land declaration</span>
+      {% set docs = appellantCaseData.documents.ownershipCertificate.documents %}
+      {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+      <span class="question-title">Application for an award of appeal costs</span>
+      {% set docs = appellantCaseData.documents.appellantCostsApplication.documents %}
+      {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+      <span class="question-title">Design and access statement</span>
+      {% set docs = appellantCaseData.documents.designAccessStatement.documents %}
+      {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+      <span class="question-title">Plans, drawings and list of plans</span>
+      {% set docs = appellantCaseData.documents.plansDrawings.documents %}
+      {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+      <span class="question-title">New plans or drawings</span>
+      {% set docs = appellantCaseData.documents.newPlansDrawings.documents %}
+      {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+  <div class="question-block">
+      <span class="question-title">Other new supporting documents</span>
+      {% set docs = appellantCaseData.documents.otherNewDocuments.documents %}
+      {% if docs and docs.length %}<ul class="document-list">{% for doc in docs %}<li>{{ doc.name }}</li>{% endfor %}</ul>{% else %}<span class="answer not-available">No documents</span>{% endif %}
+  </div>
+</body>
+</html>
