@@ -398,21 +398,42 @@ const getAppealsWithCompletedEvents = () =>
 					valid: true
 				}
 			},
-			siteVisit: {
-				OR: [
-					{
-						visitEndTime: {
-							lte: new Date()
-						}
-					},
-					{
-						visitEndTime: null,
-						visitDate: {
-							lte: new Date()
-						}
+			OR: [
+				{
+					siteVisit: {
+						OR: [
+							{
+								visitEndTime: {
+									lte: new Date()
+								}
+							},
+							{
+								visitEndTime: null,
+								visitDate: {
+									lte: new Date()
+								}
+							}
+						]
 					}
-				]
-			}
+				},
+				{
+					hearing: {
+						OR: [
+							{
+								hearingStartTime: {
+									lte: new Date()
+								}
+							},
+							{
+								hearingEndTime: null,
+								hearingStartTime: {
+									lte: new Date()
+								}
+							}
+						]
+					}
+				}
+			]
 		},
 		include: appealDetailsInclude
 	});
