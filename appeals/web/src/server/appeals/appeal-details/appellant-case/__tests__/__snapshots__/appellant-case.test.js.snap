@@ -6538,7 +6538,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="29" inputmode="numeric">
                     </div>
                 </div>
@@ -7083,7 +7083,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="" inputmode="numeric">
                     </div>
                 </div>
@@ -7144,7 +7144,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
-                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                         id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
                     </div>
                 </div>
@@ -8146,7 +8146,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
                                         <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                         id="valid-date-day" name="valid-date-day" type="text" value="29" inputmode="numeric">
                                     </div>
                                 </div>
@@ -8570,7 +8570,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
                                         <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                         id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
                                     </div>
                                 </div>
@@ -8640,7 +8640,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
                                         <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                         id="valid-date-day" name="valid-date-day" type="text" value="21" inputmode="numeric">
                                     </div>
                                 </div>
@@ -8711,7 +8711,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
                                         <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                         id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
                                     </div>
                                 </div>

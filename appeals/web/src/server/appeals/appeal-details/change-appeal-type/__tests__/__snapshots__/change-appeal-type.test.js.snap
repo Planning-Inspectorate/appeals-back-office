@@ -570,7 +570,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
                                             value="29" inputmode="numeric">
                                         </div>
@@ -643,7 +643,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
                                             value="" inputmode="numeric">
                                         </div>
@@ -790,7 +790,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error govuk-input--error"
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
                                             id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
                                             value="4" inputmode="numeric">
                                         </div>
