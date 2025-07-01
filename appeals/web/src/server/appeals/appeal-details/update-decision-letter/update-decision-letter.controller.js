@@ -10,6 +10,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getCorrectionNotice = async (request, response) => {
@@ -80,7 +81,7 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 					)}" class="govuk-link">${file.name}</a>`,
 					actions: {
 						Change: {
-							href: `${baseUrl}/upload-decision-letter`,
+							href: `${addBackLinkQueryToUrl(request, `${baseUrl}/upload-decision-letter`)}`,
 							visuallyHiddenText: 'decision letter'
 						}
 					}
@@ -187,7 +188,9 @@ export const postUpdateDocumentCheckDetails = async (request, response) => {
 			text: 'Decision letter updated'
 		});
 
-		return response.redirect(`/appeals-service/appeal-details/${appealId}/appeal-decision`);
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/issue-decision/view-decision`
+		);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');

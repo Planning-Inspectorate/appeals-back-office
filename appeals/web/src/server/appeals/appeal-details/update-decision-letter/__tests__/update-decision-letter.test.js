@@ -234,7 +234,7 @@ describe('update-decision-letter', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Preview');
 			expect(unprettifiedElement.innerHTML).toContain('Update decision letter');
 		});
-		it('should render the check your view-decision page after submit', async () => {
+		it('should render the view-decision page after submit', async () => {
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 			expect(correctionNoticeResponse.statusCode).toBe(302);
 
@@ -248,7 +248,7 @@ describe('update-decision-letter', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/appeal-decision'
+				'Found. Redirecting to /appeals-service/appeal-details/1/issue-decision/view-decision'
 			);
 		});
 	});

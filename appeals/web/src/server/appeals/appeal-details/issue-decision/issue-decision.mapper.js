@@ -23,6 +23,7 @@ import {
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import config from '#environment/config.js';
+import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -506,9 +507,10 @@ export function checkAndConfirmPage(appealData, request) {
 
 /**
  * @param {Appeal} appealData
+ * @param {Request} request
  * @returns {PageRow}[]
  */
-export function viewDecisionPageRows(appealData) {
+export function viewDecisionPageRows(appealData, request) {
 	const { appealId, decision, costs } = appealData || {};
 	const appellantCostsDecision = costs.appellantDecisionFolder?.documents[0];
 	const lpaCostsDecision = costs.lpaDecisionFolder?.documents[0];
@@ -547,7 +549,10 @@ export function viewDecisionPageRows(appealData) {
 					? [
 							{
 								text: 'Change',
-								href: `${baseUrl(appealData)}/decision-letter-upload`,
+								href: `${addBackLinkQueryToUrl(
+									request,
+									`/appeals-service/appeal-details/${appealId}/update-decision-letter/upload-decision-letter`
+								)}`,
 								visuallyHiddenText: 'decision letter'
 							}
 					  ]
@@ -616,9 +621,15 @@ export function viewDecisionPage(appealData, request) {
 	const summaryListComponent = {
 		type: 'summary-list',
 		parameters: {
-			rows: viewDecisionPageRows(appealData)
+			rows: viewDecisionPageRows(appealData, request)
 		}
 	};
+
+	const notificationBanners = mapNotificationBannersFromSession(
+		request.session,
+		'appealDecision',
+		appealData.appealId
+	);
 
 	const title = `Decision`;
 	const pageContent = {
@@ -627,7 +638,7 @@ export function viewDecisionPage(appealData, request) {
 			getBackLinkUrlFromQuery(request) || `/appeals-service/appeal-details/${appealData.appealId}`,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		pageComponents: [summaryListComponent]
+		pageComponents: [...notificationBanners, summaryListComponent]
 	};
 
 	return pageContent;
