@@ -20,12 +20,7 @@
 			{%- set _ = notificationBanners.push(component) -%}
 		{%- endif -%}
 	{%- endfor -%}
-{% if pageContent.currentAppeal %}
-  <a class="govuk-button" href="/appeals-service/appeal-details/{{ pageContent.currentAppeal.appealId }}/download-pdf">
-    Download PDF
-  </a>
 
-{% endif %}
 	{%- if errorSummaries | length -%}
 	<div class="govuk-grid-row">
 		<div class="govuk-grid-column-two-thirds">
@@ -46,7 +41,6 @@
 	{%- endif -%}
 	{{ pageHeading(pageContent) }}
 {%- endblock -%}
-
 {%- block pageContent -%}
 	{%- set formComponents = [] -%}
 	{%- for component in pageContent.pageComponents -%}

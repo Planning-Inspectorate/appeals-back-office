@@ -1,120 +1,124 @@
+// @ts-nocheck
 const nunjucks = require('nunjucks');
 const path = require('path');
 const fs = require('fs');
-const { format } = require('date-fns');
+const { formatInTimeZone } = require('date-fns-tz');
 const generatePdfLib = require('../lib/generate-pdf');
 const logger = require('../lib/logger');
 const { getBrowserInstance } = require('../browser-instance');
-
+const UK_TIMEZONE = 'Europe/London';
 const nunjucksEnv = nunjucks.configure(path.join(__dirname, '../views'), {
 	autoescape: true
 });
-
 nunjucksEnv.addFilter('date', (dateString, formatString) => {
 	try {
 		if (!dateString) return '';
 		const date = new Date(dateString);
-
 		if (isNaN(date.getTime())) {
-			logger.warn(`Invalid date encountered in template: ${dateString}`);
+			logger.warn(`Invalid date encountered in template filter: ${dateString}`);
 			return dateString;
 		}
-
-		return format(date, formatString);
+		return formatInTimeZone(date, UK_TIMEZONE, formatString);
 	} catch (error) {
 		logger.error(
 			{ err: error, dateString, formatString },
 			'Error formatting date in Nunjucks filter'
 		);
-
 		return dateString;
 	}
 });
 
-// @ts-ignore
 const generateDataUri = (relativePath, mimeType) => {
 	try {
 		const absolutePath = path.resolve(__dirname, relativePath);
-		logger.info(`Attempting to read image for Data URI: ${absolutePath}`);
 		const imageBuffer = fs.readFileSync(absolutePath);
 		const base64Image = imageBuffer.toString('base64');
-		const dataUri = `data:${mimeType};base64,${base64Image}`;
-		logger.info(`Successfully generated Data URI for ${relativePath}. Length: ${dataUri.length}`);
-		return dataUri;
+		return `data:${mimeType};base64,${base64Image}`;
 	} catch (error) {
-		logger.error(
-			{ err: error, filePath: relativePath },
-			'Failed to read image file or generate Data URI'
-		);
+		logger.error({ err: error, filePath: relativePath }, 'Failed to read image file for Data URI');
 		return null;
 	}
 };
 
-// @ts-ignore
-const postGeneratePdfController = async (req, res, next) => {
-	const { currentAppeal, appealCaseNotes } = req.body;
-	const appealId = currentAppeal?.appealId || 'unknown';
+let gdsCssFilePath = '';
+try {
+	const gdsCssSourcePath = require.resolve('govuk-frontend/dist/govuk/govuk-frontend.min.css');
+	const gdsCssContent = fs.readFileSync(gdsCssSourcePath, 'utf8');
 
-	if (!currentAppeal || !appealCaseNotes) {
-		logger.warn({ appealId }, 'PDF Generation request missing required data');
-		logger.warn('PDF Generation request missing required data (currentAppeal or appealCaseNotes)');
+	const staticCssDir = path.join(__dirname, '../public/assets');
+	if (!fs.existsSync(staticCssDir)) {
+		fs.mkdirSync(staticCssDir, { recursive: true });
+	}
+	const cssFileName = 'govuk-frontend-pdf.css';
+	gdsCssFilePath = path.join(staticCssDir, cssFileName);
+	fs.writeFileSync(gdsCssFilePath, gdsCssContent, 'utf8');
+	logger.info(`Successfully loaded GDS CSS and wrote to static file: ${gdsCssFilePath}`);
+} catch (error) {
+	logger.error(
+		{ err: error },
+		'FATAL: Could not load or write GOV.UK Frontend CSS to static file.'
+	);
+	throw error;
+}
+
+const postGeneratePdfController = async (req, res, next) => {
+	const { templateName, templateData } = req.body;
+	const identifier =
+		templateData?.currentAppeal?.appealId ||
+		templateData?.lpaQuestionnaireData?.appealId ||
+		'unknown_identifier';
+
+	if (!templateName || !templateData) {
+		logger.warn({ identifier }, 'PDF Generation request missing templateName or templateData');
 		return res
 			.status(400)
-			.send({ message: 'Missing required data: currentAppeal and appealCaseNotes' });
+			.json({
+				error: 'BAD_REQUEST',
+				message: 'Missing required data: templateName and templateData'
+			});
 	}
-	logger.info({ appealId }, 'Received request to generate PDF');
-	logger.info(
-		{ appealId: currentAppeal.appealId },
-		'Received request to generate PDF, currentAppeal.appealId'
-	);
+	logger.info({ identifier, templateName }, 'Received request to generate PDF');
 
 	try {
 		const browser = getBrowserInstance();
-		logger.info({ appealId }, 'Retrieved shared browser instance.');
+		const logoDataUri = generateDataUri('../assets/logo.png', 'image/png'); // Common asset
 
-		const logoDataUri = generateDataUri('../assets/logo.png', 'image/png');
+		logger.info({ identifier, templateName }, `Rendering Nunjucks template: ${templateName}.njk`);
+		const context = {
+			...templateData,
+			logoDataUri: logoDataUri,
+			gdsCssUrl: `/assets/${path.basename(gdsCssFilePath)}`
+		};
+		const html = nunjucksEnv.render(`${templateName}.njk`, context);
 
-		logger.info({ appealId }, 'Rendering Nunjucks template: appeal-pdf.njk');
+		logger.info(`Rendered HTML length for ${templateName}: ${html?.length || 0}`);
 
-		const html = nunjucksEnv.render('appeal-pdf.njk', {
-			currentAppeal,
-			appealCaseNotes,
-			logoDataUri: logoDataUri
-		});
+		const pdfBuffer = await generatePdfLib(browser, html);
 		logger.info(
-			{ appealId },
-			'HTML rendered successfully, calling PDF generation library (generatePdfLib)'
+			{ identifier, templateName },
+			`PDF Buffer received. Size: ${pdfBuffer?.length || 0} bytes.`
 		);
 
-		logger.info(`Rendered HTML length: ${html?.length || 0}`);
-		if (html && html.length > 0) {
-			logger.info(`Rendered HTML start: ${html.substring(0, 500)}...`);
-			logger.info(`Rendered HTML end: ...${html.substring(html.length - 500)}`);
-			logger.info(
-				`HTML includes appealId (${currentAppeal.appealId})? ${html.includes(
-					currentAppeal.appealId.toString()
-				)}`
-			);
-			logger.info(
-				`HTML includes case note text? ${
-					appealCaseNotes.length > 0 ? html.includes(appealCaseNotes[0].note) : 'N/A (no notes)'
-				}`
-			);
-		} else {
-			logger.error('Rendered HTML is empty or null after Nunjucks processing!');
-			throw new Error('Nunjucks rendered empty HTML content.');
-		}
-
-		logger.info('HTML rendered successfully, calling PDF generation library (generatePdfLib)');
-		const pdfBuffer = await generatePdfLib(browser, html);
-		logger.info(`PDF Buffer received from library. Size: ${pdfBuffer?.length || 0} bytes.`);
-
 		res.setHeader('Content-Type', 'application/pdf');
-		res.setHeader('Content-Disposition', `attachment; filename="appeal-details-${appealId}.pdf"`);
 		res.send(pdfBuffer);
-		logger.info({ appealId }, 'PDF sent successfully to client.');
+		logger.info({ identifier, templateName }, 'PDF buffer sent successfully.');
 	} catch (err) {
-		logger.error({ err, appealId }, 'Error occurred during PDF generation or sending process.');
+		if (
+			err.message &&
+			(err.message.includes('template not found') || err.name === 'TemplateNotFoundError')
+		) {
+			logger.error({ err, identifier, templateName }, `Template not found: ${templateName}.njk`);
+			return res
+				.status(400)
+				.json({
+					error: 'TEMPLATE_NOT_FOUND',
+					message: `Invalid template specified: ${templateName}`
+				});
+		}
+		logger.error(
+			{ err, identifier, templateName },
+			'Error occurred during PDF generation process.'
+		);
 		next(err);
 	}
 };
