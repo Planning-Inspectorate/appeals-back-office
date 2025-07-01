@@ -86,10 +86,8 @@ describe('appeal withdrawal routes', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledWith({
 				notifyClient: expect.anything(),
 				personalisation: {
@@ -104,7 +102,6 @@ describe('appeal withdrawal routes', () => {
 				templateName: 'appeal-withdrawn-appellant'
 			});
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledWith({
 				notifyClient: expect.anything(),
 				personalisation: {

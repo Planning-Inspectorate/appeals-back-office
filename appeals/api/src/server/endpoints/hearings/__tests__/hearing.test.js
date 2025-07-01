@@ -206,16 +206,16 @@ describe('hearing routes', () => {
 					hearing_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom'
 				};
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation,
 					recipientEmail: fullPlanningAppeal.appellant.email,
 					templateName: 'hearing-updated'
 				});
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
 					personalisation,
@@ -308,16 +308,16 @@ describe('hearing routes', () => {
 					hearing_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom'
 				};
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation,
 					recipientEmail: fullPlanningAppeal.appellant.email,
 					templateName: 'hearing-updated'
 				});
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
 					personalisation,
@@ -360,7 +360,7 @@ describe('hearing routes', () => {
 						address: true
 					}
 				});
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(201);
@@ -1064,16 +1064,16 @@ describe('hearing routes', () => {
 					hearing_address:
 						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom'
 				};
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation,
 					recipientEmail: fullPlanningAppeal.appellant.email,
 					templateName: 'hearing-set-up'
 				});
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
 					personalisation,
@@ -1113,7 +1113,6 @@ describe('hearing routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(201);
@@ -1734,16 +1733,16 @@ describe('hearing routes', () => {
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					lpa_reference: '48269/APP/2021/1482'
 				};
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation,
 					recipientEmail: fullPlanningAppeal.appellant.email,
 					templateName: 'hearing-cancelled'
 				});
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
 					personalisation,

@@ -233,10 +233,8 @@ describe('decision routes', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				notifyClient: expect.any(Object),
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
@@ -250,7 +248,6 @@ describe('decision routes', () => {
 				recipientEmail: appeal.agent.email
 			});
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 				notifyClient: expect.any(Object),
 				personalisation: {
@@ -359,7 +356,6 @@ describe('decision routes', () => {
 				decisionDate
 			);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(5);
 
 			const expectedRecipients = [
@@ -371,7 +367,6 @@ describe('decision routes', () => {
 			];
 
 			expectedRecipients.forEach((recipient) => {
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledWith({
 					notifyClient: expect.any(Object),
 					templateName: 'correction-notice-decision',
@@ -425,10 +420,8 @@ describe('decision routes', () => {
 				decisionDate
 			);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledWith({
 				notifyClient: expect.any(Object),
 				templateName: 'correction-notice-decision',

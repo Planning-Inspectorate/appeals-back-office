@@ -166,7 +166,6 @@ describe('appeal timetables routes', () => {
 						}
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 						notifyClient: expect.any(Object),
 						personalisation: {
@@ -497,9 +496,8 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(201);
 				expect(response.body).toEqual({ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' });
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation: {
@@ -525,7 +523,7 @@ describe('appeal timetables routes', () => {
 					recipientEmail: householdAppeal.appellant.email,
 					templateName: 'appeal-start-date-change-appellant'
 				});
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
 					personalisation: {
@@ -567,9 +565,8 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(201);
 				expect(response.body).toEqual({ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' });
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation: {
@@ -595,7 +592,7 @@ describe('appeal timetables routes', () => {
 					recipientEmail: householdAppeal.appellant.email,
 					templateName: 'appeal-valid-start-case-appellant'
 				});
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
 					personalisation: {
@@ -682,9 +679,8 @@ describe('appeal timetables routes', () => {
 						});
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
-					// eslint-disable-next-line no-undef
+
 					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 						notifyClient: expect.anything(),
 						personalisation: {
@@ -712,7 +708,7 @@ describe('appeal timetables routes', () => {
 						recipientEmail: appeal.appellant.email,
 						templateName: 'appeal-valid-start-case-s78-appellant'
 					});
-					// eslint-disable-next-line no-undef
+
 					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 						notifyClient: expect.anything(),
 						personalisation: {
