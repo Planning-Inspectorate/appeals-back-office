@@ -4,7 +4,6 @@ import { getAppealCaseNotes } from './case-notes/case-notes.service.js';
 import { getSingularRepresentationByType } from './representations/representations.service.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { getAppellantCaseFromAppealId } from './appellant-case/appellant-case.service.js';
-import { mapDownloadAllPdfsButton } from '#lib/mappers/data/appeal/submappers/download-all-pdfs.mapper.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -64,9 +63,6 @@ export const viewAppealDetails = async (request, response) => {
 	);
 
 	mappedPageContent.pageComponents = mappedPageContent.pageComponents || [];
-
-	// Add the component returned by our mapper function
-	mappedPageContent.pageComponents.push(mapDownloadAllPdfsButton({ appealDetails: currentAppeal }));
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
 		pageContent: { ...mappedPageContent, currentAppeal },

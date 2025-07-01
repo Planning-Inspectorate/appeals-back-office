@@ -23,6 +23,9 @@ process.on('unhandledRejection', (reason, p) => {
 	throw new Error(`Build had unhandled rejection ${reason}`);
 });
 
+/**
+ * Virtual imports made available to all bundles. Used for site config and globals.
+ */
 const virtualImports = {
 	pi_config: {
 		isProduction,
@@ -32,21 +35,27 @@ const virtualImports = {
 };
 
 /**
- * Reusable function to build a single JavaScript bundle using Rollup.
- * @param {string} inputPath - The path to the entrypoint JS file.
- * @param {string} outputName - The desired name of the output file (without extension).
- * @returns {Promise<any>}
+ * Performs main site compilation via Rollup.
  */
-async function buildBundle(inputPath, outputName) {
+async function build() {
+	const input = 'src/client/app.js';
+
 	logger.log(
-		`Bundling (${isProduction ? kleur.magenta('production') : kleur.magenta('development')})`,
-		kleur.blue(inputPath)
+		`Bundling (${isProduction ? kleur.magenta('production') : kleur.magenta('development')} / ${
+			isRelease ? 'release' : 'dev'
+		})`,
+		kleur.blue(input)
 	);
 
 	const appBundle = await rollup({
-		input: inputPath,
+		input,
 		plugins: [
-			nodeResolve({ jsnext: true, main: true, browser: true, preferBuiltins: false }),
+			nodeResolve({
+				jsnext: true,
+				main: true,
+				browser: true,
+				preferBuiltins: false
+			}),
 			rollupPluginCJS({}),
 			rollupPluginReplace({
 				values: {
@@ -59,74 +68,64 @@ async function buildBundle(inputPath, outputName) {
 			}),
 			rollupPluginVirtual(buildVirtualJSON(virtualImports)),
 			rollupPluginBeep(),
-			getBabelOutputPlugin({ exclude: 'node_modules/**' }),
-			alias({ entries: {} }),
+			getBabelOutputPlugin({
+				// babelHelpers: 'bundled',
+				exclude: 'node_modules/**'
+			}),
+			alias({
+				entries: {}
+			}),
 			iife(),
 			...(bundleAnalyzer
-				? [visualizer({ filename: `${outputName}-stats.html`, open: true, gzipSize: true })]
+				? [visualizer({ filename: 'bundle-stats.html', open: true, gzipSize: true })]
 				: [])
 		],
+		// Controls if Rollup tries to ensure that entry chunks have the same exports as the underlying entry module.
+		// https://rollupjs.org/guide/en/#preserveentrysignatures
 		preserveEntrySignatures: false
 	});
-
 	const appGenerated = await appBundle.write({
-		entryFileNames: isRelease ? `${outputName}-[hash].js` : `${outputName}.js`,
+		// Do we need an import polyfill?
+		// dynamicImportFunction: 'window._import',
+		entryFileNames: isRelease ? '[name]-[hash].js' : '[name].js',
 		sourcemap: true,
 		dir: 'src/server/static/scripts',
+		// https://rollupjs.org/guide/en/#outputformat
 		format: 'es'
 	});
-
-	const mainOutput = appGenerated.output.find(({ name }) => name === outputName);
-	if (!mainOutput) {
-		throw new Error(`Could not find main output for bundle ${outputName}`);
-	}
-
 	const outputFiles = appGenerated.output.map(({ fileName }) => fileName);
 
-	// Only write the resourceJS.json file for the main 'app' bundle
-	if (outputName === 'app') {
-		logger.log(
-			`Writing resource JSON file ${kleur.blue('resourceJS.json')} to ${kleur.blue(
-				'.build/resourceJS.json'
-			)}`
-		);
-		if (!fs.existsSync(buildDir)) {
-			fs.mkdirSync(buildDir);
-		}
-		fs.writeFileSync(
-			`${buildDir}/resourceJS.json`,
-			JSON.stringify({ path: `/scripts/${mainOutput.fileName}` })
-		);
+	// Save the "app.js" entrypoint (which has a hashed name) for the all-browser loader code.
+	// @ts-expect-error – package type signature is incorrect
+	const entrypoints = appGenerated.output.filter(({ isEntry }) => isEntry);
+
+	if (entrypoints.length !== 1) {
+		throw new Error(`expected single Rollup entrypoint, was: ${entrypoints.length}`);
 	}
 
+	const appPath = appGenerated.output[0].fileName;
+
+	// Write the bundle entrypoint to a known file for NJ to read.
+	logger.log(
+		`Writing resource JSON file ${kleur.blue('resourceCSS.json')} to ${kleur.blue(
+			'.build/resourceJS.json'
+		)}`
+	);
+
+	if (!fs.existsSync(buildDir)) {
+		fs.mkdirSync(buildDir);
+	}
+
+	fs.writeFileSync(`${buildDir}/resourceJS.json`, JSON.stringify({ path: `/scripts/${appPath}` }));
+
+	// Compress the generated source here, as we need the final files and hashes for the Service Worker manifest.
 	if (isProduction) {
 		const ratio = await minifySource(outputFiles, 'src/server/static/scripts');
-		logger.log(`Minified ${outputName} code is ${(ratio * 100).toFixed(2)}% of source`);
+
+		logger.log(`Minified site code is ${(ratio * 100).toFixed(2)}% of source`);
 	}
 
-	logger.success(
-		`Bundled JS ${kleur.blue(mainOutput.fileName)}, total ${outputFiles.length} files`
-	);
+	logger.success(`Bundled JS ${kleur.blue(appPath)}, total ${outputFiles.length} files`);
 }
 
-async function main() {
-	const bundlesToBuild = [
-		{ inputPath: 'src/client/app.js', outputName: 'app' }
-		// Add our new download handler to the list
-		// {
-		// 	inputPath: 'src/client/components/pdf-error-inject/download-handler.js',
-		// 	outputName: 'download-handler'
-		// }
-	];
-
-	// Build all bundles in parallel
-	await Promise.all(
-		bundlesToBuild.map((bundle) => buildBundle(bundle.inputPath, bundle.outputName))
-	);
-}
-
-// Run the main build process
-main().catch((error) => {
-	logger.error('Main build process failed:', error);
-	process.exit(1);
-});
+await build();
