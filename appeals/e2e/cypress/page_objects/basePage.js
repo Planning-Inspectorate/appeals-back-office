@@ -56,6 +56,7 @@ export class Page {
 		summaryListActions: '.govuk-summary-list__actions',
 		summaryListKey: '.govuk-summary-list__key',
 		summaryListValue: '.govuk-summary-list__value',
+		summaryDetails: '.govuk-details__summary',
 		summaryErrorMessages: '.govuk-list.govuk-error-summary__list',
 		xlHeader: '.govuk-heading-xl',
 		projectManagement: 'span.font-weight--700:nth-child(2)', // TODO Use specific data-cy selector
@@ -122,7 +123,8 @@ export class Page {
 		xlHeader: () => cy.get(this.selectors.xlHeader),
 		twoThirdColumn: () => cy.get(this.selectors.twoThirdColumn),
 		link: () => cy.get(this.selectors.link),
-		usersInput: () => cy.get(this.selectors.users)
+		usersInput: () => cy.get(this.selectors.users),
+		summaryDetails: () => cy.get(this.selectors.summaryDetails)
 	};
 
 	/********************************************************
