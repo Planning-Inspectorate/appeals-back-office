@@ -236,7 +236,6 @@ describe('lpa questionnaires routes', () => {
 					databaseConnector.lPAQuestionnaireIncompleteReasonsSelected.update
 				).not.toHaveBeenCalled();
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				expect(response.status).toEqual(200);
@@ -321,9 +320,8 @@ describe('lpa questionnaires routes', () => {
 						.send(body)
 						.set('azureAdUserId', azureAdUserId);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
-					// eslint-disable-next-line no-undef
+
 					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 						notifyClient: expect.anything(),
 						personalisation: {
@@ -335,7 +333,6 @@ describe('lpa questionnaires routes', () => {
 						templateName: 'lpaq-complete-lpa'
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 						notifyClient: expect.anything(),
 						personalisation: test.personalisation,
@@ -982,9 +979,8 @@ describe('lpa questionnaires routes', () => {
 					.send(body)
 					.set('azureAdUserId', azureAdUserId);
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenCalledWith({
 					notifyClient: expect.anything(),
 					personalisation: {

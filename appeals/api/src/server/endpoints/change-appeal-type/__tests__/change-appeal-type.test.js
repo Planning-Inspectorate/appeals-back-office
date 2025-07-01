@@ -249,10 +249,8 @@ describe('appeal change type resubmit routes', () => {
 				}
 			});
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				notifyClient: expect.anything(),
 				personalisation: {

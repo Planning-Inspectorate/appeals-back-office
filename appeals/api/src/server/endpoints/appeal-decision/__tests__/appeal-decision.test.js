@@ -175,10 +175,8 @@ describe('appeal decision routes', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledWith({
 				notifyClient: expect.any(Object),
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
@@ -192,7 +190,6 @@ describe('appeal decision routes', () => {
 				recipientEmail: 'test@136s7.com'
 			});
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledWith({
 				notifyClient: expect.any(Object),
 				personalisation: {

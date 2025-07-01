@@ -328,10 +328,8 @@ describe('site visit routes', () => {
 						visitType: siteVisit.siteVisitType.name
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-schedule-unaccompanied-appellant',
@@ -384,10 +382,8 @@ describe('site visit routes', () => {
 						visitType: siteVisit.siteVisitType.name
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-schedule-accompanied-appellant',
@@ -403,7 +399,6 @@ describe('site visit routes', () => {
 						recipientEmail: appeal.agent.email
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-schedule-accompanied-lpa',
@@ -459,10 +454,8 @@ describe('site visit routes', () => {
 						...visitData
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-schedule-access-required-appellant',
@@ -922,7 +915,6 @@ describe('site visit routes', () => {
 					visitType: siteVisit.siteVisitType.name
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -1153,7 +1145,6 @@ describe('site visit routes', () => {
 					previousVisitType: 'Accompanied'
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(0);
 				expect(response.status).toEqual(200);
 			});
@@ -1210,7 +1201,6 @@ describe('site visit routes', () => {
 					previousVisitType: SITE_VISIT_TYPE_ACCOMPANIED
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -1268,10 +1258,8 @@ describe('site visit routes', () => {
 					siteVisitChangeType: 'visit-type'
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledWith({
 					notifyClient: expect.any(Object),
 					templateName: 'site-visit-change-unaccompanied-to-access-required-appellant',
@@ -1347,10 +1335,8 @@ describe('site visit routes', () => {
 						siteVisitChangeType: 'all'
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-to-unaccompanied-appellant',
@@ -1366,7 +1352,6 @@ describe('site visit routes', () => {
 						recipientEmail: appeal.agent.email
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-to-unaccompanied-lpa',
@@ -1444,10 +1429,8 @@ describe('site visit routes', () => {
 						siteVisitChangeType: 'date-time'
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-access-required-date-change-appellant',
@@ -1524,10 +1507,8 @@ describe('site visit routes', () => {
 						siteVisitChangeType: 'date-time'
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-date-change-appellant',
@@ -1543,7 +1524,6 @@ describe('site visit routes', () => {
 						recipientEmail: appeal.agent.email
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-date-change-lpa',
@@ -1620,10 +1600,8 @@ describe('site visit routes', () => {
 						siteVisitChangeType: 'visit-type'
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-to-unaccompanied-appellant',
@@ -1639,7 +1617,6 @@ describe('site visit routes', () => {
 						recipientEmail: appeal.agent.email
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-to-unaccompanied-lpa',
@@ -1716,10 +1693,8 @@ describe('site visit routes', () => {
 						siteVisitChangeType: 'visit-type'
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-unaccompanied-to-accompanied-appellant',
@@ -1735,7 +1710,6 @@ describe('site visit routes', () => {
 						recipientEmail: appeal.agent.email
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-unaccompanied-to-accompanied-lpa',
@@ -1813,10 +1787,8 @@ describe('site visit routes', () => {
 						siteVisitChangeType: 'visit-type'
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-access-required-to-accompanied-appellant',
@@ -1832,7 +1804,6 @@ describe('site visit routes', () => {
 						recipientEmail: appeal.agent.email
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-access-required-to-accompanied-lpa',
@@ -1909,10 +1880,8 @@ describe('site visit routes', () => {
 						siteVisitChangeType: 'visit-type'
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-to-access-required-appellant',
@@ -1928,7 +1897,6 @@ describe('site visit routes', () => {
 						recipientEmail: appeal.agent.email
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-to-access-required-lpa',
@@ -2005,10 +1973,8 @@ describe('site visit routes', () => {
 						siteVisitChangeType: 'visit-type'
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-access-required-to-unaccompanied-appellant',
@@ -2086,10 +2052,8 @@ describe('site visit routes', () => {
 						siteVisitChangeType: 'visit-type'
 					});
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-					// eslint-disable-next-line no-undef
 					expect(mockNotifySend).toHaveBeenCalledWith({
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-unaccompanied-to-access-required-appellant',
@@ -2141,7 +2105,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2163,7 +2126,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2185,7 +2147,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2207,7 +2168,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2231,7 +2191,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2257,7 +2216,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2283,7 +2241,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2309,7 +2266,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2364,7 +2320,6 @@ describe('site visit routes', () => {
 					siteVisitChangeType: 'unchanged'
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2391,7 +2346,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2418,7 +2372,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2443,7 +2396,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2468,7 +2420,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
@@ -2495,7 +2446,6 @@ describe('site visit routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 		});

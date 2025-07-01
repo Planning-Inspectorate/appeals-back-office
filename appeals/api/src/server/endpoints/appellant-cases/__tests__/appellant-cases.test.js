@@ -289,7 +289,6 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
@@ -373,7 +372,6 @@ describe('appellant cases routes', () => {
 					}
 				);
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
@@ -465,7 +463,6 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
@@ -536,7 +533,6 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
@@ -572,9 +568,8 @@ describe('appellant cases routes', () => {
 					.send(body)
 					.set('azureAdUserId', azureAdUserId);
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation: {
@@ -666,7 +661,6 @@ describe('appellant cases routes', () => {
 					]
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
@@ -744,7 +738,6 @@ describe('appellant cases routes', () => {
 					]
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
@@ -802,7 +795,6 @@ describe('appellant cases routes', () => {
 					})
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(response.status).toEqual(200);
@@ -840,9 +832,8 @@ describe('appellant cases routes', () => {
 					.send(body)
 					.set('azureAdUserId', azureAdUserId);
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation: {
@@ -918,9 +909,8 @@ describe('appellant cases routes', () => {
 					}
 				});
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation: {

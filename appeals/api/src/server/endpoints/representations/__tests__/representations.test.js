@@ -236,10 +236,8 @@ describe('/appeals/:id/reps', () => {
 
 			expect(response.status).toEqual(200);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledWith({
 				notifyClient: expect.anything(),
 				personalisation: expectedEmailPayload,
@@ -329,10 +327,8 @@ describe('/appeals/:id/reps', () => {
 
 			expect(response.status).toEqual(200);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledWith({
 				notifyClient: expect.anything(),
 				personalisation: expectedEmailPayload,
@@ -768,10 +764,8 @@ describe('/appeals/:id/reps/publish', () => {
 
 			expect(response.status).toEqual(200);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				notifyClient: expect.anything(),
 				personalisation: {
@@ -785,7 +779,6 @@ describe('/appeals/:id/reps/publish', () => {
 				templateName: 'received-statement-and-ip-comments-lpa'
 			});
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 				notifyClient: expect.anything(),
 				personalisation: {
@@ -845,10 +838,8 @@ describe('/appeals/:id/reps/publish', () => {
 
 			expect(response.status).toEqual(200);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				notifyClient: expect.anything(),
 				personalisation: {
@@ -861,7 +852,6 @@ describe('/appeals/:id/reps/publish', () => {
 				templateName: 'received-statement-and-ip-comments-lpa'
 			});
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 				notifyClient: expect.anything(),
 				personalisation: {
@@ -923,10 +913,8 @@ describe('/appeals/:id/reps/publish', () => {
 
 			expect(response.status).toEqual(200);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				notifyClient: expect.anything(),
 				personalisation: {
@@ -939,7 +927,6 @@ describe('/appeals/:id/reps/publish', () => {
 				templateName: 'received-statement-and-ip-comments-lpa'
 			});
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 				notifyClient: expect.anything(),
 				personalisation: {
@@ -1040,10 +1027,8 @@ describe('/appeals/:id/reps/publish', () => {
 
 			expect(response.status).toEqual(200);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				notifyClient: expect.anything(),
 				personalisation: {
@@ -1054,7 +1039,6 @@ describe('/appeals/:id/reps/publish', () => {
 				templateName: 'final-comments-done-lpa'
 			});
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 				notifyClient: expect.anything(),
 				personalisation: {

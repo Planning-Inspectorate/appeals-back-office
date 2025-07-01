@@ -115,10 +115,8 @@ describe('invalid appeal decision routes', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				notifyClient: expect.any(Object),
 				personalisation: {
@@ -132,7 +130,6 @@ describe('invalid appeal decision routes', () => {
 				templateName: 'decision-is-invalid-appellant'
 			});
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 				notifyClient: expect.any(Object),
 				personalisation: {
