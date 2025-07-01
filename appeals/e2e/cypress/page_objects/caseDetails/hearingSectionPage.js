@@ -2,6 +2,7 @@
 
 import { CaseDetailsPage } from '../caseDetailsPage';
 import { DateTimeSection } from '../dateTimeSection.js';
+import { happyPathHelper } from '../../support/happyPathHelper';
 
 const dateTimeSection = new DateTimeSection();
 export class HearingSectionPage extends CaseDetailsPage {
@@ -98,5 +99,14 @@ export class HearingSectionPage extends CaseDetailsPage {
 	verifyYouCannotCheckTheseAnswersPage() {
 		this.basePageElements.xlHeader().contains('You cannot check these answers');
 		this.basePageElements.link().contains('appeal details');
+	}
+
+	verifyHearingReadyToSetupTagPersonalList(caseRef) {
+		this.basePageElements.tableCell().contains(caseRef);
+		this.basePageElements.tableCell().last().contains('Hearing ready to set up');
+	}
+	verifyAwaitingHearingTagPersonalList(caseRef) {
+		this.basePageElements.tableCell().contains(caseRef);
+		this.basePageElements.tableCell().last().contains('Awaiting hearing');
 	}
 }

@@ -7,6 +7,7 @@ import { happyPathHelper } from '../../support/happyPathHelper';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { HearingSectionPage } from '../../page_objects/caseDetails/hearingSectionPage';
 import { formatDateAndTime } from '../../support/utils/formatDateAndTime';
+import { urlPaths } from '../../support/urlPaths';
 
 const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();
@@ -262,6 +263,30 @@ describe('Setup hearing and add hearing estimates', () => {
 		});
 	});
 
+	it('display hearing ready to setup in personal list before setup', () => {
+		happyPathHelper.reviewLPaStatement(caseRef);
+		cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
+		hearingSectionPage.verifyHearingReadyToSetupTagPersonalList(caseRef);
+	});
+
+	it('display awaiting hearing when hearing has been set up', () => {
+		caseDetailsPage.clickButtonByText('Set up hearing');
+		cy.getBusinessActualDate(currentDate, 2).then((hearingDate) => {
+			hearingDate.setHours(currentDate.getHours(), currentDate.getMinutes());
+			hearingSectionPage.setUpHearing(
+				hearingDate,
+				hearingDate.getHours(),
+				hearingDate.getMinutes()
+			);
+		});
+		caseDetailsPage.selectRadioButtonByValue('Yes');
+		caseDetailsPage.clickButtonByText('Continue');
+		hearingSectionPage.addHearingLocationAddress(originalAddress);
+		caseDetailsPage.clickButtonByText('Set up hearing');
+		cy.visit(urlPaths.personalListFilteredAwaitingEvent);
+		hearingSectionPage.verifyAwaitingHearingTagPersonalList(caseRef);
+	});
+
 	it('should set up hearing with address changes', () => {
 		const updatedAddress = {
 			...originalAddress,
@@ -417,7 +442,7 @@ describe('Setup hearing and add hearing estimates', () => {
 	});
 
 	it('should automatically prompt to set up hearing when statements and IP comments are shared', () => {
-		// deleteHearingIfExists(caseRef);
+		deleteHearingIfExists(caseRef);
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 		happyPathHelper.reviewS78Lpaq(caseRef);
 		caseDetailsPage.checkStatusOfCase('Statements', 0);
@@ -426,6 +451,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.simulateStatementsDeadlineElapsed(caseRef);
 		cy.reload();
 		caseDetailsPage.shareIpAndLpaComments();
+		happyPathHelper.reviewLPaStatement(caseRef);
 		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
 		caseDetailsPage.validateBannerMessage('Important', 'Set up hearing');
 		caseDetailsPage.checkStatusOfCase('Hearing ready to set up', 0);

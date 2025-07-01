@@ -46,8 +46,8 @@ export const happyPathHelper = {
 	reviewS78Lpaq(caseRef) {
 		let dueDate = new Date();
 
-		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		//cy.visit(urlPaths.appealsList);
+		//listCasesPage.clickAppealByRef(caseRef);
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue('Complete');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -69,6 +69,20 @@ export const happyPathHelper = {
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Start case');
+	},
+	reviewLPaStatement(caseRef) {
+		happyPathHelper.reviewS78Lpaq(caseRef);
+		caseDetailsPage.checkStatusOfCase('Statements', 0);
+		happyPathHelper.addThirdPartyComment(caseRef, true);
+		caseDetailsPage.clickBackLink();
+		happyPathHelper.addThirdPartyComment(caseRef, false);
+		caseDetailsPage.clickBackLink();
+		happyPathHelper.addLpaStatement(caseRef);
+		cy.simulateStatementsDeadlineElapsed(caseRef);
+		cy.reload();
+		caseDetailsPage.basePageElements.bannerLink().click();
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.checkStatusOfCase('Hearing ready to set up', 0);
 	},
 
 	changeStartDate(caseRef) {

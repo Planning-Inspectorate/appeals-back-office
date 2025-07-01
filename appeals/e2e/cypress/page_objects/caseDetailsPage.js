@@ -172,7 +172,8 @@ export class CaseDetailsPage extends Page {
 		cancelHearing: () => cy.get('#cancelHearing'),
 		hearingBannerLink: () => cy.get('.govuk-notification-banner__content .govuk-link'),
 		setUpTimetableHearingDate: () => cy.getByData(this._cyDataSelectors.setUpTimetableHearingDate),
-		timeTableRows: () => cy.get('.appeal-case-timetable dt')
+		timeTableRows: () => cy.get('.appeal-case-timetable dt'),
+		personalListFilterDropdown: () => cy.get('.govuk-select')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -473,6 +474,12 @@ export class CaseDetailsPage extends Page {
 
 	clickSetUpTimetableHearingDate() {
 		this.elements.setUpTimetableHearingDate().click();
+	}
+
+	filterPersonalList(text) {
+		this.basePageElements.summaryDetails().click();
+		this.elements.personalListFilterDropdown().select(text);
+		this.clickButtonByText('Apply');
 	}
 
 	/***************************************************************
