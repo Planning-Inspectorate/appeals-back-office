@@ -44,6 +44,9 @@ module "app_web" {
     API_HOST     = "https://${module.app_api.default_site_hostname}"
     APP_HOSTNAME = var.web_app_domain
 
+    # PDF generator host
+    PDF_SERVICE_URL               = module.app_pdf.default_site_hostname
+
     # auth
     APPEALS_CASE_OFFICER_GROUP_ID = var.apps_config.auth.group_ids.case_officer
     APPEALS_CS_TEAM_GROUP_ID      = var.apps_config.auth.group_ids.cs_team
