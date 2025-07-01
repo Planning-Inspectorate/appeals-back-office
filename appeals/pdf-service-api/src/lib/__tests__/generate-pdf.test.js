@@ -1,6 +1,7 @@
 // @ts-nocheck
+import { jest } from '@jest/globals';
+import generatePdfLib from '../generate-pdf';
 
-const generatePdfLib = require('./generate-pdf');
 describe('lib/generatePdf (Optimized)', () => {
 	const html = '<html><body><p>A test pdf</p></body></html>';
 	const mockPdfBuffer = Buffer.from(html);

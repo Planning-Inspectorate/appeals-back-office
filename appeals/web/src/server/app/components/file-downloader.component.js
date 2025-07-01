@@ -9,8 +9,10 @@ import {
 	getAllCaseFolders
 } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { APPEAL_CASE_STAGE, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import { generateAllPdfs } from '#app/components/download-all-generated-pdfs.component.js';
 
 /** @typedef {import('../auth/auth-session.service').SessionWithAuth} SessionWithAuth */
+/** @typedef {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} WebAppeal */
 /** @typedef {import('express').Response} Response */
 
 const validScanResult = APPEAL_VIRUS_CHECK_STATUS.SCANNED;
@@ -233,11 +235,14 @@ const createBlobDownloadStream = async (
 /**
  * Build a zipped file and Download
  *
- * @param {{apiClient: import('got').Got, params: {caseId: string, filename?: string}, session: SessionWithAuth}} request
+ * @param {{apiClient: import('got').Got, params: {caseId: string, filename?: string}, session: SessionWithAuth, currentAppeal: WebAppeal}} request
  * @param {Response} response
  * @returns {Promise<Response>}
  */
-export const getBulkDocumentDownload = async ({ apiClient, params, session }, response) => {
+export const getBulkDocumentDownload = async (
+	{ apiClient, params, session, currentAppeal },
+	response
+) => {
 	const { filename: requestedFilename, caseId } = params;
 
 	const folders = await getAllCaseFolders(apiClient, caseId);
@@ -295,6 +300,11 @@ export const getBulkDocumentDownload = async ({ apiClient, params, session }, re
 			}
 		});
 	}
+
+	const successfulPdfs = await generateAllPdfs(currentAppeal, apiClient);
+
+	// @ts-ignore
+	successfulPdfs.forEach((pdf) => archive.append(pdf.buffer, { name: pdf.name }));
 
 	if (missingFiles.length) {
 		archive.append(Buffer.from(JSON.stringify(missingFiles)), { name: 'missing-files.json' });

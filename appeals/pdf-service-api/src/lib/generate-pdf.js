@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-const logger = require('./logger');
+import logger from './logger.js';
 
 /**
  *
@@ -9,7 +9,7 @@ const logger = require('./logger');
  * @returns {Promise<Buffer>}
  * @throws {Error}
  */
-const generatePdfLib = async (browser, html) => {
+export default async (browser, html) => {
 	logger.info('generatePdfLib (optimized): Starting PDF generation using shared browser.');
 	let page = null;
 
@@ -83,5 +83,3 @@ const generatePdfLib = async (browser, html) => {
 		// Don't close the browser as it's shared to improve download speed
 	}
 };
-
-module.exports = generatePdfLib;
