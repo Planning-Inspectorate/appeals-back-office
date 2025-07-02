@@ -3589,6 +3589,24 @@ describe('appeal-details', () => {
 				expect(unprettifiedHTML).not.toContain('Hearing</span></h2>');
 			});
 
+			it('should render the Site accordion for HAS cases', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('Site</span></h2>');
+			});
+
 			for (const procedureType of [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.INQUIRY]) {
 				it(`should not render the Hearing accordion for s78 cases with a procedureType of ${procedureType}`, async () => {
 					nock('http://test/')
@@ -3608,6 +3626,28 @@ describe('appeal-details', () => {
 					expect(unprettifiedHTML).toContain('Case details</h1>');
 					expect(unprettifiedHTML).not.toContain('<div id="case-details-hearing-section">');
 					expect(unprettifiedHTML).not.toContain('Hearing</span></h2>');
+				});
+			}
+
+			for (const procedureType of [APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY]) {
+				it(`should not render the site accordion for s78 cases with a procedureType of ${procedureType}`, async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							procedureType
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Case details</h1>');
+					expect(unprettifiedHTML).not.toContain('<div id="case-details-site-section">');
+					expect(unprettifiedHTML).not.toContain('Site</span></h2>');
 				});
 			}
 

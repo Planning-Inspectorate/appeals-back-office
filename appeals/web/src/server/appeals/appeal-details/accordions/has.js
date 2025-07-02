@@ -79,7 +79,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 
 	const accordionComponents = [
 		caseOverview,
-		siteDetails,
+		...(siteDetails ?? []),
 		caseTimetable[0],
 		caseDocumentation,
 		caseContacts,
@@ -108,10 +108,14 @@ export function generateAccordion(appealDetails, mappedData, session) {
 					heading: { text: 'Overview' },
 					content: { html: '', pageComponents: [caseOverview] }
 				},
-				{
-					heading: { text: 'Site' },
-					content: { html: '', pageComponents: [siteDetails] }
-				},
+				...(siteDetails.length
+					? [
+							{
+								heading: { text: 'Site' },
+								content: { html: '', pageComponents: siteDetails }
+							}
+					  ]
+					: []),
 				{
 					heading: { text: 'Timetable' },
 					content: { html: '', pageComponents: caseTimetable }
