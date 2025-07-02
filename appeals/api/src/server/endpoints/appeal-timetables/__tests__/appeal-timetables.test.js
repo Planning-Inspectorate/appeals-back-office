@@ -120,7 +120,7 @@ describe('appeal timetables routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: 'Timetable updated\nLPA questionnaire due date changed to 10 June 2024',
+						details: 'Timetable updated:<br>• LPA questionnaire due date changed to 10 June 2024',
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
