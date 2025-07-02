@@ -18,7 +18,7 @@ export const notificationBannerDefinitions = {
 	siteVisitScheduled: {
 		pages: ['appealDetails'],
 		type: 'success',
-		text: 'Site visit scheduled'
+		text: 'Site visit set up'
 	},
 	siteVisitRescheduled: {
 		pages: ['appealDetails'],

@@ -353,7 +353,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-day">Visit date must be a real date</a>
+                            <li><a href="#visit-date-day">Site visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -435,8 +435,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date must be a
-                                    real date</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date must
+                                    be a real date</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -502,7 +502,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-day">The visit date must be in the future</a>
+                            <li><a href="#visit-date-day">The site visit date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -584,8 +584,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The visit date must be
-                                    in the future</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The site visit date must
+                                    be in the future</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -651,7 +651,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-day">Visit date day must be between 1 and 31</a>
+                            <li><a href="#visit-date-day">Site visit date day must be between 1 and 31</a>
                             </li>
                         </ul>
                     </div>
@@ -733,8 +733,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date day must be
-                                    between 1 and 31</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date day must
+                                    be between 1 and 31</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -800,7 +800,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-day">Visit date day must be between 1 and 31</a>
+                            <li><a href="#visit-date-day">Site visit date day must be between 1 and 31</a>
                             </li>
                         </ul>
                     </div>
@@ -882,8 +882,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date day must be
-                                    between 1 and 31</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date day must
+                                    be between 1 and 31</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -949,7 +949,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-month">Visit date month must be between 1 and 12</a>
+                            <li><a href="#visit-date-month">Site visit date month must be between 1 and 12</a>
                             </li>
                         </ul>
                     </div>
@@ -1031,8 +1031,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date month must
-                                    be between 1 and 12</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date month
+                                    must be between 1 and 12</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -1098,7 +1098,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-month">Visit date month must be between 1 and 12</a>
+                            <li><a href="#visit-date-month">Site visit date month must be between 1 and 12</a>
                             </li>
                         </ul>
                     </div>
@@ -1180,8 +1180,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date month must
-                                    be between 1 and 12</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date month
+                                    must be between 1 and 12</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -1247,7 +1247,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-year">Visit date year must be 4 digits</a>
+                            <li><a href="#visit-date-year">Site visit date year must be 4 digits</a>
                             </li>
                         </ul>
                     </div>
@@ -1329,8 +1329,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date year must
-                                    be 4 digits</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date year
+                                    must be 4 digits</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -1396,7 +1396,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-year">Visit date year must be 4 digits</a>
+                            <li><a href="#visit-date-year">Site visit date year must be 4 digits</a>
                             </li>
                         </ul>
                     </div>
@@ -1478,8 +1478,8 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date year must
-                                    be 4 digits</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date year
+                                    must be 4 digits</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -1545,7 +1545,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">End time hour cannot be less than 0 or greater than 23</a>
+                            <li><a href="#visit-end-time-hour">Enter a real end time</a>
                             </li>
                         </ul>
                     </div>
@@ -1664,15 +1664,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
                         </fieldset>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="24">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                                <p id="time-error" class="govuk-error-message">Enter a real end time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-end-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
+                                name="visit-end-time-hour" type="number" value="24">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
+                                name="visit-end-time-minute" type="number" value="30">
+                            </fieldset>
+                        </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
                     </form>
@@ -1692,7 +1696,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-minute">End time minute cannot be less than 0 or greater than 59</a>
+                            <li><a href="#visit-end-time-hour">Enter a real end time</a>
                             </li>
                         </ul>
                     </div>
@@ -1811,15 +1815,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
                         </fieldset>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="60">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                                <p id="time-error" class="govuk-error-message">Enter a real end time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-end-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
+                                name="visit-end-time-hour" type="number" value="11">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
+                                name="visit-end-time-minute" type="number" value="60">
+                            </fieldset>
+                        </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
                     </form>
@@ -1839,7 +1847,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Start time hour cannot be less than 0 or greater than 23</a>
+                            <li><a href="#visit-start-time-hour">Enter a real start time</a>
                             </li>
                         </ul>
                     </div>
@@ -1949,15 +1957,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <h2>Select time</h2>
                         <p class="govuk-hint">Optional for unaccompanied visits</p>
                         <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="24">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                                <p id="time-error" class="govuk-error-message">Enter a real start time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-start-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                                name="visit-start-time-hour" type="number" value="24">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                                name="visit-start-time-minute" type="number" value="00">
+                            </fieldset>
+                        </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
@@ -2096,15 +2108,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <h2>Select time</h2>
                         <p class="govuk-hint">Optional for unaccompanied visits</p>
                         <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                                <p id="time-error" class="govuk-error-message">Start time must be before end time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-start-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                                name="visit-start-time-hour" type="number" value="10">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                                name="visit-start-time-minute" type="number" value="00">
+                            </fieldset>
+                        </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
@@ -2133,7 +2149,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-minute">Start time minute cannot be less than 0 or greater than 59</a>
+                            <li><a href="#visit-start-time-hour">Enter a real start time</a>
                             </li>
                         </ul>
                     </div>
@@ -2243,15 +2259,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <h2>Select time</h2>
                         <p class="govuk-hint">Optional for unaccompanied visits</p>
                         <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="60">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                                <p id="time-error" class="govuk-error-message">Enter a real start time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-start-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                                name="visit-start-time-hour" type="number" value="10">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                                name="visit-start-time-minute" type="number" value="60">
+                            </fieldset>
+                        </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
@@ -2280,13 +2300,11 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-type">Please select a visit type</a>
+                            <li><a href="#visit-type">Select visit type</a>
                             </li>
-                            <li><a href="#visit-start-time-hour">Start time must include an hour</a>
+                            <li><a href="#visit-start-time-hour">Enter the start time</a>
                             </li>
-                            <li><a href="#visit-start-time-minute">Start time must include a minute</a>
-                            </li>
-                            <li><a href="#visit-date-day">Enter the visit date</a>
+                            <li><a href="#visit-date-day">Enter the site visit date</a>
                             </li>
                         </ul>
                     </div>
@@ -2342,10 +2360,11 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" aria-describedby="visit-type-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select visit type</legend>
-                                <div class="govuk-radios" data-module="govuk-radios">
+                                <p id="visit-type-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select visit type</p>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="visit-type" name="visit-type" type="radio"
                                         value="unaccompanied">
@@ -2361,51 +2380,56 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                         type="radio" value="accompanied">
                                         <label class="govuk-label govuk-radios__label" for="visit-type-3">Accompanied</label>
                                     </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the visit date</p>
-                                <div                                 class="govuk-date-input" id="visit-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="visit-date-day" name="visit-date-day" type="text" value="" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="visit-date-month" name="visit-date-month" type="text" value="" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="visit-date-year" name="visit-date-year" type="text" value="" inputmode="numeric">
-                                        </div>
-                                    </div>
                         </div>
                         </fieldset>
+                </div>
+                <div class="govuk-form-group govuk-form-group--error">
+                    <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
+                        <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                        <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the site visit
+                            date</p>
+                        <div class="govuk-date-input" id="visit-date">
+                            <div class="govuk-date-input__item">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
+                                    <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                    id="visit-date-day" name="visit-date-day" type="text" value="" inputmode="numeric">
+                                </div>
+                            </div>
+                            <div class="govuk-date-input__item">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
+                                    <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                    id="visit-date-month" name="visit-date-month" type="text" value="" inputmode="numeric">
+                                </div>
+                            </div>
+                            <div class="govuk-date-input__item">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
+                                    <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                    id="visit-date-year" name="visit-date-year" type="text" value="" inputmode="numeric">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
                 <h2>Select time</h2>
                 <p class="govuk-hint">Optional for unaccompanied visits</p>
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                    <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                    name="visit-start-time-hour" type="number" value="">:
-                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                    <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                    name="visit-start-time-minute" type="number" value="">
-                </fieldset>
+                <div class="govuk-form-group govuk-form-group--error">
+                    <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                        <p id="time-error" class="govuk-error-message">Enter the start time</p>
+                        <label class="govuk-label govuk-visually-hidden"
+                        for="visit-start-time-hour">Hour</label>
+                        <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                        name="visit-start-time-hour" type="number" value="">:
+                        <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                        <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                        name="visit-start-time-minute" type="number" value="">
+                    </fieldset>
+                </div>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                     <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
@@ -2434,7 +2458,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-day">Visit date must be a real date</a>
+                            <li><a href="#visit-date-day">Site visit date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -2516,8 +2540,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date must be a
-                                    real date</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date must
+                                    be a real date</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -2583,7 +2607,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-day">The visit date must be in the future</a>
+                            <li><a href="#visit-date-day">The site visit date must be in the future</a>
                             </li>
                         </ul>
                     </div>
@@ -2665,8 +2689,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The visit date must be
-                                    in the future</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The site visit date must
+                                    be in the future</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -2732,7 +2756,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-day">Visit date day must be between 1 and 31</a>
+                            <li><a href="#visit-date-day">Site visit date day must be between 1 and 31</a>
                             </li>
                         </ul>
                     </div>
@@ -2814,8 +2838,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date day must be
-                                    between 1 and 31</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date day must
+                                    be between 1 and 31</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -2881,7 +2905,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-day">Visit date day must be between 1 and 31</a>
+                            <li><a href="#visit-date-day">Site visit date day must be between 1 and 31</a>
                             </li>
                         </ul>
                     </div>
@@ -2963,8 +2987,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date day must be
-                                    between 1 and 31</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date day must
+                                    be between 1 and 31</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -3030,7 +3054,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-month">Visit date month must be between 1 and 12</a>
+                            <li><a href="#visit-date-month">Site visit date month must be between 1 and 12</a>
                             </li>
                         </ul>
                     </div>
@@ -3112,8 +3136,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date month must
-                                    be between 1 and 12</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date month
+                                    must be between 1 and 12</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -3179,7 +3203,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-month">Visit date month must be between 1 and 12</a>
+                            <li><a href="#visit-date-month">Site visit date month must be between 1 and 12</a>
                             </li>
                         </ul>
                     </div>
@@ -3261,8 +3285,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date month must
-                                    be between 1 and 12</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date month
+                                    must be between 1 and 12</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -3328,7 +3352,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-year">Visit date year must be 4 digits</a>
+                            <li><a href="#visit-date-year">Site visit date year must be 4 digits</a>
                             </li>
                         </ul>
                     </div>
@@ -3410,8 +3434,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date year must
-                                    be 4 digits</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date year
+                                    must be 4 digits</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -3477,7 +3501,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-date-year">Visit date year must be 4 digits</a>
+                            <li><a href="#visit-date-year">Site visit date year must be 4 digits</a>
                             </li>
                         </ul>
                     </div>
@@ -3559,8 +3583,8 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
                                 <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Visit date year must
-                                    be 4 digits</p>
+                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Site visit date year
+                                    must be 4 digits</p>
                                 <div class="govuk-date-input" id="visit-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -3626,7 +3650,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">End time hour cannot be less than 0 or greater than 23</a>
+                            <li><a href="#visit-end-time-hour">Enter a real end time</a>
                             </li>
                         </ul>
                     </div>
@@ -3745,15 +3769,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
                         </fieldset>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="24">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                                <p id="time-error" class="govuk-error-message">Enter a real end time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-end-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
+                                name="visit-end-time-hour" type="number" value="24">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
+                                name="visit-end-time-minute" type="number" value="30">
+                            </fieldset>
+                        </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
                     </form>
@@ -3773,7 +3801,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-minute">End time minute cannot be less than 0 or greater than 59</a>
+                            <li><a href="#visit-end-time-hour">Enter a real end time</a>
                             </li>
                         </ul>
                     </div>
@@ -3892,15 +3920,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
                             name="visit-start-time-minute" type="number" value="00">
                         </fieldset>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="60">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                                <p id="time-error" class="govuk-error-message">Enter a real end time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-end-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
+                                name="visit-end-time-hour" type="number" value="11">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
+                                name="visit-end-time-minute" type="number" value="60">
+                            </fieldset>
+                        </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
                     </form>
@@ -3920,7 +3952,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Start time hour cannot be less than 0 or greater than 23</a>
+                            <li><a href="#visit-start-time-hour">Enter a real start time</a>
                             </li>
                         </ul>
                     </div>
@@ -4030,15 +4062,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <h2>Select time</h2>
                         <p class="govuk-hint">Optional for unaccompanied visits</p>
                         <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="24">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                                <p id="time-error" class="govuk-error-message">Enter a real start time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-start-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                                name="visit-start-time-hour" type="number" value="24">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                                name="visit-start-time-minute" type="number" value="00">
+                            </fieldset>
+                        </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
@@ -4177,15 +4213,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <h2>Select time</h2>
                         <p class="govuk-hint">Optional for unaccompanied visits</p>
                         <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                                <p id="time-error" class="govuk-error-message">Start time must be before end time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-start-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                                name="visit-start-time-hour" type="number" value="10">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                                name="visit-start-time-minute" type="number" value="00">
+                            </fieldset>
+                        </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
@@ -4214,7 +4254,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-minute">Start time minute cannot be less than 0 or greater than 59</a>
+                            <li><a href="#visit-start-time-hour">Enter a real start time</a>
                             </li>
                         </ul>
                     </div>
@@ -4324,15 +4364,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <h2>Select time</h2>
                         <p class="govuk-hint">Optional for unaccompanied visits</p>
                         <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="60">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                                <p id="time-error" class="govuk-error-message">Enter a real start time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-start-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                                name="visit-start-time-hour" type="number" value="10">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                                name="visit-start-time-minute" type="number" value="60">
+                            </fieldset>
+                        </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
@@ -4361,9 +4405,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">End time must include an hour</a>
-                            </li>
-                            <li><a href="#visit-end-time-minute">End time must include a minute</a>
+                            <li><a href="#visit-end-time-hour">Enter the end time</a>
                             </li>
                             <li><a href="#visit-start-time-hour">Start time must be before end time</a>
                             </li>
@@ -4475,24 +4517,32 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <h2>Select time</h2>
                         <p class="govuk-hint">Optional for unaccompanied visits</p>
                         <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="11">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
-                        </fieldset>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                                <p id="time-error" class="govuk-error-message">Start time must be before end time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-start-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                                name="visit-start-time-hour" type="number" value="11">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                                name="visit-start-time-minute" type="number" value="00">
+                            </fieldset>
+                        </div>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
+                                <p id="time-error" class="govuk-error-message">Enter the end time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-end-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
+                                name="visit-end-time-hour" type="number" value="">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
+                                name="visit-end-time-minute" type="number" value="">
+                            </fieldset>
+                        </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
                     </form>
@@ -4512,9 +4562,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Start time must include an hour</a>
-                            </li>
-                            <li><a href="#visit-start-time-minute">Start time must include a minute</a>
+                            <li><a href="#visit-start-time-hour">Enter the start time</a>
                             </li>
                         </ul>
                     </div>
@@ -4624,15 +4672,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <h2>Select time</h2>
                         <p class="govuk-hint">Optional for unaccompanied visits</p>
                         <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                                <p id="time-error" class="govuk-error-message">Enter the start time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-start-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                                name="visit-start-time-hour" type="number" value="">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                                name="visit-start-time-minute" type="number" value="">
+                            </fieldset>
+                        </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
@@ -4661,9 +4713,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Start time must include an hour</a>
-                            </li>
-                            <li><a href="#visit-start-time-minute">Start time must include a minute</a>
+                            <li><a href="#visit-start-time-hour">Enter the start time</a>
                             </li>
                         </ul>
                     </div>
@@ -4773,15 +4823,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <h2>Select time</h2>
                         <p class="govuk-hint">Optional for unaccompanied visits</p>
                         <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="">:
-                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="">
-                        </fieldset>
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                                <p id="time-error" class="govuk-error-message">Enter the start time</p>
+                                <label class="govuk-label govuk-visually-hidden"
+                                for="visit-start-time-hour">Hour</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                                name="visit-start-time-hour" type="number" value="">:
+                                <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                                name="visit-start-time-minute" type="number" value="">
+                            </fieldset>
+                        </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
@@ -4810,13 +4864,11 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-type">Please select a visit type</a>
+                            <li><a href="#visit-type">Select visit type</a>
                             </li>
-                            <li><a href="#visit-start-time-hour">Start time must include an hour</a>
+                            <li><a href="#visit-start-time-hour">Enter the start time</a>
                             </li>
-                            <li><a href="#visit-start-time-minute">Start time must include a minute</a>
-                            </li>
-                            <li><a href="#visit-date-day">Enter the visit date</a>
+                            <li><a href="#visit-date-day">Enter the site visit date</a>
                             </li>
                         </ul>
                     </div>
@@ -4872,10 +4924,11 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" aria-describedby="visit-type-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Select visit type</legend>
-                                <div class="govuk-radios" data-module="govuk-radios">
+                                <p id="visit-type-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select visit type</p>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="visit-type" name="visit-type" type="radio"
                                         value="unaccompanied">
@@ -4891,51 +4944,56 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                         type="radio" value="accompanied">
                                         <label class="govuk-label govuk-radios__label" for="visit-type-3">Accompanied</label>
                                     </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
-                                <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the visit date</p>
-                                <div                                 class="govuk-date-input" id="visit-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="visit-date-day" name="visit-date-day" type="text" value="" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="visit-date-month" name="visit-date-month" type="text" value="" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
-                                            id="visit-date-year" name="visit-date-year" type="text" value="" inputmode="numeric">
-                                        </div>
-                                    </div>
                         </div>
                         </fieldset>
+                </div>
+                <div class="govuk-form-group govuk-form-group--error">
+                    <fieldset class="govuk-fieldset" role="group" aria-describedby="visit-date-hint visit-date-error">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Select date</legend>
+                        <div id="visit-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                        <p id="visit-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the site visit
+                            date</p>
+                        <div class="govuk-date-input" id="visit-date">
+                            <div class="govuk-date-input__item">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-date-input__label" for="visit-date-day">Day</label>
+                                    <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                    id="visit-date-day" name="visit-date-day" type="text" value="" inputmode="numeric">
+                                </div>
+                            </div>
+                            <div class="govuk-date-input__item">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-date-input__label" for="visit-date-month">Month</label>
+                                    <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                    id="visit-date-month" name="visit-date-month" type="text" value="" inputmode="numeric">
+                                </div>
+                            </div>
+                            <div class="govuk-date-input__item">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label govuk-date-input__label" for="visit-date-year">Year</label>
+                                    <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                    id="visit-date-year" name="visit-date-year" type="text" value="" inputmode="numeric">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
                 <h2>Select time</h2>
                 <p class="govuk-hint">Optional for unaccompanied visits</p>
                 <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
-                    <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                    name="visit-start-time-hour" type="number" value="">:
-                    <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                    <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                    name="visit-start-time-minute" type="number" value="">
-                </fieldset>
+                <div class="govuk-form-group govuk-form-group--error">
+                    <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                        <p id="time-error" class="govuk-error-message">Enter the start time</p>
+                        <label class="govuk-label govuk-visually-hidden"
+                        for="visit-start-time-hour">Hour</label>
+                        <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                        name="visit-start-time-hour" type="number" value="">:
+                        <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                        <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                        name="visit-start-time-minute" type="number" value="">
+                    </fieldset>
+                </div>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                     <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>

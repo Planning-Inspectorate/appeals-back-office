@@ -229,9 +229,7 @@ describe('change hearing', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain(
-				'Hearing time hour cannot be less than 0 or greater than 23'
-			);
+			expect(errorSummaryHtml).toContain('Enter a real hearing time');
 		});
 
 		it('should return 400 on missing time with appropriate error message', async () => {
@@ -249,7 +247,7 @@ describe('change hearing', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Hearing time must include an hour');
+			expect(errorSummaryHtml).toContain('Enter the hearing time');
 		});
 	});
 

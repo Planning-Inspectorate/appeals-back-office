@@ -13,6 +13,7 @@
  * @param {string} [params.hint]
  * @param {boolean} [params.showLabels=true]
  * @param {string} [params.fieldsetClasses]
+ * @param {string} [params.errorMessage]
  * @returns {PageComponent}
  */
 export function timeInput({
@@ -23,7 +24,8 @@ export function timeInput({
 	legendClasses = 'govuk-fieldset__legend--m',
 	hint,
 	showLabels = true,
-	fieldsetClasses
+	fieldsetClasses,
+	errorMessage
 }) {
 	/** @type {PageComponent} */
 	return {
@@ -45,7 +47,8 @@ export function timeInput({
 			},
 			minute: {
 				value: value?.minute
-			}
+			},
+			errorMessage: errorMessage
 		}
 	};
 }
