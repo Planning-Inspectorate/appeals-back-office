@@ -44,15 +44,28 @@ export function safeRedirect(request, response, url) {
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
- * @param {string} url
+ * @param {string} urlString
  * @returns {string}
  */
-export function addBackLinkQueryToUrl(request, url) {
-	const urlParts = url.split('#');
+export function addBackLinkQueryToUrl(request, urlString) {
+	return addQueryParamsToUrl(urlString, { backUrl: request.originalUrl });
+}
 
-	return `${urlParts[0]}?backUrl=${encodeURIComponent(request.originalUrl)}${
-		urlParts.length > 1 ? `#${urlParts[1]}` : ''
-	}`;
+/**
+ * @param {string} urlString
+ * @param {Record<string, string>} queryParams
+ * @returns {string}
+ */
+export function addQueryParamsToUrl(urlString, queryParams) {
+	const [urlWithQuery, hash] = urlString.split('#');
+	const [url, queryString] = urlWithQuery.split('?');
+
+	const newQueryString = new URLSearchParams(queryString);
+	Object.entries(queryParams).forEach(([key, value]) => {
+		newQueryString.set(key, value);
+	});
+
+	return `${url}?${newQueryString.toString()}${hash ? `#${hash}` : ''}`;
 }
 
 /**

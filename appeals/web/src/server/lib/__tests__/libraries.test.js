@@ -1611,6 +1611,30 @@ describe('url-utilities', () => {
 				)
 			).toBe('/supplied/url?backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue#with-hash');
 		});
+
+		it('should append a backUrl query and keep any existing query string intact', () => {
+			expect(
+				addBackLinkQueryToUrl(
+					// @ts-ignore
+					{ originalUrl: '/test/original/url?withOwnQuery=true' },
+					'/supplied/url?originalQuery1=true&originalQuery2=false'
+				)
+			).toBe(
+				'/supplied/url?originalQuery1=true&originalQuery2=false&backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue'
+			);
+		});
+
+		it('should append a backUrl query and keep any existing query string intact and add the hash', () => {
+			expect(
+				addBackLinkQueryToUrl(
+					// @ts-ignore
+					{ originalUrl: '/test/original/url?withOwnQuery=true' },
+					'/supplied/url?originalQuery1=true&originalQuery2=false#with-hash'
+				)
+			).toBe(
+				'/supplied/url?originalQuery1=true&originalQuery2=false&backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue#with-hash'
+			);
+		});
 	});
 
 	describe('getBackLinkUrlFromQuery', () => {
