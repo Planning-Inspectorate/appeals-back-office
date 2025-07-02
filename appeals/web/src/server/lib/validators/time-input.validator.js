@@ -22,32 +22,27 @@ export const createTimeInputValidator = (
 	// eslint-disable-next-line no-unused-vars
 	continueValidationCondition = (value) => true
 ) => {
-	const missingPrefix = messageFieldNamePrefix ? capitalize(messageFieldNamePrefix) : 'The time';
-	const invalidPrefix = messageFieldNamePrefix ? capitalize(messageFieldNamePrefix) : 'The';
-
 	return createValidator(
 		body(`${fieldNamePrefix}-hour`)
 			.if(continueValidationCondition)
-			.trim()
-			.notEmpty()
-			.withMessage(capitalize(`${missingPrefix} must include an hour`))
-			.bail()
-			.isInt()
-			.withMessage(capitalize(`${invalidPrefix} hour must be a number`))
-			.bail()
-			.isInt({ min: 0, max: 23 })
-			.withMessage(capitalize(`${invalidPrefix} hour cannot be less than 0 or greater than 23`)),
-		body(`${fieldNamePrefix}-minute`)
-			.if(continueValidationCondition)
-			.trim()
-			.notEmpty()
-			.withMessage(capitalize(`${missingPrefix} must include a minute`))
-			.bail()
-			.isInt()
-			.withMessage(capitalize(`${invalidPrefix} minute must be a number`))
-			.bail()
-			.isInt({ min: 0, max: 59 })
-			.withMessage(capitalize(`${invalidPrefix} minute cannot be less than 0 or greater than 59`))
+			.custom((hour, { req }) => {
+				const minute = req.body[`${fieldNamePrefix}-minute`]?.trim();
+				hour = hour?.trim();
+
+				if (!hour || !minute) {
+					throw new Error(`Enter the ${messageFieldNamePrefix}`);
+				}
+				if (!/^\d+$/.test(hour) || !/^\d+$/.test(minute)) {
+					const error = new Error(`Enter a ${messageFieldNamePrefix} using numbers 0 to 9`);
+					throw error;
+				}
+				const [hourNum, minuteNum] = [parseInt(hour, 10), parseInt(minute, 10)];
+				if (minuteNum < 0 || minuteNum > 59 || hourNum < 0 || hourNum > 23) {
+					const error = new Error(`Enter a real ${messageFieldNamePrefix}`);
+					throw error;
+				}
+				return true;
+			})
 	);
 };
 

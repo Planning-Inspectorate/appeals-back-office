@@ -189,9 +189,7 @@ describe('set up inquiry', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain(
-				'Inquiry time hour cannot be less than 0 or greater than 23'
-			);
+			expect(errorSummaryHtml).toContain('Enter a real inquiry time');
 		});
 
 		it('should return 400 on missing time with appropriate error message', async () => {
@@ -209,7 +207,7 @@ describe('set up inquiry', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Inquiry time must include an hour');
+			expect(errorSummaryHtml).toContain('Enter the inquiry time');
 		});
 	});
 

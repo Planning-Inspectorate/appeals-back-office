@@ -170,7 +170,8 @@ export async function scheduleOrManageSiteVisitPage(
 					value: 'accompanied',
 					text: 'Accompanied'
 				}
-			]
+			],
+			errorMessage: errors && errors['visit-type']?.msg && { text: errors['visit-type']?.msg }
 		}
 	};
 
@@ -203,7 +204,8 @@ export async function scheduleOrManageSiteVisitPage(
 		legendText: 'Start time',
 		legendClasses: 'govuk-fieldset__legend--s',
 		fieldsetClasses: 'govuk-!-margin-bottom-4',
-		showLabels: false
+		showLabels: false,
+		errorMessage: errors?.['visit-start-time-hour']?.msg
 	});
 
 	const selectEndTimeComponent = timeInput({
@@ -212,7 +214,8 @@ export async function scheduleOrManageSiteVisitPage(
 		legendText: 'End time',
 		legendClasses: 'govuk-fieldset__legend--s',
 		fieldsetClasses: 'govuk-!-margin-bottom-6',
-		showLabels: false
+		showLabels: false,
+		errorMessage: errors?.['visit-end-time-hour']?.msg
 	});
 
 	/** @type {PageComponent} */
