@@ -1,11 +1,13 @@
-const { loadEnvironment } = require('@pins/platform');
-const { join } = require('node:path');
+import { loadEnvironment } from '@pins/platform';
+import path from 'node:path';
+import url from 'node:url';
 
-const apiDir = join(__dirname, '..'); // package root, where .env files live
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+const apiDir = path.join(__dirname, '..'); // package root, where .env files live
 
 const environment = loadEnvironment(process.env.NODE_ENV, apiDir);
 
-const config = {
+export default {
 	gitSha: process.env.GIT_SHA ?? 'NO GIT SHA FOUND',
 	auth: {
 		authServerUrl: environment.AUTH_BASE_URL
@@ -20,5 +22,3 @@ const config = {
 			(Number(environment.SERVER_TERMINATION_GRACE_PERIOD_SECONDS) || 0) * 1000
 	}
 };
-
-module.exports = config;

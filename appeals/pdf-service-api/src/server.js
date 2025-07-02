@@ -1,7 +1,7 @@
-const http = require('http');
-const config = require('./config');
-const logger = require('./lib/logger');
-const app = require('./app');
+import http from 'http';
+import config from './config.js';
+import logger from './lib/logger.js';
+import app from './app.js';
 
 const {
 	server: { port }
@@ -10,7 +10,7 @@ const {
 /**
  * @returns {http.Server}
  */
-module.exports = () => {
+export default () => {
 	const server = http.createServer(app);
 
 	server.listen(port, () => {

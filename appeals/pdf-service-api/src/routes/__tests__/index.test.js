@@ -1,25 +1,26 @@
 /* eslint-disable no-unused-vars */
 // @ts-nocheck
-const { mockPost, mockGet, mockUse } = require('../../test/utils/mocks');
-jest.mock('../controllers/pdf.js', () => ({
-	postGeneratePdfController: jest.fn()
-}));
+import { jest } from '@jest/globals';
+import { mockPost, mockGet } from '../../../test/utils/mocks';
+
+// jest.mock('../../controllers/pdf.js', () => ({
+// 	postGeneratePdfController: jest.fn()
+// }));
 
 // Mock other dependencies
-jest.mock('../config', () => ({
+jest.mock('../../config.js', () => ({
 	/* mock config object */
 }));
-jest.mock('../lib/logger', () => ({ info: jest.fn(), error: jest.fn() }));
+jest.mock('../../lib/logger.js', () => ({ info: jest.fn(), error: jest.fn() }));
 
 describe('routes/index', () => {
 	let routerIndex;
-	const { postGeneratePdfController } = require('../controllers/pdf.js');
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		jest.resetModules();
 		jest.clearAllMocks();
 
-		routerIndex = require('./index');
+		routerIndex = await import('../index.js');
 	});
 
 	it('should define POST /generate-pdf route', () => {

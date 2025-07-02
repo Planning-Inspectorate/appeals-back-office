@@ -1,6 +1,6 @@
-const logger = require('./lib/logger');
-const server = require('./server');
-const { launchBrowser, closeBrowser } = require('./browser-instance');
+import logger from './lib/logger.js';
+import server from './server.js';
+import { launchBrowser, closeBrowser } from './browser-instance.js';
 
 const main = async () => {
 	try {
