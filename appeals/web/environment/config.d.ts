@@ -76,7 +76,7 @@ export interface EnvironmentConfig extends BaseEnvironmentConfig {
 		[key: string]: boolean;
 	};
 	useSystemTestBcForChangeLpa: boolean;
-	pdfServiceUrl: string;
+	pdfServiceHost: string;
 }
 
 export function loadConfig(): EnvironmentConfig;
