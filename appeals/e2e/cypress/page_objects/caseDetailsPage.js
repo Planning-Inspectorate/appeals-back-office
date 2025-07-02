@@ -98,6 +98,7 @@ export class CaseDetailsPage extends Page {
 		manageRelatedAppeals: () => cy.getByData(this._cyDataSelectors.manageRelatedAppeals),
 		uploadFile: () => cy.getByData(this._cyDataSelectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
+		appealType: () => cy.get('.appeal-appeal-type .govuk-summary-list__value'),
 		addAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.addAgreementToChangeDescriptionEvidence),
 		addNotifiyingParties: () => cy.getByData(this._cyDataSelectors.addNotifyingParties),
@@ -748,4 +749,7 @@ export class CaseDetailsPage extends Page {
 			.each(($el) => actualSections.push($el.text().trim()))
 			.then(() => expect(actualSections).to.deep.equal(expectedSections));
 	};
+	verifyAppealType(expectedAppealType) {
+		this.elements.appealType().should('contain', expectedAppealType);
+	}
 }
