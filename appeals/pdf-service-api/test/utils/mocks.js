@@ -1,4 +1,5 @@
 /* eslint-disable no-undef */
+import { jest } from '@jest/globals';
 
 const mockGet = jest.fn();
 const mockPost = jest.fn();
@@ -43,7 +44,7 @@ jest.doMock('express', () => ({
 	})
 }));
 
-module.exports = {
+export {
 	mockGet,
 	mockPost,
 	mockDelete,

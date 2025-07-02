@@ -1,7 +1,7 @@
-const express = require('express');
-const config = require('../config');
-const logger = require('../lib/logger');
-const { postGeneratePdfController } = require('../controllers/pdf.js');
+import express from 'express';
+import config from '../config.js';
+import logger from '../lib/logger.js';
+import { postGeneratePdfController } from '../controllers/pdf.js';
 
 const router = express.Router();
 
@@ -34,4 +34,4 @@ router.get('/', (req, res) => {
 });
 
 logger.info('PDF service routes setup complete.');
-module.exports = router;
+export default router;
