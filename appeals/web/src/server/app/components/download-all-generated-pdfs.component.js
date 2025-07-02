@@ -3,7 +3,7 @@ import { getLpaQuestionnaireFromId } from '#appeals/appeal-details/lpa-questionn
 import { getSingularRepresentationByType } from '#appeals/appeal-details/representations/representations.service.js';
 import { getAppellantCaseFromAppealId } from '#appeals/appeal-details/appellant-case/appellant-case.service.js';
 
-const pdfServiceGenerateUrl = config.pdfServiceUrl + '/generate-pdf';
+const pdfServiceGenerateUrl = config.pdfServiceHost + '/generate-pdf';
 const FETCH_TIMEOUT_MS = 30000;
 
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} WebAppeal */
