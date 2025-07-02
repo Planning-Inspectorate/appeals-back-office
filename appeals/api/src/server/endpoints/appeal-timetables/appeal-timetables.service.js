@@ -226,11 +226,12 @@ const updateAppealTimetable = async (appeal, body, notifyClient, azureAdUserId) 
 		// @ts-ignore
 		processedBody
 	);
-	let details = 'Timetable updated';
+	let details = 'Timetable updated:';
 	if (result) {
 		Object.keys(processedBody).map(async (key) => {
 			details +=
-				'\n' +
+				'<br>' +
+				'• ' +
 				stringTokenReplacement(AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED, [
 					// @ts-ignore
 					dueDateToAppealTimetableTextMapper[key],
@@ -254,7 +255,7 @@ const updateAppealTimetable = async (appeal, body, notifyClient, azureAdUserId) 
 const dueDateToAppealTimetableTextMapper = {
 	lpaQuestionnaireDueDate: 'LPA questionnaire',
 	ipCommentsDueDate: 'Interested party comments',
-	lpaStatementDueDate: 'LPA statement',
+	lpaStatementDueDate: 'Statements',
 	finalCommentsDueDate: 'Final comments'
 };
 
