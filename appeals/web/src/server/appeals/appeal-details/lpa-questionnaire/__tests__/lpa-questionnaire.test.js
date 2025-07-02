@@ -594,7 +594,7 @@ describe('LPA Questionnaire review', () => {
 				},
 				{
 					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.TREE_PRESERVATION_PLAN}`,
-					label: 'Tree Preservation Order'
+					label: 'Tree preservation order'
 				},
 				{
 					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.DEFINITIVE_MAP_STATEMENT}`,
@@ -2033,7 +2033,9 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Upload documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Upload agreement to change description evidence documents</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
@@ -2356,7 +2358,9 @@ describe('LPA Questionnaire review', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Changed description documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence documents</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -2534,7 +2538,9 @@ describe('LPA Questionnaire review', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Updated changed description document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Updated agreement to change description evidence document</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain('test-document.txt</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</legend>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
@@ -3428,7 +3434,9 @@ describe('LPA Questionnaire review', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
-			expect(unprettifiedElement.innerHTML).toContain('Changed description documents</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence documents</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain('Name</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Date received</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');

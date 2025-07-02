@@ -3949,7 +3949,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
-            <h1 class="govuk-heading-l">Changed description documents</h1>
+            <h1 class="govuk-heading-l">Agreement to change description evidence documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

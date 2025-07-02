@@ -7,16 +7,16 @@ exports[`appeal-documents upload should render upload form if appeal ID and fold
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Upload documents</h1>
+            <h1 class="govuk-heading-l">Upload your other new supporting documents</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1"
             data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
-            data-folder-id="1" data-document-type="newSupportingDocuments" data-document-stage="appellantCase"
+            data-folder-id="1" data-document-type="otherNewDocuments" data-document-stage="appellantCase"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
+            data-document-title="other new supporting documents" data-allowed-types="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
             data-formatted-allowed-types="PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="">
@@ -24,7 +24,7 @@ exports[`appeal-documents upload should render upload form if appeal ID and fold
                         <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
-                            <h2 class="pins-file-upload__container-title">Upload documents</h2>
+                            <h2 class="pins-file-upload__container-title">Upload your other new supporting documents</h2>
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1"
@@ -67,7 +67,7 @@ exports[`appeal-documents upload should render upload form if appeal ID, folder 
         <div class="govuk-grid-column-full">
             <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/appellant-case/add-document-details/1/0e4ce48f-2d67-4659-9082-e80a15182386"
             data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
-            data-folder-id="1" data-document-type="newSupportingDocuments" data-document-stage="appellantCase"
+            data-folder-id="1" data-document-type="otherNewDocuments" data-document-stage="appellantCase"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
             data-document-id="0e4ce48f-2d67-4659-9082-e80a15182386" data-allowed-types="application/pdf"
             data-formatted-allowed-types="PDF">
