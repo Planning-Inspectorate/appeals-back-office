@@ -327,3 +327,13 @@ export const setTimeInTimeZone = (date, hours, minutes) => {
 	const paddedMinutes = minutes.toString().padStart(2, '0');
 	return zonedTimeToUtc(`${ymd} ${paddedHours}:${paddedMinutes}`, DEFAULT_TIMEZONE);
 };
+
+export const getExampleDateHint = (daysFromToday = 45, inFuture = true) => {
+	const date = new Date(Date.now());
+	date.setDate(date.getDate() + (inFuture ? daysFromToday : -daysFromToday));
+	return [
+		date.getDate(),
+		date.getMonth() + 1, // Months are zero-based
+		date.getFullYear()
+	].join(' ');
+};

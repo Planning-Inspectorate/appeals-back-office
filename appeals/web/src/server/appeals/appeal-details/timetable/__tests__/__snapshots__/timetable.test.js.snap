@@ -14,7 +14,7 @@ exports[`Timetable GET /edit should render "Timetable due dates" page for househ
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -63,7 +63,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -114,7 +114,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -146,7 +146,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -179,7 +179,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -211,7 +211,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -261,7 +261,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -294,7 +294,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -326,7 +326,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -376,7 +376,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -409,7 +409,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -441,7 +441,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -491,7 +491,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -524,7 +524,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -557,7 +557,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -590,7 +590,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -640,7 +640,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -673,7 +673,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -706,7 +706,7 @@ exports[`Timetable GET /edit should render correct "Timetable due dates" page fo
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1041,8 +1041,9 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
                     date must include a day</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -1108,8 +1109,9 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
                     date must include a month</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -1175,8 +1177,9 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
                     date must include a year</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -1242,8 +1245,9 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The lpa questionnaire
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The lpa questionnaire
                     due date must be in the future</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -1309,8 +1313,9 @@ exports[`Timetable POST /edit Householder should re-render edit timetable page w
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
                     date must be a real date</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -1377,7 +1382,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1409,7 +1414,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1442,7 +1447,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
                     due date must include a day</p>
                 <div class="govuk-date-input" id="ip-comments-due-date">
@@ -1477,7 +1482,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1510,7 +1515,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1576,7 +1581,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1608,7 +1613,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1641,7 +1646,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
                     due date must include a month</p>
                 <div class="govuk-date-input" id="ip-comments-due-date">
@@ -1676,7 +1681,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1709,7 +1714,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1775,7 +1780,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1807,7 +1812,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1840,7 +1845,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
                     due date must include a year</p>
                 <div class="govuk-date-input" id="ip-comments-due-date">
@@ -1875,7 +1880,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1908,7 +1913,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -1974,7 +1979,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2006,7 +2011,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2039,7 +2044,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The interested party
                     comments due date must be in the future</p>
                 <div class="govuk-date-input"
@@ -2075,7 +2080,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2108,7 +2113,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2174,7 +2179,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2206,7 +2211,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2239,7 +2244,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
                     due date must be a real date</p>
                 <div class="govuk-date-input" id="ip-comments-due-date">
@@ -2274,7 +2279,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2307,7 +2312,7 @@ exports[`Timetable POST /edit S78 hearing Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2373,8 +2378,9 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
                     date must include a day</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -2407,7 +2413,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2440,7 +2446,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2473,7 +2479,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2506,7 +2512,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2572,8 +2578,9 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
                     date must include a month</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -2606,7 +2613,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2639,7 +2646,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2672,7 +2679,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2705,7 +2712,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2771,8 +2778,9 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
                     date must include a year</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -2805,7 +2813,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2838,7 +2846,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2871,7 +2879,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2904,7 +2912,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -2970,8 +2978,9 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The lpa questionnaire
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The lpa questionnaire
                     due date must be in the future</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -3004,7 +3013,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3037,7 +3046,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3070,7 +3079,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3103,7 +3112,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3169,8 +3178,9 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
                     date must be a real date</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -3203,7 +3213,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3236,7 +3246,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3269,7 +3279,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3302,7 +3312,7 @@ exports[`Timetable POST /edit S78 hearing LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3368,7 +3378,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3400,7 +3410,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3433,7 +3443,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3466,7 +3476,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3499,7 +3509,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3565,7 +3575,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3597,7 +3607,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3630,7 +3640,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3663,7 +3673,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3696,7 +3706,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3762,7 +3772,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3794,7 +3804,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3827,7 +3837,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3860,7 +3870,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3893,7 +3903,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3959,7 +3969,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -3991,7 +4001,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4024,7 +4034,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4057,7 +4067,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4090,7 +4100,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4156,7 +4166,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4188,7 +4198,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4221,7 +4231,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4254,7 +4264,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4287,7 +4297,7 @@ exports[`Timetable POST /edit S78 hearing Planning obligation should re-render e
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4353,7 +4363,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4385,7 +4395,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4418,7 +4428,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4451,7 +4461,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4484,7 +4494,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4550,7 +4560,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4582,7 +4592,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4615,7 +4625,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4648,7 +4658,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4681,7 +4691,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4747,7 +4757,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4779,7 +4789,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4812,7 +4822,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4845,7 +4855,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4878,7 +4888,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4944,7 +4954,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -4976,7 +4986,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5009,7 +5019,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5042,7 +5052,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5075,7 +5085,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5141,7 +5151,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5173,7 +5183,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5206,7 +5216,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5239,7 +5249,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5272,7 +5282,7 @@ exports[`Timetable POST /edit S78 hearing Statement of common ground should re-r
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5338,7 +5348,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5370,7 +5380,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
                     include a day</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
@@ -5405,7 +5415,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5438,7 +5448,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5471,7 +5481,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5537,7 +5547,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5569,7 +5579,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
                     include a month</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
@@ -5604,7 +5614,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5637,7 +5647,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5670,7 +5680,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5736,7 +5746,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5768,7 +5778,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
                     include a year</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
@@ -5803,7 +5813,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5836,7 +5846,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5869,7 +5879,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5935,7 +5945,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -5967,7 +5977,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The statements due date
                     must be in the future</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
@@ -6002,7 +6012,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6035,7 +6045,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6068,7 +6078,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6134,7 +6144,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6166,7 +6176,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
                     be a real date</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
@@ -6201,7 +6211,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6234,7 +6244,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due</legend>
                 <div id="statement-of-common-ground-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="statement-of-common-ground-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6267,7 +6277,7 @@ exports[`Timetable POST /edit S78 hearing Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due</legend>
                 <div id="planning-obligation-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="planning-obligation-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6333,7 +6343,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6365,7 +6375,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6398,7 +6408,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6430,7 +6440,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
                     must include a day</p>
                 <div class="govuk-date-input" id="final-comments-due-date">
@@ -6498,7 +6508,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6530,7 +6540,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6563,7 +6573,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6595,7 +6605,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
                     must include a month</p>
                 <div class="govuk-date-input" id="final-comments-due-date">
@@ -6663,7 +6673,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6695,7 +6705,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6728,7 +6738,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6760,7 +6770,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
                     must include a year</p>
                 <div class="govuk-date-input" id="final-comments-due-date">
@@ -6828,7 +6838,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6860,7 +6870,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6893,7 +6903,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -6925,7 +6935,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The final comments due
                     date must be in the future</p>
                 <div class="govuk-date-input" id="final-comments-due-date">
@@ -6993,7 +7003,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7025,7 +7035,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7058,7 +7068,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7090,7 +7100,7 @@ exports[`Timetable POST /edit S78 written Final comments should re-render edit t
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
                     must be a real date</p>
                 <div class="govuk-date-input" id="final-comments-due-date">
@@ -7158,7 +7168,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7190,7 +7200,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7223,7 +7233,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
                     due date must include a day</p>
                 <div class="govuk-date-input" id="ip-comments-due-date">
@@ -7257,7 +7267,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7323,7 +7333,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7355,7 +7365,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7388,7 +7398,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
                     due date must include a month</p>
                 <div class="govuk-date-input" id="ip-comments-due-date">
@@ -7422,7 +7432,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7488,7 +7498,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7520,7 +7530,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7553,7 +7563,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
                     due date must include a year</p>
                 <div class="govuk-date-input" id="ip-comments-due-date">
@@ -7587,7 +7597,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7653,7 +7663,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7685,7 +7695,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7718,7 +7728,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The interested party
                     comments due date must be in the future</p>
                 <div class="govuk-date-input"
@@ -7753,7 +7763,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7819,7 +7829,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7851,7 +7861,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7884,7 +7894,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
                     due date must be a real date</p>
                 <div class="govuk-date-input" id="ip-comments-due-date">
@@ -7918,7 +7928,7 @@ exports[`Timetable POST /edit S78 written Interested party comments should re-re
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -7984,8 +7994,9 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
                     date must include a day</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -8018,7 +8029,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8051,7 +8062,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8083,7 +8094,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8149,8 +8160,9 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
                     date must include a month</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -8183,7 +8195,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8216,7 +8228,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8248,7 +8260,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8314,8 +8326,9 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
                     date must include a year</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -8348,7 +8361,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8381,7 +8394,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8413,7 +8426,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8479,8 +8492,9 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The lpa questionnaire
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The lpa questionnaire
                     due date must be in the future</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -8513,7 +8527,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8546,7 +8560,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8578,7 +8592,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8644,8 +8658,9 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint lpa-questionnaire-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
-                <p id="lpa-questionnaire-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
+                class="govuk-hint">For example, 29 10 2024</div>
+                <p id="lpa-questionnaire-due-date-error"
+                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> LPA questionnaire due
                     date must be a real date</p>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
@@ -8678,7 +8693,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8711,7 +8726,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8743,7 +8758,7 @@ exports[`Timetable POST /edit S78 written LPA questionnaire should re-render edi
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8809,7 +8824,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8841,7 +8856,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
                     include a day</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
@@ -8876,7 +8891,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8908,7 +8923,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -8974,7 +8989,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9006,7 +9021,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
                     include a month</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
@@ -9041,7 +9056,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9073,7 +9088,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9139,7 +9154,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9171,7 +9186,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
                     include a year</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
@@ -9206,7 +9221,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9238,7 +9253,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9304,7 +9319,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9336,7 +9351,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The statements due date
                     must be in the future</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
@@ -9371,7 +9386,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9403,7 +9418,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9469,7 +9484,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9501,7 +9516,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
                     be a real date</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
@@ -9536,7 +9551,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="ip-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9568,7 +9583,7 @@ exports[`Timetable POST /edit S78 written Statements should re-render edit timet
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="final-comments-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9638,7 +9653,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page a
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9670,7 +9685,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page a
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the statements
                     due date</p>
                 <div class="govuk-date-input" id="lpa-statement-due-date">
@@ -9705,7 +9720,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page a
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the interested
                     party comments due date</p>
                 <div class="govuk-date-input" id="ip-comments-due-date">
@@ -9739,7 +9754,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page a
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the final comments
                     due date</p>
                 <div class="govuk-date-input" id="final-comments-due-date">
@@ -9811,7 +9826,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page w
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due</legend>
                 <div id="lpa-questionnaire-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <div class="govuk-date-input" id="lpa-questionnaire-due-date">
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
@@ -9843,7 +9858,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page w
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-statement-due-date-hint lpa-statement-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statements due</legend>
-                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="lpa-statement-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="lpa-statement-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Statements due date must
                     be after the LPA questionnaire due date on 27 June 2025</p>
                 <div class="govuk-date-input"
@@ -9879,7 +9894,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page w
             <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint ip-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments due</legend>
                 <div id="ip-comments-due-date-hint"
-                class="govuk-hint">For example, 27 3 2007</div>
+                class="govuk-hint">For example, 29 10 2024</div>
                 <p id="ip-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Interested party comments
                     due date must be after the LPA questionnaire due date on 27 June 2025</p>
                 <div                 class="govuk-date-input" id="ip-comments-due-date">
@@ -9913,7 +9928,7 @@ exports[`Timetable POST /edit S78 written should re-render edit timetable page w
         <div class="govuk-form-group govuk-form-group--error">
             <fieldset class="govuk-fieldset" role="group" aria-describedby="final-comments-due-date-hint final-comments-due-date-error">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Final comments due</legend>
-                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+                <div id="final-comments-due-date-hint" class="govuk-hint">For example, 29 10 2024</div>
                 <p id="final-comments-due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Final comments due date
                     must be after the statements due date on 25 July 2025</p>
                 <div class="govuk-date-input"
