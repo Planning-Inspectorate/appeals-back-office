@@ -1,0 +1,772 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapIpCommentsData should map interested party comments data correctly 1`] = `
+{
+  "details": {
+    "acceptedComments": [
+      {
+        "attachments": [
+          {
+            "documentGuid": "58565a17-f943-4548-9588-596205ad7ac1",
+            "documentVersion": {
+              "blobStoragePath": "appeal/6000072/58565a17-f943-4548-9588-596205ad7ac1/v1/file_example_XLSX_5000.xlsx",
+              "document": {
+                "caseId": 72,
+                "createdAt": "2025-07-09T11:28:10.078Z",
+                "folderId": 3600,
+                "guid": "58565a17-f943-4548-9588-596205ad7ac1",
+                "isDeleted": false,
+                "latestVersionId": 1,
+                "name": "file_example_XLSX_5000.xlsx",
+              },
+              "documentGuid": "58565a17-f943-4548-9588-596205ad7ac1",
+              "documentType": "representationAttachments",
+              "documentURI": "https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/6000072/58565a17-f943-4548-9588-596205ad7ac1/v1/file_example_XLSX_5000.xlsx",
+              "fileName": "file_example_XLSX_5000.xlsx",
+              "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              "originalFilename": "file_example_XLSX_5000.xlsx",
+              "size": 188887,
+              "version": 1,
+            },
+            "representationId": 236,
+            "version": 1,
+          },
+          {
+            "documentGuid": "7416a70a-321b-45f5-a045-e426e46e9a7f",
+            "documentVersion": {
+              "blobStoragePath": "appeal/6000072/7416a70a-321b-45f5-a045-e426e46e9a7f/v1/file_example_PNG_2100kB.png",
+              "document": {
+                "caseId": 72,
+                "createdAt": "2025-07-09T11:27:45.191Z",
+                "folderId": 3600,
+                "guid": "7416a70a-321b-45f5-a045-e426e46e9a7f",
+                "isDeleted": false,
+                "latestVersionId": 1,
+                "name": "file_example_PNG_2100kB.png",
+              },
+              "documentGuid": "7416a70a-321b-45f5-a045-e426e46e9a7f",
+              "documentType": "representationAttachments",
+              "documentURI": "https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/6000072/7416a70a-321b-45f5-a045-e426e46e9a7f/v1/file_example_PNG_2100kB.png",
+              "fileName": "file_example_PNG_2100kB.png",
+              "mime": "image/png",
+              "originalFilename": "file_example_PNG_2100kB.png",
+              "size": 2060826,
+              "version": 1,
+            },
+            "representationId": 236,
+            "version": 1,
+          },
+        ],
+        "author": "Eva Sharma - Source: Back Office - Has email: true",
+        "created": "2025-07-03T15:13:59.982Z",
+        "id": 236,
+        "notes": "",
+        "origin": "citizen",
+        "originalRepresentation": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+        "redactedRepresentation": "",
+        "rejectionReasons": [],
+        "representationType": "comment",
+        "represented": {
+          "address": {
+            "addressLine1": "",
+            "postCode": "",
+          },
+          "email": "test9@example.com",
+          "id": 317,
+          "name": "Eva Sharma - Source: Back Office - Has email: true",
+        },
+        "siteVisitRequested": false,
+        "source": "back-office-appeals",
+        "status": "valid",
+      },
+    ],
+    "agent": {
+      "email": "test1@example.com",
+      "firstName": "Lee",
+      "lastName": "Thornton",
+      "organisationName": "Lee Thornton Ltd",
+      "phoneNumber": null,
+      "serviceUserId": 105,
+    },
+    "appealId": 72,
+    "appealReference": "6000072",
+    "appealSite": {
+      "addressId": 72,
+      "addressLine1": "Copthalls",
+      "addressLine2": "Clevedon Road",
+      "postCode": "BS48 1PN",
+      "town": "West Hill",
+    },
+    "appealStatus": "final_comments",
+    "appealTimetable": {
+      "appealTimetableId": 37,
+      "appellantStatementDueDate": "2025-02-07T23:59:00.000Z",
+      "caseResubmissionDueDate": null,
+      "finalCommentsDueDate": "2025-02-21T23:59:00.000Z",
+      "ipCommentsDueDate": "2025-02-07T23:59:00.000Z",
+      "lpaQuestionnaireDueDate": "2025-01-10T23:59:00.000Z",
+      "lpaStatementDueDate": "2025-02-07T23:59:00.000Z",
+      "planningObligationDueDate": null,
+      "s106ObligationDueDate": "2025-02-21T23:59:00.000Z",
+      "statementOfCommonGroundDueDate": null,
+    },
+    "appealType": "Planning appeal",
+    "appellant": {
+      "email": "test4@example.com",
+      "firstName": "Sophie",
+      "lastName": "Skinner",
+      "organisationName": null,
+      "phoneNumber": null,
+      "serviceUserId": 106,
+    },
+    "appellantCaseId": 72,
+    "awaitingReviewComments": [
+      {
+        "attachments": [
+          {
+            "documentGuid": "97bcf3c3-75ab-4ea3-bc34-c32596cbba78",
+            "documentVersion": {
+              "blobStoragePath": "appeal/6000072/97bcf3c3-75ab-4ea3-bc34-c32596cbba78/v1/file-sample_100kB.docx",
+              "document": {
+                "caseId": 72,
+                "createdAt": "2025-07-09T11:28:35.123Z",
+                "folderId": 3600,
+                "guid": "97bcf3c3-75ab-4ea3-bc34-c32596cbba78",
+                "isDeleted": false,
+                "latestVersionId": 1,
+                "name": "file-sample_100kB.docx",
+              },
+              "documentGuid": "97bcf3c3-75ab-4ea3-bc34-c32596cbba78",
+              "documentType": "representationAttachments",
+              "documentURI": "https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/6000072/97bcf3c3-75ab-4ea3-bc34-c32596cbba78/v1/file-sample_100kB.docx",
+              "fileName": "file-sample_100kB.docx",
+              "mime": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+              "originalFilename": "file-sample_100kB.docx",
+              "size": 111303,
+              "version": 1,
+            },
+            "representationId": 233,
+            "version": 1,
+          },
+        ],
+        "author": "Fiona Burgess - Source: Front Office - Has email: true",
+        "created": "2025-07-03T15:13:59.944Z",
+        "id": 233,
+        "notes": "",
+        "origin": "citizen",
+        "originalRepresentation": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+        "redactedRepresentation": "",
+        "rejectionReasons": [],
+        "representationType": "comment",
+        "represented": {
+          "address": {
+            "addressLine1": "",
+            "postCode": "",
+          },
+          "email": "test6@example.com",
+          "id": 314,
+          "name": "Fiona Burgess - Source: Front Office - Has email: true",
+        },
+        "siteVisitRequested": false,
+        "source": "citizen",
+        "status": "awaiting_review",
+      },
+      {
+        "attachments": [],
+        "author": "Ryan Marshall - Source: Back Office - Has email: true",
+        "created": "2025-07-03T15:13:59.933Z",
+        "id": 232,
+        "notes": "",
+        "origin": "citizen",
+        "originalRepresentation": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+        "redactedRepresentation": "",
+        "rejectionReasons": [],
+        "representationType": "comment",
+        "represented": {
+          "address": {
+            "addressLine1": "",
+            "postCode": "",
+          },
+          "email": "test5@example.com",
+          "id": 313,
+          "name": "Ryan Marshall - Source: Back Office - Has email: true",
+        },
+        "siteVisitRequested": false,
+        "source": "back-office-appeals",
+        "status": "awaiting_review",
+      },
+      {
+        "attachments": [],
+        "author": "Sophie Skinner - Source: Front Office - Has email: false",
+        "created": "2025-07-03T15:13:59.925Z",
+        "id": 231,
+        "notes": "",
+        "origin": "citizen",
+        "originalRepresentation": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+        "redactedRepresentation": "",
+        "rejectionReasons": [],
+        "representationType": "comment",
+        "represented": {
+          "address": {
+            "addressLine1": "",
+            "postCode": "",
+          },
+          "id": 312,
+          "name": "Sophie Skinner - Source: Front Office - Has email: false",
+        },
+        "siteVisitRequested": false,
+        "source": "citizen",
+        "status": "awaiting_review",
+      },
+      {
+        "attachments": [],
+        "author": "Haley Eland - Source: Front Office - Has email: true",
+        "created": "2025-07-03T15:13:59.901Z",
+        "id": 229,
+        "notes": "",
+        "origin": "citizen",
+        "originalRepresentation": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+        "redactedRepresentation": "",
+        "rejectionReasons": [],
+        "representationType": "comment",
+        "represented": {
+          "address": {
+            "addressLine1": "",
+            "postCode": "",
+          },
+          "email": "test2@example.com",
+          "id": 310,
+          "name": "Haley Eland - Source: Front Office - Has email: true",
+        },
+        "siteVisitRequested": false,
+        "source": "citizen",
+        "status": "awaiting_review",
+      },
+      {
+        "attachments": [],
+        "author": "Lee Thornton - Source: Back Office - Has email: false",
+        "created": "2025-07-03T15:13:59.894Z",
+        "id": 228,
+        "notes": "",
+        "origin": "citizen",
+        "originalRepresentation": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+        "redactedRepresentation": "",
+        "rejectionReasons": [],
+        "representationType": "comment",
+        "represented": {
+          "address": {
+            "addressLine1": "",
+            "postCode": "",
+          },
+          "id": 309,
+          "name": "Lee Thornton - Source: Back Office - Has email: false",
+        },
+        "siteVisitRequested": false,
+        "source": "back-office-appeals",
+        "status": "awaiting_review",
+      },
+    ],
+    "completedStateList": [],
+    "costs": {
+      "appellantApplicationFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3587,
+        "path": "costs/appellantCostsApplication",
+      },
+      "appellantCorrespondenceFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3589,
+        "path": "costs/appellantCostsCorrespondence",
+      },
+      "appellantDecisionFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3593,
+        "path": "costs/appellantCostsDecisionLetter",
+      },
+      "appellantWithdrawalFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3588,
+        "path": "costs/appellantCostsWithdrawal",
+      },
+      "lpaApplicationFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3590,
+        "path": "costs/lpaCostsApplication",
+      },
+      "lpaCorrespondenceFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3592,
+        "path": "costs/lpaCostsCorrespondence",
+      },
+      "lpaDecisionFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3594,
+        "path": "costs/lpaCostsDecisionLetter",
+      },
+      "lpaWithdrawalFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3591,
+        "path": "costs/lpaCostsWithdrawal",
+      },
+    },
+    "createdAt": "2025-07-03T15:13:55.967Z",
+    "decision": {
+      "folderId": 3599,
+      "path": "appeal-decision/caseDecisionLetter",
+    },
+    "documentationSummary": {
+      "appellantCase": {
+        "dueDate": null,
+        "receivedAt": "2025-07-03T15:13:55.967Z",
+        "status": "Valid",
+      },
+      "appellantFinalComments": {
+        "receivedAt": "2025-07-03T15:14:00.044Z",
+        "representationStatus": "awaiting_review",
+        "status": "received",
+      },
+      "ipComments": {
+        "counts": {
+          "awaiting_review": 5,
+          "invalid": 4,
+          "valid": 1,
+        },
+        "isRedacted": false,
+        "receivedAt": "2025-07-03T15:14:00.000Z",
+        "status": "received",
+      },
+      "lpaFinalComments": {
+        "receivedAt": "2025-07-03T15:14:00.065Z",
+        "representationStatus": "awaiting_review",
+        "status": "received",
+      },
+      "lpaQuestionnaire": {
+        "dueDate": "2025-01-10T23:59:00.000Z",
+        "receivedAt": "2023-05-08T23:00:00.000Z",
+        "status": "received",
+      },
+      "lpaStatement": {
+        "isRedacted": false,
+        "receivedAt": "2025-07-03T15:14:00.031Z",
+        "representationStatus": "valid",
+        "status": "received",
+      },
+    },
+    "eiaScreeningRequired": null,
+    "environmentalAssessment": {
+      "caseId": 72,
+      "documents": [],
+      "folderId": 3563,
+      "path": "appellant-case/environmentalAssessment",
+    },
+    "healthAndSafety": {
+      "appellantCase": {
+        "details": null,
+        "hasIssues": false,
+      },
+      "lpaQuestionnaire": {
+        "details": "There may be no mobile reception at the site",
+        "hasIssues": true,
+      },
+    },
+    "inspectorAccess": {
+      "appellantCase": {
+        "details": null,
+        "isRequired": false,
+      },
+      "lpaQuestionnaire": {
+        "details": "There is a tall hedge around the site which obstructs the view of the site",
+        "isRequired": true,
+      },
+    },
+    "internalCorrespondence": {
+      "crossTeam": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3595,
+        "path": "internal/crossTeamCorrespondence",
+      },
+      "inspector": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3596,
+        "path": "internal/inspectorCorrespondence",
+      },
+      "mainParty": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3597,
+        "path": "internal/mainPartyCorrespondence",
+      },
+    },
+    "isChildAppeal": false,
+    "isParentAppeal": false,
+    "linkedAppeals": [],
+    "localPlanningDepartment": "Maidstone Borough Council",
+    "lpaEmailAddress": "maid@lpa-email.gov.uk",
+    "lpaQuestionnaireId": 40,
+    "neighbouringSites": [],
+    "otherAppeals": [],
+    "planningApplicationReference": "44377/APP/3/218453",
+    "procedureType": "Written",
+    "rejectedComments": [
+      {
+        "attachments": [],
+        "author": "Elaine Madsen - Source: Front Office - Has email: false",
+        "created": "2025-07-03T15:14:00.000Z",
+        "id": 237,
+        "notes": "",
+        "origin": "citizen",
+        "originalRepresentation": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+        "redactedRepresentation": "",
+        "rejectionReasons": [
+          {
+            "hasText": false,
+            "id": 1,
+            "name": "Includes personal or medical information",
+            "text": [],
+          },
+        ],
+        "representationType": "comment",
+        "represented": {
+          "address": {
+            "addressLine1": "",
+            "postCode": "",
+          },
+          "id": 318,
+          "name": "Elaine Madsen - Source: Front Office - Has email: false",
+        },
+        "siteVisitRequested": false,
+        "source": "citizen",
+        "status": "invalid",
+      },
+      {
+        "attachments": [],
+        "author": "Bob Ross - Source: Front Office - Has email: true",
+        "created": "2025-07-03T15:13:59.968Z",
+        "id": 235,
+        "notes": "",
+        "origin": "citizen",
+        "originalRepresentation": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+        "redactedRepresentation": "",
+        "rejectionReasons": [
+          {
+            "hasText": false,
+            "id": 1,
+            "name": "Includes personal or medical information",
+            "text": [],
+          },
+        ],
+        "representationType": "comment",
+        "represented": {
+          "address": {
+            "addressLine1": "",
+            "postCode": "",
+          },
+          "email": "test8@example.com",
+          "id": 316,
+          "name": "Bob Ross - Source: Front Office - Has email: true",
+        },
+        "siteVisitRequested": false,
+        "source": "citizen",
+        "status": "invalid",
+      },
+      {
+        "attachments": [],
+        "author": "Kevin Fowler - Source: Back Office - Has email: false",
+        "created": "2025-07-03T15:13:59.953Z",
+        "id": 234,
+        "notes": "",
+        "origin": "citizen",
+        "originalRepresentation": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+        "redactedRepresentation": "",
+        "rejectionReasons": [
+          {
+            "hasText": false,
+            "id": 1,
+            "name": "Includes personal or medical information",
+            "text": [],
+          },
+        ],
+        "representationType": "comment",
+        "represented": {
+          "address": {
+            "addressLine1": "",
+            "postCode": "",
+          },
+          "id": 315,
+          "name": "Kevin Fowler - Source: Back Office - Has email: false",
+        },
+        "siteVisitRequested": false,
+        "source": "back-office-appeals",
+        "status": "invalid",
+      },
+      {
+        "attachments": [],
+        "author": "Roger Simmons - Source: Back Office - Has email: true",
+        "created": "2025-07-03T15:13:59.910Z",
+        "id": 230,
+        "notes": "",
+        "origin": "citizen",
+        "originalRepresentation": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+        "redactedRepresentation": "",
+        "rejectionReasons": [
+          {
+            "hasText": false,
+            "id": 1,
+            "name": "Includes personal or medical information",
+            "text": [],
+          },
+        ],
+        "representationType": "comment",
+        "represented": {
+          "address": {
+            "addressLine1": "",
+            "postCode": "",
+          },
+          "email": "test3@example.com",
+          "id": 311,
+          "name": "Roger Simmons - Source: Back Office - Has email: true",
+        },
+        "siteVisitRequested": false,
+        "source": "back-office-appeals",
+        "status": "invalid",
+      },
+    ],
+    "startedAt": "2025-01-03T16:13:52.867Z",
+    "stateList": [
+      {
+        "completed": true,
+        "key": "assign_case_officer",
+      },
+      {
+        "completed": true,
+        "key": "validation",
+      },
+      {
+        "completed": true,
+        "key": "ready_to_start",
+      },
+      {
+        "completed": true,
+        "key": "lpa_questionnaire",
+      },
+      {
+        "completed": true,
+        "key": "statements",
+      },
+      {
+        "completed": false,
+        "key": "final_comments",
+      },
+      {
+        "completed": false,
+        "key": "event",
+      },
+      {
+        "completed": false,
+        "key": "evidence",
+      },
+      {
+        "completed": false,
+        "key": "awaiting_event",
+      },
+      {
+        "completed": false,
+        "key": "issue_determination",
+      },
+      {
+        "completed": false,
+        "key": "awaiting_transfer",
+      },
+      {
+        "completed": false,
+        "key": "invalid",
+      },
+      {
+        "completed": false,
+        "key": "transferred",
+      },
+      {
+        "completed": false,
+        "key": "closed",
+      },
+      {
+        "completed": false,
+        "key": "withdrawn",
+      },
+      {
+        "completed": false,
+        "key": "complete",
+      },
+    ],
+    "validAt": "2024-09-03T15:13:52.867Z",
+    "withdrawal": {
+      "withdrawalFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3555,
+        "path": "appellant-case/appellantCaseWithdrawalLetter",
+      },
+    },
+  },
+  "sections": [
+    {
+      "comments": [
+        {
+          "items": [
+            {
+              "key": "Interested party",
+              "text": "Fiona Burgess - Source: Front Office - Has email: true",
+            },
+            {
+              "key": "Date received",
+              "text": "3 July 2025, 16:13",
+            },
+            {
+              "key": "Comment",
+              "text": String {
+                "length": 247,
+                "val": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+              },
+            },
+            {
+              "html": "file-sample_100kB.docx",
+              "key": "Supporting documents",
+            },
+          ],
+        },
+        {
+          "items": [
+            {
+              "key": "Interested party",
+              "text": "Ryan Marshall - Source: Back Office - Has email: true",
+            },
+            {
+              "key": "Date received",
+              "text": "3 July 2025, 16:13",
+            },
+            {
+              "key": "Comment",
+              "text": String {
+                "length": 247,
+                "val": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+              },
+            },
+            {
+              "html": "No documents",
+              "key": "Supporting documents",
+            },
+          ],
+        },
+        {
+          "items": [
+            {
+              "key": "Interested party",
+              "text": "Sophie Skinner - Source: Front Office - Has email: false",
+            },
+            {
+              "key": "Date received",
+              "text": "3 July 2025, 16:13",
+            },
+            {
+              "key": "Comment",
+              "text": String {
+                "length": 247,
+                "val": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+              },
+            },
+            {
+              "html": "No documents",
+              "key": "Supporting documents",
+            },
+          ],
+        },
+        {
+          "items": [
+            {
+              "key": "Interested party",
+              "text": "Haley Eland - Source: Front Office - Has email: true",
+            },
+            {
+              "key": "Date received",
+              "text": "3 July 2025, 16:13",
+            },
+            {
+              "key": "Comment",
+              "text": String {
+                "length": 247,
+                "val": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+              },
+            },
+            {
+              "html": "No documents",
+              "key": "Supporting documents",
+            },
+          ],
+        },
+        {
+          "items": [
+            {
+              "key": "Interested party",
+              "text": "Lee Thornton - Source: Back Office - Has email: false",
+            },
+            {
+              "key": "Date received",
+              "text": "3 July 2025, 16:13",
+            },
+            {
+              "key": "Comment",
+              "text": String {
+                "length": 247,
+                "val": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+              },
+            },
+            {
+              "html": "No documents",
+              "key": "Supporting documents",
+            },
+          ],
+        },
+      ],
+      "heading": "Awaiting review",
+    },
+    {
+      "comments": [
+        {
+          "items": [
+            {
+              "key": "Interested party",
+              "text": "Eva Sharma - Source: Back Office - Has email: true",
+            },
+            {
+              "key": "Date received",
+              "text": "3 July 2025, 16:13",
+            },
+            {
+              "key": "Comment",
+              "text": String {
+                "length": 247,
+                "val": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+              },
+            },
+            {
+              "html": "<ul class="govuk-list govuk-list--bullet"><li>file_example_XLSX_5000.xlsx</li><li>file_example_PNG_2100kB.png</li></ul>",
+              "key": "Supporting documents",
+            },
+          ],
+        },
+      ],
+      "heading": "Accepted",
+    },
+  ],
+}
+`;

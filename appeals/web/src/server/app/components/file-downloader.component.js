@@ -301,10 +301,12 @@ export const getBulkDocumentDownload = async (
 		});
 	}
 
-	const successfulPdfs = await generateAllPdfs(currentAppeal, apiClient);
+	if (config.featureFlags.featureFlagPdfDownload) {
+		const successfulPdfs = await generateAllPdfs(currentAppeal, apiClient);
 
-	// @ts-ignore
-	successfulPdfs.forEach((pdf) => archive.append(pdf.buffer, { name: pdf.name }));
+		// @ts-ignore
+		successfulPdfs.forEach((pdf) => archive.append(pdf.buffer, { name: pdf.name }));
+	}
 
 	if (missingFiles.length) {
 		archive.append(Buffer.from(JSON.stringify(missingFiles)), { name: 'missing-files.json' });

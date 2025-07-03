@@ -1,0 +1,188 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapAppellantCaseData should map appellant case data 1`] = `
+{
+  "details": {
+    "appealReference": "6000073",
+    "appealSite": {
+      "addressId": 72,
+      "addressLine1": "Copthalls",
+      "addressLine2": "Clevedon Road",
+      "postCode": "BS48 1PN",
+      "town": "West Hill",
+    },
+    "localPlanningDepartment": "Maidstone Borough Council",
+  },
+  "sections": [
+    {
+      "heading": "Appellant details",
+      "items": [
+        {
+          "html": "Sophie Skinner<br>test4@example.com",
+          "key": "Appellant details",
+        },
+      ],
+    },
+    {
+      "heading": "Site details",
+      "items": [
+        {
+          "html": "Copthalls, Clevedon Road, West Hill, BS48 1PN",
+          "key": "What is the address of the appeal site?",
+        },
+        {
+          "key": "What is the area of the appeal site?",
+          "text": "30.9 m²",
+        },
+        {
+          "key": "Is the appeal site in a green belt?",
+          "text": "No",
+        },
+        {
+          "key": "Does the appellant own all of the land involved in the appeal?",
+          "text": "Fully owned",
+        },
+        {
+          "key": "Does the appellant know who owns the land involved in the appeal?",
+          "text": "Some",
+        },
+        {
+          "key": "Is the appeal site part of an agricultural holding?",
+          "text": "Yes",
+        },
+        {
+          "key": "Are you a tenant of the agricultural holding?",
+          "text": "No",
+        },
+        {
+          "key": "Are there any other tenants?",
+          "text": "No",
+        },
+        {
+          "key": "Will an inspector need to access your land or property?",
+          "text": "No",
+        },
+        {
+          "key": "Are there any health and safety issues on the appeal site?",
+          "text": "No",
+        },
+      ],
+    },
+    {
+      "heading": "Application details",
+      "items": [
+        {
+          "html": "Maidstone Borough Council",
+          "key": "Which local planning authority (LPA) do you want to appeal against?",
+        },
+        {
+          "key": "What is the application reference number?",
+          "text": "44377/APP/3/218453",
+        },
+        {
+          "key": "What date did you submit your application?",
+          "text": "22 May 2025",
+        },
+        {
+          "key": "Enter the description of development that you submitted in your application",
+          "text": "Lorem ipsum",
+        },
+        {
+          "key": "Are there other appeals linked to your development?",
+          "text": "No",
+        },
+        {
+          "key": "Was your application granted or refused?",
+          "text": "Refused",
+        },
+        {
+          "key": "What’s the date on the decision letter from the local planning authority?",
+          "text": "3 June 2025",
+        },
+        {
+          "key": "Development type",
+          "text": "Major retail services",
+        },
+      ],
+    },
+    {
+      "heading": "Appeal details",
+      "items": [
+        {
+          "key": "What type of application is your appeal about?",
+          "text": "Planning appeal",
+        },
+        {
+          "key": "How would you prefer us to decide your appeal?",
+          "text": "Hearing",
+        },
+        {
+          "key": "Why would you prefer this appeal procedure?",
+          "text": "Need for a detailed examination",
+        },
+        {
+          "key": "How many days would you expect the inquiry to last?",
+          "text": "1",
+        },
+        {
+          "key": "How many witnesses would you expect to give evidence at the inquiry?",
+          "text": "1",
+        },
+      ],
+    },
+    {
+      "heading": "Upload documents",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "Application form",
+        },
+        {
+          "html": "No documents",
+          "key": "Agreement to change the description of development",
+        },
+        {
+          "html": "No documents",
+          "key": "Decision letter from the local planning authority",
+        },
+        {
+          "html": "No documents",
+          "key": "Appellant statement",
+        },
+        {
+          "key": "What is the status of your planning obligation?",
+          "text": "Not started",
+        },
+        {
+          "html": "No documents",
+          "key": "Planning obligation",
+        },
+        {
+          "html": "No documents",
+          "key": "Separate ownership certificate and agricultural land declaration",
+        },
+        {
+          "html": "No documents",
+          "key": "Application for an award of appeal costs",
+        },
+        {
+          "html": "No documents",
+          "key": "Design and access statement",
+        },
+        {
+          "html": "No documents",
+          "key": "Plans, drawings and list of plans",
+        },
+        {
+          "html": "No documents",
+          "key": "New plans or drawings",
+        },
+        {
+          "html": "No documents",
+          "key": "Other new supporting documents",
+        },
+      ],
+    },
+  ],
+}
+`;
