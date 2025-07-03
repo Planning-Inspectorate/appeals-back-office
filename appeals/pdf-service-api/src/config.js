@@ -20,5 +20,8 @@ export default {
 		showErrors: environment.SERVER_SHOW_ERRORS === 'true',
 		terminationGracePeriod:
 			(Number(environment.SERVER_TERMINATION_GRACE_PERIOD_SECONDS) || 0) * 1000
+	},
+	development: {
+		createHTMLFile: environment.CREATE_HTML_FILE
 	}
 };
