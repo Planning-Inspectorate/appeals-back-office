@@ -308,7 +308,7 @@ export const appealsApiClient = {
 
 	async getNotifyEmails(reference) {
 		try {
-			const url = `${baseUrl}/appeals/${reference}/notify-emails-sent`;
+			const url = `${baseUrl}appeals/${reference}/notify-emails-sent`;
 			const response = await fetch(url, {
 				method: 'GET',
 				headers: {
