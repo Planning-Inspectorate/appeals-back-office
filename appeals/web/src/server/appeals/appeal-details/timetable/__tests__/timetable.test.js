@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -9,6 +10,10 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details/1/timetable';
 
 describe('Timetable', () => {
+	beforeEach(() => {
+		//mocking the for example date for snapshots
+		Date.now = jest.fn(() => new Date(Date.UTC(2024, 8, 14)).valueOf());
+	});
 	afterEach(teardown);
 
 	describe('GET /edit', () => {
