@@ -317,7 +317,7 @@
   <h2 class="govuk-heading-m">7. Appeal process</h2>
   <div class="question-block">
     <span class="question-title">Which procedure do you think is most appropriate for this appeal?</span>
-    <span class="answer">{{ lpaQuestionnaireData.lpaProcedurePreference | default("Not applicable", true) }}</span>
+    <span class="answer">{{ lpaQuestionnaireData.lpaProcedurePreference | formatSentenceCase }}</span>
   </div>
   <div class="question-block">
     <span class="question-title">Why would you prefer this procedure?</span>
