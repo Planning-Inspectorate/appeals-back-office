@@ -323,9 +323,9 @@ export const appealsApiClient = {
 		}
 	},
 
-	async updateAppealCases(appealId, requestBody) {
+	async updateAppealCases(appealId, appellantCaseId, requestBody) {
 		try {
-			const url = `${baseUrl}appeals/${appealId}/appellant-cases/${appealId}`;
+			const url = `${baseUrl}appeals/${appealId}/appellant-cases/${appellantCaseId}`;
 			const response = await fetch(url, {
 				method: 'PATCH',
 				headers: {
