@@ -37,7 +37,7 @@ nunjucksEnv.addFilter('formatSentenceCase', (inputValue, fallBackText = 'Not ans
 	if (!inputValue) {
 		return fallBackText;
 	}
-	const withSpaces = inputValue.replace(/-/g, ' ');
+	const withSpaces = inputValue.replace(/-_/g, ' ');
 	const capitalized = withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1);
 	return capitalized;
 });
