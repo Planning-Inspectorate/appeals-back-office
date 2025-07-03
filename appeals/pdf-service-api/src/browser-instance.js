@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer-core';
 import logger from './lib/logger.js';
+import config from './config.js';
 
 // @ts-ignore
 let browserInstance = null;
@@ -42,7 +43,7 @@ async function launchBrowser() {
 			executablePath: chromiumPath,
 			headless: true,
 			args: minimalLaunchArgs,
-			dumpio: false // Stops excessive browser stdout/stderr logging for stability
+			dumpio: config.logger.isExtensive // Stops excessive browser stdout/stderr logging for stability
 		});
 		logger.info('Shared browser instance launched successfully.');
 

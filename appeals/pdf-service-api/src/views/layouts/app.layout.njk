@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	{% block head %}
+		{% include "includes/pdf-head.njk" %}
+	{% endblock %}
+</head>
+
+<body>
+	{% block header %}
+		{% include "includes/pdf-header.njk" %}<h1 class="govuk-heading-xl">{{ title }}</h1>
+
+		<div class="site-address-header">
+			<p><strong>Site address</strong>
+				{{ details.appealSite | formatAddress('Site address not available') }}
+			</p>
+		</div>
+		<p><strong>Appeal reference</strong> {{ details.appealReference | default('N/A') }}</p>
+		<p><strong>LPA</strong> {{ details.localPlanningDepartment | default('N/A') }}</p>
+		{% block headerend %}{% endblock %}
+	{% endblock %}
+
+	{% block main %}{% endblock %}
+</body>
+
+</html>

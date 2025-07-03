@@ -60,15 +60,6 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 
 	// --- Step 1: Define a single source of truth for all tasks ---
 	const tasks = [
-		// {
-		//     filenameInZip: `Appeal details ${currentAppealData.appealReference}.pdf`,
-		//     templateName: 'appeal-pdf',
-		//     async fetchData() {
-		//         console.log('[DownloadAll] Fetching data for: Appeal Details');
-		//         const appealCaseNotes = await getAppealCaseNotes(apiClient, appealId);
-		//         return { title: "Appeal Summary", appealReference: currentAppealData.appealReference, currentAppeal: currentAppealData, appealCaseNotes };
-		//     }
-		// },
 		{
 			filenameInZip: `LPA questionnaire ${currentAppealData.appealReference}.pdf`,
 			templateName: 'lpa-questionnaire-pdf',
@@ -191,9 +182,6 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 
 	const results = await Promise.all(generationPromises);
 
-	// --- Step 3: Create ZIP and stream response ---
-	const successfulPdfs = results.filter((r) => r.buffer);
-	// const failedPdfs = results.filter(r => !r.buffer);
-
-	return successfulPdfs;
+	// --- Step 3: Stream response as an array of buffers ---
+	return results.filter((r) => r.buffer);
 }

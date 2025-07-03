@@ -25,7 +25,7 @@ router.post('/generate-pdf', (req, res, next) => {
 	const appealId = req.body?.currentAppeal?.appealId || 'unknown';
 	logger.info(`ROUTE: POST /generate-pdf matched for appealId: ${appealId}`);
 
-	postGeneratePdfController(req, res, next);
+	return postGeneratePdfController(req, res, next);
 });
 
 router.get('/', (req, res) => {

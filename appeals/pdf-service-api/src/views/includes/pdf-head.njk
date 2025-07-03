@@ -1,0 +1,89 @@
+{# This file contains all shared metadata and CSS for all generated PDFs #}
+<meta charset="utf-8" />
+<title>{{ title | default('Appeal Document') }} - {{ appealReference | default('N/A') }}</title>
+{% if gdsCss %}<style>{{ gdsCss | safe }}</style>{% endif %}
+<style>
+    /* Global Styles */
+    body {
+        font-family: Helvetica, Arial, sans-serif;
+        margin: 10mm;
+        font-size: 10pt;
+        line-height: 1.4;
+        color: #0b0c0c;
+        background-color: #ffffff;
+    }
+
+	.header-container {
+		display: flex;
+		align-items: center;
+		margin-bottom: 5px;
+		border-bottom: 5px solid #0b0c0c;
+		padding-bottom: 10px;
+	}
+	.header-logo {
+		max-width: 35px;
+		height: auto;
+		margin-right: 15px;
+	}
+	.header-text {
+		font-size: 14pt;
+		font-weight: bold;
+		color: #0b0c0c;
+	}
+	.beta-banner {
+		padding: 5px 0;
+		margin-bottom: 15px;
+		font-size: 10pt;
+	}
+
+	.beta-banner strong { font-weight: bold; color: #0b0c0c; }
+	.beta-banner a { color: #005ea5; text-decoration: underline; }
+
+
+	.govuk-summary-list {
+		display: table;
+		width: 100%;
+		table-layout: fixed;
+		border-collapse: collapse;
+	}
+
+	.govuk-summary-list__row {
+		display: table-row;
+		border-bottom: 1px solid #b1b4b6;
+	}
+	.govuk-summary-list__key,
+	.govuk-summary-list__value {
+		display: table-cell;
+		padding-top: 10px;
+		padding-right: 20px;
+		padding-bottom: 10px;
+		overflow-wrap: break-word;
+	}
+	.govuk-summary-list__key {
+		width: 30%;
+		font-weight: bold;
+	}
+	.govuk-list--bullet li {
+		margin-left: -24px;
+	}
+	.govuk-heading-m {
+		font-size: 18px;
+		line-height: 20px;
+		margin-bottom: 15px;
+	}
+	.govuk-heading-l {
+		font-size: 24px;
+		line-height: 25px;
+		margin-bottom: 20px;
+	}
+	.govuk-heading-xl {
+		font-size: 32px;
+		line-height: 35px;
+		margin-bottom: 30px;
+	}
+	.govuk-section-break {
+		margin-bottom: 45px;
+	}
+
+
+</style>

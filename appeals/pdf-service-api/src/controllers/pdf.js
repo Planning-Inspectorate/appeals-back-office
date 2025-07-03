@@ -1,46 +1,21 @@
 // @ts-nocheck
-import nunjucks from 'nunjucks';
-import { formatInTimeZone } from 'date-fns-tz';
 import generatePdfLib from '../lib/generate-pdf.js';
 import logger from '../lib/logger.js';
+import config from '../config.js';
 import { getBrowserInstance } from '../browser-instance.js';
-const UK_TIMEZONE = 'Europe/London';
-import { fileURLToPath } from 'url';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import * as fs from 'node:fs';
-// import cssFileContents from 'govuk-frontend/dist/govuk/govuk-frontend.min.css';
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
-const nunjucksEnv = nunjucks.configure(path.join(__dirname, '../views'), {
-	autoescape: true
-});
-nunjucksEnv.addFilter('date', (dateString, formatString) => {
-	try {
-		if (!dateString) return '';
-		const date = new Date(dateString);
-		if (isNaN(date.getTime())) {
-			logger.warn(`Invalid date encountered in template filter: ${dateString}`);
-			return dateString;
-		}
-		return formatInTimeZone(date, UK_TIMEZONE, formatString);
-	} catch (error) {
-		logger.error(
-			{ err: error, dateString, formatString },
-			'Error formatting date in Nunjucks filter'
-		);
-		return dateString;
-	}
-});
-nunjucksEnv.addFilter('formatSentenceCase', (inputValue, fallBackText = 'Not answered') => {
-	console.log('inputted value', inputValue);
-	if (!inputValue) {
-		return fallBackText;
-	}
-	const withSpaces = inputValue.replace(/-/g, ' ');
-	const capitalized = withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1);
-	return capitalized;
-});
+import dirname from '../lib/utils/dirname.js';
+import nunjucksEnv from '../lib/nunjucks-environment.js';
+import mapQuestionnaireData from '../mappers/lpa-questionnaire/lpa-questionnaire.mapper.js';
+import mapAppellantCaseData from '../mappers/appellant-case/appellant-case.mapper.js';
+import mapIpCommentsData from '../mappers/ip-comments/ip-comments.mapper.js';
+import { mapLpaStatement } from '../mappers/lpa-statement/lpa-statement.mapper.js';
+import { mapLpaFinalComments } from '../mappers/lpa-final-comments/lpa-final-comments.mapper.js';
+import { mapAppellantFinalComments } from '../mappers/appellant-final-comments/appellant-final-comments.mapper.js';
+
+const __dirname = dirname(import.meta.url); // get the resolved path of the directory
 
 const generateDataUri = (relativePath, mimeType) => {
 	try {
@@ -76,6 +51,25 @@ try {
 	throw error;
 }
 
+const mapTemplateDataForView = (templateName, templateData) => {
+	switch (templateName) {
+		case 'lpa-questionnaire-pdf':
+			return mapQuestionnaireData(templateData.lpaQuestionnaireData);
+		case 'appellant-case-pdf':
+			return mapAppellantCaseData(templateData.appellantCaseData);
+		case 'ip-comments-pdf':
+			return mapIpCommentsData(templateData.ipCommentsData);
+		case 'lpa-statement-pdf':
+			return mapLpaStatement(templateData.lpaStatementData);
+		case 'lpa-final-comments-pdf':
+			return mapLpaFinalComments(templateData.lpaFinalCommentsData);
+		case 'appellant-final-comments-pdf':
+			return mapAppellantFinalComments(templateData.appellantFinalCommentsData);
+		default:
+			return templateData;
+	}
+};
+
 const postGeneratePdfController = async (req, res, next) => {
 	const { templateName, templateData } = req.body;
 	const identifier =
@@ -97,14 +91,27 @@ const postGeneratePdfController = async (req, res, next) => {
 		const logoDataUri = generateDataUri('../assets/logo.png', 'image/png'); // Common asset
 
 		logger.info({ identifier, templateName }, `Rendering Nunjucks template: ${templateName}.njk`);
+		const mappedData = mapTemplateDataForView(templateName, templateData);
 		const context = {
-			...templateData,
+			...mappedData,
 			logoDataUri: logoDataUri,
 			gdsCssUrl: `/assets/${path.basename(gdsCssFilePath)}`
 		};
+
 		const html = nunjucksEnv.render(`${templateName}.njk`, context);
 
 		logger.info(`Rendered HTML length for ${templateName}: ${html?.length || 0}`);
+
+		if (config.development.createHTMLFile) {
+			const tempDir = path.join(__dirname, '../..', 'temp');
+			if (!fs.existsSync(tempDir)) {
+				fs.mkdirSync(tempDir, { recursive: true });
+			}
+			const htmlFilePath = path.join(tempDir, `${templateName}.html`);
+			logger.info({ identifier, templateName }, `Writing HTML to file: ${htmlFilePath}`);
+			fs.writeFileSync(htmlFilePath, html, 'utf8');
+			logger.info({ identifier, templateName }, 'HTML file written successfully.');
+		}
 
 		const pdfBuffer = await generatePdfLib(browser, html);
 		logger.info(
