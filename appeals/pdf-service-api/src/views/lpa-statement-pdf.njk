@@ -24,7 +24,7 @@
   {% if lpaStatementData %}
     <div class="meta-info">
       <strong>Date received</strong> {{ lpaStatementData.created | date('d MMMM yyyy, HH:mm') if lpaStatementData.created else 'N/A' }}<br>
-      <strong>Status</strong> {{ lpaStatementData.status | default('N/A') }}
+      <strong>Status</strong> {{ lpaStatementData.status | formatSentenceCase }}
     </div>
 
     <h2 >Statement</h2>
