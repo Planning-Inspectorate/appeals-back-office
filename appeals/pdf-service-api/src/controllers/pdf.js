@@ -1,46 +1,15 @@
 // @ts-nocheck
-import nunjucks from 'nunjucks';
-import { formatInTimeZone } from 'date-fns-tz';
 import generatePdfLib from '../lib/generate-pdf.js';
 import logger from '../lib/logger.js';
 import { getBrowserInstance } from '../browser-instance.js';
-const UK_TIMEZONE = 'Europe/London';
-import { fileURLToPath } from 'url';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import * as fs from 'node:fs';
+import dirname from '../lib/utils/dirname.js';
+import nunjucksEnv from '../lib/nunjucks-environment.js';
+
 // import cssFileContents from 'govuk-frontend/dist/govuk/govuk-frontend.min.css';
-const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
-const __dirname = path.dirname(__filename); // get the name of the directory
-const nunjucksEnv = nunjucks.configure(path.join(__dirname, '../views'), {
-	autoescape: true
-});
-nunjucksEnv.addFilter('date', (dateString, formatString) => {
-	try {
-		if (!dateString) return '';
-		const date = new Date(dateString);
-		if (isNaN(date.getTime())) {
-			logger.warn(`Invalid date encountered in template filter: ${dateString}`);
-			return dateString;
-		}
-		return formatInTimeZone(date, UK_TIMEZONE, formatString);
-	} catch (error) {
-		logger.error(
-			{ err: error, dateString, formatString },
-			'Error formatting date in Nunjucks filter'
-		);
-		return dateString;
-	}
-});
-nunjucksEnv.addFilter('formatSentenceCase', (inputValue, fallBackText = 'Not answered') => {
-	console.log('inputted value', inputValue);
-	if (!inputValue) {
-		return fallBackText;
-	}
-	const withSpaces = inputValue.replace(/-_/g, ' ');
-	const capitalized = withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1);
-	return capitalized;
-});
+const __dirname = dirname(import.meta.url); // get the resolved path of the directory
 
 const generateDataUri = (relativePath, mimeType) => {
 	try {
@@ -102,6 +71,7 @@ const postGeneratePdfController = async (req, res, next) => {
 			logoDataUri: logoDataUri,
 			gdsCssUrl: `/assets/${path.basename(gdsCssFilePath)}`
 		};
+
 		const html = nunjucksEnv.render(`${templateName}.njk`, context);
 
 		logger.info(`Rendered HTML length for ${templateName}: ${html?.length || 0}`);
