@@ -6,7 +6,7 @@
 <body class="govuk-body">
   {% include "pdf-header.njk" %}
 
-  <h1 class="govuk-heading-xl">Appellant Case</h1>
+  <h1>Appellant Case</h1>
 
   <p><strong>Site address</strong>
     {% if appellantCaseData.appealSite %}
@@ -87,7 +87,7 @@
   </div>
   <div class="question-block">
     <span class="question-title">Enter the description of development that you submitted in your application</span>
-    <span class="answer">{{ appellantCaseData.developmentDescription.details | default("Not provided") }}</span>
+    <span class="answer">{{ appellantCaseData.developmentDescription.details | formatSentenceCase  }}</span>
   </div>
   <div class="question-block">
       <span class="question-title">Are there other appeals linked to your development?</span>
@@ -103,7 +103,7 @@
   </div>
   <div class="question-block">
     <span class="question-title">Development type</span>
-    <span class="answer">{{ appellantCaseData.developmentType | default("Not provided") }}</span>
+    <span class="answer">{{ appellantCaseData.developmentType | formatSentenceCase("Not provided") }}</span>
   </div>
 
   <h2 class="govuk-heading-l">4. Appeal details</h2>
