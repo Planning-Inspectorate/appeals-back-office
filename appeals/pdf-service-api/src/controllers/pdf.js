@@ -32,6 +32,15 @@ nunjucksEnv.addFilter('date', (dateString, formatString) => {
 		return dateString;
 	}
 });
+nunjucksEnv.addFilter('formatSentenceCase', (inputValue, fallBackText = 'Not answered') => {
+	console.log('inputted value', inputValue);
+	if (!inputValue) {
+		return fallBackText;
+	}
+	const withSpaces = inputValue.replace(/-/g, ' ');
+	const capitalized = withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1);
+	return capitalized;
+});
 
 const generateDataUri = (relativePath, mimeType) => {
 	try {

@@ -5,7 +5,7 @@
 </head>
 <body >
   	 {% include "pdf-header.njk" %}
-  <h1 class="govuk-heading-m">Interested Party Comments</h1>
+  <h1>Interested party comments</h1>
 
   <div class="site-address-header">
     <p><strong>Site address</strong>
@@ -17,7 +17,7 @@
     </p>
   </div>
 
-  <p><strong>Appeal Reference</strong> {{ ipCommentsData.appealReference | default('N/A') }}</p>
+  <p><strong>Appeal reference</strong> {{ ipCommentsData.appealReference | default('N/A') }}</p>
 
   {# Section for Awaiting Review Comments #}
   <h2 >Awaiting review</h2>
@@ -26,7 +26,7 @@
       <div class="comment-block">
         <p class="comment-meta">
           <strong>Interested party</strong> {{ comment_item.author | default('N/A') }}<br>
-          <strong>Date Received</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}
+          <strong>Date received</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}
         </p>
         <p class="govuk-body">{{ comment_item.originalRepresentation | nl2br | default('No comment text provided.') | safe }}</p>
       </div>
@@ -42,7 +42,7 @@
       <div class="comment-block accepted">
         <p class="comment-meta">
           <strong>Interested party</strong> {{ comment_item.author | default('N/A') }}<br>
-          <strong>Date Received</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}
+          <strong>Date received</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}
         </p>
         <p class="govuk-body">{{ comment_item.originalRepresentation | nl2br | default('No comment text provided.') | safe }}</p>
       </div>

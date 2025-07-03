@@ -6,7 +6,7 @@
 <body class="govuk-body">
  {% include "pdf-header.njk" %}
 
-  <h1 class="govuk-heading-m">LPA statement</h1>
+  <h1 >LPA statement</h1>
 
   <div class="site-address-header">
     <p><strong>Site address</strong>
@@ -24,12 +24,12 @@
   {% if lpaStatementData %}
     <div class="meta-info">
       <strong>Date received</strong> {{ lpaStatementData.created | date('d MMMM yyyy, HH:mm') if lpaStatementData.created else 'N/A' }}<br>
-      <strong>Status</strong> {{ lpaStatementData.status | default('N/A') }}
+      <strong>Status</strong> {{ lpaStatementData.status | formatSentenceCase }}
     </div>
 
     <h2 >Statement</h2>
     <div class="statement-text-block">
-        <p class="govuk-body">{{ lpaStatementData.originalRepresentation | nl2br | default('No statement text provided.') | safe }}</p>
+        <p>{{ lpaStatementData.originalRepresentation | nl2br | default('No statement text provided.') | safe }}</p>
     </div>
 
     <h2 style="margin-top: 30px;">Supporting documents</h2>

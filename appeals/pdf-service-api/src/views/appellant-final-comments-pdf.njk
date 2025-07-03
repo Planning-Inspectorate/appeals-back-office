@@ -6,7 +6,7 @@
 <body >
   	 {% include "pdf-header.njk" %}
 
-  <h1 class="govuk-heading-m">Appellant Final Comments</h1>
+  <h1 >Appellant final comments</h1>
 
   <div class="site-address-header">
     <p><strong>Site address</strong>
@@ -18,21 +18,21 @@
     </p>
   </div>
 
-  <p><strong>Appeal Reference</strong> {{ appellantFinalCommentsData.appealReference | default('N/A') }}</p>
+  <p><strong>Appeal reference</strong> {{ appellantFinalCommentsData.appealReference | default('N/A') }}</p>
 
-  <h2 >Submitted Final Comments</h2>
+  <h2 >Submitted final comments</h2>
   {% if appellantFinalCommentsData.commentsList and appellantFinalCommentsData.commentsList.length %}
     {% for comment_item in appellantFinalCommentsData.commentsList %}
       <div class="comment-block">
         <p class="comment-meta">
           <strong>Submitted by</strong> {{ comment_item.author | default('N/A') }}<br>
-          <strong>Date Received</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}<br>
+          <strong>Date received</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}<br>
           <strong>Status</strong> {{ comment_item.status | default('N/A') }}
         </p>
         <p class="govuk-body">{{ comment_item.originalRepresentation | nl2br | default('No comment text provided.') | safe }}</p>
 
         {% if comment_item.attachments and comment_item.attachments.length %}
-          <h3>Supporting Documents</h3>
+          <h3>Supporting documents</h3>
           <ul class="document-list">
             {% for doc in comment_item.attachments %}
               <li>{{ doc.name | default('Unnamed document') }}</li>

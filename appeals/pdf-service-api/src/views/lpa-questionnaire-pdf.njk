@@ -5,7 +5,7 @@
 </head>
 <body >
 	 {% include "pdf-header.njk" %}
-  <h1 class="govuk-heading-l">LPA questionnaire</h1>
+  <h1 >LPA questionnaire</h1>
 
   <div class="site-address-header">
     <p><strong>Site address</strong>
@@ -95,7 +95,7 @@
     <span class="question-title">Is the development in, near or likely to affect any designated sites?</span>
     {% if lpaQuestionnaireData.designatedSiteNames and lpaQuestionnaireData.designatedSiteNames.length %}
       <span class="answer">Yes</span>
-      <ul class="standard-list">{% for site in lpaQuestionnaireData.designatedSiteNames %}<li>{{ site.name }}</li>{% endfor %}</ul>
+      <ul class="document-list">{% for site in lpaQuestionnaireData.designatedSiteNames %}<li>{{ site.name }}</li>{% endfor %}</ul>
     {% else %}
       <span class="answer no-answer">No</span>
     {% endif %}
@@ -123,7 +123,7 @@
   <h2 class="govuk-heading-m">2. Environmental impact assessment</h2>
   <div class="question-block">
     <span class="question-title">What is the development category?</span>
-    <span class="answer">{{ lpaQuestionnaireData.eiaEnvironmentalImpactSchedule | default("Not answered") }}</span>
+    <span class="answer">{{ lpaQuestionnaireData.eiaEnvironmentalImpactSchedule | formatSentenceCase("Other") }} </span>
   </div>
   <div class="question-block">
     <span class="question-title">Does the development meet or exceed the threshold or criteria in column 2?</span>
@@ -150,7 +150,7 @@
   </div>
   <div class="question-block">
     <span class="question-title">Description of development</span>
-    <span class="answer">{{ lpaQuestionnaireData.eiaDevelopmentDescription | default("Not answered") }}</span>
+    <span class="answer">{{ lpaQuestionnaireData.eiaDevelopmentDescription | formatSentenceCase }}</span>
   </div>
   <div class="question-block">
     <span class="question-title">Is the development in, partly in, or likely to affect a sensitive area?</span>
@@ -170,7 +170,7 @@
   <div class="question-block">
     <span class="question-title">How did you notify relevant parties about this application?</span>
     {% if lpaQuestionnaireData.lpaNotificationMethods and lpaQuestionnaireData.lpaNotificationMethods.length %}
-      <ul class="standard-list">{% for method in lpaQuestionnaireData.lpaNotificationMethods %}<li>{{ method.name }}</li>{% endfor %}</ul>
+      <ul class="document-list">{% for method in lpaQuestionnaireData.lpaNotificationMethods %}<li>{{ method.name }}</li>{% endfor %}</ul>
     {% else %}
       <span class="answer not-available">Not specified.</span>
     {% endif %}
@@ -317,7 +317,7 @@
   <h2 class="govuk-heading-m">7. Appeal process</h2>
   <div class="question-block">
     <span class="question-title">Which procedure do you think is most appropriate for this appeal?</span>
-    <span class="answer">{{ lpaQuestionnaireData.lpaProcedurePreference | default("Not applicable", true) }}</span>
+    <span class="answer">{{ lpaQuestionnaireData.lpaProcedurePreference | formatSentenceCase }}</span>
   </div>
   <div class="question-block">
     <span class="question-title">Why would you prefer this procedure?</span>
@@ -343,7 +343,7 @@
     {% endif %}
   </div>
 
-  <h2 class="govuk-heading-m">Additional Ddcuments (LPA case correspondence)</h2>
+  <h2 class="govuk-heading-m">Additional documents (LPA case correspondence)</h2>
   <div class="question-block">
     {% if lpaQuestionnaireData.documents.lpaCaseCorrespondence and lpaQuestionnaireData.documents.lpaCaseCorrespondence.documents.length %}
       <ul class="document-list">
@@ -352,7 +352,7 @@
         {% endfor %}
       </ul>
     {% else %}
-      <p class="not-available">No documents.</p>
+      <p class="not-available">No documents</p>
     {% endif %}
   </div>
 
