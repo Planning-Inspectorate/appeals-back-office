@@ -1,7 +1,13 @@
 // @ts-nocheck
 import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import { request } from '#tests/../app-test.js';
-import { householdAppeal, appealS78 } from '#tests/appeals/mocks.js';
+import {
+	householdAppeal,
+	appealS78,
+	appealS20,
+	fullPlanningAppeal,
+	listedBuildingAppeal
+} from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
 import { cloneDeep } from 'lodash-es';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
@@ -164,88 +170,184 @@ describe('/appeals/:id/reps', () => {
 			expect(response.status).toEqual(200);
 		});
 
-		test('200 when final comment representation status is successfully updated with rejection', async () => {
-			jest
-				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
-				.setSystemTime(new Date('2024-12-11'));
+		test.each([
+			['HAS', householdAppeal],
+			['S78', fullPlanningAppeal],
+			['S20', listedBuildingAppeal]
+		])(
+			'200 when lpa final comment representation status is successfully updated with rejection for %s appeal',
+			async (_, appeal) => {
+				jest
+					.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+					.setSystemTime(new Date('2024-12-11'));
 
-			const mockRepresentation = {
-				id: 1,
-				lpa: false,
-				status: null,
-				originalRepresentation: 'Original text of the representation',
-				redactedRepresentation: 'Redacted text of the representation',
-				dateCreated: new Date('2024-12-11T12:00:00Z'),
-				notes: 'Some notes',
-				attachments: ['attachment1.pdf', 'attachment2.pdf'],
-				representationType: 'lpa_final_comment',
-				siteVisitRequested: true,
-				source: 'citizen',
-				representationRejectionReasonsSelected: [
-					{
-						representationRejectionReason: {
-							id: 1,
-							name: 'Invalid submission',
-							hasText: false
+				const mockRepresentation = {
+					id: 1,
+					lpa: false,
+					status: null,
+					originalRepresentation: 'Original text of the representation',
+					redactedRepresentation: 'Redacted text of the representation',
+					dateCreated: new Date('2024-12-11T12:00:00Z'),
+					notes: 'Some notes',
+					attachments: ['attachment1.pdf', 'attachment2.pdf'],
+					representationType: 'lpa_final_comment',
+					siteVisitRequested: true,
+					source: 'citizen',
+					representationRejectionReasonsSelected: [
+						{
+							representationRejectionReason: {
+								id: 1,
+								name: 'Invalid submission',
+								hasText: false
+							},
+							representationRejectionReasonText: []
 						},
-						representationRejectionReasonText: []
-					},
-					{
-						representationRejectionReason: {
-							id: 7,
-							name: 'Other',
-							hasText: true
-						},
-						representationRejectionReasonText: [{ text: 'Provided documents were incomplete' }]
-					}
+						{
+							representationRejectionReason: {
+								id: 7,
+								name: 'Other',
+								hasText: true
+							},
+							representationRejectionReasonText: [{ text: 'Provided documents were incomplete' }]
+						}
+					]
+				};
+
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
 				]
-			};
+					.map((key) => appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
 
-			const expectedSiteAddress = [
-				'addressLine1',
-				'addressLine2',
-				'addressTown',
-				'addressCounty',
-				'postcode',
-				'addressCountry'
-			]
-				.map((key) => householdAppeal.address[key])
-				.filter((value) => value)
-				.join(', ');
+				const expectedEmailPayload = {
+					lpa_reference: appeal.applicationReference,
+					appeal_reference_number: appeal.reference,
+					reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
+					site_address: expectedSiteAddress
+				};
 
-			const expectedEmailPayload = {
-				lpa_reference: householdAppeal.applicationReference,
-				appeal_reference_number: householdAppeal.reference,
-				reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
-				site_address: expectedSiteAddress
-			};
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+				databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+				databaseConnector.representation.update.mockResolvedValue({
+					...mockRepresentation,
+					status: 'invalid'
+				});
 
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
-			databaseConnector.representation.update.mockResolvedValue({
-				...mockRepresentation,
-				status: 'invalid'
-			});
+				const response = await request
+					.patch('/appeals/1/reps/1')
+					.send({
+						status: 'invalid',
+						notes: 'Some notes'
+					})
+					.set('azureAdUserId', '732652365');
 
-			const response = await request
-				.patch('/appeals/1/reps/1')
-				.send({
-					status: 'invalid',
-					notes: 'Some notes'
-				})
-				.set('azureAdUserId', '732652365');
+				expect(response.status).toEqual(200);
 
-			expect(response.status).toEqual(200);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					notifyClient: expect.anything(),
+					personalisation: expectedEmailPayload,
+					recipientEmail: appeal.lpa.email,
+					templateName: 'final-comment-rejected-lpa'
+				});
+			}
+		);
+		test.each([
+			['HAS', householdAppeal],
+			['S78', fullPlanningAppeal],
+			['S20', listedBuildingAppeal]
+		])(
+			'200 when appellant final comment representation status is successfully updated with rejection for %s appeal',
+			async (_, appeal) => {
+				jest
+					.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+					.setSystemTime(new Date('2024-12-11'));
 
-			expect(mockNotifySend).toHaveBeenCalledWith({
-				notifyClient: expect.anything(),
-				personalisation: expectedEmailPayload,
-				recipientEmail: householdAppeal.lpa.email,
-				templateName: 'final-comment-rejected-lpa'
-			});
-		});
+				const mockRepresentation = {
+					id: 1,
+					lpa: false,
+					status: null,
+					originalRepresentation: 'Original text of the representation',
+					redactedRepresentation: 'Redacted text of the representation',
+					dateCreated: new Date('2024-12-11T12:00:00Z'),
+					notes: 'Some notes',
+					attachments: ['attachment1.pdf', 'attachment2.pdf'],
+					representationType: 'appellant_final_comment',
+					siteVisitRequested: true,
+					source: 'citizen',
+					representationRejectionReasonsSelected: [
+						{
+							representationRejectionReason: {
+								id: 1,
+								name: 'Invalid submission',
+								hasText: false
+							},
+							representationRejectionReasonText: []
+						},
+						{
+							representationRejectionReason: {
+								id: 7,
+								name: 'Other',
+								hasText: true
+							},
+							representationRejectionReasonText: [{ text: 'Provided documents were incomplete' }]
+						}
+					]
+				};
+
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: appeal.applicationReference,
+					appeal_reference_number: appeal.reference,
+					reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
+					site_address: expectedSiteAddress
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+				databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+				databaseConnector.representation.update.mockResolvedValue({
+					...mockRepresentation,
+					status: 'invalid'
+				});
+
+				const response = await request
+					.patch('/appeals/1/reps/1')
+					.send({
+						status: 'invalid',
+						notes: 'Some notes'
+					})
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					notifyClient: expect.anything(),
+					personalisation: expectedEmailPayload,
+					recipientEmail: appeal.agent.email,
+					templateName: 'final-comment-rejected-appellant'
+				});
+			}
+		);
 
 		test('200 when ip comment representation status is successfully updated with rejection', async () => {
 			jest
@@ -649,11 +751,16 @@ describe('/appeals/:id/reps', () => {
 });
 
 describe('/appeals/:id/reps/publish', () => {
-	let mockAppeal;
+	let mockS78Appeal;
+	let mockS20Appeal;
 	beforeEach(() => {
-		mockAppeal = cloneDeep({
+		mockS78Appeal = cloneDeep({
 			...appealS78,
 			representations: appealS78.representations.filter((rep) => rep.status !== 'awaiting_review')
+		});
+		mockS20Appeal = cloneDeep({
+			...appealS20,
+			representations: appealS20.representations.filter((rep) => rep.status !== 'awaiting_review')
 		});
 	});
 
@@ -663,12 +770,13 @@ describe('/appeals/:id/reps/publish', () => {
 
 	describe('publish LPA statements', () => {
 		beforeEach(() => {
-			mockAppeal.appealStatus[0].status = 'statements';
+			mockS78Appeal.appealStatus[0].status = 'statements';
+			mockS20Appeal.appealStatus[0].status = 'statements';
 		});
 
 		test('409 if case is not in STATEMENTS state', async () => {
-			mockAppeal.appealStatus[0].status = 'lpa_questionnaire';
-			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+			mockS78Appeal.appealStatus[0].status = 'lpa_questionnaire';
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
 
 			const response = await request
 				.post('/appeals/1/reps/publish')
@@ -680,8 +788,8 @@ describe('/appeals/:id/reps/publish', () => {
 		});
 
 		test('400 if any ip comments or any lpa statements are awaiting review', async () => {
-			mockAppeal.representations = appealS78.representations;
-			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+			mockS78Appeal.representations = appealS78.representations;
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
 
 			const response = await request
 				.post('/appeals/1/reps/publish')
@@ -693,11 +801,11 @@ describe('/appeals/:id/reps/publish', () => {
 		});
 
 		test('400 if the deadline for ip comments has not passed', async () => {
-			mockAppeal.appealTimetable = {
-				...mockAppeal.appealTimetable,
+			mockS78Appeal.appealTimetable = {
+				...mockS78Appeal.appealTimetable,
 				ipCommentsDueDate: new Date('3025-01-01')
 			};
-			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
 
 			const response = await request
 				.post('/appeals/1/reps/publish')
@@ -709,11 +817,11 @@ describe('/appeals/:id/reps/publish', () => {
 		});
 
 		test('400 if the deadline for lpa statements has not passed', async () => {
-			mockAppeal.appealTimetable = {
-				...mockAppeal.appealTimetable,
+			mockS78Appeal.appealTimetable = {
+				...mockS78Appeal.appealTimetable,
 				lpaStatementDueDate: new Date('3025-01-01')
 			};
-			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
 
 			const response = await request
 				.post('/appeals/1/reps/publish')
@@ -724,7 +832,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(response.status).toEqual(400);
 		});
 
-		test('send notify comments and statements (written)', async () => {
+		test('send notify comments and statements (written) S78', async () => {
 			const expectedSiteAddress = [
 				'addressLine1',
 				'addressLine2',
@@ -733,20 +841,20 @@ describe('/appeals/:id/reps/publish', () => {
 				'postcode',
 				'addressCountry'
 			]
-				.map((key) => mockAppeal.address[key])
+				.map((key) => mockS78Appeal.address[key])
 				.filter((value) => value)
 				.join(', ');
 
 			const expectedEmailPayload = {
-				lpa_reference: mockAppeal.applicationReference,
-				appeal_reference_number: mockAppeal.reference,
+				lpa_reference: mockS78Appeal.applicationReference,
+				appeal_reference_number: mockS78Appeal.reference,
 				has_ip_comments: false,
 				has_statement: false,
 				final_comments_deadline: '4 December 2024',
 				site_address: expectedSiteAddress
 			};
 
-			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
 			databaseConnector.appealStatus.create.mockResolvedValue({});
 			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 			databaseConnector.representation.findMany.mockResolvedValue([
@@ -792,8 +900,7 @@ describe('/appeals/:id/reps/publish', () => {
 				templateName: 'received-statement-and-ip-comments-appellant'
 			});
 		});
-
-		test('send notify comments and statements (hearing not yet set up)', async () => {
+		test('send notify comments and statements (written) S20', async () => {
 			const expectedSiteAddress = [
 				'addressLine1',
 				'addressLine2',
@@ -802,21 +909,161 @@ describe('/appeals/:id/reps/publish', () => {
 				'postcode',
 				'addressCountry'
 			]
-				.map((key) => mockAppeal.address[key])
+				.map((key) => mockS20Appeal.address[key])
 				.filter((value) => value)
 				.join(', ');
 
 			const expectedEmailPayload = {
-				lpa_reference: mockAppeal.applicationReference,
+				lpa_reference: mockS20Appeal.applicationReference,
+				appeal_reference_number: mockS20Appeal.reference,
 				has_ip_comments: false,
 				has_statement: false,
-				appeal_reference_number: mockAppeal.reference,
+				final_comments_deadline: '4 December 2024',
+				site_address: expectedSiteAddress
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockS20Appeal);
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ representationType: 'lpa_statement' },
+				{ representationType: 'appellant_final_comment' }
+			]);
+			databaseConnector.representation.updateMany.mockResolvedValue([]);
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+				{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+			]);
+			databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'statements' })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					has_ip_comments: true,
+					has_statement: true,
+					what_happens_next:
+						'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.'
+				},
+				recipientEmail: mockS20Appeal.lpa.email,
+				templateName: 'received-statement-and-ip-comments-lpa'
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next:
+						'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.'
+				},
+				recipientEmail: mockS20Appeal.appellant.email,
+				templateName: 'received-statement-and-ip-comments-appellant'
+			});
+		});
+
+		test('send notify comments and statements (hearing not yet set up) S78', async () => {
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => mockS78Appeal.address[key])
+				.filter((value) => value)
+				.join(', ');
+
+			const expectedEmailPayload = {
+				lpa_reference: mockS78Appeal.applicationReference,
+				has_ip_comments: false,
+				has_statement: false,
+				appeal_reference_number: mockS78Appeal.reference,
 				final_comments_deadline: '4 December 2024',
 				site_address: expectedSiteAddress
 			};
 
 			const appeal = {
-				...mockAppeal,
+				...mockS78Appeal,
+				procedureType: 'hearing'
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ representationType: 'lpa_statement' },
+				{ representationType: 'appellant_final_comment' }
+			]);
+			databaseConnector.representation.updateMany.mockResolvedValue([]);
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+				{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+			]);
+			databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'statements' })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					has_ip_comments: true,
+					has_statement: true,
+					what_happens_next: 'We will contact you when the hearing has been set up.'
+				},
+				recipientEmail: appealS78.lpa.email,
+				templateName: 'received-statement-and-ip-comments-lpa'
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next: 'We will contact you if we need any more information.'
+				},
+				recipientEmail: appealS78.appellant.email,
+				templateName: 'received-statement-and-ip-comments-appellant'
+			});
+		});
+		test('send notify comments and statements (hearing not yet set up) S20', async () => {
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => mockS20Appeal.address[key])
+				.filter((value) => value)
+				.join(', ');
+
+			const expectedEmailPayload = {
+				lpa_reference: mockS20Appeal.applicationReference,
+				has_ip_comments: false,
+				has_statement: false,
+				appeal_reference_number: mockS20Appeal.reference,
+				final_comments_deadline: '4 December 2024',
+				site_address: expectedSiteAddress
+			};
+
+			const appeal = {
+				...mockS20Appeal,
 				procedureType: 'hearing'
 			};
 
@@ -865,7 +1112,7 @@ describe('/appeals/:id/reps/publish', () => {
 			});
 		});
 
-		test('send notify comments and statements (hearing already set up)', async () => {
+		test('send notify comments and statements (hearing already set up) S78', async () => {
 			const expectedSiteAddress = [
 				'addressLine1',
 				'addressLine2',
@@ -874,21 +1121,96 @@ describe('/appeals/:id/reps/publish', () => {
 				'postcode',
 				'addressCountry'
 			]
-				.map((key) => mockAppeal.address[key])
+				.map((key) => mockS78Appeal.address[key])
 				.filter((value) => value)
 				.join(', ');
 
 			const expectedEmailPayload = {
-				lpa_reference: mockAppeal.applicationReference,
+				lpa_reference: mockS78Appeal.applicationReference,
 				has_ip_comments: false,
 				has_statement: false,
-				appeal_reference_number: mockAppeal.reference,
+				appeal_reference_number: mockS78Appeal.reference,
 				final_comments_deadline: '4 December 2024',
 				site_address: expectedSiteAddress
 			};
 
 			const appeal = {
-				...mockAppeal,
+				...mockS78Appeal,
+				procedureType: 'hearing',
+				hearing: {
+					hearingStartTime: new Date('2025-01-31')
+				}
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ representationType: 'lpa_statement' },
+				{ representationType: 'appellant_final_comment' }
+			]);
+			databaseConnector.representation.updateMany.mockResolvedValue([]);
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+				{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+			]);
+			databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'statements' })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					has_ip_comments: true,
+					has_statement: true,
+					what_happens_next: 'The hearing is on 31 January 2025.'
+				},
+				recipientEmail: appealS78.lpa.email,
+				templateName: 'received-statement-and-ip-comments-lpa'
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next:
+						'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.'
+				},
+				recipientEmail: appealS78.appellant.email,
+				templateName: 'received-statement-and-ip-comments-appellant'
+			});
+		});
+		test('send notify comments and statements (hearing already set up) S20', async () => {
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => mockS20Appeal.address[key])
+				.filter((value) => value)
+				.join(', ');
+
+			const expectedEmailPayload = {
+				lpa_reference: mockS20Appeal.applicationReference,
+				has_ip_comments: false,
+				has_statement: false,
+				appeal_reference_number: mockS20Appeal.reference,
+				final_comments_deadline: '4 December 2024',
+				site_address: expectedSiteAddress
+			};
+
+			const appeal = {
+				...mockS20Appeal,
 				procedureType: 'hearing',
 				hearing: {
 					hearingStartTime: new Date('2025-01-31')
@@ -944,12 +1266,13 @@ describe('/appeals/:id/reps/publish', () => {
 
 	describe('publish final comments', () => {
 		beforeEach(() => {
-			mockAppeal.appealStatus[0].status = 'final_comments';
+			mockS78Appeal.appealStatus[0].status = 'final_comments';
+			mockS20Appeal.appealStatus[0].status = 'final_comments';
 		});
 
 		test('409 if case is not in FINAL_COMMENTS state', async () => {
-			mockAppeal.appealStatus[0].status = 'lpa_questionnaire';
-			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+			mockS78Appeal.appealStatus[0].status = 'lpa_questionnaire';
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
 
 			const response = await request
 				.post('/appeals/1/reps/publish')
@@ -961,8 +1284,8 @@ describe('/appeals/:id/reps/publish', () => {
 		});
 
 		test('400 if any appellant final comments or any lpa final comments are awaiting review', async () => {
-			mockAppeal.representations = appealS78.representations;
-			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+			mockS78Appeal.representations = appealS78.representations;
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
 
 			const response = await request
 				.post('/appeals/1/reps/publish')
@@ -974,11 +1297,11 @@ describe('/appeals/:id/reps/publish', () => {
 		});
 
 		test('400 if the deadline for final comments has not passed', async () => {
-			mockAppeal.appealTimetable = {
-				...mockAppeal.appealTimetable,
+			mockS78Appeal.appealTimetable = {
+				...mockS78Appeal.appealTimetable,
 				finalCommentsDueDate: new Date('3025-01-01')
 			};
-			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
 
 			const response = await request
 				.post('/appeals/1/reps/publish')
@@ -989,7 +1312,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(response.status).toEqual(400);
 		});
 
-		test('send notify lpa and appellant final comments', async () => {
+		test('send notify lpa and appellant final comments S78', async () => {
 			const expectedSiteAddress = [
 				'addressLine1',
 				'addressLine2',
@@ -998,20 +1321,82 @@ describe('/appeals/:id/reps/publish', () => {
 				'postcode',
 				'addressCountry'
 			]
-				.map((key) => mockAppeal.address[key])
+				.map((key) => mockS78Appeal.address[key])
 				.filter((value) => value)
 				.join(', ');
 
 			const expectedEmailPayload = {
-				lpa_reference: mockAppeal.applicationReference,
+				lpa_reference: mockS78Appeal.applicationReference,
 				has_ip_comments: false,
 				has_statement: false,
-				appeal_reference_number: mockAppeal.reference,
+				appeal_reference_number: mockS78Appeal.reference,
 				final_comments_deadline: '',
 				site_address: expectedSiteAddress
 			};
 
-			databaseConnector.appeal.findUnique.mockResolvedValue(mockAppeal);
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockS78Appeal);
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ representationType: 'appellant_final_comment' },
+				{ representationType: 'lpa_final_comment' }
+			]);
+			databaseConnector.representation.updateMany.mockResolvedValue([]);
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'final_comments' })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			expect(response.status).toEqual(200);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next: ''
+				},
+				recipientEmail: appealS78.lpa.email,
+				templateName: 'final-comments-done-lpa'
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next: ''
+				},
+				recipientEmail: appealS78.appellant.email,
+				templateName: 'final-comments-done-appellant'
+			});
+		});
+		test('send notify lpa and appellant final comments S20', async () => {
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => mockS20Appeal.address[key])
+				.filter((value) => value)
+				.join(', ');
+
+			const expectedEmailPayload = {
+				lpa_reference: mockS20Appeal.applicationReference,
+				has_ip_comments: false,
+				has_statement: false,
+				appeal_reference_number: mockS20Appeal.reference,
+				final_comments_deadline: '',
+				site_address: expectedSiteAddress
+			};
+
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockS20Appeal);
 			databaseConnector.appealStatus.create.mockResolvedValue({});
 			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 			databaseConnector.representation.findMany.mockResolvedValue([

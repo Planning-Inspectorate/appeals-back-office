@@ -12,20 +12,20 @@ import {
 import { siteVisitDateField } from './site-visits.constants.js';
 
 export const validateSiteVisitType = createValidator(
-	body('visit-type').trim().notEmpty().withMessage('Please select a visit type')
+	body('visit-type').trim().notEmpty().withMessage('Select visit type')
 );
 
 export const validateVisitDateFields = createDateInputFieldsValidator(
 	siteVisitDateField,
-	'Visit date'
+	'Site visit date'
 );
 export const validateVisitDateValid = createDateInputDateValidityValidator(
 	siteVisitDateField,
-	'Visit date'
+	'Site visit date'
 );
 export const validateVisitDateInFuture = createDateInputDateInFutureValidator(
 	siteVisitDateField,
-	'Visit date'
+	'Site visit date'
 );
 export const validateVisitStartTime = createTimeInputValidator(
 	'visit-start-time',

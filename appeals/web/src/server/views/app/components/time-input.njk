@@ -2,7 +2,9 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 
 {% macro govukTimeInput(params) %}
-
+{% if params.errorMessage %}
+	<div class="govuk-form-group govuk-form-group--error">
+{% endif %}
 	{% set innerContent %}
 		{% if params.hint.text or params.hint.html %}
 			<div id="hearing-date-hint" class="govuk-hint">
@@ -10,6 +12,11 @@
 			</div>
 		{% endif %}
 
+	{% if params.errorMessage%}
+			<p id="time-error" class="govuk-error-message">
+			{{params.errorMessage}}
+			</p>
+		{% endif %}
 		{% if params.showLabels %}
 			<div class="govuk-date-input">
 				<div class="govuk-date-input__item govuk-!-margin-right-1">
@@ -35,9 +42,9 @@
 						},
 						classes: "govuk-input--width-2",
 						value: params.minute.value
-					}) }}		
+					}) }}
 				</div>
-			</div> 
+			</div>
 		{% else %}
 			<label class="govuk-label govuk-visually-hidden" for="{{ params.id }}-hour">Hour</label>
 			<input class="govuk-input govuk-input--width-2" id="{{ params.id }}-hour" name="{{ params.id }}-hour" type="number" value="{{ params.hour.value if params.hour and params.hour.value else '' }}">
@@ -47,12 +54,14 @@
 		{% endif %}
 	{% endset %}
 
-	{% if params.fieldset %}	
+	{% if params.fieldset %}
 		{% call govukFieldset(params.fieldset) %}
 			{{ innerContent | safe }}
 		{% endcall %}
 	{% else %}
 		{{ innerContent | safe }}
 	{% endif %}
-
+{% if params.errorMessage %}
+	</div>
+{% endif %}
 {% endmacro %}

@@ -4,6 +4,14 @@ import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
 import { formatLinkableAppealSummary } from './linkable-appeal.formatter.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { currentStatus } from '#utils/current-status.js';
+
+const linkableCaseStatuses = [
+	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+	APPEAL_CASE_STATUS.VALIDATION,
+	APPEAL_CASE_STATUS.READY_TO_START,
+	APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+];
 
 /**
  *
@@ -18,7 +26,7 @@ export const getLinkableAppealSummaryByCaseReference = async (appealReference) =
 			throw error;
 		});
 		return formatHorizonGetCaseData(horizonAppeal);
-	} else if (appeal.appealStatus.some(({ status }) => status === APPEAL_CASE_STATUS.STATEMENTS)) {
+	} else if (!linkableCaseStatuses.includes(currentStatus(appeal))) {
 		throw 432;
 	} else {
 		return formatLinkableAppealSummary(appeal);
