@@ -226,8 +226,9 @@ Cypress.Commands.add('checkNotifySent', (reference, templates) => {
 Cypress.Commands.add('updateAppealDetails', (reference, caseDetails) => {
 	return cy.wrap(null).then(async () => {
 		const details = await appealsApiClient.loadCaseDetails(reference);
-		const appealId = await details.appealId;
-		return await appealsApiClient.updateAppealCases(appealId, caseDetails);
+		const appealId = details.appealId;
+		const appellantCaseId = details.appellantCaseId;
+		return await appealsApiClient.updateAppealCases(appealId, appellantCaseId, caseDetails);
 	});
 });
 
