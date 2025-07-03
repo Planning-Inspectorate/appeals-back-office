@@ -76,11 +76,20 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 				console.log('[DownloadAll] Fetching data for: LPA Questionnaire');
 				const lpaQuestionnaireId = currentAppealData.lpaQuestionnaireId;
 				if (!lpaQuestionnaireId) return null;
+
 				const rawData = await getLpaQuestionnaireFromId(
 					apiClient,
 					appealId,
 					lpaQuestionnaireId.toString()
 				);
+
+				if (rawData) {
+					console.log(
+						'[DEBUG] Raw EIA Schedule Value from API:',
+						rawData.eiaEnvironmentalImpactSchedule
+					);
+				}
+
 				return rawData ? { lpaQuestionnaireData: { ...currentAppealData, ...rawData } } : null;
 			}
 		},
