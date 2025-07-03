@@ -462,4 +462,231 @@ describe('set up inquiry', () => {
 			url: `${baseUrl}/${appealId}/Inquiry/setup/address-details`
 		});
 	});
+
+	describe('GET /inquiry/setup/timetable-due-dates', () => {
+		const appealId = 2;
+
+		let pageHtml;
+
+		beforeAll(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`
+			);
+			pageHtml = parseHtml(response.text);
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the correct heading', () => {
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Timetable due dates');
+		});
+
+		it('should render a date input for LPA questionnaire date', () => {
+			expect(pageHtml.querySelector('input#lpa-questionnaire-due-date-day')).not.toBeNull();
+			expect(pageHtml.querySelector('input#lpa-questionnaire-due-date-month')).not.toBeNull();
+			expect(pageHtml.querySelector('input#lpa-questionnaire-due-date-year')).not.toBeNull();
+		});
+
+		it('should render a date input for statements date', () => {
+			expect(pageHtml.querySelector('input#statement-due-date-day')).not.toBeNull();
+			expect(pageHtml.querySelector('input#statement-due-date-month')).not.toBeNull();
+			expect(pageHtml.querySelector('input#statement-due-date-year')).not.toBeNull();
+		});
+
+		it('should render a date input for IP comments date', () => {
+			expect(pageHtml.querySelector('input#ip-comments-due-date-day')).not.toBeNull();
+			expect(pageHtml.querySelector('input#ip-comments-due-date-month')).not.toBeNull();
+			expect(pageHtml.querySelector('input#ip-comments-due-date-year')).not.toBeNull();
+		});
+
+		it('should render a date input for statement of common ground date', () => {
+			expect(
+				pageHtml.querySelector('input#statement-of-common-ground-due-date-day')
+			).not.toBeNull();
+			expect(
+				pageHtml.querySelector('input#statement-of-common-ground-due-date-month')
+			).not.toBeNull();
+			expect(
+				pageHtml.querySelector('input#statement-of-common-ground-due-date-year')
+			).not.toBeNull();
+		});
+
+		it('should render a date input for proof of evidence and witnesses date', () => {
+			expect(
+				pageHtml.querySelector('input#proof-of-evidence-and-witnesses-due-date-day')
+			).not.toBeNull();
+			expect(
+				pageHtml.querySelector('input#proof-of-evidence-and-witnesses-due-date-month')
+			).not.toBeNull();
+			expect(
+				pageHtml.querySelector('input#proof-of-evidence-and-witnesses-due-date-year')
+			).not.toBeNull();
+		});
+
+		it('should render a date input for planning obligation date', () => {
+			expect(pageHtml.querySelector('input#planning-obligation-due-date-day')).not.toBeNull();
+			expect(pageHtml.querySelector('input#planning-obligation-due-date-month')).not.toBeNull();
+			expect(pageHtml.querySelector('input#planning-obligation-due-date-year')).not.toBeNull();
+		});
+	});
+
+	describe('POST /inquiry/setup/timetable-due-dates', () => {
+		const appealId = 2;
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+		});
+
+		it('should return 400 with an error when all fields are blank', async () => {
+			const appealId = 2;
+			// Use a clearly past date
+			const response = await request
+				.post(`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`)
+				.send({});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter timetable due dates');
+		});
+
+		it('should return 400 with an error when statement due date is in the past', async () => {
+			const appealId = 2;
+			// Use a clearly past date
+			const response = await request
+				.post(`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`)
+				.send({
+					'statement-due-date-day': '01',
+					'statement-due-date-month': '01',
+					'statement-due-date-year': '2000'
+				});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('statement due date must be in the future');
+		});
+
+		it('should return 400 with an error when incorrect date is entered', async () => {
+			const appealId = 2;
+			// Use a clearly past date
+			const response = await request
+				.post(`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`)
+				.send({
+					'statement-due-date-day': '32',
+					'statement-due-date-month': '12',
+					'statement-due-date-year': '2000'
+				});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Statement due date day must be between 1 and 31');
+		});
+
+		it('should return 400 with an error when a non-business day is entered', async () => {
+			const appealId = 2;
+			// Use a clearly past date
+			const response = await request
+				.post(`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`)
+				.send({
+					'statement-due-date-day': '25',
+					'statement-due-date-month': '12',
+					'statement-due-date-year': '2040'
+				});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('The statement due date must be a business day');
+		});
+
+		it('should return 400 with a specific date field error when full date is not entered', async () => {
+			const appealId = 2;
+			// Use a clearly past date
+			const response = await request
+				.post(`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`)
+				.send({
+					'statement-due-date-day': '01',
+					'statement-due-date-month': '01',
+					'lpa-questionnaire-due-date-year': '2025',
+					'lpa-questionnaire-due-date-day': '01',
+					'planning-obligation-due-date-month': '01',
+					'planning-obligation-due-date-year': '2025'
+				});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Statement due date must include a year');
+			expect(errorSummaryHtml).toContain('LPA questionnaire due date must include a month');
+			expect(errorSummaryHtml).toContain('Planning obligation due date must include a day');
+			expect(errorSummaryHtml).toContain('Enter the statement of common ground due date');
+			expect(errorSummaryHtml).toContain('Enter the proof of evidence and witnesses due date');
+		});
+
+		//TODO: To be added back when CYA view is applied
+
+		// eslint-disable-next-line jest/no-commented-out-tests
+		// it('should redirect to /inquiry/setup/check-details with valid inputs', async () => {
+		// 	const response = await request
+		// 		.post(`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`)
+		// 		.send({
+		// 			'lpa-questionnaire-due-date-day': '01',
+		// 			'lpa-questionnaire-due-date-month': '02',
+		// 			'lpa-questionnaire-due-date-year': '3025',
+		// 			'statement-due-date-day': '01',
+		// 			'statement-due-date-month': '02',
+		// 			'statement-due-date-year': '3025',
+		// 			'ip-comments-due-date-day': '01',
+		// 			'ip-comments-due-date-month': '02',
+		// 			'ip-comments-due-date-year': '3025',
+		// 			'statement-of-common-ground-due-date-day': '01',
+		// 			'statement-of-common-ground-due-date-month': '02',
+		// 			'statement-of-common-ground-due-date-year': '3025',
+		// 			'proof-of-evidence-and-witnesses-due-date-day': '01',
+		// 			'proof-of-evidence-and-witnesses-due-date-month': '02',
+		// 			'proof-of-evidence-and-witnesses-due-date-year': '3025',
+		// 			'planning-obligation-due-date-day': '01',
+		// 			'planning-obligation-due-date-month': '02',
+		// 			'planning-obligation-due-date-year': '3025'
+		// 		});
+		//
+		// 	expect(response.statusCode).toBe(302);
+		// 	expect(response.headers.location).toBe(`${baseUrl}/${appealId}/inquiry/setup/check-details`);
+		// });
+	});
 });

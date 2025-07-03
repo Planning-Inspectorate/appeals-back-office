@@ -341,6 +341,17 @@ export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
 		if (!req.errors) {
 			return next();
 		}
+		for (const e of Object.keys(req.errors)) {
+			if (req.errors[e].msg.includes('whole-page')) {
+				const [cause, message] = req.errors[e].msg.split('::');
+				req.errors[e].param = `${cause}`;
+				req.errors[e].msg = message;
+				req.errors = {
+					e: req.errors[e]
+				};
+				return next();
+			}
+		}
 
 		const dateFields = [
 			`${fieldNamePrefix}`,
