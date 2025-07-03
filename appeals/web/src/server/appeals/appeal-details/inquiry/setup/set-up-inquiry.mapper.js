@@ -157,3 +157,97 @@ export function addressDetailsPage(appealData, action, currentAddress, errors) {
 		pageComponents: addressInputs({ address: currentAddress, errors })
 	};
 }
+
+/**
+ * @param {Appeal} appealDetails
+ * @param {import('@pins/appeals').Address} values
+ * @param {import("@pins/express").ValidationErrors | undefined} errors
+ * @returns Promise<PageContent>
+ */
+export const inquiryDueDatesPage = async (appealDetails, values, errors = undefined) => {
+	/**
+	 * @type {{backLinkUrl: string, heading: string, title: string, preHeading: string, pageComponents?: PageComponent[]}}
+	 */
+	let pageContent = {
+		title: `Timetable due dates`,
+		backLinkUrl:
+			values.addressLine1 || values.addressLine2
+				? `/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/setup/address-details`
+				: `/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/setup/address`,
+		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+		heading: `Timetable due dates`,
+		pageComponents: []
+	};
+	/**
+	 *
+	 * @type {string[]}
+	 */
+	const dueDateFields = [
+		'lpaQuestionnaireDueDate',
+		'statementDueDate',
+		'ipCommentsDueDate',
+		'statementOfCommonGroundDueDate',
+		'proofOfEvidenceAndWitnessesDueDate',
+		'planningObligationDueDate'
+	];
+
+	pageContent.pageComponents = dueDateFields.map((dateField) => {
+		const fieldType = getDueDateFieldNameAndID(dateField);
+		if (fieldType === undefined) {
+			throw new Error(`Unknown date field: ${dateField}`);
+		}
+		return dateInput({
+			name: `${fieldType.id}`,
+			id: `${fieldType.id}`,
+			namePrefix: `${fieldType.id}`,
+			legendText: `${fieldType.name}`,
+			hint: 'For example, 31 3 2025',
+			legendClasses: 'govuk-fieldset__legend--m',
+			errors: errors
+		});
+	});
+
+	return pageContent;
+};
+
+/**
+ *
+ * @param {string} dateField
+ * @returns {undefined | {name: string, id: string}}
+ */
+export const getDueDateFieldNameAndID = (dateField) => {
+	switch (dateField) {
+		case 'lpaQuestionnaireDueDate':
+			return {
+				id: 'lpa-questionnaire-due-date',
+				name: 'LPA questionnaire due date'
+			};
+		case 'statementDueDate':
+			return {
+				id: 'statement-due-date',
+				name: 'Statement due date'
+			};
+		case 'ipCommentsDueDate':
+			return {
+				id: 'ip-comments-due-date',
+				name: 'Interested party comments'
+			};
+		case 'statementOfCommonGroundDueDate':
+			return {
+				id: 'statement-of-common-ground-due-date',
+				name: 'Statement of common ground due date'
+			};
+		case 'proofOfEvidenceAndWitnessesDueDate':
+			return {
+				id: 'proof-of-evidence-and-witnesses-due-date',
+				name: 'Proof of evidence and witnesses due date'
+			};
+		case 'planningObligationDueDate':
+			return {
+				id: 'planning-obligation-due-date',
+				name: 'Planning obligation due date'
+			};
+		default:
+			return undefined;
+	}
+};

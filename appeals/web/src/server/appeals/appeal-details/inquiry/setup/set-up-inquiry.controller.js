@@ -1,4 +1,9 @@
-import { inquiryDatePage, addressDetailsPage, addressKnownPage } from './set-up-inquiry.mapper.js';
+import {
+	inquiryDatePage,
+	addressDetailsPage,
+	addressKnownPage,
+	inquiryDueDatesPage
+} from './set-up-inquiry.mapper.js';
 import { inquiryEstimationPage } from './set-up-inquiry.mapper.js';
 import { isEmpty, has, pick } from 'lodash-es';
 
@@ -203,6 +208,48 @@ export const postInquiryAddressDetails = async (request, response) => {
 
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/inquiry/setup/timetable-due-dates`
+	);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getInquiryDueDates = async (request, response) => {
+	const values = request.session['setUpInquiry'] || {};
+
+	return renderInquiryDueDates(request, response, values);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('@pins/appeals').Address} values
+ */
+export const renderInquiryDueDates = async (request, response, values) => {
+	const { currentAppeal, errors } = request;
+	const mappedPageContent = await inquiryDueDatesPage(currentAppeal, values, errors);
+
+	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postInquiryDueDates = async (request, response) => {
+	if (request.errors) {
+		const values = request.session['setUpInquiry'] || {};
+		return renderInquiryDueDates(request, response, values);
+	}
+
+	const { appealId } = request.currentAppeal;
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/inquiry/setup/check-details`
 	);
 };
 
