@@ -349,97 +349,292 @@ describe('/appeals/:id/reps', () => {
 			}
 		);
 
-		test('200 when ip comment representation status is successfully updated with rejection', async () => {
-			jest
-				.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
-				.setSystemTime(new Date('2024-12-11'));
+		test.each([
+			['full planning', appealS78],
+			['listed building', appealS20]
+		])(
+			'200 when ip comment representation status is successfully updated with rejection and is not allowed resubmission, appeal type %s',
+			async (_, appeal) => {
+				jest
+					.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+					.setSystemTime(new Date('2024-12-11'));
 
-			const mockRepresented = { email: 'test123@test.com' };
-			const mockAppealS78 = {
-				...appealS78,
-				appealTimetable: { ...appealS78.appealTimetable, ipCommentsDueDate: new Date() }
-			};
+				const mockRepresented = { email: 'test123@test.com' };
+				const mockAppeal = {
+					...appeal,
+					appealTimetable: { ...appeal.appealTimetable, ipCommentsDueDate: new Date() }
+				};
 
-			const mockRepresentation = {
-				id: 1,
-				lpa: false,
-				status: null,
-				originalRepresentation: 'Original text of the representation',
-				redactedRepresentation: 'Redacted text of the representation',
-				dateCreated: new Date('2024-12-11T12:00:00Z'),
-				notes: 'Some notes',
-				attachments: ['attachment1.pdf', 'attachment2.pdf'],
-				representationType: 'comment',
-				siteVisitRequested: true,
-				source: 'citizen',
-				represented: mockRepresented,
-				representationRejectionReasonsSelected: [
-					{
-						representationRejectionReason: {
-							id: 1,
-							name: 'Invalid submission',
-							hasText: false
+				const mockRepresentation = {
+					id: 1,
+					lpa: false,
+					status: null,
+					originalRepresentation: 'Original text of the representation',
+					redactedRepresentation: 'Redacted text of the representation',
+					dateCreated: new Date('2024-12-11T12:00:00Z'),
+					notes: 'Some notes',
+					attachments: ['attachment1.pdf', 'attachment2.pdf'],
+					representationType: 'comment',
+					siteVisitRequested: true,
+					source: 'citizen',
+					represented: mockRepresented,
+					representationRejectionReasonsSelected: [
+						{
+							representationRejectionReason: {
+								id: 1,
+								name: 'Invalid submission',
+								hasText: false
+							},
+							representationRejectionReasonText: []
 						},
-						representationRejectionReasonText: []
-					},
-					{
-						representationRejectionReason: {
-							id: 7,
-							name: 'Other',
-							hasText: true
-						},
-						representationRejectionReasonText: [{ text: 'Provided documents were incomplete' }]
-					}
+						{
+							representationRejectionReason: {
+								id: 7,
+								name: 'Other',
+								hasText: true
+							},
+							representationRejectionReasonText: [{ text: 'Provided documents were incomplete' }]
+						}
+					]
+				};
+
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
 				]
-			};
+					.map((key) => appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
 
-			const expectedSiteAddress = [
-				'addressLine1',
-				'addressLine2',
-				'addressTown',
-				'addressCounty',
-				'postcode',
-				'addressCountry'
-			]
-				.map((key) => appealS78.address[key])
-				.filter((value) => value)
-				.join(', ');
+				const expectedEmailPayload = {
+					lpa_reference: mockAppeal.applicationReference,
+					deadline_date: '',
+					ip_comment_due_before_resubmission_deadline: true,
+					appeal_reference_number: mockAppeal.reference,
+					reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
+					site_address: expectedSiteAddress
+				};
 
-			const expectedEmailPayload = {
-				lpa_reference: mockAppealS78.applicationReference,
-				deadline_date: '16 December 2024',
-				ip_comment_due_before_resubmission_deadline: true,
-				appeal_reference_number: mockAppealS78.reference,
-				reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
-				site_address: expectedSiteAddress
-			};
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+				databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+				databaseConnector.representation.update.mockResolvedValue({
+					...mockRepresentation,
+					status: 'invalid'
+				});
 
-			databaseConnector.appeal.findUnique.mockResolvedValue(appealS78);
-			databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
-			databaseConnector.representation.update.mockResolvedValue({
-				...mockRepresentation,
-				status: 'invalid'
-			});
+				const response = await request
+					.patch('/appeals/1/reps/1')
+					.send({
+						status: 'invalid',
+						allowResubmit: false
+					})
+					.set('azureAdUserId', '732652365');
 
-			const response = await request
-				.patch('/appeals/1/reps/1')
-				.send({
-					status: 'invalid',
-					allowResubmit: true
-				})
-				.set('azureAdUserId', '732652365');
+				expect(response.status).toEqual(200);
 
-			expect(response.status).toEqual(200);
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					notifyClient: expect.anything(),
+					personalisation: expectedEmailPayload,
+					recipientEmail: mockRepresented.email,
+					templateName: 'ip-comment-rejected'
+				});
+			}
+		);
 
-			expect(mockNotifySend).toHaveBeenCalledWith({
-				notifyClient: expect.anything(),
-				personalisation: expectedEmailPayload,
-				recipientEmail: mockRepresented.email,
-				templateName: 'ip-comment-rejected-deadline-extended'
-			});
-		});
+		test.each([
+			['full planning', appealS78],
+			['listed building', appealS20]
+		])(
+			'200 when ip comment representation status is successfully updated with rejection and is allowed resubmission, appeal type %s',
+			async (_, appeal) => {
+				jest
+					.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+					.setSystemTime(new Date('2024-12-11'));
+
+				const mockRepresented = { email: 'test123@test.com' };
+				const mockAppeal = {
+					...appeal,
+					appealTimetable: { ...appeal.appealTimetable, ipCommentsDueDate: new Date() }
+				};
+
+				const mockRepresentation = {
+					id: 1,
+					lpa: false,
+					status: null,
+					originalRepresentation: 'Original text of the representation',
+					redactedRepresentation: 'Redacted text of the representation',
+					dateCreated: new Date('2024-12-11T12:00:00Z'),
+					notes: 'Some notes',
+					attachments: ['attachment1.pdf', 'attachment2.pdf'],
+					representationType: 'comment',
+					siteVisitRequested: true,
+					source: 'citizen',
+					represented: mockRepresented,
+					representationRejectionReasonsSelected: [
+						{
+							representationRejectionReason: {
+								id: 1,
+								name: 'Invalid submission',
+								hasText: false
+							},
+							representationRejectionReasonText: []
+						},
+						{
+							representationRejectionReason: {
+								id: 7,
+								name: 'Other',
+								hasText: true
+							},
+							representationRejectionReasonText: [{ text: 'Provided documents were incomplete' }]
+						}
+					]
+				};
+
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: mockAppeal.applicationReference,
+					deadline_date: '16 December 2024',
+					ip_comment_due_before_resubmission_deadline: true,
+					appeal_reference_number: mockAppeal.reference,
+					reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
+					site_address: expectedSiteAddress
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+				databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+				databaseConnector.representation.update.mockResolvedValue({
+					...mockRepresentation,
+					status: 'invalid'
+				});
+
+				const response = await request
+					.patch('/appeals/1/reps/1')
+					.send({
+						status: 'invalid',
+						allowResubmit: true
+					})
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					notifyClient: expect.anything(),
+					personalisation: expectedEmailPayload,
+					recipientEmail: mockRepresented.email,
+					templateName: 'ip-comment-rejected-deadline-extended'
+				});
+			}
+		);
+
+		test.each([
+			['full planning', appealS78],
+			['listed building', appealS20]
+		])(
+			'200 when lpa statement incomplete is successfully updated with rejection, appeal type %s',
+			async (_, appeal) => {
+				jest
+					.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+					.setSystemTime(new Date('2024-12-11'));
+
+				const mockRepresentation = {
+					id: 1,
+					lpa: false,
+					status: null,
+					originalRepresentation: 'Original text of the representation',
+					redactedRepresentation: 'Redacted text of the representation',
+					dateCreated: new Date('2024-12-11T12:00:00Z'),
+					notes: 'Some notes',
+					attachments: ['attachment1.pdf', 'attachment2.pdf'],
+					representationType: 'lpa_statement',
+					siteVisitRequested: true,
+					source: 'lpa',
+					representationRejectionReasonsSelected: [
+						{
+							representationRejectionReason: {
+								id: 8,
+								name: 'Supporting documents missing',
+								hasText: false
+							},
+							representationRejectionReasonText: []
+						},
+						{
+							representationRejectionReason: {
+								id: 10,
+								name: 'Other',
+								hasText: true
+							},
+							representationRejectionReasonText: [{ text: 'Provided documents were incomplete' }]
+						}
+					]
+				};
+
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: appeal.applicationReference,
+					deadline_date: '',
+					appeal_reference_number: appeal.reference,
+					reasons: ['Supporting documents missing', 'Other: Provided documents were incomplete'],
+					site_address: expectedSiteAddress
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+				databaseConnector.representation.findUnique.mockResolvedValue(mockRepresentation);
+				databaseConnector.representation.update.mockResolvedValue({
+					...mockRepresentation,
+					status: 'incomplete'
+				});
+
+				const response = await request
+					.patch('/appeals/1/reps/1')
+					.send({
+						status: 'incomplete',
+						notes: 'Some notes',
+						allowResubmit: false
+					})
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					notifyClient: expect.anything(),
+					personalisation: expectedEmailPayload,
+					recipientEmail: appeal.lpa.email,
+					templateName: 'lpa-statement-incomplete'
+				});
+			}
+		);
 	});
 
 	describe('POST representation/comments', () => {
@@ -1422,7 +1617,7 @@ describe('/appeals/:id/reps/publish', () => {
 					...expectedEmailPayload,
 					what_happens_next: ''
 				},
-				recipientEmail: appealS78.lpa.email,
+				recipientEmail: appealS20.lpa.email,
 				templateName: 'final-comments-done-lpa'
 			});
 
@@ -1432,7 +1627,7 @@ describe('/appeals/:id/reps/publish', () => {
 					...expectedEmailPayload,
 					what_happens_next: ''
 				},
-				recipientEmail: appealS78.appellant.email,
+				recipientEmail: appealS20.appellant.email,
 				templateName: 'final-comments-done-appellant'
 			});
 		});

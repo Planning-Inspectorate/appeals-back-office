@@ -25,10 +25,12 @@ import {
 } from '#tests/shared/mocks.js';
 import {
 	fullPlanningAppeal,
+	fullPlanningAppealLPAQuestionnaireIncomplete,
 	householdAppeal,
 	householdAppealLPAQuestionnaireComplete,
 	householdAppealLPAQuestionnaireIncomplete,
-	listedBuildingAppeal
+	listedBuildingAppeal,
+	listedBuildingAppealLPAQuestionnaireIncomplete
 } from '#tests/appeals/mocks.js';
 import createManyToManyRelationData from '#utils/create-many-to-many-relation-data.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -963,41 +965,48 @@ describe('lpa questionnaires routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			test('sends a correctly formatted notify email when the outcome is incomplete for a household appeal', async () => {
-				const householdAppeal = householdAppealLPAQuestionnaireIncomplete;
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			test.each([
+				['household', householdAppealLPAQuestionnaireIncomplete],
+				['full planning', fullPlanningAppealLPAQuestionnaireIncomplete],
+				['listed building', listedBuildingAppealLPAQuestionnaireIncomplete]
+			])(
+				'sends a correctly formatted notify email when the outcome is incomplete for a %s appeal',
+				async (_, appealLPAQIncomplete) => {
+					const appeal = appealLPAQIncomplete;
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 
-				const body = {
-					incompleteReasons: [{ id: 1 }, { id: 2 }],
-					lpaQuestionnaireDueDate: '2099-06-22T00:00:00.000Z',
-					validationOutcome: 'Incomplete'
-				};
-				const { id, lpaQuestionnaire } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
+					const body = {
+						incompleteReasons: [{ id: 1 }, { id: 2 }],
+						lpaQuestionnaireDueDate: '2099-06-22T00:00:00.000Z',
+						validationOutcome: 'Incomplete'
+					};
+					const { id, lpaQuestionnaire } = appeal;
+					const response = await request
+						.patch(`/appeals/${id}/lpa-questionnaires/${lpaQuestionnaire.id}`)
+						.send(body)
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					notifyClient: expect.anything(),
-					personalisation: {
-						lpa_reference: householdAppeal.applicationReference,
-						appeal_reference_number: householdAppeal.reference,
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						due_date: '22 June 2099',
-						reasons: [
-							'Documents or information are missing: Policy is missing',
-							'Other: Addresses are incorrect or missing'
-						]
-					},
-					recipientEmail: householdAppeal.lpa.email,
-					templateName: 'lpaq-incomplete'
-				});
-				expect(response.status).toEqual(200);
-			});
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						notifyClient: expect.anything(),
+						personalisation: {
+							lpa_reference: appeal.applicationReference,
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							due_date: '22 June 2099',
+							reasons: [
+								'Documents or information are missing: Policy is missing',
+								'Other: Addresses are incorrect or missing'
+							]
+						},
+						recipientEmail: appeal.lpa.email,
+						templateName: 'lpaq-incomplete'
+					});
+					expect(response.status).toEqual(200);
+				}
+			);
 
 			test('returns an error if appealId is not numeric', async () => {
 				const { lpaQuestionnaire } = householdAppeal;
