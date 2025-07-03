@@ -659,7 +659,7 @@ describe('set up inquiry', () => {
 		});
 
 		//TODO: To be added back when CYA view is applied
-
+		//
 		// eslint-disable-next-line jest/no-commented-out-tests
 		// it('should redirect to /inquiry/setup/check-details with valid inputs', async () => {
 		// 	const response = await request
