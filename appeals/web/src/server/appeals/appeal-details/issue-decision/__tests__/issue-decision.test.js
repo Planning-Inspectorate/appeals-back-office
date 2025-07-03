@@ -99,9 +99,9 @@ describe('issue-decision', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Select decision</a>');
+			expect(unprettifiedElement.innerHTML).toContain('Select the decision</a>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<p id="decision-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select decision</p>'
+				'<p id="decision-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select the decision</p>'
 			);
 		});
 
