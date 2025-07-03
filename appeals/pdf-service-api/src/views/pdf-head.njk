@@ -17,9 +17,9 @@
     .header-container {
         display: flex;
         align-items: center;
-        margin-bottom: 10px;
-        border-bottom: 5px solid #00703c;
-        padding-bottom: 10px;
+        margin-bottom: 5px;
+        border-bottom: 5px solid #0b0c0c;;
+ 				padding-bottom: 10px;
     }
     .header-logo {
         max-width: 35px;
@@ -32,53 +32,53 @@
         color: #0b0c0c;
     }
     .beta-banner {
-        background-color: #f3f2f1;
-        padding: 10px 15px;
-        margin-bottom: 25px;
-        border: 1px solid #b1b4b6;
+        padding: 10px 5px;
+				padding-left:50px;
+        margin-bottom: 15px;
         font-size: 10pt;
     }
     .beta-banner strong { font-weight: bold; color: #0b0c0c; }
     .beta-banner a { color: #005ea5; text-decoration: underline; }
 
     /* Typography */
-    h1 { font-size: 16pt; margin-top: 0.5em; margin-bottom: 15px; color: #0b0c0c; border-bottom: 1px solid #b1b4b6; padding-bottom: 5px;}
-    h2 { font-size: 13pt; margin-top: 25px; margin-bottom: 10px; color: #0b0c0c; border-bottom: 1px solid #b1b4b6; padding-bottom: 3px;}
+    h1 { font-size: 16pt; margin-top: 0.5em; margin-bottom: 15px; color: #0b0c0c; border-bottom: 1px solid #0b0c0c; padding-bottom: 5px;}
+    h2 { font-size: 13pt; margin-top: 25px; margin-bottom: 10px; color: #0b0c0c; border-bottom: 1px solid #0b0c0c; padding-bottom: 3px;}
     h3 { font-size: 11pt; margin-top: 15px; margin-bottom: 5px; color: #0b0c0c; font-weight: bold;}
     p, ul { margin-bottom: 10px; }
-    .not-available { color: #595959; font-style: italic; }
+    .not-available { color:#0b0c0c }
 
     /* Layout & Component Styles */
     .section { margin-bottom: 1.5em; }
     .details-grid { display: grid; grid-template-columns: 180px auto; gap: 5px 10px; margin-bottom: 1em; }
     .details-grid dt { font-weight: bold; padding-top: 2px; padding-bottom: 2px; }
     .details-grid dd { margin-left: 0; padding-top: 2px; padding-bottom: 2px; }
-    .question-block { page-break-inside: avoid; margin-bottom: 15px; padding-left: 10px; border-left: 2px solid #b1b4b6; }
+    .question-block { page-break-inside: avoid; margin-bottom: 15px;}
+		.question-block ul {
+    padding-left: 0; /* Removes the default browser indentation for lists */
+}
     .question-title { font-weight: bold; display: block; margin-bottom: 3px; font-size: 11pt; }
-    .answer { padding-left: 15px; }
-    hr { border: none; border-top: 1px solid #b1b4b6; margin: 1.5em 0; }
+    .answer { } /* can be added later*/
+    hr { border: none; border-top: 1px solid #0b0c0c; margin: 1.5em 0; }
 
 
     ul.case-note-list { list-style-type: none; padding-left: 0; }
     li.case-note-item, .comment-block, .statement-text-block {
       background-color: transparent;
       margin-bottom: 10px;
-      padding: 10px;
-      border: 1px solid #b1b4b6;
+
     }
     li.case-note-item strong, .comment-meta {
       display: block;
       margin-bottom: 5px;
       font-size: 0.9em;
-      color: #595959;
+   		color:#0b0c0c;
       padding-bottom: 5px;
-      border-bottom: 1px dashed #b1b4b6;
     }
-	    .comment-block { page-break-inside: avoid; margin-bottom: 20px; padding: 15px; background-color: #f8f8f8; border-left: 5px solid #b1b4b6;}
-		    .comment-block.accepted { border-left-color: #00703c; } /* Green for Accepted */
-   .comment-block.rejected { border-left-color: #d4351c; } /* Red for Rejected */
-   .comment-meta { font-size: 0.9em; color: #505a5f; margin-bottom: 10px; border-bottom: 1px dashed #b1b4b6; padding-bottom: 5px; }
-    .document-list { margin-top: 5px; padding-left: 0; list-style: none; }
-    .document-list li { margin-bottom: 3px; }
-    .site-address-header { margin-bottom: 15px; }
+	 .comment-block { page-break-inside: avoid; margin-bottom: 10px;   }
+	 .comment-block.accepted { } /* Green for Accepted, can add styles later*/
+   .comment-block.rejected {  } /* Red for Rejected ,can add styles later*/
+   .comment-meta { font-size: 0.9em;  color:#0b0c0c; padding-bottom: 5px; }
+   .document-list { margin-top: 5px; list-style: none; }
+   .document-list li { margin-bottom: 3px; }
+   .site-address-header { margin-bottom: 15px; }
 </style>
