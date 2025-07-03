@@ -48,15 +48,15 @@ The following notifications are sent from the back-office using these [Notify Te
 
 ### Appeal valid start case s78 appellant
 
-- **Appeal type:** s78
+- **Appeal type:** s78, s20
 - **Notify Template:** [appeal-valid-start-case-s78-appellant](../appeals/api/src/server/notify/templates/appeal-valid-start-case-s78-appellant.content.md)
-- **Trigger:** Start a full planning case, select an appeal procedure, and confirm.
+- **Trigger:** Start a full planning or listed building case, select an appeal procedure, and confirm.
 
 ### Appeal valid start case s78 lpa
 
-- **Appeal type:** s78
+- **Appeal type:** s78, s20
 - **Notify Template:** [appeal-valid-start-case-s78-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-s78-lpa.content.md)
-- **Trigger:** Start a full planning case, select an appeal procedure, and confirm.
+- **Trigger:** Start a full planning or listed building case, select an appeal procedure, and confirm.
 
 ### Appeal valid start case householder appellant
 
@@ -86,7 +86,7 @@ The following notifications are sent from the back-office using these [Notify Te
 
 ### Lpaq complete s78 appellant
 
-- **Appeal type:** s78
+- **Appeal type:** s78, s20
 - **Notify Template:** [lpaq-complete-appellant](../appeals/api/src/server/notify/templates/lpaq-complete-appellant.content.md)
 - **Trigger:** Review a Lpaq and mark it as complete by selecting "Complete" and continue
 
@@ -112,46 +112,46 @@ The following notifications are sent from the back-office using these [Notify Te
 
 ### Lpa statement incomplete
 
-- **Appeal type:** s78
+- **Appeal type:** s78, s20
 - **Notify Template:** [lpa-statement-incomplete](../appeals/api/src/server/notify/templates/lpa-statement-incomplete.content.md)
 - **Trigger:** Review a lpa statement and mark it as incomplete by selecting "Incomplete" and continue
 
 ### Ip comment rejected
 
-- **Appeal type:** s78
+- **Appeal type:** s78, s20
 - **Notify Template:** [ip-comment-rejected](../appeals/api/src/server/notify/templates/ip-comment-rejected.content.md)
 - **Trigger:** Review an ip comment and mark it as rejected by selecting "Reject" and continue
 
 ### Ip comment rejected deadline extended
 
-- **Appeal type:** s78
-- **Notify Template:** [ip-comment-rejected](../appeals/api/src/server/notify/templates/ip-comment-rejected.content.md)
+- **Appeal type:** s78, s20
+- **Notify Template:** [ip-comment-rejected-deadline-extended](../appeals/api/src/server/notify/templates/ip-comment-rejected-deadline-extended.content.md)
 - **Trigger:** Update and extend the ip comment due date and then review an ip comment and mark it as rejected by selecting "Reject" and continue
 
 ## Final comments
 
 ### Final comments done appellant
 
-- **Appeal type:** s78
+- **Appeal type:** s78, s20
 - **Notify Template:** [final-comments-done-appellant](../appeals/api/src/server/notify/templates/final-comments-done-appellant.content.md)
 - **Trigger:** Review final comments and mark as accepted and continue
 
 ### Final comments done lpa
 
-- **Appeal type:** s78
+- **Appeal type:** s78, s20
 - **Notify Template:** [final-comments-done-lpa](../appeals/api/src/server/notify/templates/final-comments-done-lpa.content.md)
 - **Trigger:** Review final comments and mark as accepted and continue
 
 ### Final comment rejected appellant
 
-- **Appeal type:** s78
+- **Appeal type:** s78, s20
 - **Notify Template:** [final-comment-rejected-appellant](../appeals/api/src/server/notify/templates/final-comment-rejected-appellant.content.md)
 - **Trigger:** Review final comments and mark as rejected, add some reasons and continue
 -
 
 ### Final comment rejected lpa
 
-- **Appeal type:** s78
+- **Appeal type:** s78, s20
 - **Notify Template:** [final-comment-rejected-lpa](../appeals/api/src/server/notify/templates/final-comment-rejected-lpa.content.md)
 - **Trigger:** Review final comments and mark as rejected, add some reasons and continue
 

@@ -2,7 +2,7 @@
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal } from '#tests/appeals/mocks.js';
+import { fullPlanningAppeal, householdAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { add, sub } from 'date-fns';
@@ -148,9 +148,14 @@ describe('appeal decision routes', () => {
 				}
 			});
 		});
-		test('returns 200 when all good', async () => {
+
+		test.each([
+			['householdAppeal', householdAppeal],
+			['fullPlanningAppeal', fullPlanningAppeal],
+			['listedBuildingAppeal', listedBuildingAppeal]
+		])('returns 200 when all good, appeal type: %s', async (_, appeal) => {
 			const correctAppealState = {
-				...householdAppeal,
+				...appeal,
 				appealStatus: [
 					{
 						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
@@ -170,7 +175,7 @@ describe('appeal decision routes', () => {
 			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
 
 			const response = await request
-				.post(`/appeals/${householdAppeal.id}/inspector-decision`)
+				.post(`/appeals/${appeal.id}/inspector-decision`)
 				.send({
 					outcome: 'allowed',
 					documentDate: utcDate.toISOString(),
@@ -184,26 +189,26 @@ describe('appeal decision routes', () => {
 				notifyClient: expect.any(Object),
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
 				personalisation: {
-					appeal_reference_number: '1345264',
-					lpa_reference: '48269/APP/2021/1482',
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
-					front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264'
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
 				},
-				recipientEmail: 'test@136s7.com'
+				recipientEmail: appeal.agent.email
 			});
 
 			expect(mockNotifySend).toHaveBeenCalledWith({
 				notifyClient: expect.any(Object),
 				personalisation: {
-					appeal_reference_number: '1345264',
-					lpa_reference: '48269/APP/2021/1482',
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
-					front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264'
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
 				},
-				templateName: 'decision-is-allowed-split-dismissed-appellant',
-				recipientEmail: 'test@136s7.com'
+				templateName: 'decision-is-allowed-split-dismissed-lpa',
+				recipientEmail: appeal.lpa.email
 			});
 
 			expect(response.status).toEqual(201);

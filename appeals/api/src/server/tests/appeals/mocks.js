@@ -460,8 +460,29 @@ export const fullPlanningAppealAppellantCaseInvalid = {
 
 export const fullPlanningAppealLPAQuestionnaireIncomplete = {
 	...fullPlanningAppeal,
+	appealStatus: [
+		{
+			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			valid: true
+		}
+	],
 	lpaQuestionnaire: {
 		...fullPlanningAppeal.lpaQuestionnaire,
+		...incompleteLPAQuestionnaireOutcome
+	},
+	id: 5
+};
+
+export const listedBuildingAppealLPAQuestionnaireIncomplete = {
+	...listedBuildingAppeal,
+	appealStatus: [
+		{
+			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			valid: true
+		}
+	],
+	lpaQuestionnaire: {
+		...listedBuildingAppeal.lpaQuestionnaire,
 		...incompleteLPAQuestionnaireOutcome
 	},
 	id: 5
