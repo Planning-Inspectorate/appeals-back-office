@@ -1,0 +1,15 @@
+{% extends "layouts/app.layout.njk" %}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set title="LPA questionnaire" %}
+
+{% block main %}
+	{% for section in sections -%}
+		<h2>{{ section.heading }}</h2>
+
+		{{ govukSummaryList({
+			rows: section.items | formatItems
+		}) }}
+	{%- endfor %}
+{% endblock %}

@@ -1,12 +1,14 @@
 // @ts-nocheck
 import generatePdfLib from '../lib/generate-pdf.js';
 import logger from '../lib/logger.js';
+import config from '../config.js';
 import { getBrowserInstance } from '../browser-instance.js';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import * as fs from 'node:fs';
 import dirname from '../lib/utils/dirname.js';
 import nunjucksEnv from '../lib/nunjucks-environment.js';
+import mapQuestionnaireData from '../mappers/lpa-questionnaire.mapper.js';
 
 // import cssFileContents from 'govuk-frontend/dist/govuk/govuk-frontend.min.css';
 const __dirname = dirname(import.meta.url); // get the resolved path of the directory
@@ -45,6 +47,15 @@ try {
 	throw error;
 }
 
+const mapTemplateDataForView = (templateName, templateData) => {
+	switch (templateName) {
+		case 'lpa-questionnaire-summary-pdf':
+			return mapQuestionnaireData(templateData);
+		default:
+			return templateData;
+	}
+};
+
 const postGeneratePdfController = async (req, res, next) => {
 	const { templateName, templateData } = req.body;
 	const identifier =
@@ -66,8 +77,9 @@ const postGeneratePdfController = async (req, res, next) => {
 		const logoDataUri = generateDataUri('../assets/logo.png', 'image/png'); // Common asset
 
 		logger.info({ identifier, templateName }, `Rendering Nunjucks template: ${templateName}.njk`);
+		const mappedData = mapTemplateDataForView(templateName, templateData);
 		const context = {
-			...templateData,
+			...mappedData,
 			logoDataUri: logoDataUri,
 			gdsCssUrl: `/assets/${path.basename(gdsCssFilePath)}`
 		};
@@ -75,6 +87,17 @@ const postGeneratePdfController = async (req, res, next) => {
 		const html = nunjucksEnv.render(`${templateName}.njk`, context);
 
 		logger.info(`Rendered HTML length for ${templateName}: ${html?.length || 0}`);
+
+		if (config.development.createHTMLFile) {
+			const tempDir = path.join(__dirname, '../..', 'temp');
+			if (!fs.existsSync(tempDir)) {
+				fs.mkdirSync(tempDir, { recursive: true });
+			}
+			const htmlFilePath = path.join(tempDir, `${templateName}.html`);
+			logger.info({ identifier, templateName }, `Writing HTML to file: ${htmlFilePath}`);
+			fs.writeFileSync(htmlFilePath, html, 'utf8');
+			logger.info({ identifier, templateName }, 'HTML file written successfully.');
+		}
 
 		const pdfBuffer = await generatePdfLib(browser, html);
 		logger.info(

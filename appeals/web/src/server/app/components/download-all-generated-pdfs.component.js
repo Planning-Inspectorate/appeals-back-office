@@ -70,6 +70,30 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 		//     }
 		// },
 		{
+			filenameInZip: `LPA questionnaire as summary ${currentAppealData.appealReference}.pdf`,
+			templateName: 'lpa-questionnaire-summary-pdf',
+			async fetchData() {
+				console.log('[DownloadAll] Fetching data for: LPA Questionnaire summary');
+				const lpaQuestionnaireId = currentAppealData.lpaQuestionnaireId;
+				if (!lpaQuestionnaireId) return null;
+
+				const rawData = await getLpaQuestionnaireFromId(
+					apiClient,
+					appealId,
+					lpaQuestionnaireId.toString()
+				);
+
+				if (rawData) {
+					console.log(
+						'[DEBUG] Raw EIA Schedule Value from API:',
+						rawData.eiaEnvironmentalImpactSchedule
+					);
+				}
+
+				return rawData ? { lpaQuestionnaireData: { ...currentAppealData, ...rawData } } : null;
+			}
+		},
+		{
 			filenameInZip: `LPA questionnaire ${currentAppealData.appealReference}.pdf`,
 			templateName: 'lpa-questionnaire-pdf',
 			async fetchData() {
