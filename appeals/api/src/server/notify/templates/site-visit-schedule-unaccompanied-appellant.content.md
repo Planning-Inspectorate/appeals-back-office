@@ -8,15 +8,15 @@ You are not required to attend the site visit.
 
 # About the visit
 
-If you see the inspector, be aware that you cannot give them any documents or discuss the appeal with them.
+The purpose of the site visit is for the inspector to view the site and its surroundings. You are only required to give the inspector access to the site.
+
+You cannot give the inspector any documents or discuss the appeal with them.
 
 The inspector will carry out the inspection on their own.
 
-# Next steps
+# What happens next
 
-We will let you know our inspector’s decision when it is available.
-
-If you need to contact us, include our reference number in any communication.
+We will contact you when the inspector makes a decision.
 
 The Planning Inspectorate
 caseofficers@planninginspectorate.gov.uk
