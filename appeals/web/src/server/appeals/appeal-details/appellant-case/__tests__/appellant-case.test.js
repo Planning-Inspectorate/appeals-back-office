@@ -274,6 +274,31 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('4. Appeal details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('5. Upload documents</h2>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Additional documents</h2>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Which local planning authority (LPA) do you want to appeal against?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the application reference number?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What date did you submit your application?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Enter the description of development that you submitted in your application</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there other appeals linked to your development?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Was your application granted or refused?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What’s the date on the decision letter from the local planning authority?​</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Decision letter from the local planning authority</dt>'
+			);
 		});
 
 		it('should render review outcome form fields and controls when the appeal is in "validation" status', async () => {

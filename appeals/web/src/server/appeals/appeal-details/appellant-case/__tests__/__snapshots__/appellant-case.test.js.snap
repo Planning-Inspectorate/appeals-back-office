@@ -1753,6 +1753,19 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="change-development-description">Change<span class="govuk-visually-hidden"> Enter the description of development that you submitted in your application (3. Application details)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row appeal-related-appeals"><dt class="govuk-summary-list__key"> Are there other appeals linked to your development?</dt>
+                            <dd                             class="govuk-summary-list__value"><span>No</span>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/other-appeals/add"
+                                    data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Are there other appeals linked to your development? (3. Application details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-outcome/change"
+                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Application details)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
@@ -1763,12 +1776,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
                                     data-cy="add-decision-letter">Add<span class="govuk-visually-hidden"> Decision letter from the local planning authority (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-outcome/change"
-                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Application details)</span></a>
                                 </dd>
                         </div>
                     </dl>
