@@ -4,7 +4,7 @@ import { createTextareaConditionalValidator } from '#lib/validators/textarea-val
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 
 export const validateDecision = createValidator(
-	body('decision').trim().notEmpty().withMessage('Select decision')
+	body('decision').trim().notEmpty().withMessage('Select the decision')
 );
 
 export const validateAppellantCostsDecision = createValidator(
@@ -25,7 +25,7 @@ export const validateInvalidReason = createTextareaConditionalValidator(
 	'invalidReason',
 	'decision',
 	'Invalid',
-	'Enter reason',
+	'Enter a reason',
 	textInputCharacterLimits.defaultTextareaLength,
 	`Reason must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
 );
