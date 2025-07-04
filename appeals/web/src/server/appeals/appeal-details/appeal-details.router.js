@@ -16,7 +16,6 @@ import { auditRouter } from './audit/audit.router.js';
 import * as controller from './appeal-details.controller.js';
 import issueDecisionRouter from './issue-decision/issue-decision.router.js';
 import issueDecisionOldRouter from './issue-decision-old/issue-decision.router.js';
-import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.router.js';
 import linkedAppealsRouter from './linked-appeals/linked-appeals.router.js';
 import otherAppealsRouter from './other-appeals/other-appeals.router.js';
 import neighbouringSitesRouter from './neighbouring-sites/neighbouring-sites.router.js';
@@ -44,6 +43,7 @@ import timetableRouter from './timetable/timetable.router.js';
 import updateDecisionLetterRouter from './update-decision-letter/update-decision-letter.router.js';
 import inquiryRouter from './inquiry/inquiry.router.js';
 import assignUserRouter from './assign-user/assign-user.router.js';
+import changeAppealTypeMiddleware from './change-appeal-type.middleware.js';
 
 const router = createRouter();
 
@@ -108,7 +108,7 @@ router.use(
 	'/:appealId/change-appeal-type',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
-	appealTypeChangeRouter
+	changeAppealTypeMiddleware
 );
 router.use(
 	'/:appealId/linked-appeals',
