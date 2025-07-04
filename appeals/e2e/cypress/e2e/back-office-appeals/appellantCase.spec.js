@@ -14,7 +14,8 @@ describe('Managing Appellant Case Details', () => {
 
 	const appealTypes = {
 		D: 'householder',
-		W: 'planning appeal'
+		W: 'planning appeal',
+		Y: 'S20 appeal'
 	};
 
 	beforeEach(() => {
