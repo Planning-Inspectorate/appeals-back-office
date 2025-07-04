@@ -531,6 +531,21 @@ describe('Setup hearing and add hearing estimates', () => {
 		// Final timetable verification
 		caseDetailsPage.verifyTimeTableRows(timeTableRows);
 	});
+
+	it('should display all expected case detail sections for hearing cases', () => {
+		const expectedSections = [
+			'Overview',
+			'Timetable',
+			'Hearing',
+			'Documentation',
+			'Costs',
+			'Contacts',
+			'Team',
+			'Case management'
+		];
+
+		caseDetailsPage.verifyCaseDetailsSection(expectedSections);
+	});
 	const setupTestCase = () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.createCase({ caseType: 'W' }).then((ref) => {
