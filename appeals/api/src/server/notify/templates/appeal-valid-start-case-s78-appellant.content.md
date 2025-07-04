@@ -20,7 +20,7 @@ Due by {{lpa_statement_deadline}}.
 
 Due by {{ip_comments_deadline}}.
 
-{% if final_comments_deadline -%}
+{% if procedure_type == 'written representations' -%}
 ## Final comments from you and the local planning authority
 
 Due by {{final_comments_deadline}}.
