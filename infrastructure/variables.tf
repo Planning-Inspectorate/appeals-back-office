@@ -50,6 +50,7 @@ variable "apps_config" {
       featureFlagIssueDecision          = bool
       featureFlagReIssueDecision        = bool
       featureFlagSimplifyTeamAssignment = bool
+      featureFlagChangeAppealType       = bool
     })
 
     logging = object({

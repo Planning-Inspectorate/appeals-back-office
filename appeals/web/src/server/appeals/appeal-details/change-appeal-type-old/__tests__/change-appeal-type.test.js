@@ -26,11 +26,13 @@ describe('change-appeal-type', () => {
 
 	describe('GET /change-appeal-type/appeal-type', () => {
 		it('should render the appeal type page', async () => {
-			const response = await request.get(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`);
+			const response = await request
+				.get(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`)
+				.set('Appeal-Change-Type', 'true');
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Appeal type</h1>');
+			expect(element.innerHTML).toContain('What type should this appeal be?</h1>');
 			expect(element.innerHTML).toContain(
 				'<input class="govuk-radios__input" id="appeal-type" name="appealType"'
 			);
@@ -56,6 +58,7 @@ describe('change-appeal-type', () => {
 		it('should re-render the appeal type page with an error message if required field is missing', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({
 					appealType: ''
 				});
@@ -63,7 +66,7 @@ describe('change-appeal-type', () => {
 			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Appeal type</h1>');
+			expect(element.innerHTML).toContain('What type should this appeal be?</h1>');
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
