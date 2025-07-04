@@ -91,6 +91,130 @@ exports[`set up inquiry GET /inquiry/setup/address-details should match the snap
 </main>"
 `;
 
+exports[`set up inquiry GET /inquiry/setup/check-details should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and start case</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+                                <dd class="govuk-summary-list__value">Inquiry</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/select-procedure"
+                                    data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <h3 class="govuk-heading-m">Inquiry details</h3>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry Date</dt>
+                                <dd class="govuk-summary-list__value">1 February 3025</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/date"
+                                    data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry Date</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
+                                <dd class="govuk-summary-list__value">12:00pm</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/date"
+                                    data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
+                                <dd                                 class="govuk-summary-list__value"></dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/estimation"
+                                        data-cy="change-inquiry-expected-number-of-days">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
+                                <dd                                 class="govuk-summary-list__value">Yes</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/address"
+                                        data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address of where the inquiry will take place</dt>
+                                <dd                                 class="govuk-summary-list__value">Flat 9
+                                    <br>123 Gerbil Drive
+                                    <br>Blarberton
+                                    <br>Slabshire
+                                    <br>X25 3YZ</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/address-details"
+                                        data-cy="change-inquiey-address">Change<span class="govuk-visually-hidden"> Address of where the inquiry will take place</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <h3 class="govuk-heading-m">Timetable due dates</h3>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
+                                <dd class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                    data-cy="change-lpa-questionnaire-due">Change<span class="govuk-visually-hidden"> LPA questionnaire due</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement due</dt>
+                                <dd class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                    data-cy="change-statement-due">Change<span class="govuk-visually-hidden"> Statement due</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
+                                <dd                                 class="govuk-summary-list__value"></dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                        data-cy="change-interested-party-comments-due">Change<span class="govuk-visually-hidden"> Interested party comments due</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement of common ground due</dt>
+                                <dd                                 class="govuk-summary-list__value"></dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                        data-cy="change-statement-of-common-ground-due">Change<span class="govuk-visually-hidden"> Statement of common ground due</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Proof of evidence and witnesses due</dt>
+                                <dd                                 class="govuk-summary-list__value"></dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                        data-cy="change-proof-of-evidence-and-witnesses-due">Change<span class="govuk-visually-hidden"> Proof of evidence and witnesses due</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation due</dt>
+                                <dd class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                    data-cy="change-planning-obligation-due">Change<span class="govuk-visually-hidden"> Planning obligation due</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <p class="govuk-body">We’ll start the timetable now and send emails to the relevant parties.</p>
+                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Start case</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`set up inquiry GET /inquiry/setup/date should match the snapshot 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

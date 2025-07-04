@@ -186,6 +186,15 @@ export const AUDIT_TRAIL_HEARING_ESTIMATES_ADDED = 'Hearing estimates added';
 export const AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED = 'Hearing estimates updated';
 export const AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED = 'Hearing estimates removed';
 
+export const AUDIT_TRAIL_INQUIRY_SET_UP = 'Inquiry set up on {replacement0}';
+export const AUDIT_TRAIL_INQUIRY_DATE_UPDATED = 'Inquiry date updated to {replacement0}';
+export const AUDIT_TRAIL_INQUIRY_ADDRESS_ADDED = 'The inquiry address has been added';
+export const AUDIT_TRAIL_INQUIRY_ADDRESS_UPDATED = 'Inquiry address updated to {replacement0}';
+export const AUDIT_TRAIL_INQUIRY_CANCELLED = 'Inquiry cancelled';
+export const AUDIT_TRAIL_INQUIRY_ESTIMATES_ADDED = 'Inquiry estimates added';
+export const AUDIT_TRAIL_INQUIRY_ESTIMATES_UPDATED = 'Inquiry estimates updated';
+export const AUDIT_TRAIL_INQUIRY_ESTIMATES_REMOVED = 'Inquiry estimates removed';
+
 export const AUDIT_TRAIL_DECISION_ISSUED = 'Decision issued: {replacement0}';
 export const AUDIT_TRAIL_DECISION_LETTER_UPDATED = 'Decision letter: {replacement0} updated';
 export const AUDIT_TRAIL_CORRECTION_NOTICE_ADDED = 'Correction notice added: {replacement0} ';

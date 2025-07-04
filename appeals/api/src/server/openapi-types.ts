@@ -2628,6 +2628,124 @@ export interface CancelHearing {
 	hearingId?: number;
 }
 
+export interface CreateInquiryRequest {
+	/**
+	 * Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	inquiryStartTime?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	inquiryEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+}
+
+export interface UpdateInquiryRequest {
+	/**
+	 * Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	inquiryStartTime?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	inquiryEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+}
+
+export interface InquiryResponse {
+	/** @example 1 */
+	appealId?: number;
+	/** @example 1 */
+	inquiryId?: number;
+	/**
+	 * Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2014-11-14T00:00:00+00:00"
+	 */
+	inquiryStartTime?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2014-11-14T00:00:00+00:00"
+	 */
+	inquiryEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+}
+
+export interface InquiryEstimate {
+	/** @example 1.5 */
+	estimatedTime?: number;
+}
+
+export interface InquiryEstimateCreateRequest {
+	/** @example 1.5 */
+	estimatedTime?: number;
+}
+
+export interface InquiryEstimateUpdateRequest {
+	/** @example 1.5 */
+	estimatedTime?: number;
+}
+
+export interface InquiryEstimateResponse {
+	/** @example 1 */
+	inquiryEstimateId?: number;
+}
+
+export interface CancelInquiry {
+	/** @example 1 */
+	appealId?: number;
+	/** @example 1 */
+	inquiryId?: number;
+}
+
 export interface Address {
 	addressId?: number;
 	addressLine1: string;

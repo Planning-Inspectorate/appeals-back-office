@@ -886,6 +886,13 @@ type CreateHearing = {
 	address: Omit<Schema.Address, 'id'> | undefined;
 };
 
+type CreateInquiry = {
+	appealId: number;
+	inquiryStartTime: Date | string;
+	inquiryEndTime: Date | string | undefined;
+	address: Omit<Schema.Address, 'id'> | undefined;
+};
+
 type UpdateHearing = {
 	appealId: number;
 	hearingId: number;
@@ -907,6 +914,29 @@ type HearingResponse = {
 	hearingEndTime: Date | null;
 	address: Schema.Address | null;
 	addressId: number | null;
+};
+
+type InquiryResponse = {
+	appealId: number;
+	inquiryId: number;
+	inquiryStartTime: Date;
+	inquiryEndTime: Date | null;
+	address: Schema.Address | null;
+	addressId: number | null;
+};
+
+type UpdateInquiry = {
+	appealId: number;
+	inquiryId: number;
+	inquiryStartTime: Date | string;
+	inquiryEndTime: Date | string | undefined;
+	addressId?: number;
+	address?: Omit<Schema.Address, 'id'> | null;
+};
+
+type CancelInquiry = {
+	appealId?: number;
+	inquiryId: number;
 };
 
 type ListedBuildingDetailsResponse = {
@@ -996,5 +1026,10 @@ export {
 	UpdateHearing,
 	CancelHearing,
 	HearingResponse,
+	InquiryResponse,
+	CreateInquiry,
+	InquiryAddress,
+	CancelInquiry,
+	UpdateInquiry,
 	UpdateAppealDecisionRequest
 };

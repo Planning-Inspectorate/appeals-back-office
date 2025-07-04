@@ -212,6 +212,22 @@ export const householdAppeal = {
 			addressTown: 'Maidstone'
 		}
 	},
+	inquiry: {
+		id: 1,
+		appealId: 1,
+		inquiryStartTime: new Date('2022-03-31T01:00:00.000Z'),
+		inquiryEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		addressId: 1,
+		address: {
+			id: 1,
+			addressLine1: '96 The Avenue',
+			addressLine2: 'Leftfield',
+			addressCountry: 'United Kingdom',
+			addressCounty: 'Kent',
+			postcode: 'MD21 5XY',
+			addressTown: 'Maidstone'
+		}
+	},
 	parentAppeals: [],
 	childAppeals: [],
 	lpaQuestionnaire: {
