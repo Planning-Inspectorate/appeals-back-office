@@ -1,4 +1,4 @@
-You have a new {{appeal_type}} appeal against the application {{lpa_reference}}.
+You have a new {{appeal_type | lower}} appeal against the application {{lpa_reference}}.
 
 We will decide the appeal by {{procedure_type}}. You can tell us if you think a different procedure is more appropriate in the questionnaire.
 
@@ -19,7 +19,7 @@ Due by {{lpa_statement_deadline}}.
 
 Due by {{ip_comments_deadline}}.
 
-{% if final_comments_deadline -%}
+{% if procedure_type == 'written representations' -%}
 ## Final comments from the local planning authority
 
 Due by {{final_comments_deadline}}.
@@ -38,9 +38,13 @@ Due by {{planning_obligation_deadline}}.
 
 {% endif -%}
 
-# Next steps
+# What happens next
 
 [Submit your questionnaire and other documents]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}), including your appeal notification letter and a list of those notified by {{questionnaire_due_date}}.
 
+{% if procedure_type == 'a hearing' -%}
+We will send you another email when we set up the hearing.
+
+{% endif -%}
 The Planning Inspectorate
 caseofficers@planninginspectorate.gov.uk

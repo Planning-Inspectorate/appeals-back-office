@@ -16,8 +16,8 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 				start_date: '01 January 2025',
 				local_planning_authority: 'Bristol City Council',
-				appeal_type: 'Householder',
-				procedure_type: 'a written procedure',
+				appeal_type: 'Planning',
+				procedure_type: 'written representations',
 				questionnaire_due_date: '01 January 2025',
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
@@ -31,9 +31,9 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'You have a new Householder appeal against the application 48269/APP/2021/1482.',
+			'You have a new planning appeal against the application 48269/APP/2021/1482.',
 			'',
-			'We will decide the appeal by a written procedure. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
+			'We will decide the appeal by written representations. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
 			'',
 			'# Appeal details',
 			'',
@@ -60,7 +60,7 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 			'',
 			'Due by 30 January 2025.',
 			'',
-			'# Next steps',
+			'# What happens next',
 			'',
 			'[Submit your questionnaire and other documents](/mock-front-office-url/manage-appeals/134526), including your appeal notification letter and a list of those notified by 01 January 2025.',
 			'',
@@ -77,7 +77,7 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'New Householder: 134526'
+				subject: 'New planning appeal: 134526'
 			}
 		);
 	});
@@ -96,11 +96,12 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 				start_date: '01 January 2025',
 				local_planning_authority: 'Bristol City Council',
-				appeal_type: 'Householder',
-				procedure_type: 'a written procedure',
+				appeal_type: 'Planning',
+				procedure_type: 'a hearing',
 				questionnaire_due_date: '01 January 2025',
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
+				final_comments_deadline: '30 January 2025',
 				statement_of_common_ground_deadline: '25 January 2025',
 				planning_obligation_deadline: '30 January 2025'
 			},
@@ -112,9 +113,9 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'You have a new Householder appeal against the application 48269/APP/2021/1482.',
+			'You have a new planning appeal against the application 48269/APP/2021/1482.',
 			'',
-			'We will decide the appeal by a written procedure. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
+			'We will decide the appeal by a hearing. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
 			'',
 			'# Appeal details',
 			'',
@@ -145,9 +146,11 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 			'',
 			'Due by 30 January 2025.',
 			'',
-			'# Next steps',
+			'# What happens next',
 			'',
 			'[Submit your questionnaire and other documents](/mock-front-office-url/manage-appeals/134526), including your appeal notification letter and a list of those notified by 01 January 2025.',
+			'',
+			'We will send you another email when we set up the hearing.',
 			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
@@ -162,7 +165,7 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'New Householder: 134526'
+				subject: 'New planning appeal: 134526'
 			}
 		);
 	});
@@ -181,8 +184,8 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 				start_date: '01 January 2025',
 				local_planning_authority: 'Bristol City Council',
-				appeal_type: 'Householder',
-				procedure_type: 'a written procedure',
+				appeal_type: 'Planning',
+				procedure_type: 'a hearing',
 				questionnaire_due_date: '01 January 2025',
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
@@ -197,9 +200,9 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'You have a new Householder appeal against the application 48269/APP/2021/1482.',
+			'You have a new planning appeal against the application 48269/APP/2021/1482.',
 			'',
-			'We will decide the appeal by a written procedure. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
+			'We will decide the appeal by a hearing. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
 			'',
 			'# Appeal details',
 			'',
@@ -226,9 +229,11 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 			'',
 			'Due by 25 January 2025.',
 			'',
-			'# Next steps',
+			'# What happens next',
 			'',
 			'[Submit your questionnaire and other documents](/mock-front-office-url/manage-appeals/134526), including your appeal notification letter and a list of those notified by 01 January 2025.',
+			'',
+			'We will send you another email when we set up the hearing.',
 			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
@@ -243,7 +248,7 @@ describe('appeal-valid-start-case-s78-lpa.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'New Householder: 134526'
+				subject: 'New planning appeal: 134526'
 			}
 		);
 	});

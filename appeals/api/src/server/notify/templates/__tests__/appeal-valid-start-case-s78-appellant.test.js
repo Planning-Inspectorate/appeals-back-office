@@ -113,6 +113,7 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 				questionnaire_due_date: '01 January 2025',
 				lpa_statement_deadline: '10 January 2025',
 				ip_comments_deadline: '20 January 2025',
+				final_comments_deadline: '30 January 2025',
 				we_will_email_when: [
 					'to let you know when you can view information from other parties in the appeals service',
 					'when we set up your hearing'
