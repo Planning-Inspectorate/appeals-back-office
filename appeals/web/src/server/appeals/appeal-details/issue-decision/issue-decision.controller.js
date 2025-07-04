@@ -194,6 +194,13 @@ export const renderDecisionLetterUpload = async (request, response) => {
 		? 'update decision letter'
 		: 'issue decision';
 
+	if (shouldFollowReIssueDecisionFlow(currentAppeal)) {
+		request.params = {
+			...request.params,
+			documentId: currentAppeal.decision.documentId
+		};
+	}
+
 	await renderDocumentUpload({
 		request,
 		response,
