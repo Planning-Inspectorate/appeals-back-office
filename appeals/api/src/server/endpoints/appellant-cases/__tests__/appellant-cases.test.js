@@ -538,56 +538,61 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			test('sends a correctly formatted notify email when the validation outcome is Incomplete', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(
-					householdAppealAppellantCaseIncomplete
-				);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
-				// @ts-ignore
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[0]
-				);
-				// @ts-ignore
-				databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue(
-					appellantCaseIncompleteReasons
-				);
+			test.each([
+				['householdAppeal', householdAppealAppellantCaseIncomplete],
+				['fullPlanningAppeal', fullPlanningAppealAppellantCaseIncomplete],
+				['listedBuildingAppeal', listedBuildingAppealAppellantCaseIncomplete]
+			])(
+				'sends a correctly formatted notify email when the validation outcome is Incomplete for %s appeal',
+				async (_, appeal) => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+					// @ts-ignore
+					databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+						appellantCaseValidationOutcomes[0]
+					);
+					// @ts-ignore
+					databaseConnector.appellantCaseIncompleteReason.findMany.mockResolvedValue(
+						appellantCaseIncompleteReasons
+					);
 
-				const body = {
-					appealDueDate: '2099-07-14T00:00:00.000Z',
-					incompleteReasons: [{ id: 1 }, { id: 2 }],
-					validationOutcome: 'Incomplete'
-				};
-				const { appellantCase, id } = householdAppealAppellantCaseIncomplete;
-				const response = await request
-					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
+					const body = {
+						appealDueDate: '2099-07-14T00:00:00.000Z',
+						incompleteReasons: [{ id: 1 }, { id: 2 }],
+						validationOutcome: 'Incomplete'
+					};
+					const { appellantCase, id } = appeal;
+					const response = await request
+						.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+						.send(body)
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						due_date: '14 July 2099',
-						reasons: [
-							'The original application form is incomplete',
-							'Other: Appellant contact information is incorrect or missing'
-						]
-					},
-					recipientEmail: 'test@136s7.com',
-					templateName: 'appeal-incomplete'
-				});
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							lpa_reference: appeal.applicationReference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							due_date: '14 July 2099',
+							reasons: [
+								'The original application form is incomplete',
+								'Other: Appellant contact information is incorrect or missing'
+							]
+						},
+						recipientEmail: appeal.agent.email,
+						templateName: 'appeal-incomplete'
+					});
 
-				expect(response.status).toEqual(200);
-			});
+					expect(response.status).toEqual(200);
+				}
+			);
 
 			test('updates appellant case when the validation outcome is Invalid with reason text', async () => {
 				// @ts-ignore
@@ -800,131 +805,146 @@ describe('appellant cases routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			test('sends a correctly formatted notify email when the validation outcome is Invalid', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppealAppellantCaseInvalid);
-				// @ts-ignore
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[1]
-				);
-				// @ts-ignore
-				databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
-					appellantCaseInvalidReasons
-				);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+			test.each([
+				['householdAppeal', householdAppealAppellantCaseInvalid],
+				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid],
+				['listedBuildingAppeal', listedBuildingAppealAppellantCaseInvalid]
+			])(
+				'sends a correctly formatted notify email when the validation outcome is Invalid for %s appeal',
+				async (_, appeal) => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+						appellantCaseValidationOutcomes[1]
+					);
+					// @ts-ignore
+					databaseConnector.appellantCaseInvalidReason.findMany.mockResolvedValue(
+						appellantCaseInvalidReasons
+					);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				const body = {
-					invalidReasons: [
-						{
-							id: 1,
-							text: ['Reason Text 1', 'Reason Text 2']
-						}
-					],
-					validationOutcome: 'Invalid'
-				};
-				const { appellantCase, id } = householdAppealAppellantCaseInvalid;
-				const response = await request
-					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
+					const body = {
+						invalidReasons: [
+							{
+								id: 1,
+								text: ['Reason Text 1', 'Reason Text 2']
+							}
+						],
+						validationOutcome: 'Invalid'
+					};
+					const { appellantCase, id } = appeal;
+					const response = await request
+						.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+						.send(body)
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						reasons: [
-							'Appeal has not been submitted on time',
-							'Other: The appeal site address does not match'
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							lpa_reference: appeal.applicationReference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							reasons: [
+								'Appeal has not been submitted on time',
+								'Other: The appeal site address does not match'
+							]
+						},
+						recipientEmail: appeal.agent.email,
+						templateName: 'appeal-invalid'
+					});
+
+					expect(response.status).toEqual(200);
+				}
+			);
+
+			test.each([
+				['householdAppeal', householdAppeal],
+				['fullPlanningAppeal', fullPlanningAppeal],
+				['listedBuildingAppeal', listedBuildingAppeal]
+			])(
+				'updates appellant case and sends a notify email when the validation outcome is Valid for %s appeal',
+				async (_, appeal) => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal,
+						appealStatus: [
+							{
+								status: 'validation',
+								valid: true
+							}
 						]
-					},
-					recipientEmail: 'test@136s7.com',
-					templateName: 'appeal-invalid'
-				});
+					});
 
-				expect(response.status).toEqual(200);
-			});
+					// @ts-ignore
+					databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
+						appellantCaseValidationOutcomes[2]
+					);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+					// @ts-ignore
+					databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+					// @ts-ignore
+					databaseConnector.documentVersion.update.mockResolvedValue([]);
+					// @ts-ignore
+					databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+						{ id: 1, key: 'no_redaction_required' }
+					]);
+					// @ts-ignore
+					databaseConnector.document.findUnique.mockResolvedValue(null);
 
-			test('updates appellant case and sends a notify email when the validation outcome is Valid', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue({
-					...householdAppeal,
-					appealStatus: [
-						{
-							status: 'validation',
+					const body = {
+						validationOutcome: 'valid'
+					};
+					const { appellantCase, id } = appeal;
+					const response = await request
+						.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+						.send(body)
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+						where: { id: appellantCase.id },
+						data: {
+							appellantCaseValidationOutcomeId: 3
+						}
+					});
+
+					expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							createdAt: expect.any(Date),
+							status: APPEAL_CASE_STATUS.READY_TO_START,
 							valid: true
 						}
-					]
-				});
+					});
 
-				// @ts-ignore
-				databaseConnector.appellantCaseValidationOutcome.findUnique.mockResolvedValue(
-					appellantCaseValidationOutcomes[2]
-				);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
-				// @ts-ignore
-				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
-				// @ts-ignore
-				databaseConnector.documentVersion.update.mockResolvedValue([]);
-				// @ts-ignore
-				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
-					{ id: 1, key: 'no_redaction_required' }
-				]);
-				// @ts-ignore
-				databaseConnector.document.findUnique.mockResolvedValue(null);
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-				const body = {
-					validationOutcome: 'valid'
-				};
-				const { appellantCase } = householdAppeal;
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/appellant-cases/${appellantCase.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							lpa_reference: appeal.applicationReference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 
-				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
-					where: { id: appellantCase.id },
-					data: {
-						appellantCaseValidationOutcomeId: 3
-					}
-				});
+							feedback_link: 'https://forms.office.com/r/9U4Sq9rEff'
+						},
+						recipientEmail: appeal.agent.email,
+						templateName: 'appeal-confirmed'
+					});
 
-				expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						createdAt: expect.any(Date),
-						status: APPEAL_CASE_STATUS.READY_TO_START,
-						valid: true
-					}
-				});
-
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
-
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						lpa_reference: '48269/APP/2021/1482',
-						appeal_reference_number: '1345264',
-						feedback_link: 'https://forms.office.com/r/9U4Sq9rEff',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
-					},
-					recipientEmail: 'test@136s7.com',
-					templateName: 'appeal-confirmed'
-				});
-
-				expect(response.status).toEqual(200);
-			});
+					expect(response.status).toEqual(200);
+				}
+			);
 			test('updates appellant case site area and procedure preferences', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				databaseConnector.user.upsert.mockResolvedValue({

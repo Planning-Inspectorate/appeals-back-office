@@ -481,74 +481,126 @@ describe('appeal timetables routes', () => {
 	});
 	describe('/appeals/:appealId/appeal-timetables', () => {
 		describe('POST', () => {
-			test('updates a household appeal timetable', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
-
-				const { id } = householdAppeal;
-				const response = await request
-					.post(`/appeals/${id}/appeal-timetables/`)
-					.send()
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(201);
-				expect(response.body).toEqual({ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' });
-
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						appeal_reference_number: '1345264',
-						appeal_type: 'Householder',
-						appellant_email_address: householdAppeal.appellant.email,
-						comment_deadline: '',
-						due_date: '12 June 2024',
-						final_comments_deadline: '',
-						ip_comments_deadline: '',
-						local_planning_authority: 'Maidstone Borough Council',
-						lpa_reference: '48269/APP/2021/1482',
-						lpa_statement_deadline: '',
-						procedure_type: 'written representations',
-						questionnaire_due_date: '12 June 2024',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024',
-						we_will_email_when:
-							'when you can view information from other parties in the appeals service.',
-						site_visit: true,
-						costs_info: true
+			test.each([
+				[
+					'householdAppeal',
+					houseAppealWithTimetable,
+					{ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' },
+					{}
+				],
+				[
+					'fullPlanningAppeal',
+					fullPlanningAppealWithTimetable,
+					{
+						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-24T22:59:00.000Z'
 					},
-					recipientEmail: householdAppeal.appellant.email,
-					templateName: 'appeal-start-date-change-appellant'
-				});
-
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						appeal_reference_number: '1345264',
-						appeal_type: 'Householder',
-						appellant_email_address: householdAppeal.appellant.email,
-						comment_deadline: '',
-						due_date: '12 June 2024',
-						final_comments_deadline: '',
-						ip_comments_deadline: '',
-						local_planning_authority: 'Maidstone Borough Council',
-						lpa_reference: '48269/APP/2021/1482',
-						lpa_statement_deadline: '',
-						procedure_type: 'written representations',
-						questionnaire_due_date: '12 June 2024',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024'
+					{
+						statement_of_common_ground_deadline: '',
+						planning_obligation_deadline: ''
+					}
+				],
+				[
+					'listedBuildingAppeal',
+					listedBuildingAppealWithTimetable,
+					{
+						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-24T22:59:00.000Z'
 					},
-					recipientEmail: householdAppeal.lpa.email,
-					templateName: 'appeal-start-date-change-lpa'
-				});
-			});
+					{}
+				]
+			])(
+				'updates a %s appeal timetable',
+				async (_, appeal, expectedResponse, additionalPersonalisation) => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+
+					const { id } = appeal;
+					const response = await request
+						.post(`/appeals/${id}/appeal-timetables/`)
+						.send()
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(response.body).toEqual(expectedResponse);
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							comment_deadline: '',
+							due_date: '12 June 2024',
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedResponse.finalCommentsDueDate || ''
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedResponse.ipCommentsDueDate || ''
+							),
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedResponse.lpaStatementDueDate || ''
+							),
+							procedure_type: 'written representations',
+							questionnaire_due_date: '12 June 2024',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							we_will_email_when:
+								'when you can view information from other parties in the appeals service.',
+							site_visit: true,
+							costs_info: true
+						},
+						recipientEmail: appeal.appellant.email,
+						templateName: 'appeal-start-date-change-appellant'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							comment_deadline: '',
+							due_date: '12 June 2024',
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedResponse.finalCommentsDueDate || ''
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedResponse.ipCommentsDueDate || ''
+							),
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedResponse.lpaStatementDueDate || ''
+							),
+							procedure_type: 'written representations',
+							questionnaire_due_date: '12 June 2024',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							...additionalPersonalisation
+						},
+						recipientEmail: appeal.lpa.email,
+						templateName: 'appeal-start-date-change-lpa'
+					});
+				}
+			);
 
 			test('start a household appeal timetable', async () => {
 				// @ts-ignore
