@@ -56,5 +56,9 @@ router
 		saveBodyToSession('setUpInquiry'),
 		asyncHandler(controller.postInquiryDueDates)
 	);
+router
+	.route('/check-details')
+	.get(asyncHandler(controller.getInquiryCheckDetails))
+	.post(asyncHandler(controller.postInquiryCheckDetails));
 
 export default router;

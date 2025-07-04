@@ -9,13 +9,14 @@ import { mapSiteVisitEntity, mapHearingEntity } from '#mappers/integration/map-e
 import { EventType } from '@pins/event-client';
 /** @typedef {import('pins-data-model').Schemas.AppealEvent} AppealEvent */
 /** @typedef {import('@pins/appeals.api').Schema.Hearing} Hearing */
+/** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */
 
 /**
  *
  * @param {number} eventId
  * @param {string} eventType
  * @param {string} updateType
- * @param {Hearing | undefined | null} existingHearing
+ * @param {Inquiry | Hearing | undefined | null} existingHearing
  * @returns
  */
 export const broadcastEvent = async (
@@ -96,6 +97,7 @@ export const broadcastEvent = async (
 				appeal: {
 					reference: appeal.reference
 				},
+				// @ts-ignore
 				hearingStartTime: existingHearing.hearingStartTime,
 				hearingEndTime: null
 			};

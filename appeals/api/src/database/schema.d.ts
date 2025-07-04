@@ -31,6 +31,8 @@ export interface Appeal extends schema.Appeal {
 	appellantProcedurePreferenceDuration?: number | null;
 	representations?: Representation[] | null;
 	hearingEstimate?: HearingEstimate | null;
+	inquiry?: Inquiry | null;
+	inquiryEstimate?: InquiryEstimate | null;
 }
 export interface CaseNote extends schema.CaseNote {
 	user: User;
@@ -43,6 +45,10 @@ export interface AppealRelationship extends schema.AppealRelationship {
 export interface Hearing extends schema.Hearing {
 	address: Address;
 }
+export interface Inquiry extends schema.Inquiry {
+	address: Address;
+}
+
 export interface AppealType extends schema.AppealType {}
 export interface AppealTimetable extends schema.AppealTimetable {}
 export interface AppealStatus extends schema.AppealStatus {}
@@ -179,3 +185,4 @@ export interface RepresentationRejectionReasonText
 
 export interface AppealNotification extends schema.AppealNotification {}
 export interface HearingEstimate extends schema.HearingEstimate {}
+export interface InquiryEstimate extends schema.InquiryEstimate {}

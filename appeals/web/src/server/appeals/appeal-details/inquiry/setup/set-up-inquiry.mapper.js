@@ -5,6 +5,17 @@ import { addressInputs } from '#lib/mappers/index.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 
+import { addressToString } from '#lib/address-formatter.js';
+import {
+	dateISOStringToDisplayDate,
+	dateISOStringToDisplayTime12hr,
+	dayMonthYearHourMinuteToISOString
+} from '#lib/dates.js';
+import { textSummaryListItem } from '#lib/mappers/index.js';
+import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { capitalize, pick } from 'lodash-es';
+
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
@@ -265,3 +276,283 @@ export const getDueDateFieldNameAndID = (dateField) => {
 			return undefined;
 	}
 };
+
+/**
+ * @param {string|number} appealId
+ * @param {string} appealReference
+ * @param {string} action
+ * @param {import('@pins/express').Session} session
+ * @returns {PageContent}
+ */
+export function confirmInquiryPage(appealId, appealReference, action, session) {
+	const procedureType = session.startCaseAppealProcedure?.[appealId]?.appealProcedure;
+	/**@type {PageComponent[]} */
+	const pageComponents = [
+		{
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'appeal-procedure',
+						text: 'Appeal procedure',
+						value: capitalizeFirstLetter(procedureType),
+						link: `/appeals-service/appeal-details/${appealId}/start-case/select-procedure`,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		}
+	];
+
+	pageComponents.push(...mapInquiryDetails(appealId, action, session));
+	pageComponents.push(...mapInquiryTimetableDue(appealId, action, session));
+
+	// Add page footer
+	pageComponents.push(
+		simpleHtmlComponent(
+			'p',
+			{
+				class: 'govuk-body'
+			},
+			`We’ll start the timetable now and send emails to the relevant parties.`
+		)
+	);
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Check details and start case',
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/start-case/select-procedure`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		heading: 'Check details and start case',
+		pageComponents,
+		submitButtonText: 'Start case'
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {string|number} appealId
+ * @param {string} action
+ * @param {import('@pins/express').Session} session
+ * @returns {PageComponent[]}
+ */
+export function mapInquiryDetails(appealId, action, session) {
+	const values = session.setUpInquiry;
+	const dateTime = dayMonthYearHourMinuteToISOString({
+		day: values['inquiry-date-day'],
+		month: values['inquiry-date-month'],
+		year: values['inquiry-date-year'],
+		hour: values['inquiry-time-hour'],
+		minute: values['inquiry-time-minute']
+	});
+	const date = dateISOStringToDisplayDate(dateTime);
+	const time = dateISOStringToDisplayTime12hr(dateTime);
+	const address = pick(values, ['addressLine1', 'addressLine2', 'town', 'county', 'postCode']);
+	/**@type {PageComponent[]} */
+	const pageComponents = [
+		simpleHtmlComponent(
+			'h3',
+			{
+				class: 'govuk-heading-m'
+			},
+			`Inquiry details`
+		),
+		{
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'inquiry-date',
+						text: 'Inquiry Date',
+						value: date,
+						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/date`,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		},
+		{
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'inquiry-time',
+						text: 'Inquiry time',
+						value: time,
+						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/date`,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		},
+		{
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'inquiry-expected-number-of-days',
+						text: 'Do you know the expected number of days to carry out the inquiry?',
+						value: capitalize(values.inquiryEstimationYesNo),
+						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/estimation`,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		}
+	];
+
+	if (values.inquiryEstimationYesNo === 'yes') {
+		pageComponents.push({
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'expected-number-of-days',
+						text: 'Expected number of days to carry out the inquiry',
+						value: `${values.inquiryEstimationDays} days`,
+						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/estimation`,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		});
+	}
+
+	pageComponents.push({
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				textSummaryListItem({
+					id: 'inquiry-address-known',
+					text: 'Do you know the address of where the inquiry will take place?',
+					value: capitalize(values.addressKnown),
+					link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/address`,
+					editable: true
+				})?.display.summaryListItem
+			]
+		}
+	});
+
+	if (values.addressKnown === 'yes' && address) {
+		pageComponents.push({
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'inquiey-address',
+						text: 'Address of where the inquiry will take place',
+						value: { html: addressToString(address, '<br>') },
+						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/address-details`,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		});
+	}
+	return pageComponents;
+}
+
+/**
+ * @param {string|number} appealId
+ * @param {string} action
+ * @param {import('@pins/express').Session} session
+ * @returns {PageComponent[]}
+ */
+export function mapInquiryTimetableDue(appealId, action, session) {
+	const values = session.setUpInquiry;
+	/**@type {PageComponent[]} */
+	const pageComponents = [
+		simpleHtmlComponent(
+			'h3',
+			{
+				class: 'govuk-heading-m'
+			},
+			`Timetable due dates`
+		),
+		{
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'lpa-questionnaire-due',
+						text: 'LPA questionnaire due',
+						value: dateISOStringToDisplayDate(values.lpaQuestionnaireDueDate),
+						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		},
+		{
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'statement-due',
+						text: 'Statement due',
+						value: dateISOStringToDisplayDate(values.statementDueDate),
+						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		},
+		{
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'interested-party-comments-due',
+						text: 'Interested party comments due',
+						value: dateISOStringToDisplayDate(values.ipCommentsDueDate),
+						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		},
+		{
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'statement-of-common-ground-due',
+						text: 'Statement of common ground due',
+						value: dateISOStringToDisplayDate(values.statementOfCommonGroundDueDate),
+						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		},
+		{
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'proof-of-evidence-and-witnesses-due',
+						text: 'Proof of evidence and witnesses due',
+						value: dateISOStringToDisplayDate(values.proofOfEvidenceAndWitnessesDueDate),
+						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		},
+		{
+			type: 'summary-list',
+			parameters: {
+				rows: [
+					textSummaryListItem({
+						id: 'planning-obligation-due',
+						text: 'Planning obligation due',
+						value: dateISOStringToDisplayDate(values.planningObligationDueDate),
+						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
+						editable: true
+					})?.display.summaryListItem
+				]
+			}
+		}
+	];
+	return pageComponents;
+}
