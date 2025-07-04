@@ -41,6 +41,7 @@ apps_config = {
     featureFlagIssueDecision          = false
     featureFlagReIssueDecision        = false
     featureFlagSimplifyTeamAssignment = false
+    featureFlagChangeAppealType       = false
   }
 
   use_system_test_bc_for_change_lpa = false

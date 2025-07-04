@@ -17,6 +17,7 @@ import * as controller from './appeal-details.controller.js';
 import issueDecisionRouter from './issue-decision/issue-decision.router.js';
 import issueDecisionOldRouter from './issue-decision-old/issue-decision.router.js';
 import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.router.js';
+import appealTypeChangeOldRouter from './change-appeal-type-old/change-appeal-type.router.js';
 import linkedAppealsRouter from './linked-appeals/linked-appeals.router.js';
 import otherAppealsRouter from './other-appeals/other-appeals.router.js';
 import neighbouringSitesRouter from './neighbouring-sites/neighbouring-sites.router.js';
@@ -108,7 +109,9 @@ router.use(
 	'/:appealId/change-appeal-type',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
-	appealTypeChangeRouter
+	config.featureFlags.featureFlagChangeAppealType
+		? appealTypeChangeRouter
+		: appealTypeChangeOldRouter
 );
 router.use(
 	'/:appealId/linked-appeals',
