@@ -287,32 +287,17 @@ export const listedBuildingAppeal = {
 
 export const listedBuildingAppealAppellantCaseValid = {
 	...fullPlanningAppeal,
-	id: 3,
+	id: 4,
 	appealType: {
 		id: 12,
 		type: 'Planning listed building and conservation area',
 		key: 'Y'
 	},
-	appellantCase: {
-		...householdAppeal.appellantCase,
-		hasDesignAndAccessStatement: true,
-		hasNewPlansOrDrawings: true,
-		hasOtherTenants: true,
-		hasPlanningObligation: true,
-		hasSeparateOwnershipCertificate: true,
-		hasToldTenants: false,
-		isAgriculturalHolding: true,
-		isAgriculturalHoldingTenant: true,
-		isDevelopmentDescriptionStillCorrect: false,
-		newDevelopmentDescription: 'A new extension has been added at the back',
-		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
-		...validAppellantCaseOutcome
-	},
 	representations: []
 };
 export const listedBuildingAppealAppellantCaseIncomplete = {
 	...fullPlanningAppeal,
-	id: 3,
+	id: 5,
 	appealType: {
 		id: 12,
 		type: 'Planning listed building and conservation area',
@@ -333,12 +318,14 @@ export const listedBuildingAppealAppellantCaseIncomplete = {
 		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
 		...incompleteAppellantCaseOutcome
 	},
+
+	caseExtensionDate: new Date(2099, 6, 14),
 	representations: []
 };
 
 export const listedBuildingAppealAppellantCaseInvalid = {
 	...fullPlanningAppeal,
-	id: 3,
+	id: 6,
 	appealType: {
 		id: 12,
 		type: 'Planning listed building and conservation area',
@@ -446,6 +433,8 @@ export const fullPlanningAppealAppellantCaseIncomplete = {
 		...fullPlanningAppeal.appellantCase,
 		...incompleteAppellantCaseOutcome
 	},
+	caseExtensionDate: new Date(2099, 6, 14),
+
 	id: 5
 };
 

@@ -165,7 +165,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "phoneNumber": "09876 543 210",
     "serviceUserId": 1,
   },
-  "appealId": 3,
+  "appealId": 4,
   "appealReference": "1345264",
   "appealSite": {
     "addressId": 1,
@@ -229,9 +229,6 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "ownsSomeLand": true,
   },
   "typeOfPlanningApplication": "full-appeal",
-  "validation": {
-    "outcome": "Valid",
-  },
 }
 `;
 
@@ -658,7 +655,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "phoneNumber": "09876 543 210",
     "serviceUserId": 1,
   },
-  "appealId": 3,
+  "appealId": 5,
   "appealReference": "1345264",
   "appealSite": {
     "addressId": 1,
@@ -941,7 +938,7 @@ exports[`appellant cases routes /appeals/:appealId/appellant-cases/:appellantCas
     "phoneNumber": "09876 543 210",
     "serviceUserId": 1,
   },
-  "appealId": 3,
+  "appealId": 6,
   "appealReference": "1345264",
   "appealSite": {
     "addressId": 1,
