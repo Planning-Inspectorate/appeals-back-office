@@ -9,6 +9,7 @@ import {
 	generateIssueDecisionUrl,
 	mapDecisionOutcome
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
+import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import config from '#environment/config.js';
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -22,9 +23,15 @@ export const mapDecision = ({ appealDetails, session, request }) => {
 		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
 		userHasPermission(permissionNames.setCaseOutcome, session);
 
+	const { documentId, documentName } = decision || {};
+
 	const link = canIssueDecision
 		? addBackLinkQueryToUrl(request, generateIssueDecisionUrl(appealId))
-		: addBackLinkQueryToUrl(request, `${baseUrl(appealDetails)}/view-decision`);
+		: config.featureFlags.featureFlagIssueDecision
+		? addBackLinkQueryToUrl(request, `${baseUrl(appealDetails)}/view-decision`)
+		: documentId && documentName
+		? mapDocumentDownloadUrl(appealId, documentId, documentName)
+		: '';
 
 	return textSummaryListItem({
 		id: 'decision',
@@ -32,11 +39,7 @@ export const mapDecision = ({ appealDetails, session, request }) => {
 		value: mapDecisionOutcome(decision?.outcome || '') || 'Not issued',
 		link,
 		editable,
-		actionText: canIssueDecision
-			? 'Issue'
-			: config.featureFlags.featureFlagIssueDecision
-			? 'View'
-			: '',
+		actionText: canIssueDecision ? 'Issue' : 'View',
 		classes: 'appeal-decision'
 	});
 };

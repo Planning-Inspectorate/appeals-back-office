@@ -7,6 +7,8 @@ import { isStatePassed } from '#lib/appeal-status.js';
 import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { getFileVersionsInfo } from '#appeals/appeal-documents/appeal.documents.service.js';
+import config from '#environment/config.js';
+import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
@@ -99,8 +101,29 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 
 		if (appealDetails.decision?.outcome || hasCostsAppellantDecision || hasCostsLpaDecision) {
 			insetTextRows.push(
-				`<a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/issue-decision/view-decision">View decision</a>`
+				config.featureFlags.featureFlagIssueDecision
+					? getViewDecisionLink(appealDetails.appealId)
+					: getViewDecisionLinkOld(appealDetails)
 			);
+
+			// if (!config.featureFlags.featureFlagIssueDecision) {
+			// 	const virusCheckStatus = mapVirusCheckStatus(
+			// 		appealDetails.decision.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
+			// 	);
+			// 	if (virusCheckStatus.checked && virusCheckStatus.safe) {
+			// 		insetTextRows.push(
+			// 			generateDecisionDocumentDownloadHtml(appealDetails, 'View decision')
+			// 		);
+			// 	} else {
+			// 		insetTextRows.push(
+			// 			`<span class="govuk-body">View decision</span><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>`
+			// 		);
+			// 	}
+			// } else {
+			// 	insetTextRows.push(
+			// 		`<a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/issue-decision/view-decision">View decision</a>`
+			// 	);
+			// }
 		}
 
 		const html =
@@ -193,3 +216,20 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 	// @ts-ignore
 	return statusTagsComponentGroup;
 };
+
+/**
+ * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
+ * @returns {string}
+ */
+const getViewDecisionLinkOld = (appealDetails) => {
+	const decisionDownloadHtml = generateDecisionDocumentDownloadHtml(appealDetails, 'View decision');
+
+	if (decisionDownloadHtml.includes('Virus')) {
+		return `<span class="govuk-body">View decision </span>${decisionDownloadHtml}`;
+	}
+
+	return decisionDownloadHtml;
+};
+
+const getViewDecisionLink = (/** @type {number} */ appealId) =>
+	`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/view-decision">View decision</a>`;
