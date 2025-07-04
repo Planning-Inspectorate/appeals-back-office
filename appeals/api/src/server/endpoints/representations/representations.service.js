@@ -250,7 +250,7 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		if (hasLpaStatement || hasLpaComment) {
 			let whatHappensNextAppellant;
 			let whatHappensNextLpa;
-			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
+			if (String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.HEARING) {
 				if (appeal.hearing?.hearingStartTime) {
 					whatHappensNextAppellant = `Your hearing is on ${formatDate(
 						appeal.hearing?.hearingStartTime,

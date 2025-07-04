@@ -1,1 +1,1 @@
-New {{appeal_type}}: {{appeal_reference_number}}
+New {{appeal_type | lower}} appeal: {{appeal_reference_number}}

@@ -11,11 +11,9 @@ Venue address: {{hearing_address}}
 
 You need to attend the hearing on {{hearing_date}}.
 
-The details of the hearing are subject to change. We will contact you by
-email if we make any changes.
+The details of the hearing are subject to change. We will contact you by email if we make any changes.
 
-We expect the hearing to finish on the same day. If the hearing needs
-more time, you will arrange the next steps on the day.
+We expect the hearing to finish on the same day. If the hearing needs more time, you will arrange the next steps on the day.
 
 The Planning Inspectorate
 caseofficers@planninginspectorate.gov.uk

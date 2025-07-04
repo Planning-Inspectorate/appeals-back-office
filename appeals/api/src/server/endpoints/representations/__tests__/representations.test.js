@@ -1188,7 +1188,11 @@ describe('/appeals/:id/reps/publish', () => {
 
 			const appeal = {
 				...mockS78Appeal,
-				procedureType: 'hearing'
+				procedureType: {
+					id: 1,
+					key: 'hearing',
+					name: 'Hearing'
+				}
 			};
 
 			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
@@ -1259,7 +1263,11 @@ describe('/appeals/:id/reps/publish', () => {
 
 			const appeal = {
 				...mockS20Appeal,
-				procedureType: 'hearing'
+				procedureType: {
+					id: 1,
+					key: 'hearing',
+					name: 'Hearing'
+				}
 			};
 
 			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
@@ -1331,7 +1339,11 @@ describe('/appeals/:id/reps/publish', () => {
 
 			const appeal = {
 				...mockS78Appeal,
-				procedureType: 'hearing',
+				procedureType: {
+					id: 1,
+					key: 'hearing',
+					name: 'Hearing'
+				},
 				hearing: {
 					hearingStartTime: new Date('2025-01-31')
 				}
@@ -1406,7 +1418,11 @@ describe('/appeals/:id/reps/publish', () => {
 
 			const appeal = {
 				...mockS20Appeal,
-				procedureType: 'hearing',
+				procedureType: {
+					id: 1,
+					key: 'hearing',
+					name: 'Hearing'
+				},
 				hearing: {
 					hearingStartTime: new Date('2025-01-31')
 				}
