@@ -1,0 +1,57 @@
+import {
+	formatDocumentData,
+	formatSentenceCase,
+	formatYesNo,
+	formatYesNoDetails
+} from '../../../lib/nunjucks-filters/index.js';
+
+export function environmentalImpactAssessmentSection(templateData) {
+	const {
+		eiaEnvironmentalImpactSchedule,
+		eiaColumnTwoThreshold,
+		eiaRequiresEnvironmentalStatement,
+		eiaDevelopmentDescription,
+		eiaSensitiveAreaDetails
+	} = templateData.lpaQuestionnaireData;
+
+	const { eiaEnvironmentalStatement, eiaScreeningOpinion, eiaScreeningDirection } =
+		templateData.lpaQuestionnaireData?.documents || {};
+
+	return {
+		heading: 'Environmental impact assessment',
+		items: [
+			{
+				key: 'What is the development category?',
+				text: formatSentenceCase(eiaEnvironmentalImpactSchedule, 'Other')
+			},
+			{
+				key: 'Does the development meet or exceed the threshold or criteria in column 2?',
+				text: formatYesNo(eiaColumnTwoThreshold)
+			},
+			{
+				key: 'Did your screening opinion say the development needed an environmental statement?',
+				text: formatYesNo(eiaRequiresEnvironmentalStatement)
+			},
+			{
+				key: 'Environmental statement and supporting information',
+				html: formatDocumentData(eiaEnvironmentalStatement)
+			},
+			{
+				key: 'Screening opinion documents',
+				html: formatDocumentData(eiaScreeningOpinion)
+			},
+			{
+				key: 'Screening direction documents',
+				html: formatDocumentData(eiaScreeningDirection)
+			},
+			{
+				key: 'Description of development',
+				text: formatSentenceCase(eiaDevelopmentDescription)
+			},
+			{
+				key: 'Is the development in, partly in, or likely to affect a sensitive area?',
+				html: formatYesNoDetails(eiaSensitiveAreaDetails)
+			}
+		]
+	};
+}
