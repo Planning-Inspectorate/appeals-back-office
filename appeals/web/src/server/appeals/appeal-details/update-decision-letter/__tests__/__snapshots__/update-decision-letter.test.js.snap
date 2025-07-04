@@ -16,8 +16,8 @@ exports[`update-decision-letter GET /decision-letter-upload should render the de
             data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
             data-folder-id="123" data-document-type="caseDecisionLetter" data-document-stage="appeal-decision"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-document-title="decision letter" data-allowed-types="application/pdf"
-            data-formatted-allowed-types="PDF">
+            data-document-id="e1e90a49-fab3-44b8-a21a-bb73af089f6b" data-document-title="decision letter"
+            data-allowed-types="application/pdf" data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="">
                     <div class="pins-file-upload__container">
