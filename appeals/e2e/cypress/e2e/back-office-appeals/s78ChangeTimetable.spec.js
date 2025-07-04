@@ -81,17 +81,19 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
 		caseDetailsPage.clickRowChangeLink(timetableItems[1].row);
 		caseDetailsPage.changeTimetableDates(timetableItems, new Date());
-		caseDetailsPage.checkErrorMessageDisplays('The statements due date must be in the future');
+		caseDetailsPage.checkErrorMessageDisplays(
+			'Statements due date must be after the LPA questionnaire due date'
+		);
 	});
 
 	it('should not accept non business date when case status is statements', () => {
 		navigateToTimeTableSection();
 		caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
 		caseDetailsPage.clickRowChangeLink(timetableItems[1].row);
-		const nextYear = new Date().getFullYear() + 1;
+		const nextYear = new Date().getFullYear() + 2;
 		const nonBusinessDate = new Date(nextYear, 0, 1);
-		caseDetailsPage.changeTimetableDates(timetableItems, nonBusinessDate);
-		caseDetailsPage.checkErrorMessageDisplays('The statements due date must be a business day');
+		caseDetailsPage.changeTimetableDates([timetableItems[1]], new Date(nextYear, 0, 1), 0);
+		caseDetailsPage.checkErrorMessageDisplays('due date must be a business day');
 	});
 
 	it('should move case status to final_comments and update available due dates', () => {
@@ -149,9 +151,9 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 			new Date(new Date().getFullYear() + futureDate.years, 0, 1),
 			futureDate.days + addedDays
 		).then((date) => {
-			caseDetailsPage.changeTimetableDates(timetableItems, date);
+			caseDetailsPage.changeTimetableDates(timetableItems, date, 7);
 			caseDetailsPage.clickUpdateTimetableDueDates();
-			caseDetailsPage.verifyDatesChanged(timetableItems, date);
+			caseDetailsPage.verifyDatesChanged(timetableItems, date, 7);
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
 		});
 	};
