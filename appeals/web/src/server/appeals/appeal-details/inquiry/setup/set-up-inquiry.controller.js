@@ -3,7 +3,7 @@ import {
 	inquiryDatePage,
 	addressDetailsPage,
 	addressKnownPage,
-	inquiryDueDatesPage
+	inquiryDueDatesPage,
 	confirmInquiryPage
 } from './set-up-inquiry.mapper.js';
 import { inquiryEstimationPage } from './set-up-inquiry.mapper.js';
