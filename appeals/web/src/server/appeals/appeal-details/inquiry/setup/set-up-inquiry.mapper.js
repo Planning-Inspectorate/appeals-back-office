@@ -476,7 +476,13 @@ export function mapInquiryTimetableDue(appealId, action, session) {
 					textSummaryListItem({
 						id: 'lpa-questionnaire-due',
 						text: 'LPA questionnaire due',
-						value: dateISOStringToDisplayDate(values.lpaQuestionnaireDueDate),
+						value: dateISOStringToDisplayDate(
+							dayMonthYearHourMinuteToISOString({
+								day: values['lpa-questionnaire-due-date-day'],
+								month: values['lpa-questionnaire-due-date-month'],
+								year: values['lpa-questionnaire-due-date-year']
+							})
+						),
 						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
 						editable: true
 					})?.display.summaryListItem
@@ -490,7 +496,13 @@ export function mapInquiryTimetableDue(appealId, action, session) {
 					textSummaryListItem({
 						id: 'statement-due',
 						text: 'Statement due',
-						value: dateISOStringToDisplayDate(values.statementDueDate),
+						value: dateISOStringToDisplayDate(
+							dayMonthYearHourMinuteToISOString({
+								day: values['statement-due-date-day'],
+								month: values['statement-due-date-month'],
+								year: values['statement-due-date-year']
+							})
+						),
 						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
 						editable: true
 					})?.display.summaryListItem
@@ -504,7 +516,13 @@ export function mapInquiryTimetableDue(appealId, action, session) {
 					textSummaryListItem({
 						id: 'interested-party-comments-due',
 						text: 'Interested party comments due',
-						value: dateISOStringToDisplayDate(values.ipCommentsDueDate),
+						value: dateISOStringToDisplayDate(
+							dayMonthYearHourMinuteToISOString({
+								day: values['ip-comments-due-date-day'],
+								month: values['ip-comments-due-date-month'],
+								year: values['ip-comments-due-date-year']
+							})
+						),
 						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
 						editable: true
 					})?.display.summaryListItem
@@ -518,7 +536,13 @@ export function mapInquiryTimetableDue(appealId, action, session) {
 					textSummaryListItem({
 						id: 'statement-of-common-ground-due',
 						text: 'Statement of common ground due',
-						value: dateISOStringToDisplayDate(values.statementOfCommonGroundDueDate),
+						value: dateISOStringToDisplayDate(
+							dayMonthYearHourMinuteToISOString({
+								day: values['statement-of-common-ground-due-date-day'],
+								month: values['statement-of-common-ground-due-date-month'],
+								year: values['statement-of-common-ground-due-date-year']
+							})
+						),
 						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
 						editable: true
 					})?.display.summaryListItem
@@ -532,7 +556,13 @@ export function mapInquiryTimetableDue(appealId, action, session) {
 					textSummaryListItem({
 						id: 'proof-of-evidence-and-witnesses-due',
 						text: 'Proof of evidence and witnesses due',
-						value: dateISOStringToDisplayDate(values.proofOfEvidenceAndWitnessesDueDate),
+						value: dateISOStringToDisplayDate(
+							dayMonthYearHourMinuteToISOString({
+								day: values['proof-of-evidence-and-witnesses-due-date-day'],
+								month: values['proof-of-evidence-and-witnesses-due-date-month'],
+								year: values['proof-of-evidence-and-witnesses-due-date-year']
+							})
+						),
 						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
 						editable: true
 					})?.display.summaryListItem
@@ -546,7 +576,13 @@ export function mapInquiryTimetableDue(appealId, action, session) {
 					textSummaryListItem({
 						id: 'planning-obligation-due',
 						text: 'Planning obligation due',
-						value: dateISOStringToDisplayDate(values.planningObligationDueDate),
+						value: dateISOStringToDisplayDate(
+							dayMonthYearHourMinuteToISOString({
+								day: values['planning-obligation-due-date-day'],
+								month: values['planning-obligation-due-date-month'],
+								year: values['planning-obligation-due-date-year']
+							})
+						),
 						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
 						editable: true
 					})?.display.summaryListItem
