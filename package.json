@@ -29,6 +29,7 @@
 		"test:cov": "dotenv turbo run test:cov -- --concurrency=2",
 		"web": "npm run dev --workspace=@pins/appeals.web",
 		"api": "npm run dev --workspace=@pins/appeals.api",
+		"pdf-service": "npm run start:dev --workspace=@pins/pdf-service-api",
 		"c4": "docker pull structurizr/lite && docker run -it --rm -p 8082:8080 -v $PWD:/usr/local/structurizr structurizr/lite"
 	},
 	"dependencies": {

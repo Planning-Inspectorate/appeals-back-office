@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+
+  {% include "pdf-head.njk" %}
+</head>
+<body >
+ {% include "pdf-header.njk" %}
+
+    {% if currentAppeal %}
+
+        <h1 class="govuk-heading-m">Appeal Summary</h1>
+
+        <h2>Appeal Details</h2>
+        <div class="details-grid">
+            <dt>Appeal Reference</dt>
+            <dd>{{ currentAppeal.appealReference | default('N/A') }}</dd>
+            <dt>Appeal Type</dt>
+            <dd>{{ currentAppeal.appealType | default('N/A') }}</dd>
+            <dt>Procedure</dt>
+            <dd>{{ currentAppeal.procedureType | default('N/A') }}</dd>
+            <dt>Appeal Status</dt>
+            <dd>{{ currentAppeal.appealStatus | default('N/A') }}</dd>
+            <dt>LPA Application Ref</dt>
+            <dd>{{ currentAppeal.planningApplicationReference | default('N/A') }}</dd>
+            <dt>Local Planning Dept</dt>
+            <dd>{{ currentAppeal.localPlanningDepartment | default('N/A') }}</dd>
+            <dt>LPA Email</dt>
+            <dd>{{ currentAppeal.lpaEmailAddress | default('N/A') }}</dd>
+            <dt>Date Received</dt>
+            <dd>{{ currentAppeal.createdAt | date('d MMMM yyyy') if currentAppeal.createdAt else 'N/A' }}</dd>
+            <dt>Date Valid</dt>
+            <dd>{{ currentAppeal.validAt | date('d MMMM yyyy') if currentAppeal.validAt else 'N/A' }}</dd>
+            <dt>Appeal Started</dt>
+            <dd>{{ currentAppeal.startedAt | date('d MMMM yyyy') if currentAppeal.startedAt else 'N/A' }}</dd>
+        </div>
+
+        <hr>
+
+        <h2>Site Details</h2>
+        <div class="section">
+            {% if currentAppeal.appealSite %}
+                <p>
+                    {{ currentAppeal.appealSite.addressLine1 | default('') }}<br>
+                    {% if currentAppeal.appealSite.addressLine2 %}{{ currentAppeal.appealSite.addressLine2 }}<br>{% endif %}
+                    {% if currentAppeal.appealSite.town %}{{ currentAppeal.appealSite.town }}<br>{% endif %}
+                    {% if currentAppeal.appealSite.county %}{{ currentAppeal.appealSite.county }}<br>{% endif %}
+                    {{ currentAppeal.appealSite.postCode | default('') }}
+                </p>
+            {% else %}
+                <p class="not-available">Site address not available.</p>
+            {% endif %}
+
+            {# Defensive check for nested properties #}
+            {% if currentAppeal.inspectorAccess and currentAppeal.inspectorAccess.lpaQuestionnaire %}
+                <h3>Inspector Access (LPA)</h3>
+                <p>Required {{ "Yes" if currentAppeal.inspectorAccess.lpaQuestionnaire.isRequired == true else "No" }}</p>
+                {% if currentAppeal.inspectorAccess.lpaQuestionnaire.details %}
+                    <p>Details {{ currentAppeal.inspectorAccess.lpaQuestionnaire.details }}</p>
+                {% endif %}
+            {% endif %}
+            {% if currentAppeal.healthAndSafety and currentAppeal.healthAndSafety.lpaQuestionnaire %}
+                <h3>Health & Safety (LPA)</h3>
+                <p>Issues {{ "Yes" if currentAppeal.healthAndSafety.lpaQuestionnaire.hasIssues == true else "No" }}</p>
+                {% if currentAppeal.healthAndSafety.lpaQuestionnaire.details %}
+                    <p>Details {{ currentAppeal.healthAndSafety.lpaQuestionnaire.details }}</p>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <hr>
+
+        <h2>Parties</h2>
+        <div class="section">
+            <h3>Appellant</h3>
+            {% if currentAppeal.appellant %}
+                <div class="details-grid">
+                    <dt>Name</dt>
+                    <dd>{{ currentAppeal.appellant.firstName | default('') }} {{ currentAppeal.appellant.lastName | default('') }}</dd>
+                    <dt>Organisation</dt>
+                    <dd>{{ currentAppeal.appellant.organisationName | default('N/A') }}</dd>
+                    <dt>Email</dt>
+                    <dd>{{ currentAppeal.appellant.email | default('N/A') }}</dd>
+                    <dt>Phone</dt>
+                    <dd>{{ currentAppeal.appellant.phoneNumber | default('N/A') }}</dd>
+                </div>
+            {% else %}
+                <p class="not-available">Appellant details not available.</p>
+            {% endif %}
+
+            <hr>
+
+            <h3>Agent</h3>
+            {% if currentAppeal.agent %}
+                <div class="details-grid">
+                    <dt>Name</dt>
+                    <dd>{{ currentAppeal.agent.firstName | default('') }} {{ currentAppeal.agent.lastName | default('') }}</dd>
+                    <dt>Organisation</dt>
+                    <dd>{{ currentAppeal.agent.organisationName | default('N/A') }}</dd>
+                    <dt>Email</dt>
+                    <dd>{{ currentAppeal.agent.email | default('N/A') }}</dd>
+                    <dt>Phone</dt>
+                    <dd>{{ currentAppeal.agent.phoneNumber | default('N/A') }}</dd>
+                </div>
+            {% else %}
+                <p class="not-available">No agent acting.</p>
+            {% endif %}
+        </div>
+
+        <hr>
+
+        <h2>Timetable</h2>
+        <div class="section">
+            {% if currentAppeal.appealTimetable %}
+                <div class="details-grid">
+                    <dt>LPA Questionnaire Due</dt>
+                    <dd>{{ currentAppeal.appealTimetable.lpaQuestionnaireDueDate | date('d MMMM yyyy') if currentAppeal.appealTimetable.lpaQuestionnaireDueDate else 'N/A' }}</dd>
+                    <dt>Appellant Statement Due</dt>
+                    <dd>{{ currentAppeal.appealTimetable.appellantStatementDueDate | date('d MMMM yyyy') if currentAppeal.appealTimetable.appellantStatementDueDate else 'N/A' }}</dd>
+                    <dt>LPA Statement Due</dt>
+                    <dd>{{ currentAppeal.appealTimetable.lpaStatementDueDate | date('d MMMM yyyy') if currentAppeal.appealTimetable.lpaStatementDueDate else 'N/A' }}</dd>
+                    <dt>IP Comments Due</dt>
+                    <dd>{{ currentAppeal.appealTimetable.ipCommentsDueDate | date('d MMMM yyyy') if currentAppeal.appealTimetable.ipCommentsDueDate else 'N/A' }}</dd>
+                    <dt>Final Comments Due</dt>
+                    <dd>{{ currentAppeal.appealTimetable.finalCommentsDueDate | date('d MMMM yyyy') if currentAppeal.appealTimetable.finalCommentsDueDate else 'N/A' }}</dd>
+                    <dt>S106 Obligation Due</dt>
+                    <dd>{{ currentAppeal.appealTimetable.s106ObligationDueDate | date('d MMMM yyyy') if currentAppeal.appealTimetable.s106ObligationDueDate else 'N/A' }}</dd>
+                    {% if currentAppeal.appealTimetable.caseResubmissionDueDate %}
+                        <dt>Case Resubmission Due</dt>
+                        <dd>{{ currentAppeal.appealTimetable.caseResubmissionDueDate | date('d MMMM yyyy') }}</dd>
+                    {% endif %}
+                </div>
+            {% else %}
+                <p class="not-available">Timetable details not available.</p>
+            {% endif %}
+        </div>
+
+        <hr>
+
+        <h2>Case Notes</h2>
+        <div class="section">
+            {% if appealCaseNotes and appealCaseNotes.length %}
+                <ul class="case-note-list">
+                    {% for note in appealCaseNotes %}
+                        <li class="case-note-item">
+                            <strong>{{ note.createdAt | date('d MMMM yyyy, HH:mm') if note.createdAt else 'Date Unknown' }}</strong>
+                            {{ note.comment | default('No content') }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="not-available">No case notes available.</p>
+            {% endif %}
+        </div>
+
+        {% if currentAppeal.linkedAppeals and currentAppeal.linkedAppeals.length %}
+        <hr>
+        <h2>Linked Appeals</h2>
+        <ul class="document-list">
+            {% for linked in currentAppeal.linkedAppeals %}
+                <li>{{ linked.appealReference | default('N/A') }} - Status: {{ linked.status | default('N/A') }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+
+       {% if currentAppeal.otherAppeals and currentAppeal.otherAppeals.length %}
+        <hr>
+        <h2>Other Appeals on Site</h2>
+        <ul class="document-list">
+            {% for other in currentAppeal.otherAppeals %}
+                <li>{{ other.appealReference | default('N/A') }}</li>
+            {% endfor %}
+        </ul>
+       {% endif %}
+
+    {% else %}
+        <h1 class="govuk-heading-xl">Error</h1>
+        <p>Appeal data was not available to generate this document.</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+   {% include "pdf-head.njk" %}
+</head>
+<body >
+	 {% include "pdf-header.njk" %}
+
+  <h1 class="govuk-heading-m">LPA final comments</h1>
+  <div class="site-address-header">
+    <p><strong>Site address</strong>
+    {% if lpaFinalCommentsData.appealSite %}
+        {{ lpaFinalCommentsData.appealSite.addressLine1 | default('') }}{% if lpaFinalCommentsData.appealSite.addressLine2 %}, {{ lpaFinalCommentsData.appealSite.addressLine2 }}{% endif %}{% if lpaFinalCommentsData.appealSite.town %}, {{ lpaFinalCommentsData.appealSite.town }}{% endif %}{% if lpaFinalCommentsData.appealSite.county %}, {{ lpaFinalCommentsData.appealSite.county }}{% endif %}, {{ lpaFinalCommentsData.appealSite.postCode | default('') }}
+    {% else %}
+        <span class="not-available">Site address not available.</span>
+    {% endif %}
+    </p>
+  </div>
+
+  <p><strong>Appeal reference</strong> {{ lpaFinalCommentsData.appealReference | default('N/A') }}</p>
+  <p><strong>LPA</strong> {{ lpaFinalCommentsData.localPlanningDepartment | default('N/A') }}</p>
+
+  <h2>Submitted final comments</h2>
+  {% if lpaFinalCommentsData.commentsList and lpaFinalCommentsData.commentsList.length %}
+    {% for comment_item in lpaFinalCommentsData.commentsList %}
+      <div class="comment-block">
+        <p class="comment-meta">
+          <strong>Submitted by</strong> {{ comment_item.author | default('N/A') }}<br>
+          <strong>Date received</strong> {{ comment_item.created | date('d MMMM yyyy, HH:mm') if comment_item.created else 'N/A' }}<br>
+          <strong>Status</strong> {{ comment_item.status | default('N/A') }}
+        </p>
+
+        <p class="govuk-body">{{ comment_item.originalRepresentation | nl2br | default('No comment text provided.') }}</p>
+
+        {% if comment_item.attachments and comment_item.attachments.length %}
+          <h3 >Supporting documents</h3>
+          <ul class="document-list">
+            {% for doc in comment_item.attachments %}
+              <li>{{ doc.name | default('Unnamed document') }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="not-available">No supporting documents submitted with this comment.</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="not-available">No LPA final comments found or submitted for this appeal.</p>
+  {% endif %}
+
+</body>
+</html>

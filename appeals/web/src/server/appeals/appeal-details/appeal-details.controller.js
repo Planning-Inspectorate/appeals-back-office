@@ -6,7 +6,6 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { getAppellantCaseFromAppealId } from './appellant-case/appellant-case.service.js';
 
 /**
- *
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
@@ -16,7 +15,7 @@ export const viewAppealDetails = async (request, response) => {
 	if (!currentAppeal) {
 		return response.status(404).render('app/404.njk');
 	}
-
+	session.currentAppeal = currentAppeal;
 	delete session.reviewOutcome;
 
 	const appealCaseNotes = await getAppealCaseNotes(
@@ -63,8 +62,10 @@ export const viewAppealDetails = async (request, response) => {
 		appellantCase
 	);
 
+	mappedPageContent.pageComponents = mappedPageContent.pageComponents || [];
+
 	return response.status(200).render('patterns/display-page.pattern.njk', {
-		pageContent: mappedPageContent,
+		pageContent: { ...mappedPageContent, currentAppeal },
 		errors
 	});
 };

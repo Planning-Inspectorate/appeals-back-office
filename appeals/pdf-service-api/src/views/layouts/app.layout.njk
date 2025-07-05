@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	{% block head %}
+		{% include "pdf-head.njk" %}
+	{% endblock %}
+</head>
+
+<body>
+	{% block header %}
+		{% include "pdf-header.njk" %}<h1 >{{ title }}</h1>
+
+		<div class="site-address-header">
+			<p><strong>Site address</strong>
+				{% if lpaQuestionnaireData.appealSite %}
+					{{ lpaQuestionnaireData.appealSite.addressLine1 | default('') }}{% if lpaQuestionnaireData.appealSite.addressLine2 %}, {{ lpaQuestionnaireData.appealSite.addressLine2 }}{% endif %}{% if lpaQuestionnaireData.appealSite.town %}, {{ lpaQuestionnaireData.appealSite.town }}{% endif %}{% if lpaQuestionnaireData.appealSite.county %}, {{ lpaQuestionnaireData.appealSite.county }}{% endif %}, {{ lpaQuestionnaireData.appealSite.postCode | default('') }}
+				{% else %}
+					<span class="not-available">Site address not available.</span>
+				{% endif %}
+			</p>
+		</div>
+	{% endblock %}
+
+	{% block main %}{% endblock %}
+</body>
+
+</html>
