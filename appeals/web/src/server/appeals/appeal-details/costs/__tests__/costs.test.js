@@ -23,7 +23,7 @@ import {
 	fileUploadInfo
 } from '#testing/app/fixtures/referencedata.js';
 import usersService from '#appeals/appeal-users/users-service.js';
-import { capitalize, cloneDeep } from 'lodash-es';
+import { capitalize, cloneDeep, upperCase } from 'lodash-es';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
@@ -402,10 +402,30 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date must include a day' },
-							{ value: 'a', expectedError: 'Received date day must be a number' },
-							{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
-							{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
+							{
+								value: '',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date must include a day`
+							},
+							{
+								value: 'a',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date day must be a number`
+							},
+							{
+								value: '0',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date day must be between 1 and 31`
+							},
+							{
+								value: '32',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date day must be between 1 and 31`
+							}
 						];
 
 						for (const testCase of testCases) {
@@ -444,10 +464,30 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date must include a month' },
-							{ value: 'a', expectedError: 'Received date month must be a number' },
-							{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
-							{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
+							{
+								value: '',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date must include a month`
+							},
+							{
+								value: 'a',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date month must be a number`
+							},
+							{
+								value: '0',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date month must be between 1 and 12`
+							},
+							{
+								value: '13',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date month must be between 1 and 12`
+							}
 						];
 
 						for (const testCase of testCases) {
@@ -486,9 +526,24 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date must include a year' },
-							{ value: 'a', expectedError: 'Received date year must be a number' },
-							{ value: '202', expectedError: 'Received date year must be 4 digits' }
+							{
+								value: '',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date must include a year`
+							},
+							{
+								value: 'a',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date year must be a number`
+							},
+							{
+								value: '202',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date year must be 4 digits`
+							}
 						];
 
 						for (const testCase of testCases) {
@@ -553,7 +608,11 @@ describe('costs', () => {
 							rootElement: '.govuk-error-summary'
 						});
 
-						expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
+						expect(errorSummaryElement.innerHTML).toContain(
+							`${
+								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+							} costs ${costsDocumentType} received date must be a valid date`
+						);
 					});
 
 					it(`should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, if complete and valid document details were provided (${costsCategory} ${costsDocumentType})`, async () => {
@@ -738,10 +797,30 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date must include a day' },
-							{ value: 'a', expectedError: 'Received date day must be a number' },
-							{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
-							{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
+							{
+								value: '',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date must include a day`
+							},
+							{
+								value: 'a',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date day must be a number`
+							},
+							{
+								value: '0',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date day must be between 1 and 31`
+							},
+							{
+								value: '32',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date day must be between 1 and 31`
+							}
 						];
 
 						for (const testCase of testCases) {
@@ -780,10 +859,30 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date must include a month' },
-							{ value: 'a', expectedError: 'Received date month must be a number' },
-							{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
-							{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
+							{
+								value: '',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date must include a month`
+							},
+							{
+								value: 'a',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date month must be a number`
+							},
+							{
+								value: '0',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date month must be between 1 and 12`
+							},
+							{
+								value: '13',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date month must be between 1 and 12`
+							}
 						];
 
 						for (const testCase of testCases) {
@@ -822,9 +921,24 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date must include a year' },
-							{ value: 'a', expectedError: 'Received date year must be a number' },
-							{ value: '202', expectedError: 'Received date year must be 4 digits' }
+							{
+								value: '',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date must include a year`
+							},
+							{
+								value: 'a',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date year must be a number`
+							},
+							{
+								value: '202',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date year must be 4 digits`
+							}
 						];
 
 						for (const testCase of testCases) {
@@ -889,7 +1003,11 @@ describe('costs', () => {
 							rootElement: '.govuk-error-summary'
 						});
 
-						expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
+						expect(errorSummaryElement.innerHTML).toContain(
+							`${
+								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+							} costs ${costsDocumentType} received date must be a valid date`
+						);
 					});
 
 					it(`should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, if complete and valid document details were provided (${costsCategory} ${costsDocumentType})`, async () => {
@@ -1490,7 +1608,9 @@ describe('costs', () => {
 							rootElement: '.govuk-error-summary'
 						});
 
-						expect(errorSummaryElement.innerHTML).toContain('Answer must be provided');
+						expect(errorSummaryElement.innerHTML).toContain(
+							'Select yes if you are sure you want to remove this version'
+						);
 					});
 
 					it(`should not send an API request to delete the document, and should redirect to the manage document page, if answer "no" was provided (${costsCategory} ${costsDocumentType})`, async () => {
@@ -2874,7 +2994,9 @@ describe('costs', () => {
 					rootElement: '.govuk-error-summary'
 				});
 
-				expect(errorSummaryElement.innerHTML).toContain('Answer must be provided');
+				expect(errorSummaryElement.innerHTML).toContain(
+					'Select yes if you are sure you want to remove this version'
+				);
 			});
 
 			it(`should not send an API request to delete the document, and should redirect to the manage document page, if answer "no" was provided`, async () => {

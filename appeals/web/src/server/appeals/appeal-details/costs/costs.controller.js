@@ -41,7 +41,7 @@ export const getDocumentUpload = async (request, response) => {
 	}
 
 	let uploadPageHeadingText = '';
-
+	let documentTitle = undefined;
 	switch (costsCategory) {
 		case 'lpa':
 			uploadPageHeadingText = `Upload LPA costs ${costsDocumentType} document`;
@@ -51,6 +51,7 @@ export const getDocumentUpload = async (request, response) => {
 			break;
 		default:
 			uploadPageHeadingText = `Upload ${costsCategory} costs ${costsDocumentType} document`;
+			documentTitle = `${costsCategory} costs ${costsDocumentType}`;
 			break;
 	}
 
@@ -59,6 +60,7 @@ export const getDocumentUpload = async (request, response) => {
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
+		documentTitle: documentTitle,
 		nextPageUrl:
 			costsCategory === 'decision'
 				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}`

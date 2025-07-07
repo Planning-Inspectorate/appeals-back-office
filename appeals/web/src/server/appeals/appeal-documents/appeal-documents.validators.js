@@ -3,6 +3,8 @@ import { body } from 'express-validator';
 
 import { dateIsValid, dateIsTodayOrInThePast } from '#lib/dates.js';
 import { folderPathToFolderNameText } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { lowerCase } from 'lodash-es';
+import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 
 export const validateDocumentNameBodyFormat = createValidator(
 	body()
@@ -65,37 +67,44 @@ export const validateDocumentDetailsBodyFormat = createValidator(
 );
 
 export const validateDocumentDetailsReceivedDatesFields = createValidator(
-	body('items.*.receivedDate').custom((value) => {
+	body('items.*.receivedDate').custom((value, { req }) => {
+		const documentName = getDocumentName(req);
 		const day = value.day;
 		const month = value.month;
 		const year = value.year;
 
 		if (!day && !month && !year) {
-			throw new Error('all-fields-day::Enter the received date');
+			throw new Error(
+				`all-fields-day::Enter the ${
+					documentName === 'Received' || !documentName.includes('LPA')
+						? lowerCase(documentName)
+						: documentName
+				} date`
+			);
 		}
 
 		if (!day && !month) {
-			throw new Error('day-month::Received date must include a day and a month');
+			throw new Error(`day-month::${documentName} date must include a day and a month`);
 		}
 
 		if (!day && !year) {
-			throw new Error('day-year::Received date must include a day and a year');
+			throw new Error(`day-year::${documentName} date must include a day and a year`);
 		}
 
 		if (!month && !year) {
-			throw new Error('month-year::Received date must include a month and a year');
+			throw new Error(`month-year::${documentName} date must include a month and a year`);
 		}
 
 		if (!day) {
-			throw new Error('day::Received date must include a day');
+			throw new Error(`day::${documentName} date must include a day`);
 		}
 
 		if (!month) {
-			throw new Error('month::Received date must include a month');
+			throw new Error(`month::${documentName} date must include a month`);
 		}
 
 		if (!year) {
-			throw new Error('year::Received date must include a year');
+			throw new Error(`year::${documentName} date must include a year`);
 		}
 
 		const dayStr = String(day);
@@ -103,73 +112,76 @@ export const validateDocumentDetailsReceivedDatesFields = createValidator(
 		const yearStr = String(year);
 
 		if (!/^\d+$/.test(dayStr)) {
-			throw new Error('day::Received date day must be a number');
+			throw new Error(`day::${documentName} date day must be a number`);
 		}
 		if (dayStr.length < 1 || dayStr.length > 2) {
-			throw new Error('day::Received date day must be 1 or 2 digits');
+			throw new Error(`day::${documentName} date day must be 1 or 2 digits`);
 		}
 		if (!/^(0?[1-9]|[12]\d|3[01])$/.test(dayStr)) {
-			throw new Error('day::Received date day must be between 1 and 31');
+			throw new Error(`day::${documentName} date day must be between 1 and 31`);
 		}
 
 		if (!/^\d+$/.test(monthStr)) {
-			throw new Error('month::Received date month must be a number');
+			throw new Error(`month::${documentName} date month must be a number`);
 		}
 		if (monthStr.length < 1 || monthStr.length > 2) {
-			throw new Error('month::Received date month must be 1 or 2 digits');
+			throw new Error(`month::${documentName} date month must be 1 or 2 digits`);
 		}
 		if (!/^(0?[1-9]|1[0-2])$/.test(monthStr)) {
-			throw new Error('month::Received date month must be between 1 and 12');
+			throw new Error(`month::${documentName} date month must be between 1 and 12`);
 		}
 
 		if (!/^\d+$/.test(yearStr)) {
-			throw new Error('year::Received date year must be a number');
+			throw new Error(`year::${documentName} date year must be a number`);
 		}
 		if (yearStr.length !== 4) {
-			throw new Error('year::Received date year must be 4 digits');
+			throw new Error(`year::${documentName} date year must be 4 digits`);
 		}
 		return true;
 	})
 );
 
 export const validateDocumentDetailsReceivedDateValid = createValidator(
-	body('items.*.receivedDate')
-		.custom((value) => {
-			const day = value.day;
-			const month = value.month;
-			const year = value.year;
+	body('items.*.receivedDate').custom((value, { req }) => {
+		const documentName = getDocumentName(req);
+		const day = value.day;
+		const month = value.month;
+		const year = value.year;
 
-			if (!day || !month || !year) {
-				return false;
-			}
+		if (!day || !month || !year) {
+			return false;
+		}
+		const errorMessage = `all-fields-day::${documentName} date must be a valid date`;
 
-			const dayNumber = Number.parseInt(day, 10);
-			const monthNumber = Number.parseInt(month, 10);
-			const yearNumber = Number.parseInt(year, 10);
+		const dayNumber = Number.parseInt(day, 10);
+		const monthNumber = Number.parseInt(month, 10);
+		const yearNumber = Number.parseInt(year, 10);
 
-			if (!dateIsValid({ day: dayNumber, month: monthNumber, year: yearNumber })) {
-				return false;
-			}
+		if (!dateIsValid({ day: dayNumber, month: monthNumber, year: yearNumber })) {
+			throw new Error(errorMessage);
+		}
 
-			return true;
-		})
-		.withMessage('all-fields-day::Received date must be a valid date')
+		return true;
+	})
 );
 
 export const validateDocumentDetailsReceivedDateIsNotFutureDate = createValidator(
-	body('items.*.receivedDate')
-		.custom((value) => {
-			const day = value.day;
-			const month = value.month;
-			const year = value.year;
+	body('items.*.receivedDate').custom((value, { req }) => {
+		const documentName = getDocumentName(req);
+		const day = value.day;
+		const month = value.month;
+		const year = value.year;
 
-			if (!day || !month || !year) {
-				return false;
-			}
+		if (!day || !month || !year) {
+			return false;
+		}
+		const errorMessage = `all-fields-day::${documentName} date cannot be a future date`;
 
-			return dateIsTodayOrInThePast({ day, month, year });
-		})
-		.withMessage('all-fields-day::Received date cannot be a future date')
+		if (!dateIsTodayOrInThePast({ day, month, year })) {
+			throw new Error(errorMessage);
+		}
+		return true;
+	})
 );
 
 export const validateDocumentDetailsRedactionStatuses = createValidator(
@@ -187,5 +199,21 @@ export const validateDocumentDetailsRedactionStatuses = createValidator(
 );
 
 export const validateDocumentDeleteAnswer = createValidator(
-	body('delete-file-answer').trim().notEmpty().withMessage('Answer must be provided')
+	body('delete-file-answer')
+		.trim()
+		.notEmpty()
+		.withMessage('Select yes if you are sure you want to remove this version')
 );
+
+export const getDocumentName = (
+	/** @type {import("express-validator/src/base").Request} */ req
+) => {
+	const { currentFolder } = req;
+	const folderDisplayLabel = mapFolderNameToDisplayLabel(currentFolder?.path);
+
+	if (folderDisplayLabel == null || String(folderDisplayLabel).trim() === '') {
+		return 'Received';
+	} else {
+		return `${folderDisplayLabel} received`;
+	}
+};
