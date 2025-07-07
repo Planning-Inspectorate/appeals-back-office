@@ -3,6 +3,8 @@ import { asyncHandler } from '@pins/express';
 import * as controller from './set-up-hearing.controller.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import * as validators from './set-up-hearing-validators.js';
+import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
+import { dateFieledName } from './set-up-hearing.constants.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -13,6 +15,9 @@ router
 	.get(asyncHandler(controller.getHearingDate))
 	.post(
 		validators.validateHearingDateTime,
+		extractAndProcessDateErrors({
+			fieldNamePrefix: dateFieledName
+		}),
 		saveBodyToSession('setUpHearing'),
 		asyncHandler(controller.postHearingDate)
 	);
