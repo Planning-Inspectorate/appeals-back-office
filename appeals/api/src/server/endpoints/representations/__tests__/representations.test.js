@@ -1078,7 +1078,8 @@ describe('/appeals/:id/reps/publish', () => {
 					has_ip_comments: true,
 					has_statement: true,
 					what_happens_next:
-						'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.'
+						'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
+					subject: 'Submit your final comments'
 				},
 				recipientEmail: appealS78.lpa.email,
 				templateName: 'received-statement-and-ip-comments-lpa'
@@ -1089,7 +1090,8 @@ describe('/appeals/:id/reps/publish', () => {
 				personalisation: {
 					...expectedEmailPayload,
 					what_happens_next:
-						'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.'
+						'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
+					subject: 'Submit your final comments'
 				},
 				recipientEmail: appealS78.appellant.email,
 				templateName: 'received-statement-and-ip-comments-appellant'
@@ -1146,7 +1148,8 @@ describe('/appeals/:id/reps/publish', () => {
 					has_ip_comments: true,
 					has_statement: true,
 					what_happens_next:
-						'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.'
+						'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
+					subject: 'Submit your final comments'
 				},
 				recipientEmail: mockS20Appeal.lpa.email,
 				templateName: 'received-statement-and-ip-comments-lpa'
@@ -1157,7 +1160,8 @@ describe('/appeals/:id/reps/publish', () => {
 				personalisation: {
 					...expectedEmailPayload,
 					what_happens_next:
-						'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.'
+						'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
+					subject: 'Submit your final comments'
 				},
 				recipientEmail: mockS20Appeal.appellant.email,
 				templateName: 'received-statement-and-ip-comments-appellant'
@@ -1223,7 +1227,8 @@ describe('/appeals/:id/reps/publish', () => {
 					...expectedEmailPayload,
 					has_ip_comments: true,
 					has_statement: true,
-					what_happens_next: 'We will contact you when the hearing has been set up.'
+					what_happens_next: 'We will contact you when the hearing has been set up.',
+					subject: `We've received all statements and comments`
 				},
 				recipientEmail: appealS78.lpa.email,
 				templateName: 'received-statement-and-ip-comments-lpa'
@@ -1233,7 +1238,8 @@ describe('/appeals/:id/reps/publish', () => {
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
-					what_happens_next: 'We will contact you if we need any more information.'
+					what_happens_next: 'We will contact you if we need any more information.',
+					subject: `We have received the local planning authority's questionnaire, all statements and comments from interested parties`
 				},
 				recipientEmail: appealS78.appellant.email,
 				templateName: 'received-statement-and-ip-comments-appellant'
@@ -1298,7 +1304,8 @@ describe('/appeals/:id/reps/publish', () => {
 					...expectedEmailPayload,
 					has_ip_comments: true,
 					has_statement: true,
-					what_happens_next: 'We will contact you when the hearing has been set up.'
+					what_happens_next: 'We will contact you when the hearing has been set up.',
+					subject: `We've received all statements and comments`
 				},
 				recipientEmail: appealS78.lpa.email,
 				templateName: 'received-statement-and-ip-comments-lpa'
@@ -1308,7 +1315,8 @@ describe('/appeals/:id/reps/publish', () => {
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
-					what_happens_next: 'We will contact you if we need any more information.'
+					what_happens_next: 'We will contact you if we need any more information.',
+					subject: `We have received the local planning authority's questionnaire, all statements and comments from interested parties`
 				},
 				recipientEmail: appealS78.appellant.email,
 				templateName: 'received-statement-and-ip-comments-appellant'
@@ -1377,7 +1385,8 @@ describe('/appeals/:id/reps/publish', () => {
 					...expectedEmailPayload,
 					has_ip_comments: true,
 					has_statement: true,
-					what_happens_next: 'The hearing is on 31 January 2025.'
+					what_happens_next: 'The hearing is on 31 January 2025.',
+					subject: `We've received all statements and comments`
 				},
 				recipientEmail: appealS78.lpa.email,
 				templateName: 'received-statement-and-ip-comments-lpa'
@@ -1388,7 +1397,8 @@ describe('/appeals/:id/reps/publish', () => {
 				personalisation: {
 					...expectedEmailPayload,
 					what_happens_next:
-						'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.'
+						'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.',
+					subject: `We have received the local planning authority's questionnaire, all statements and comments from interested parties`
 				},
 				recipientEmail: appealS78.appellant.email,
 				templateName: 'received-statement-and-ip-comments-appellant'
@@ -1456,7 +1466,8 @@ describe('/appeals/:id/reps/publish', () => {
 					...expectedEmailPayload,
 					has_ip_comments: true,
 					has_statement: true,
-					what_happens_next: 'The hearing is on 31 January 2025.'
+					what_happens_next: 'The hearing is on 31 January 2025.',
+					subject: `We've received all statements and comments`
 				},
 				recipientEmail: appealS78.lpa.email,
 				templateName: 'received-statement-and-ip-comments-lpa'
@@ -1467,7 +1478,8 @@ describe('/appeals/:id/reps/publish', () => {
 				personalisation: {
 					...expectedEmailPayload,
 					what_happens_next:
-						'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.'
+						'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.',
+					subject: `We have received the local planning authority's questionnaire, all statements and comments from interested parties`
 				},
 				recipientEmail: appealS78.appellant.email,
 				templateName: 'received-statement-and-ip-comments-appellant'

@@ -31,7 +31,7 @@ const startAppeal = async (req, res) => {
 			notifyClient,
 			siteAddress,
 			req.get('azureAdUserId') || '',
-			body.procedureType
+			body.procedureType || appeal.procedureType?.key
 		);
 
 		if (result.success) {

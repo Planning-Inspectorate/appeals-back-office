@@ -22,7 +22,8 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 				has_statement: true,
 				has_ip_comments: true,
 				what_happens_next:
-					'You need to [submit your final comments](/mock-front-office-url/appeals/ABC45678) by 01 January 2021.'
+					'You need to [submit your final comments](/mock-front-office-url/appeals/ABC45678) by 01 January 2021.',
+				subject: 'Submit your final comments'
 			}
 		};
 		expectedTailContent = [
