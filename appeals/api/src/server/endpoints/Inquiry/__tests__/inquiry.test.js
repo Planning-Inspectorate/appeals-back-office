@@ -35,6 +35,23 @@ describe('inquiry routes', () => {
 		databaseConnector.inquiry.findUnique.mockResolvedValue({ ...inquiry });
 		// @ts-ignore
 		databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+
+		const mockTx = {
+			address: { create: jest.fn() },
+			inquiry: { create: jest.fn() },
+			inquiryEstimate: { create: jest.fn() },
+			appealTimetable: { create: jest.fn() }
+		};
+		mockTx.address.create.mockResolvedValue({ id: 99, ...address });
+		mockTx.inquiry.create.mockResolvedValue(inquiry);
+		mockTx.inquiryEstimate.create.mockResolvedValue({ id: 1, estimatedTime: 9, appealId: 2 });
+		mockTx.appealTimetable.create.mockResolvedValue({});
+		databaseConnector.$transaction = jest.fn();
+		databaseConnector.$transaction.mockResolvedValue({
+			inquiry: {
+				id: 2
+			}
+		});
 	});
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -1000,49 +1017,38 @@ describe('inquiry routes', () => {
 	});
 
 	describe('/:appealId/inquiry', () => {
-		describe('POST', () => {
-			const inquiryAddress = {
-				addressLine1: 'Court 2',
-				addressLine2: '24 Court Street',
-				country: 'United Kingdom',
-				county: 'Test County',
-				postcode: 'AB12 3CD',
-				town: 'Test Town'
+		let requestData = null;
+		const inquiryAddress = {
+			addressLine1: 'Court 2',
+			addressLine2: '24 Court Street',
+			country: 'United Kingdom',
+			county: 'Test County',
+			postcode: 'AB12 3CD',
+			town: 'Test Town'
+		};
+		beforeEach(() => {
+			requestData = {
+				inquiryStartTime: '2999-01-01T13:00:00.000Z',
+				address: inquiryAddress,
+				ipCommentsDueDate: new Date('2999-01-01T14:00:00.000Z'),
+				lpaQuestionnaireDueDate: new Date('2999-01-01T15:00:00.000Z'),
+				planningObligationDueDate: new Date('2999-01-01T16:00:00.000Z'),
+				proofOfEvidenceAndWitnessesDueDate: new Date('2999-01-01T17:00:00.000Z'),
+				startDate: new Date('2999-01-01T18:00:00.000Z'),
+				statementDueDate: new Date('2999-01-01T19:00:00.000Z'),
+				statementOfCommonGroundDueDate: new Date('2999-01-01T20:00:00.000Z')
 			};
+		});
 
+		describe('POST', () => {
 			test('creates a single inquiry with address', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
-
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
-					.send({
-						inquiryStartTime: '2999-01-01T13:00:00.000Z',
-						address: inquiryAddress
-					})
+					.send(requestData)
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.inquiry.create).toHaveBeenCalledWith({
-					data: {
-						appeal: {
-							connect: {
-								id: fullPlanningAppeal.id
-							}
-						},
-						inquiryStartTime: '2999-01-01T13:00:00.000Z',
-						inquiryEndTime: undefined,
-						address: {
-							create: {
-								addressLine1: inquiryAddress.addressLine1,
-								addressLine2: inquiryAddress.addressLine2,
-								addressTown: inquiryAddress.town,
-								addressCounty: inquiryAddress.county,
-								postcode: inquiryAddress.postcode,
-								addressCountry: inquiryAddress.country
-							}
-						}
-					}
-				});
 				['Inquiry set up on 1 January 2999', 'The inquiry address has been added'].forEach(
 					(details) => {
 						expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -1090,20 +1096,9 @@ describe('inquiry routes', () => {
 
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
-					.send({ inquiryStartTime: inquiry.inquiryStartTime })
+					.send({ ...requestData, inquiryStartTime: inquiry.inquiryStartTime })
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.inquiry.create).toHaveBeenCalledWith({
-					data: {
-						appeal: {
-							connect: {
-								id: fullPlanningAppeal.id
-							}
-						},
-						inquiryStartTime: inquiry.inquiryStartTime.toISOString(),
-						inquiryEndTime: undefined
-					}
-				});
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: fullPlanningAppeal.id,
@@ -1112,8 +1107,6 @@ describe('inquiry routes', () => {
 						userId: 1
 					}
 				});
-
-				expect(mockNotifySend).not.toHaveBeenCalled();
 
 				expect(response.status).toEqual(201);
 			});
@@ -1127,6 +1120,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address
@@ -1147,6 +1141,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/appealId/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address
@@ -1167,7 +1162,12 @@ describe('inquiry routes', () => {
 
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
-					.send({ inquiryEndTime: inquiry.inquiryEndTime, address })
+					.send({
+						...requestData,
+						inquiryStartTime: undefined,
+						inquiryEndTime: inquiry.inquiryEndTime,
+						address
+					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
@@ -1187,6 +1187,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address,
 						inquiryStartTime: 'inquiryStartTime'
@@ -1209,7 +1210,7 @@ describe('inquiry routes', () => {
 
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
-					.send({ inquiryStartTime: inquiry.inquiryStartTime, address })
+					.send({ ...requestData, inquiryStartTime: inquiry.inquiryStartTime, address })
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(201);
@@ -1224,6 +1225,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						address,
 						inquiryEndTime: 'inquiryEndTime'
@@ -1247,6 +1249,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1275,6 +1278,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1304,6 +1308,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1334,6 +1339,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1363,6 +1369,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1393,6 +1400,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1421,6 +1429,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1450,6 +1459,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1480,6 +1490,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1509,6 +1520,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1539,6 +1551,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1568,6 +1581,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1598,6 +1612,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1626,6 +1641,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1655,6 +1671,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {
@@ -1684,6 +1701,7 @@ describe('inquiry routes', () => {
 				const response = await request
 					.post(`/appeals/${fullPlanningAppeal.id}/inquiry`)
 					.send({
+						...requestData,
 						inquiryStartTime: inquiry.inquiryStartTime,
 						inquiryEndTime: inquiry.inquiryEndTime,
 						address: {

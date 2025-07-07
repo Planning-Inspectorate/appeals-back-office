@@ -11,7 +11,7 @@ import { isEmpty, has, pick } from 'lodash-es';
 import { dayMonthYearHourMinuteToISOString, getTodaysISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import * as startCaseService from '../../start-case/start-case.service.js';
-import { createInquiry, createInquiryEstimates } from './inquiry.service.js';
+import { createInquiry } from './inquiry.service.js';
 
 /**
  * @param {string} path
@@ -397,6 +397,7 @@ export const postInquiryCheckDetails = async (request, response) => {
 
 		// Create Inquiry
 		await createInquiry(request, {
+			startDate: getTodaysISOString(),
 			inquiryStartTime: dayMonthYearHourMinuteToISOString({
 				day: inquiry['inquiry-date-day'],
 				month: inquiry['inquiry-date-month'],
@@ -404,15 +405,41 @@ export const postInquiryCheckDetails = async (request, response) => {
 				hour: inquiry['inquiry-time-hour'],
 				minute: inquiry['inquiry-time-minute']
 			}),
-			...(inquiry.addressKnown === 'yes' && submittedAddress)
+			...(inquiry.addressKnown === 'yes' && submittedAddress),
+			...(inquiry.inquiryEstimationYesNo === 'yes' && {
+				estimatedDays: session.setUpInquiry.inquiryEstimationDays
+			}),
+			lpaQuestionnaireDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['lpa-questionnaire-due-date-day'],
+				month: inquiry['lpa-questionnaire-due-date-month'],
+				year: inquiry['lpa-questionnaire-due-date-year']
+			}),
+			statementDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['statement-due-dat-day'],
+				month: inquiry['statement-due-dat-month'],
+				year: inquiry['statement-due-dat-year']
+			}),
+			ipCommentsDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['ip-comments-due-date-day'],
+				month: inquiry['ip-comments-due-date-month'],
+				year: inquiry['ip-comments-due-date-year']
+			}),
+			statementOfCommonGroundDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['statement-of-common-ground-due-date-day'],
+				month: inquiry['statement-of-common-ground-due-date-month'],
+				year: inquiry['statement-of-common-ground-due-date-year']
+			}),
+			proofOfEvidenceAndWitnessesDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['inquiry-date-day'],
+				month: inquiry['inquiry-date-month'],
+				year: inquiry['inquiry-date-year']
+			}),
+			planningObligationDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['planning-obligation-due-date-day'],
+				month: inquiry['planning-obligation-due-date-month'],
+				year: inquiry['planning-obligation-due-date-year']
+			})
 		});
-
-		if (session.setUpInquiry.inquiryEstimationDays) {
-			// Create Inquiry estimate
-			await createInquiryEstimates(request, {
-				estimatedTime: parseFloat(session.setUpInquiry.inquiryEstimationDays)
-			});
-		}
 
 		addNotificationBannerToSession({
 			session: request.session,

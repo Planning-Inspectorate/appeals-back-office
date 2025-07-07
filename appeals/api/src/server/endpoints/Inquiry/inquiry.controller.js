@@ -48,7 +48,19 @@ export const getInquiryById = async (req, res) => {
  */
 export const postInquiry = async (req, res) => {
 	const {
-		body: { inquiryStartTime, inquiryEndTime, address },
+		body: {
+			inquiryStartTime,
+			inquiryEndTime,
+			address,
+			startDate,
+			estimatedDays,
+			lpaQuestionnaireDueDate,
+			statementDueDate,
+			ipCommentsDueDate,
+			statementOfCommonGroundDueDate,
+			proofOfEvidenceAndWitnessesDueDate,
+			planningObligationDueDate
+		},
 		params,
 		appeal
 	} = req;
@@ -59,8 +71,16 @@ export const postInquiry = async (req, res) => {
 		await createInquiry(
 			{
 				appealId,
+				startDate,
 				inquiryStartTime,
 				inquiryEndTime,
+				estimatedDays,
+				lpaQuestionnaireDueDate,
+				statementDueDate,
+				ipCommentsDueDate,
+				statementOfCommonGroundDueDate,
+				proofOfEvidenceAndWitnessesDueDate,
+				planningObligationDueDate,
 				...(address && {
 					address: {
 						addressLine1: address.addressLine1,

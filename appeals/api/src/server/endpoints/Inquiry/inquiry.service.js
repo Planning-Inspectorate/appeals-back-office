@@ -8,6 +8,7 @@ import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/d
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
+import { databaseConnector } from '#utils/database-connector.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */
@@ -113,15 +114,53 @@ const createInquiry = async (createInquiryData, appeal, notifyClient) => {
 		const inquiryEndTime = createInquiryData.inquiryEndTime;
 		const address = createInquiryData.address;
 
-		const inquiry = await inquiryRepository.createInquiryById({
-			appealId,
-			inquiryStartTime,
-			inquiryEndTime,
-			address
+		const result = await databaseConnector.$transaction(async (tx) => {
+			// Add address
+			const addr = await tx.address.create({
+				data: address
+			});
+
+			// Add inquiry
+			const inquiry = await tx.inquiry.create({
+				data: {
+					inquiryStartTime,
+					inquiryEndTime,
+					appealId,
+					addressId: addr.id
+				}
+			});
+
+			let estimate = undefined;
+			// Add Estimation
+			if (createInquiryData.estimatedDays) {
+				estimate = await tx.inquiryEstimate.create({
+					data: {
+						appealId,
+						estimatedTime: Number(createInquiryData.estimatedDays)
+					}
+				});
+			}
+
+			// Add Appeal Timetable
+			const timetable = await tx.appealTimetable.create({
+				data: {
+					appealId,
+					lpaQuestionnaireDueDate: createInquiryData.lpaQuestionnaireDueDate,
+					lpaStatementDueDate: createInquiryData.statementDueDate,
+					appellantStatementDueDate: createInquiryData.statementDueDate,
+					planningObligationDueDate: createInquiryData.planningObligationDueDate,
+					statementOfCommonGroundDueDate: createInquiryData.statementOfCommonGroundDueDate,
+					ipCommentsDueDate: createInquiryData.ipCommentsDueDate,
+					proofOfEvidenceAndWitnessesDueDate: createInquiryData.proofOfEvidenceAndWitnessesDueDate
+				}
+			});
+
+			// Return anything you want from this transaction
+			return { addr, inquiry, estimate, timetable };
 		});
 
 		if (address) {
-			await broadcasters.broadcastEvent(inquiry.id, EVENT_TYPE.INQUIRY, EventType.Create);
+			await broadcasters.broadcastEvent(result.inquiry.id, EVENT_TYPE.INQUIRY, EventType.Create);
 			await sendInquiryDetailsNotifications(
 				notifyClient,
 				'inquiry-set-up',

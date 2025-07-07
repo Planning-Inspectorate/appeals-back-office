@@ -27,10 +27,18 @@ export const getInquiryValidator = composeMiddleware(
 
 export const postInquiryValidator = composeMiddleware(
 	validateIdParameter('appealId'),
+	validateDateParameter({ parameterName: 'startDate', isRequired: true }),
 	validateDateParameter({ parameterName: 'inquiryStartTime', isRequired: true }),
 	validateDateParameter({ parameterName: 'inquiryEndTime' }),
+	validateDateParameter({ parameterName: 'lpaQuestionnaireDueDate', isRequired: true }),
+	validateDateParameter({ parameterName: 'statementDueDate', isRequired: true }),
+	validateDateParameter({ parameterName: 'ipCommentsDueDate', isRequired: true }),
+	validateDateParameter({ parameterName: 'statementOfCommonGroundDueDate', isRequired: true }),
+	validateDateParameter({ parameterName: 'proofOfEvidenceAndWitnessesDueDate', isRequired: true }),
+	validateDateParameter({ parameterName: 'planningObligationDueDate', isRequired: true }),
 	body('addressId').optional().isNumeric().withMessage(ERROR_MUST_BE_NUMBER),
 	body('address').optional(),
+	body('estimatedDays').optional().isNumeric().withMessage(ERROR_MUST_BE_NUMBER),
 	validateRequiredStringParameter('address.addressLine1', LENGTH_250, 'address'),
 	validateStringParameterAllowingEmpty('address.addressLine2', LENGTH_250),
 	validateRequiredStringParameter('address.town', LENGTH_250, 'address'),

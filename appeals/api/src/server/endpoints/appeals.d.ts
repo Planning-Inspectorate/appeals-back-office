@@ -893,6 +893,14 @@ type CreateInquiry = {
 	inquiryStartTime: Date | string;
 	inquiryEndTime: Date | string | undefined;
 	address: Omit<Schema.Address, 'id'> | undefined;
+	startDate: Date | string;
+	estimatedDays: string | Date | undefined;
+	lpaQuestionnaireDueDate: Date | string;
+	statementDueDate: Date | string;
+	ipCommentsDueDate: Date | string;
+	statementOfCommonGroundDueDate: Date | string;
+	proofOfEvidenceAndWitnessesDueDate: Date | string;
+	planningObligationDueDate: Date | string;
 };
 
 type UpdateHearing = {
