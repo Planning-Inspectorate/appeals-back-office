@@ -134,6 +134,14 @@ export const rearrangeHearing = async (req, res) => {
 			req.notifyClient
 		);
 
+		if (
+			arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) &&
+			address &&
+			!appeal.hearing?.address
+		) {
+			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+		}
+
 		const existingHearing = req.appeal.hearing;
 		if (existingHearing?.hearingStartTime !== hearingStartTime) {
 			await createAuditTrail({
