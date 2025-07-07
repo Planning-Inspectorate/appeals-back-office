@@ -1,4 +1,4 @@
-import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+import { dateISOStringToDayMonthYearHourMinute, getExampleDateHint } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 import { dateInput } from '#lib/mappers/index.js';
@@ -64,7 +64,7 @@ export const mapEditTimetablePage = (
 				  }
 				: {},
 			legendText: `${timetableTypeText} due`,
-			hint: 'For example, 27 3 2007',
+			hint: `For example, ${getExampleDateHint(45)}`,
 			legendClasses:
 				timeTableTypes.length > 1 ? 'govuk-fieldset__legend--m' : 'govuk-fieldset__legend--l',
 			errors: errors

@@ -160,11 +160,17 @@ export function addressDetailsPage(appealData, action, currentAddress, errors) {
 
 /**
  * @param {Appeal} appealDetails
+ * @param {any} sessionValues
  * @param {import('@pins/appeals').Address} values
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns Promise<PageContent>
  */
-export const inquiryDueDatesPage = async (appealDetails, values, errors = undefined) => {
+export const inquiryDueDatesPage = async (
+	appealDetails,
+	sessionValues,
+	values,
+	errors = undefined
+) => {
 	/**
 	 * @type {{backLinkUrl: string, heading: string, title: string, preHeading: string, pageComponents?: PageComponent[]}}
 	 */
@@ -196,6 +202,9 @@ export const inquiryDueDatesPage = async (appealDetails, values, errors = undefi
 		if (fieldType === undefined) {
 			throw new Error(`Unknown date field: ${dateField}`);
 		}
+		const day = fieldType.id + '-day';
+		const month = fieldType.id + '-month';
+		const year = fieldType.id + '-year';
 		return dateInput({
 			name: `${fieldType.id}`,
 			id: `${fieldType.id}`,
@@ -203,6 +212,11 @@ export const inquiryDueDatesPage = async (appealDetails, values, errors = undefi
 			legendText: `${fieldType.name}`,
 			hint: 'For example, 31 3 2025',
 			legendClasses: 'govuk-fieldset__legend--m',
+			value: {
+				day: sessionValues[day] ? sessionValues[day] : '',
+				month: sessionValues[month] ? sessionValues[month] : '',
+				year: sessionValues[year] ? sessionValues[year] : ''
+			},
 			errors: errors
 		});
 	});
