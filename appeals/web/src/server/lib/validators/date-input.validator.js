@@ -319,7 +319,11 @@ export const createDateInputDateInFutureOfDateValidator = (
 					{ day: compareDay, month: compareMonth, year: compareYear }
 				)
 			) {
-				const formattedDate = storedDateToCompare.toLocaleDateString('en-GB', {
+				const formattedDate = new Date(
+					compareYear,
+					compareMonth - 1,
+					compareDay
+				).toLocaleDateString('en-GB', {
 					day: 'numeric',
 					month: 'long',
 					year: 'numeric'
