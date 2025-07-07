@@ -250,7 +250,11 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		if (hasLpaStatement || hasLpaComment) {
 			let whatHappensNextAppellant;
 			let whatHappensNextLpa;
+			let lpaSubject;
+			let appellantSubject;
 			if (String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.HEARING) {
+				lpaSubject = `We've received all statements and comments`;
+				appellantSubject = `We have received the local planning authority's questionnaire, all statements and comments from interested parties`;
 				if (appeal.hearing?.hearingStartTime) {
 					whatHappensNextAppellant = `Your hearing is on ${formatDate(
 						appeal.hearing?.hearingStartTime,
@@ -265,6 +269,8 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 					whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
 				}
 			} else {
+				lpaSubject = 'Submit your final comments';
+				appellantSubject = 'Submit your final comments';
 				whatHappensNextAppellant = `You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
 				whatHappensNextLpa = `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
 			}
@@ -277,7 +283,8 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 				templateName: 'received-statement-and-ip-comments-lpa',
 				recipientEmail: appeal.lpa?.email,
 				finalCommentsDueDate,
-				whatHappensNext: whatHappensNextLpa
+				whatHappensNext: whatHappensNextLpa,
+				subject: lpaSubject
 			});
 
 			await notifyPublished({
@@ -286,7 +293,8 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 				templateName: 'received-statement-and-ip-comments-appellant',
 				recipientEmail: appeal.agent?.email || appeal.appellant?.email,
 				finalCommentsDueDate,
-				whatHappensNext: whatHappensNextAppellant
+				whatHappensNext: whatHappensNextAppellant,
+				subject: appellantSubject
 			});
 		}
 	} catch (error) {
@@ -354,6 +362,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
  * @property {string} [whatHappensNext]
  * @property {boolean} [hasLpaStatement]
  * @property {boolean} [hasIpComments]
+ * @property {string} [subject]
  */
 
 /**
@@ -368,7 +377,8 @@ async function notifyPublished({
 	finalCommentsDueDate = '',
 	whatHappensNext = '',
 	hasLpaStatement = false,
-	hasIpComments = false
+	hasIpComments = false,
+	subject = ''
 }) {
 	const lpaReference = appeal.applicationReference;
 	if (!lpaReference) {
@@ -397,7 +407,8 @@ async function notifyPublished({
 			final_comments_deadline: finalCommentsDueDate,
 			what_happens_next: whatHappensNext,
 			has_ip_comments: hasIpComments,
-			has_statement: hasLpaStatement
+			has_statement: hasLpaStatement,
+			...(subject ? { subject } : {})
 		}
 	});
 }

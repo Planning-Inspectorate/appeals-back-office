@@ -14,7 +14,8 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 				appeal_reference_number: 'ABC45678',
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
-				final_comments_deadline: '01 January 2021'
+				final_comments_deadline: '01 January 2021',
+				subject: 'Submit your final comments'
 			}
 		};
 
@@ -61,7 +62,8 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 				lpa_reference: '12345XYZ',
 				final_comments_deadline: '01 January 2021',
 				what_happens_next:
-					'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.'
+					'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.',
+				subject: 'Submit your final comments'
 			}
 		};
 
