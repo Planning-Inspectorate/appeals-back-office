@@ -228,7 +228,8 @@ export const getInquiryDueDates = async (request, response) => {
  */
 export const renderInquiryDueDates = async (request, response, values) => {
 	const { currentAppeal, errors } = request;
-	const mappedPageContent = await inquiryDueDatesPage(currentAppeal, values, errors);
+	const sessionValues = request.session['setUpInquiry'] || {};
+	const mappedPageContent = await inquiryDueDatesPage(currentAppeal, sessionValues, values, errors);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,

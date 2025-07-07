@@ -238,7 +238,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -246,7 +246,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="lpa-questionnaire-due-date-month" name="lpa-questionnaire-due-date-month"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -254,7 +254,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="lpa-questionnaire-due-date-year" name="lpa-questionnaire-due-date-year"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -269,7 +269,8 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="statement-due-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="statement-due-date-day" name="statement-due-date-day" type="text" inputmode="numeric">
+                                            id="statement-due-date-day" name="statement-due-date-day" type="text" value=""
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -277,7 +278,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="statement-due-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="statement-due-date-month" name="statement-due-date-month" type="text"
-                                            inputmode="numeric">
+                                            value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -285,7 +286,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="statement-due-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="statement-due-date-year" name="statement-due-date-year" type="text"
-                                            inputmode="numeric">
+                                            value="" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -302,7 +303,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
-                                            inputmode="numeric">
+                                            value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -310,7 +311,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
-                                            inputmode="numeric">
+                                            value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -318,7 +319,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
-                                            inputmode="numeric">
+                                            value="" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -335,7 +336,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -343,7 +344,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -351,7 +352,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -368,7 +369,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="proof-of-evidence-and-witnesses-due-date-day" name="proof-of-evidence-and-witnesses-due-date-day"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -376,7 +377,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="proof-of-evidence-and-witnesses-due-date-month" name="proof-of-evidence-and-witnesses-due-date-month"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -384,7 +385,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="proof-of-evidence-and-witnesses-due-date-year" name="proof-of-evidence-and-witnesses-due-date-year"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
@@ -401,7 +402,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="planning-obligation-due-date-day" name="planning-obligation-due-date-day"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -409,7 +410,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-month">Month</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="planning-obligation-due-date-month" name="planning-obligation-due-date-month"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                     <div class="govuk-date-input__item">
@@ -417,7 +418,7 @@ exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the 
                                             <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="planning-obligation-due-date-year" name="planning-obligation-due-date-year"
-                                            type="text" inputmode="numeric">
+                                            type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
