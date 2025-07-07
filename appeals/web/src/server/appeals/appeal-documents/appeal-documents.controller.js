@@ -34,6 +34,7 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
+import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 
 /** @typedef {'all-fields-day' | 'day-month' | 'month-year' | 'day-year' | 'day' | 'month' | 'year'} DateFieldKey */
 
@@ -708,7 +709,8 @@ export const postUploadDocumentVersionCheckAndConfirm = async ({
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'documentVersionAdded',
-			appealId: currentAppeal.appealId
+			appealId: currentAppeal.appealId,
+			text: `${mapFolderNameToDisplayLabel(currentFolder?.path) || 'Document'} updated`
 		});
 
 		if (nextPageUrl) {
@@ -1031,7 +1033,8 @@ export const postDeleteDocument = async ({
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'documentDeleted',
-			appealId
+			appealId,
+			text: `${mapFolderNameToDisplayLabel(currentFolder?.path) || 'Document'} removed`
 		});
 		return response.redirect(returnUrl);
 	}

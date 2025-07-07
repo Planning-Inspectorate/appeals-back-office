@@ -3759,7 +3759,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a day</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a day</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is non-numeric', async () => {
@@ -3788,7 +3790,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date day must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date day must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is less than 1', async () => {
@@ -3818,7 +3822,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence received date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -3849,7 +3853,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence received date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -3879,7 +3883,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a month</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a month</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is non-numeric', async () => {
@@ -3908,7 +3914,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date month must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date month must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is less than 1', async () => {
@@ -3938,7 +3946,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence received date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -3969,7 +3977,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence received date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -3999,7 +4007,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a year</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a year</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate year is non-numeric', async () => {
@@ -4028,7 +4038,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date year must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date year must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate is not a valid date', async () => {
@@ -4057,7 +4069,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must be a valid date</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must be a valid date</a>'
+			);
 		});
 
 		it('should send a patch request to the appeal documents endpoint and redirect to the check your answers page, if complete and valid document details were provided', async () => {
@@ -4389,7 +4403,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a day</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a day</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is non-numeric', async () => {
@@ -4418,7 +4434,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date day must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date day must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is less than 1', async () => {
@@ -4448,7 +4466,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence received date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -4479,7 +4497,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence received date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -4509,7 +4527,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a month</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a month</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is non-numeric', async () => {
@@ -4538,7 +4558,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date month must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date month must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is less than 1', async () => {
@@ -4568,7 +4590,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence received date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -4599,7 +4621,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence received date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -4629,7 +4651,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a year</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a year</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate year is non-numeric', async () => {
@@ -4658,7 +4682,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date year must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date year must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate is not a valid date', async () => {
@@ -4687,7 +4713,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must be a valid date</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must be a valid date</a>'
+			);
 		});
 
 		it('should send a patch request to the appeal documents endpoint and redirect to the check your answers page, if complete and valid document details were provided', async () => {
@@ -5015,7 +5043,9 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Document updated</p>');
+			expect(notificationBannerElementHTML).toContain(
+				'Agreement to change description evidence updated</p>'
+			);
 		});
 	});
 

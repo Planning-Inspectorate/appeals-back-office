@@ -22,7 +22,7 @@ import { createTestEnvironment } from '#testing/index.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { cloneDeep, capitalize } from 'lodash-es';
-
+import { documentNameFromCategory } from '../internal-correspondence.service';
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
@@ -524,10 +524,30 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date must include a day' },
-					{ value: 'a', expectedError: 'Received date day must be a number' },
-					{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
-					{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
+					{
+						value: '',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date must include a day`
+					},
+					{
+						value: 'a',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date day must be a number`
+					},
+					{
+						value: '0',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date day must be between 1 and 31`
+					},
+					{
+						value: '32',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date day must be between 1 and 31`
+					}
 				];
 
 				for (const testCase of testCases) {
@@ -569,10 +589,30 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date must include a month' },
-					{ value: 'a', expectedError: 'Received date month must be a number' },
-					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
-					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
+					{
+						value: '',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date must include a month`
+					},
+					{
+						value: 'a',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date month must be a number`
+					},
+					{
+						value: '0',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date month must be between 1 and 12`
+					},
+					{
+						value: '13',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date month must be between 1 and 12`
+					}
 				];
 
 				for (const testCase of testCases) {
@@ -614,9 +654,24 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date must include a year' },
-					{ value: 'a', expectedError: 'Received date year must be a number' },
-					{ value: '202', expectedError: 'Received date year must be 4 digits' }
+					{
+						value: '',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date must include a year`
+					},
+					{
+						value: 'a',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date year must be a number`
+					},
+					{
+						value: '202',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date year must be 4 digits`
+					}
 				];
 
 				for (const testCase of testCases) {
@@ -687,7 +742,11 @@ describe('internal correspondence', () => {
 					rootElement: '.govuk-error-summary'
 				});
 
-				expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
+				expect(errorSummaryElement.innerHTML).toContain(
+					`${capitalize(
+						documentNameFromCategory(correspondenceCategory)
+					)} received date must be a valid date`
+				);
 			});
 
 			it(`should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, if complete and valid document details were provided (${correspondenceCategory})`, async () => {
@@ -909,10 +968,30 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date must include a day' },
-					{ value: 'a', expectedError: 'Received date day must be a number' },
-					{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
-					{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
+					{
+						value: '',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date must include a day`
+					},
+					{
+						value: 'a',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date day must be a number`
+					},
+					{
+						value: '0',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date day must be between 1 and 31`
+					},
+					{
+						value: '32',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date day must be between 1 and 31`
+					}
 				];
 
 				for (const testCase of testCases) {
@@ -954,10 +1033,30 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date must include a month' },
-					{ value: 'a', expectedError: 'Received date month must be a number' },
-					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
-					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
+					{
+						value: '',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date must include a month`
+					},
+					{
+						value: 'a',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date month must be a number`
+					},
+					{
+						value: '0',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date month must be between 1 and 12`
+					},
+					{
+						value: '13',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date month must be between 1 and 12`
+					}
 				];
 
 				for (const testCase of testCases) {
@@ -999,9 +1098,24 @@ describe('internal correspondence', () => {
 				expect(addDocumentsResponse.statusCode).toBe(302);
 
 				const testCases = [
-					{ value: '', expectedError: 'Received date must include a year' },
-					{ value: 'a', expectedError: 'Received date year must be a number' },
-					{ value: '202', expectedError: 'Received date year must be 4 digits' }
+					{
+						value: '',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date must include a year`
+					},
+					{
+						value: 'a',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date year must be a number`
+					},
+					{
+						value: '202',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date year must be 4 digits`
+					}
 				];
 
 				for (const testCase of testCases) {
@@ -1072,7 +1186,11 @@ describe('internal correspondence', () => {
 					rootElement: '.govuk-error-summary'
 				});
 
-				expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
+				expect(errorSummaryElement.innerHTML).toContain(
+					`${capitalize(
+						documentNameFromCategory(correspondenceCategory)
+					)} received date must be a valid date`
+				);
 			});
 
 			it(`should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, if complete and valid document details were provided (${correspondenceCategory})`, async () => {
@@ -1835,10 +1953,30 @@ describe('internal correspondence', () => {
 
 			it(`should re-render the change document details page with the expected error message if receivedDate day is an invalid value (${correspondenceCategory})`, async () => {
 				const testCases = [
-					{ value: '', expectedError: 'Received date must include a day' },
-					{ value: 'a', expectedError: 'Received date day must be a number' },
-					{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
-					{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
+					{
+						value: '',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date must include a day`
+					},
+					{
+						value: 'a',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date day must be a number`
+					},
+					{
+						value: '0',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date day must be between 1 and 31`
+					},
+					{
+						value: '32',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date day must be between 1 and 31`
+					}
 				];
 
 				for (const testCase of testCases) {
@@ -1878,10 +2016,30 @@ describe('internal correspondence', () => {
 
 			it(`should re-render the change document details page with the expected error message if receivedDate month is an invalid value (${correspondenceCategory})`, async () => {
 				const testCases = [
-					{ value: '', expectedError: 'Received date must include a month' },
-					{ value: 'a', expectedError: 'Received date month must be a number' },
-					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
-					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
+					{
+						value: '',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date must include a month`
+					},
+					{
+						value: 'a',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date month must be a number`
+					},
+					{
+						value: '0',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date month must be between 1 and 12`
+					},
+					{
+						value: '13',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date month must be between 1 and 12`
+					}
 				];
 
 				for (const testCase of testCases) {
@@ -1921,9 +2079,24 @@ describe('internal correspondence', () => {
 
 			it(`should re-render the change document details page with the expected error message if receivedDate year is an invalid value (${correspondenceCategory})`, async () => {
 				const testCases = [
-					{ value: '', expectedError: 'Received date must include a year' },
-					{ value: 'a', expectedError: 'Received date year must be a number' },
-					{ value: '202', expectedError: 'Received date year must be 4 digits' }
+					{
+						value: '',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date must include a year`
+					},
+					{
+						value: 'a',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date year must be a number`
+					},
+					{
+						value: '202',
+						expectedError: `${capitalize(
+							documentNameFromCategory(correspondenceCategory)
+						)} received date year must be 4 digits`
+					}
 				];
 
 				for (const testCase of testCases) {
@@ -1992,7 +2165,11 @@ describe('internal correspondence', () => {
 					rootElement: '.govuk-error-summary'
 				});
 
-				expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
+				expect(errorSummaryElement.innerHTML).toContain(
+					`${capitalize(
+						documentNameFromCategory(correspondenceCategory)
+					)} received date must be a valid date`
+				);
 			});
 
 			it(`should send a patch request to the appeal documents endpoint and redirect to the manage individual document page, if complete and valid document details were provided (${correspondenceCategory})`, async () => {
@@ -2245,7 +2422,9 @@ describe('internal correspondence', () => {
 					rootElement: '.govuk-error-summary'
 				});
 
-				expect(errorSummaryElement.innerHTML).toContain('Answer must be provided');
+				expect(errorSummaryElement.innerHTML).toContain(
+					'Select yes if you are sure you want to remove this version'
+				);
 			});
 
 			it(`should not send an API request to delete the document, and should redirect to the manage document page, if answer "no" was provided`, async () => {

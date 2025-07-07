@@ -2726,7 +2726,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a day</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a day</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is non-numeric', async () => {
@@ -2753,7 +2755,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date day must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date day must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is less than 1', async () => {
@@ -2781,7 +2785,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence received date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -2810,7 +2814,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence received date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -2838,7 +2842,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a month</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a month</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is non-numeric', async () => {
@@ -2865,7 +2871,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date month must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date month must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is less than 1', async () => {
@@ -2893,7 +2901,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence received date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -2922,7 +2930,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence received date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -2950,7 +2958,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a year</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a year</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate year is non-numeric', async () => {
@@ -2977,7 +2987,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date year must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date year must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate is not a valid date', async () => {
@@ -3004,7 +3016,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must be a valid date</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must be a valid date</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate is in the future', async () => {
@@ -3032,7 +3046,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date cannot be a future date</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date cannot be a future date</a>'
+			);
 		});
 
 		it('should send a patch request to the appeal documents endpoint and redirect to the lpa questionnaire page, if complete and valid document details were provided', async () => {
@@ -3385,7 +3401,9 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Document updated</p>');
+			expect(notificationBannerElementHTML).toContain(
+				'Agreement to change description evidence updated</p>'
+			);
 		});
 	});
 

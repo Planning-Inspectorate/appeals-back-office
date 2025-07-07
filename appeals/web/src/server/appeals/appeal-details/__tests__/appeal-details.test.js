@@ -591,7 +591,9 @@ describe('appeal-details', () => {
 
 				expect(notificationBanner2ElementHTML).toMatchSnapshot();
 				expect(notificationBanner2ElementHTML).toContain('Success</h3>');
-				expect(notificationBanner2ElementHTML).toContain('Document updated</p>');
+				expect(notificationBanner2ElementHTML).toContain(
+					'>Appellant costs application updated</p>'
+				);
 			});
 
 			it('should render a success notification banner when an LPA costs document was uploaded', async () => {
@@ -692,7 +694,7 @@ describe('appeal-details', () => {
 
 				expect(notificationBanner2ElementHTML).toMatchSnapshot();
 				expect(notificationBanner2ElementHTML).toContain('Success</h3>');
-				expect(notificationBanner2ElementHTML).toContain('Document updated</p>');
+				expect(notificationBanner2ElementHTML).toContain('LPA costs application updated</p>');
 			});
 
 			it('should render a success notification banner when a costs decision document was uploaded', async () => {

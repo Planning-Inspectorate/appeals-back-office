@@ -181,7 +181,7 @@ describe('environmental-assessment', () => {
 			});
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Success</h3>');
-			expect(element.innerHTML).toContain('Document updated</p>');
+			expect(element.innerHTML).toContain('Agreement to change description evidence updated</p>');
 		});
 	});
 
