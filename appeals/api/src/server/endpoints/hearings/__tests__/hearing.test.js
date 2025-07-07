@@ -4,6 +4,7 @@ import { jest } from '@jest/globals';
 
 import { fullPlanningAppeal as fullPlanningAppealData } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -149,7 +150,20 @@ describe('hearing routes', () => {
 			};
 
 			test('updates a single hearing with address', async () => {
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.EVENT,
+							valid: true
+						}
+					]
+				});
+				databaseConnector.hearing.findUnique.mockResolvedValue({
+					...hearing,
+					addressId: null,
+					address: null
+				});
 				databaseConnector.hearing.update.mockResolvedValue(hearing);
 
 				const response = await request
@@ -197,6 +211,14 @@ describe('hearing routes', () => {
 						userId: 1
 					}
 				});
+				expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
+					data: {
+						appealId: fullPlanningAppeal.id,
+						createdAt: expect.any(Date),
+						status: 'awaiting_event',
+						valid: true
+					}
+				});
 				const personalisation = {
 					appeal_reference_number: '1345264',
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
@@ -227,8 +249,19 @@ describe('hearing routes', () => {
 			});
 
 			test('updates a single hearing with addressId', async () => {
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 				databaseConnector.hearing.update.mockResolvedValue(hearing);
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.EVENT,
+							valid: true
+						}
+					]
+				});
+				databaseConnector.hearing.findUnique.mockResolvedValue({
+					...hearing
+				});
 
 				const response = await request
 					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
@@ -263,6 +296,7 @@ describe('hearing routes', () => {
 				});
 
 				expect(response.status).toEqual(201);
+				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
 			});
 
 			test('updates a single hearing with no address or hearingEndTime', async () => {

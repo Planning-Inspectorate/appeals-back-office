@@ -2,6 +2,7 @@ import logger from '#utils/logger.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { formatHearing } from './hearing.formatter.js';
 import { createHearing, deleteHearing, updateHearing } from './hearing.service.js';
+import hearingRepository from '#repositories/hearing.repository.js';
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import transitionState from '#state/transition-state.js';
@@ -119,6 +120,8 @@ export const rearrangeHearing = async (req, res) => {
 	const hearingId = Number(params.hearingId);
 
 	try {
+		const currentHearing = await hearingRepository.getHearingById(hearingId);
+
 		await updateHearing(
 			{
 				appealId,
@@ -137,7 +140,7 @@ export const rearrangeHearing = async (req, res) => {
 		if (
 			arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) &&
 			address &&
-			!appeal.hearing?.address
+			!currentHearing?.address
 		) {
 			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		}
