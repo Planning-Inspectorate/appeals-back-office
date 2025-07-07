@@ -608,13 +608,13 @@ describe('Timetable', () => {
 					'<h2 class="govuk-error-summary__title"> There is a problem</h2>'
 				);
 				expect(element.innerHTML).toContain(
-					'Statements due date must be after the LPA questionnaire due date on 27 June 2025</a>'
+					'Statements due date must be after the LPA questionnaire due date on 5 October 2050</a>'
 				);
 				expect(element.innerHTML).toContain(
-					'Interested party comments due date must be after the LPA questionnaire due date on 27 June 2025</a>'
+					'Interested party comments due date must be after the LPA questionnaire due date on 5 October 2050</a>'
 				);
 				expect(element.innerHTML).toContain(
-					'Final comments due date must be after the statements due date on 25 July 2025</a>'
+					'Final comments due date must be after the statements due date on 4 October 2050</a>'
 				);
 			});
 

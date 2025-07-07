@@ -4,18 +4,12 @@ import { setAppealTimetables } from './timetable.service.js';
 import {
 	mapEditTimetablePage,
 	getAppealTimetableTypes,
-	getIdText,
 	getTimetableTypeText
 } from './timetable.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import {
-	dateISOStringToDisplayDate,
-	dayMonthYearHourMinuteToISOString,
-	setTimeInTimeZone
-} from '#lib/dates.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
-import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getEditTimetable = async (request, response) => {
@@ -29,34 +23,10 @@ export const getEditTimetable = async (request, response) => {
  */
 export const postEditTimetable = async (request, response) => {
 	const { appealId } = request.params;
-	const { errors, session } = request;
+	const { errors } = request;
 	if (errors) {
 		return renderEditTimetable(request, response);
 	}
-
-	const appealDetails = request.currentAppeal;
-
-	session.appealTimetable = {};
-
-	const { appellantCase } = request.locals;
-
-	const timeTableTypes = getAppealTimetableTypes(appealDetails, appellantCase);
-
-	timeTableTypes.forEach((timetableType) => {
-		const idText = getIdText(timetableType);
-		const updatedDueDateDay = parseInt(request.body[`${idText}-due-date-day`], 10);
-		const updatedDueDateMonth = parseInt(request.body[`${idText}-due-date-month`], 10);
-		const updatedDueDateYear = parseInt(request.body[`${idText}-due-date-year`], 10);
-
-		const updatedDueDateDayString = `0${updatedDueDateDay}`.slice(-2);
-		const updatedDueDateMonthString = `0${updatedDueDateMonth}`.slice(-2);
-
-		session.appealTimetable[timetableType] = dayMonthYearHourMinuteToISOString({
-			year: updatedDueDateYear,
-			month: updatedDueDateMonthString,
-			day: updatedDueDateDayString
-		});
-	});
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/timetable/edit/check`);
 };
@@ -170,12 +140,7 @@ export const postAppealTimetables = async (request, response) => {
 	const originalTimetable = appealDetails.appealTimetable || {};
 
 	for (const key of Object.keys(sessionTimetable)) {
-		const sessionDate = setTimeInTimeZone(
-			sessionTimetable[key],
-			DEADLINE_HOUR,
-			DEADLINE_MINUTE
-		).toISOString();
-		if (sessionDate === originalTimetable[key]) {
+		if (sessionTimetable[key] === originalTimetable[key]) {
 			delete sessionTimetable[key];
 		}
 	}
