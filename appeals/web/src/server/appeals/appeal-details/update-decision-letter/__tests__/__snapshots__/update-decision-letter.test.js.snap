@@ -63,8 +63,8 @@ exports[`update-decision-letter GET /issue-decision/check-your-decision should r
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                    <dd class="govuk-summary-list__value"><a href="/documents/APP/Q9999/D/21/351062/download-uncommitted/100/test-document2.txt"
-                        class="govuk-link">test-document2.txt</a>
+                    <dd class="govuk-summary-list__value"><a href="/documents/APP/Q9999/D/21/351062/download-uncommitted/100/test-document2.pdf/4"
+                        class="govuk-link">test-document2.pdf</a>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/update-decision-letter/upload-decision-letter?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fupdate-decision-letter%2Fcheck-details">Change <span class="govuk-visually-hidden">decision letter</span></a>
                     </dd>
