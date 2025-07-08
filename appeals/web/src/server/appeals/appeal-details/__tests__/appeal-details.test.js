@@ -3124,7 +3124,8 @@ describe('appeal-details', () => {
 								ipCommentsDueDate: '2025-01-04T00:00:00.000Z',
 								finalCommentsDueDate: '2025-01-05T00:00:00.000Z',
 								statementOfCommonGroundDueDate: '2025-01-06T00:00:00.000Z'
-							}
+							},
+							hearing: null
 						});
 					nock('http://test/')
 						.get(`/appeals/${appealId}/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
@@ -3217,6 +3218,7 @@ describe('appeal-details', () => {
 							validAt: '2025-01-01T00:00:00.000Z',
 							startedAt: '2025-01-01T00:00:00.000Z',
 							procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+							hearing: null,
 							appealTimetable: {
 								validAt: '2025-01-01T00:00:00.000Z',
 								startedAt: '2025-01-01T00:00:00.000Z',
@@ -3330,6 +3332,7 @@ describe('appeal-details', () => {
 							validAt: '2025-01-01T00:00:00.000Z',
 							startedAt: '2025-01-01T00:00:00.000Z',
 							procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+							hearing: null,
 							appealTimetable: {
 								validAt: '2025-01-01T00:00:00.000Z',
 								startedAt: '2025-01-01T00:00:00.000Z',
@@ -3657,7 +3660,8 @@ describe('appeal-details', () => {
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
-						procedureType: APPEAL_CASE_PROCEDURE.HEARING
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+						hearing: null
 					});
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
@@ -3873,7 +3877,8 @@ describe('appeal-details', () => {
 							preparationTime: 1,
 							sittingTime: 2.5,
 							reportingTime: 3
-						}
+						},
+						hearing: null
 					});
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
