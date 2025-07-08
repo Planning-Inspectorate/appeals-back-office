@@ -12,6 +12,7 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import { createHearing, updateHearing } from './hearing.service.js';
+import { preserveQueryString, stripQueryString } from '#lib/url-utilities.js';
 
 /**
  * @param {string} path
@@ -39,13 +40,27 @@ const sessionValuesToDateTime = (sessionValues) => {
 };
 
 /**
+ * Returns the previous page in the journey, or the CYA page if we are at the point where we started editing
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} prevPageUrl
+ * @param {string} cyaUrl
+ * @returns {string}
+ */
+const getBackLinkUrl = (request, prevPageUrl, cyaUrl) => {
+	const editEntrypoint = String(request.query.editEntrypoint);
+	return stripQueryString(editEntrypoint) === stripQueryString(request.originalUrl)
+		? preserveQueryString(request, cyaUrl, { exclude: ['editEntrypoint'] })
+		: preserveQueryString(request, prevPageUrl);
+};
+
+/**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getHearingDate = async (request, response) => {
 	const sessionValues = request.session['setUpHearing'] || {};
 
-	return renderHearingDate(request, response, sessionValuesToDateTime(sessionValues));
+	return renderHearingDate(request, response, sessionValuesToDateTime(sessionValues), 'setup');
 };
 
 /**
@@ -66,20 +81,27 @@ export const getChangeHearingDate = async (request, response) => {
 		? sessionValuesToDateTime(sessionValues)
 		: dateISOStringToDayMonthYearHourMinute(request.currentAppeal.hearing.hearingStartTime);
 
-	return renderHearingDate(request, response, values);
+	return renderHearingDate(request, response, values, 'change');
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {{day?: string | number, month?: string | number, year?: string | number, hour?: string | number, minute?: string | number}} values
+ * @param {string} action
  */
-export const renderHearingDate = async (request, response, values) => {
+export const renderHearingDate = async (request, response, values, action) => {
 	const { errors } = request;
 
 	const appealDetails = request.currentAppeal;
+	const { appealId } = appealDetails;
+	const backLinkUrl = getBackLinkUrl(
+		request,
+		`/appeals-service/appeal-details/${appealId}`,
+		`/appeals-service/appeal-details/${appealId}/hearing/${action}/check-details`
+	);
 
-	const mappedPageContent = await hearingDatePage(appealDetails, values);
+	const mappedPageContent = hearingDatePage(appealDetails, values, backLinkUrl);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -96,13 +118,19 @@ export const postHearingDate = async (request, response) => {
 		return renderHearingDate(
 			request,
 			response,
-			sessionValuesToDateTime(request.session['setUpHearing'] || {})
+			sessionValuesToDateTime(request.session['setUpHearing'] || {}),
+			'setup'
 		);
 	}
 
 	const { appealId } = request.currentAppeal;
 
-	return response.redirect(`/appeals-service/appeal-details/${appealId}/hearing/setup/address`);
+	return response.redirect(
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/hearing/setup/address`
+		)
+	);
 };
 
 /**
@@ -115,12 +143,17 @@ export const postChangeHearingDate = async (request, response) => {
 		const values = sessionValues
 			? sessionValuesToDateTime(sessionValues)
 			: request.currentAppeal.hearing;
-		return renderHearingDate(request, response, values);
+		return renderHearingDate(request, response, values, 'change');
 	}
 
 	const { appealId } = request.currentAppeal;
 
-	return response.redirect(`/appeals-service/appeal-details/${appealId}/hearing/change/address`);
+	return response.redirect(
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/hearing/change/address`
+		)
+	);
 };
 
 /**
@@ -152,12 +185,18 @@ export const getChangeHearingAddress = async (request, response) => {
  * @param {{addressKnown: string}} [values]
  * @param {'change' | 'setup'} action
  */
-export const renderHearingAddress = async (request, response, action, values) => {
+export const renderHearingAddress = (request, response, action, values) => {
 	const { errors } = request;
 
 	const appealDetails = request.currentAppeal;
+	const { appealId } = appealDetails;
+	const backLinkUrl = getBackLinkUrl(
+		request,
+		`/appeals-service/appeal-details/${appealId}/hearing/${action}/date`,
+		`/appeals-service/appeal-details/${appealId}/hearing/${action}/check-details`
+	);
 
-	const mappedPageContent = await addressKnownPage(appealDetails, action, values);
+	const mappedPageContent = addressKnownPage(appealDetails, action, backLinkUrl, values);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -178,7 +217,12 @@ export const postHearingAddress = async (request, response) => {
 
 	const nextStep = request.body.addressKnown === 'yes' ? 'address-details' : 'check-details';
 
-	return response.redirect(`/appeals-service/appeal-details/${appealId}/hearing/setup/${nextStep}`);
+	return response.redirect(
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/hearing/setup/${nextStep}`
+		)
+	);
 };
 
 /**
@@ -195,7 +239,10 @@ export const postChangeHearingAddress = async (request, response) => {
 	const nextStep = request.body.addressKnown === 'yes' ? 'address-details' : 'check-details';
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/hearing/change/${nextStep}`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/hearing/change/${nextStep}`
+		)
 	);
 };
 
@@ -235,10 +282,16 @@ export const getChangeHearingAddressDetails = async (request, response) => {
  * @param {import('@pins/appeals').Address} values
  * @param {'setup' | 'change'} action
  */
-export const renderHearingAddressDetails = async (request, response, values, action) => {
+export const renderHearingAddressDetails = (request, response, values, action) => {
 	const { currentAppeal, errors } = request;
+	const { appealId } = currentAppeal;
+	const backLinkUrl = getBackLinkUrl(
+		request,
+		`/appeals-service/appeal-details/${appealId}/hearing/${action}/address`,
+		`/appeals-service/appeal-details/${appealId}/hearing/${action}/check-details`
+	);
 
-	const mappedPageContent = await addressDetailsPage(currentAppeal, action, values, errors);
+	const mappedPageContent = addressDetailsPage(currentAppeal, action, values, errors, backLinkUrl);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -259,7 +312,11 @@ export const postHearingAddressDetails = async (request, response) => {
 	const { appealId } = request.currentAppeal;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/hearing/setup/check-details`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/hearing/setup/check-details`,
+			{ exclude: ['editEntrypoint'] }
+		)
 	);
 };
 
@@ -276,7 +333,11 @@ export const postChangeHearingAddressDetails = async (request, response) => {
 	const { appealId } = request.currentAppeal;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/hearing/change/check-details`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealId}/hearing/change/check-details`,
+			{ exclude: ['editEntrypoint'] }
+		)
 	);
 };
 

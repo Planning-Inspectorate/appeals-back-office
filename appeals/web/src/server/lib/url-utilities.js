@@ -86,3 +86,23 @@ export function getBackLinkUrlFromQuery(request) {
 export function stripQueryString(url) {
 	return url.split('?')[0];
 }
+
+/**
+ * Returns the specified URL with the same query params as the original URL of the request,
+ * optionally excluding specific params.
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} urlString
+ * @param {{ exclude?: string[] }} [options]
+ * @returns {string}
+ */
+export function preserveQueryString(request, urlString, { exclude = [] } = {}) {
+	const [urlWithoutHash] = request.originalUrl.split('#');
+	const [, queryString] = urlWithoutHash.split('?');
+
+	const queryParams = new URLSearchParams(queryString);
+	exclude.forEach((param) => {
+		queryParams.delete(param);
+	});
+
+	return `${urlString.split('#')[0]}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+}

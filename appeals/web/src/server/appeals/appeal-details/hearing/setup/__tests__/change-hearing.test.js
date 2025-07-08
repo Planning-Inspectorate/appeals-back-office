@@ -60,7 +60,7 @@ describe('change hearing', () => {
 				.reply(200, { ...appealWithHearing, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/change/date`);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -80,6 +80,27 @@ describe('change hearing', () => {
 		it('should render a Time field', () => {
 			expect(pageHtml.querySelector('input#hearing-time-hour')).not.toBeNull();
 			expect(pageHtml.querySelector('input#hearing-time-minute')).not.toBeNull();
+		});
+
+		it('should have a back link to the appeal details page', () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealWithHearing, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/hearing/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Fdate`
+			);
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/change/check-details`
+			);
 		});
 
 		it('should render the existing date and time', async () => {
@@ -260,7 +281,7 @@ describe('change hearing', () => {
 				.reply(200, { ...appealWithHearing, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/change/address`);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -281,6 +302,64 @@ describe('change hearing', () => {
 			expect(pageHtml.querySelector('input[name="addressKnown"]')).not.toBeNull();
 		});
 
+		it('should have a back link to the date page', () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/change/date`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing this page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.twice()
+				.reply(200, { ...appealWithHearing, appealId });
+
+			// set session data with post request
+			await request.post(`${baseUrl}/${appealId}/hearing/change/date`).send({
+				'hearing-date-day': '01',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/hearing/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Faddress`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/change/check-details`
+			);
+		});
+
+		it('should have a back link to the date page if editing began on a previous page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.twice()
+				.reply(200, { ...appealWithHearing, appealId });
+
+			// set session data with post request
+			await request.post(`${baseUrl}/${appealId}/hearing/change/date`).send({
+				'hearing-date-day': '01',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/hearing/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Fdate`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Fdate`
+			);
+		});
+
 		it('should preselect yes if the existing hearing has an address', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
@@ -288,10 +367,10 @@ describe('change hearing', () => {
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/change/address`);
 
-			pageHtml = parseHtml(response.text);
+			const html = parseHtml(response.text);
 
 			expect(
-				pageHtml.querySelector('input[name="addressKnown"][value="yes"]')?.getAttribute('checked')
+				html.querySelector('input[name="addressKnown"][value="yes"]')?.getAttribute('checked')
 			).toBeDefined();
 		});
 
@@ -302,10 +381,10 @@ describe('change hearing', () => {
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/change/address`);
 
-			pageHtml = parseHtml(response.text);
+			const html = parseHtml(response.text, { rootElement: 'body' });
 
 			expect(
-				pageHtml.querySelector('input[name="addressKnown"][value="no"]')?.getAttribute('checked')
+				html.querySelector('input[name="addressKnown"][value="no"]')?.getAttribute('checked')
 			).toBeDefined();
 		});
 
@@ -322,10 +401,10 @@ describe('change hearing', () => {
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/change/address`);
 
-			pageHtml = parseHtml(response.text);
+			const html = parseHtml(response.text);
 
 			expect(
-				pageHtml.querySelector('input[name="addressKnown"][value="no"]')?.getAttribute('checked')
+				html.querySelector('input[name="addressKnown"][value="no"]')?.getAttribute('checked')
 			).toBeDefined();
 		});
 	});
@@ -383,7 +462,7 @@ describe('change hearing', () => {
 				.reply(200, { ...appealWithHearing, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/change/address-details`);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -414,6 +493,44 @@ describe('change hearing', () => {
 			expect(pageHtml.querySelector('input[name="postCode"]')).not.toBeNull();
 		});
 
+		it('should have a back link to the address known page', () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/change/address`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing this page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealWithHearing, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/hearing/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Faddress`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/change/check-details`
+			);
+		});
+
+		it('should have a back link to the date page if editing began on a previous page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealWithHearing, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/hearing/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Fdate`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Fdate`
+			);
+		});
+
 		it('should render the existing address', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
@@ -421,23 +538,17 @@ describe('change hearing', () => {
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/change/address-details`);
 
-			pageHtml = parseHtml(response.text);
+			const html = parseHtml(response.text);
 
-			expect(pageHtml.querySelector('input[name="addressLine1"]').getAttribute('value')).toEqual(
+			expect(html.querySelector('input[name="addressLine1"]').getAttribute('value')).toEqual(
 				'Flat 9'
 			);
-			expect(pageHtml.querySelector('input[name="addressLine2"]').getAttribute('value')).toEqual(
+			expect(html.querySelector('input[name="addressLine2"]').getAttribute('value')).toEqual(
 				'123 Gerbil Drive'
 			);
-			expect(pageHtml.querySelector('input[name="town"]').getAttribute('value')).toEqual(
-				'Blarberton'
-			);
-			expect(pageHtml.querySelector('input[name="county"]').getAttribute('value')).toEqual(
-				'Slabshire'
-			);
-			expect(pageHtml.querySelector('input[name="postCode"]').getAttribute('value')).toEqual(
-				'X25 3YZ'
-			);
+			expect(html.querySelector('input[name="town"]').getAttribute('value')).toEqual('Blarberton');
+			expect(html.querySelector('input[name="county"]').getAttribute('value')).toEqual('Slabshire');
+			expect(html.querySelector('input[name="postCode"]').getAttribute('value')).toEqual('X25 3YZ');
 		});
 
 		it('should render any submitted response', async () => {
@@ -457,23 +568,17 @@ describe('change hearing', () => {
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/change/address-details`);
 
-			pageHtml = parseHtml(response.text);
+			const html = parseHtml(response.text);
 
-			expect(pageHtml.querySelector('input[name="addressLine1"]').getAttribute('value')).toEqual(
+			expect(html.querySelector('input[name="addressLine1"]').getAttribute('value')).toEqual(
 				'Flat 8'
 			);
-			expect(pageHtml.querySelector('input[name="addressLine2"]').getAttribute('value')).toEqual(
+			expect(html.querySelector('input[name="addressLine2"]').getAttribute('value')).toEqual(
 				'29 Hamster Road'
 			);
-			expect(pageHtml.querySelector('input[name="town"]').getAttribute('value')).toEqual(
-				'Bristleton'
-			);
-			expect(pageHtml.querySelector('input[name="county"]').getAttribute('value')).toEqual(
-				'Tuscany'
-			);
-			expect(pageHtml.querySelector('input[name="postCode"]').getAttribute('value')).toEqual(
-				'T12 3YZ'
-			);
+			expect(html.querySelector('input[name="town"]').getAttribute('value')).toEqual('Bristleton');
+			expect(html.querySelector('input[name="county"]').getAttribute('value')).toEqual('Tuscany');
+			expect(html.querySelector('input[name="postCode"]').getAttribute('value')).toEqual('T12 3YZ');
 		});
 	});
 
@@ -540,7 +645,7 @@ describe('change hearing', () => {
 					.send(addressValues);
 
 				const response = await request.get(`${baseUrl}/${appealId}/hearing/change/check-details`);
-				pageHtml = parseHtml(response.text);
+				pageHtml = parseHtml(response.text, { rootElement: 'body' });
 			});
 
 			it('should match the snapshot', () => {
@@ -582,6 +687,33 @@ describe('change hearing', () => {
 
 			it('should render the correct button text', () => {
 				expect(pageHtml.querySelector('button')?.innerHTML.trim()).toBe('Update hearing');
+			});
+
+			it('should have a back link to the address details page', () => {
+				expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+					`${baseUrl}/${appealId}/hearing/change/address-details`
+				);
+			});
+
+			it('should have a back link to the address known page if no address was provided', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.times(3)
+					.reply(200, { ...appealWithHearing, appealId });
+
+				// set session data with post requests to previous pages
+				await request.post(`${baseUrl}/${appealId}/hearing/change/date`).send(dateValues);
+				await request
+					.post(`${baseUrl}/${appealId}/hearing/change/address`)
+					.send({ addressKnown: 'no' });
+
+				const response = await request.get(`${baseUrl}/${appealId}/hearing/change/check-details`);
+
+				const html = parseHtml(response.text, { rootElement: 'body' });
+
+				expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+					`${baseUrl}/${appealId}/hearing/change/address`
+				);
 			});
 		});
 
