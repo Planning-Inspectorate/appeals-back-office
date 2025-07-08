@@ -16,7 +16,7 @@ import config from '../../../../../environment/config.js';
  * @returns {PageComponent[]}
  */
 export function mapStatusDependentNotifications(appealDetails, request) {
-	const requiredActions = getRequiredActionsForAppeal(appealDetails);
+	const requiredActions = getRequiredActionsForAppeal(appealDetails, 'detail');
 
 	/** @type {import('../components/index.js').NotificationBannerDefinitionKey[]} */
 	const bannerKeys = requiredActions

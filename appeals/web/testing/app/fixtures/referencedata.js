@@ -346,6 +346,19 @@ export const appealData = {
 		visitStartTime: '2023-10-09T08:38:00.000Z',
 		visitType: 'Accompanied'
 	},
+	hearing: {
+		hearingId: 0,
+		hearingEndTime: undefined,
+		hearingStartTime: '2023-10-09T08:38:00.000Z',
+		addressId: 99,
+		address: {
+			addressId: 1,
+			addressLine1: '96 The Avenue',
+			addressLine2: 'Maidstone',
+			county: 'Kent',
+			postCode: 'MD21 5XY'
+		}
+	},
 	createdAt: '2023-05-21T10:27:06.626Z',
 	startedAt: '2023-05-23T10:27:06.626Z',
 	validAt: '2023-05-23T10:27:06.626Z',
