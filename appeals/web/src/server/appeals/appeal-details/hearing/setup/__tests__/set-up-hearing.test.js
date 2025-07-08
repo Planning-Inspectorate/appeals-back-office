@@ -39,7 +39,7 @@ describe('set up hearing', () => {
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/setup/date`);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -59,6 +59,27 @@ describe('set up hearing', () => {
 		it('should render a Time field', () => {
 			expect(pageHtml.querySelector('input#hearing-time-hour')).not.toBeNull();
 			expect(pageHtml.querySelector('input#hearing-time-minute')).not.toBeNull();
+		});
+
+		it('should have a back link to the appeal details page', () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/hearing/setup/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fsetup%2Fdate`
+			);
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/setup/check-details`
+			);
 		});
 
 		it('should render any saved response', async () => {
@@ -229,7 +250,7 @@ describe('set up hearing', () => {
 			});
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/setup/address`);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -254,6 +275,64 @@ describe('set up hearing', () => {
 			expect(
 				pageHtml.querySelector('input[name="addressKnown"][value="yes"]')?.getAttribute('checked')
 			).toBeDefined();
+		});
+
+		it('should have a back link to the date page', () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/setup/date`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing this page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.twice()
+				.reply(200, { ...appealData, appealId });
+
+			// set session data with post request
+			await request.post(`${baseUrl}/${appealId}/hearing/setup/date`).send({
+				'hearing-date-day': '01',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/hearing/setup/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fsetup%2Faddress`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/setup/check-details`
+			);
+		});
+
+		it('should have a back link to the date page if editing began on a previous page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.twice()
+				.reply(200, { ...appealData, appealId });
+
+			// set session data with post request
+			await request.post(`${baseUrl}/${appealId}/hearing/setup/date`).send({
+				'hearing-date-day': '01',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/hearing/setup/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fsetup%2Fdate`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/setup/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fsetup%2Fdate`
+			);
 		});
 	});
 
@@ -305,6 +384,20 @@ describe('set up hearing', () => {
 
 	describe('GET /hearing/setup/address-details', () => {
 		const appealId = 2;
+		const dateValues = {
+			'hearing-date-day': '01',
+			'hearing-date-month': '02',
+			'hearing-date-year': '3025',
+			'hearing-time-hour': '12',
+			'hearing-time-minute': '00'
+		};
+		const addressValues = {
+			addressLine1: 'Flat 9',
+			addressLine2: '123 Gerbil Drive',
+			town: 'Blarberton',
+			county: 'Slabshire',
+			postCode: 'X25 3YZ'
+		};
 
 		let pageHtml;
 
@@ -314,7 +407,7 @@ describe('set up hearing', () => {
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/setup/address-details`);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -343,6 +436,64 @@ describe('set up hearing', () => {
 
 		it('should render a text input for postcode', () => {
 			expect(pageHtml.querySelector('input[name="postCode"]')).not.toBeNull();
+		});
+
+		it('should have a back link to the address page', () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/setup/address`
+			);
+		});
+
+		it('should have a back link to the CYA page if editing this page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.times(4)
+				.reply(200, { ...appealData, appealId });
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/hearing/setup/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address`)
+				.send({ addressKnown: 'yes' });
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address-details`)
+				.send(addressValues);
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/hearing/setup/address-details?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fsetup%2Faddress-details`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/setup/check-details`
+			);
+		});
+
+		it('should have a back link to the address page if editing began on a previous page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.times(4)
+				.reply(200, { ...appealData, appealId });
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/hearing/setup/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address`)
+				.send({ addressKnown: 'yes' });
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address-details`)
+				.send(addressValues);
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/hearing/setup/address-details?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fsetup%2Faddress`
+			);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/setup/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fsetup%2Faddress`
+			);
 		});
 	});
 
@@ -410,7 +561,7 @@ describe('set up hearing', () => {
 				.send(addressValues);
 
 			const response = await request.get(`${baseUrl}/${appealId}/hearing/setup/check-details`);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -452,6 +603,33 @@ describe('set up hearing', () => {
 
 		it('should render the correct button text', () => {
 			expect(pageHtml.querySelector('button')?.innerHTML.trim()).toBe('Set up hearing');
+		});
+
+		it('should have a back link to the address details page', () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/setup/address-details`
+			);
+		});
+
+		it('should have a back link to the address known page if no address was provided', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.times(3)
+				.reply(200, { ...appealData, appealId });
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/hearing/setup/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address`)
+				.send({ addressKnown: 'no' });
+
+			const response = await request.get(`${baseUrl}/${appealId}/hearing/setup/check-details`);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				`${baseUrl}/${appealId}/hearing/setup/address`
+			);
 		});
 	});
 

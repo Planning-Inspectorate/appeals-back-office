@@ -38,7 +38,8 @@ import {
 	safeRedirect,
 	addBackLinkQueryToUrl,
 	getBackLinkUrlFromQuery,
-	stripQueryString
+	stripQueryString,
+	preserveQueryString
 } from '#lib/url-utilities.js';
 import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
@@ -1634,6 +1635,49 @@ describe('url-utilities', () => {
 			).toBe(
 				'/supplied/url?originalQuery1=true&originalQuery2=false&backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue#with-hash'
 			);
+		});
+	});
+
+	describe('preserveQueryString', () => {
+		it('should return the supplied URL with the query string intact', () => {
+			expect(
+				preserveQueryString(
+					// @ts-ignore
+					{ originalUrl: '/original/url/with-query?testQuery=someValue' },
+					'/test/url/with-query'
+				)
+			).toBe('/test/url/with-query?testQuery=someValue');
+		});
+
+		it('should return the unaltered URL with no query string', () => {
+			expect(
+				preserveQueryString(
+					// @ts-ignore
+					{ originalUrl: '/original/url/with-query' },
+					'/test/url/with-query'
+				)
+			).toBe('/test/url/with-query');
+		});
+
+		it('should return the supplied URL with the query string intact and no hash', () => {
+			expect(
+				preserveQueryString(
+					// @ts-ignore
+					{ originalUrl: '/original/url/with-query?testQuery=someValue' },
+					'/new/url/with-query#with-hash'
+				)
+			).toBe('/new/url/with-query?testQuery=someValue');
+		});
+
+		it('should return the supplied URL with the query string except for the excluded query params', () => {
+			expect(
+				preserveQueryString(
+					// @ts-ignore
+					{ originalUrl: '/original/url/with-query?testQuery=someValue&excludeQuery=true' },
+					'/test/url/with-query',
+					{ exclude: ['excludeQuery'] }
+				)
+			).toBe('/test/url/with-query?testQuery=someValue');
 		});
 	});
 
