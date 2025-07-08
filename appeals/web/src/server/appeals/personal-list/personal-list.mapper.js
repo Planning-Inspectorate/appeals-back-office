@@ -388,6 +388,12 @@ function mapRequiredActionToPersonalListActionHtml(
 				`/appeals-service/appeal-details/${appealId}/hearing/setup/date`
 			)}">Set up hearing</a>`;
 		}
+		case 'addHearingAddress': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/hearing/change/address-details`
+			)}">Add hearing address</a>`;
+		}
 		default: {
 			return '';
 		}
@@ -401,10 +407,13 @@ function mapRequiredActionToPersonalListActionHtml(
  * @returns {string}
  */
 export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
-	const requiredActions = getRequiredActionsForAppeal({
-		...appeal,
-		appealTimetable: appeal.appealTimetable || {}
-	});
+	const requiredActions = getRequiredActionsForAppeal(
+		{
+			...appeal,
+			appealTimetable: appeal.appealTimetable || {}
+		},
+		'summary'
+	);
 
 	const { appealId, lpaQuestionnaireId, isChildAppeal = false } = appeal;
 

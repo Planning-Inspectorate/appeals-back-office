@@ -545,8 +545,9 @@ interface AppealListResponse {
 	isParentAppeal: boolean | null;
 	isChildAppeal: boolean | null;
 	planningApplicationReference: string | null;
+	isHearingSetup: boolean | null;
+	hasHearingAddress: boolean | null;
 }
-
 interface DocumentationSummary {
 	appellantCase?: DocumentationSummaryEntry;
 	lpaQuestionnaire?: DocumentationSummaryEntry;

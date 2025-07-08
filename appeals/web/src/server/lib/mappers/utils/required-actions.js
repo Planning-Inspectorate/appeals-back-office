@@ -13,9 +13,10 @@ import {
 /**
  * This logic is documented in `docs/reference/appeal-action-required-logic.md`. Please ensure this document is kept updated to reflect any changes made in this function.
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal|import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} appealDetails
+ * @param { 'summary'|'detail' } view
  * @returns {AppealRequiredAction[]}
  */
-export function getRequiredActionsForAppeal(appealDetails) {
+export function getRequiredActionsForAppeal(appealDetails, view) {
 	/** @type {AppealRequiredAction[]} */
 	const actions = [];
 
@@ -41,17 +42,26 @@ export function getRequiredActionsForAppeal(appealDetails) {
 				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING.toLowerCase()
 			) {
 				// @ts-ignore
-				if (!appealDetails.hearing) {
+				if (
+					// @ts-ignore
+					(view === 'detail' && !appealDetails.hearing) ||
+					// @ts-ignore
+					(view === 'summary' && !appealDetails.isHearingSetup)
+				) {
 					actions.push('setupHearing');
+					break;
 				}
 
 				if (
+					(view === 'detail' &&
+						// @ts-ignore
+						appealDetails.hearing &&
+						// @ts-ignore
+						!appealDetails.hearing?.addressId &&
+						// @ts-ignore
+						!appealDetails.hearing?.address) ||
 					// @ts-ignore
-					appealDetails.hearing &&
-					// @ts-ignore
-					!appealDetails.hearing?.addressId &&
-					// @ts-ignore
-					!appealDetails.hearing?.address
+					(view === 'summary' && !appealDetails.hasHearingAddress)
 				) {
 					actions.push('addHearingAddress');
 				}
