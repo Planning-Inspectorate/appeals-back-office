@@ -140,7 +140,7 @@ export const rearrangeHearing = async (req, res) => {
 		if (
 			arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) &&
 			address &&
-			!currentHearing?.address
+			!currentHearing?.addressId
 		) {
 			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		}
