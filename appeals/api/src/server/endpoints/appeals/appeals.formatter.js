@@ -59,7 +59,9 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 	appealTimetable: formatAppealTimetable(appeal),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
 	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
-	planningApplicationReference: appeal.applicationReference
+	planningApplicationReference: appeal.applicationReference,
+	isHearingSetup: !!appeal.hearing,
+	hasHearingAddress: !!appeal.hearing?.addressId
 });
 
 /**
@@ -86,7 +88,9 @@ const formatMyAppeals = async (appeal, linkedAppeals) => ({
 	appealTimetable: formatAppealTimetable(appeal),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
 	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
-	planningApplicationReference: appeal.applicationReference
+	planningApplicationReference: appeal.applicationReference,
+	isHearingSetup: !!appeal.hearing,
+	hasHearingAddress: !!appeal.hearing?.addressId
 });
 
 /**
