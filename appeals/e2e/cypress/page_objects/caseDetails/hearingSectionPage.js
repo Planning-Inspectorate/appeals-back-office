@@ -2,9 +2,13 @@
 
 import { CaseDetailsPage } from '../caseDetailsPage';
 import { DateTimeSection } from '../dateTimeSection.js';
-import { happyPathHelper } from '../../support/happyPathHelper';
+import { users } from '../../fixtures/users';
+import { ListCasesPage } from '../listCasesPage';
 
+const listCasesPage = new ListCasesPage();
+const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();
+
 export class HearingSectionPage extends CaseDetailsPage {
 	hearingSectionElements = {
 		...this.elements, // Inherit parent elements
@@ -20,7 +24,6 @@ export class HearingSectionPage extends CaseDetailsPage {
 			postcode: () => cy.get('#post-code')
 		},
 
-		hearingValues: () => cy.get('.govuk-summary-list__key'),
 		changeHearing: () => cy.get('.govuk-summary-list__actions > .govuk-link').last(),
 		hearingSectionHeader: () => cy.get('h1'),
 		keepHearing: () => cy.get('#keepHearing'),
@@ -52,7 +55,7 @@ export class HearingSectionPage extends CaseDetailsPage {
 		this.clickButtonByText('Continue');
 	}
 
-	verifyHearingEstimatedValue(estimateField, value) {
+	verifyHearingEstimate(estimateField, value) {
 		const daysCount = parseFloat(value);
 		const daySuffix = daysCount === 1 ? 'day' : 'days';
 		const expectedText = `${daysCount} ${daySuffix}`;
@@ -108,5 +111,89 @@ export class HearingSectionPage extends CaseDetailsPage {
 	verifyAwaitingHearingTagPersonalList(caseRef) {
 		this.basePageElements.tableCell().contains(caseRef);
 		this.basePageElements.tableCell().last().contains('Awaiting hearing');
+	}
+	navigateToHearingSection(caseRef) {
+		cy.clearAllSessionStorage();
+		cy.clearAllCookies();
+		cy.login(users.appeals.caseAdmin);
+		caseDetailsPage.navigateToAppealsService();
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickAccordionByButton('Hearing');
+	}
+	verifyErrorMessages(options) {
+		options.messages.forEach((message) => {
+			caseDetailsPage.checkErrorMessageDisplays(message);
+		});
+
+		options.fields.forEach((field) => {
+			caseDetailsPage.verifyInputFieldIsFocusedWhenErrorMessageLinkIsClicked(field, 'id', field);
+			if (options.verifyInlineErrors) {
+				caseDetailsPage.verifyInlineErrorMessage(`${field}-error`);
+			}
+		});
+	}
+	ensureHearingExists(caseRef, date) {
+		return cy.loadAppealDetails(caseRef).then((appealDetails) => {
+			if (appealDetails.hearing === undefined) {
+				cy.addHearingDetails(caseRef, date).then((hearingDetails) => {
+					expect(hearingDetails.hearingStartTime).to.be.eq(date.toISOString());
+					expect(hearingDetails.hearingEndTime).to.be.eq(date.toISOString());
+					return cy.addHearingDetails(caseRef, date);
+				});
+			}
+		});
+	}
+	deleteHearingIfExists(caseRef) {
+		cy.log(`Checking for hearing with case reference: ${caseRef}`);
+
+		cy.loadAppealDetails(caseRef).then((appealDetails) => {
+			cy.log('Appeal details:', appealDetails);
+
+			// More thorough check for hearing existence
+			if (appealDetails?.hearing?.hearingId) {
+				cy.log(`Hearing exists with ID: ${appealDetails.hearing.hearingId}, deleting...`);
+
+				cy.deleteHearing(caseRef).then((hearingDetails) => {
+					expect(Number(hearingDetails.appealId)).to.equal(appealDetails.appealId);
+					expect(Number(hearingDetails.hearingId)).to.equal(appealDetails.hearing.hearingId);
+					cy.log('Hearing successfully deleted');
+				});
+			} else {
+				cy.log('No hearing exists for this case');
+			}
+		});
+	}
+	verifyCaseHistory(hearingInformation) {
+		caseDetailsPage.clickAccordionByButton('Case management');
+		caseDetailsPage.clickViewCaseHistory();
+		hearingInformation.forEach((info) => {
+			caseDetailsPage.verifyTableCellTextCaseHistory(info);
+		});
+	}
+
+	verifyIssueDecision(caseRef) {
+		cy.simulateHearingElapsed(caseRef);
+		cy.reload();
+		caseDetailsPage.validateBannerMessage('Important', 'Issue decision');
+		caseDetailsPage.clickIssueDecision(caseRef);
+		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Allowed'));
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.pdf);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Issue Decision');
+		caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
+		caseDetailsPage.checkStatusOfCase('Complete', 0);
+		caseDetailsPage.checkDecisionOutcome('Allowed');
+		caseDetailsPage.viewDecisionLetter('View decision');
+		caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
+	}
+
+	getTimeUpToMinutes(isoString) {
+		const date = new Date(isoString);
+		return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
 	}
 }

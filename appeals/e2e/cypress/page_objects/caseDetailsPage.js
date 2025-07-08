@@ -570,7 +570,10 @@ export class CaseDetailsPage extends Page {
 			cy.wrap($elem)
 				.invoke('text')
 				.then((text) =>
-					expect(text.trim().toLocaleLowerCase()).to.include(answer.toLocaleLowerCase())
+					expect(text.trim().toLocaleLowerCase()).to.include(
+						answer.toLocaleLowerCase(),
+						`${answer} is not included`
+					)
 				);
 		});
 	}

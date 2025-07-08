@@ -49,7 +49,7 @@ const appealsApiRequests = {
 		},
 		users: [
 			{
-				emailAddress: 'test@test.com',
+				emailAddress: 'appellant@test.com',
 				firstName: 'Testy',
 				lastName: 'McTest',
 				salutation: 'string',
@@ -58,7 +58,7 @@ const appealsApiRequests = {
 				organisation: 'K+C'
 			},
 			{
-				emailAddress: 'test@test.com',
+				emailAddress: 'agent@test.com',
 				firstName: 'Agent',
 				lastName: 'Bond',
 				salutation: 'string',
@@ -137,7 +137,7 @@ const appealsApiRequests = {
 		representationType: 'comment',
 		representationSubmittedDate: new Date(),
 		newUser: {
-			emailAddress: 'test@test.com',
+			emailAddress: 'interestedparty@test.com',
 			firstName: 'Testy',
 			lastName: 'McTest',
 			salutation: 'Mr',

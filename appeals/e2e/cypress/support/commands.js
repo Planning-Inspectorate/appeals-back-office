@@ -242,3 +242,19 @@ Cypress.Commands.add('updateTimeTableDetails', (reference, timeTableDetails) => 
 		return await appealsApiClient.updateTimeTable(appealId, appealTimetableId, timeTableDetails);
 	});
 });
+
+Cypress.Commands.add('simulateHearingElapsed', (reference) => {
+	return cy.wrap(null).then(async () => {
+		return appealsApiClient.simulateHearingElapsed(reference).then(() => {
+			cy.log(`Simulated hearing elapsed for case ref ${reference}`);
+		});
+	});
+});
+
+Cypress.Commands.add('navigateToAppealDetailsPage', (reference) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		cy.visit(`appeals-service/appeal-details/${appealId}`);
+	});
+});
