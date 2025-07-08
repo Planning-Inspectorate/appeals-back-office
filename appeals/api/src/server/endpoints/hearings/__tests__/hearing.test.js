@@ -254,13 +254,15 @@ describe('hearing routes', () => {
 					...fullPlanningAppeal,
 					appealStatus: [
 						{
-							status: APPEAL_CASE_STATUS.EVENT,
+							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
 							valid: true
 						}
 					]
 				});
 				databaseConnector.hearing.findUnique.mockResolvedValue({
-					...hearing
+					...hearing,
+					address: undefined,
+					addressId: 99
 				});
 
 				const response = await request
@@ -268,7 +270,8 @@ describe('hearing routes', () => {
 					.send({
 						hearingStartTime: '2999-01-01T12:00:00.000Z',
 						hearingEndTime: '2999-01-01T13:00:00.000Z',
-						addressId: 42
+						addressId: 42,
+						address: hearingAddress
 					})
 					.set('azureAdUserId', azureAdUserId);
 
