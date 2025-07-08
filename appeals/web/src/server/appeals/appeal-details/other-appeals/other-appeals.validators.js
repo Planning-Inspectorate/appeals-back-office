@@ -10,6 +10,8 @@ export const validateAddOtherAppealsReference = createValidator(
 		.withMessage('Enter an appeal reference')
 		.isLength({ min: 7, max: 7 })
 		.withMessage('Appeal reference must be 7 digits')
+		.isNumeric()
+		.withMessage('Enter appeal reference number using numbers 0 to 9')
 		.bail()
 		.custom(async (reference, { req }) => {
 			try {
