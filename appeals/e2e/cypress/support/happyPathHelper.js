@@ -83,6 +83,8 @@ export const happyPathHelper = {
 		caseDetailsPage.basePageElements.bannerLink().click();
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.checkStatusOfCase('Hearing ready to set up', 0);
+		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
+		caseDetailsPage.validateBannerMessage('Important', 'Set up hearing');
 	},
 
 	changeStartDate(caseRef) {

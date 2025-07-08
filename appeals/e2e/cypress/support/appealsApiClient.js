@@ -190,22 +190,6 @@ export const appealsApiClient = {
 			return false;
 		}
 	},
-	async setAppealTimetables(appealId) {
-		try {
-			const url = `${baseUrl}appeals/${appealId}/appeal-timetables`;
-			const response = await fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-				}
-			});
-
-			return await response.json();
-		} catch {
-			return false;
-		}
-	},
 	async getBusinessDate(date, days = 7) {
 		try {
 			const url = `${baseUrl}appeals/add-business-days`;
