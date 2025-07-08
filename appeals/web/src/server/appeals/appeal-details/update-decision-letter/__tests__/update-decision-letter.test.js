@@ -202,6 +202,18 @@ describe('update-decision-letter', () => {
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
 				.persist();
+			nock('http://test/')
+				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b')
+				.reply(200, {
+					id: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
+					name: 'test-document2.pdf',
+					latestDocumentVersion: {
+						documentId: '3861dfbd-4886-4c43-9e23-18c8134f9ba1',
+						version: 3,
+						fileName: 'test-document2.pdf'
+					}
+				})
+				.persist();
 
 			correctionNoticeResponse = await request
 				.post(`${baseUrl}/1/update-decision-letter/correction-notice`)

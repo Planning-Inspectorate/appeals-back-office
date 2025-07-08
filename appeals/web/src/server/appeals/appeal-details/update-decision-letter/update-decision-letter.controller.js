@@ -11,6 +11,7 @@ import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { getFileInfo } from '#appeals/appeal-documents/appeal.documents.service.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getCorrectionNotice = async (request, response) => {
@@ -47,7 +48,13 @@ export const renderCorrectionNotice = async (request, response) => {
 export const renderUpdateDocumentCheckDetails = async (request, response) => {
 	const {
 		errors,
-		currentAppeal: { appealSite, appealReference, planningApplicationReference },
+		currentAppeal: {
+			appealSite,
+			appealReference,
+			planningApplicationReference,
+			appealId,
+			decision
+		},
 		session: {
 			updateDecisionLetter: { correctionNotice },
 			inspectorDecision
@@ -55,6 +62,20 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 	} = request;
 	const baseUrl = request.baseUrl;
 	const file = inspectorDecision?.files?.[0];
+
+	const fileInfo = await getFileInfo(request.apiClient, appealId, decision.documentId);
+
+	if (!fileInfo) {
+		return response.status(404).render('app/404');
+	}
+
+	if (!('latestDocumentVersion' in fileInfo) || !('name' in fileInfo)) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	const documentVersion = fileInfo.latestDocumentVersion.version + 1;
+	const documentName = fileInfo.name;
+
 	const personalisation = {
 		appeal_reference_number: appealReference,
 		site_address: appealSiteToAddressString(appealSite),
@@ -64,7 +85,6 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 	};
 	const templateName = 'correction-notice-decision.content.md';
 	const template = await generateNotifyPreview(request.apiClient, templateName, personalisation);
-
 	return renderCheckYourAnswersComponent(
 		{
 			title: 'Check details and update decision letter',
@@ -77,8 +97,9 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 					html: `<a href="${mapUncommittedDocumentDownloadUrl(
 						appealReference,
 						file.GUID,
-						file.name
-					)}" class="govuk-link">${file.name}</a>`,
+						documentName,
+						documentVersion
+					)}" class="govuk-link">${documentName}</a>`,
 					actions: {
 						Change: {
 							href: `${addBackLinkQueryToUrl(request, `${baseUrl}/upload-decision-letter`)}`,
