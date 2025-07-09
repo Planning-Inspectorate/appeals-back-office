@@ -346,22 +346,26 @@ describe('set up hearing', () => {
 		});
 
 		it('should redirect to /hearing/setup/confirmation when answering no', async () => {
-			const response = await request.post(`${baseUrl}/${appealId}/hearing/setup/address`).send({
-				addressKnown: 'no'
-			});
+			const response = await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address?editEntrypoint=remove-me`)
+				.send({
+					addressKnown: 'no'
+				});
 
 			expect(response.statusCode).toBe(302);
 			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/hearing/setup/check-details`);
 		});
 
 		it('should redirect to /hearing/setup/address-details when answering yes', async () => {
-			const response = await request.post(`${baseUrl}/${appealId}/hearing/setup/address`).send({
-				addressKnown: 'yes'
-			});
+			const response = await request
+				.post(`${baseUrl}/${appealId}/hearing/setup/address?editEntrypoint=keep-me`)
+				.send({
+					addressKnown: 'yes'
+				});
 
 			expect(response.statusCode).toBe(302);
 			expect(response.headers.location).toBe(
-				`${baseUrl}/${appealId}/hearing/setup/address-details`
+				`${baseUrl}/${appealId}/hearing/setup/address-details?editEntrypoint=keep-me`
 			);
 		});
 
