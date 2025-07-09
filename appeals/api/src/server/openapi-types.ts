@@ -2639,6 +2639,46 @@ export interface CreateInquiryRequest {
 	 * @example "2026-11-10T00:00:00.000Z"
 	 */
 	inquiryEndTime?: string;
+	/**
+	 * Date string of the timetable: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	startDate?: string;
+	/**
+	 * Estimated number of days
+	 * @example "5"
+	 */
+	estimatedDays?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	lpaQuestionnaireDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	statementDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	ipCommentsDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	statementOfCommonGroundDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	proofOfEvidenceAndWitnessesDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	planningObligationDueDate?: string;
 	address?: {
 		/** @example "1 Grove Cottage" */
 		addressLine1?: string;
@@ -2653,14 +2693,6 @@ export interface CreateInquiryRequest {
 		/** @example "Woodton" */
 		town?: string;
 	};
-	startDate: string;
-	estimatedDays?: string;
-	lpaQuestionnaireDueDate: string;
-	statementDueDate: string;
-	ipCommentsDueDate: string;
-	statementOfCommonGroundDueDate: string;
-	proofOfEvidenceAndWitnessesDueDate: string;
-	planningObligationDueDate: string;
 }
 
 export interface InquiryResponse {
