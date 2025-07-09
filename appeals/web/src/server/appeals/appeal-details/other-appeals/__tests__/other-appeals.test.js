@@ -103,6 +103,42 @@ describe('other-appeals', () => {
 			expect(errorSummaryHtml).toContain('Appeal reference must be 7 digits</a>');
 		});
 
+		it('should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference contains both numbers and letters', async () => {
+			const response = await request
+				.post(`${baseUrl}/1/other-appeals/add`)
+				.send({ addOtherAppealsReference: '12345AB' });
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter the appeal reference number</label></h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter appeal reference number using numbers 0 to 9</a>');
+		});
+
+		it('should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference contains only letters', async () => {
+			const response = await request
+				.post(`${baseUrl}/1/other-appeals/add`)
+				.send({ addOtherAppealsReference: 'ABCDEFG' });
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Enter the appeal reference number</label></h1>');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter appeal reference number using numbers 0 to 9</a>');
+		});
+
 		it('should re-render the "Enter the appeal reference number" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid', async () => {
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testInvalidLinkableAppealReference}/related`)
