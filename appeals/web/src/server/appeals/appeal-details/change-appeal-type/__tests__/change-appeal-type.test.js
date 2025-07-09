@@ -3,6 +3,7 @@ import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
 import { appealData, appealTypesData } from '#testing/app/fixtures/referencedata.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -16,6 +17,15 @@ const checkTransferPath = '/check-transfer';
 
 /** @typedef {import('../../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 
+const validAppealChangeTypeStatuses = [
+	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+	APPEAL_CASE_STATUS.VALIDATION
+];
+
+const invalidAppealChangeTypeStatuses = Object.values(APPEAL_CASE_STATUS).filter(
+	(status) => !validAppealChangeTypeStatuses.includes(status)
+);
+
 describe('change-appeal-type', () => {
 	beforeEach(() => {
 		installMockApi();
@@ -25,16 +35,53 @@ describe('change-appeal-type', () => {
 	afterEach(teardown);
 
 	describe('GET /change-appeal-type/appeal-type', () => {
-		it('should render the appeal type page', async () => {
-			const response = await request.get(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`);
-			const element = parseHtml(response.text);
+		invalidAppealChangeTypeStatuses.forEach((status) => {
+			it(`should render the you cannot update the appeal type page for appeals with status ${status}`, async () => {
+				const amendedAppeal = {
+					...appealData,
+					appealId: '123943',
+					appealStatus: status
+				};
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Appeal type</h1>');
-			expect(element.innerHTML).toContain(
-				'<input class="govuk-radios__input" id="appeal-type" name="appealType"'
-			);
-			expect(element.innerHTML).toContain('Continue</button>');
+				installMockApi();
+				nock('http://test/').get('/appeals/123943').reply(200, amendedAppeal);
+				nock('http://test/').get('/appeals/123943/appeal-types').reply(200, appealTypesData);
+
+				const response = await request.get(
+					`${baseUrl}/123943${changeAppealTypePath}/${appealTypePath}`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('You cannot update the appeal type</h1>');
+				expect(element.innerHTML).toContain('govuk-list govuk-list--bullet');
+			});
+		});
+
+		validAppealChangeTypeStatuses.forEach((status) => {
+			it(`should render the appeal type page for appeals with status ${status}`, async () => {
+				const amendedAppeal = {
+					...appealData,
+					appealId: '123943',
+					appealStatus: status
+				};
+
+				installMockApi();
+				nock('http://test/').get('/appeals/123943').reply(200, amendedAppeal);
+				nock('http://test/').get('/appeals/123943/appeal-types').reply(200, appealTypesData);
+
+				const response = await request.get(
+					`${baseUrl}/123943${changeAppealTypePath}/${appealTypePath}`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Appeal type</h1>');
+				expect(element.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="appeal-type" name="appealType"'
+				);
+				expect(element.innerHTML).toContain('Continue</button>');
+			});
 		});
 	});
 
@@ -54,8 +101,17 @@ describe('change-appeal-type', () => {
 		});
 
 		it('should re-render the appeal type page with an error message if required field is missing', async () => {
+			const amendedAppeal = {
+				...appealData,
+				appealId: '123943',
+				appealStatus: APPEAL_CASE_STATUS.VALIDATION
+			};
+
+			nock('http://test/').get('/appeals/123943').reply(200, amendedAppeal);
+			nock('http://test/').get('/appeals/123943/appeal-types').reply(200, appealTypesData);
+
 			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`)
+				.post(`${baseUrl}/123943${changeAppealTypePath}/${appealTypePath}`)
 				.send({
 					appealType: ''
 				});

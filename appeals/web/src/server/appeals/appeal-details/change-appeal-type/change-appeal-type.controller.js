@@ -10,11 +10,13 @@ import {
 	changeAppealFinalDatePage,
 	resubmitAppealPage,
 	addHorizonReferencePage,
-	checkTransferPage
+	checkTransferPage,
+	invalidChangeAppealType
 } from './change-appeal-type.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -76,17 +78,31 @@ const renderAppealType = async (request, response) => {
 		request.session.changeAppealType = {};
 	}
 
-	const mappedPageContent = appealTypePage(
-		appealData,
-		appealTypes,
-		request.session.changeAppealType,
-		errors ? errors['appealType'].msg : undefined
-	);
+	const validAppealChangeTypeStatuses = [
+		APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+		APPEAL_CASE_STATUS.VALIDATION
+	];
 
-	return response.status(200).render('patterns/change-page.pattern.njk', {
-		pageContent: mappedPageContent,
-		errors
-	});
+	if (validAppealChangeTypeStatuses.includes(appealData.appealStatus)) {
+		const mappedPageContent = appealTypePage(
+			appealData,
+			appealTypes,
+			request.session.changeAppealType,
+			errors ? errors['appealType'].msg : undefined
+		);
+
+		return response.status(200).render('patterns/change-page.pattern.njk', {
+			pageContent: mappedPageContent,
+			errors
+		});
+	} else {
+		const pageContent = invalidChangeAppealType(appealData);
+
+		return response.status(200).render('patterns/display-page.pattern.njk', {
+			pageContent,
+			errors
+		});
+	}
 };
 
 /**
