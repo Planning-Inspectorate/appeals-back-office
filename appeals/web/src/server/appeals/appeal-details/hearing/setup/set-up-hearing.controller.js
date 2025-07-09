@@ -215,14 +215,13 @@ export const postHearingAddress = async (request, response) => {
 
 	const { appealId } = request.currentAppeal;
 
-	const nextStep = request.body.addressKnown === 'yes' ? 'address-details' : 'check-details';
+	const baseUrl = `/appeals-service/appeal-details/${appealId}/hearing/setup`;
+	const nextStepUrl =
+		request.body.addressKnown === 'yes'
+			? preserveQueryString(request, `${baseUrl}/address-details`)
+			: preserveQueryString(request, `${baseUrl}/check-details`, { exclude: ['editEntrypoint'] });
 
-	return response.redirect(
-		preserveQueryString(
-			request,
-			`/appeals-service/appeal-details/${appealId}/hearing/setup/${nextStep}`
-		)
-	);
+	return response.redirect(nextStepUrl);
 };
 
 /**
@@ -236,14 +235,13 @@ export const postChangeHearingAddress = async (request, response) => {
 
 	const { appealId } = request.currentAppeal;
 
-	const nextStep = request.body.addressKnown === 'yes' ? 'address-details' : 'check-details';
+	const baseUrl = `/appeals-service/appeal-details/${appealId}/hearing/change`;
+	const nextStepUrl =
+		request.body.addressKnown === 'yes'
+			? preserveQueryString(request, `${baseUrl}/address-details`)
+			: preserveQueryString(request, `${baseUrl}/check-details`, { exclude: ['editEntrypoint'] });
 
-	return response.redirect(
-		preserveQueryString(
-			request,
-			`/appeals-service/appeal-details/${appealId}/hearing/change/${nextStep}`
-		)
-	);
+	return response.redirect(nextStepUrl);
 };
 
 /**
