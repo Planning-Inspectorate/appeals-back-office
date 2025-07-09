@@ -5,6 +5,7 @@ import { nameToString } from '#lib/person-name-formatter.js';
 import { getAppealTypesFromId } from './change-appeal-type.service.js';
 import { dateInput } from '#lib/mappers/index.js';
 import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -47,8 +48,50 @@ export function appealTypePage(appealDetails, appealTypes, changeAppeal, errorMe
 	const pageContent = {
 		title: `What type should this appeal be? - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: `Appeal ${shortAppealReference} - update appeal type`,
 		pageComponents: [selectAppealTypeRadiosComponent]
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealDetails
+ * @returns {PageContent}
+ */
+export function invalidChangeAppealType(appealDetails) {
+	const validAppealChangeTypeStatusesListItems = [
+		APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+		APPEAL_CASE_STATUS.VALIDATION
+	]
+		.map((status) => {
+			const formattedStatus = status.replace(/_/g, ' ');
+			return `<li>${formattedStatus}</li>`;
+		})
+		.join('');
+
+	/** @type {PageComponent} */
+	const messageComponent = {
+		type: 'html',
+		parameters: {
+			html: `
+			<p class="govuk-body">This is because you can only update the appeal type when the status is:</p>
+			<ul class="govuk-list govuk-list--bullet">
+				${validAppealChangeTypeStatusesListItems}
+			</ul>
+      	`
+		}
+	};
+
+	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'You cannot update the appeal type',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		preHeading: `Appeal ${shortAppealReference}`,
+		heading: 'You cannot update the appeal type',
+		pageComponents: [messageComponent]
 	};
 
 	return pageContent;
