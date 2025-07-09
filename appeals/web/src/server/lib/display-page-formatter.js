@@ -68,7 +68,7 @@ export const formatListOfLinkedAppeals = (listOfAppeals) => {
 			? generateHorizonAppealUrl(listOfAppeals[i].appealId)
 			: `/appeals-service/appeal-details/${listOfAppeals[i].appealId}`;
 		const linkAriaLabel = `Appeal ${numberToAccessibleDigitLabel(shortAppealReference || '')}`;
-		const relationshipText = listOfAppeals[i].isParentAppeal ? ' (Lead)' : ' (Child)';
+		const relationshipText = listOfAppeals[i].isParentAppeal ? ' (lead)' : '';
 
 		formattedLinks +=
 			linkUrl.length > 0
