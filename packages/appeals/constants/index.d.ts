@@ -2,3 +2,7 @@ declare module '@pins/appeals/constants/common.js';
 declare module '@pins/appeals/constants/documents.js';
 declare module '@pins/appeals/constants/dates.js';
 declare module '@pins/appeals/constants/support.js';
+declare module '@pins/appeals/utils/cache-data.js';
+declare module '@pins/appeals/utils/date-formatter.js';
+declare module '@pins/appeals/utils/business-days.js';
+declare module '@pins/appeals/utils/is-fpa.js';
