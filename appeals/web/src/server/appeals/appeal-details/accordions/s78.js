@@ -55,7 +55,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 			head: [
 				{ text: 'Documentation' },
 				{ text: 'Status' },
-				{ text: 'Received' },
+				{ text: 'Date' },
 				{ text: 'Action', classes: 'govuk-!-text-align-right' }
 			],
 			rows: [

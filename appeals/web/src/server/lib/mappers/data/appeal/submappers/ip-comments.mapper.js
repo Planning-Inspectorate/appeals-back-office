@@ -62,9 +62,7 @@ export const mapIpComments = ({ appealDetails, currentRoute, request }) => {
 		const { ipCommentsDueDate } = appealDetails.appealTimetable ?? {};
 
 		if (dateIsInThePast(dateISOStringToDayMonthYearHourMinute(ipCommentsDueDate))) {
-			return `Interested party comments deadline on ${dateISOStringToDisplayDate(
-				ipCommentsDueDate
-			)}`;
+			return `Deadline on ${dateISOStringToDisplayDate(ipCommentsDueDate)}`;
 		}
 
 		if (status === 'not_received') {
