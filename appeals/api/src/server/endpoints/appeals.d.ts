@@ -935,20 +935,6 @@ type InquiryResponse = {
 	addressId: number | null;
 };
 
-type UpdateInquiry = {
-	appealId: number;
-	inquiryId: number;
-	inquiryStartTime: Date | string;
-	inquiryEndTime: Date | string | undefined;
-	addressId?: number;
-	address?: Omit<Schema.Address, 'id'> | null;
-};
-
-type CancelInquiry = {
-	appealId?: number;
-	inquiryId: number;
-};
-
 type ListedBuildingDetailsResponse = {
 	id: number;
 	listEntry: string;
@@ -1039,7 +1025,5 @@ export {
 	InquiryResponse,
 	CreateInquiry,
 	InquiryAddress,
-	CancelInquiry,
-	UpdateInquiry,
 	UpdateAppealDecisionRequest
 };

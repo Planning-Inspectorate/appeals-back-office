@@ -1,5 +1,3 @@
-import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
-import inquiryRepository from '#repositories/inquiry.repository.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { notifySend } from '#notify/notify-send.js';
 import { ERROR_NO_RECIPIENT_EMAIL } from '@pins/appeals/constants/support.js';
@@ -21,32 +19,9 @@ import { APPEAL_CASE_STATUS } from 'pins-data-model';
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateInquiry} CreateInquiry */
-/** @typedef {import('@pins/appeals.api').Appeals.UpdateInquiry} UpdateInquiry */
-/** @typedef {import('@pins/appeals.api').Appeals.CancelInquiry} CancelInquiry */
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('express').NextFunction} NextFunction */
-
-/**
- * @param {Request} req
- * @param {Response} res
- * @param {NextFunction} next
- * @returns {Promise<Response | void>}
- */
-const checkInquiryExists = async (req, res, next) => {
-	const {
-		appeal,
-		params: { inquiryId }
-	} = req;
-
-	const hasInquiry = appeal.inquiry?.id === Number(inquiryId);
-
-	if (!hasInquiry) {
-		return res.status(404).send({ errors: { inquiryId: ERROR_NOT_FOUND } });
-	}
-
-	next();
-};
 
 /**
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
@@ -207,72 +182,4 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 	}
 };
 
-/**
- * @param {UpdateInquiry} updateInquiryData
- * @param {Appeal} appeal
- * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
- */
-const updateInquiry = async (updateInquiryData, appeal, notifyClient) => {
-	try {
-		const appealId = updateInquiryData.appealId;
-		const inquiryId = Number(updateInquiryData.inquiryId);
-		const inquiryStartTime = updateInquiryData.inquiryStartTime;
-		const inquiryEndTime = updateInquiryData.inquiryEndTime;
-		const address = updateInquiryData.address;
-		const addressId = updateInquiryData.addressId;
-
-		const updateData = {
-			appealId,
-			inquiryId,
-			inquiryStartTime: inquiryStartTime,
-			inquiryEndTime: inquiryEndTime || undefined,
-			addressId: addressId,
-			address: address
-		};
-
-		const result = await inquiryRepository.updateInquiryById(inquiryId, updateData);
-
-		// @ts-ignore
-		if (result.address) {
-			await broadcasters.broadcastEvent(updateData.inquiryId, EVENT_TYPE.INQUIRY, EventType.Update);
-			await sendInquiryDetailsNotifications(
-				notifyClient,
-				'inquiry-updated',
-				appeal,
-				inquiryStartTime,
-				result.address
-			);
-		}
-
-		return result;
-	} catch (error) {
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
-	}
-};
-
-/**
- * @param {CancelInquiry} deleteInquiryData
- * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
- * @param {Appeal} appeal
- */
-const deleteInquiry = async (deleteInquiryData, notifyClient, appeal) => {
-	try {
-		const { inquiryId } = deleteInquiryData;
-
-		const existingInquiry = await inquiryRepository.getInquiryById(inquiryId);
-
-		await inquiryRepository.deleteInquiryById(inquiryId);
-
-		await broadcasters.broadcastEvent(
-			inquiryId,
-			EVENT_TYPE.INQUIRY,
-			EventType.Delete,
-			existingInquiry
-		);
-		await sendInquiryNotifications(notifyClient, 'inquiry-cancelled', appeal);
-	} catch (error) {
-		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
-	}
-};
-
-export { checkInquiryExists, createInquiry, updateInquiry, deleteInquiry };
+export { createInquiry };
