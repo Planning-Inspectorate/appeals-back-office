@@ -19,7 +19,7 @@ router.post(
         }
         #swagger.requestBody = {
 			in: 'body',
-			description: 'Site visit details to create',
+			description: 'Inquiry details to create',
 			schema: { $ref: '#/components/schemas/CreateInquiryRequest' },
 			required: true
 		}
