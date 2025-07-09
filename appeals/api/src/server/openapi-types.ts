@@ -2639,8 +2639,6 @@ export interface CreateInquiryRequest {
 	 * @example "2026-11-10T00:00:00.000Z"
 	 */
 	inquiryEndTime?: string;
-	/** @example 1 */
-	addressId?: number;
 	address?: {
 		/** @example "1 Grove Cottage" */
 		addressLine1?: string;
@@ -2655,6 +2653,14 @@ export interface CreateInquiryRequest {
 		/** @example "Woodton" */
 		town?: string;
 	};
+	startDate: string;
+	estimatedDays?: string;
+	lpaQuestionnaireDueDate: string;
+	statementDueDate: string;
+	ipCommentsDueDate: string;
+	statementOfCommonGroundDueDate: string;
+	proofOfEvidenceAndWitnessesDueDate: string;
+	planningObligationDueDate: string;
 }
 
 export interface UpdateInquiryRequest {

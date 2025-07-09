@@ -657,40 +657,9 @@ describe('set up inquiry', () => {
 			expect(errorSummaryHtml).toContain('Enter the statement of common ground due date');
 			expect(errorSummaryHtml).toContain('Enter the proof of evidence and witnesses due date');
 		});
-
-		//TODO: To be added back when CYA view is applied
-		//
-		// eslint-disable-next-line jest/no-commented-out-tests
-		// it('should redirect to /inquiry/setup/check-details with valid inputs', async () => {
-		// 	const response = await request
-		// 		.post(`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`)
-		// 		.send({
-		// 			'lpa-questionnaire-due-date-day': '01',
-		// 			'lpa-questionnaire-due-date-month': '02',
-		// 			'lpa-questionnaire-due-date-year': '3025',
-		// 			'statement-due-date-day': '01',
-		// 			'statement-due-date-month': '02',
-		// 			'statement-due-date-year': '3025',
-		// 			'ip-comments-due-date-day': '01',
-		// 			'ip-comments-due-date-month': '02',
-		// 			'ip-comments-due-date-year': '3025',
-		// 			'statement-of-common-ground-due-date-day': '01',
-		// 			'statement-of-common-ground-due-date-month': '02',
-		// 			'statement-of-common-ground-due-date-year': '3025',
-		// 			'proof-of-evidence-and-witnesses-due-date-day': '01',
-		// 			'proof-of-evidence-and-witnesses-due-date-month': '02',
-		// 			'proof-of-evidence-and-witnesses-due-date-year': '3025',
-		// 			'planning-obligation-due-date-day': '01',
-		// 			'planning-obligation-due-date-month': '02',
-		// 			'planning-obligation-due-date-year': '3025'
-		// 		});
-		//
-		// 	expect(response.statusCode).toBe(302);
-		// 	expect(response.headers.location).toBe(`${baseUrl}/${appealId}/inquiry/setup/check-details`);
-		// });
 	});
 
-		describe('GET /inquiry/setup/check-details', () => {
+	describe('GET /inquiry/setup/check-details', () => {
 		const appealId = 1;
 		const dateValues = {
 			'inquiry-date-day': '01',
@@ -809,7 +778,14 @@ describe('set up inquiry', () => {
 			nock('http://test/')
 				.post(`/appeals/${appealId}/inquiry`, {
 					inquiryStartTime: '3025-02-01T12:00:00.000Z',
-					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode }
+					address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode },
+					startDate: '2025-07-08T23:00:00.000Z',
+					lpaQuestionnaireDueDate: '3025-02-01T00:00:00.000Z',
+					statementDueDate: '3025-02-01T00:00:00.000Z',
+					ipCommentsDueDate: '3025-02-01T00:00:00.000Z',
+					statementOfCommonGroundDueDate: '3025-02-01T00:00:00.000Z',
+					proofOfEvidenceAndWitnessesDueDate: '3025-02-01T00:00:00.000Z',
+					planningObligationDueDate: '3025-02-01T00:00:00.000Z'
 				})
 				.reply(201, { inquiryId: 1 });
 
@@ -826,6 +802,27 @@ describe('set up inquiry', () => {
 				.send(addressValues);
 			await request.post(`${baseUrl}/${appealId}/inquiry/setup/estimation`).send(estimationValue);
 
+			await request.post(`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`).send({
+				'lpa-questionnaire-due-date-day': '01',
+				'lpa-questionnaire-due-date-month': '02',
+				'lpa-questionnaire-due-date-year': '3025',
+				'statement-due-date-day': '01',
+				'statement-due-date-month': '02',
+				'statement-due-date-year': '3025',
+				'ip-comments-due-date-day': '01',
+				'ip-comments-due-date-month': '02',
+				'ip-comments-due-date-year': '3025',
+				'statement-of-common-ground-due-date-day': '01',
+				'statement-of-common-ground-due-date-month': '02',
+				'statement-of-common-ground-due-date-year': '3025',
+				'proof-of-evidence-and-witnesses-due-date-day': '01',
+				'proof-of-evidence-and-witnesses-due-date-month': '02',
+				'proof-of-evidence-and-witnesses-due-date-year': '3025',
+				'planning-obligation-due-date-day': '01',
+				'planning-obligation-due-date-month': '02',
+				'planning-obligation-due-date-year': '3025'
+			});
+
 			const response = await request.post(`${baseUrl}/${appealId}/inquiry/setup/check-details`);
 
 			expect(response.status).toBe(302);
@@ -835,7 +832,14 @@ describe('set up inquiry', () => {
 		it('should redirect to appeal details page after submission with no address', async () => {
 			nock('http://test/')
 				.post(`/appeals/${appealId}/inquiry`, {
-					inquiryStartTime: '3025-02-01T12:00:00.000Z'
+					startDate: '2025-07-08T23:00:00.000Z',
+					inquiryStartTime: '3025-02-01T12:00:00.000Z',
+					lpaQuestionnaireDueDate: '3025-02-01T00:00:00.000Z',
+					statementDueDate: '3025-02-01T00:00:00.000Z',
+					ipCommentsDueDate: '3025-02-01T00:00:00.000Z',
+					statementOfCommonGroundDueDate: '3025-02-01T00:00:00.000Z',
+					proofOfEvidenceAndWitnessesDueDate: '3025-02-01T00:00:00.000Z',
+					planningObligationDueDate: '3025-02-01T00:00:00.000Z'
 				})
 				.reply(201, { inquiryId: 1 });
 
@@ -852,6 +856,27 @@ describe('set up inquiry', () => {
 				.post(`${baseUrl}/${appealId}/inquiry/setup/address-details`)
 				.send(addressValues);
 			await request.post(`${baseUrl}/${appealId}/inquiry/setup/estimation`).send(estimationValue);
+
+			await request.post(`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`).send({
+				'lpa-questionnaire-due-date-day': '01',
+				'lpa-questionnaire-due-date-month': '02',
+				'lpa-questionnaire-due-date-year': '3025',
+				'statement-due-date-day': '01',
+				'statement-due-date-month': '02',
+				'statement-due-date-year': '3025',
+				'ip-comments-due-date-day': '01',
+				'ip-comments-due-date-month': '02',
+				'ip-comments-due-date-year': '3025',
+				'statement-of-common-ground-due-date-day': '01',
+				'statement-of-common-ground-due-date-month': '02',
+				'statement-of-common-ground-due-date-year': '3025',
+				'proof-of-evidence-and-witnesses-due-date-day': '01',
+				'proof-of-evidence-and-witnesses-due-date-month': '02',
+				'proof-of-evidence-and-witnesses-due-date-year': '3025',
+				'planning-obligation-due-date-day': '01',
+				'planning-obligation-due-date-month': '02',
+				'planning-obligation-due-date-year': '3025'
+			});
 
 			const response = await request.post(`${baseUrl}/${appealId}/inquiry/setup/check-details`);
 
