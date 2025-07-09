@@ -93,7 +93,8 @@ export const postInquiry = async (req, res) => {
 				})
 			},
 			appeal,
-			req.notifyClient
+			req.notifyClient,
+			req.get('azureAdUserId') || ''
 		);
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) && address) {

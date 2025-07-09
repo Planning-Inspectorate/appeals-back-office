@@ -10,7 +10,6 @@ import { inquiryEstimationPage } from './set-up-inquiry.mapper.js';
 import { isEmpty, has, pick } from 'lodash-es';
 import { dayMonthYearHourMinuteToISOString, getTodaysISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
-import * as startCaseService from '../../start-case/start-case.service.js';
 import { createInquiry } from './inquiry.service.js';
 
 /**
@@ -380,14 +379,6 @@ export const postInquiryCheckDetails = async (request, response) => {
 			return response.status(500).render('app/500.njk');
 		}
 
-		//Start Case
-		await startCaseService.setStartDate(
-			request.apiClient,
-			appealId,
-			getTodaysISOString(),
-			session.startCaseAppealProcedure?.[appealId]?.appealProcedure
-		);
-
 		const submittedAddress = {
 			address: {
 				...pick(inquiry, ['addressLine1', 'addressLine2', 'town', 'county']),
@@ -415,9 +406,9 @@ export const postInquiryCheckDetails = async (request, response) => {
 				year: inquiry['lpa-questionnaire-due-date-year']
 			}),
 			statementDueDate: dayMonthYearHourMinuteToISOString({
-				day: inquiry['statement-due-dat-day'],
-				month: inquiry['statement-due-dat-month'],
-				year: inquiry['statement-due-dat-year']
+				day: inquiry['statement-due-date-day'],
+				month: inquiry['statement-due-date-month'],
+				year: inquiry['statement-due-date-year']
 			}),
 			ipCommentsDueDate: dayMonthYearHourMinuteToISOString({
 				day: inquiry['ip-comments-due-date-day'],

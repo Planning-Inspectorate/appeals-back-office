@@ -36,7 +36,6 @@ export const postInquiryValidator = composeMiddleware(
 	validateDateParameter({ parameterName: 'statementOfCommonGroundDueDate', isRequired: true }),
 	validateDateParameter({ parameterName: 'proofOfEvidenceAndWitnessesDueDate', isRequired: true }),
 	validateDateParameter({ parameterName: 'planningObligationDueDate', isRequired: true }),
-	body('addressId').optional().isNumeric().withMessage(ERROR_MUST_BE_NUMBER),
 	body('address').optional(),
 	body('estimatedDays').optional().isNumeric().withMessage(ERROR_MUST_BE_NUMBER),
 	validateRequiredStringParameter('address.addressLine1', LENGTH_250, 'address'),

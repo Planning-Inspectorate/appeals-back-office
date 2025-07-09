@@ -1456,9 +1456,45 @@ export const spec = {
 					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
 					example: '2026-11-10T00:00:00.000Z'
 				},
-				addressId: {
-					type: 'number',
-					example: 1
+				startDate: {
+					type: 'string',
+					description: 'Date string of the timetable: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				estimatedDays: {
+					type: 'string',
+					description: 'Estimated number of days',
+					example: '5'
+				},
+				lpaQuestionnaireDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				statementDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				ipCommentsDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				statementOfCommonGroundDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				proofOfEvidenceAndWitnessesDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				planningObligationDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
 				},
 				address: {
 					type: 'object',
