@@ -284,6 +284,80 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
 </main>"
 `;
 
+exports[`other-appeals POST /other-appeals/add should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference contains both numbers and letters 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#add-other-appeals-reference">Enter appeal reference number using numbers 0 to 9</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form method="POST">
+                <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
+                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
+                    name="addOtherAppealsReference" type="text" value="12345AB">
+                </div>
+                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
+                id="filters-submit">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`other-appeals POST /other-appeals/add should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference contains only letters 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#add-other-appeals-reference">Enter appeal reference number using numbers 0 to 9</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form method="POST">
+                <div class="govuk-form-group">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
+                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
+                    name="addOtherAppealsReference" type="text" value="ABCDEFG">
+                </div>
+                <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
+                id="filters-submit">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`other-appeals POST /other-appeals/add should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference is greater than 7 digits 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
