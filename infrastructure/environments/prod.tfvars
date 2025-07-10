@@ -33,7 +33,7 @@ apps_config = {
 
   featureFlags = {
     featureFlagS78Written             = true
-    featureFlagS78Hearing             = false
+    featureFlagS78Hearing             = true
     featureFlagS78Inquiry             = false
     featureFlagLinkedAppeals          = false
     featureFlagS20                    = false
