@@ -28,7 +28,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitStartTime('08', '00');
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit scheduled');
+			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
 			caseDetailsPage.validateAnswer('Visit Type', 'Unaccompanied');
 			caseDetailsPage.elements.changeSetVisitType().click();
 			caseDetailsPage.clickButtonByText('Manage the site visit');
@@ -37,7 +37,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitStartTime('08', '00');
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit type changed');
+			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit updated');
 			caseDetailsPage.validateAnswer('Visit Type', 'Access required');
 		});
 	});
@@ -55,7 +55,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitStartTime('08', '00');
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit scheduled');
+			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
 			caseDetailsPage.validateAnswer('Visit Type', 'Access required');
 			caseDetailsPage.clickChangeVisitTypeHasCaseTimetable();
 			caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
@@ -63,7 +63,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitStartTime('08', '00');
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit type changed');
+			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit updated');
 			caseDetailsPage.validateAnswer('Visit Type', 'Unaccompanied');
 		});
 	});
