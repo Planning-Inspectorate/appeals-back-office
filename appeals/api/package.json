@@ -17,7 +17,7 @@
 		"test:cov": "npm run prisma-generate && cross-env NODE_ENV=test NODE_OPTIONS=\"--experimental-vm-modules --expose-gc\" npx jest --forceExit --logHeapUsage --ci --coverage",
 		"test:watch": "npm run test -- --watch",
 		"dev": "npm run prisma-generate && nodemon --experimental-json-modules -e js ./src/server.js",
-		"start": "node ./src/server.js",
+		"start": "node --inspect=0.0.0.0:9229 ./src/server.js",
 		"lint:js": "eslint .",
 		"lint:js:fix": "eslint . --fix",
 		"clean": "rimraf .turbo node_modules dist",

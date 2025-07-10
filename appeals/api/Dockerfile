@@ -11,7 +11,7 @@ RUN npm ci
 
 # relative to cwd
 ENV SWAGGER_JSON_DIR=./src/server/openapi.json
-ENV DATABASE_URL=$DATABASE_URL
+ENV DATABASE_URL=blah
 ENV GIT_SHA=$GIT_SHA
 
 WORKDIR /src/app/appeals/api

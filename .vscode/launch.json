@@ -35,6 +35,18 @@
 			"cwd": "${workspaceFolder}",
 			"console": "integratedTerminal",
 			"internalConsoleOptions": "neverOpen"
-		}
+		},
+		{
+			"type": "node",
+			"request": "attach",
+			"name": "API APP: attach",
+			"skipFiles": ["<node_internals>/**"],
+			"cwd": "${workspaceFolder}/appeals/api",
+			"internalConsoleOptions": "neverOpen",
+			"port": 9229,
+			"address": "127.0.0.1",
+			"localRoot": "${workspaceFolder}/appeals/api",
+			"remoteRoot": "/src/app/appeals/api"
+		},
 	]
 }
