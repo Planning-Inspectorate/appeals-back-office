@@ -80,9 +80,29 @@ export const validAppellantCaseS78 = {
 	}
 };
 
+export const validAppellantCaseS20 = {
+	...validAppellantCase,
+	casedata: {
+		...validAppellantCase.casedata,
+		caseType: 'Y',
+		appellantProcedurePreference: 'inquiry',
+		appellantProcedurePreferenceDetails: 'Reason for preference',
+		appellantProcedurePreferenceDuration: 3,
+		appellantProcedurePreferenceWitnessCount: 2,
+		planningObligation: false,
+		agriculturalHolding: null,
+		tenantAgriculturalHolding: null,
+		otherTenantsAgriculturalHolding: null,
+		informedTenantsAgriculturalHolding: null,
+		statusPlanningObligation: null,
+		developmentType: 'minor-dwellings'
+	}
+};
+
 export const validLpaQuestionnaire = {
 	casedata: {
 		caseReference: '6000000',
+		caseType: 'D',
 		lpaQuestionnaireSubmittedDate: new Date(2024, 5, 1).toISOString(),
 		lpaStatement: 'cupidatat ipsum eu culpa',
 		siteAccessDetails: ['Here it is'],
@@ -111,7 +131,7 @@ export const validLpaQuestionnaire = {
 		{
 			dateCreated: '2024-03-01T13:48:35.847Z',
 			documentId: '001',
-			documentType: 'appellantCostsApplication',
+			documentType: 'lpaCostsWithdrawal',
 			documentURI:
 				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
 			filename: 'img2.jpg',
@@ -131,6 +151,87 @@ export const validLpaQuestionnaire = {
 			size: 10293
 		}
 	]
+};
+
+export const validLpaQuestionnaireS78 = {
+	casedata: {
+		...validLpaQuestionnaire.casedata,
+		caseType: 'W',
+		changedListedBuildingNumbers: ['10023', '17824'],
+		designatedSitesNames: ['SSSI'],
+		affectsScheduledMonument: true,
+		isAonbNationalLandscape: true,
+		isGypsyOrTravellerSite: true,
+		isPublicRightOfWay: true,
+		eiaEnvironmentalImpactSchedule: 'schedule-1',
+		eiaDevelopmentDescription: 'change-extensions',
+		eiaSensitiveAreaDetails: '',
+		eiaColumnTwoThreshold: true,
+		eiaScreeningOpinion: true,
+		eiaRequiresEnvironmentalStatement: true,
+		eiaCompletedEnvironmentalStatement: true,
+		eiaScopingOpinion: true,
+		consultedBodiesDetails: '',
+		hasProtectedSpecies: true,
+		hasStatutoryConsultees: true,
+		hasInfrastructureLevy: true,
+		hasTreePreservationOrder: true,
+		hasConsultationResponses: true,
+		hasEmergingPlan: true,
+		hasSupplementaryPlanningDocs: true,
+		isInfrastructureLevyFormallyAdopted: true,
+		infrastructureLevyAdoptedDate: '2023-07-27T20:30:00.000Z',
+		infrastructureLevyExpectedDate: '2023-07-27T20:30:00.000Z',
+		lpaProcedurePreference: 'written',
+		lpaProcedurePreferenceDetails: '',
+		lpaProcedurePreferenceDuration: 1,
+		lpaFinalCommentDetails: '',
+		lpaAddedWitnesses: true,
+		siteWithinSSSI: true,
+		reasonForNeighbourVisits: undefined,
+		importantInformation: '',
+		redeterminedIndicator: '',
+		dateCostsReportDespatched: '2023-07-27T20:30:00.000Z',
+		dateNotRecoveredOrDerecovered: '2023-07-27T20:30:00.000Z',
+		dateRecovered: '2023-07-27T20:30:00.000Z',
+		originalCaseDecisionDate: '2023-07-27T20:30:00.000Z',
+		targetDate: '2023-07-27T20:30:00.000Z',
+		siteNoticesSentDate: '2023-07-27T20:30:00.000Z',
+		designatedSiteNameCustom: ''
+	},
+	documents: [
+		{
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: '001',
+			documentType: 'lpaCostsWithdrawal',
+			documentURI:
+				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+			filename: 'img2.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293
+		},
+		{
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			documentId: '001',
+			documentType: 'lpaCostsApplication',
+			documentURI:
+				'https://pinsstdocsdevukw001.blob.core.windows.net/uploads/055c2c5a-a540-4cd6-a51a-5cfd2ddc16bf/788b8a15-d392-4986-ac23-57be2f824f9c/--12345678---chrishprofilepic.jpeg',
+			filename: 'img3.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293
+		}
+	]
+};
+
+export const validLpaQuestionnaireS20 = {
+	casedata: {
+		...validLpaQuestionnaireS78.casedata,
+		caseType: 'Y',
+		preserveGrantLoan: true
+	},
+	documents: validLpaQuestionnaireS78.documents
 };
 
 export const validRepresentationIp = {
@@ -309,6 +410,196 @@ export const appealIngestionInputS78 = {
 			otherTenantsAgriculturalHolding: null,
 			tenantAgriculturalHolding: null,
 			typeOfPlanningApplication: undefined
+		}
+	}
+};
+
+export const appealIngestionInputS20 = {
+	...appealIngestionInput,
+	appealType: {
+		connect: {
+			key: 'Y'
+		}
+	},
+	appellantCase: {
+		create: {
+			...appealIngestionInput.appellantCase.create,
+			appellantProcedurePreference: 'inquiry',
+			appellantProcedurePreferenceDetails: 'Reason for preference',
+			appellantProcedurePreferenceDuration: 3,
+			appellantProcedurePreferenceWitnessCount: 2,
+			caseworkReason: undefined,
+			developmentType: 'minor-dwellings',
+			planningObligation: false,
+			statusPlanningObligation: null,
+			siteViewableFromRoad: undefined,
+			siteGridReferenceEasting: undefined,
+			siteGridReferenceNorthing: undefined,
+			numberOfResidencesNetChange: undefined,
+			typeOfPlanningApplication: undefined
+		}
+	}
+};
+
+export const validLpaQuestionnaireIngestion = {
+	data: {
+		lpaQuestionnaire: {
+			connectOrCreate: {
+				create: {
+					inConservationArea: true,
+					isCorrectAppealType: true,
+					isGreenBelt: false,
+					listedBuildingDetails: {
+						create: [
+							{
+								affectsListedBuilding: true,
+								listEntry: '10001'
+							},
+							{
+								affectsListedBuilding: true,
+								listEntry: '10002'
+							}
+						]
+					},
+					lpaCostsAppliedFor: false,
+					lpaNotificationMethods: {
+						create: [
+							{
+								lpaNotificationMethod: {
+									connect: {
+										key: 'notice'
+									}
+								}
+							},
+							{
+								lpaNotificationMethod: {
+									connect: {
+										key: 'letter'
+									}
+								}
+							}
+						]
+					},
+					lpaQuestionnaireSubmittedDate: '2024-06-01T00:00:00.000Z',
+					lpaStatement: 'cupidatat ipsum eu culpa',
+					newConditionDetails: 'cupidatat',
+					reasonForNeighbourVisits: undefined,
+					siteAccessDetails: 'Here it is',
+					siteSafetyDetails: 'Fine'
+				},
+				where: {
+					appealId: 100
+				}
+			}
+		},
+		neighbouringSites: {
+			create: [
+				{
+					address: {
+						create: {
+							addressCounty: 'reprehenderit eu mollit Excepteur sit',
+							addressLine1: 'deserunt in irure do',
+							addressLine2: null,
+							addressTown: 'laboris ut enim et laborum',
+							postcode: 'aliqua in qui ipsum'
+						}
+					},
+					source: 'lpa'
+				}
+			]
+		}
+	},
+	where: {
+		id: 100
+	}
+};
+export const validLpaQuestionnaireIngestionS78 = {
+	...validLpaQuestionnaireIngestion,
+	data: {
+		...validLpaQuestionnaireIngestion.data,
+		lpaQuestionnaire: {
+			...validLpaQuestionnaireIngestion.data.lpaQuestionnaire,
+			connectOrCreate: {
+				...validLpaQuestionnaireIngestion.data.lpaQuestionnaire.connectOrCreate,
+				create: {
+					...validLpaQuestionnaireIngestion.data.lpaQuestionnaire.connectOrCreate.create,
+					affectsScheduledMonument: true,
+					isAonbNationalLandscape: true,
+					isGypsyOrTravellerSite: true,
+					isPublicRightOfWay: true,
+					eiaEnvironmentalImpactSchedule: 'schedule-1',
+					eiaDevelopmentDescription: 'change-extensions',
+					eiaSensitiveAreaDetails: '',
+					eiaColumnTwoThreshold: true,
+					eiaScreeningOpinion: true,
+					eiaRequiresEnvironmentalStatement: true,
+					eiaCompletedEnvironmentalStatement: true,
+					eiaScopingOpinion: true,
+					consultedBodiesDetails: '',
+					hasProtectedSpecies: true,
+					hasStatutoryConsultees: true,
+					hasInfrastructureLevy: true,
+					hasTreePreservationOrder: true,
+					hasConsultationResponses: true,
+					hasEmergingPlan: true,
+					hasSupplementaryPlanningDocs: true,
+					isInfrastructureLevyFormallyAdopted: true,
+					infrastructureLevyAdoptedDate: '2023-07-27T20:30:00.000Z',
+					infrastructureLevyExpectedDate: '2023-07-27T20:30:00.000Z',
+					lpaProcedurePreference: 'written',
+					lpaProcedurePreferenceDetails: '',
+					lpaProcedurePreferenceDuration: 1,
+					designatedSiteNameCustom: undefined,
+					designatedSiteNames: {
+						create: [
+							{
+								designatedSite: {
+									connect: {
+										key: 'SSSI'
+									}
+								}
+							}
+						]
+					},
+					listedBuildingDetails: {
+						create: [
+							{
+								affectsListedBuilding: true,
+								listEntry: '10001'
+							},
+							{
+								affectsListedBuilding: true,
+								listEntry: '10002'
+							},
+							{
+								affectsListedBuilding: false,
+								listEntry: '10023'
+							},
+							{
+								affectsListedBuilding: false,
+								listEntry: '17824'
+							}
+						]
+					}
+				}
+			}
+		}
+	}
+};
+
+export const validLpaQuestionnaireIngestionS20 = {
+	...validLpaQuestionnaireIngestionS78,
+	data: {
+		...validLpaQuestionnaireIngestionS78.data,
+		lpaQuestionnaire: {
+			...validLpaQuestionnaireIngestionS78.data.lpaQuestionnaire,
+			connectOrCreate: {
+				...validLpaQuestionnaireIngestionS78.data.lpaQuestionnaire.connectOrCreate,
+				create: {
+					...validLpaQuestionnaireIngestionS78.data.lpaQuestionnaire.connectOrCreate.create,
+					preserveGrantLoan: true
+				}
+			}
 		}
 	}
 };
