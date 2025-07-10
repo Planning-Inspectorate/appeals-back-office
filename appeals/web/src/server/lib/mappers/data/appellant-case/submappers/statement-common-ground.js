@@ -3,7 +3,7 @@ import { documentUploadUrlTemplate, mapDocumentManageUrl } from '../common.js';
 
 //TODO: update with new document type
 /** @type {import('../mapper.js').SubMapper} */
-export const mapStatementOfCommonGroundDocument = ({ appellantCaseData, userHasUpdateCase }) =>
+export const mapStatementCommonGroundDocument = ({ appellantCaseData, userHasUpdateCase }) =>
 	documentSummaryListItem({
 		manageUrl: mapDocumentManageUrl(
 			appellantCaseData.appealId,
