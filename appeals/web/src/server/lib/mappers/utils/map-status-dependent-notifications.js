@@ -86,6 +86,14 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
 				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`
 			});
+		case 'progressHearingCaseWithNoRepsFromStatements':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to hearing ready to set up</a>`
+			});
 		case 'readyForValidation':
 			return createNotificationBanner({
 				bannerDefinitionKey,

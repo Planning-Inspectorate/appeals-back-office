@@ -51,9 +51,13 @@ export async function postShareRepresentations(request, response) {
 	const bannerDefinitionKey = (() => {
 		switch (currentAppeal.appealStatus) {
 			case APPEAL_CASE_STATUS.STATEMENTS:
-				return publishedReps.length > 0
-					? 'commentsAndLpaStatementShared'
-					: 'progressedToFinalComments';
+				if (publishedReps.length === 0 && currentAppeal.procedureType === 'Hearing') {
+					return 'progressedToHearingReadyToSetUp';
+				} else if (publishedReps.length > 0) {
+					return 'commentsAndLpaStatementShared';
+				} else {
+					return 'progressedToFinalComments';
+				}
 			case APPEAL_CASE_STATUS.FINAL_COMMENTS:
 				return publishedReps.filter(
 					(rep) =>
