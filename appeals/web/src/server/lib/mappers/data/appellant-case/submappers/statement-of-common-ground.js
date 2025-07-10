@@ -1,18 +1,19 @@
 import { documentSummaryListItem } from '#lib/mappers/components/index.js';
 import { documentUploadUrlTemplate, mapDocumentManageUrl } from '../common.js';
 
+//TODO: update with new document type
 /** @type {import('../mapper.js').SubMapper} */
-export const mapCostsDocument = ({ appellantCaseData, appealDetails, userHasUpdateCase }) =>
+export const mapStatementOfCommonGroundDocument = ({ appellantCaseData, userHasUpdateCase }) =>
 	documentSummaryListItem({
 		manageUrl: mapDocumentManageUrl(
 			appellantCaseData.appealId,
-			appealDetails.costs.appellantApplicationFolder?.folderId
+			appellantCaseData.documents.statementCommonGround?.folderId
 		),
 		appealId: appellantCaseData.appealId,
 		editable: userHasUpdateCase,
 		uploadUrlTemplate: documentUploadUrlTemplate,
-		id: 'statement-of-common-ground',
+		id: 'draft-statement-of-common-ground.document',
 		text: 'Draft statement of common ground',
-		folderInfo: appealDetails.costs.appellantApplicationFolder,
-		cypressDataName: 'costs-document'
+		folderInfo: appellantCaseData.documents.statementCommonGround,
+		cypressDataName: 'draft-statement-of-common-ground'
 	});
