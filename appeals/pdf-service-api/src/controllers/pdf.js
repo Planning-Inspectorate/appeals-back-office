@@ -15,7 +15,6 @@ import { mapLpaStatement } from '../mappers/lpa-statement/lpa-statement.mapper.j
 import { mapLpaFinalComments } from '../mappers/lpa-final-comments/lpa-final-comments.mapper.js';
 import { mapAppellantFinalComments } from '../mappers/appellant-final-comments/appellant-final-comments.mapper.js';
 
-// import cssFileContents from 'govuk-frontend/dist/govuk/govuk-frontend.min.css';
 const __dirname = dirname(import.meta.url); // get the resolved path of the directory
 
 const generateDataUri = (relativePath, mimeType) => {
