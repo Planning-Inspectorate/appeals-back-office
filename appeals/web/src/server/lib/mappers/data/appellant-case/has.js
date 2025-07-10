@@ -22,7 +22,7 @@ import { mapDecisionLetter } from './submappers/decision-letter.js';
 import { mapAppealStatement } from './submappers/appeal-statement.js';
 import { mapCostsDocument } from './submappers/costs-document.js';
 import { mapRelatedAppeals } from './submappers/related-appeals.js';
-import { mapStatementOfCommonGroundDocument } from './submappers/statement-of-common-ground.js';
+import { mapStatementCommonGroundDocument } from './submappers/statement-common-ground.js';
 
 export const submaps = {
 	appellant: mapAppellant,
@@ -49,5 +49,5 @@ export const submaps = {
 	additionalDocuments: mapAdditionalDocuments,
 	reviewOutcome: mapReviewOutcome,
 	relatedAppeals: mapRelatedAppeals,
-	statementOfCommonGround: mapStatementOfCommonGroundDocument
+	statementCommonGround: mapStatementCommonGroundDocument
 };

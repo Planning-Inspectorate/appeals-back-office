@@ -177,7 +177,7 @@ export function generateS20Components(
 					mappedAppellantCaseData.appealStatement.display.summaryListItem,
 					mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
 					mappedAppellantCaseData.planningObligation.display.summaryListItem,
-					mappedAppellantCaseData.statementOfCommonGround.display.summaryListItem,
+					mappedAppellantCaseData.statementCommonGround.display.summaryListItem,
 					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem,
 					mappedAppellantCaseData.costsDocument.display.summaryListItem,
 					mappedAppellantCaseData.designAccessStatement.display.summaryListItem,

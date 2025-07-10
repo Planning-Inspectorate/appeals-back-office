@@ -459,6 +459,10 @@ export const spec = {
 				otherNewDocuments: {
 					folderId: 4575,
 					documents: []
+				},
+				statementCommonGround: {
+					folderId: 4576,
+					documents: []
 				}
 			},
 			appellantProcedurePreference: 'Hearing',
