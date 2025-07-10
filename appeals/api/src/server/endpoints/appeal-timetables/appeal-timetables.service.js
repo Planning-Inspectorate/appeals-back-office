@@ -256,9 +256,7 @@ const dueDateToAppealTimetableTextMapper = {
 	lpaQuestionnaireDueDate: 'LPA questionnaire',
 	ipCommentsDueDate: 'Interested party comments',
 	lpaStatementDueDate: 'Statements',
-	finalCommentsDueDate: 'Final comments',
-	statementOfCommonGroundDueDate: 'Statement of common ground',
-	planningObligationDueDate: 'Planning obligation'
+	finalCommentsDueDate: 'Final comments'
 };
 
 /**

@@ -6,10 +6,7 @@ import {
 	extractAndProcessDateErrors,
 	createDateInputDateInFutureOfDateValidator
 } from '#lib/validators/date-input.validator.js';
-import { DEADLINE_HOUR } from '@pins/appeals/constants/dates.js';
-import { getAppealTimetableTypes, getIdText } from './timetable.mapper.js';
-import { DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
-import { setTimeInTimeZone } from '#lib/dates.js';
+import { getAppealTimetableTypes } from './timetable.mapper.js';
 
 /**
  *
@@ -32,120 +29,72 @@ export const createTimetableValidators = (fieldName, label, fieldNameToCompare, 
  * @returns {import('express').RequestHandler[]}
  */
 export const selectTimetableValidators = (req) => {
-	const { currentAppeal, session } = req || {};
+	const { currentAppeal } = req || {};
 	/** @type {import('express').RequestHandler[]} */
 	const validatorsList = [];
 	const { appellantCase } = req.locals;
+	const timetableTypes = getAppealTimetableTypes(currentAppeal, appellantCase);
 
-	let timetableTypes = getAppealTimetableTypes(currentAppeal, appellantCase);
-
-	const originalTimetable = currentAppeal.appealTimetable || {};
-	session.appealTimetable = session.appealTimetable || {};
+	const validatorsMap = {
+		lpaQuestionnaireDueDate: {
+			id: 'lpa-questionnaire-due-date',
+			label: 'LPA questionnaire due date'
+		},
+		lpaStatementDueDate: {
+			id: 'lpa-statement-due-date',
+			label: 'Statements due date',
+			idToCompare: 'lpa-questionnaire-due-date',
+			labelToCompare: 'LPA questionnaire due date'
+		},
+		ipCommentsDueDate: {
+			id: 'ip-comments-due-date',
+			label: 'Interested party comments due date',
+			idToCompare: 'lpa-questionnaire-due-date',
+			labelToCompare: 'LPA questionnaire due date'
+		},
+		finalCommentsDueDate: {
+			id: 'final-comments-due-date',
+			label: 'Final comments due date',
+			idToCompare: 'lpa-statement-due-date',
+			labelToCompare: 'statements due date'
+		},
+		statementOfCommonGroundDueDate: {
+			id: 'statement-of-common-ground-due-date',
+			label: 'Statement of common ground due date'
+		},
+		planningObligationDueDate: {
+			id: 'planning-obligation-due-date',
+			label: 'Planning obligation due date'
+		}
+	};
 
 	timetableTypes.forEach((timetableType) => {
-		const idText = getIdText(timetableType);
-		const sessionDate = buildSessionDate(req, idText);
-
-		if (sessionDate !== originalTimetable[timetableType]) {
-			//only validate due dates that have changed
-			const validatorConfig = validatorsMap[timetableType];
-			const idToCompare = 'idToCompare' in validatorConfig ? validatorConfig.idToCompare : '';
-			const labelToCompare =
-				'labelToCompare' in validatorConfig ? validatorConfig.labelToCompare : '';
-			validatorsList.push(
-				...createTimetableValidators(
-					validatorConfig.id,
-					validatorConfig.label,
-					idToCompare,
-					labelToCompare
-				)
-			);
-		}
-		session.appealTimetable[timetableType] = sessionDate;
+		const validatorConfig = validatorsMap[timetableType];
+		const idToCompare = 'idToCompare' in validatorConfig ? validatorConfig.idToCompare : '';
+		const labelToCompare =
+			'labelToCompare' in validatorConfig ? validatorConfig.labelToCompare : '';
+		validatorsList.push(
+			...createTimetableValidators(
+				validatorConfig.id,
+				validatorConfig.label,
+				idToCompare,
+				labelToCompare
+			)
+		);
 	});
-	validatorsList.push(...getAllDateErrorExtractors());
+	validatorsList.push(
+		extractAndProcessDateErrors({
+			fieldNamePrefix: 'lpa-questionnaire-due-date'
+		}),
+		extractAndProcessDateErrors({
+			fieldNamePrefix: 'lpa-statement-due-date'
+		}),
+		extractAndProcessDateErrors({
+			fieldNamePrefix: 'ip-comments-due-date'
+		}),
+		extractAndProcessDateErrors({
+			fieldNamePrefix: 'final-comments-due-date'
+		})
+	);
 	return validatorsList;
-};
-
-const validatorsMap = {
-	lpaQuestionnaireDueDate: {
-		id: 'lpa-questionnaire-due-date',
-		label: 'LPA questionnaire due date'
-	},
-	lpaStatementDueDate: {
-		id: 'lpa-statement-due-date',
-		label: 'Statements due date',
-		idToCompare: 'lpa-questionnaire-due-date',
-		labelToCompare: 'LPA questionnaire due date'
-	},
-	ipCommentsDueDate: {
-		id: 'ip-comments-due-date',
-		label: 'Interested party comments due date',
-		idToCompare: 'lpa-questionnaire-due-date',
-		labelToCompare: 'LPA questionnaire due date'
-	},
-	finalCommentsDueDate: {
-		id: 'final-comments-due-date',
-		label: 'Final comments due date',
-		idToCompare: 'lpa-statement-due-date',
-		labelToCompare: 'statements due date'
-	},
-	statementOfCommonGroundDueDate: {
-		id: 'statement-of-common-ground-due-date',
-		label: 'Statement of common ground due date'
-	},
-	planningObligationDueDate: {
-		id: 'planning-obligation-due-date',
-		label: 'Planning obligation due date'
-	}
-};
-
-/**
- * Builds a session date string from request body fields.
- * @param {import('express').Request} req
- * @param {string} idText
- * @returns {string}
- */
-const buildSessionDate = (req, idText) => {
-	const updatedDueDateDay = parseInt(req.body[`${idText}-due-date-day`], 10);
-	const updatedDueDateMonth = parseInt(req.body[`${idText}-due-date-month`], 10);
-	const updatedDueDateYear = parseInt(req.body[`${idText}-due-date-year`], 10);
-
-	const updatedDueDateDayString = `0${updatedDueDateDay}`.slice(-2);
-	const updatedDueDateMonthString = `0${updatedDueDateMonth}`.slice(-2);
-
-	if (!isValidDayMonthYear(updatedDueDateDay, updatedDueDateMonth, updatedDueDateYear)) {
-		return '';
-	}
-
-	// Build the local time string
-	const localDateString = `${updatedDueDateYear}-${updatedDueDateMonthString}-${updatedDueDateDayString}`;
-
-	const utcDate = setTimeInTimeZone(new Date(localDateString), DEADLINE_HOUR, DEADLINE_MINUTE);
-
-	return utcDate.toISOString();
-};
-
-/**
- * Extracts and processes date errors for all timetable fields.
- * @returns {import('express').RequestHandler[]}
- */
-const getAllDateErrorExtractors = () => [
-	extractAndProcessDateErrors({ fieldNamePrefix: 'lpa-questionnaire-due-date' }),
-	extractAndProcessDateErrors({ fieldNamePrefix: 'lpa-statement-due-date' }),
-	extractAndProcessDateErrors({ fieldNamePrefix: 'ip-comments-due-date' }),
-	extractAndProcessDateErrors({ fieldNamePrefix: 'final-comments-due-date' }),
-	extractAndProcessDateErrors({ fieldNamePrefix: 'statement-of-common-ground-due-date' }),
-	extractAndProcessDateErrors({ fieldNamePrefix: 'planning-obligation-due-date' })
-];
-
-/**
- * Checks if the provided day, month, and year are valid calendar values.
- * @param {number} day
- * @param {number} month
- * @param {number} year
- * @returns {boolean}
- */
-const isValidDayMonthYear = (day, month, year) => {
-	return !!day && !!month && !!year && day >= 1 && day <= 31 && month >= 1 && month <= 12;
 };

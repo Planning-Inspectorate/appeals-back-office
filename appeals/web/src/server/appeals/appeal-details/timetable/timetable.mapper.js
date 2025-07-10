@@ -56,14 +56,13 @@ export const mapEditTimetablePage = (
 			name: `${idText}-due-date`,
 			id: `${idText}-due-date`,
 			namePrefix: `${idText}-due-date`,
-			value: {
-				// @ts-ignore
-				day: body[`${idText}-due-date-day`] ?? currentDueDateDayMonthYear?.day,
-				// @ts-ignore
-				month: body[`${idText}-due-date-month`] ?? currentDueDateDayMonthYear?.month,
-				// @ts-ignore
-				year: body[`${idText}-due-date-year`] ?? currentDueDateDayMonthYear?.year
-			},
+			value: currentDueDateDayMonthYear
+				? {
+						day: body[`${idText}-due-date-day`] ?? currentDueDateDayMonthYear?.day,
+						month: body[`${idText}-due-date-month`] ?? currentDueDateDayMonthYear?.month,
+						year: body[`${idText}-due-date-year`] ?? currentDueDateDayMonthYear?.year
+				  }
+				: {},
 			legendText: `${timetableTypeText} due`,
 			hint: `For example, ${getExampleDateHint(45)}`,
 			legendClasses:
