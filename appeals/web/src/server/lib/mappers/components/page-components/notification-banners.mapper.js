@@ -38,7 +38,7 @@ export const notificationBannerDefinitions = {
 	siteVisitChangedDefault: {
 		pages: ['appealDetails'],
 		type: 'success',
-		text: 'Site visit changed'
+		text: 'Site visit updated'
 	},
 	allocationDetailsUpdated: {
 		type: 'success',

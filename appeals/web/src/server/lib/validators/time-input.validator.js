@@ -65,10 +65,10 @@ export const createStartTimeBeforeEndTimeValidator = (
 				const endTimeMinute = parseInt(req.body[`${endTimeFieldNamePrefix}-minute`], 10);
 
 				if (
-					Number.isNaN(startTimeHour) ||
-					Number.isNaN(startTimeMinute) ||
-					Number.isNaN(endTimeHour) ||
-					Number.isNaN(endTimeMinute) ||
+					!Number.isNaN(startTimeHour) &&
+					!Number.isNaN(startTimeMinute) &&
+					!Number.isNaN(endTimeHour) &&
+					!Number.isNaN(endTimeMinute) &&
 					!timeIsBeforeTime(startTimeHour, startTimeMinute, endTimeHour, endTimeMinute)
 				) {
 					throw new Error(
