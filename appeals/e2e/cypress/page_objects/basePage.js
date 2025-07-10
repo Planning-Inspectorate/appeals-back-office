@@ -25,6 +25,7 @@ export class Page {
 		centralCol: '.pins-column--central',
 		checkbox: '.govuk-checkboxes__item',
 		errorMessage: '.govuk-error-message',
+		inLineErrorMessage: '.govuk-form-group--error .govuk-error-message',
 		formGroup: '.govuk-form-group',
 		fullColumn: '.govuk-grid-column-full',
 		twoThirdColumn: '.govuk-grid-column-two-thirds',
@@ -88,6 +89,7 @@ export class Page {
 			cy.contains(this.selectors.tableCell, question, { matchCase: false }).nextUntil('a'),
 		enterDate: () => cy.get(this.selectors.dateInput),
 		errorMessage: () => cy.get(this.selectors.errorMessage),
+		inLineErrorMessage: () => cy.get(this.selectors.inLineErrorMessage),
 		summaryErrorMessages: () => cy.get(this.selectors.summaryErrorMessages),
 		input: () => cy.get(this.selectors.input),
 		linkByText: (text) => cy.contains(this.selectors.link, text, { matchCase: true }),
@@ -284,6 +286,10 @@ export class Page {
 	}
 
 	validateErrorMessage(errorMessage) {
+		this.basePageElements.errorMessage().contains(errorMessage).should('exist');
+	}
+
+	validateInLineErrorMessage(errorMessage) {
 		this.basePageElements.errorMessage().contains(errorMessage).should('exist');
 	}
 
