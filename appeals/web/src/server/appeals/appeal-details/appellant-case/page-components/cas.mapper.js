@@ -142,7 +142,8 @@ export function generateCASComponents(appealDetails, appellantCaseData, mappedAp
 				mappedAppellantCaseData.applicationForm.display.summaryListItem,
 				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
 				mappedAppellantCaseData.appealStatement.display.summaryListItem,
-				mappedAppellantCaseData.costsDocument.display.summaryListItem
+				mappedAppellantCaseData.costsDocument.display.summaryListItem,
+				mappedAppellantCaseData.supportingDocuments.display.summaryListItem
 			]
 		}
 	};
