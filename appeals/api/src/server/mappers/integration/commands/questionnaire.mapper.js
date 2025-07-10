@@ -42,7 +42,7 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 			  }
 			: undefined;
 
-	const listedBuildingsData = mapListedBuildings(casedata, isS78);
+	const listedBuildingsData = mapListedBuildings(casedata, isS78 || isS20);
 
 	//@ts-ignore
 	return {
@@ -73,10 +73,10 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 /**
  *
  * @param {import('@planning-inspectorate/data-model').Schemas.LPAQS78SubmissionProperties} casedata
- * @param {boolean} isS78
+ * @param {boolean} appealHasChangedListedBuilding
  * @returns {{listEntry: string, affectsListedBuilding: boolean }[] | null}
  */
-const mapListedBuildings = (casedata, isS78) => {
+const mapListedBuildings = (casedata, appealHasChangedListedBuilding) => {
 	const affectedListedBuildings =
 		casedata.affectedListedBuildingNumbers?.map((entry) => {
 			return {
@@ -85,7 +85,7 @@ const mapListedBuildings = (casedata, isS78) => {
 			};
 		}) ?? [];
 
-	const changedListedBuildings = isS78
+	const changedListedBuildings = appealHasChangedListedBuilding
 		? (casedata.changedListedBuildingNumbers || []).map((entry) => {
 				return {
 					listEntry: entry,
