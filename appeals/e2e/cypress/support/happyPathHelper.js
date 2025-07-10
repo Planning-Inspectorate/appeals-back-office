@@ -215,7 +215,7 @@ export const happyPathHelper = {
 		dateTimeSection.enterVisitStartTime('08', '00');
 		dateTimeSection.enterVisitEndTime('12', '00');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.validateBannerMessage('Success', 'Site visit scheduled');
+		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
 	},
 
 	issueDecision(caseRef, decision) {
