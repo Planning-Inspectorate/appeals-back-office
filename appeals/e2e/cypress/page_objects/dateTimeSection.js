@@ -48,20 +48,13 @@ export class DateTimeSection extends Page {
 	enterDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.dueDate, date);
 	}
-	// enterDueDates(timetableItems, date) {
-	// 	timetableItems.forEach((timetableItem) => {
-	// 		if (timetableItem.editable) {
-	// 			this.#setAllDateFields(`#${timetableItem.row}-`, date);
-	// 		}
-	// 	});
-	// }
 
-	enterDueDates(timetableItems, startDate) {
+	enterDueDates(timetableItems, startDate, intervalDays) {
 		timetableItems.forEach((item, index) => {
 			if (!item.editable) return;
 
 			const dueDate = new Date(startDate);
-			dueDate.setDate(dueDate.getDate() + index * 7);
+			dueDate.setDate(dueDate.getDate() + index * intervalDays);
 
 			this.#setAllDateFields(`#${item.row}-`, dueDate);
 		});
