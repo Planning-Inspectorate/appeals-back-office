@@ -202,7 +202,7 @@ interface SingleAppellantCaseResponse {
 		planningObligation?: FolderInfo | null;
 		ownershipCertificate?: FolderInfo | null;
 		otherNewDocuments?: FolderInfo | null;
-		statementOfCommonGround?: FolderInfo | null;
+		statementCommonGround?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	isGreenBelt?: boolean | null;
