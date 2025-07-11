@@ -38,13 +38,14 @@ export const mapLpaQuestionnaire = ({ appealDetails, currentRoute, request }) =>
 	})();
 
 	const actionHtml = (() => {
-		switch (status) {
+		switch (status?.toLowerCase()) {
 			case 'received':
 				return `<a href="${addBackLinkQueryToUrl(
 					request,
 					`${currentRoute}/lpa-questionnaire/${appealDetails?.lpaQuestionnaireId}`
 				)}" data-cy="review-lpa-questionnaire" class="govuk-link">Review<span class="govuk-visually-hidden"> L P A questionnaire</span></a>`;
-			case 'Complete':
+			case 'complete':
+			case 'incomplete':
 				return `<a href="${addBackLinkQueryToUrl(
 					request,
 					`${currentRoute}/lpa-questionnaire/${appealDetails?.lpaQuestionnaireId}`
