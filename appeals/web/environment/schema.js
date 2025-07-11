@@ -75,6 +75,7 @@ export default baseSchema
 			})
 			.options({ presence: 'required' }),
 		featureFlags: joi.object().pattern(/featureFlag.*/, joi.boolean()),
-		useSystemTestBcForChangeLpa: joi.boolean().optional()
+		useSystemTestBcForChangeLpa: joi.boolean().optional(),
+		pdfServiceHost: joi.string().optional()
 	})
 	.options({ presence: 'required' }); // all required by default

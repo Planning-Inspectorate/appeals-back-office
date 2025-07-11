@@ -5,10 +5,10 @@ import { getAppealDetailsFromId } from './appeal-details.service.js';
  * @returns {Promise<void>}
  */
 export const validateAppeal = async (req, res, next) => {
-	const { appealId } = req.params;
+	const { appealId, caseId } = req.params;
 
 	try {
-		const appeal = await getAppealDetailsFromId(req.apiClient, appealId);
+		const appeal = await getAppealDetailsFromId(req.apiClient, appealId || caseId);
 		if (!appeal) {
 			return res.status(404).render('app/404.njk');
 		}

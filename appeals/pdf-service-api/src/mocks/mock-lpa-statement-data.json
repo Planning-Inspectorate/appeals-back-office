@@ -1,0 +1,284 @@
+{
+	"lpaStatementData": {
+		"appealId": 72,
+		"appealReference": "6000072",
+		"planningApplicationReference": "44377/APP/3/218453",
+		"localPlanningDepartment": "Maidstone Borough Council",
+		"procedureType": "Written",
+		"createdAt": "2025-07-03T15:13:55.967Z",
+		"validAt": "2024-09-03T15:13:52.867Z",
+		"startedAt": "2025-01-03T16:13:52.867Z",
+		"appealSite": {
+			"addressId": 72,
+			"addressLine1": "Copthalls",
+			"addressLine2": "Clevedon Road",
+			"town": "West Hill",
+			"postCode": "BS48 1PN"
+		},
+		"appealType": "Planning appeal",
+		"agent": {
+			"serviceUserId": 105,
+			"firstName": "Lee",
+			"lastName": "Thornton",
+			"organisationName": "Lee Thornton Ltd",
+			"email": "test1@example.com",
+			"phoneNumber": null
+		},
+		"appellant": {
+			"serviceUserId": 106,
+			"firstName": "Sophie",
+			"lastName": "Skinner",
+			"organisationName": null,
+			"email": "test4@example.com",
+			"phoneNumber": null
+		},
+		"linkedAppeals": [],
+		"otherAppeals": [],
+		"isChildAppeal": false,
+		"isParentAppeal": false,
+		"appealStatus": "final_comments",
+		"appealTimetable": {
+			"appealTimetableId": 37,
+			"lpaQuestionnaireDueDate": "2025-01-10T23:59:00.000Z",
+			"caseResubmissionDueDate": null,
+			"ipCommentsDueDate": "2025-02-07T23:59:00.000Z",
+			"appellantStatementDueDate": "2025-02-07T23:59:00.000Z",
+			"lpaStatementDueDate": "2025-02-07T23:59:00.000Z",
+			"finalCommentsDueDate": "2025-02-21T23:59:00.000Z",
+			"s106ObligationDueDate": "2025-02-21T23:59:00.000Z",
+			"statementOfCommonGroundDueDate": null,
+			"planningObligationDueDate": null
+		},
+		"documentationSummary": {
+			"appellantCase": {
+				"status": "Valid",
+				"dueDate": null,
+				"receivedAt": "2025-07-03T15:13:55.967Z"
+			},
+			"lpaQuestionnaire": {
+				"status": "received",
+				"dueDate": "2025-01-10T23:59:00.000Z",
+				"receivedAt": "2023-05-08T23:00:00.000Z"
+			},
+			"ipComments": {
+				"status": "received",
+				"receivedAt": "2025-07-03T15:14:00.000Z",
+				"counts": {
+					"awaiting_review": 5,
+					"invalid": 4,
+					"valid": 1
+				},
+				"isRedacted": false
+			},
+			"lpaStatement": {
+				"status": "received",
+				"receivedAt": "2025-07-03T15:14:00.031Z",
+				"representationStatus": "valid",
+				"isRedacted": false
+			},
+			"lpaFinalComments": {
+				"status": "received",
+				"receivedAt": "2025-07-03T15:14:00.065Z",
+				"representationStatus": "awaiting_review"
+			},
+			"appellantFinalComments": {
+				"status": "received",
+				"receivedAt": "2025-07-03T15:14:00.044Z",
+				"representationStatus": "awaiting_review"
+			}
+		},
+		"stateList": [
+			{
+				"key": "assign_case_officer",
+				"completed": true
+			},
+			{
+				"key": "validation",
+				"completed": true
+			},
+			{
+				"key": "ready_to_start",
+				"completed": true
+			},
+			{
+				"key": "lpa_questionnaire",
+				"completed": true
+			},
+			{
+				"key": "statements",
+				"completed": true
+			},
+			{
+				"key": "final_comments",
+				"completed": false
+			},
+			{
+				"key": "event",
+				"completed": false
+			},
+			{
+				"key": "evidence",
+				"completed": false
+			},
+			{
+				"key": "awaiting_event",
+				"completed": false
+			},
+			{
+				"key": "issue_determination",
+				"completed": false
+			},
+			{
+				"key": "awaiting_transfer",
+				"completed": false
+			},
+			{
+				"key": "invalid",
+				"completed": false
+			},
+			{
+				"key": "transferred",
+				"completed": false
+			},
+			{
+				"key": "closed",
+				"completed": false
+			},
+			{
+				"key": "withdrawn",
+				"completed": false
+			},
+			{
+				"key": "complete",
+				"completed": false
+			}
+		],
+		"completedStateList": [],
+		"decision": {
+			"folderId": 3599,
+			"path": "appeal-decision/caseDecisionLetter"
+		},
+		"neighbouringSites": [],
+		"withdrawal": {
+			"withdrawalFolder": {
+				"folderId": 3555,
+				"path": "appellant-case/appellantCaseWithdrawalLetter",
+				"documents": [],
+				"caseId": 72
+			}
+		},
+		"appellantCaseId": 72,
+		"lpaQuestionnaireId": 40,
+		"healthAndSafety": {
+			"appellantCase": {
+				"details": null,
+				"hasIssues": false
+			},
+			"lpaQuestionnaire": {
+				"details": "There may be no mobile reception at the site",
+				"hasIssues": true
+			}
+		},
+		"inspectorAccess": {
+			"appellantCase": {
+				"details": null,
+				"isRequired": false
+			},
+			"lpaQuestionnaire": {
+				"details": "There is a tall hedge around the site which obstructs the view of the site",
+				"isRequired": true
+			}
+		},
+		"eiaScreeningRequired": null,
+		"lpaEmailAddress": "maid@lpa-email.gov.uk",
+		"environmentalAssessment": {
+			"caseId": 72,
+			"folderId": 3563,
+			"path": "appellant-case/environmentalAssessment",
+			"documents": []
+		},
+		"costs": {
+			"appellantApplicationFolder": {
+				"caseId": 72,
+				"folderId": 3587,
+				"path": "costs/appellantCostsApplication",
+				"documents": []
+			},
+			"appellantWithdrawalFolder": {
+				"caseId": 72,
+				"folderId": 3588,
+				"path": "costs/appellantCostsWithdrawal",
+				"documents": []
+			},
+			"appellantCorrespondenceFolder": {
+				"caseId": 72,
+				"folderId": 3589,
+				"path": "costs/appellantCostsCorrespondence",
+				"documents": []
+			},
+			"lpaApplicationFolder": {
+				"caseId": 72,
+				"folderId": 3590,
+				"path": "costs/lpaCostsApplication",
+				"documents": []
+			},
+			"lpaWithdrawalFolder": {
+				"caseId": 72,
+				"folderId": 3591,
+				"path": "costs/lpaCostsWithdrawal",
+				"documents": []
+			},
+			"lpaCorrespondenceFolder": {
+				"caseId": 72,
+				"folderId": 3592,
+				"path": "costs/lpaCostsCorrespondence",
+				"documents": []
+			},
+			"appellantDecisionFolder": {
+				"caseId": 72,
+				"folderId": 3593,
+				"path": "costs/appellantCostsDecisionLetter",
+				"documents": []
+			},
+			"lpaDecisionFolder": {
+				"caseId": 72,
+				"folderId": 3594,
+				"path": "costs/lpaCostsDecisionLetter",
+				"documents": []
+			}
+		},
+		"internalCorrespondence": {
+			"crossTeam": {
+				"caseId": 72,
+				"folderId": 3595,
+				"path": "internal/crossTeamCorrespondence",
+				"documents": []
+			},
+			"inspector": {
+				"caseId": 72,
+				"folderId": 3596,
+				"path": "internal/inspectorCorrespondence",
+				"documents": []
+			},
+			"mainParty": {
+				"caseId": 72,
+				"folderId": 3597,
+				"path": "internal/mainPartyCorrespondence",
+				"documents": []
+			}
+		},
+		"id": 238,
+		"origin": "lpa",
+		"author": "Maidstone Borough Council",
+		"status": "valid",
+		"originalRepresentation": "Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. Steve wants reflections, so let's give him reflections. It's amazing what you can do with a little love in your heart. Clouds are free they come and go as they please.\n\nThe secret to doing anything is believing that you can do it. Anything that you believe you can do strong enough, you can do. Anything. As long as you believe. It looks so good, I might as well not stop. This present moment is perfect simply due to the fact you're experiencing it. Making all those little fluffies that live in the clouds.\n\nYou don't want to kill all your dark areas they are very important. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Anyone can paint. Each highlight must have it's own private shadow. Don't fiddle with it all day.",
+		"redactedRepresentation": "",
+		"created": "2025-07-03T15:14:00.031Z",
+		"notes": "",
+		"attachments": [],
+		"representationType": "lpa_statement",
+		"siteVisitRequested": false,
+		"source": "lpa",
+		"rejectionReasons": []
+	}
+}

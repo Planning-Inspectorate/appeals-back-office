@@ -1,0 +1,23 @@
+{% extends "layouts/app.layout.njk" %}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set title="Interested party comments" %}
+
+{% block main %}
+	{% for section in sections -%}
+		<h2 class="govuk-heading-l">{{ section.heading }}</h2>
+		{% if section.comments.length -%}
+			{% for comment in section.comments -%}
+				<div class="govuk-section-break">
+					<h3 class="govuk-heading-m">Interested party {{ loop.index }}</h3>
+					{{ govukSummaryList({
+						rows: comment.items | formatItems
+					}) }}
+				</div>
+			{%- endfor %}
+		{%- else %}
+			<span>None</span>
+		{%- endif %}
+	{%- endfor %}
+{% endblock %}

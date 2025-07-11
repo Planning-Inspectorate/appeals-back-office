@@ -44,7 +44,6 @@ import updateDecisionLetterRouter from './update-decision-letter/update-decision
 import inquiryRouter from './inquiry/inquiry.router.js';
 import assignUserRouter from './assign-user/assign-user.router.js';
 import changeAppealTypeMiddleware from './change-appeal-type.middleware.js';
-
 const router = createRouter();
 
 router
@@ -66,7 +65,6 @@ router.use(
 	assertUserHasPermission(permissionNames.updateCase),
 	startDateRouter
 );
-
 router.use('/:appealId/lpa-questionnaire', lpaQuestionnaireRouter);
 router.use('/:appealId/allocation-details', allocationDetailsRouter);
 router.use('/:appealId/appeal-timetables', appealTimetablesRouter);

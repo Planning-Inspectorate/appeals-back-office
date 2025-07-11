@@ -1,0 +1,312 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mapLpaStatementData should map LPA statement data correctly 1`] = `
+{
+  "dateReceived": "3 July 2025, 16:14",
+  "details": {
+    "agent": {
+      "email": "test1@example.com",
+      "firstName": "Lee",
+      "lastName": "Thornton",
+      "organisationName": "Lee Thornton Ltd",
+      "phoneNumber": null,
+      "serviceUserId": 105,
+    },
+    "appealId": 72,
+    "appealReference": "6000072",
+    "appealSite": {
+      "addressId": 72,
+      "addressLine1": "Copthalls",
+      "addressLine2": "Clevedon Road",
+      "postCode": "BS48 1PN",
+      "town": "West Hill",
+    },
+    "appealStatus": "final_comments",
+    "appealTimetable": {
+      "appealTimetableId": 37,
+      "appellantStatementDueDate": "2025-02-07T23:59:00.000Z",
+      "caseResubmissionDueDate": null,
+      "finalCommentsDueDate": "2025-02-21T23:59:00.000Z",
+      "ipCommentsDueDate": "2025-02-07T23:59:00.000Z",
+      "lpaQuestionnaireDueDate": "2025-01-10T23:59:00.000Z",
+      "lpaStatementDueDate": "2025-02-07T23:59:00.000Z",
+      "planningObligationDueDate": null,
+      "s106ObligationDueDate": "2025-02-21T23:59:00.000Z",
+      "statementOfCommonGroundDueDate": null,
+    },
+    "appealType": "Planning appeal",
+    "appellant": {
+      "email": "test4@example.com",
+      "firstName": "Sophie",
+      "lastName": "Skinner",
+      "organisationName": null,
+      "phoneNumber": null,
+      "serviceUserId": 106,
+    },
+    "appellantCaseId": 72,
+    "attachments": [],
+    "author": "Maidstone Borough Council",
+    "completedStateList": [],
+    "costs": {
+      "appellantApplicationFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3587,
+        "path": "costs/appellantCostsApplication",
+      },
+      "appellantCorrespondenceFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3589,
+        "path": "costs/appellantCostsCorrespondence",
+      },
+      "appellantDecisionFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3593,
+        "path": "costs/appellantCostsDecisionLetter",
+      },
+      "appellantWithdrawalFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3588,
+        "path": "costs/appellantCostsWithdrawal",
+      },
+      "lpaApplicationFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3590,
+        "path": "costs/lpaCostsApplication",
+      },
+      "lpaCorrespondenceFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3592,
+        "path": "costs/lpaCostsCorrespondence",
+      },
+      "lpaDecisionFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3594,
+        "path": "costs/lpaCostsDecisionLetter",
+      },
+      "lpaWithdrawalFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3591,
+        "path": "costs/lpaCostsWithdrawal",
+      },
+    },
+    "created": "2025-07-03T15:14:00.031Z",
+    "createdAt": "2025-07-03T15:13:55.967Z",
+    "decision": {
+      "folderId": 3599,
+      "path": "appeal-decision/caseDecisionLetter",
+    },
+    "documentationSummary": {
+      "appellantCase": {
+        "dueDate": null,
+        "receivedAt": "2025-07-03T15:13:55.967Z",
+        "status": "Valid",
+      },
+      "appellantFinalComments": {
+        "receivedAt": "2025-07-03T15:14:00.044Z",
+        "representationStatus": "awaiting_review",
+        "status": "received",
+      },
+      "ipComments": {
+        "counts": {
+          "awaiting_review": 5,
+          "invalid": 4,
+          "valid": 1,
+        },
+        "isRedacted": false,
+        "receivedAt": "2025-07-03T15:14:00.000Z",
+        "status": "received",
+      },
+      "lpaFinalComments": {
+        "receivedAt": "2025-07-03T15:14:00.065Z",
+        "representationStatus": "awaiting_review",
+        "status": "received",
+      },
+      "lpaQuestionnaire": {
+        "dueDate": "2025-01-10T23:59:00.000Z",
+        "receivedAt": "2023-05-08T23:00:00.000Z",
+        "status": "received",
+      },
+      "lpaStatement": {
+        "isRedacted": false,
+        "receivedAt": "2025-07-03T15:14:00.031Z",
+        "representationStatus": "valid",
+        "status": "received",
+      },
+    },
+    "eiaScreeningRequired": null,
+    "environmentalAssessment": {
+      "caseId": 72,
+      "documents": [],
+      "folderId": 3563,
+      "path": "appellant-case/environmentalAssessment",
+    },
+    "healthAndSafety": {
+      "appellantCase": {
+        "details": null,
+        "hasIssues": false,
+      },
+      "lpaQuestionnaire": {
+        "details": "There may be no mobile reception at the site",
+        "hasIssues": true,
+      },
+    },
+    "id": 238,
+    "inspectorAccess": {
+      "appellantCase": {
+        "details": null,
+        "isRequired": false,
+      },
+      "lpaQuestionnaire": {
+        "details": "There is a tall hedge around the site which obstructs the view of the site",
+        "isRequired": true,
+      },
+    },
+    "internalCorrespondence": {
+      "crossTeam": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3595,
+        "path": "internal/crossTeamCorrespondence",
+      },
+      "inspector": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3596,
+        "path": "internal/inspectorCorrespondence",
+      },
+      "mainParty": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3597,
+        "path": "internal/mainPartyCorrespondence",
+      },
+    },
+    "isChildAppeal": false,
+    "isParentAppeal": false,
+    "linkedAppeals": [],
+    "localPlanningDepartment": "Maidstone Borough Council",
+    "lpaEmailAddress": "maid@lpa-email.gov.uk",
+    "lpaQuestionnaireId": 40,
+    "neighbouringSites": [],
+    "notes": "",
+    "origin": "lpa",
+    "originalRepresentation": "Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. Steve wants reflections, so let's give him reflections. It's amazing what you can do with a little love in your heart. Clouds are free they come and go as they please.
+
+The secret to doing anything is believing that you can do it. Anything that you believe you can do strong enough, you can do. Anything. As long as you believe. It looks so good, I might as well not stop. This present moment is perfect simply due to the fact you're experiencing it. Making all those little fluffies that live in the clouds.
+
+You don't want to kill all your dark areas they are very important. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Anyone can paint. Each highlight must have it's own private shadow. Don't fiddle with it all day.",
+    "otherAppeals": [],
+    "planningApplicationReference": "44377/APP/3/218453",
+    "procedureType": "Written",
+    "redactedRepresentation": "",
+    "rejectionReasons": [],
+    "representationType": "lpa_statement",
+    "siteVisitRequested": false,
+    "source": "lpa",
+    "startedAt": "2025-01-03T16:13:52.867Z",
+    "stateList": [
+      {
+        "completed": true,
+        "key": "assign_case_officer",
+      },
+      {
+        "completed": true,
+        "key": "validation",
+      },
+      {
+        "completed": true,
+        "key": "ready_to_start",
+      },
+      {
+        "completed": true,
+        "key": "lpa_questionnaire",
+      },
+      {
+        "completed": true,
+        "key": "statements",
+      },
+      {
+        "completed": false,
+        "key": "final_comments",
+      },
+      {
+        "completed": false,
+        "key": "event",
+      },
+      {
+        "completed": false,
+        "key": "evidence",
+      },
+      {
+        "completed": false,
+        "key": "awaiting_event",
+      },
+      {
+        "completed": false,
+        "key": "issue_determination",
+      },
+      {
+        "completed": false,
+        "key": "awaiting_transfer",
+      },
+      {
+        "completed": false,
+        "key": "invalid",
+      },
+      {
+        "completed": false,
+        "key": "transferred",
+      },
+      {
+        "completed": false,
+        "key": "closed",
+      },
+      {
+        "completed": false,
+        "key": "withdrawn",
+      },
+      {
+        "completed": false,
+        "key": "complete",
+      },
+    ],
+    "status": "valid",
+    "validAt": "2024-09-03T15:13:52.867Z",
+    "withdrawal": {
+      "withdrawalFolder": {
+        "caseId": 72,
+        "documents": [],
+        "folderId": 3555,
+        "path": "appellant-case/appellantCaseWithdrawalLetter",
+      },
+    },
+  },
+  "heading": "LPA statement",
+  "sections": [
+    {
+      "details": String {
+        "length": 912,
+        "val": "Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. Steve wants reflections, so let's give him reflections. It's amazing what you can do with a little love in your heart. Clouds are free they come and go as they please.<br />
+<br />
+The secret to doing anything is believing that you can do it. Anything that you believe you can do strong enough, you can do. Anything. As long as you believe. It looks so good, I might as well not stop. This present moment is perfect simply due to the fact you're experiencing it. Making all those little fluffies that live in the clouds.<br />
+<br />
+You don't want to kill all your dark areas they are very important. I will take some magic white, and a little bit of Vandyke brown and a little touch of yellow. Anyone can paint. Each highlight must have it's own private shadow. Don't fiddle with it all day.",
+      },
+      "heading": "Statement",
+    },
+    {
+      "details": "No documents",
+      "heading": "Supporting documents",
+    },
+  ],
+  "status": "Valid",
+}
+`;

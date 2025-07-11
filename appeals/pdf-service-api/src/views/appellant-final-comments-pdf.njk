@@ -1,0 +1,19 @@
+{% extends "layouts/app.layout.njk" %}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set title="Appellant final comments" %}
+
+{% block headerend %}
+	<p><strong>Date received</strong> {{ dateReceived | default('N/A') }}</p>
+	<p><strong>Status</strong> {{ status | default('N/A') }}</p>
+{% endblock %}
+
+{% block main %}
+	{% for section in sections -%}
+		<h2 class="govuk-heading-l">{{ section.heading }}</h2>
+
+		{{ section.details | safe }}
+	{%- endfor %}
+{% endblock %}
+
