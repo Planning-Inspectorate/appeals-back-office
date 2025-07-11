@@ -98,6 +98,12 @@ export const happyPathHelper = {
 		return visitDate;
 	},
 
+	getYesterday() {
+		const date = new Date();
+		date.setDate(date.getDate() - 1);
+		return date;
+	},
+
 	uploadDocAppellantCase(caseRef) {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
@@ -215,7 +221,7 @@ export const happyPathHelper = {
 		dateTimeSection.enterVisitStartTime('08', '00');
 		dateTimeSection.enterVisitEndTime('12', '00');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.validateBannerMessage('Success', 'Site visit scheduled');
+		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
 	},
 
 	issueDecision(caseRef, decision) {
