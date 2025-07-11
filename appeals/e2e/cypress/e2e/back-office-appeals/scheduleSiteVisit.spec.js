@@ -85,9 +85,7 @@ describe('Schedule site visit', () => {
 			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
 
-			// Create a date 1 day in the past
-			const yesterday = new Date();
-			yesterday.setDate(yesterday.getDate() - 1);
+			const yesterday = happyPathHelper.getYesterday();
 
 			dateTimeSection.enterVisitDate(yesterday);
 			dateTimeSection.enterVisitStartTime('08', '00');
