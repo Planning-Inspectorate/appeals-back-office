@@ -98,6 +98,12 @@ export const happyPathHelper = {
 		return visitDate;
 	},
 
+	getYesterday() {
+		const date = new Date();
+		date.setDate(date.getDate() - 1);
+		return date;
+	},
+
 	uploadDocAppellantCase(caseRef) {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
