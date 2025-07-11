@@ -103,15 +103,6 @@ export class HearingSectionPage extends CaseDetailsPage {
 		this.basePageElements.xlHeader().contains('You cannot check these answers');
 		this.basePageElements.link().contains('appeal details');
 	}
-
-	verifyHearingReadyToSetupTagPersonalList(caseRef) {
-		this.basePageElements.tableCell().contains(caseRef);
-		this.basePageElements.tableCell().last().contains('Hearing ready to set up');
-	}
-	verifyAwaitingHearingTagPersonalList(caseRef) {
-		this.basePageElements.tableCell().contains(caseRef);
-		this.basePageElements.tableCell().last().contains('Awaiting hearing');
-	}
 	navigateToHearingSection(caseRef) {
 		cy.clearAllSessionStorage();
 		cy.clearAllCookies();
