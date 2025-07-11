@@ -25,6 +25,10 @@ const createStateMachine = (appealType, procedureType, currentState) =>
 	createMachine({
 		id: 'appeals-state-machine',
 		initial: currentState || APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+		context: {
+			appealType,
+			procedureType
+		},
 		states: {
 			[APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER]: {
 				on: {
@@ -116,14 +120,20 @@ const createStateMachine = (appealType, procedureType, currentState) =>
 			[APPEAL_CASE_STATUS.STATEMENTS]: {
 				on: {
 					[VALIDATION_OUTCOME_COMPLETE]: {
-						target: targetStateOnStatementsComplete[procedureType]
+						target: targetStateOnStatementsComplete[procedureType],
+						cond: isAppealTypeAndProcedureTypeValid
 					},
-					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
+					[APPEAL_CASE_STATUS.CLOSED]: {
+						target: APPEAL_CASE_STATUS.CLOSED,
+						cond: isAppealTypeAndProcedureTypeValid
+					},
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
-						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
+						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+						cond: isAppealTypeAndProcedureTypeValid
 					},
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
-						target: APPEAL_CASE_STATUS.WITHDRAWN
+						target: APPEAL_CASE_STATUS.WITHDRAWN,
+						cond: isAppealTypeAndProcedureTypeValid
 					}
 				},
 				meta: {
@@ -138,14 +148,20 @@ const createStateMachine = (appealType, procedureType, currentState) =>
 			[APPEAL_CASE_STATUS.FINAL_COMMENTS]: {
 				on: {
 					[VALIDATION_OUTCOME_COMPLETE]: {
-						target: APPEAL_CASE_STATUS.EVENT
+						target: APPEAL_CASE_STATUS.EVENT,
+						cond: isAppealTypeAndProcedureTypeValid
 					},
-					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
+					[APPEAL_CASE_STATUS.CLOSED]: {
+						target: APPEAL_CASE_STATUS.CLOSED,
+						cond: isAppealTypeAndProcedureTypeValid
+					},
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
-						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
+						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+						cond: isAppealTypeAndProcedureTypeValid
 					},
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
-						target: APPEAL_CASE_STATUS.WITHDRAWN
+						target: APPEAL_CASE_STATUS.WITHDRAWN,
+						cond: isAppealTypeAndProcedureTypeValid
 					}
 				},
 				meta: {
@@ -178,14 +194,25 @@ const createStateMachine = (appealType, procedureType, currentState) =>
 			},
 			[APPEAL_CASE_STATUS.EVIDENCE]: {
 				on: {
-					[VALIDATION_OUTCOME_COMPLETE]: { target: APPEAL_CASE_STATUS.EVENT },
-					[VALIDATION_OUTCOME_INCOMPLETE]: { target: undefined },
-					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
+					[VALIDATION_OUTCOME_COMPLETE]: {
+						target: APPEAL_CASE_STATUS.EVENT,
+						cond: isAppealTypeAndProcedureTypeValid
+					},
+					[VALIDATION_OUTCOME_INCOMPLETE]: {
+						target: undefined,
+						cond: isAppealTypeAndProcedureTypeValid
+					},
+					[APPEAL_CASE_STATUS.CLOSED]: {
+						target: APPEAL_CASE_STATUS.CLOSED,
+						cond: isAppealTypeAndProcedureTypeValid
+					},
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
-						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
+						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+						cond: isAppealTypeAndProcedureTypeValid
 					},
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
-						target: APPEAL_CASE_STATUS.WITHDRAWN
+						target: APPEAL_CASE_STATUS.WITHDRAWN,
+						cond: isAppealTypeAndProcedureTypeValid
 					}
 				},
 				meta: {
@@ -306,6 +333,31 @@ const createStateMachine = (appealType, procedureType, currentState) =>
 			}
 		}
 	});
+
+/**
+ * @typedef {{ appealType: string, procedureType: string }} Ctx
+ * @typedef {{ state: { value: string, meta: Record<string, any> } }} State
+ * @typedef {import('xstate').EventObject} _evt
+ */
+/**
+ * Checks if the appeal type and procedure type are valid for the current state.
+ * @param {Ctx} ctx - The context object containing appealType and procedureType.
+ * @param {Object} _evt - The event object (not used in this function).
+ * @param {{ state: import('xstate').State<Ctx, any, any, any> }} meta
+ * @returns {boolean} - Returns true if the appeal type and procedure type are valid for
+ * the current state, otherwise false.
+ */
+const isAppealTypeAndProcedureTypeValid = (ctx, _evt, { state }) => {
+	const meta = state.meta[`appeals-state-machine.${state.value}`];
+	const appealType = ctx.appealType;
+	const procedureType = ctx.procedureType;
+
+	if (!appealType || !procedureType || !meta) return false;
+
+	return (
+		meta.validAppealTypes.includes(appealType) && meta.validProcedureTypes.includes(procedureType)
+	);
+};
 
 const targetStateOnStatementsComplete = {
 	[APPEAL_CASE_PROCEDURE.HEARING]: APPEAL_CASE_STATUS.EVENT,
