@@ -306,6 +306,12 @@ function mapRequiredActionToPersonalListActionHtml(
 				`/appeals-service/appeal-details/${appealId}/share`
 			)}">Progress case</a>`;
 		}
+		case 'progressHearingCaseWithNoRepsFromStatements': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/share`
+			)}">Progress to hearing ready to set up<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+		}
 		case 'progressFromStatements': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,

@@ -164,8 +164,14 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 					}
 			  };
 
-	const heading =
-		valueTexts.length > 0 ? 'Share IP comments and statements' : 'Progress to final comments';
+	let heading;
+	if (appeal.procedureType === 'Hearing') {
+		heading = 'Progress to hearing ready to set up';
+	} else if (valueTexts.length > 0) {
+		heading = 'Share IP comments and statements';
+	} else {
+		heading = 'Progress to final comments';
+	}
 
 	return {
 		title: heading,
