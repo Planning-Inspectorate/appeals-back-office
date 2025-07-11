@@ -11,7 +11,8 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	SECTION_78_HEARING: 'featureFlagS78Hearing',
 	SECTION_78_INQUIRY: 'featureFlagS78Inquiry',
 	SECTION_20: 'featureFlagS20',
-	CAS: 'featureFlagCAS'
+	CAS: 'featureFlagCAS',
+	LINKED_APPEALS: 'featureFlagLinkedAppeals'
 });
 
 export const APPEAL_TYPE = Object.freeze({

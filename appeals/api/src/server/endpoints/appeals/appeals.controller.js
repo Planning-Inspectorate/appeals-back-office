@@ -7,8 +7,10 @@ import {
 	DEFAULT_PAGE_SIZE,
 	ERROR_CANNOT_BE_EMPTY_STRING
 } from '@pins/appeals/constants/support.js';
-import { formatMyAppeals } from './appeals.formatter.js';
+import { formatMyAppeal } from './appeals.formatter.js';
 import { retrieveAppealListData, updateCompletedEvents } from './appeals.service.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -89,14 +91,37 @@ const getMyAppeals = async (req, res) => {
 	const formattedAppeals = await Promise.all(
 		appeals.map(async (appeal) => {
 			const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
-
-			return formatMyAppeals(
-				appeal,
-				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked')
-			);
+			const isChildAppeal =
+				isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
+				linkedAppeals.some((link) => link.childRef === appeal.reference);
+			const isParentAppeal =
+				isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
+				linkedAppeals.some((link) => link.parentRef === appeal.reference);
+			const myAppealData = isChildAppeal ? [] : [{ appeal, isParentAppeal, isChildAppeal }];
+			if (isParentAppeal) {
+				await Promise.all(
+					linkedAppeals.map(async (linkedAppeal) => {
+						if (linkedAppeal.childId) {
+							const childAppeal = await appealRepository.getAppealById(
+								Number(linkedAppeal.childId)
+							);
+							if (childAppeal) {
+								myAppealData.push({
+									// @ts-ignore
+									appeal: childAppeal,
+									isParentAppeal: false,
+									// @ts-ignore
+									isChildAppeal: true
+								});
+							}
+						}
+					})
+				);
+			}
+			return Promise.all(myAppealData.map(formatMyAppeal));
 		})
 	);
-	const sortedAppeals = sortAppeals(formattedAppeals);
+	const sortedAppeals = sortAppeals(formattedAppeals.flat());
 
 	// Flatten to a unique array of strings
 	// @ts-ignore
