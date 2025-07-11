@@ -252,6 +252,10 @@ describe('Setup hearing and add hearing estimates', () => {
 
 			// Verify full back navigation chain
 			caseDetailsPage.clickBackLink();
+			hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
+			caseDetailsPage.clickBackLink();
+			hearingSectionPage.verifyHearingHeader(headers.hearing.addressForm);
+			caseDetailsPage.clickBackLink();
 			hearingSectionPage.verifyHearingHeader(headers.hearing.addressQuestion);
 			caseDetailsPage.clickBackLink();
 			hearingSectionPage.verifyHearingHeader(headers.hearing.dateTime);
@@ -492,15 +496,24 @@ describe('Setup hearing and add hearing estimates', () => {
 
 		// Final timetable verification
 		caseDetailsPage.verifyTimeTableRows(timeTableRows);
+
+		//Notify
+		const expectedNotifies = ['hearing-set-up'];
+
+		cy.checkNotifySent(caseRef, expectedNotifies);
 	});
 
 	it('should progress hearing case to decision', () => {
 		hearingSectionPage.deleteHearingIfExists(caseRef);
 		happyPathHelper.reviewLPaStatement(caseRef);
 
-		// Check personal list - Hearing ready to set up
+		// Verify Hearing ready to set up tag - all cases page
+		cy.visit(urlPaths.allCases);
+		hearingSectionPage.verifyTagOnAllCasesPage(caseRef, 'Hearing ready to set up');
+
+		// Verify Hearing ready to set up tag - personal list page
 		cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
-		hearingSectionPage.verifyHearingReadyToSetupTagPersonalList(caseRef);
+		hearingSectionPage.verifyTagOnPersonalListPage(caseRef, 'Hearing ready to set up');
 
 		// navigate to details page
 		caseDetailsPage.clickLinkByText(caseRef);
@@ -524,16 +537,30 @@ describe('Setup hearing and add hearing estimates', () => {
 			caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
 			caseDetailsPage.validateBannerMessage('Important', 'Add hearing address');
 
-			// add hearing address via the banner
+			// Verify Hearing ready to set up tag - all cases page
+			cy.visit(urlPaths.allCases);
+			hearingSectionPage.verifyTagOnAllCasesPage(caseRef, 'Hearing ready to set up');
+
+			// Verify Hearing ready to set up tag - personal list page
+			cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
+			hearingSectionPage.verifyTagOnPersonalListPage(caseRef, 'Hearing ready to set up');
+
+			// // navigate to details page
+			caseDetailsPage.clickLinkByText(caseRef);
+
 			caseDetailsPage.clickHearingBannerLink();
 			hearingSectionPage.addHearingLocationAddress(originalAddress);
 			hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
 			caseDetailsPage.clickButtonByText('Update hearing');
 			caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
 
-			// Check personal list - Awaiting hearing
+			// Verify Awaiting hearing tag - all cases page
+			cy.visit(urlPaths.allCases);
+			hearingSectionPage.verifyTagOnAllCasesPage(caseRef, 'Awaiting hearing');
+
+			// Verify Awaiting hearing tag - personal list page
 			cy.visit(urlPaths.personalListFilteredAwaitingEvent);
-			hearingSectionPage.verifyAwaitingHearingTagPersonalList(caseRef);
+			hearingSectionPage.verifyTagOnPersonalListPage(caseRef, 'Awaiting hearing');
 
 			// navigate to details page
 			caseDetailsPage.clickLinkByText(caseRef);
