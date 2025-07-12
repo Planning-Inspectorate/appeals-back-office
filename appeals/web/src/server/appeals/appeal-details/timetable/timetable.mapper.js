@@ -1,7 +1,8 @@
-import { dateISOStringToDayMonthYearHourMinute, getExampleDateHint } from '#lib/dates.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
+import { dateISOStringToDayMonthYearHourMinute, getExampleDateHint } from '#lib/dates.js';
 import { dateInput } from '#lib/mappers/index.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -133,10 +134,11 @@ export const getAppealTimetableTypes = (appeal, appellantCase) => {
 	let validAppealTimetableType = [];
 
 	switch (appeal.appealType) {
-		case 'Householder':
+		case APPEAL_TYPE.HOUSEHOLDER:
 			validAppealTimetableType = ['lpaQuestionnaireDueDate'];
 			break;
-		case 'Planning appeal':
+		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
+		case APPEAL_TYPE.S78:
 			validAppealTimetableType = [];
 			if (
 				appeal.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE &&
