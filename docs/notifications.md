@@ -14,9 +14,9 @@ GOV_NOTIFY_API_KEY=########-####-####-####-############
 GOV_NOTIFY_APPEAL_GENERIC_ID=########-####-####-####-############
 ```
 
-All templates are stored as markdown files located within the codebase at [Notify Templates](../appeals/api/src/server/notify/templates) as _.content.md and _.subject.md template pairs for the email content and subject line respectively.
+All templates are stored as **nunjucks template/markdown hybrid** files located within the codebase at [Notify Templates](../appeals/api/src/server/notify/templates) as _.content.md and _.subject.md template pairs for the email content and subject line respectively.
 
-When an email is sent, the templates are pre-populated with the personalisation variables before sending the contents to Notify with the template id as `GOV_NOTIFY_APPEAL_GENERIC_ID`.
+When an email is sent, the templates are rendered using nunjucks to generate markdown with the personalisation variables pre-populated prior to sending the contents to Notify with the generic template id `GOV_NOTIFY_APPEAL_GENERIC_ID`.
 
 > [!IMPORTANT]
 > The `API GOV_NOTIFY_API_KEY` cannot be publicly disclosed, and needs to be retrieved through the repository owner
@@ -36,17 +36,17 @@ NOTIFY_SEND_MAIL_EMULATOR=true
 ##### test-my-email.subject.md
 
 ```markdown
-Subject line appeal ((appeal_reference_number))
+Subject line appeal {{appeal_reference_number}}
 ```
 
 ##### test-my-email.content.md
 
 ```markdown
-# Appeal ((appeal_reference_number))
+# Appeal {{appeal_reference_number}}
 
-Dear ((first_name)) ((last_name)),
+Dear {{first_name}} {{last_name}},
 Please see your list of information below:
-((information))
+{{information}}
 ```
 
 ##### An example of how to use the above templates and send an email

@@ -168,10 +168,12 @@ export function personalListPage(
 					},
 					{
 						classes: 'action-required',
-						html: mapActionLinksForAppeal(appeal, isCaseOfficer, request)
+						html: appeal.isChildAppeal
+							? ''
+							: mapActionLinksForAppeal(appeal, isCaseOfficer, request)
 					},
 					{
-						text: dateISOStringToDisplayDate(appeal.dueDate) || ''
+						text: appeal.isChildAppeal ? '' : dateISOStringToDisplayDate(appeal.dueDate) || ''
 					},
 					{
 						html: '',

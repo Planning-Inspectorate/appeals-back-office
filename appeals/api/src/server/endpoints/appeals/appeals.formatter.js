@@ -65,11 +65,13 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 });
 
 /**
- * @param {DBUserAppeal} appeal
- * @param {AppealRelationship[]} linkedAppeals
+ * @param {Object} options
+ * @param {DBUserAppeal} options.appeal
+ * @param {Boolean} options.isParentAppeal
+ * @param {Boolean} options.isChildAppeal
  * @returns {Promise<AppealListResponse>}
  */
-const formatMyAppeals = async (appeal, linkedAppeals) => ({
+const formatMyAppeal = async ({ appeal, isParentAppeal = false, isChildAppeal = false }) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
@@ -86,8 +88,8 @@ const formatMyAppeals = async (appeal, linkedAppeals) => ({
 		appeal.caseExtensionDate
 	),
 	appealTimetable: formatAppealTimetable(appeal),
-	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
+	isParentAppeal,
+	isChildAppeal,
 	planningApplicationReference: appeal.applicationReference,
 	isHearingSetup: !!appeal.hearing,
 	hasHearingAddress: !!appeal.hearing?.addressId
@@ -295,7 +297,6 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 		if (
 			relation.childRef === currentAppealRef &&
 			relation.parentId &&
-			relation.parentId !== null &&
 			relevantIds.indexOf(relation.parentId) === -1
 		) {
 			relevantIds.push(relation.parentId);
@@ -303,7 +304,6 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 		if (
 			relation.parentRef === currentAppealRef &&
 			relation.childId &&
-			relation.childId !== null &&
 			relevantIds.indexOf(relation.childId) === -1
 		) {
 			relevantIds.push(relation.childId);
@@ -313,4 +313,4 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 	return relevantIds;
 };
 
-export { formatAppeal, formatMyAppeals, getIdsOfReferencedAppeals };
+export { formatAppeal, formatMyAppeal, getIdsOfReferencedAppeals };

@@ -138,7 +138,7 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 			],
 			rows: comments.map((comment) => [
 				{
-					html: addressToString(comment.represented.address)
+					html: addressToString(comment.represented.address) || 'No address'
 				},
 				{
 					html: '',
@@ -151,7 +151,7 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 											comment.redactedRepresentation,
 											comment.originalRepresentation
 									  )
-									: comment.originalRepresentation,
+									: comment.originalRepresentation || 'No comment',
 								labelText: 'Read more'
 							}
 						}
@@ -159,14 +159,16 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 				},
 				{
 					html: buildHtmlList({
-						items: comment.attachments.map(
-							(a) =>
-								`<a class="govuk-link" href="${mapDocumentDownloadUrl(
-									a.documentVersion.document.caseId,
-									a.documentVersion.document.guid,
-									a.documentVersion.document.name
-								)}" target="_blank">${a.documentVersion.document.name}</a>`
-						),
+						items: comment.attachments?.length
+							? comment.attachments.map(
+									(a) =>
+										`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+											a.documentVersion.document.caseId,
+											a.documentVersion.document.guid,
+											a.documentVersion.document.name
+										)}" target="_blank">${a.documentVersion.document.name}</a>`
+							  )
+							: ['No documents'],
 						isOrderedList: true,
 						isNumberedList: comment.attachments.length > 1
 					})
