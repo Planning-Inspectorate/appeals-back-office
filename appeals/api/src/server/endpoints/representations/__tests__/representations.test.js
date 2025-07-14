@@ -1054,7 +1054,8 @@ describe('/appeals/:id/reps/publish', () => {
 			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 			databaseConnector.representation.findMany.mockResolvedValue([
 				{ representationType: 'lpa_statement' },
-				{ representationType: 'appellant_final_comment' }
+				{ representationType: 'appellant_final_comment' },
+				{ representationType: 'comment' }
 			]);
 			databaseConnector.representation.updateMany.mockResolvedValue([]);
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
@@ -1124,7 +1125,8 @@ describe('/appeals/:id/reps/publish', () => {
 			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 			databaseConnector.representation.findMany.mockResolvedValue([
 				{ representationType: 'lpa_statement' },
-				{ representationType: 'appellant_final_comment' }
+				{ representationType: 'appellant_final_comment' },
+				{ representationType: 'comment' }
 			]);
 			databaseConnector.representation.updateMany.mockResolvedValue([]);
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
@@ -1204,7 +1206,8 @@ describe('/appeals/:id/reps/publish', () => {
 			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 			databaseConnector.representation.findMany.mockResolvedValue([
 				{ representationType: 'lpa_statement' },
-				{ representationType: 'appellant_final_comment' }
+				{ representationType: 'appellant_final_comment' },
+				{ representationType: 'comment' }
 			]);
 			databaseConnector.representation.updateMany.mockResolvedValue([]);
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
@@ -1281,7 +1284,8 @@ describe('/appeals/:id/reps/publish', () => {
 			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 			databaseConnector.representation.findMany.mockResolvedValue([
 				{ representationType: 'lpa_statement' },
-				{ representationType: 'appellant_final_comment' }
+				{ representationType: 'appellant_final_comment' },
+				{ representationType: 'comment' }
 			]);
 			databaseConnector.representation.updateMany.mockResolvedValue([]);
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
@@ -1362,7 +1366,8 @@ describe('/appeals/:id/reps/publish', () => {
 			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 			databaseConnector.representation.findMany.mockResolvedValue([
 				{ representationType: 'lpa_statement' },
-				{ representationType: 'appellant_final_comment' }
+				{ representationType: 'appellant_final_comment' },
+				{ representationType: 'comment' }
 			]);
 			databaseConnector.representation.updateMany.mockResolvedValue([]);
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
@@ -1443,7 +1448,8 @@ describe('/appeals/:id/reps/publish', () => {
 			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
 			databaseConnector.representation.findMany.mockResolvedValue([
 				{ representationType: 'lpa_statement' },
-				{ representationType: 'appellant_final_comment' }
+				{ representationType: 'appellant_final_comment' },
+				{ representationType: 'comment' }
 			]);
 			databaseConnector.representation.updateMany.mockResolvedValue([]);
 			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
