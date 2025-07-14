@@ -71,7 +71,7 @@ const formatAppeal = (appeal, linkedAppeals) => ({
  * @param {Boolean} options.isChildAppeal
  * @returns {Promise<AppealListResponse>}
  */
-const formatMyAppeal = async ({ appeal, isParentAppeal, isChildAppeal }) => ({
+const formatMyAppeal = async ({ appeal, isParentAppeal = false, isChildAppeal = false }) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),

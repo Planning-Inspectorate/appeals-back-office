@@ -97,6 +97,7 @@ const getMyAppeals = async (req, res) => {
 			const isParentAppeal =
 				isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
 				linkedAppeals.some((link) => link.parentRef === appeal.reference);
+			// Do not add child appeals here as they will be grouped with their parent appeals below
 			const myAppealData = isChildAppeal ? [] : [{ appeal, isParentAppeal, isChildAppeal }];
 			if (isParentAppeal) {
 				await Promise.all(
@@ -106,6 +107,7 @@ const getMyAppeals = async (req, res) => {
 								Number(linkedAppeal.childId)
 							);
 							if (childAppeal) {
+								// Add the child appeals so they are grouped with their parent appeals above
 								myAppealData.push({
 									// @ts-ignore
 									appeal: childAppeal,
