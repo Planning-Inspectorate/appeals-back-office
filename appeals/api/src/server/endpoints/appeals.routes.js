@@ -48,6 +48,8 @@ import { historicEnglandRoutes } from './historic-england/historic-england.route
 import { hearingEstimatesRoutes } from './hearing-estimates/hearing-estimates.routes.js';
 import { default as appealDetailsRoutes } from './appeal-details/appeal-details.routes.js';
 import { notifyPreviewRouter } from './notify-preview/notify-preview.routes.js';
+import { inquiryRoutes } from './Inquiry/inquiry.routes.js';
+import { inquiryEstimatesRoutes } from './inquiry-estimates/inquiry-estimates.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
@@ -105,5 +107,8 @@ if (config.enableTestEndpoints) {
 router.use(linkedAppealsRoutes);
 router.use(transferredAppealsRoutes);
 router.use(hearingEstimatesRoutes);
+
+router.use(inquiryRoutes);
+router.use(inquiryEstimatesRoutes);
 
 export { router as appealsRoutes };

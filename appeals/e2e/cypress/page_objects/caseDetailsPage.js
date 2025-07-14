@@ -98,6 +98,7 @@ export class CaseDetailsPage extends Page {
 		manageRelatedAppeals: () => cy.getByData(this._cyDataSelectors.manageRelatedAppeals),
 		uploadFile: () => cy.getByData(this._cyDataSelectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
+		appealType: () => cy.get('.appeal-appeal-type .govuk-summary-list__value'),
 		addAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.addAgreementToChangeDescriptionEvidence),
 		addNotifiyingParties: () => cy.getByData(this._cyDataSelectors.addNotifyingParties),
@@ -587,17 +588,21 @@ export class CaseDetailsPage extends Page {
 			});
 	}
 
-	verifyDatesChanged(timeTableRows, date) {
-		const formattedDate = formatDateAndTime(date).date;
-		timeTableRows.forEach((timeTableRow) => {
-			if (timeTableRow.editable) {
-				this.elements
-					.getTimetableDate(timeTableRow.row)
-					.invoke('text')
-					.then((dateText) => {
-						expect(dateText.trim()).to.equal(formattedDate);
-					});
-			}
+	verifyDatesChanged(timeTableRows, startDate, intervalDays) {
+		timeTableRows.forEach((row, index) => {
+			if (!row.editable) return;
+
+			const expectedDate = new Date(startDate);
+			expectedDate.setDate(expectedDate.getDate() + index * intervalDays);
+
+			const formattedExpected = formatDateAndTime(expectedDate).date;
+
+			this.elements
+				.getTimetableDate(row.row)
+				.invoke('text')
+				.then((dateText) => {
+					expect(dateText.trim()).to.equal(formattedExpected);
+				});
 		});
 	}
 
@@ -679,8 +684,8 @@ export class CaseDetailsPage extends Page {
 		});
 	}
 
-	changeTimetableDates(timetableItems, date) {
-		dateTimeSection.enterDueDates(timetableItems, date);
+	changeTimetableDates(timetableItems, date, intervalDays) {
+		dateTimeSection.enterDueDates(timetableItems, date, intervalDays);
 		this.clickButtonByText('Continue');
 	}
 
@@ -748,4 +753,7 @@ export class CaseDetailsPage extends Page {
 			.each(($el) => actualSections.push($el.text().trim()))
 			.then(() => expect(actualSections).to.deep.equal(expectedSections));
 	};
+	verifyAppealType(expectedAppealType) {
+		this.elements.appealType().should('contain', expectedAppealType);
+	}
 }

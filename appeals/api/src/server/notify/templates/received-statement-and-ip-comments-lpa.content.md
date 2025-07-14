@@ -1,6 +1,10 @@
-We’ve received comments from interested parties.
+{% if has_ip_comments -%}
+   We’ve received comments from interested parties.
+{% endif -%}
 
+{% if has_ip_comments -%}
 You can [view this information in the appeals service]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}).
+{% endif -%}
 
 {% include 'parts/appeal-details.md' %}
 

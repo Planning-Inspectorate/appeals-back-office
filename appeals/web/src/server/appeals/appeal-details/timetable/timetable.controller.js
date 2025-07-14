@@ -10,6 +10,9 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { padNumberWithZero } from '#lib/string-utilities.js';
+import { zonedTimeToUtc } from 'date-fns-tz';
+import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getEditTimetable = async (request, response) => {
@@ -127,10 +130,6 @@ export const renderCheckYourAnswers = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postAppealTimetables = async (request, response) => {
-	if (request.errors) {
-		return renderEditTimetable(request, response);
-	}
-
 	const { session } = request;
 	const appealDetails = request.currentAppeal;
 	const appealId = appealDetails.appealId;
@@ -138,9 +137,8 @@ export const postAppealTimetables = async (request, response) => {
 
 	let sessionTimetable = session.appealTimetable || {};
 	const originalTimetable = appealDetails.appealTimetable || {};
-
 	for (const key of Object.keys(sessionTimetable)) {
-		if (sessionTimetable[key] === originalTimetable[key]) {
+		if (sessionTimetable[key] === (originalTimetable[key] || '').slice(0, 10)) {
 			delete sessionTimetable[key];
 		}
 	}
@@ -152,14 +150,27 @@ export const postAppealTimetables = async (request, response) => {
 	}
 
 	try {
+		const timeStr = `${padNumberWithZero(0)}:${padNumberWithZero(0)}`;
+
+		// Transform each sessionTimetable value to UTC ISO string
+		const transformedTimetable = Object.fromEntries(
+			Object.entries(sessionTimetable).map(([key, value]) => [
+				key,
+				zonedTimeToUtc(`${value} ${timeStr}`, DEFAULT_TIMEZONE).toISOString()
+			])
+		);
 		const setAppealTimetableResponse = await setAppealTimetables(
 			request.apiClient,
 			appealId,
 			appealTimetableId,
-			{ ...sessionTimetable }
+			{ ...transformedTimetable }
 		);
 
 		if (setAppealTimetableResponse.errors) {
+			logger.error(
+				`Timetable due dates error for Appeal ${appealId}: `,
+				JSON.stringify(setAppealTimetableResponse.errors)
+			);
 			return response.status(500).render('app/500.njk');
 		}
 

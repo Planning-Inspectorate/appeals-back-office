@@ -2149,7 +2149,7 @@
 			}
 		},
 		"/appeals/{appealId}/document-folders/{folderId}": {
-			"get": {
+			"post": {
 				"tags": ["Documents"],
 				"description": "Returns the contents of a single appeal folder, by id",
 				"parameters": [
@@ -5191,39 +5191,6 @@
 				}
 			}
 		},
-		"/appeals/{appealReference}/hearing-elapsed": {
-			"post": {
-				"tags": ["Test Utilities"],
-				"description": "A test endpoint to simulate the completion of a hearing event",
-				"parameters": [
-					{
-						"name": "appealReference",
-						"in": "path",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					},
-					{
-						"name": "azureAdUserId",
-						"in": "header",
-						"required": true,
-						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
-				"responses": {
-					"200": {
-						"description": "OK"
-					},
-					"400": {
-						"description": "Bad Request"
-					}
-				}
-			}
-		},
 		"/appeals/{appealReference}/statements-elapsed": {
 			"post": {
 				"tags": ["Test Utilities"],
@@ -5294,6 +5261,39 @@
 			"get": {
 				"tags": ["Test Utilities"],
 				"description": "A test endpoint to retrieve an array of notify emails sent for this appeal reference",
+				"parameters": [
+					{
+						"name": "appealReference",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
+		"/appeals/{appealReference}/hearing-elapsed": {
+			"post": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to simulate the completion of a hearing event",
 				"parameters": [
 					{
 						"name": "appealReference",
@@ -5599,6 +5599,248 @@
 							"application/xml": {
 								"schema": {
 									"$ref": "#/components/schemas/HearingEstimateResponse"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/inquiry": {
+			"post": {
+				"tags": ["Inquiry Details"],
+				"description": "Sets a single inquiry by appeal ID",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Sets a single inquiry by ID",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateInquiry"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CreateInquiry"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Inquiry details to create",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateInquiryRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateInquiryRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/inquiry-estimates": {
+			"post": {
+				"tags": ["Inquiry Estimates"],
+				"description": "Creates inquiry estimates for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"201": {
+						"description": "Creates inquiry estimates",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/InquiryEstimateResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/InquiryEstimateResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Inquiry estimate details to create",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/InquiryEstimateCreateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/InquiryEstimateCreateRequest"
+							}
+						}
+					}
+				}
+			},
+			"patch": {
+				"tags": ["Inquiry Estimates"],
+				"description": "Updates inquiry estimates for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates inquiry estimates",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/InquiryEstimateResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/InquiryEstimateResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Inquiry estimate details to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/InquiryEstimateUpdateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/InquiryEstimateUpdateRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": ["Inquiry Estimates"],
+				"description": "Deletes inquiry estimates for an appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Deletes inquiry estimates",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/InquiryEstimateResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/InquiryEstimateResponse"
 								}
 							}
 						}
@@ -8317,6 +8559,20 @@
 									"folderId": {
 										"type": "number",
 										"example": 4575
+									},
+									"documents": {
+										"type": "array",
+										"example": [],
+										"items": {}
+									}
+								}
+							},
+							"statementCommonGround": {
+								"type": "object",
+								"properties": {
+									"folderId": {
+										"type": "number",
+										"example": 4576
 									},
 									"documents": {
 										"type": "array",
@@ -11230,6 +11486,182 @@
 						"example": 1
 					},
 					"hearingId": {
+						"type": "number",
+						"example": 1
+					}
+				}
+			},
+			"CreateInquiryRequest": {
+				"type": "object",
+				"properties": {
+					"inquiryStartTime": {
+						"type": "string",
+						"description": "Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"inquiryEndTime": {
+						"type": "string",
+						"description": "Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"startDate": {
+						"type": "string",
+						"description": "Date string of the timetable: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"estimatedDays": {
+						"type": "string",
+						"description": "Estimated number of days",
+						"example": "5"
+					},
+					"lpaQuestionnaireDueDate": {
+						"type": "string",
+						"description": "Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"statementDueDate": {
+						"type": "string",
+						"description": "Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"ipCommentsDueDate": {
+						"type": "string",
+						"description": "Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"statementOfCommonGroundDueDate": {
+						"type": "string",
+						"description": "Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"proofOfEvidenceAndWitnessesDueDate": {
+						"type": "string",
+						"description": "Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"planningObligationDueDate": {
+						"type": "string",
+						"description": "Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"address": {
+						"type": "object",
+						"properties": {
+							"addressLine1": {
+								"type": "string",
+								"example": "1 Grove Cottage"
+							},
+							"addressLine2": {
+								"type": "string",
+								"example": "Shotesham Road"
+							},
+							"country": {
+								"type": "string",
+								"example": "United Kingdom"
+							},
+							"county": {
+								"type": "string",
+								"example": "Devon"
+							},
+							"postcode": {
+								"type": "string",
+								"example": "NR35 2ND"
+							},
+							"town": {
+								"type": "string",
+								"example": "Woodton"
+							}
+						}
+					}
+				}
+			},
+			"InquiryResponse": {
+				"type": "object",
+				"properties": {
+					"appealId": {
+						"type": "number",
+						"example": 1
+					},
+					"inquiryId": {
+						"type": "number",
+						"example": 1
+					},
+					"inquiryStartTime": {
+						"type": "string",
+						"description": "Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2014-11-14T00:00:00+00:00"
+					},
+					"inquiryEndTime": {
+						"type": "string",
+						"description": "Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2014-11-14T00:00:00+00:00"
+					},
+					"addressId": {
+						"type": "number",
+						"example": 1
+					},
+					"address": {
+						"type": "object",
+						"properties": {
+							"addressLine1": {
+								"type": "string",
+								"example": "1 Grove Cottage"
+							},
+							"addressLine2": {
+								"type": "string",
+								"example": "Shotesham Road"
+							},
+							"country": {
+								"type": "string",
+								"example": "United Kingdom"
+							},
+							"county": {
+								"type": "string",
+								"example": "Devon"
+							},
+							"postcode": {
+								"type": "string",
+								"example": "NR35 2ND"
+							},
+							"town": {
+								"type": "string",
+								"example": "Woodton"
+							}
+						}
+					}
+				}
+			},
+			"InquiryEstimate": {
+				"type": "object",
+				"properties": {
+					"estimatedTime": {
+						"type": "number",
+						"example": 1.5
+					}
+				}
+			},
+			"InquiryEstimateCreateRequest": {
+				"type": "object",
+				"properties": {
+					"estimatedTime": {
+						"type": "number",
+						"example": 1.5
+					}
+				}
+			},
+			"InquiryEstimateUpdateRequest": {
+				"type": "object",
+				"properties": {
+					"estimatedTime": {
+						"type": "number",
+						"example": 1.5
+					}
+				}
+			},
+			"InquiryEstimateResponse": {
+				"type": "object",
+				"properties": {
+					"inquiryEstimateId": {
 						"type": "number",
 						"example": 1
 					}
@@ -17482,6 +17914,373 @@
 								}
 							},
 							"otherNewDocuments": {
+								"type": "object",
+								"required": ["caseId", "folderId", "path", "documents"],
+								"properties": {
+									"caseId": {
+										"type": "number"
+									},
+									"folderId": {
+										"type": "number"
+									},
+									"path": {
+										"type": "string"
+									},
+									"documents": {
+										"nullable": true,
+										"type": "array",
+										"items": {
+											"type": "object",
+											"required": ["id", "name"],
+											"properties": {
+												"id": {
+													"type": "string",
+													"format": "uuid"
+												},
+												"caseId": {
+													"type": "number"
+												},
+												"folderId": {
+													"type": "number"
+												},
+												"name": {
+													"type": "string"
+												},
+												"createdAt": {
+													"type": "string",
+													"format": "date-time"
+												},
+												"latestDocumentVersion": {
+													"type": "object",
+													"required": [
+														"id",
+														"version",
+														"virusCheckStatus",
+														"redactionStatus",
+														"documentURI"
+													],
+													"properties": {
+														"id": {
+															"type": "string",
+															"format": "uuid"
+														},
+														"version": {
+															"type": "number"
+														},
+														"fileName": {
+															"type": "string"
+														},
+														"originalFileName": {
+															"type": "string"
+														},
+														"size": {
+															"type": "number"
+														},
+														"mime": {
+															"type": "string"
+														},
+														"createdAt": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"dateReceived": {
+															"type": "string",
+															"format": "date-time"
+														},
+														"redactionStatus": {
+															"type": "string",
+															"enum": ["no_redaction_required", "not_redacted", "redacted"]
+														},
+														"virusCheckStatus": {
+															"type": "string",
+															"enum": ["affected", "not_scanned", "scanned"]
+														},
+														"documentType": {
+															"type": "string",
+															"enum": [
+																"appealNotification",
+																"appellantCaseCorrespondence",
+																"appellantCaseWithdrawalLetter",
+																"appellantCostsApplication",
+																"appellantCostsCorrespondence",
+																"appellantCostsDecisionLetter",
+																"appellantCostsWithdrawal",
+																"appellantFinalComment",
+																"appellantProofOfEvidence",
+																"appellantStatement",
+																"appellantWitnessesEvidence",
+																"applicationDecisionLetter",
+																"caseDecisionLetter",
+																"changedDescription",
+																"communityInfrastructureLevy",
+																"conservationMap",
+																"consultationResponses",
+																"crossTeamCorrespondence",
+																"definitiveMapStatement",
+																"designAccessStatement",
+																"developmentPlanPolicies",
+																"eiaEnvironmentalStatement",
+																"eiaScopingOpinion",
+																"eiaScreeningDirection",
+																"eiaScreeningOpinion",
+																"emergingPlan",
+																"environmentalAssessment",
+																"historicEnglandConsultation",
+																"inspectorCorrespondence",
+																"interestedPartyComment",
+																"lpaCaseCorrespondence",
+																"lpaCostsApplication",
+																"lpaCostsCorrespondence",
+																"lpaCostsDecisionLetter",
+																"lpaCostsWithdrawal",
+																"lpaFinalComment",
+																"lpaProofOfEvidence",
+																"lpaStatement",
+																"lpaWitnessesEvidence",
+																"mainPartyCorrespondence",
+																"newPlansDrawings",
+																"originalApplicationForm",
+																"otherNewDocuments",
+																"otherPartyRepresentations",
+																"otherRelevantPolicies",
+																"ownershipCertificate",
+																"planningObligation",
+																"planningOfficerReport",
+																"plansDrawings",
+																"rule6ProofOfEvidence",
+																"rule6Statement",
+																"rule6WitnessesEvidence",
+																"statementCommonGround",
+																"supplementaryPlanning",
+																"treePreservationPlan",
+																"uncategorised",
+																"whoNotified",
+																"whoNotifiedLetterToNeighbours",
+																"whoNotifiedPressAdvert",
+																"whoNotifiedSiteNotice"
+															]
+														},
+														"stage": {
+															"type": "string",
+															"enum": [
+																"appeal-decision",
+																"appellant-case",
+																"costs",
+																"evidence",
+																"final-comments",
+																"internal",
+																"lpa-questionnaire",
+																"statements",
+																"third-party-comments",
+																"witnesses"
+															]
+														},
+														"documentURI": {
+															"type": "string"
+														},
+														"isLateEntry": {
+															"type": "boolean"
+														},
+														"isDeleted": {
+															"type": "boolean"
+														},
+														"versionAudit": {
+															"nullable": true,
+															"type": "array",
+															"items": {
+																"type": "object",
+																"required": ["loggedAt", "user", "action", "details"],
+																"properties": {
+																	"loggedAt": {
+																		"type": "string",
+																		"format": "date-time"
+																	},
+																	"user": {
+																		"type": "string",
+																		"format": "uuid"
+																	},
+																	"action": {
+																		"type": "string"
+																	},
+																	"details": {
+																		"type": "string"
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												},
+												"allVersions": {
+													"type": "array",
+													"items": {
+														"type": "object",
+														"required": [
+															"id",
+															"version",
+															"virusCheckStatus",
+															"redactionStatus",
+															"documentURI"
+														],
+														"properties": {
+															"id": {
+																"type": "string",
+																"format": "uuid"
+															},
+															"version": {
+																"type": "number"
+															},
+															"fileName": {
+																"type": "string"
+															},
+															"originalFileName": {
+																"type": "string"
+															},
+															"size": {
+																"type": "number"
+															},
+															"mime": {
+																"type": "string"
+															},
+															"createdAt": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"dateReceived": {
+																"type": "string",
+																"format": "date-time"
+															},
+															"redactionStatus": {
+																"type": "string",
+																"enum": ["no_redaction_required", "not_redacted", "redacted"]
+															},
+															"virusCheckStatus": {
+																"type": "string",
+																"enum": ["affected", "not_scanned", "scanned"]
+															},
+															"documentType": {
+																"type": "string",
+																"enum": [
+																	"appealNotification",
+																	"appellantCaseCorrespondence",
+																	"appellantCaseWithdrawalLetter",
+																	"appellantCostsApplication",
+																	"appellantCostsCorrespondence",
+																	"appellantCostsDecisionLetter",
+																	"appellantCostsWithdrawal",
+																	"appellantFinalComment",
+																	"appellantProofOfEvidence",
+																	"appellantStatement",
+																	"appellantWitnessesEvidence",
+																	"applicationDecisionLetter",
+																	"caseDecisionLetter",
+																	"changedDescription",
+																	"communityInfrastructureLevy",
+																	"conservationMap",
+																	"consultationResponses",
+																	"crossTeamCorrespondence",
+																	"definitiveMapStatement",
+																	"designAccessStatement",
+																	"developmentPlanPolicies",
+																	"eiaEnvironmentalStatement",
+																	"eiaScopingOpinion",
+																	"eiaScreeningDirection",
+																	"eiaScreeningOpinion",
+																	"emergingPlan",
+																	"environmentalAssessment",
+																	"historicEnglandConsultation",
+																	"inspectorCorrespondence",
+																	"interestedPartyComment",
+																	"lpaCaseCorrespondence",
+																	"lpaCostsApplication",
+																	"lpaCostsCorrespondence",
+																	"lpaCostsDecisionLetter",
+																	"lpaCostsWithdrawal",
+																	"lpaFinalComment",
+																	"lpaProofOfEvidence",
+																	"lpaStatement",
+																	"lpaWitnessesEvidence",
+																	"mainPartyCorrespondence",
+																	"newPlansDrawings",
+																	"originalApplicationForm",
+																	"otherNewDocuments",
+																	"otherPartyRepresentations",
+																	"otherRelevantPolicies",
+																	"ownershipCertificate",
+																	"planningObligation",
+																	"planningOfficerReport",
+																	"plansDrawings",
+																	"rule6ProofOfEvidence",
+																	"rule6Statement",
+																	"rule6WitnessesEvidence",
+																	"statementCommonGround",
+																	"supplementaryPlanning",
+																	"treePreservationPlan",
+																	"uncategorised",
+																	"whoNotified",
+																	"whoNotifiedLetterToNeighbours",
+																	"whoNotifiedPressAdvert",
+																	"whoNotifiedSiteNotice"
+																]
+															},
+															"stage": {
+																"type": "string",
+																"enum": [
+																	"appeal-decision",
+																	"appellant-case",
+																	"costs",
+																	"evidence",
+																	"final-comments",
+																	"internal",
+																	"lpa-questionnaire",
+																	"statements",
+																	"third-party-comments",
+																	"witnesses"
+																]
+															},
+															"documentURI": {
+																"type": "string"
+															},
+															"isLateEntry": {
+																"type": "boolean"
+															},
+															"isDeleted": {
+																"type": "boolean"
+															},
+															"versionAudit": {
+																"nullable": true,
+																"type": "array",
+																"items": {
+																	"type": "object",
+																	"required": ["loggedAt", "user", "action", "details"],
+																	"properties": {
+																		"loggedAt": {
+																			"type": "string",
+																			"format": "date-time"
+																		},
+																		"user": {
+																			"type": "string",
+																			"format": "uuid"
+																		},
+																		"action": {
+																			"type": "string"
+																		},
+																		"details": {
+																			"type": "string"
+																		}
+																	}
+																}
+															}
+														}
+													},
+													"nullable": true
+												}
+											}
+										}
+									}
+								}
+							},
+							"statementCommonGround": {
 								"type": "object",
 								"required": ["caseId", "folderId", "path", "documents"],
 								"properties": {

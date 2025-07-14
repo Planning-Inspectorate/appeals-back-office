@@ -237,8 +237,6 @@ Cypress.Commands.add('updateTimeTableDetails', (reference, timeTableDetails) => 
 		const details = await appealsApiClient.loadCaseDetails(reference);
 		const appealId = await details.appealId;
 		const appealTimetableId = await details.appealTimetable.appealTimetableId;
-		console.log('This is time table update');
-		console.log(appealTimetableId);
 		return await appealsApiClient.updateTimeTable(appealId, appealTimetableId, timeTableDetails);
 	});
 });

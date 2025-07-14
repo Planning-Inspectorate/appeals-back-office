@@ -2109,6 +2109,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation">Add<span class="govuk-visually-hidden"> Planning obligation (5. Upload documents)</span></a>
                             </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Draft statement of common ground</dt>
+                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
+                                    data-cy="add-draft-statement-of-common-ground">Add<span class="govuk-visually-hidden"> Draft statement of common ground (5. Upload documents)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Separate ownership certificate and agricultural land declaration</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-ownership-certificate">Add<span class="govuk-visually-hidden"> Separate ownership certificate and agricultural land declaration (5. Upload documents)</span></a>
@@ -2688,6 +2694,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-planning-obligation">Add<span class="govuk-visually-hidden"> Planning obligation (5. Upload documents)</span></a>
                             </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Draft statement of common ground</dt>
+                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
+                                    data-cy="add-draft-statement-of-common-ground">Add<span class="govuk-visually-hidden"> Draft statement of common ground (5. Upload documents)</span></a>
+                                </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Separate ownership certificate and agricultural land declaration</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>

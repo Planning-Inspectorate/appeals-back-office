@@ -202,6 +202,7 @@ interface SingleAppellantCaseResponse {
 		planningObligation?: FolderInfo | null;
 		ownershipCertificate?: FolderInfo | null;
 		otherNewDocuments?: FolderInfo | null;
+		statementCommonGround?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	isGreenBelt?: boolean | null;
@@ -887,6 +888,21 @@ type CreateHearing = {
 	address: Omit<Schema.Address, 'id'> | undefined;
 };
 
+type CreateInquiry = {
+	appealId: number;
+	inquiryStartTime: Date | string;
+	inquiryEndTime: Date | string | undefined;
+	address: Omit<Schema.Address, 'id'> | undefined;
+	startDate: Date | string;
+	estimatedDays: string | Date | undefined;
+	lpaQuestionnaireDueDate: Date | string;
+	statementDueDate: Date | string;
+	ipCommentsDueDate: Date | string;
+	statementOfCommonGroundDueDate: Date | string;
+	proofOfEvidenceAndWitnessesDueDate: Date | string;
+	planningObligationDueDate: Date | string;
+};
+
 type UpdateHearing = {
 	appealId: number;
 	hearingId: number;
@@ -906,6 +922,15 @@ type HearingResponse = {
 	hearingId: number;
 	hearingStartTime: Date;
 	hearingEndTime: Date | null;
+	address: Schema.Address | null;
+	addressId: number | null;
+};
+
+type InquiryResponse = {
+	appealId: number;
+	inquiryId: number;
+	inquiryStartTime: Date;
+	inquiryEndTime: Date | null;
 	address: Schema.Address | null;
 	addressId: number | null;
 };
@@ -997,5 +1022,8 @@ export {
 	UpdateHearing,
 	CancelHearing,
 	HearingResponse,
+	InquiryResponse,
+	CreateInquiry,
+	InquiryAddress,
 	UpdateAppealDecisionRequest
 };

@@ -1276,6 +1276,12 @@ export interface SingleAppellantCaseResponse {
 			/** @example [] */
 			documents?: any[];
 		};
+		statementCommonGround?: {
+			/** @example 4576 */
+			folderId?: number;
+			/** @example [] */
+			documents?: any[];
+		};
 	};
 	/** @example "Hearing" */
 	appellantProcedurePreference?: string;
@@ -2626,6 +2632,126 @@ export interface CancelHearing {
 	appealId?: number;
 	/** @example 1 */
 	hearingId?: number;
+}
+
+export interface CreateInquiryRequest {
+	/**
+	 * Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	inquiryStartTime?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	inquiryEndTime?: string;
+	/**
+	 * Date string of the timetable: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	startDate?: string;
+	/**
+	 * Estimated number of days
+	 * @example "5"
+	 */
+	estimatedDays?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	lpaQuestionnaireDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	statementDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	ipCommentsDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	statementOfCommonGroundDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	proofOfEvidenceAndWitnessesDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	planningObligationDueDate?: string;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+}
+
+export interface InquiryResponse {
+	/** @example 1 */
+	appealId?: number;
+	/** @example 1 */
+	inquiryId?: number;
+	/**
+	 * Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2014-11-14T00:00:00+00:00"
+	 */
+	inquiryStartTime?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2014-11-14T00:00:00+00:00"
+	 */
+	inquiryEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+}
+
+export interface InquiryEstimate {
+	/** @example 1.5 */
+	estimatedTime?: number;
+}
+
+export interface InquiryEstimateCreateRequest {
+	/** @example 1.5 */
+	estimatedTime?: number;
+}
+
+export interface InquiryEstimateUpdateRequest {
+	/** @example 1.5 */
+	estimatedTime?: number;
+}
+
+export interface InquiryEstimateResponse {
+	/** @example 1 */
+	inquiryEstimateId?: number;
 }
 
 export interface Address {
@@ -6059,6 +6185,220 @@ export type AppellantCase = {
 			}[];
 		};
 		otherNewDocuments?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appealNotification'
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
+						| 'appellantCostsWithdrawal'
+						| 'appellantFinalComment'
+						| 'appellantProofOfEvidence'
+						| 'appellantStatement'
+						| 'appellantWitnessesEvidence'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
+						| 'inspectorCorrespondence'
+						| 'interestedPartyComment'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
+						| 'lpaCostsWithdrawal'
+						| 'lpaFinalComment'
+						| 'lpaProofOfEvidence'
+						| 'lpaStatement'
+						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'rule6ProofOfEvidence'
+						| 'rule6Statement'
+						| 'rule6WitnessesEvidence'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appealNotification'
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
+						| 'appellantCostsWithdrawal'
+						| 'appellantFinalComment'
+						| 'appellantProofOfEvidence'
+						| 'appellantStatement'
+						| 'appellantWitnessesEvidence'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
+						| 'inspectorCorrespondence'
+						| 'interestedPartyComment'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
+						| 'lpaCostsWithdrawal'
+						| 'lpaFinalComment'
+						| 'lpaProofOfEvidence'
+						| 'lpaStatement'
+						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'rule6ProofOfEvidence'
+						| 'rule6Statement'
+						| 'rule6WitnessesEvidence'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		statementCommonGround?: {
 			caseId: number;
 			folderId: number;
 			path: string;

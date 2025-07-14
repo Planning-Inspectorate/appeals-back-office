@@ -229,7 +229,8 @@ const appellantCase = {
 				newPlansDrawings: { ...Folder },
 				planningObligation: { ...Folder },
 				ownershipCertificate: { ...Folder },
-				otherNewDocuments: { ...Folder }
+				otherNewDocuments: { ...Folder },
+				statementCommonGround: { ...Folder }
 			}
 		}
 	}

@@ -8,7 +8,9 @@
    We have received comments from interested parties.
 {% endif -%}
 
+{% if has_statement or has_ip_comments -%}
 You can [view this information in the appeals service]({{front_office_url}}/appeals/{{appeal_reference_number}}).
+{% endif -%}
 
 {% if not has_statement -%}
    The local planning authority did not submit a statement.
@@ -19,9 +21,12 @@ You can [view this information in the appeals service]({{front_office_url}}/appe
 
 {% include 'parts/appeal-details.md' %}
 
+{% if what_happens_next -%}
 # What happens next
 
 {{what_happens_next}}
+
+{% endif -%}
 
 The Planning Inspectorate
 caseofficers@planninginspectorate.gov.uk

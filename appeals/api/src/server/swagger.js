@@ -459,6 +459,10 @@ export const spec = {
 				otherNewDocuments: {
 					folderId: 4575,
 					documents: []
+				},
+				statementCommonGround: {
+					folderId: 4576,
+					documents: []
 				}
 			},
 			appellantProcedurePreference: 'Hearing',
@@ -1434,6 +1438,182 @@ export const spec = {
 					example: 1
 				},
 				hearingId: {
+					type: 'number',
+					example: 1
+				}
+			}
+		},
+		CreateInquiryRequest: {
+			type: 'object',
+			properties: {
+				inquiryStartTime: {
+					type: 'string',
+					description: 'Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				inquiryEndTime: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				startDate: {
+					type: 'string',
+					description: 'Date string of the timetable: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				estimatedDays: {
+					type: 'string',
+					description: 'Estimated number of days',
+					example: '5'
+				},
+				lpaQuestionnaireDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				statementDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				ipCommentsDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				statementOfCommonGroundDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				proofOfEvidenceAndWitnessesDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				planningObligationDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
+		InquiryResponse: {
+			type: 'object',
+			properties: {
+				appealId: {
+					type: 'number',
+					example: 1
+				},
+				inquiryId: {
+					type: 'number',
+					example: 1
+				},
+				inquiryStartTime: {
+					type: 'string',
+					description: 'Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2014-11-14T00:00:00+00:00'
+				},
+				inquiryEndTime: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2014-11-14T00:00:00+00:00'
+				},
+				addressId: {
+					type: 'number',
+					example: 1
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
+		InquiryEstimate: {
+			type: 'object',
+			properties: {
+				estimatedTime: {
+					type: 'number',
+					example: 1.5
+				}
+			}
+		},
+		InquiryEstimateCreateRequest: {
+			type: 'object',
+			properties: {
+				estimatedTime: {
+					type: 'number',
+					example: 1.5
+				}
+			}
+		},
+		InquiryEstimateUpdateRequest: {
+			type: 'object',
+			properties: {
+				estimatedTime: {
+					type: 'number',
+					example: 1.5
+				}
+			}
+		},
+		InquiryEstimateResponse: {
+			type: 'object',
+			properties: {
+				inquiryEstimateId: {
 					type: 'number',
 					example: 1
 				}

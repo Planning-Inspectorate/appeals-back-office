@@ -108,19 +108,19 @@ exports[`site-visit GET /site-visit/manage-visit should render the manage visit 
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="09">:
+                            name="visit-start-time-hour" type="text" value="09">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="38">
+                            name="visit-start-time-minute" type="text" value="38">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="10">:
+                            name="visit-end-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="00">
+                            name="visit-end-time-minute" type="text" value="00">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -240,19 +240,19 @@ exports[`site-visit GET /site-visit/schedule-visit should render the schedule vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="09">:
+                            name="visit-start-time-hour" type="text" value="09">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="38">
+                            name="visit-start-time-minute" type="text" value="38">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="10">:
+                            name="visit-end-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="00">
+                            name="visit-end-time-minute" type="text" value="00">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -469,19 +469,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -618,19 +618,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -767,19 +767,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -916,19 +916,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -1065,19 +1065,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -1214,19 +1214,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -1363,19 +1363,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -1512,19 +1512,19 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -1659,10 +1659,10 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
@@ -1671,10 +1671,10 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                                name="visit-end-time-hour" type="number" value="24">:
+                                name="visit-end-time-hour" type="text" value="24">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                                name="visit-end-time-minute" type="number" value="30">
+                                name="visit-end-time-minute" type="text" value="30">
                             </fieldset>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
@@ -1810,10 +1810,10 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
@@ -1822,10 +1822,10 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                                name="visit-end-time-hour" type="number" value="11">:
+                                name="visit-end-time-hour" type="text" value="11">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                                name="visit-end-time-minute" type="number" value="60">
+                                name="visit-end-time-minute" type="text" value="60">
                             </fieldset>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
@@ -1964,20 +1964,20 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                                name="visit-start-time-hour" type="number" value="24">:
+                                name="visit-start-time-hour" type="text" value="24">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                                name="visit-start-time-minute" type="number" value="00">
+                                name="visit-start-time-minute" type="text" value="00">
                             </fieldset>
                         </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -2115,20 +2115,20 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                                name="visit-start-time-hour" type="number" value="10">:
+                                name="visit-start-time-hour" type="text" value="10">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                                name="visit-start-time-minute" type="number" value="00">
+                                name="visit-start-time-minute" type="text" value="00">
                             </fieldset>
                         </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="10">:
+                            name="visit-end-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="00">
+                            name="visit-end-time-minute" type="text" value="00">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -2266,20 +2266,20 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                                name="visit-start-time-hour" type="number" value="10">:
+                                name="visit-start-time-hour" type="text" value="10">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                                name="visit-start-time-minute" type="number" value="60">
+                                name="visit-start-time-minute" type="text" value="60">
                             </fieldset>
                         </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -2424,20 +2424,20 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <label class="govuk-label govuk-visually-hidden"
                         for="visit-start-time-hour">Hour</label>
                         <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                        name="visit-start-time-hour" type="number" value="">:
+                        name="visit-start-time-hour" type="text" value="">:
                         <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                         <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                        name="visit-start-time-minute" type="number" value="">
+                        name="visit-start-time-minute" type="text" value="">
                     </fieldset>
                 </div>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                     <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                    name="visit-end-time-hour" type="number" value="">:
+                    name="visit-end-time-hour" type="text" value="">:
                     <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                    name="visit-end-time-minute" type="number" value="">
+                    name="visit-end-time-minute" type="text" value="">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                 <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -2574,19 +2574,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -2723,19 +2723,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -2872,19 +2872,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -3021,19 +3021,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -3170,19 +3170,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -3319,19 +3319,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -3468,19 +3468,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -3617,19 +3617,19 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -3764,10 +3764,10 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
@@ -3776,10 +3776,10 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                                name="visit-end-time-hour" type="number" value="24">:
+                                name="visit-end-time-hour" type="text" value="24">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                                name="visit-end-time-minute" type="number" value="30">
+                                name="visit-end-time-minute" type="text" value="30">
                             </fieldset>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
@@ -3915,10 +3915,10 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                            name="visit-start-time-hour" type="number" value="10">:
+                            name="visit-start-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                            name="visit-start-time-minute" type="number" value="00">
+                            name="visit-start-time-minute" type="text" value="00">
                         </fieldset>
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
@@ -3927,10 +3927,10 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                                name="visit-end-time-hour" type="number" value="11">:
+                                name="visit-end-time-hour" type="text" value="11">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                                name="visit-end-time-minute" type="number" value="60">
+                                name="visit-end-time-minute" type="text" value="60">
                             </fieldset>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
@@ -4069,20 +4069,20 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                                name="visit-start-time-hour" type="number" value="24">:
+                                name="visit-start-time-hour" type="text" value="24">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                                name="visit-start-time-minute" type="number" value="00">
+                                name="visit-start-time-minute" type="text" value="00">
                             </fieldset>
                         </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -4220,20 +4220,20 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                                name="visit-start-time-hour" type="number" value="10">:
+                                name="visit-start-time-hour" type="text" value="10">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                                name="visit-start-time-minute" type="number" value="00">
+                                name="visit-start-time-minute" type="text" value="00">
                             </fieldset>
                         </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="10">:
+                            name="visit-end-time-hour" type="text" value="10">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="00">
+                            name="visit-end-time-minute" type="text" value="00">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -4371,20 +4371,20 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                                name="visit-start-time-hour" type="number" value="10">:
+                                name="visit-start-time-hour" type="text" value="10">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                                name="visit-start-time-minute" type="number" value="60">
+                                name="visit-start-time-minute" type="text" value="60">
                             </fieldset>
                         </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -4406,8 +4406,6 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
                             <li><a href="#visit-end-time-hour">Enter the end time</a>
-                            </li>
-                            <li><a href="#visit-start-time-hour">Start time must be before end time</a>
                             </li>
                         </ul>
                     </div>
@@ -4517,19 +4515,15 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <h2>Select time</h2>
                         <p class="govuk-hint">Optional for unaccompanied visits</p>
                         <p class="govuk-hint">Use the 24-hour clock. For example 16:30</p>
-                        <div class="govuk-form-group govuk-form-group--error">
-                            <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                                <p id="time-error" class="govuk-error-message">Start time must be before end time</p>
-                                <label class="govuk-label govuk-visually-hidden"
-                                for="visit-start-time-hour">Hour</label>
-                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                                name="visit-start-time-hour" type="number" value="11">:
-                                <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
-                                <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                                name="visit-start-time-minute" type="number" value="00">
-                            </fieldset>
-                        </div>
+                        <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
+                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-hour">Hour</label>
+                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
+                            name="visit-start-time-hour" type="text" value="11">:
+                            <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
+                            <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
+                            name="visit-start-time-minute" type="text" value="00">
+                        </fieldset>
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
@@ -4537,10 +4531,10 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                                name="visit-end-time-hour" type="number" value="">:
+                                name="visit-end-time-hour" type="text" value="">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                                name="visit-end-time-minute" type="number" value="">
+                                name="visit-end-time-minute" type="text" value="">
                             </fieldset>
                         </div>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
@@ -4679,20 +4673,20 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                                name="visit-start-time-hour" type="number" value="">:
+                                name="visit-start-time-hour" type="text" value="">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                                name="visit-start-time-minute" type="number" value="">
+                                name="visit-start-time-minute" type="text" value="">
                             </fieldset>
                         </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="11">:
+                            name="visit-end-time-hour" type="text" value="11">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="30">
+                            name="visit-end-time-minute" type="text" value="30">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -4830,20 +4824,20 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                                name="visit-start-time-hour" type="number" value="">:
+                                name="visit-start-time-hour" type="text" value="">:
                                 <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                                name="visit-start-time-minute" type="number" value="">
+                                name="visit-start-time-minute" type="text" value="">
                             </fieldset>
                         </div>
                         <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                             <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                            name="visit-end-time-hour" type="number" value="">:
+                            name="visit-end-time-hour" type="text" value="">:
                             <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                             <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                            name="visit-end-time-minute" type="number" value="">
+                            name="visit-end-time-minute" type="text" value="">
                         </fieldset>
                         <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                         <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
@@ -4988,20 +4982,20 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <label class="govuk-label govuk-visually-hidden"
                         for="visit-start-time-hour">Hour</label>
                         <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
-                        name="visit-start-time-hour" type="number" value="">:
+                        name="visit-start-time-hour" type="text" value="">:
                         <label class="govuk-label govuk-visually-hidden" for="visit-start-time-minute">Minute</label>
                         <input class="govuk-input govuk-input--width-2" id="visit-start-time-minute"
-                        name="visit-start-time-minute" type="number" value="">
+                        name="visit-start-time-minute" type="text" value="">
                     </fieldset>
                 </div>
                 <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
                     <label class="govuk-label govuk-visually-hidden" for="visit-end-time-hour">Hour</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
-                    name="visit-end-time-hour" type="number" value="">:
+                    name="visit-end-time-hour" type="text" value="">:
                     <label class="govuk-label govuk-visually-hidden" for="visit-end-time-minute">Minute</label>
                     <input class="govuk-input govuk-input--width-2" id="visit-end-time-minute"
-                    name="visit-end-time-minute" type="number" value="">
+                    name="visit-end-time-minute" type="text" value="">
                 </fieldset>
                 <div class="govuk-inset-text">Confirming will inform the relevant parties of the site visit</div>
                 <button                 type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>

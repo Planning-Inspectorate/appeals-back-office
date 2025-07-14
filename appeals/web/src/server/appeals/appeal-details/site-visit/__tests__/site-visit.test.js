@@ -71,12 +71,10 @@ describe('site-visit', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Use the 24-hour clock. For example 16:30</p>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-start-time-hour" type="number"');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="visit-start-time-minute" type="number"'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-end-time-hour" type="number"');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-end-time-minute" type="number"');
+			expect(unprettifiedElement.innerHTML).toContain('name="visit-start-time-hour" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="visit-start-time-minute" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="visit-end-time-hour" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="visit-end-time-minute" type="text"');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Confirming will inform the relevant parties of the site visit </div>'
 			);
@@ -657,12 +655,10 @@ describe('site-visit', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Use the 24-hour clock. For example 16:30</p>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-start-time-hour" type="number"');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="visit-start-time-minute" type="number"'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-end-time-hour" type="number"');
-			expect(unprettifiedElement.innerHTML).toContain('name="visit-end-time-minute" type="number"');
+			expect(unprettifiedElement.innerHTML).toContain('name="visit-start-time-hour" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="visit-start-time-minute" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="visit-end-time-hour" type="text"');
+			expect(unprettifiedElement.innerHTML).toContain('name="visit-end-time-minute" type="text"');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Confirming will inform the relevant parties of the site visit </div>'
 			);

@@ -364,4 +364,20 @@ export class Page {
 		this.basePageElements.errorMessageLink(link).click();
 		cy.focused().should('have.attr', attribute, value);
 	}
+
+	verifyTagOnPersonalListPage(caseRef, expectedTagText) {
+		cy.get(this.selectors.link)
+			.contains(caseRef)
+			.parents('tr')
+			.find('.govuk-tag')
+			.should('have.text', expectedTagText);
+	}
+
+	verifyTagOnAllCasesPage(caseRef, expectedTagText) {
+		cy.getByData(caseRef)
+			.parent('td')
+			.siblings('.govuk-table__cell')
+			.find('.govuk-tag')
+			.should('have.text', expectedTagText);
+	}
 }

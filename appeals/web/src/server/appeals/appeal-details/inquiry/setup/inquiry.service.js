@@ -1,22 +1,7 @@
 /**
- * @typedef {object} InquiryAddress
- * @property {string} addressLine1
- * @property {string} addressLine2
- * @property {string} town
- * @property {string} county
- * @property {string} postcode
- */
-
-/**
- * @typedef {object} InquiryDetails
- * @property {string} inquiryStartTime
- * @property {InquiryAddress} address
- */
-
-/**
  * @param {import('@pins/express/types/express.js').Request} request
- * @param {InquiryDetails} inquiryDetails
- * @returns {Promise<{inquiryEstimateId: number}>}
+ * @param {{startDate: string, estimatedDays?: string, inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string, planningObligationDueDate: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}} inquiryDetails
+ * @returns {Promise<{inquiryId: number}>}
  */
 export const createInquiry = async (request, inquiryDetails) => {
 	const { appealId } = request.currentAppeal;

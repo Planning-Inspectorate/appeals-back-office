@@ -1,11 +1,16 @@
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	inquiryDatePage,
 	addressDetailsPage,
 	addressKnownPage,
-	inquiryDueDatesPage
+	inquiryDueDatesPage,
+	confirmInquiryPage
 } from './set-up-inquiry.mapper.js';
 import { inquiryEstimationPage } from './set-up-inquiry.mapper.js';
 import { isEmpty, has, pick } from 'lodash-es';
+import { dayMonthYearHourMinuteToISOString, getTodaysISOString } from '#lib/dates.js';
+import logger from '#lib/logger.js';
+import { createInquiry } from './inquiry.service.js';
 
 /**
  * @param {string} path
@@ -326,4 +331,142 @@ export const postChangeInquiryAddressDetails = async (request, response) => {
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/inquiry/change/timetable-due-dates`
 	);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getInquiryCheckDetails = async (request, response) => {
+	const {
+		currentAppeal: { appealId, appealReference },
+		session,
+		errors
+	} = request;
+
+	if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
+		return response.status(500).render('app/500.njk');
+	}
+
+	const mappedPageContent = confirmInquiryPage(appealId, appealReference, 'setup', session);
+
+	return response.render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postInquiryCheckDetails = async (request, response) => {
+	try {
+		const {
+			currentAppeal: { appealId }
+		} = request;
+
+		const { session } = request;
+		const inquiry = session.setUpInquiry;
+
+		if (!inquiry) {
+			return renderAlreadySubmittedError(request, response);
+		}
+
+		if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		const submittedAddress = {
+			address: {
+				...pick(inquiry, ['addressLine1', 'addressLine2', 'town', 'county']),
+				postcode: inquiry['postCode']
+			}
+		};
+
+		// Create Inquiry
+		await createInquiry(request, {
+			startDate: getTodaysISOString(),
+			inquiryStartTime: dayMonthYearHourMinuteToISOString({
+				day: inquiry['inquiry-date-day'],
+				month: inquiry['inquiry-date-month'],
+				year: inquiry['inquiry-date-year'],
+				hour: inquiry['inquiry-time-hour'],
+				minute: inquiry['inquiry-time-minute']
+			}),
+			...(inquiry.addressKnown === 'yes' && submittedAddress),
+			...(inquiry.inquiryEstimationYesNo === 'yes' && {
+				estimatedDays: session.setUpInquiry.inquiryEstimationDays
+			}),
+			lpaQuestionnaireDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['lpa-questionnaire-due-date-day'],
+				month: inquiry['lpa-questionnaire-due-date-month'],
+				year: inquiry['lpa-questionnaire-due-date-year']
+			}),
+			statementDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['statement-due-date-day'],
+				month: inquiry['statement-due-date-month'],
+				year: inquiry['statement-due-date-year']
+			}),
+			ipCommentsDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['ip-comments-due-date-day'],
+				month: inquiry['ip-comments-due-date-month'],
+				year: inquiry['ip-comments-due-date-year']
+			}),
+			statementOfCommonGroundDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['statement-of-common-ground-due-date-day'],
+				month: inquiry['statement-of-common-ground-due-date-month'],
+				year: inquiry['statement-of-common-ground-due-date-year']
+			}),
+			proofOfEvidenceAndWitnessesDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['inquiry-date-day'],
+				month: inquiry['inquiry-date-month'],
+				year: inquiry['inquiry-date-year']
+			}),
+			planningObligationDueDate: dayMonthYearHourMinuteToISOString({
+				day: inquiry['planning-obligation-due-date-day'],
+				month: inquiry['planning-obligation-due-date-month'],
+				year: inquiry['planning-obligation-due-date-year']
+			})
+		});
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'caseStarted',
+			appealId
+		});
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'timetableStarted',
+			appealId
+		});
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when posting the check details and start case page'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+const renderAlreadySubmittedError = (request, response) => {
+	return response.status(404).render('app/404.njk', {
+		titleCopy: 'You cannot check these answers',
+		bodyCopy: [
+			'It looks like you may have already submitted the data.',
+			`Continue to <a class="govuk-link" href="/appeals-service/appeal-details/${request.currentAppeal.appealId}">appeal details</a>`
+		]
+	});
 };

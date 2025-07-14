@@ -462,7 +462,6 @@ describe('set up inquiry', () => {
 			url: `${baseUrl}/${appealId}/Inquiry/setup/address-details`
 		});
 	});
-
 	describe('GET /inquiry/setup/timetable-due-dates', () => {
 		const appealId = 2;
 
@@ -657,36 +656,261 @@ describe('set up inquiry', () => {
 			expect(errorSummaryHtml).toContain('Enter the statement of common ground due date');
 			expect(errorSummaryHtml).toContain('Enter the proof of evidence and witnesses due date');
 		});
+	});
 
-		//TODO: To be added back when CYA view is applied
-		//
-		// eslint-disable-next-line jest/no-commented-out-tests
-		// it('should redirect to /inquiry/setup/check-details with valid inputs', async () => {
-		// 	const response = await request
-		// 		.post(`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`)
-		// 		.send({
-		// 			'lpa-questionnaire-due-date-day': '01',
-		// 			'lpa-questionnaire-due-date-month': '02',
-		// 			'lpa-questionnaire-due-date-year': '3025',
-		// 			'statement-due-date-day': '01',
-		// 			'statement-due-date-month': '02',
-		// 			'statement-due-date-year': '3025',
-		// 			'ip-comments-due-date-day': '01',
-		// 			'ip-comments-due-date-month': '02',
-		// 			'ip-comments-due-date-year': '3025',
-		// 			'statement-of-common-ground-due-date-day': '01',
-		// 			'statement-of-common-ground-due-date-month': '02',
-		// 			'statement-of-common-ground-due-date-year': '3025',
-		// 			'proof-of-evidence-and-witnesses-due-date-day': '01',
-		// 			'proof-of-evidence-and-witnesses-due-date-month': '02',
-		// 			'proof-of-evidence-and-witnesses-due-date-year': '3025',
-		// 			'planning-obligation-due-date-day': '01',
-		// 			'planning-obligation-due-date-month': '02',
-		// 			'planning-obligation-due-date-year': '3025'
-		// 		});
-		//
-		// 	expect(response.statusCode).toBe(302);
-		// 	expect(response.headers.location).toBe(`${baseUrl}/${appealId}/inquiry/setup/check-details`);
-		// });
+	describe('GET /inquiry/setup/check-details', () => {
+		const appealId = 1;
+		const dateValues = {
+			'inquiry-date-day': '01',
+			'inquiry-date-month': '02',
+			'inquiry-date-year': '3025',
+			'inquiry-time-hour': '12',
+			'inquiry-time-minute': '00'
+		};
+		const addressValues = {
+			addressLine1: 'Flat 9',
+			addressLine2: '123 Gerbil Drive',
+			town: 'Blarberton',
+			county: 'Slabshire',
+			postCode: 'X25 3YZ'
+		};
+		const estimationValue = {
+			inquiryEstimationDays: '10'
+		};
+
+		let pageHtml;
+
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/start-case/select-procedure`).send({
+				appealProcedure: 'inquiry'
+			});
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/inquiry/setup/address`)
+				.send({ addressKnown: 'yes' });
+			await request
+				.post(`${baseUrl}/${appealId}/inquiry/setup/address-details`)
+				.send(addressValues);
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/estimation`).send(estimationValue);
+
+			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/check-details`);
+			pageHtml = parseHtml(response.text);
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the correct heading', () => {
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Check details and start case');
+		});
+
+		it('should render the correct date', () => {
+			expect(pageHtml.querySelectorAll('dd.govuk-summary-list__value')?.[1]?.innerHTML.trim()).toBe(
+				'1 February 3025'
+			);
+		});
+
+		it('should render the correct time', () => {
+			expect(pageHtml.querySelectorAll('dd.govuk-summary-list__value')?.[2]?.innerHTML.trim()).toBe(
+				'12:00pm'
+			);
+		});
+
+		it('should render the correct yes or no answer', () => {
+			expect(pageHtml.querySelectorAll('dd.govuk-summary-list__value')?.[0]?.innerHTML.trim()).toBe(
+				'Inquiry'
+			);
+		});
+
+		it('should render the correct address', () => {
+			expect(
+				pageHtml
+					.querySelectorAll('dd.govuk-summary-list__value')?.[5]
+					?.innerHTML.split('<br>')
+					.map((line) => line.trim())
+			).toEqual(['Flat 9', '123 Gerbil Drive', 'Blarberton', 'Slabshire', 'X25 3YZ']);
+		});
+
+		it('should render the correct button text', () => {
+			expect(pageHtml.querySelector('button')?.innerHTML.trim()).toBe('Start case');
+		});
+	});
+
+	describe('POST /inquiry/setup/check-details', () => {
+		const appealId = 1;
+
+		const dateValues = {
+			'inquiry-date-day': '01',
+			'inquiry-date-month': '02',
+			'inquiry-date-year': '3025',
+			'inquiry-time-hour': '12',
+			'inquiry-time-minute': '00'
+		};
+		const addressValues = {
+			addressLine1: 'Flat 9',
+			addressLine2: '123 Gerbil Drive',
+			town: 'Blarberton',
+			county: 'Slabshire',
+			postCode: 'X25 3YZ'
+		};
+
+		const estimationValue = {
+			inquiryEstimationDays: '10'
+		};
+
+		beforeEach(() => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			nock('http://test/').post(`/appeals/${appealId}/appeal-timetables`).reply(200);
+			nock('http://test/').post(`/appeals/${appealId}/inquiry-estimates`).reply(200);
+		});
+
+		it('should redirect to appeal details page after submission with address', async () => {
+			nock('http://test/')
+				.post(`/appeals/${appealId}/inquiry`, (body) => {
+					// Assert required fields exist
+					expect(body).toHaveProperty('startDate');
+					expect(body).toHaveProperty('inquiryStartTime');
+					expect(body).toHaveProperty('lpaQuestionnaireDueDate');
+					expect(body).toHaveProperty('statementDueDate');
+					expect(body).toHaveProperty('ipCommentsDueDate');
+					expect(body).toHaveProperty('statementOfCommonGroundDueDate');
+					expect(body).toHaveProperty('proofOfEvidenceAndWitnessesDueDate');
+					expect(body).toHaveProperty('planningObligationDueDate');
+					return true; // IMPORTANT: return true to match
+				})
+				.reply(201, { inquiryId: 1 });
+
+			await request.post(`${baseUrl}/${appealId}/start-case/select-procedure`).send({
+				appealProcedure: 'inquiry'
+			});
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/inquiry/setup/address`)
+				.send({ addressKnown: 'yes' });
+			await request
+				.post(`${baseUrl}/${appealId}/inquiry/setup/address-details`)
+				.send(addressValues);
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/estimation`).send(estimationValue);
+
+			await request.post(`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`).send({
+				'lpa-questionnaire-due-date-day': '01',
+				'lpa-questionnaire-due-date-month': '02',
+				'lpa-questionnaire-due-date-year': '3025',
+				'statement-due-date-day': '01',
+				'statement-due-date-month': '02',
+				'statement-due-date-year': '3025',
+				'ip-comments-due-date-day': '01',
+				'ip-comments-due-date-month': '02',
+				'ip-comments-due-date-year': '3025',
+				'statement-of-common-ground-due-date-day': '01',
+				'statement-of-common-ground-due-date-month': '02',
+				'statement-of-common-ground-due-date-year': '3025',
+				'proof-of-evidence-and-witnesses-due-date-day': '01',
+				'proof-of-evidence-and-witnesses-due-date-month': '02',
+				'proof-of-evidence-and-witnesses-due-date-year': '3025',
+				'planning-obligation-due-date-day': '01',
+				'planning-obligation-due-date-month': '02',
+				'planning-obligation-due-date-year': '3025'
+			});
+
+			const response = await request.post(`${baseUrl}/${appealId}/inquiry/setup/check-details`);
+
+			expect(response.status).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}`);
+		});
+
+		it('should redirect to appeal details page after submission with no address', async () => {
+			nock('http://test/')
+				.post(`/appeals/${appealId}/inquiry`, (body) => {
+					// Assert required fields exist
+					expect(body).toHaveProperty('startDate');
+					expect(body).toHaveProperty('inquiryStartTime');
+					expect(body).toHaveProperty('lpaQuestionnaireDueDate');
+					expect(body).toHaveProperty('statementDueDate');
+					expect(body).toHaveProperty('ipCommentsDueDate');
+					expect(body).toHaveProperty('statementOfCommonGroundDueDate');
+					expect(body).toHaveProperty('proofOfEvidenceAndWitnessesDueDate');
+					expect(body).toHaveProperty('planningObligationDueDate');
+					return true; // IMPORTANT: return true to match
+				})
+				.reply(201, { inquiryId: 1 });
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/start-case/select-procedure`).send({
+				appealProcedure: 'inquiry'
+			});
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/inquiry/setup/address`)
+				.send({ addressKnown: 'no' });
+			await request
+				.post(`${baseUrl}/${appealId}/inquiry/setup/address-details`)
+				.send(addressValues);
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/estimation`).send(estimationValue);
+
+			await request.post(`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`).send({
+				'lpa-questionnaire-due-date-day': '01',
+				'lpa-questionnaire-due-date-month': '02',
+				'lpa-questionnaire-due-date-year': '3025',
+				'statement-due-date-day': '01',
+				'statement-due-date-month': '02',
+				'statement-due-date-year': '3025',
+				'ip-comments-due-date-day': '01',
+				'ip-comments-due-date-month': '02',
+				'ip-comments-due-date-year': '3025',
+				'statement-of-common-ground-due-date-day': '01',
+				'statement-of-common-ground-due-date-month': '02',
+				'statement-of-common-ground-due-date-year': '3025',
+				'proof-of-evidence-and-witnesses-due-date-day': '01',
+				'proof-of-evidence-and-witnesses-due-date-month': '02',
+				'proof-of-evidence-and-witnesses-due-date-year': '3025',
+				'planning-obligation-due-date-day': '01',
+				'planning-obligation-due-date-month': '02',
+				'planning-obligation-due-date-year': '3025'
+			});
+
+			const response = await request.post(`${baseUrl}/${appealId}/inquiry/setup/check-details`);
+
+			expect(response.status).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/${appealId}`);
+		});
+
+		it('should show 404 page if error is the session data is not present', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/inquiry/setup/check-details`);
+
+			expect(response.status).toBe(404);
+			expect(response.text).toContain('You cannot check these answers');
+		});
+
+		it('should show 500 page if error is thrown', async () => {
+			nock('http://test/')
+				.post(`/appeals/${appealId}/inquiry`)
+				.reply(500, { error: 'Internal Server Error' });
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send(dateValues);
+			await request
+				.post(`${baseUrl}/${appealId}/inquiry/setup/address`)
+				.send({ addressKnown: 'yes' });
+			await request
+				.post(`${baseUrl}/${appealId}/inquiry/setup/address-details`)
+				.send(addressValues);
+
+			const response = await request.post(`${baseUrl}/${appealId}/inquiry/setup/check-details`);
+
+			expect(response.status).toBe(500);
+			expect(response.text).toContain('Sorry, there is a problem with the service');
+		});
 	});
 });

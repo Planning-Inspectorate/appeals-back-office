@@ -6,10 +6,7 @@ import {
 	extractAndProcessDateErrors,
 	createDateInputDateInFutureOfDateValidator
 } from '#lib/validators/date-input.validator.js';
-import { DEADLINE_HOUR } from '@pins/appeals/constants/dates.js';
 import { getAppealTimetableTypes, getIdText } from './timetable.mapper.js';
-import { DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
-import { setTimeInTimeZone } from '#lib/dates.js';
 
 /**
  *
@@ -45,8 +42,9 @@ export const selectTimetableValidators = (req) => {
 	timetableTypes.forEach((timetableType) => {
 		const idText = getIdText(timetableType);
 		const sessionDate = buildSessionDate(req, idText);
+		const originalDatePart = (originalTimetable[timetableType] || '').slice(0, 10);
 
-		if (sessionDate !== originalTimetable[timetableType]) {
+		if (!originalDatePart || sessionDate !== originalDatePart) {
 			//only validate due dates that have changed
 			const validatorConfig = validatorsMap[timetableType];
 			const idToCompare = 'idToCompare' in validatorConfig ? validatorConfig.idToCompare : '';
@@ -118,12 +116,7 @@ const buildSessionDate = (req, idText) => {
 		return '';
 	}
 
-	// Build the local time string
-	const localDateString = `${updatedDueDateYear}-${updatedDueDateMonthString}-${updatedDueDateDayString}`;
-
-	const utcDate = setTimeInTimeZone(new Date(localDateString), DEADLINE_HOUR, DEADLINE_MINUTE);
-
-	return utcDate.toISOString();
+	return `${updatedDueDateYear}-${updatedDueDateMonthString}-${updatedDueDateDayString}`;
 };
 
 /**

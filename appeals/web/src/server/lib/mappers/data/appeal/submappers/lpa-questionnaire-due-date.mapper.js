@@ -5,6 +5,7 @@ import {
 	// @ts-ignore
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLpaQuestionnaireDueDate = ({
@@ -25,9 +26,11 @@ export const mapLpaQuestionnaireDueDate = ({
 	) {
 		editable = false;
 	}
-	const useNewTimetableRoute = ['Householder', 'Planning appeal'].includes(
-		appealDetails.appealType || ''
-	);
+	const useNewTimetableRoute = [
+		APPEAL_TYPE.HOUSEHOLDER,
+		APPEAL_TYPE.S78,
+		APPEAL_TYPE.PLANNED_LISTED_BUILDING
+	].includes(appealDetails.appealType || '');
 
 	return textSummaryListItem({
 		id,

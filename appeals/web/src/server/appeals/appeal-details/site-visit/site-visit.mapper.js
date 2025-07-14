@@ -375,7 +375,7 @@ export function scheduleOrManageSiteVisitConfirmationPage(pageType, appealDetail
 			break;
 		case 'all':
 		default:
-			pageContent.title = 'Site visit changed';
+			pageContent.title = 'Site visit updated';
 			pageContent.pageComponents = [
 				{
 					type: 'panel',

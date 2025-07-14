@@ -527,6 +527,11 @@ export const appellantCaseDataNotValidated = {
 			documents: [],
 			folderId: 70457,
 			path: 'appellant-case/originalApplicationForm'
+		},
+		statementCommonGround: {
+			documents: [],
+			folderId: 70458,
+			path: 'appellant-case/statementCommonGround'
 		}
 	},
 	hasAdvertisedAppeal: null,
