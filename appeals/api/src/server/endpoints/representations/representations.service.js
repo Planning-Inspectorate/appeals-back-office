@@ -237,15 +237,12 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		new Date(appeal.appealTimetable?.finalCommentsDueDate || ''),
 		false
 	);
-
-	const hasLpaStatement = result.some(
-		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
-	);
-	const hasLpaComment = result.some(
-		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
-	);
-	const hasIpComments = result.some(
-		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
+	const [hasLpaStatement, hasLpaComment, hasIpComments] = [
+		'LPA_STATEMENT',
+		'LPA_FINAL_COMMENT',
+		'COMMENT'
+	].map((type) =>
+		result.some((rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE[type])
 	);
 
 	try {
