@@ -36,7 +36,7 @@ exports[`final-comments GET / should render the accept appellant final comments 
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
                     <dd class="govuk-summary-list__value">Accept final comments</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant?backUrl=/final-comments/appellant/accept">Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant?backUrl=/appeals-service/appeal-details/2/final-comments/appellant/accept">Change</a>
                     </dd>
                 </div>
             </dl>
@@ -88,7 +88,7 @@ exports[`final-comments GET / should render the accept lpa final comments page w
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decisions</dt>
                     <dd class="govuk-summary-list__value">Accept final comments</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa?backUrl=/final-comments/lpa/accept">Change</a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa?backUrl=/appeals-service/appeal-details/2/final-comments/lpa/accept">Change</a>
                     </dd>
                 </div>
             </dl>
