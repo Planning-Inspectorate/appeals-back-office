@@ -110,6 +110,11 @@ const appealDetailsInclude = {
 			address: true
 		}
 	},
+	inquiry: {
+		include: {
+			address: true
+		}
+	},
 	caseNotes: true,
 	folders: {
 		include: {

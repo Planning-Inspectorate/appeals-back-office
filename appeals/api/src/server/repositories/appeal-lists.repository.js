@@ -119,7 +119,8 @@ const getAllAppeals = async (
 				}
 			},
 			siteVisit: true,
-			hearing: true
+			hearing: true,
+			inquiry: true
 		},
 		orderBy: { caseUpdatedDate: 'desc' }
 	});
@@ -225,7 +226,8 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 				siteVisit: {
 					include: { siteVisitType: true }
 				},
-				hearing: true
+				hearing: true,
+				inquiry: true
 			},
 			skip: getSkipValue(pageNumber, pageSize),
 			take: pageSize

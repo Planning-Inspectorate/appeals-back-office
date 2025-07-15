@@ -17,6 +17,7 @@ import { mapLpaQuestionnaire } from './map-lpa-questionnaire.js';
 import { mapHearing } from './map-hearing.js';
 import { mapHearingEstimate } from './map-hearing-estimate.js';
 import { mapCompletedStateList } from '#mappers/api/shared/map-completed-state-list.js';
+import { mapInquiry } from './map-inquiry.js';
 
 export const apiSharedMappers = {
 	appealSummary: mapAppealSummary,
@@ -24,6 +25,7 @@ export const apiSharedMappers = {
 	team: mapAppealTeam,
 	siteVisit: mapSiteVisit,
 	hearing: mapHearing,
+	inquiry: mapInquiry,
 	allocationDetails: mapAllocationDetails,
 	appealTimetable: mapAppealTimetable,
 	documentationSummary: mapDocumentationSummary,
