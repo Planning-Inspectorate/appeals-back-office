@@ -24,6 +24,7 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import { notifyOnStatusChange } from './notify/index.js';
 import { currentStatus } from '#utils/current-status.js';
+import logger from '#utils/logger.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -329,7 +330,20 @@ export async function publish(req, res) {
 		);
 	}
 
+	logger.info(
+		`[publish] appealId=${appeal.id}, status=${currentAppealStatus}, calling publish handler`
+	);
+
 	const updatedReps = await publish(appeal, azureAdUserId, req.notifyClient);
+
+	logger.info(
+		`[publish] updated representations:`,
+		updatedReps.map((r) => ({
+			id: r.id,
+			type: r.representationType,
+			status: r.status
+		}))
+	);
 
 	if (updatedReps.length > 0) {
 		/** @type {Record<string, string>} */
