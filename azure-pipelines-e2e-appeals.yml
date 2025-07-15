@@ -25,6 +25,7 @@ schedules:
 
 jobs:
     - job: Run_Cypress_Tests_For_Appeals
+      timeoutInMinutes: 90
       pool: pins-odt-agent-pool-tests
 
       steps:
