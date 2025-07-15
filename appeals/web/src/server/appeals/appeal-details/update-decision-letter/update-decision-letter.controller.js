@@ -140,7 +140,7 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 						closing: '</div></div>'
 					},
 					parameters: {
-						summaryText: `Preview`,
+						summaryText: `Preview email`,
 						html: template.renderedHtml
 					}
 				}
