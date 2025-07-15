@@ -63,7 +63,23 @@ const deleteAppealData = async (
 		}
 	});
 
+	const deleteInquiry = databaseConnector.inquiry.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
 	const deleteHearingEstimate = databaseConnector.hearingEstimate.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteInquiryEstimate = databaseConnector.inquiryEstimate.deleteMany({
 		where: {
 			appealId: {
 				in: appealIDs
@@ -412,7 +428,9 @@ const deleteAppealData = async (
 		deleteRepsAttachments,
 		deleteHearingEstimate,
 		deleteHearing,
-		deleteAppeals
+		deleteAppeals,
+		deleteInquiry,
+		deleteInquiryEstimate
 	]);
 };
 
