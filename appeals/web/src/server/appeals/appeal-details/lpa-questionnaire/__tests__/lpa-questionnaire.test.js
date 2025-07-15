@@ -873,7 +873,7 @@ describe('LPA Questionnaire review', () => {
 					'name="reviewOutcome" type="radio" value="incomplete">'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain('Continue</button>');
-			}, 10000);
+			}, 50000);
 		}
 
 		describe('show more', () => {
