@@ -50,6 +50,10 @@ export const mapAppealTimetable = (data) => {
 				planningObligationDueDate:
 					(appeal.appealTimetable.planningObligationDueDate &&
 						appeal.appealTimetable.planningObligationDueDate.toISOString()) ||
+					null,
+				proofOfEvidenceAndWitnessesDueDate:
+					(appeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate &&
+						appeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate.toISOString()) ||
 					null
 			})
 		};

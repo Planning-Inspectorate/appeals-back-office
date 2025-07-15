@@ -2201,6 +2201,8 @@ export interface UpdateAppealTimetableRequest {
 	statementOfCommonGroundDueDate?: string;
 	/** @example "2024-08-13" */
 	planningObligationDueDate?: string;
+	/** @example "2024-08-14" */
+	proofOfEvidenceAndWitnessesDueDate?: string;
 }
 
 export interface UpdateAppealTimetableResponse {
@@ -2216,6 +2218,8 @@ export interface UpdateAppealTimetableResponse {
 	statementOfCommonGroundDueDate?: string;
 	/** @example "2024-08-13T01:00:00.000Z" */
 	planningObligationDueDate?: string;
+	/** @example "2024-08-14T01:00:00.000Z" */
+	proofOfEvidenceAndWitnessesDueDate?: string;
 }
 
 export interface AllDocumentRedactionStatusesResponse {

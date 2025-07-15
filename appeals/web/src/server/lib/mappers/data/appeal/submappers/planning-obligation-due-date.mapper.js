@@ -13,7 +13,9 @@ export const mapPlanningObligationDueDate = ({
 
 	if (
 		!appealDetails.startedAt ||
-		appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.HEARING ||
+		![APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(
+			appealDetails.procedureType?.toLowerCase() ?? ''
+		) ||
 		!appellantCase?.planningObligation?.hasObligation
 	) {
 		return { id, display: {} };

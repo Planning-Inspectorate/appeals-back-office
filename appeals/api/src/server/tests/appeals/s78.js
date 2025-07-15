@@ -199,7 +199,8 @@ export default {
 		s106ObligationDueDate: new Date('2024-12-04T23:59:00.000Z'),
 		statementOfCommonGroundDueDate: new Date('2024-12-04T23:59:00.000Z'),
 		planningObligationDueDate: new Date('2024-12-04T23:59:00.000Z'),
-		issueDeterminationDate: null
+		issueDeterminationDate: null,
+		proofOfEvidenceAndWitnessesDueDate: new Date('2024-12-04T23:59:00.000Z')
 	},
 	appealType: {
 		id: 2,

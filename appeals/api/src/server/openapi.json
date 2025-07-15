@@ -10713,6 +10713,10 @@
 					"planningObligationDueDate": {
 						"type": "string",
 						"example": "2024-08-13"
+					},
+					"proofOfEvidenceAndWitnessesDueDate": {
+						"type": "string",
+						"example": "2024-08-14"
 					}
 				},
 				"xml": {
@@ -10745,6 +10749,10 @@
 					"planningObligationDueDate": {
 						"type": "string",
 						"example": "2024-08-13T01:00:00.000Z"
+					},
+					"proofOfEvidenceAndWitnessesDueDate": {
+						"type": "string",
+						"example": "2024-08-14T01:00:00.000Z"
 					}
 				},
 				"xml": {

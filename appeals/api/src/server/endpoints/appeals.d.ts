@@ -127,6 +127,7 @@ interface SingleAppealDetailsResponse {
 	eiaScreeningRequired?: boolean | null;
 	hearingEstimate?: HearingEstimate | null;
 	hearing?: Hearing | null;
+	inquiry?: Inquiry | null;
 }
 
 interface UpdateAppealRequest {
@@ -495,6 +496,14 @@ interface Hearing {
 	address: Schema.Address;
 }
 
+interface Inquiry {
+	inquiryId: number;
+	inquiryStartTime: string;
+	inquiryEndTime?: string;
+	address: Schema.Address;
+	addressId?: number;
+}
+
 interface AppealTimetable {
 	appealTimetableId: number;
 	caseResubmissionDueDate?: string | null;
@@ -507,6 +516,7 @@ interface AppealTimetable {
 	issueDeterminationDate?: string | null;
 	statementOfCommonGroundDueDate?: string | null;
 	planningObligationDueDate?: string | null;
+	proofOfEvidenceAndWitnessesDueDate?: string | null;
 }
 
 interface UpdateTimetableRequest {

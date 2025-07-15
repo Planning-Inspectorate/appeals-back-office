@@ -353,6 +353,7 @@ export interface WebAppealTimetable extends AppealTimetable {
 	issueDeterminationDate?: string | null;
 	statementOfCommonGroundDueDate?: string | null;
 	planningObligationDueDate?: string | null;
+	proofOfEvidenceAndWitnessesDueDate?: null;
 	completeDate?: string | null;
 }
 

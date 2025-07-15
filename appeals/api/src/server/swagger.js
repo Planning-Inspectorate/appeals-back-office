@@ -861,7 +861,8 @@ export const spec = {
 			lpaQuestionnaireDueDate: '2024-08-11',
 			statementReviewDate: '2024-08-12',
 			statementOfCommonGroundDueDate: '2024-08-12',
-			planningObligationDueDate: '2024-08-13'
+			planningObligationDueDate: '2024-08-13',
+			proofOfEvidenceAndWitnessesDueDate: '2024-08-14'
 		},
 		UpdateAppealTimetableResponse: {
 			finalCommentReviewDate: '2024-08-09T01:00:00.000Z',
@@ -869,7 +870,8 @@ export const spec = {
 			lpaQuestionnaireDueDate: '2024-08-11T01:00:00.000Z',
 			statementReviewDate: '2024-08-12T01:00:00.000Z',
 			statementOfCommonGroundDueDate: '2024-08-12T01:00:00.000Z',
-			planningObligationDueDate: '2024-08-13T01:00:00.000Z'
+			planningObligationDueDate: '2024-08-13T01:00:00.000Z',
+			proofOfEvidenceAndWitnessesDueDate: '2024-08-14T01:00:00.000Z'
 		},
 		AllDocumentRedactionStatusesResponse: {
 			id: 1,
