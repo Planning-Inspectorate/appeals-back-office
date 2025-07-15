@@ -237,12 +237,45 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		new Date(appeal.appealTimetable?.finalCommentsDueDate || ''),
 		false
 	);
+	// const [hasLpaStatement, hasLpaComment, hasIpComments] = [
+	// 	'LPA_STATEMENT',
+	// 	'LPA_FINAL_COMMENT',
+	// 	'COMMENT'
+	// ].map((type) =>
+	// 	result.some((rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE[type])
+	// );
+
+	logger.info(`[publishLpaStatements] raw result: ${JSON.stringify(result, null, 2)}`);
+
+	logger.info(`[publishLpaStatements] expected representation types:`, APPEAL_REPRESENTATION_TYPE);
+
+	const representationTypesInResult = result.map((rep) => rep.representationType);
+	logger.info(
+		`[publishLpaStatements] representation types in result:`,
+		representationTypesInResult
+	);
+
 	const [hasLpaStatement, hasLpaComment, hasIpComments] = [
-		'LPA_STATEMENT',
-		'LPA_FINAL_COMMENT',
-		'COMMENT'
-	].map((type) =>
-		result.some((rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE[type])
+		APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+		APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
+		APPEAL_REPRESENTATION_TYPE.COMMENT
+	].map((type) => result.some((rep) => rep.representationType === type));
+
+	// const hasLpaStatement = result.some(
+	// 	(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+	// );
+	// const hasLpaComment = result.some(
+	// 	(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+	// );
+	// const hasIpComments = result.some(
+	// 	(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
+	// );
+	// const hasAppellantFinalComment = result.some(
+	// 	(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+	// );
+
+	logger.info(
+		`[publishLpaStatements] appealId=${appeal.id}, hasLpaStatement=${hasLpaStatement}, hasIpComments=${hasIpComments}`
 	);
 
 	try {
