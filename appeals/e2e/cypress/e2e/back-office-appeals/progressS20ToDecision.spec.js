@@ -18,7 +18,7 @@ describe('Progress S20 to decision', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it(`Completes a S78 appeal to decision`, { tags: tag.smoke }, () => {
+	it(`Completes a s20 appeal to decision`, { tags: tag.smoke }, () => {
 		let todaysDate = new Date();
 
 		cy.createCase({
