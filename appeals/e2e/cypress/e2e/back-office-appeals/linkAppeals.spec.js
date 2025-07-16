@@ -65,7 +65,7 @@ describe('link appeals', () => {
 		});
 	});
 
-	it('click on the first linked appeal', () => {
+	it('Click on the first linked appeal', () => {
 		cy.createCase().then((leadCase) => {
 			cy.createCase().then((childCase) => {
 				happyPathHelper.assignCaseOfficer(leadCase);
@@ -137,7 +137,7 @@ describe('link appeals', () => {
 		});
 	});
 
-	it('An error is displayed when attempting to link an already linked case', () => {
+	it('Should be unable to link an already linked case', () => {
 		cy.createCase().then((leadCase1) => {
 			cy.createCase().then((leadCase2) => {
 				cy.createCase().then((childCase) => {
