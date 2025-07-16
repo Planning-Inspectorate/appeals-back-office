@@ -31,36 +31,13 @@ jobs:
     strategy:
       matrix:
         group1:
-          SPEC: >
-            cypress/e2e/addCostDecisionRedacted.spec.js,
-            cypress/e2e/assignUserToCase.spec.js,
-            cypress/e2e/caseNotes.spec.js,
-            cypress/e2e/changeContact.spec.js,
-            cypress/e2e/hearing.spec.js
+          SPEC: cypress/e2e/back-office-appeals/addCostDecisionRedacted.spec.js,cypress/e2e/back-office-appeals/assignUserToCase.spec.js,cypress/e2e/back-office-appeals/caseNotes.spec.js,cypress/e2e/back-office-appeals/changeContact.spec.js,cypress/e2e/back-office-appeals/hearing.spec.js
         group2:
-          SPEC: >
-            cypress/e2e/addCorrespondence.spec.js,
-            cypress/e2e/changeSiteVisit.spec.js,
-            cypress/e2e/linkAppeals.spec.js,
-            cypress/e2e/reviewLpaCase.spec.js,
-            cypress/e2e/s78ChangeTimetable.spec.js
+          SPEC: cypress/e2e/back-office-appeals/addCorrespondence.spec.js,cypress/e2e/back-office-appeals/changeSiteVisit.spec.js,cypress/e2e/back-office-appeals/linkAppeals.spec.js,cypress/e2e/back-office-appeals/reviewLpaCase.spec.js,cypress/e2e/back-office-appeals/s78ChangeTimetable.spec.js
         group3:
-          SPEC: >
-            cypress/e2e/manageDocsLoad.spec.js,
-            cypress/e2e/issueDecision.spec.js,
-            cypress/e2e/reviewAppellantCase.spec.js,
-            cypress/e2e/unlinkAppeals.spec.js,
-            cypress/e2e/relatedAppeals.spec.js,
-            cypress/e2e/updateLpaqDueDate.spec.js
+          SPEC: cypress/e2e/back-office-appeals/manageDocsLoad.spec.js,cypress/e2e/back-office-appeals/issueDecision.spec.js,cypress/e2e/back-office-appeals/reviewAppellantCase.spec.js,cypress/e2e/back-office-appeals/unlinkAppeals.spec.js,cypress/e2e/back-office-appeals/relatedAppeals.spec.js,cypress/e2e/back-office-appeals/updateLpaqDueDate.spec.js
         group4:
-          SPEC: >
-            cypress/e2e/manageAppellantCase.spec.js,
-            cypress/e2e/issueDecisionInvalid.spec.js,
-            cypress/e2e/nationalListSearch.spec.js,
-            cypress/e2e/progressS78ToDecision.spec.js,
-            cypress/e2e/s78LoaStatement.spec.js,
-            cypress/e2e/withdrawAppeal.spec.js,
-            cypress/e2e/uploadDocsAppellantCase.spec.js
+          SPEC: cypress/e2e/back-office-appeals/manageAppellantCase.spec.js,cypress/e2e/back-office-appeals/issueDecisionInvalid.spec.js,cypress/e2e/back-office-appeals/nationalListSearch.spec.js,cypress/e2e/back-office-appeals/progressS78ToDecision.spec.js,cypress/e2e/back-office-appeals/s78LoaStatement.spec.js,cypress/e2e/back-office-appeals/withdrawAppeal.spec.js,cypress/e2e/back-office-appeals/uploadDocsAppellantCase.spec.js
 
     steps:
       - task: NodeTool@0
@@ -81,8 +58,11 @@ jobs:
         displayName: "Install Dependencies"
 
       - script: |
-          echo "Running specs: $(SPEC)"
-          npx cypress run --spec "$(SPEC)"
+          echo "Running specs:"
+          for spec in $(echo $(SPEC) | tr ',' ' '); do
+            echo "- $spec"
+          done
+          npx cypress run --spec $(SPEC)
         workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
         env:
           BASE_URL: $(APPEALS_BASE_URL)
