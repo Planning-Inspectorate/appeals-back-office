@@ -95,7 +95,7 @@ jobs:
         displayName: "Run Cypress Tests"
 
       - task: PublishBuildArtifacts@1
-        condition: and(failed(), exists('appeals/e2e/cypress/screenshots'))
+        condition: failed()
         inputs:
           pathToPublish: 'appeals/e2e/cypress/screenshots'
           artifactName: 'FailedTests'
