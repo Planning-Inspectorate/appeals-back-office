@@ -137,29 +137,40 @@ describe('link appeals', () => {
 		});
 	});
 
-	it.only('link a back office appeal to a horizon appeal', () => {
-		const horizonAppealId =
-			Cypress.config('apiBaseUrl').indexOf('test') > -1
-				? horizonTestAppeals.horizonAppealTest
-				: horizonTestAppeals.horizonAppealMock;
+	it('An error is displayed when attempting to link an already linked case', () => {
+		cy.createCase().then((leadCase1) => {
+			cy.createCase().then((leadCase2) => {
+				cy.createCase().then((childCase) => {
+					happyPathHelper.assignCaseOfficer(leadCase1);
+					caseDetailsPage.clickAccordionByButton('Overview');
 
-		cy.createCase().then((leadCase) => {
-			happyPathHelper.assignCaseOfficer(leadCase);
-			caseDetailsPage.clickAccordionByButton('Overview');
+					//link appeal
+					caseDetailsPage.clickAddLinkedAppeal();
+					caseDetailsPage.fillInput(childCase);
+					caseDetailsPage.clickButtonByText('Continue');
 
-			//link appeal
-			caseDetailsPage.clickAddLinkedAppeal();
-			caseDetailsPage.fillInput(horizonAppealId);
-			caseDetailsPage.clickButtonByText('Continue');
+					//select lead appeal
+					caseDetailsPage.selectRadioButtonByValue(leadCase1);
+					caseDetailsPage.clickButtonByText('Continue');
+					caseDetailsPage.clickButtonByText('Add linked appeal');
 
-			//select lead appeal
-			caseDetailsPage.selectRadioButtonByValue(leadCase);
-			caseDetailsPage.clickButtonByText('Continue');
+					//CYA
+					caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
 
-			//CYA
-			caseDetailsPage.clickButtonByText('Add linked appeal');
-			caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
-			caseDetailsPage.checkStatusOfCase('Lead', 1);
+					//case details
+					caseDetailsPage.checkStatusOfCase('Lead', 1);
+
+					//2nd lead case
+					happyPathHelper.assignCaseOfficer(leadCase2);
+					caseDetailsPage.clickAccordionByButton('Overview');
+
+					//link appeal
+					caseDetailsPage.clickAddLinkedAppeal();
+					caseDetailsPage.fillInput(childCase);
+					caseDetailsPage.clickButtonByText('Continue');
+					caseDetailsPage.checkHeading(`You have already linked appeal ${childCase}`);
+				});
+			});
 		});
 	});
 });
