@@ -82,7 +82,8 @@ jobs:
 
       - script: |
           echo "Running specs: $(SPEC)"
-          npx cypress run --spec "$(SPEC)"
+          IFS=',' read -ra SPECS <<< "$(SPEC)"
+          npx cypress run --spec "${SPECS[@]}"
         workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
         env:
           BASE_URL: $(APPEALS_BASE_URL)
