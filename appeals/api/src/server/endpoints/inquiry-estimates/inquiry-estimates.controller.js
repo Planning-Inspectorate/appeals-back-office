@@ -2,13 +2,13 @@ import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import * as inquiryEstimatesRepository from '#repositories/inquiry-estimates.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import {
+	AUDIT_TRAIL_HEARING_ESTIMATES_ADDED,
+	AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED,
+	AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED
+} from '@pins/appeals/constants/support.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import { EventType } from '@pins/event-client';
-import {
-	AUDIT_TRAIL_INQUIRY_ESTIMATES_ADDED,
-	AUDIT_TRAIL_INQUIRY_ESTIMATES_REMOVED,
-	AUDIT_TRAIL_INQUIRY_ESTIMATES_UPDATED
-} from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -20,24 +20,26 @@ import {
  */
 export const addInquiryEstimate = async (req, res) => {
 	const { appeal } = req;
-	const { estimatedTime } = req.body;
+	const { preparationTime, sittingTime, reportingTime } = req.body;
 
 	const result = await inquiryEstimatesRepository.addInquiryEstimate({
 		appealId: appeal.id,
-		estimatedTime: parseFloat(estimatedTime)
+		preparationTime: parseFloat(preparationTime),
+		sittingTime: parseFloat(sittingTime),
+		reportingTime: parseFloat(reportingTime)
 	});
 
 	if (result) {
 		await createAuditTrail({
 			appealId: appeal.id,
 			azureAdUserId: req.get('azureAdUserId'),
-			details: AUDIT_TRAIL_INQUIRY_ESTIMATES_ADDED
+			details: AUDIT_TRAIL_HEARING_ESTIMATES_ADDED
 		});
 
 		await broadcasters.broadcastAppeal(appeal.id);
 		await broadcasters.broadcastEventEstimates(
 			result.id,
-			EVENT_TYPE.INQUIRY,
+			EVENT_TYPE.HEARING,
 			EventType.Create,
 			null
 		);
@@ -55,7 +57,7 @@ export const addInquiryEstimate = async (req, res) => {
  */
 export const updateInquiryEstimate = async (req, res) => {
 	const { appeal } = req;
-	const { estimatedTime } = req.body;
+	const { preparationTime, sittingTime, reportingTime } = req.body;
 
 	const existingEstimate = await inquiryEstimatesRepository.getInquiryEstimateByAppealId(appeal.id);
 
@@ -65,17 +67,19 @@ export const updateInquiryEstimate = async (req, res) => {
 
 	const result = await inquiryEstimatesRepository.updateInquiryEstimate({
 		appealId: appeal.id,
-		estimatedTime: parseFloat(estimatedTime)
+		preparationTime: parseFloat(preparationTime),
+		sittingTime: parseFloat(sittingTime),
+		reportingTime: parseFloat(reportingTime)
 	});
 
 	await createAuditTrail({
 		appealId: appeal.id,
 		azureAdUserId: req.get('azureAdUserId'),
-		details: AUDIT_TRAIL_INQUIRY_ESTIMATES_UPDATED
+		details: AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED
 	});
 
 	await broadcasters.broadcastAppeal(appeal.id);
-	await broadcasters.broadcastEventEstimates(result.id, EVENT_TYPE.INQUIRY, EventType.Update, null);
+	await broadcasters.broadcastEventEstimates(result.id, EVENT_TYPE.HEARING, EventType.Update, null);
 	return res.send({
 		inquiryEstimateId: result.id
 	});
@@ -100,13 +104,13 @@ export const removeInquiryEstimate = async (req, res) => {
 	await createAuditTrail({
 		appealId: appeal.id,
 		azureAdUserId: req.get('azureAdUserId'),
-		details: AUDIT_TRAIL_INQUIRY_ESTIMATES_REMOVED
+		details: AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED
 	});
 
 	await broadcasters.broadcastAppeal(appeal.id);
 	await broadcasters.broadcastEventEstimates(
 		existingEstimate.id,
-		EVENT_TYPE.INQUIRY,
+		EVENT_TYPE.HEARING,
 		EventType.Delete,
 		existingEstimate
 	);

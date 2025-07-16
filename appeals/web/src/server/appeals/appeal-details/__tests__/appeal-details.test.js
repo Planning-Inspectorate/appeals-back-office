@@ -4376,6 +4376,359 @@ describe('appeal-details', () => {
 					});
 				});
 		});
+
+		describe('Inquiry', () => {
+			const appealId = 3;
+
+			beforeEach(() => {
+				nock.cleanAll();
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
+					.reply(200, appellantFinalCommentsAwaitingReview);
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
+					.reply(200, lpaFinalCommentsAwaitingReview);
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, { planningObligation: { hasObligation: false } });
+			});
+
+			it('should not render the Inquiry accordion for HAS cases', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						procedureType: 'Inquiry'
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).not.toContain('<div id="case-details-inquiry-section">');
+				expect(unprettifiedHTML).not.toContain('Inquiry</span></h2>');
+			});
+
+			it('should render the Site accordion for HAS cases', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						procedureType: 'Inquiry'
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('Site</span></h2>');
+			});
+
+			for (const procedureType of [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]) {
+				it(`should not render the Inquiry accordion for s78 cases with a procedureType of ${procedureType}`, async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							procedureType
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Case details</h1>');
+					expect(unprettifiedHTML).not.toContain('<div id="case-details-inquiry-section">');
+					expect(unprettifiedHTML).not.toContain('Inquiry</span></h2>');
+				});
+			}
+
+			for (const procedureType of [APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY]) {
+				it(`should not render the site accordion for s78 cases with a procedureType of ${procedureType}`, async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							procedureType
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Case details</h1>');
+					expect(unprettifiedHTML).not.toContain('<div id="case-details-site-section">');
+					expect(unprettifiedHTML).not.toContain('Site</span></h2>');
+				});
+			}
+
+			it('should render the Inquiry accordion with the expected content for s78 cases with a procedureType of "Inquiry"', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						inquiry: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
+				expect(unprettifiedHTML).toContain('Inquiry</span></h2>');
+
+				const inquirySectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-inquiry-section'
+				}).innerHTML;
+
+				expect(inquirySectionHtml).toMatchSnapshot();
+
+				const unprettifiedInquirySectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-inquiry-section',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedInquirySectionHtml).toContain('Inquiry estimates</h3>');
+				expect(unprettifiedInquirySectionHtml).toContain(
+					`href="/appeals-service/appeal-details/${appealId}/inquiry/estimates/add">Add inquiry estimates</a>`
+				);
+			});
+
+			it('should render the inquiry details summary list when inquiry is present with address', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						inquiry: {
+							inquiryId: '123',
+							inquiryStartTime: '2025-05-15T12:00:00.000Z',
+							estimatedDays: 6,
+							address: {
+								addressLine1: '123 Main St',
+								addressLine2: 'Apt 1',
+								town: 'Anytown',
+								county: 'Anycounty',
+								postcode: 'AA1 1AA'
+							}
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
+				expect(unprettifiedHTML).toContain('Inquiry</span></h2>');
+
+				const inquirySectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-inquiry-section'
+				}).innerHTML;
+
+				expect(inquirySectionHtml).toMatchSnapshot();
+
+				const unprettifiedInquirySectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-inquiry-section',
+					skipPrettyPrint: true
+				});
+
+				expect(
+					unprettifiedInquirySectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[0]
+						?.innerHTML.trim()
+				).toEqual('15 May 2025');
+				expect(
+					unprettifiedInquirySectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[1]
+						?.innerHTML.trim()
+				).toEqual(dateISOStringToDisplayTime12hr('2025-05-15T12:00:00.000Z'));
+				expect(
+					unprettifiedInquirySectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[2]
+						?.innerHTML.trim()
+				).toEqual('Yes');
+				expect(
+					unprettifiedInquirySectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+						?.innerHTML.trim()
+				).toEqual('6 Days');
+				expect(
+					unprettifiedInquirySectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[4]
+						?.innerHTML.trim()
+				).toEqual('Yes');
+				expect(
+					unprettifiedInquirySectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[5]
+						?.innerHTML.split('<br>')
+						.map((line) => line.trim())
+				).toEqual(['123 Main St', 'Apt 1', 'Anytown', 'Anycounty', 'AA1 1AA']);
+				expect(
+					unprettifiedInquirySectionHtml.querySelector('a[data-cy="change-date"]')?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/inquiry/change/date`);
+				expect(
+					unprettifiedInquirySectionHtml.querySelector('a[data-cy="change-time"]')?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/inquiry/change/date`);
+				expect(
+					unprettifiedInquirySectionHtml.querySelector(
+						'a[data-cy="change-whether-the-estimated-number-of-days-is-known-or-not"]'
+					)?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/inquiry/change/estimatedDays`);
+				expect(
+					unprettifiedInquirySectionHtml.querySelector('a[data-cy="change-estimated-days"]')
+						?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/inquiry/change/estimated-days`);
+				expect(
+					unprettifiedInquirySectionHtml.querySelector(
+						'a[data-cy="change-whether-the-address-is-known-or-not"]'
+					)?.attributes?.href
+				).toEqual(`${baseUrl}/${appealId}/inquiry/change/address`);
+				expect(
+					unprettifiedInquirySectionHtml.querySelector('a[data-cy="change-address"]')?.attributes
+						?.href
+				).toEqual(`${baseUrl}/${appealId}/inquiry/change/address-details`);
+			});
+
+			it('should render the inquiry details summary list when inquiry is present with no address', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						inquiry: {
+							inquiryId: '123',
+							inquiryStartTime: '2025-05-15T12:00:00.000Z',
+							estimatedDays: 6
+						}
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
+				expect(unprettifiedHTML).toContain('Inquiry</span></h2>');
+
+				const inquirySectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-inquiry-section'
+				}).innerHTML;
+
+				expect(inquirySectionHtml).toMatchSnapshot();
+
+				const unprettifiedInquirySectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-inquiry-section',
+					skipPrettyPrint: true
+				});
+
+				expect(
+					unprettifiedInquirySectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[0]
+						?.innerHTML.trim()
+				).toEqual('15 May 2025');
+				expect(
+					unprettifiedInquirySectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[1]
+						?.innerHTML.trim()
+				).toEqual(dateISOStringToDisplayTime12hr('2025-05-15T12:00:00.000Z'));
+				expect(
+					unprettifiedInquirySectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[2]
+						?.innerHTML.trim()
+				).toEqual('Yes');
+				expect(
+					unprettifiedInquirySectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[3]
+						?.innerHTML.trim()
+				).toEqual('6 Days');
+				expect(
+					unprettifiedInquirySectionHtml
+						.querySelectorAll('dd.govuk-summary-list__value')?.[4]
+						?.innerHTML.trim()
+				).toEqual('No');
+				expect(
+					unprettifiedInquirySectionHtml.querySelectorAll('dd.govuk-summary-list__value')?.[5]
+				).toBeFalsy();
+			});
+
+			it('should render the Inquiry estimates summary list when estimates are present', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
+						inquiryEstimate: {
+							preparationTime: 1,
+							sittingTime: 2.5,
+							reportingTime: 3
+						},
+						inquiry: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
+				expect(unprettifiedHTML).toContain('Inquiry</span></h2>');
+
+				const inquirySectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-inquiry-section'
+				}).innerHTML;
+
+				expect(inquirySectionHtml).toMatchSnapshot();
+
+				const unprettifiedInquirySectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-inquiry-section',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedInquirySectionHtml).toContain('Inquiry estimates</h3>');
+				expect(unprettifiedInquirySectionHtml).toContain(
+					'<dd class="govuk-summary-list__value"> 1 day</dd>'
+				);
+				expect(unprettifiedInquirySectionHtml).toContain(
+					'<dd class="govuk-summary-list__value"> 2.5 days</dd>'
+				);
+				expect(unprettifiedInquirySectionHtml).toContain(
+					'<dd class="govuk-summary-list__value"> 3 days</dd>'
+				);
+				expect(unprettifiedInquirySectionHtml).toContain(
+					`<dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/inquiry/estimates/change"`
+				);
+			});
+		});
 	});
 
 	it('should not render a back button', async () => {

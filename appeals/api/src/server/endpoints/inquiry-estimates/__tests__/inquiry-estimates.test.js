@@ -7,11 +7,15 @@ import { householdAppeal } from '#tests/appeals/mocks.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const validInquiryEstimate = {
-	estimatedTime: 2
+	preparationTime: 2,
+	sittingTime: 3,
+	reportingTime: 1.5
 };
 
 const invalidInquiryEstimate = {
-	estimatedTime: -1
+	preparationTime: -1,
+	sittingTime: 0,
+	reportingTime: -2
 };
 
 const appealWithInquiryEstimate = {
@@ -19,7 +23,9 @@ const appealWithInquiryEstimate = {
 	inquiryEstimate: {
 		id: 1,
 		appealId: 1,
-		estimatedTime: 2
+		preparationTime: 2,
+		sittingTime: 3,
+		reportingTime: 1
 	}
 };
 
@@ -54,7 +60,11 @@ describe('appeal inquiry estimates routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/inquiry-estimates`)
-					.send({})
+					.send({
+						preparationTime: 2,
+						sittingTime: 3
+						// reportingTime is missing
+					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
@@ -65,7 +75,9 @@ describe('appeal inquiry estimates routes', () => {
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/inquiry-estimates`)
 					.send({
-						estimatedTime: 'two'
+						preparationTime: 'two',
+						sittingTime: 3,
+						reportingTime: 1.5
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -77,7 +89,9 @@ describe('appeal inquiry estimates routes', () => {
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/inquiry-estimates`)
 					.send({
-						estimatedTime: 2.3
+						preparationTime: 2.3,
+						sittingTime: 3.7,
+						reportingTime: 1.1
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -89,7 +103,7 @@ describe('appeal inquiry estimates routes', () => {
 				const response = await request
 					.post(`/appeals/${householdAppeal.id}/inquiry-estimates`)
 					.send({
-						estimatedTime: 1000,
+						preparationTime: 1000,
 						sittingTime: 1000,
 						reportingTime: 1000
 					})
@@ -134,7 +148,11 @@ describe('appeal inquiry estimates routes', () => {
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/inquiry-estimates`)
-					.send({})
+					.send({
+						preparationTime: 2,
+						sittingTime: 3
+						// reportingTime is missing
+					})
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
@@ -149,7 +167,9 @@ describe('appeal inquiry estimates routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/inquiry-estimates`)
 					.send({
-						estimatedTime: 'two'
+						preparationTime: 'two',
+						sittingTime: 3,
+						reportingTime: 1.5
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -165,7 +185,9 @@ describe('appeal inquiry estimates routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/inquiry-estimates`)
 					.send({
-						estimatedTime: 2.3
+						preparationTime: 2.3,
+						sittingTime: 3.7,
+						reportingTime: 1.1
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -181,7 +203,9 @@ describe('appeal inquiry estimates routes', () => {
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/inquiry-estimates`)
 					.send({
-						estimatedTime: 1000
+						preparationTime: 1000,
+						sittingTime: 1000,
+						reportingTime: 1000
 					})
 					.set('azureAdUserId', azureAdUserId);
 
@@ -216,7 +240,9 @@ describe('appeal inquiry estimates routes', () => {
 			expect(databaseConnector.inquiryEstimate.create).toHaveBeenCalledWith({
 				data: {
 					appealId: householdAppeal.id,
-					estimatedTime: validInquiryEstimate.estimatedTime
+					preparationTime: validInquiryEstimate.preparationTime,
+					sittingTime: validInquiryEstimate.sittingTime,
+					reportingTime: validInquiryEstimate.reportingTime
 				}
 			});
 		});
@@ -238,7 +264,9 @@ describe('appeal inquiry estimates routes', () => {
 			expect(databaseConnector.inquiryEstimate.update).toHaveBeenCalledWith({
 				where: { appealId: householdAppeal.id },
 				data: {
-					estimatedTime: validInquiryEstimate.estimatedTime
+					preparationTime: validInquiryEstimate.preparationTime,
+					sittingTime: validInquiryEstimate.sittingTime,
+					reportingTime: validInquiryEstimate.reportingTime
 				}
 			});
 		});

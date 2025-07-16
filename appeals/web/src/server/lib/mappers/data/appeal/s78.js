@@ -17,6 +17,9 @@ import { mapHearingDate } from './submappers/hearing-date.mapper.js';
 import { mapPlanningObligationDueDate } from './submappers/planning-obligation-due-date.mapper.js';
 import { mapProofOfEvidenceAndWitnessesDueDate } from './submappers/proof-of-evidence-and-witnesses-due-date.mapper.js';
 import { mapInquiryDate } from './submappers/inquiry-date.mapper.js';
+import { mapAddInquiryEstimates } from './submappers/inquiry-add-inquiry-estimates.js';
+import { mapInquiryEstimates } from './submappers/inquiry-inquiry-estimates.js';
+import { mapInquiryDetails } from './submappers/inquiry-details.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -33,6 +36,9 @@ export const submaps = {
 	lpaFinalComments: mapLPAFinalComments,
 	environmentalAssessment: mapEnvironmentalAssessment,
 	setUpHearing: mapSetUpHearing,
+	addInquiryEstimates: mapAddInquiryEstimates,
+	inquiryEstimates: mapInquiryEstimates,
+	inquiryDetails: mapInquiryDetails,
 	hearingDetails: mapHearingDetails,
 	addHearingEstimates: mapAddHearingEstimates,
 	hearingEstimates: mapHearingEstimates,
