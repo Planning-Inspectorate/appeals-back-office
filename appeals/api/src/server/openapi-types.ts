@@ -2720,6 +2720,11 @@ export interface InquiryResponse {
 	 * @example "2014-11-14T00:00:00+00:00"
 	 */
 	inquiryEndTime?: string;
+	/**
+	 * Estimated number of days
+	 * @example 5
+	 */
+	estimatedDays?: number;
 	/** @example 1 */
 	addressId?: number;
 	address?: {
@@ -2740,17 +2745,29 @@ export interface InquiryResponse {
 
 export interface InquiryEstimate {
 	/** @example 1.5 */
-	estimatedTime?: number;
+	preparationTime?: number;
+	/** @example 0.5 */
+	sittingTime?: number;
+	/** @example 2 */
+	reportingTime?: number;
 }
 
 export interface InquiryEstimateCreateRequest {
 	/** @example 1.5 */
-	estimatedTime?: number;
+	preparationTime?: number;
+	/** @example 0.5 */
+	sittingTime?: number;
+	/** @example 2 */
+	reportingTime?: number;
 }
 
 export interface InquiryEstimateUpdateRequest {
 	/** @example 1.5 */
-	estimatedTime?: number;
+	preparationTime?: number;
+	/** @example 0.5 */
+	sittingTime?: number;
+	/** @example 2 */
+	reportingTime?: number;
 }
 
 export interface InquiryEstimateResponse {

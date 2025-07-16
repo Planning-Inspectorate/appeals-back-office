@@ -232,6 +232,188 @@ exports[`appeal-details GET /:appealId Hearing should render the hearing details
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Inquiry should render the Inquiry accordion with the expected content for s78 cases with a procedureType of "Inquiry" 1`] = `
+"<div id="case-details-inquiry-section">
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+            <dd class="govuk-summary-list__value"></dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+                data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+            <dd class="govuk-summary-list__value"></dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+                data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the inquiry?</dt>
+            <dd             class="govuk-summary-list__value">No</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimatedDays"
+                    data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
+                </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
+            <dd             class="govuk-summary-list__value">No</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address"
+                    data-cy="change-whether-the-address-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
+                </dd>
+        </div>
+    </dl>
+    <h3 class="govuk-heading-m">Inquiry estimates</h3>
+    <div>
+        <p><a id="addInquiryEstimates" class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/inquiry/estimates/add">Add inquiry estimates</a>
+        </p>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Inquiry should render the Inquiry estimates summary list when estimates are present 1`] = `
+"<div id="case-details-inquiry-section">
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+            <dd class="govuk-summary-list__value"></dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+                data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+            <dd class="govuk-summary-list__value"></dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+                data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the inquiry?</dt>
+            <dd             class="govuk-summary-list__value">No</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimatedDays"
+                    data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
+                </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
+            <dd             class="govuk-summary-list__value">No</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address"
+                    data-cy="change-whether-the-address-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
+                </dd>
+        </div>
+    </dl>
+    <h3 class="govuk-heading-m">Inquiry estimates</h3>
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preparation time</dt>
+            <dd class="govuk-summary-list__value">1 day</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/estimates/change"
+                data-cy="change-preparation-time">Change<span class="govuk-visually-hidden"> Preparation time</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Sitting time</dt>
+            <dd class="govuk-summary-list__value">2.5 days</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/estimates/change"
+                data-cy="change-sitting-time">Change<span class="govuk-visually-hidden"> Sitting time</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reporting time</dt>
+            <dd class="govuk-summary-list__value">3 days</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/estimates/change"
+                data-cy="change-reporting-time">Change<span class="govuk-visually-hidden"> Reporting time</span></a>
+            </dd>
+        </div>
+    </dl>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Inquiry should render the inquiry details summary list when inquiry is present with address 1`] = `
+"<div id="case-details-inquiry-section">
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+            <dd class="govuk-summary-list__value">15 May 2025</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+                data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+            <dd class="govuk-summary-list__value">1:00pm</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+                data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the inquiry?</dt>
+            <dd             class="govuk-summary-list__value">Yes</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimatedDays"
+                    data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
+                </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Esitmated number of days needed to carry out inquiry</dt>
+            <dd             class="govuk-summary-list__value">6 Days</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimated-days"
+                    data-cy="change-estimated-days">Change<span class="govuk-visually-hidden"> Estimated Days</span></a>
+                </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
+            <dd             class="govuk-summary-list__value">Yes</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address"
+                    data-cy="change-whether-the-address-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
+                </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">123 Main St
+                <br>Apt 1
+                <br>Anytown
+                <br>Anycounty
+                <br>AA1 1AA</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address-details"
+                data-cy="change-address">Change<span class="govuk-visually-hidden"> Address</span></a>
+            </dd>
+        </div>
+    </dl>
+    <h3 class="govuk-heading-m">Inquiry estimates</h3>
+    <div>
+        <p><a id="addInquiryEstimates" class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/inquiry/estimates/add">Add inquiry estimates</a>
+        </p>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Inquiry should render the inquiry details summary list when inquiry is present with no address 1`] = `
+"<div id="case-details-inquiry-section">
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+            <dd class="govuk-summary-list__value">15 May 2025</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+                data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+            <dd class="govuk-summary-list__value">1:00pm</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/date"
+                data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+            </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the inquiry?</dt>
+            <dd             class="govuk-summary-list__value">Yes</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimatedDays"
+                    data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
+                </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Esitmated number of days needed to carry out inquiry</dt>
+            <dd             class="govuk-summary-list__value">6 Days</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimated-days"
+                    data-cy="change-estimated-days">Change<span class="govuk-visually-hidden"> Estimated Days</span></a>
+                </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
+            <dd             class="govuk-summary-list__value">No</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/address"
+                    data-cy="change-whether-the-address-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
+                </dd>
+        </div>
+    </dl>
+    <h3 class="govuk-heading-m">Inquiry estimates</h3>
+    <div>
+        <p><a id="addInquiryEstimates" class="govuk-body govuk-link" href="/appeals-service/appeal-details/3/inquiry/estimates/add">Add inquiry estimates</a>
+        </p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (complete) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/issue-lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-lpa-costs-decision">Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>"`;
 
 exports[`appeal-details GET /:appealId LPA costs decision should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (invalid) 1`] = `"<div class="govuk-summary-list__row costs-lpa-decision"><dt class="govuk-summary-list__key"> LPA costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/issue-lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-lpa-costs-decision">Issue<span class="govuk-visually-hidden"> LPA costs decision</span></a></dd></div>"`;

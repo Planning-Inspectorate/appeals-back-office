@@ -120,20 +120,12 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 					inquiryStartTime,
 					inquiryEndTime,
 					appealId,
-					addressId: addr.id
+					addressId: addr.id,
+					estimatedDays: createInquiryData.estimatedDays
+						? Number(createInquiryData.estimatedDays)
+						: undefined
 				}
 			});
-
-			let estimate = undefined;
-			// Add Estimation
-			if (createInquiryData.estimatedDays) {
-				estimate = await tx.inquiryEstimate.create({
-					data: {
-						appealId,
-						estimatedTime: Number(createInquiryData.estimatedDays)
-					}
-				});
-			}
 
 			const updatedAppeal = await tx.appeal.update({
 				where: { id: appeal.id },
@@ -143,22 +135,35 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 				}
 			});
 
-			// Add Appeal Timetable
-			const timetable = await tx.appealTimetable.create({
-				data: {
-					appealId,
-					lpaQuestionnaireDueDate: createInquiryData.lpaQuestionnaireDueDate,
-					lpaStatementDueDate: createInquiryData.statementDueDate,
-					appellantStatementDueDate: createInquiryData.statementDueDate,
-					planningObligationDueDate: createInquiryData.planningObligationDueDate,
-					statementOfCommonGroundDueDate: createInquiryData.statementOfCommonGroundDueDate,
-					ipCommentsDueDate: createInquiryData.ipCommentsDueDate,
-					proofOfEvidenceAndWitnessesDueDate: createInquiryData.proofOfEvidenceAndWitnessesDueDate
-				}
+			const existingTimetable = await tx.appealTimetable.findFirst({
+				where: { appealId }
 			});
+			const timetableData = {
+				appealId,
+				lpaQuestionnaireDueDate: createInquiryData.lpaQuestionnaireDueDate,
+				lpaStatementDueDate: createInquiryData.statementDueDate,
+				appellantStatementDueDate: createInquiryData.statementDueDate,
+				planningObligationDueDate: createInquiryData.planningObligationDueDate,
+				statementOfCommonGroundDueDate: createInquiryData.statementOfCommonGroundDueDate,
+				ipCommentsDueDate: createInquiryData.ipCommentsDueDate,
+				proofOfEvidenceAndWitnessesDueDate: createInquiryData.proofOfEvidenceAndWitnessesDueDate
+			};
+
+			if (existingTimetable) {
+				// Add Appeal Timetable
+				await tx.appealTimetable.update({
+					where: { appealId },
+					data: timetableData
+				});
+			} else {
+				// Add Appeal Timetable
+				await tx.appealTimetable.create({
+					data: timetableData
+				});
+			}
 
 			// Return anything you want from this transaction
-			return { addr, inquiry, estimate, timetable, updatedAppeal };
+			return { addr, inquiry, updatedAppeal };
 		});
 
 		await transitionState(
