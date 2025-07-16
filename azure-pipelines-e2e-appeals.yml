@@ -58,6 +58,11 @@ jobs:
         displayName: "Install Dependencies"
 
       - script: |
+          echo "Checking connectivity to back-office-appeals-dev..."
+          curl -I https://back-office-appeals-dev.planninginspectorate.gov.uk/appeals-service/all-cases || echo "❌ curl failed"
+        displayName: "Check app availability before Cypress"
+
+      - script: |
           echo "Running specs:"
           for spec in $(echo $(SPEC) | tr ',' ' '); do
             echo "- $spec"
