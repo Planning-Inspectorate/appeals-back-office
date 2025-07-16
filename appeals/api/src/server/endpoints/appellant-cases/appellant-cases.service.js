@@ -23,7 +23,7 @@ import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { notifySend } from '#notify/notify-send.js';
-import { APPEAL_DEVELOPMENT_TYPES } from './appellant-cases.constants.js';
+import { APPEAL_DEVELOPMENT_TYPES } from '@pins/appeals/constants/appellant-cases.constants.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
@@ -208,8 +208,9 @@ export function renderAuditTrailDetail(data) {
 	/** @type {Record<string, *>} */
 	const auditTrailParameters = {
 		AUDIT_TRAIL_DEVELOPMENT_TYPE_UPDATED: () =>
-			APPEAL_DEVELOPMENT_TYPES.find(({ value }) => value === data.developmentType)?.label ||
-			data.developmentType,
+			APPEAL_DEVELOPMENT_TYPES.find(
+				(/** @type {{value: string, label: string}} */ item) => item.value === data.developmentType
+			)?.label || data.developmentType,
 		AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED: () => data.siteAreaSquareMetres,
 		AUDIT_TRAIL_IS_GREEN_BELT_UPDATED: () => (data.isGreenBelt ? 'Yes' : 'No'),
 		AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED: () => data.knowsOtherOwners,
