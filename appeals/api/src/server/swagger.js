@@ -1550,6 +1550,11 @@ export const spec = {
 					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
 					example: '2014-11-14T00:00:00+00:00'
 				},
+				estimatedDays: {
+					type: 'number',
+					description: 'Estimated number of days',
+					example: 5
+				},
 				addressId: {
 					type: 'number',
 					example: 1
@@ -1588,27 +1593,51 @@ export const spec = {
 		InquiryEstimate: {
 			type: 'object',
 			properties: {
-				estimatedTime: {
+				preparationTime: {
 					type: 'number',
 					example: 1.5
+				},
+				sittingTime: {
+					type: 'number',
+					example: 0.5
+				},
+				reportingTime: {
+					type: 'number',
+					example: 2
 				}
 			}
 		},
 		InquiryEstimateCreateRequest: {
 			type: 'object',
 			properties: {
-				estimatedTime: {
+				preparationTime: {
 					type: 'number',
 					example: 1.5
+				},
+				sittingTime: {
+					type: 'number',
+					example: 0.5
+				},
+				reportingTime: {
+					type: 'number',
+					example: 2
 				}
 			}
 		},
 		InquiryEstimateUpdateRequest: {
 			type: 'object',
 			properties: {
-				estimatedTime: {
+				preparationTime: {
 					type: 'number',
 					example: 1.5
+				},
+				sittingTime: {
+					type: 'number',
+					example: 0.5
+				},
+				reportingTime: {
+					type: 'number',
+					example: 2
 				}
 			}
 		},

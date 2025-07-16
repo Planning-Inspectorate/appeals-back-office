@@ -115,13 +115,11 @@ const startCase = async (
 				details: AUDIT_TRAIL_CASE_TIMELINE_CREATED
 			});
 
-			if (appeal.appealType?.key === APPEAL_CASE_TYPE.W) {
-				await createAuditTrail({
-					appealId: appeal.id,
-					azureAdUserId,
-					details: stringTokenReplacement(AUDIT_TRAIL_CASE_STARTED, [procedureType || 'written'])
-				});
-			}
+			await createAuditTrail({
+				appealId: appeal.id,
+				azureAdUserId,
+				details: stringTokenReplacement(AUDIT_TRAIL_CASE_STARTED, [procedureType || 'written'])
+			});
 
 			const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
 			const lpaEmail = appeal.lpa?.email || '';

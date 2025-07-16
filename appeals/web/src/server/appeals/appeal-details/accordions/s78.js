@@ -8,6 +8,7 @@ import { getCaseOverview } from './common/case-overview.js';
 import { getCaseTeam } from './common/case-team.js';
 import { getSiteDetails } from './common/site-details.js';
 import { getCaseHearing } from './s78/case-hearing.js';
+import { getCaseInquiry } from './s78/case-inquiry.js';
 import { removeAccordionComponentsActions } from './utils/index.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
@@ -83,11 +84,14 @@ export function generateAccordion(appealDetails, mappedData, session) {
 
 	const caseHearing = getCaseHearing(mappedData, appealDetails);
 
+	const caseInquiry = getCaseInquiry(mappedData, appealDetails);
+
 	const accordionComponents = [
 		caseOverview,
 		...(siteDetails ?? []),
 		caseTimetable[0],
 		...(caseHearing ?? []),
+		...(caseInquiry ?? []),
 		caseDocumentation,
 		caseContacts,
 		caseTeam,
@@ -132,6 +136,14 @@ export function generateAccordion(appealDetails, mappedData, session) {
 							{
 								heading: { text: 'Hearing' },
 								content: { html: '', pageComponents: caseHearing }
+							}
+					  ]
+					: []),
+				...(caseInquiry
+					? [
+							{
+								heading: { text: 'Inquiry' },
+								content: { html: '', pageComponents: caseInquiry }
 							}
 					  ]
 					: []),

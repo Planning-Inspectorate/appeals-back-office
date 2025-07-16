@@ -1,29 +1,43 @@
 import { databaseConnector } from '#utils/database-connector.js';
 
 /**
- * @param {{appealId: number, estimatedTime: number }} params
+ * @param {{appealId: number, preparationTime: number, sittingTime: number, reportingTime: number}} params
  * @returns {Promise<any>}
  */
-export const addInquiryEstimate = async ({ appealId, estimatedTime }) => {
+export const addInquiryEstimate = async ({
+	appealId,
+	preparationTime,
+	sittingTime,
+	reportingTime
+}) => {
 	return databaseConnector.inquiryEstimate.create({
 		data: {
 			appealId,
-			estimatedTime
+			preparationTime,
+			sittingTime,
+			reportingTime
 		}
 	});
 };
 
 /**
- * @param {{appealId: number, estimatedTime: number }} params
+ * @param {{appealId: number, preparationTime: number, sittingTime: number, reportingTime: number}} params
  * @returns {Promise<any>}
  */
-export const updateInquiryEstimate = async ({ appealId, estimatedTime }) => {
+export const updateInquiryEstimate = async ({
+	appealId,
+	preparationTime,
+	sittingTime,
+	reportingTime
+}) => {
 	return databaseConnector.inquiryEstimate.update({
 		where: {
 			appealId
 		},
 		data: {
-			estimatedTime
+			preparationTime,
+			sittingTime,
+			reportingTime
 		}
 	});
 };

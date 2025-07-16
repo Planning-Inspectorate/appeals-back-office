@@ -16,6 +16,7 @@ export const mapInquiry = (data) => {
 			inquiryStartTime: appeal.inquiry.inquiryStartTime?.toISOString() || '',
 			inquiryEndTime: appeal.inquiry.inquiryEndTime?.toISOString() || '',
 			addressId: appeal.inquiry.addressId || undefined,
+			estimatedDays: appeal.inquiry.estimatedDays || undefined,
 			...(appeal.inquiry.address && {
 				address: {
 					addressLine1: appeal.inquiry.address.addressLine1 || undefined,

@@ -128,6 +128,7 @@ interface SingleAppealDetailsResponse {
 	hearingEstimate?: HearingEstimate | null;
 	hearing?: Hearing | null;
 	inquiry?: Inquiry | null;
+	inquiryEstimate?: InquiryEstimate | null;
 }
 
 interface UpdateAppealRequest {
@@ -502,6 +503,13 @@ interface Inquiry {
 	inquiryEndTime?: string;
 	address: Schema.Address;
 	addressId?: number;
+	estimatedDays?: number;
+}
+
+interface InquiryEstimate {
+	preparationTime?: number;
+	sittingTime?: number;
+	reportingTime?: number;
 }
 
 interface AppealTimetable {
@@ -943,6 +951,7 @@ type InquiryResponse = {
 	inquiryEndTime: Date | null;
 	address: Schema.Address | null;
 	addressId: number | null;
+	estimatedDays: number | null;
 };
 
 type ListedBuildingDetailsResponse = {
