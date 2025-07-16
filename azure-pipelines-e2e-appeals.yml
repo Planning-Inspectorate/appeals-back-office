@@ -81,7 +81,9 @@ jobs:
         displayName: "Install Dependencies"
 
       - script: |
+          echo "Running specs: $(SPEC)"
           npx cypress run --spec "$(SPEC)"
+        workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
         env:
           BASE_URL: $(APPEALS_BASE_URL)
           CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
@@ -93,8 +95,8 @@ jobs:
         displayName: "Run Cypress Tests"
 
       - task: PublishBuildArtifacts@1
+        condition: and(failed(), exists('appeals/e2e/cypress/screenshots'))
         inputs:
           pathToPublish: 'appeals/e2e/cypress/screenshots'
           artifactName: 'FailedTests'
         displayName: "Publish Failed Tests Artifacts"
-        condition: failed()
