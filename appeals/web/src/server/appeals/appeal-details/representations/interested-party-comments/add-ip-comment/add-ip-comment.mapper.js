@@ -9,7 +9,12 @@ import config from '@pins/appeals.web/environment/config.js';
 import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../interested-party-comments.service.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import { dateInput } from '#lib/mappers/index.js';
-import { dateISOStringToDayMonthYearHourMinute, getTodaysISOString } from '#lib/dates.js';
+import {
+	dateISOStringToDayMonthYearHourMinute,
+	getTodaysISOString,
+	dayMonthYearHourMinuteToISOString
+} from '#lib/dates.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').interestedPartyComment} IpComment */
@@ -18,17 +23,18 @@ import { dateISOStringToDayMonthYearHourMinute, getTodaysISOString } from '#lib/
 /** @typedef {{ 'day': string, 'month': string, 'year': string }} RequestDate */
 /** @typedef {RequestDate} ReqBody */
 
-/** @typedef {import('@pins/appeals/index.js').AddDocumentsRequest} AddDocumentsRequest */
-
 /**
  * @param {Appeal} appealDetails
  * @param {{ firstName: string, lastName: string, emailAddress: string }} values
+ * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  * */
-export const ipDetailsPage = (appealDetails, values, errors) => ({
+export const ipDetailsPage = (appealDetails, values, request, errors) => ({
 	title: "Interested party's details",
-	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
+	backLinkUrl:
+		getBackLinkUrlFromQuery(request) ||
+		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	heading: "Interested party's details",
 	pageComponents: [
@@ -123,7 +129,7 @@ export const checkAddressPage = (appealDetails, value, errors) => ({
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {boolean} providedAddress
  * @param {number} folderId
- * @param {{ appealId: string, folderId: string, files: { GUID: string, name: string, documentType: string, size: number, stage: string, mimeType: string, receivedDate: string, redactionStatus: number, blobStoreUrl: string }[] }} fileUploadInfo - The file upload information object.
+ * @param {{ appealId: string, folderId: string, files: { GUID: string, name: string, documentType: string, allowedTypes: string[], size: number, stage: string, mimeType: string, receivedDate: string, redactionStatus: number, blobStoreUrl: string }[] }} fileUploadInfo - The file upload information object.
  * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
  * */
 export const uploadPage = (appealDetails, errors, providedAddress, folderId, fileUploadInfo) => ({
@@ -132,7 +138,7 @@ export const uploadPage = (appealDetails, errors, providedAddress, folderId, fil
 		: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-address`,
 	appealId: String(appealDetails.appealId),
 	appealReference: appealDetails.appealReference,
-	appealShortReference: appealShortReference(appealDetails.appealReference),
+	preHeadingText: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	multiple: false,
 	// TODO: replace with real values
 	folderId: String(folderId),
@@ -150,12 +156,13 @@ export const uploadPage = (appealDetails, errors, providedAddress, folderId, fil
 	pageHeadingText: 'Upload interested party comment',
 	pageBodyComponents: [],
 	documentType: DOCUMENT_TYPE,
+	allowedTypes: [],
 	nextPageUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/redaction-status`,
 	errors
 });
 
 /**
- * @param {{ firstName: string, lastName: string, addressProvided: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: string, 'date-day': string, 'date-month': string, 'date-year': string }} values
+ * @param {{ firstName: string, lastName: string, addressProvided: string, emailAddress: string, addressLine1: string, addressLine2: string, town: string, county: string, postCode: string, redactionStatus: string, 'day': string, 'month': string, 'year': string }} values
  * @param {{ files: [{ GUID: string }] }} fileUpload
  * @returns {RepresentationRequest}
  */
@@ -174,56 +181,22 @@ export const mapSessionToRepresentationRequest = (values, fileUpload) => ({
 	},
 	attachments: fileUpload.files.map((file) => file.GUID) || [],
 	redactionStatus: values.redactionStatus,
-	source: ODW_SYSTEM_ID
-});
-
-/**
- * @param {number} caseId
- * @param {number} folderId
- * @param {number} redactionStatus
- * @param {string} blobStorageHost
- * @param {string} blobStorageContainer
- * @param {{ files: { GUID: string, name: string, documentType: string, size: number, stage: string, mimeType: string, receivedDate: string, redactionStatus: number, blobStoreUrl: string }[] }} fileUploadInfo - The file upload information object.
- * @returns {AddDocumentsRequest}
- */
-export const mapFileUploadInfoToMappedDocuments = (
-	caseId,
-	folderId,
-	redactionStatus,
-	blobStorageHost,
-	blobStorageContainer,
-	fileUploadInfo
-) => ({
-	blobStorageHost,
-	blobStorageContainer,
-	documents: fileUploadInfo.files.map(
-		/** @type {import('#lib/ts-utilities.js').FileUploadInfoItem} */
-		(file) =>
-			/** @type {import('@pins/appeals/index.js').MappedDocument} */
-			({
-				caseId,
-				documentName: file.name,
-				documentType: file.documentType,
-				mimeType: file.mimeType,
-				documentSize: file.size,
-				stage: file.stage,
-				folderId,
-				GUID: file.GUID,
-				receivedDate: file.receivedDate,
-				redactionStatusId: redactionStatus || 1,
-				blobStoragePath: file.blobStoreUrl
-			})
-	)
+	source: ODW_SYSTEM_ID,
+	dateCreated: dayMonthYearHourMinuteToISOString({
+		day: values.day,
+		month: values.month,
+		year: values.year
+	})
 });
 
 /**
  * @param {Appeal} appealDetails
  * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @param {ReqBody} date
+ * @param {ReqBody} commentData
  * @param {string} backLinkUrl
  * @returns {PageContent}
  * */
-export const dateSubmitted = (appealDetails, errors, date, backLinkUrl) => ({
+export const dateSubmitted = (appealDetails, errors, commentData, backLinkUrl) => ({
 	title: 'When did the interested party submit the comment?',
 	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
@@ -231,13 +204,15 @@ export const dateSubmitted = (appealDetails, errors, date, backLinkUrl) => ({
 		dateInput({
 			id: 'date',
 			name: 'date',
+			namePrefix: 'date',
 			value:
-				date.day && date.month && date.year
-					? date
+				commentData.day && commentData.month && commentData.year
+					? { day: commentData.day, month: commentData.month, year: commentData.year }
 					: dateISOStringToDayMonthYearHourMinute(getTodaysISOString()),
 			legendText: 'When did the interested party submit the comment?',
 			legendIsPageHeading: true,
-			hint: 'For example, 27 3 2024'
+			hint: 'For example, 27 3 2024',
+			errors
 		})
 	]
 });

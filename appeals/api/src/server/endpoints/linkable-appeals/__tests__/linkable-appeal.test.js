@@ -12,7 +12,7 @@ import {
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
 
-describe('/appeals/linkable-appeal/:appealReference', () => {
+describe('/appeals/linkable-appeal/:appealReference/:linkableType', () => {
 	describe('GET', () => {
 		beforeEach(() => {
 			jest.resetAllMocks();
@@ -20,7 +20,7 @@ describe('/appeals/linkable-appeal/:appealReference', () => {
 		test('gets a back office linkable appeal summary when the appeal exists in back office', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
 			const response = await request
-				.get(`/appeals/linkable-appeal/${householdAppeal.reference}`)
+				.get(`/appeals/linkable-appeal/${householdAppeal.reference}/related`)
 				.set('azureAdUserId', azureAdUserId);
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
@@ -43,7 +43,9 @@ describe('/appeals/linkable-appeal/:appealReference', () => {
 						: ''
 				}`,
 				submissionDate: new Date(householdAppeal.caseCreatedDate).toISOString(),
-				source: 'back-office'
+				source: 'back-office',
+				childAppeals: [],
+				parentAppeals: []
 			});
 		});
 		test('gets a back office linkable appeal summary when the appeal does not exist in back office but exists in Horizon', async () => {
@@ -54,7 +56,7 @@ describe('/appeals/linkable-appeal/:appealReference', () => {
 					.mockResolvedValueOnce(parseHorizonGetCaseResponse(horizonGetCaseSuccessResponse))
 			});
 			const response = await request
-				.get(`/appeals/linkable-appeal/1`)
+				.get(`/appeals/linkable-appeal/1/related`)
 				.set('azureAdUserId', azureAdUserId);
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
@@ -83,14 +85,48 @@ describe('/appeals/linkable-appeal/:appealReference', () => {
 				})
 			});
 			const response = await request
-				.get(`/appeals/linkable-appeal/1`)
+				.get(`/appeals/linkable-appeal/1/related`)
 				.set('azureAdUserId', azureAdUserId);
 			expect(response.status).toEqual(404);
+		});
+		test('responds with a 409 if the related cases cannot be linked', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValueOnce({
+				...householdAppeal,
+				parentAppeals: [{ type: 'related' }],
+				childAppeals: []
+			});
+			const response = await request
+				.get(`/appeals/linkable-appeal/${householdAppeal.reference}/related`)
+				.set('azureAdUserId', azureAdUserId);
+			expect(response.status).toEqual(409);
+		});
+		test('responds with a 409 if the linked cases cannot be linked as they already have a parent case', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValueOnce({
+				...householdAppeal,
+				parentAppeals: [{ type: 'linked' }],
+				childAppeals: []
+			});
+			const response = await request
+				.get(`/appeals/linkable-appeal/${householdAppeal.reference}/linked`)
+				.set('azureAdUserId', azureAdUserId);
+			expect(response.status).toEqual(409);
+		});
+		test('responds with a 432 if the linked cases cannot be linked as the case status is statements or beyond', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValueOnce({
+				...householdAppeal,
+				appealStatus: [{ status: 'statements' }],
+				parentAppeals: [],
+				childAppeals: []
+			});
+			const response = await request
+				.get(`/appeals/linkable-appeal/${householdAppeal.reference}/linked`)
+				.set('azureAdUserId', azureAdUserId);
+			expect(response.status).toEqual(432);
 		});
 		test('responds with a 500 if the Horizon API is down', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValueOnce(null);
 			const response = await request
-				.get(`/appeals/linkable-appeal/1`)
+				.get(`/appeals/linkable-appeal/1/related`)
 				.set('azureAdUserId', azureAdUserId);
 			expect(response.status).toEqual(500);
 		});

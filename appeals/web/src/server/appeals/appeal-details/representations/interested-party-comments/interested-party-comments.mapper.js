@@ -1,10 +1,9 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
+import { mapNotificationBannersFromSession, wrapComponents } from '#lib/mappers/index.js';
 import { addressInputs } from '#lib/mappers/index.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
-import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { highlightRedactedSections } from '#lib/redaction-string-formatter.js';
@@ -36,8 +35,6 @@ export async function interestedPartyCommentsPage(
 ) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
-	const backLinkUrl = constructUrl(backUrl, appealDetails.appealId);
-
 	const notificationBanners = mapNotificationBannersFromSession(
 		session,
 		'ipComments',
@@ -46,7 +43,7 @@ export async function interestedPartyCommentsPage(
 
 	const pageContent = {
 		title: 'Interested party comments',
-		backLinkUrl,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		addCommentUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Interested party comments',
@@ -141,7 +138,7 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 			],
 			rows: comments.map((comment) => [
 				{
-					html: addressToString(comment.represented.address)
+					html: addressToString(comment.represented.address) || 'No address'
 				},
 				{
 					html: '',
@@ -154,7 +151,7 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 											comment.redactedRepresentation,
 											comment.originalRepresentation
 									  )
-									: comment.originalRepresentation,
+									: comment.originalRepresentation || 'No comment',
 								labelText: 'Read more'
 							}
 						}
@@ -162,14 +159,16 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 				},
 				{
 					html: buildHtmlList({
-						items: comment.attachments.map(
-							(a) =>
-								`<a class="govuk-link" href="${mapDocumentDownloadUrl(
-									a.documentVersion.document.caseId,
-									a.documentVersion.document.guid,
-									a.documentVersion.document.name
-								)}" target="_blank">${a.documentVersion.document.name}</a>`
-						),
+						items: comment.attachments?.length
+							? comment.attachments.map(
+									(a) =>
+										`<a class="govuk-link" href="${mapDocumentDownloadUrl(
+											a.documentVersion.document.caseId,
+											a.documentVersion.document.guid,
+											a.documentVersion.document.name
+										)}" target="_blank">${a.documentVersion.document.name}</a>`
+							  )
+							: ['No documents'],
 						isOrderedList: true,
 						isNumberedList: comment.attachments.length > 1
 					})
@@ -179,10 +178,21 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 	};
 
 	const pageComponents = [
-		simpleHtmlComponent(
-			'a',
-			{ href: `/documents/${appealDetails.appealId}/bulk-download/documents`, class: 'govuk-link' },
-			'Download all documents'
+		wrapComponents(
+			[
+				simpleHtmlComponent(
+					'a',
+					{
+						href: `/documents/${appealDetails.appealId}/bulk-download/documents`,
+						class: 'govuk-link'
+					},
+					'Download all documents'
+				)
+			],
+			{
+				opening: '<p class="govuk-body">',
+				closing: '</p>'
+			}
 		),
 		simpleHtmlComponent('h2', {}, 'Shared IP comments'),
 		table

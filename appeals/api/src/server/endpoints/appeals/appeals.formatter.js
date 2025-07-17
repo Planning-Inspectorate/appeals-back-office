@@ -1,25 +1,27 @@
 import { countBy } from 'lodash-es';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import formatAddress from '#utils/format-address.js';
-import isFPA from '#utils/is-fpa.js';
+import isFPA from '@pins/appeals/utils/is-fpa.js';
 import {
 	formatAppellantCaseDocumentationStatus,
 	formatLpaQuestionnaireDocumentationStatus,
 	formatLpaStatementStatus
 } from '#utils/format-documentation-status.js';
-import { add, addBusinessDays } from 'date-fns';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { add } from 'date-fns';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
+import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.service.js';
+import { currentStatus } from '#utils/current-status.js';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,
 	STATE_TARGET_LPA_QUESTIONNAIRE_DUE: 10,
 	STATE_TARGET_ASSIGN_CASE_OFFICER: 15,
 	STATE_TARGET_ISSUE_DETERMINATION: 30,
-	STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT: 10,
+	STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT: 40,
 	STATE_TARGET_STATEMENT_REVIEW: 55,
 	STATE_TARGET_FINAL_COMMENT_REVIEW: 60
 };
@@ -47,40 +49,50 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
-	appealStatus: appeal.appealStatus[0].status,
+	appealStatus: currentStatus(appeal),
 	appealType: appeal.appealType?.type,
+	procedureType: appeal.procedureType?.name,
 	createdAt: appeal.caseCreatedDate,
 	localPlanningDepartment: appeal.lpa?.name || '',
 	dueDate: null,
 	documentationSummary: formatDocumentationSummary(appeal),
 	appealTimetable: formatAppealTimetable(appeal),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
+	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
+	planningApplicationReference: appeal.applicationReference,
+	isHearingSetup: !!appeal.hearing,
+	hasHearingAddress: !!appeal.hearing?.addressId
 });
 
 /**
- * @param {DBUserAppeal} appeal
- * @param {AppealRelationship[]} linkedAppeals
- * @returns {AppealListResponse}
+ * @param {Object} options
+ * @param {DBUserAppeal} options.appeal
+ * @param {Boolean} options.isParentAppeal
+ * @param {Boolean} options.isChildAppeal
+ * @returns {Promise<AppealListResponse>}
  */
-const formatMyAppeals = (appeal, linkedAppeals) => ({
+const formatMyAppeal = async ({ appeal, isParentAppeal = false, isChildAppeal = false }) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
-	appealStatus: appeal.appealStatus[0].status,
+	appealStatus: currentStatus(appeal),
 	appealType: appeal.appealType?.type,
+	procedureType: appeal.procedureType?.name,
 	createdAt: appeal.caseCreatedDate,
 	localPlanningDepartment: appeal.lpa?.name || '',
 	lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 	documentationSummary: formatDocumentationSummary(appeal),
-	dueDate: mapAppealToDueDate(
+	dueDate: await mapAppealToDueDate(
 		appeal,
 		appeal.appellantCase?.appellantCaseValidationOutcome?.name || '',
 		appeal.caseExtensionDate
 	),
 	appealTimetable: formatAppealTimetable(appeal),
-	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0
+	isParentAppeal,
+	isChildAppeal,
+	planningApplicationReference: appeal.applicationReference,
+	isHearingSetup: !!appeal.hearing,
+	hasHearingAddress: !!appeal.hearing?.addressId
 });
 
 /**
@@ -133,23 +145,19 @@ const formatDocumentationSummary = (appeal) => {
 		},
 		lpaFinalComments: {
 			status: lpaFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			// TODO: We might want to remove these fields (receivedAt, representationStatus) and just use the `counts` field as with ipComments, but this will be a breaking change for the front end
 			receivedAt: lpaFinalComments[0]?.dateCreated
 				? lpaFinalComments[0].dateCreated.toISOString()
 				: null,
 			representationStatus: lpaFinalComments[0]?.status ?? null,
-			counts: countBy(lpaFinalComments, 'status'),
 			isRedacted: lpaFinalComments.some((comment) => Boolean(comment.redactedRepresentation))
 		},
 		appellantFinalComments: {
 			status:
 				appellantFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-			// TODO: See todo above
 			receivedAt: appellantFinalComments[0]?.dateCreated
 				? appellantFinalComments[0].dateCreated.toISOString()
 				: null,
 			representationStatus: appellantFinalComments[0]?.status ?? null,
-			counts: countBy(appellantFinalComments, 'status'),
 			isRedacted: appellantFinalComments.some((comment) => Boolean(comment.redactedRepresentation))
 		}
 	};
@@ -185,12 +193,12 @@ function formatAppealTimetable(appeal) {
  * @param {DBAppeal | DBUserAppeal} appeal
  * @param {string} appellantCaseStatus
  * @param {Date | null} appellantCaseDueDate
- * @returns { Date | null | undefined }
+ * @returns {Promise<Date | null | undefined>}
  */
-export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDueDate) => {
-	switch (appeal.appealStatus[0].status) {
+export const mapAppealToDueDate = async (appeal, appellantCaseStatus, appellantCaseDueDate) => {
+	switch (currentStatus(appeal)) {
 		case APPEAL_CASE_STATUS.READY_TO_START:
-			if (appellantCaseStatus == 'Incomplete' && appellantCaseDueDate) {
+			if (appellantCaseStatus === 'Incomplete' && appellantCaseDueDate) {
 				return new Date(appellantCaseDueDate);
 			}
 			return add(new Date(appeal.caseCreatedDate), {
@@ -208,16 +216,13 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 				days: approxStageCompletion.STATE_TARGET_ASSIGN_CASE_OFFICER
 			});
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
-			if (appeal.appealTimetable?.issueDeterminationDate) {
-				return new Date(appeal.appealTimetable?.issueDeterminationDate);
-			}
 			if (appeal.siteVisit) {
-				return addBusinessDays(
+				return await calculateIssueDecisionDeadline(
 					new Date(appeal.siteVisit.visitEndTime || appeal.siteVisit.visitDate || 0),
 					approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION_AFTER_SITE_VISIT
 				);
 			}
-			return addBusinessDays(
+			return await calculateIssueDecisionDeadline(
 				new Date(appeal.caseCreatedDate),
 				approxStageCompletion.STATE_TARGET_ISSUE_DETERMINATION
 			);
@@ -257,7 +262,13 @@ export const mapAppealToDueDate = (appeal, appellantCaseStatus, appellantCaseDue
 			});
 		}
 		case APPEAL_CASE_STATUS.AWAITING_EVENT: {
-			return new Date(appeal.siteVisit?.visitDate || 0);
+			if (appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN) {
+				return appeal.siteVisit ? new Date(appeal.siteVisit?.visitDate || 0) : undefined;
+			}
+			if (appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.HEARING) {
+				return appeal.hearing ? new Date(appeal.hearing?.hearingStartTime || 0) : undefined;
+			}
+			return undefined;
 		}
 		case APPEAL_CASE_STATUS.EVENT: {
 			return new Date(
@@ -286,7 +297,6 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 		if (
 			relation.childRef === currentAppealRef &&
 			relation.parentId &&
-			relation.parentId !== null &&
 			relevantIds.indexOf(relation.parentId) === -1
 		) {
 			relevantIds.push(relation.parentId);
@@ -294,7 +304,6 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 		if (
 			relation.parentRef === currentAppealRef &&
 			relation.childId &&
-			relation.childId !== null &&
 			relevantIds.indexOf(relation.childId) === -1
 		) {
 			relevantIds.push(relation.childId);
@@ -304,4 +313,4 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 	return relevantIds;
 };
 
-export { formatAppeal, formatMyAppeals, getIdsOfReferencedAppeals };
+export { formatAppeal, formatMyAppeal, getIdsOfReferencedAppeals };

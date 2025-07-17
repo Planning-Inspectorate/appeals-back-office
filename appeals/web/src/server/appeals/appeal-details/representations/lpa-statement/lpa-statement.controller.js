@@ -1,14 +1,13 @@
 import { COMMENT_STATUS, APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { reviewLpaStatementPage, viewLpaStatementPage } from './lpa-statement.mapper.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderReviewLpaStatement = async (request, response) => {
-	const { errors, currentAppeal, currentRepresentation, session, query } = request;
-
-	const backUrl = query.backUrl ? String(query.backUrl) : '/';
+	const { errors, currentAppeal, currentRepresentation, session } = request;
 
 	const isReview = [
 		APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
@@ -19,7 +18,7 @@ export const renderReviewLpaStatement = async (request, response) => {
 		currentAppeal,
 		currentRepresentation,
 		session,
-		backUrl
+		getBackLinkUrlFromQuery(request)
 	);
 
 	return response
@@ -57,15 +56,19 @@ export const postReviewLpaStatement = async (request, response) => {
 			if (!('acceptLPAStatement' in session)) {
 				session.acceptLPAStatement = {};
 			}
+			if (!(currentAppeal.appealId in session['acceptLPAStatement'])) {
+				session.acceptLPAStatement[currentAppeal.appealId] = {};
+			}
 			if (
 				!currentAppeal.allocationDetails?.level ||
 				!currentAppeal.allocationDetails?.specialisms?.length
 			) {
-				session.acceptLPAStatement.forcedAllocation = true;
+				session.acceptLPAStatement[currentAppeal.appealId].forcedAllocation = true;
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-level`
 				);
 			}
+			delete session.acceptLPAStatement[currentAppeal.appealId].forcedAllocation;
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/lpa-statement/valid/allocation-check`
 			);

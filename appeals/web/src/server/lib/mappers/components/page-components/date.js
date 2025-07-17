@@ -1,3 +1,7 @@
+import {
+	assembleClassesFromErrors,
+	assembleDocumentDateClassesFromErrors
+} from '#lib/mappers/utils/create-class-for-date-errors.js';
 import { kebabCase } from 'lodash-es';
 
 /**
@@ -11,9 +15,12 @@ import { kebabCase } from 'lodash-es';
  * @param {string} [params.id]
  * @param {string} [params.namePrefix]
  * @param {DayMonthYearHourMinute|null} [params.value]
- * @param {string} [params.legendText]
+ * @param {string} params.legendText
  * @param {boolean} [params.legendIsPageHeading=false]
+ * @param {string} [params.legendClasses]
  * @param {string} [params.hint]
+ * @param {import("@pins/express").ValidationErrors | undefined} [params.errors]
+ *
  * @returns {PageComponent}
  */
 export function dateInput({
@@ -23,38 +30,62 @@ export function dateInput({
 	value,
 	legendText,
 	legendIsPageHeading = false,
-	hint
+	legendClasses = 'govuk-fieldset__legend--l',
+	hint,
+	errors
 }) {
 	const formattedNamePrefix = namePrefix ? `${namePrefix}-` : '';
+	const hasErrors =
+		errors?.[formattedNamePrefix + 'day']?.msg ||
+		errors?.[formattedNamePrefix + 'month']?.msg ||
+		errors?.[formattedNamePrefix + 'year']?.msg;
+
+	const classes = assembleClassesFromErrors(errors, formattedNamePrefix);
+	const defaultId = id || kebabCase(name);
 
 	/** @type {PageComponent} */
 	const component = {
 		type: 'date-input',
 		parameters: {
-			id: id || kebabCase(name),
+			id: defaultId || kebabCase(name),
 			items: [
 				{
 					label: 'Day',
 					name: `${formattedNamePrefix}day`,
-					classes: 'govuk-input--width-2',
+					id: `${formattedNamePrefix}day`,
+					classes: `govuk-input--width-2 ${classes.day}`,
 					value: value?.day
 				},
 				{
 					label: 'Month',
 					name: `${formattedNamePrefix}month`,
-					classes: 'govuk-input--width-2',
+					id: `${formattedNamePrefix}month`,
+					classes: `govuk-input--width-2 ${classes.month}`,
 					value: value?.month
 				},
 				{
 					label: 'Year',
 					name: `${formattedNamePrefix}year`,
-					classes: 'govuk-input--width-4',
+					id: `${formattedNamePrefix}year`,
+					classes: `govuk-input--width-4 ${classes.year}`,
 					value: value?.year
 				}
 			],
 			hint: hint && {
 				text: hint
-			}
+			},
+			errorMessage:
+				errors && hasErrors
+					? {
+							html: [
+								errors[formattedNamePrefix + 'day']?.msg,
+								errors[formattedNamePrefix + 'month']?.msg,
+								errors[formattedNamePrefix + 'year']?.msg
+							]
+								.filter(Boolean)
+								.join('<br>')
+					  }
+					: undefined
 		}
 	};
 
@@ -63,7 +94,91 @@ export function dateInput({
 			legend: {
 				text: legendText,
 				isPageHeading: legendIsPageHeading,
-				classes: 'govuk-fieldset__legend--l'
+				classes: legendClasses
+			}
+		};
+	}
+
+	return component;
+}
+
+/**
+ *
+ * @param {Object} params
+ * @param {string} [params.id]
+ * @param {DayMonthYearHourMinute|null} [params.value]
+ * @param {string} params.legendText
+ * @param {boolean} [params.legendIsPageHeading=false]
+ * @param {string} [params.legendClasses]
+ * @param {string} [params.hint]
+ * @param {boolean} [params.appealDocument]
+ * @param {number} [params.appealDocumentIndex]
+ * @param {import("@pins/express").ValidationErrors | undefined} [params.errors]
+ *
+ * @returns {PageComponent}
+ */
+export function documentDateInput({
+	value,
+	legendText,
+	legendIsPageHeading = false,
+	legendClasses = 'govuk-fieldset__legend--l',
+	hint,
+	appealDocumentIndex,
+	errors
+}) {
+	const hasErrors = errors && errors[`items[${appealDocumentIndex}].receivedDate`];
+	const classes = assembleDocumentDateClassesFromErrors(
+		errors,
+		`items[${appealDocumentIndex}].receivedDate`
+	);
+
+	/** @type {PageComponent} */
+	const component = {
+		type: 'date-input',
+		parameters: {
+			id: `items[${appealDocumentIndex}]receivedDate`,
+			namePrefix: `items[${appealDocumentIndex}][receivedDate]`,
+			items: [
+				{
+					label: 'Day',
+					name: '[day]',
+					id: kebabCase(`items[${appealDocumentIndex}].receivedDate.day`),
+					classes: `govuk-input--width-2 ${classes.day}`,
+					value: value?.day
+				},
+				{
+					label: 'Month',
+					name: '[month]',
+					id: kebabCase(`items[${appealDocumentIndex}].receivedDate.month`),
+					classes: `govuk-input--width-2 ${classes.month}`,
+					value: value?.month
+				},
+				{
+					label: 'Year',
+					name: '[year]',
+					id: kebabCase(`items[${appealDocumentIndex}].receivedDate.year`),
+					classes: `govuk-input--width-4 ${classes.year}`,
+					value: value?.year
+				}
+			],
+			hint: hint && {
+				text: hint
+			},
+			errorMessage:
+				errors && hasErrors
+					? {
+							html: [errors[`items[${appealDocumentIndex}].receivedDate`]?.msg]
+					  }
+					: undefined
+		}
+	};
+
+	if (legendText) {
+		component.parameters.fieldset = {
+			legend: {
+				text: legendText,
+				isPageHeading: legendIsPageHeading,
+				classes: legendClasses
 			}
 		};
 	}

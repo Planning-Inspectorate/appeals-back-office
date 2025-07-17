@@ -31,7 +31,7 @@ const startAppeal = async (req, res) => {
 			notifyClient,
 			siteAddress,
 			req.get('azureAdUserId') || '',
-			body.procedureType
+			body.procedureType || appeal.procedureType?.key
 		);
 
 		if (result.success) {
@@ -49,12 +49,10 @@ const startAppeal = async (req, res) => {
  * @returns {Promise<Response>}
  */
 const updateAppealTimetableById = async (req, res) => {
-	const { body, params, appeal } = req;
-	const appealTimetableId = Number(params.appealTimetableId);
-	const appealId = Number(appeal.id);
+	const { body, appeal, notifyClient } = req;
 
 	try {
-		await updateAppealTimetable(appealId, appealTimetableId, body, req.get('azureAdUserId') || '');
+		await updateAppealTimetable(appeal, body, notifyClient, req.get('azureAdUserId') || '');
 
 		const updatedTimetable = {
 			lpaQuestionnaireDueDate: body.lpaQuestionnaireDueDate,
@@ -63,7 +61,10 @@ const updateAppealTimetableById = async (req, res) => {
 			lpaStatementDueDate: body.lpaStatementDueDate,
 			finalCommentsDueDate: body.finalCommentsDueDate,
 			s106ObligationDueDate: body.s106ObligationDueDate,
-			issueDeterminationDate: body.issueDeterminationDate
+			issueDeterminationDate: body.issueDeterminationDate,
+			statementOfCommonGroundDueDate: body.statementOfCommonGroundDueDate,
+			planningObligationDueDate: body.planningObligationDueDate,
+			proofOfEvidenceAndWitnessesDueDate: body.proofOfEvidenceAndWitnessesDueDate
 		};
 
 		return res.send(updatedTimetable);

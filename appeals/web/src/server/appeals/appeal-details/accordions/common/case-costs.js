@@ -14,7 +14,11 @@ export const getCaseCosts = (mappedData) => ({
 		],
 		rows: [
 			mappedData.appeal.costsAppellantApplication.display.tableItem,
-			mappedData.appeal.costsDecision.display.tableItem
+			mappedData.appeal.costsAppellantWithdrawal.display.tableItem,
+			mappedData.appeal.costsAppellantCorrespondence.display.tableItem,
+			mappedData.appeal.costsLpaApplication.display.tableItem,
+			mappedData.appeal.costsLpaWithdrawal.display.tableItem,
+			mappedData.appeal.costsLpaCorrespondence.display.tableItem
 		].filter(isDefined),
 		firstCellIsHeader: true
 	}

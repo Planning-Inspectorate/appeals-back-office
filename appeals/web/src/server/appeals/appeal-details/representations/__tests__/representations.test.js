@@ -44,7 +44,7 @@ describe('representations', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Share IP comments and statements</h1>');
 			expect(element.innerHTML).toContain(
-				`<a href="/appeals-service/appeal-details/1/interested-party-comments?backUrl=/share#valid"`
+				`<a href="/appeals-service/appeal-details/1/interested-party-comments?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fshare#valid"`
 			);
 		});
 	});
@@ -70,6 +70,10 @@ describe('representations', () => {
 				nock('http://test/')
 					.get('/appeals/1/reps?type=lpa_final_comment')
 					.reply(200, lpaFinalCommentsAwaitingReview)
+					.persist();
+				nock('http://test/')
+					.get('/appeals/1/appellant-cases/0')
+					.reply(200, { planningObligation: { hasObligation: false } })
 					.persist();
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 			});

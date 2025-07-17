@@ -96,15 +96,14 @@ export function generateHASComponents(
 				}
 			},
 			rows: [
-				removeSummaryListActions(
-					mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
-				),
+				mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
 				mappedAppellantCaseData.applicationReference.display.summaryListItem,
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
+				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
+				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
-				mappedAppellantCaseData.decisionLetter.display.summaryListItem,
-				mappedAppellantCaseData.applicationDecision.display.summaryListItem
+				mappedAppellantCaseData.decisionLetter.display.summaryListItem
 			]
 		}
 	};
@@ -127,7 +126,9 @@ export function generateHASComponents(
 					text: '4. Appeal details'
 				}
 			},
-			rows: [removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem)]
+			rows: [
+				removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem)
+			]
 		}
 	};
 

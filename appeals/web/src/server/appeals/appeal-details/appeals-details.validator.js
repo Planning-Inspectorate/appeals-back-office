@@ -4,6 +4,6 @@ import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 export const validateCaseNoteTextArea = createTextareaValidator(
 	'comment',
 	'Enter case note',
-	textInputCharacterLimits.defaultInputLength,
-	`Case note must be ${textInputCharacterLimits.defaultInputLength} characters or less`
+	textInputCharacterLimits.caseNoteTextInputLength,
+	`Case note must be ${textInputCharacterLimits.caseNoteTextInputLength} characters or less`
 );

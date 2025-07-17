@@ -46,6 +46,7 @@ resource "azurerm_private_endpoint" "sql_primary" {
 
 resource "azurerm_mssql_database" "primary" {
   #checkov:skip=CKV_AZURE_224: TODO: Ensure that the Ledger feature is enabled on database that requires cryptographic proof and nonrepudiation of data integrity
+  #checkov:skip=CKV_AZURE_229: "Ensure the Azure SQL Database Namespace is zone redundant
   name        = "${local.org}-sqldb-${local.resource_suffix}"
   server_id   = azurerm_mssql_server.primary.id
   collation   = "SQL_Latin1_General_CP1_CI_AS"

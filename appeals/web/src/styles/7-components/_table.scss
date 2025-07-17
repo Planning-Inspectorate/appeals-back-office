@@ -1,4 +1,8 @@
 @use "../../../node_modules/govuk-frontend/dist/govuk/helpers/_colour" as color;
+@use "../../../node_modules/govuk-frontend/dist/govuk/helpers/media-queries" as
+	mixins;
+@use "../../../node_modules/govuk-frontend/dist/govuk/settings/media-queries" as
+	settings;
 
 .govuk-accordion__section-content {
 	.govuk-summary-list:last-child {
@@ -9,6 +13,25 @@
 		.govuk-table__header,
 		.govuk-table__cell {
 			border-bottom: none;
+		}
+	}
+}
+
+.govuk-table.govuk-table--case-list {
+	@include mixins.govuk-media-query(
+		$from: 0px,
+		$until: map-get(settings.$govuk-breakpoints, "desktop")
+	) {
+		table-layout: fixed;
+	}
+
+	@include mixins.govuk-media-query($from: 0, $until: 1024px) {
+		.govuk-table__body {
+			word-break: break-word;
+
+			.govuk-tag {
+				word-break: normal;
+			}
 		}
 	}
 }

@@ -8,9 +8,11 @@
 export const formatListedBuildingDetails = (values) =>
 	// @ts-ignore
 	(values &&
-		values.map(({ listEntry, id, affectsListedBuilding }) => ({
+		values.map(({ listEntry, id, affectsListedBuilding, listedBuilding }) => ({
 			id,
 			listEntry,
-			affectsListedBuilding
+			affectsListedBuilding,
+			name: listedBuilding?.name,
+			grade: listedBuilding?.grade
 		}))) ||
 	null;

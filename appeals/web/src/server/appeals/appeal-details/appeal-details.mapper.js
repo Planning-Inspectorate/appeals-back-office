@@ -6,6 +6,7 @@ import { generateAccordionItems } from './accordions/index.js';
 import { generateCaseNotes } from './case-notes/case-notes.mapper.js';
 import { generateStatusTags } from './status-tags/status-tags.mapper.js';
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
+import { formatCaseOfficerDetailsForCaseSummary } from '#lib/mappers/utils/format-case-officer-details-for-case-summary.js';
 
 export const pageHeading = 'Case details';
 
@@ -19,6 +20,7 @@ export const pageHeading = 'Case details';
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('./representations/representations.service.js').Representation|undefined} [appellantFinalComments]
  * @param {import('./representations/representations.service.js').Representation|undefined} [lpaFinalComments]
+ * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} [appellantCase]
  * @returns {Promise<PageContent>}
  */
 export async function appealDetailsPage(
@@ -28,17 +30,50 @@ export async function appealDetailsPage(
 	session,
 	request,
 	appellantFinalComments,
-	lpaFinalComments
+	lpaFinalComments,
+	appellantCase
 ) {
 	const mappedData = await initialiseAndMapAppealData(
 		appealDetails,
 		currentRoute,
 		session,
+		request,
 		false,
 		appellantFinalComments,
-		lpaFinalComments
+		lpaFinalComments,
+		appellantCase
 	);
+
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+
+	/**
+	 * @type {PageComponent}
+	 */
+	const caseSummary = {
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			classes: 'pins-summary-list--no-border',
+			rows: [
+				...(mappedData.appeal.caseOfficer.display.summaryListItem
+					? [
+							formatCaseOfficerDetailsForCaseSummary(
+								mappedData.appeal.caseOfficer.display.summaryListItem
+							)
+					  ]
+					: []),
+				...(mappedData.appeal.siteAddress.display.summaryListItem
+					? [mappedData.appeal.siteAddress.display.summaryListItem]
+					: []),
+				...(mappedData.appeal.localPlanningAuthority.display.summaryListItem
+					? [mappedData.appeal.localPlanningAuthority.display.summaryListItem]
+					: [])
+			]
+		}
+	};
 
 	const caseNotes = await generateCaseNotes(appealCaseNotes, request);
 	const caseDownload = mappedData.appeal.downloadCaseFiles.display.htmlItem
@@ -47,7 +82,7 @@ export async function appealDetailsPage(
 
 	const accordion = generateAccordionItems(appealDetails, mappedData, session);
 
-	const statusDependentNotifications = mapStatusDependentNotifications(appealDetails, currentRoute);
+	const statusDependentNotifications = mapStatusDependentNotifications(appealDetails, request);
 	const notificationBanners = sortNotificationBanners([
 		...statusDependentNotifications,
 		...mapNotificationBannersFromSession(session, 'appealDetails', appealDetails.appealId)
@@ -56,6 +91,7 @@ export async function appealDetailsPage(
 	const pageComponents = [
 		...notificationBanners,
 		...(await generateStatusTags(mappedData, appealDetails, request)),
+		caseSummary,
 		...caseDownload,
 		caseNotes,
 		accordion

@@ -54,19 +54,30 @@ export function loadConfig() {
 		CACHE_CONTROL_MAX_AGE,
 		FEATURE_FLAG_S78_WRITTEN,
 		FEATURE_FLAG_S78_HEARING,
+		FEATURE_FLAG_S78_INQUIRY,
+		FEATURE_FLAG_LINKED_APPEALS,
+		FEATURE_FLAG_S20,
+		FEATURE_FLAG_CAS,
+		FEATURE_FLAG_ISSUE_DECISION,
+		FEATURE_FLAG_RE_ISSUE_DECISION,
+		FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT,
+		FEATURE_FLAG_CHANGE_APPEAL_TYPE,
+		FEATURE_FLAG_PDF_DOWNLOAD,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
 		HTTPS_ENABLED,
 		HTTPS_PORT,
 		LOG_LEVEL_STDOUT,
 		DISABLE_REDIS,
+		PDF_SERVICE_HOST,
 		REDIS_CONNECTION_STRING,
 		SESSION_SECRET,
 		SESSION_MAX_AGE,
 		SSL_CERT_FILE,
 		SSL_KEY_FILE,
 		RETRY_MAX_ATTEMPTS,
-		RETRY_STATUS_CODES
+		RETRY_STATUS_CODES,
+		USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA
 	} = environment;
 
 	const config = {
@@ -122,8 +133,19 @@ export function loadConfig() {
 		// set Feature Flag default val here [default: false] - will be overwritted by values coming from the .env file
 		featureFlags: {
 			featureFlagS78Written: FEATURE_FLAG_S78_WRITTEN === 'true',
-			featureFlagS78Hearing: FEATURE_FLAG_S78_HEARING === 'true'
-		}
+			featureFlagS78Hearing: FEATURE_FLAG_S78_HEARING === 'true',
+			featureFlagS78Inquiry: FEATURE_FLAG_S78_INQUIRY === 'true',
+			featureFlagLinkedAppeals: FEATURE_FLAG_LINKED_APPEALS === 'true',
+			featureFlagS20: FEATURE_FLAG_S20 === 'true',
+			featureFlagCAS: FEATURE_FLAG_CAS === 'true',
+			featureFlagIssueDecision: FEATURE_FLAG_ISSUE_DECISION === 'true',
+			featureFlagReIssueDecision: FEATURE_FLAG_RE_ISSUE_DECISION === 'true',
+			featureFlagSimplifyTeamAssignment: FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT === 'true',
+			featureFlagChangeAppealType: FEATURE_FLAG_CHANGE_APPEAL_TYPE === 'true',
+			featureFlagPdfDownload: FEATURE_FLAG_PDF_DOWNLOAD === 'true'
+		},
+		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
+		pdfServiceHost: PDF_SERVICE_HOST
 	};
 
 	const { value: validatedConfig, error } = schema.validate(config);

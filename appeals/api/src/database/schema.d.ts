@@ -25,10 +25,14 @@ export interface Appeal extends schema.Appeal {
 	inspectorDecision?: InspectorDecision | null;
 	neighbouringSites?: NeighbouringSite[] | null;
 	folders?: Folder[] | null;
+	hearing?: Hearing | null;
 	appellantProcedurePreference?: string | null;
 	appellantProcedurePreferenceDetails?: string | null;
 	appellantProcedurePreferenceDuration?: number | null;
 	representations?: Representation[] | null;
+	hearingEstimate?: HearingEstimate | null;
+	inquiry?: Inquiry | null;
+	inquiryEstimate?: InquiryEstimate | null;
 }
 export interface CaseNote extends schema.CaseNote {
 	user: User;
@@ -37,6 +41,14 @@ export interface AppealRelationship extends schema.AppealRelationship {
 	parent?: Appeal | null;
 	child?: Appeal | null;
 }
+
+export interface Hearing extends schema.Hearing {
+	address: Address;
+}
+export interface Inquiry extends schema.Inquiry {
+	address: Address;
+}
+
 export interface AppealType extends schema.AppealType {}
 export interface AppealTimetable extends schema.AppealTimetable {}
 export interface AppealStatus extends schema.AppealStatus {}
@@ -100,7 +112,10 @@ export interface LPAQuestionnaireIncompleteReasonsSelected
 }
 export interface LPAQuestionnaireIncompleteReasonText
 	extends schema.LPAQuestionnaireIncompleteReasonText {}
-export interface ListedBuildingSelected extends schema.ListedBuildingSelected {}
+export interface ListedBuilding extends schema.ListedBuilding {}
+export interface ListedBuildingSelected extends schema.ListedBuildingSelected {
+	listedBuilding: ListedBuilding;
+}
 export interface LPANotificationMethods extends schema.LPANotificationMethods {}
 export interface LPANotificationMethodsSelected extends schema.LPANotificationMethodsSelected {
 	lpaNotificationMethod: LPANotificationMethods;
@@ -167,3 +182,7 @@ export interface RepresentationRejectionReasonText
 	extends schema.RepresentationRejectionReasonText {
 	representationRejectionReasonsSelected: RepresentationRejectionReasonsSelected;
 }
+
+export interface AppealNotification extends schema.AppealNotification {}
+export interface HearingEstimate extends schema.HearingEstimate {}
+export interface InquiryEstimate extends schema.InquiryEstimate {}

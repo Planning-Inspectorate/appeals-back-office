@@ -49,6 +49,10 @@ describe('environmental-assessment', () => {
 			.get('/appeals/document-redaction-statuses')
 			.reply(200, [{ key: 'no_redaction_required', id: 10 }])
 			.persist();
+		nock('http://test/')
+			.get('/appeals/1/appellant-cases/0')
+			.reply(200, { planningObligation: { hasObligation: false } })
+			.persist();
 	});
 
 	afterEach(() => {
@@ -177,7 +181,7 @@ describe('environmental-assessment', () => {
 			});
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Success</h3>');
-			expect(element.innerHTML).toContain('Document updated</p>');
+			expect(element.innerHTML).toContain('Agreement to change description evidence updated</p>');
 		});
 	});
 
@@ -188,15 +192,20 @@ describe('environmental-assessment', () => {
 			);
 			expect(response.statusCode).toBe(200);
 
-			const headingElement = parseHtml(response.text, { rootElement: '.govuk-main-wrapper' });
-			expect(headingElement.innerHTML).toMatchSnapshot();
-			expect(headingElement.innerHTML).toContain('Manage folder</span>');
-			expect(headingElement.innerHTML).toContain('Environmental assessment documents</h1>');
+			const element = parseHtml(response.text, { rootElement: '.govuk-main-wrapper' });
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Manage folder</span>');
+			expect(element.innerHTML).toContain('Environmental assessment documents</h1>');
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true });
+			expect(unprettifiedHtml.innerHTML).toContain(
+				`<a href="/appeals-service/appeal-details/${appealId}/environmental-assessment/upload-documents/${folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>`
+			);
 		});
 	});
 
 	describe('GET /environmental-assessment/manage-documents/:folderId/:documentId', () => {
-		it('should render the manage documents page', async () => {
+		it('should render the manage document page', async () => {
 			const response = await request.get(
 				`${baseUrl}/${appealId}/environmental-assessment/manage-documents/${folderId}/${documentId}`
 			);

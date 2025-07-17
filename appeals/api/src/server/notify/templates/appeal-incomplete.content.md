@@ -1,15 +1,14 @@
-# Appeal details
-
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
+{% include 'parts/appeal-details.md' %}
 
 We have received your appeal and we need more information.
 
 # Next steps
 
-You need to submit the following by ((due_date)) to caseofficers@planninginspectorate.gov.uk
-
-((reasons))
+You need to submit the following by {{due_date}} to caseofficers@planninginspectorate.gov.uk
+{% for reason in reasons %}
+- {{reason}}
+{%- endfor %}
 
 The Planning Inspectorate
+caseofficers@planninginspectorate.gov.uk
+

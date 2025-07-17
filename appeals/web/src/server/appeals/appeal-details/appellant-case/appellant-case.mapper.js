@@ -1,5 +1,5 @@
 import config from '#environment/config.js';
-import { inputInstructionIsRadiosInputInstruction } from '#lib/mappers/index.js';
+import { dateInput, inputInstructionIsRadiosInputInstruction } from '#lib/mappers/index.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
@@ -30,8 +30,10 @@ import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { generateHASComponents } from './page-components/has.mapper.js';
 import { generateS78Components } from './page-components/s78.mapper.js';
+import { generateCASComponents } from './page-components/cas.mapper.js';
 import { permissionNames } from '#environment/permissions.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { generateS20Components } from './page-components/s20.mapper.js';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
@@ -51,10 +53,17 @@ import { ensureArray } from '#lib/array-utilities.js';
  * @param {SingleAppellantCaseResponse} appellantCaseData
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
+ * @param {string|undefined} backUrl
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
  * @returns {Promise<PageContent>}
  */
-export async function appellantCasePage(appellantCaseData, appealDetails, currentRoute, session) {
+export async function appellantCasePage(
+	appellantCaseData,
+	appealDetails,
+	currentRoute,
+	backUrl,
+	session
+) {
 	const mappedAppellantCaseData = initialiseAndMapData(
 		appellantCaseData,
 		appealDetails,
@@ -62,27 +71,36 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 		session
 	);
 
+	const lpaText = 'Local planning authority';
+
 	/**
 	 * @type {PageComponent}
 	 */
 	const appellantCaseSummary = {
 		type: 'summary-list',
 		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">',
 			closing: '</div></div>'
 		},
 		parameters: {
 			classes: 'govuk-summary-list--no-border',
 			rows: [
 				...(mappedAppellantCaseData.siteAddress.display.summaryListItem
-					? [mappedAppellantCaseData.siteAddress.display.summaryListItem]
+					? [
+							{
+								...mappedAppellantCaseData.siteAddress.display.summaryListItem,
+								key: {
+									text: 'Site address'
+								}
+							}
+					  ]
 					: []),
 				...(mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
 					? [
 							{
 								...mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
 								key: {
-									text: 'LPA'
+									text: lpaText
 								}
 							}
 					  ]
@@ -92,7 +110,8 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 	};
 
 	appellantCaseSummary.parameters.rows = appellantCaseSummary.parameters.rows.map(
-		(/** @type {SummaryListRowProperties} */ row) => removeSummaryListActions(row)
+		(/** @type {SummaryListRowProperties} */ row) =>
+			row.key.text === lpaText ? row : removeSummaryListActions(row)
 	);
 
 	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
@@ -173,13 +192,14 @@ export async function appellantCasePage(appellantCaseData, appealDetails, curren
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Appellant case - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Appellant case',
 		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',
 		pageComponents: [
 			...errorSummaryPageComponents,
 			...notificationBanners,
+			appellantCaseSummary,
 			...appealTypeSpecificComponents,
 			...reviewOutcomeComponents
 		]
@@ -227,13 +247,21 @@ export function getValidationOutcomeFromAppellantCase(appellantCaseData) {
 
 /**
  * @param {Appeal} appealData
- * @param {number|string} [dueDateDay]
- * @param {number|string} [dueDateMonth]
- * @param {number|string} [dueDateYear]
+ * @param {number | string} [dueDateDay]
+ * @param {number | string} [dueDateMonth]
+ * @param {number | string} [dueDateYear]
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {boolean} [errorsOnPage]
  * @returns {PageContent}
  */
-export function updateDueDatePage(appealData, dueDateDay, dueDateMonth, dueDateYear, errorsOnPage) {
+export function updateDueDatePage(
+	appealData,
+	errors,
+	dueDateDay,
+	dueDateMonth,
+	dueDateYear,
+	errorsOnPage
+) {
 	let existingDueDateDayMonthYear = {
 		day: dueDateDay,
 		month: dueDateMonth,
@@ -260,35 +288,19 @@ export function updateDueDatePage(appealData, dueDateDay, dueDateMonth, dueDateY
 			type: 'submit'
 		},
 		pageComponents: [
-			{
-				type: 'date-input',
-				parameters: {
-					id: 'due-date',
-					namePrefix: 'due-date',
-					hint: {
-						text: 'For example, 27 3 2007'
-					},
-					...(existingDueDateDayMonthYear && {
-						items: [
-							{
-								name: 'day',
-								classes: 'govuk-input--width-2',
-								value: existingDueDateDayMonthYear.day
-							},
-							{
-								name: 'month',
-								classes: 'govuk-input--width-2',
-								value: existingDueDateDayMonthYear.month
-							},
-							{
-								name: 'year',
-								classes: 'govuk-input--width-4',
-								value: existingDueDateDayMonthYear.year
-							}
-						]
-					})
-				}
-			}
+			dateInput({
+				name: 'due-date',
+				id: 'due-date',
+				namePrefix: 'due-date',
+				hint: 'For example, 27 3 2007',
+				value: {
+					day: existingDueDateDayMonthYear.day,
+					month: existingDueDateDayMonthYear.month,
+					year: existingDueDateDayMonthYear.year
+				},
+				legendText: '',
+				errors: errors
+			})
 		]
 	};
 
@@ -353,11 +365,20 @@ export function checkAndConfirmPage(
 						text: `${capitalize(validationOutcomeAsString)} reasons`
 					},
 					value: {
-						html: mapReasonsToReasonsListHtml(
-							reasonOptions,
-							invalidOrIncompleteReasons,
-							invalidOrIncompleteReasonsText
-						)
+						html: '',
+						pageComponents: [
+							{
+								type: 'show-more',
+								parameters: {
+									html: mapReasonsToReasonsListHtml(
+										reasonOptions,
+										invalidOrIncompleteReasons,
+										invalidOrIncompleteReasonsText
+									),
+									labelText: 'Read more'
+								}
+							}
+						]
 					},
 					actions: {
 						items: [
@@ -401,6 +422,11 @@ export function checkAndConfirmPage(
 		}
 	};
 
+	/** @type {PageComponent[]} */
+	const pageComponents = [summaryListComponent, insetTextComponent];
+
+	preRenderPageComponents(pageComponents);
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check answers',
@@ -410,7 +436,7 @@ export function checkAndConfirmPage(
 				: `/appeals-service/appeal-details/${appealId}/appellant-case/${validationOutcome}`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check your answers before confirming your review',
-		pageComponents: [summaryListComponent, insetTextComponent]
+		pageComponents
 	};
 
 	if (
@@ -690,6 +716,23 @@ function generateCaseTypeSpecificComponents(
 			} else {
 				throw new Error('Feature flag inactive for S78');
 			}
+		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20)) {
+				return generateS20Components(
+					appealDetails,
+					appellantCaseData,
+					mappedAppellantCaseData,
+					userHasUpdateCasePermission
+				);
+			} else {
+				throw new Error('Feature flag inactive for S20');
+			}
+		case APPEAL_TYPE.COMMERCIAL:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
+				return generateCASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
+			} else {
+				throw new Error('Feature flag inactive for CAS');
+			}
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');
 	}
@@ -748,5 +791,36 @@ export function getPageHeadingTextOverrideForAddDocuments(folder) {
 			return 'Upload your other new supporting documents';
 		default:
 			break;
+	}
+}
+
+/**
+ * @param {string} folderPath
+ * @returns {string | undefined}
+ */
+export function getDocumentNameFromFolder(folderPath) {
+	switch (folderPath.split('/')[1]) {
+		case APPEAL_DOCUMENT_TYPE.APPLICATION_DECISION_LETTER:
+			return 'decision letter from the local planning authority';
+		case APPEAL_DOCUMENT_TYPE.PLANS_DRAWINGS:
+			return 'plans, drawings and list of plans';
+		case APPEAL_DOCUMENT_TYPE.ORIGINAL_APPLICATION_FORM:
+			return 'application form';
+		case APPEAL_DOCUMENT_TYPE.CHANGED_DESCRIPTION:
+			return 'evidence of your agreement to change the description of development';
+		case APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT:
+			return 'appeal statement';
+		case APPEAL_DOCUMENT_TYPE.PLANNING_OBLIGATION:
+			return 'planning obligation';
+		case APPEAL_DOCUMENT_TYPE.OWNERSHIP_CERTIFICATE:
+			return 'separate ownership certificate and agricultural land declaration';
+		case APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_APPLICATION:
+			return 'application for an award of appeal costs';
+		case APPEAL_DOCUMENT_TYPE.DESIGN_ACCESS_STATEMENT:
+			return 'design and access statement';
+		case APPEAL_DOCUMENT_TYPE.NEW_PLANS_DRAWINGS:
+			return 'new plans or drawings';
+		case APPEAL_DOCUMENT_TYPE.OTHER_NEW_DOCUMENTS:
+			return 'other new supporting documents';
 	}
 }

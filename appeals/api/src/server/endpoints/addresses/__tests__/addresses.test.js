@@ -14,7 +14,7 @@ import {
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { formatAddressSingleLine } from '../addresses.formatter.js';
+import { formatAddressSingleLine, formatAddressMultiline } from '../addresses.formatter.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -135,6 +135,8 @@ describe('addresses routes', () => {
 					id: 1,
 					azureAdUserId
 				});
+				// @ts-ignore
+				databaseConnector.address.update.mockResolvedValue(householdAppeal.address);
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/addresses/${householdAppeal.address.id}`)
@@ -150,7 +152,9 @@ describe('addresses routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_ADDRESS_UPDATED,
+						details: stringTokenReplacement(AUDIT_TRAIL_ADDRESS_UPDATED, [
+							formatAddressMultiline(householdAppeal.address)
+						]),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}

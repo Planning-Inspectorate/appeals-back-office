@@ -19,10 +19,8 @@ export const happyPathHelper = {
 		caseDetailsPage.clickAssignCaseOfficer();
 		caseDetailsPage.searchForCaseOfficer('case');
 		caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
-		caseDetailsPage.clickLinkByText('Choose');
-		caseDetailsPage.selectRadioButtonByValue('Yes');
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.validateBannerMessage('Case officer has been assigned');
+		caseDetailsPage.clickButtonByText('Assign case officer');
+		caseDetailsPage.validateBannerMessage('Success', 'Case officer assigned');
 		caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 	},
 	reviewAppellantCase(caseRef) {
@@ -48,8 +46,8 @@ export const happyPathHelper = {
 	reviewS78Lpaq(caseRef) {
 		let dueDate = new Date();
 
-		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		//cy.visit(urlPaths.appealsList);
+		//listCasesPage.clickAppealByRef(caseRef);
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue('Complete');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -72,6 +70,22 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Start case');
 	},
+	reviewLPaStatement(caseRef) {
+		happyPathHelper.reviewS78Lpaq(caseRef);
+		caseDetailsPage.checkStatusOfCase('Statements', 0);
+		happyPathHelper.addThirdPartyComment(caseRef, true);
+		caseDetailsPage.clickBackLink();
+		happyPathHelper.addThirdPartyComment(caseRef, false);
+		caseDetailsPage.clickBackLink();
+		happyPathHelper.addLpaStatement(caseRef);
+		cy.simulateStatementsDeadlineElapsed(caseRef);
+		cy.reload();
+		caseDetailsPage.basePageElements.bannerLink().click();
+		caseDetailsPage.clickButtonByText('Confirm');
+		caseDetailsPage.checkStatusOfCase('Hearing ready to set up', 0);
+		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
+		caseDetailsPage.validateBannerMessage('Important', 'Set up hearing');
+	},
 
 	changeStartDate(caseRef) {
 		caseDetailsPage.clickChangeStartDate();
@@ -84,6 +98,12 @@ export const happyPathHelper = {
 		return visitDate;
 	},
 
+	getYesterday() {
+		const date = new Date();
+		date.setDate(date.getDate() - 1);
+		return date;
+	},
+
 	uploadDocAppellantCase(caseRef) {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
@@ -94,7 +114,10 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.validateBannerMessage('Document added');
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'Agreement to change description evidence added'
+		);
 	},
 
 	manageDocsAppellantCase(caseRef) {
@@ -105,11 +128,11 @@ export const happyPathHelper = {
 		caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('upload a new version');
-		caseDetailsPage.uploadSampleFile(sampleFiles.img);
+		caseDetailsPage.uploadSampleFile(sampleFiles.document2);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.validateBannerMessage('Document updated');
+		caseDetailsPage.validateBannerMessage('Success', 'Document updated');
 	},
 
 	uploadDocsLpaq(bannerMessage = 'Document added') {
@@ -129,7 +152,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickManageNotifyingParties();
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('Upload a new version');
-		caseDetailsPage.uploadSampleFile(sampleFiles.img);
+		caseDetailsPage.uploadSampleFile(sampleFiles.document2);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -198,6 +221,68 @@ export const happyPathHelper = {
 		dateTimeSection.enterVisitStartTime('08', '00');
 		dateTimeSection.enterVisitEndTime('12', '00');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.validateBannerMessage('Success', 'Site visit scheduled');
+		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
+	},
+
+	issueDecision(caseRef, decision) {
+		caseDetailsPage.clickIssueDecision();
+		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(decision));
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+		caseDetailsPage.clickButtonByText('Continue');
+
+		//Appellant costs
+		caseDetailsPage.selectRadioButtonByValue('Yes');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+		caseDetailsPage.clickButtonByText('Continue');
+
+		//LPA costs
+		caseDetailsPage.selectRadioButtonByValue('Yes');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+		caseDetailsPage.clickButtonByText('Continue');
+
+		//CYA
+		caseDetailsPage.clickButtonByText('Issue decision');
+
+		//Banner & inset text
+		caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
+		caseDetailsPage.checkDecisionOutcome(decision);
+	},
+
+	issueDecisionWithoutCosts(caseRef, decision) {
+		caseDetailsPage.clickIssueDecision();
+		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(decision));
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+		caseDetailsPage.clickButtonByText('Continue');
+
+		//Dont issue appellant & LPA costs
+		caseDetailsPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue('No');
+		caseDetailsPage.clickButtonByText('Continue');
+
+		//CYA
+		caseDetailsPage.clickButtonByText('Issue decision');
+
+		//Banner & inset text
+		caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
+		caseDetailsPage.checkDecisionOutcome(decision);
+	},
+
+	issueAppellantCostsDecision(caseRef) {
+		caseDetailsPage.clickIssueAppellantCostsDecision();
+		caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Issue appellant costs decision');
+	},
+
+	issueLpaCostsDecision(caseRef) {
+		caseDetailsPage.clickIssueLpaCostsDecision();
+		caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Issue lpa costs decision');
 	}
 };

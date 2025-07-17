@@ -9,6 +9,7 @@ import {
 	allocationLevelPage,
 	allocationSpecialismsPage
 } from '../allocation/allocation.mapper.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
 export const renderRedact = render(redactLpaStatementPage, 'patterns/display-page.pattern.njk');
 
@@ -54,6 +55,8 @@ export function postRedact(request, response) {
 		);
 	}
 
+	delete session.redactLPAStatement?.forcedAllocation;
+
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/lpa-statement/redact/allocation-check`
 	);
@@ -67,7 +70,7 @@ export function postRedact(request, response) {
 export function renderAllocationCheck(request, response) {
 	const { errors, currentAppeal, session } = request;
 
-	const pageContent = allocationCheckPage(currentAppeal, session.redactLPAStatement);
+	const pageContent = allocationCheckPage(currentAppeal, 'redact', session.redactLPAStatement);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		errors,
@@ -104,7 +107,7 @@ export function postAllocationCheck(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderAllocationLevel(request, response) {
-	const { errors, currentAppeal, currentRepresentation, session } = request;
+	const { errors, currentAppeal, session } = request;
 
 	const allocationLevels = await (async () => {
 		const levels = await api.getAllocationDetailsLevels(request.apiClient);
@@ -113,7 +116,6 @@ export async function renderAllocationLevel(request, response) {
 
 	const pageContent = allocationLevelPage(
 		currentAppeal,
-		currentRepresentation,
 		allocationLevels,
 		session.redactLPAStatement,
 		'redact'
@@ -157,7 +159,8 @@ export async function renderAllocationSpecialisms(request, response) {
 	const pageContent = allocationSpecialismsPage(
 		currentAppeal,
 		specialisms,
-		session.redactLPAStatement
+		session.redactLPAStatement,
+		'redact'
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -205,21 +208,31 @@ export async function postConfirm(request, response) {
 			specialisms
 		});
 	}
-
+	const isRedacted = checkRedactedText(
+		session.redactLPAStatement.redactedRepresentation || '',
+		currentRepresentation?.originalRepresentation || ''
+	);
 	await redactAndAccept(
 		apiClient,
 		parseInt(appealId),
 		currentRepresentation.id,
 		session.redactLPAStatement.redactedRepresentation
 	);
-
 	delete session.redactLPAStatement;
 
-	addNotificationBannerToSession({
-		session,
-		bannerDefinitionKey: 'lpaStatementRedactedAndAccepted',
-		appealId
-	});
+	if (!isRedacted) {
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'lpaStatementAccepted',
+			appealId
+		});
+	} else {
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'lpaStatementRedactedAndAccepted',
+			appealId
+		});
+	}
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 }

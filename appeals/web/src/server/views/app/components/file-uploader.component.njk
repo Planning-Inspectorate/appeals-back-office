@@ -4,52 +4,48 @@
 {%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes -%}
 
 {%- macro extensionsHtml(params) -%}
-<span>{{ 'Each file must be a ' if params.multiple else 'The file must be a ' }}
-{%- for extension in params.allowedTypes -%}
-	{%- if loop.index !== params.allowedTypes.length -%}{{ extension|upper }}{{", "}}
-	{%- else -%}{{"	or " }}{{ extension|upper }}.
-	{% endif %}
-{% endfor %}</span>
+	<span>{{ "Each file must be a " if params.multiple else "The file must be a " }}{{ params.allowedTypes | formattedFileTypes }}{{ " and smaller than 25MB"}}.</span>
 {% endmacro %}
 
 {%- macro fileUploader(params) -%}
 	<div class="govuk-grid-row pins-file-upload" data-next-page-url="{{ params.nextPageUrl }}"
+		 data-form-id="{{ params.formId }}"
 		 data-case-id="{{ params.caseId }}" data-case-reference="{{ params.caseReference }}" data-folder-id="{{ params.folderId }}"
 		 data-document-type="{{ params.documentType }}" data-document-stage="{{ params.documentStage }}"
 		 data-blob-storage-host="{{ params.blobStorageHost }}" data-blob-storage-container="{{ params.blobStorageContainer}}"
-		 {% if params.documentId %} data-document-id="{{ params.documentId }}"{% endif %}
-		 {% if params.documentOriginalFileName %} data-document-original-file-name="{{ params.documentOriginalFileName }}"{% endif %}
-		 {% if params.documentVersion %} data-document-version="{{ params.documentVersion }}"{% endif %}
-		 {% if params.useBlobEmulator %} data-use-blob-emulator="{{ params.useBlobEmulator }}"{% endif %}
-		 {% if params.accessToken %} data-access-token="{{ params.accessToken }}"{% endif %}
-		 {% if params.uncommittedFiles %} data-uncommitted-files="{{ params.uncommittedFiles }}"{% endif %}
-		 data-allowed-types="{% for value in params.allowedTypes %}{{ value|MIME }}{% endfor %}">
+		{% if params.documentId %} data-document-id="{{ params.documentId }}"{% endif %}
+		{% if params.documentOriginalFileName %} data-document-original-file-name="{{ params.documentOriginalFileName }}"{% endif %}
+		{% if params.documentVersion %} data-document-version="{{ params.documentVersion }}"{% endif %}
+		{% if params.documentTitle %} data-document-title="{{ params.documentTitle }}"{% endif %}
+		{% if params.useBlobEmulator %} data-use-blob-emulator="{{ params.useBlobEmulator }}"{% endif %}
+		{% if params.accessToken %} data-access-token="{{ params.accessToken }}"{% endif %}
+		{% if params.uncommittedFiles %} data-uncommitted-files="{{ params.uncommittedFiles }}"{% endif %}
+		 data-allowed-types="{{ params.allowedTypes | allowedMimeTypes }}"
+		 data-formatted-allowed-types="{{ params.allowedTypes | formattedFileTypes }}">
 		{% if params.formTitle %}
 			<h1 class="govuk-heading-m govuk-grid-column-full">{{ params.formTitle }}</h1>
 		{% endif %}
 		<form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds" data-filenames-in-folder="{{ params.filenamesInFolder }}">
 			<div class="pins-file-upload__container">
-				<div class="govuk-body colour--secondary pins-file-upload__instructions">
-					{%- set hintText = 'Choose a single file or multiple files to upload.' if params.multiple else 'Choose a single file to upload.' -%}
-					{%- set totalSizeText = 'The total size of your uploaded files must be smaller than 1GB.' if params.multiple else 'The file must be smaller than 25MB.' -%}
-					<label for="upload-file-{{ params.formId }}">{{ hintText }}</label>
+				<div class="govuk-body pins-file-upload__instructions">
 					{{ extensionsHtml(params) }}
-					<span>{{ totalSizeText }}</span>
+					{%- if params.multiple -%}<span>{{ 'The total size of your uploaded files must be smaller than 1GB.' }}</span>{%- endif -%}
 				</div>
 				<div class="middle-errors-hook">
+					<h2 class="pins-file-upload__container-title">{{ params.uploadContainerHeadingText }}</h2>
 					<div class="pins-file-upload__upload">
 						<input class="display--none"
 							   id="upload-file-{{ params.formId }}"
-							   accept="{% for value in params.allowedTypes %}{{ value|MIME }}{% endfor %}"
+							   accept="{{ params.allowedTypes | allowedMimeTypes }}"
 							   type="file" name="files" value="Choose file"
 							   aria-controls="file-list-{{ params.formId }}"
 							   {% if params.multiple %}multiple{% endif %}>
-						{% if params.multiple %}
-							<span class='govuk-body pins-file-upload__dropzone-text'>Drag and drop files here or</span>
-						{% endif %}
-						<button type='button' class="pins-file-upload__button govuk-button">
-							Select files
-						</button>
+						<div>
+							<button type='button' class="pins-file-upload__button govuk-button--secondary" data-cy="upload-file-button" id="upload-file-button-{{ params.formId }}">
+								Choose file{%- if params.multiple -%}s{%- endif -%}
+							</button>
+							<span class='govuk-body pins-file-upload__dropzone-text'>or drop file{%- if params.multiple -%}s{%- endif -%}</span>
+						</div>
 					</div>
 					<div id="file-list-{{ params.formId }}">
 						<h2 class="display--sr-only" id="file-list-title-{{ params.formId }}">List of files to upload</h2>
@@ -72,6 +68,8 @@
 				{{ govukButton({ text: params.text, type: 'submit', classes: 'pins-file-upload__submit', attributes: { id: ["submit-button-", params.formId] | join } }) }}
 				<div class="progress-hook"></div>
 			</div>
+			{% from "govuk/components/file-upload/macro.njk" import govukFileUpload %}
+
 		</form>
 	</div>
 {%- endmacro -%}

@@ -2,8 +2,8 @@ import logger from '#lib/logger.js';
 import { redactFinalCommentPage, confirmRedactFinalCommentPage } from './redact.mapper.js';
 import { redactAndAccept } from '#appeals/appeal-details/representations/representations.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getRedactFinalComment = async (request, response) => {
@@ -14,11 +14,6 @@ export const getRedactFinalComment = async (request, response) => {
 		session,
 		params: { finalCommentsType }
 	} = request;
-
-	if (currentRepresentation.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED) {
-		logger.info('returning 404 as final comments cannot be redacted after sharing');
-		return response.status(404).render('app/404.njk');
-	}
 
 	const pageContent = redactFinalCommentPage(
 		currentAppeal,
@@ -41,13 +36,8 @@ export const postRedactFinalComment = async (request, response) => {
 	const {
 		params: { appealId, finalCommentsType },
 		body: { redactedRepresentation },
-		session,
-		currentRepresentation
+		session
 	} = request;
-
-	if (currentRepresentation.status === APPEAL_REPRESENTATION_STATUS.PUBLISHED) {
-		throw new Error('cannot redact a final comment that has already been shared');
-	}
 
 	session.redactedRepresentation = redactedRepresentation;
 
@@ -96,7 +86,11 @@ export const postConfirmRedactFinalComment = async (request, response) => {
 			apiClient,
 			currentRepresentation
 		} = request;
-
+		//TODO: add accept comments flow
+		const isRedacted = checkRedactedText(
+			session.redactedRepresentation || '',
+			currentRepresentation?.originalRepresentation || ''
+		);
 		await redactAndAccept(
 			apiClient,
 			appealId,
@@ -105,16 +99,28 @@ export const postConfirmRedactFinalComment = async (request, response) => {
 		);
 
 		delete session.redactedRepresentation;
+		if (!isRedacted) {
+			const acceptFinalCommentsBannerType =
+				currentRepresentation.representationType === 'appellant_final_comment'
+					? 'appellantFinalCommentsAcceptSuccess'
+					: 'lpaFinalCommentsAcceptSuccess';
 
-		addNotificationBannerToSession({
-			session,
-			bannerDefinitionKey: 'finalCommentsRedactionSuccess',
-			appealId,
-			text: `${formatFinalCommentsTypeText(
-				finalCommentsType,
-				true
-			)} final comments redacted and accepted`
-		});
+			addNotificationBannerToSession({
+				session: session,
+				bannerDefinitionKey: acceptFinalCommentsBannerType,
+				appealId
+			});
+		} else {
+			addNotificationBannerToSession({
+				session,
+				bannerDefinitionKey: 'finalCommentsRedactionSuccess',
+				appealId,
+				text: `${formatFinalCommentsTypeText(
+					finalCommentsType,
+					true
+				)} final comments redacted and accepted`
+			});
+		}
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

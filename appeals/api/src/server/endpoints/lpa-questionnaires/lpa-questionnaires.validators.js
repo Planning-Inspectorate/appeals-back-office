@@ -18,6 +18,7 @@ import validateEnumParameter from '#common/validators/enum-parameter.js';
 import validateNumberParameter from '#common/validators/number-parameter.js';
 import validateNumberRangeParameter from '#common/validators/number-range-parameter.js';
 import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { LENGTH_8000 } from '@pins/appeals/constants/support.js';
 
 const getLPAQuestionnaireValidator = composeMiddleware(
 	validateIdParameter('appealId'),
@@ -59,7 +60,7 @@ const patchLPAQuestionnaireValidator = composeMiddleware(
 	validateBooleanParameter('isCorrectAppealType').optional(),
 	validateNullableTextAreaParameter('siteAccessDetails').optional(),
 	validateNullableTextAreaParameter('siteSafetyDetails').optional(),
-	validateNullableTextAreaParameter('extraConditions').optional(),
+	validateNullableTextAreaParameter('extraConditions', LENGTH_8000).optional(),
 	validateBooleanParameter('affectsScheduledMonument').optional(),
 	validateBooleanParameter('hasProtectedSpecies').optional(),
 	validateBooleanParameter('isAonbNationalLandscape').optional(),

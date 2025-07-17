@@ -28,7 +28,7 @@ describe('final-comments-done-appellant.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'You can [view the local planning authority’s final comments](https://appeal-planning-decision.service.gov.uk/).',
+			'You can [view the local planning authority’s final comments](/mock-front-office-url/appeals/ABC45678).',
 			'',
 			'The inspector will visit the site and we will contact you when we have made the decision.',
 			'',

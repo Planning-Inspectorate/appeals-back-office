@@ -8,7 +8,7 @@ import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
-import isFPA from '#utils/is-fpa.js';
+import isFPA from '@pins/appeals/utils/is-fpa.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.DocumentationSummary} DocumentationSummary */
@@ -33,16 +33,20 @@ export const mapDocumentationSummary = (data) => {
 		) ?? null;
 
 	const appellantFinalComments =
-		appeal.representations?.filter(
+		appeal.representations?.find(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
-		) ?? [];
+		) ?? null;
 	const lpaFinalComments =
-		appeal.representations?.filter(
+		appeal.representations?.find(
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
-		) ?? [];
+		) ?? null;
 
 	const mostRecentIpComment = maxBy(ipComments, (comment) => new Date(comment.dateCreated));
 
+	const redactLPAStatementMatching = checkRedactedText(
+		lpaStatement?.redactedRepresentation || '',
+		lpaStatement?.originalRepresentation || ''
+	);
 	return {
 		appellantCase: {
 			status: formatAppellantCaseDocumentationStatus(appeal),
@@ -69,26 +73,34 @@ export const mapDocumentationSummary = (data) => {
 				status: lpaStatement ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
 				receivedAt: lpaStatement?.dateCreated.toISOString() ?? null,
 				representationStatus: lpaStatement?.status ?? null,
-				isRedacted: Boolean(lpaStatement?.redactedRepresentation)
+				isRedacted: Boolean(lpaStatement?.redactedRepresentation && redactLPAStatementMatching)
 			},
 			lpaFinalComments: {
-				status:
-					lpaFinalComments.length > 0 ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
-				receivedAt: lpaFinalComments[0]?.dateCreated
-					? lpaFinalComments[0].dateCreated.toISOString()
+				status: lpaFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: lpaFinalComments?.dateCreated
+					? lpaFinalComments.dateCreated.toISOString()
 					: null,
-				counts: countBy(lpaFinalComments, 'status')
+				representationStatus: lpaFinalComments?.status ?? null
 			},
 			appellantFinalComments: {
-				status:
-					appellantFinalComments.length > 0
-						? DOCUMENT_STATUS_RECEIVED
-						: DOCUMENT_STATUS_NOT_RECEIVED,
-				receivedAt: appellantFinalComments[0]?.dateCreated
-					? appellantFinalComments[0].dateCreated.toISOString()
+				status: appellantFinalComments ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: appellantFinalComments?.dateCreated
+					? appellantFinalComments.dateCreated.toISOString()
 					: null,
-				counts: countBy(appellantFinalComments, 'status')
+				representationStatus: appellantFinalComments?.status ?? null
 			}
 		})
 	};
+};
+/**
+ * @param {string} originalRepresentation
+ * @param {string | undefined} redactedRepresentation
+ * @returns {boolean}
+ */
+export const checkRedactedText = (originalRepresentation, redactedRepresentation) => {
+	const normalizeNewlines = (/** @type {string | undefined} */ str) =>
+		(str || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+	const normalizedOriginal = normalizeNewlines(originalRepresentation);
+	const normalizedRedacted = normalizeNewlines(redactedRepresentation);
+	return normalizedOriginal !== normalizedRedacted;
 };

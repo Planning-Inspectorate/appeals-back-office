@@ -2,7 +2,8 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { APPEAL_DEVELOPMENT_TYPES } from './appeal-development-type.constants.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { APPEAL_DEVELOPMENT_TYPES } from '@pins/appeals/constants/appellant-cases.constants.js';
 
 /**
  * @param {Appeal} appealData
@@ -16,7 +17,7 @@ export const changeDevelopmentTypePage = (appealData, appellantCaseData, storedS
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Check the Development type',
+		title: 'Development type',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
@@ -26,16 +27,18 @@ export const changeDevelopmentTypePage = (appealData, appellantCaseData, storedS
 					name: 'developmentType',
 					fieldset: {
 						legend: {
-							text: 'Check the Development type',
+							text: 'Development type',
 							isPageHeading: true,
 							classes: 'govuk-fieldset__legend--l'
 						}
 					},
-					items: APPEAL_DEVELOPMENT_TYPES.map(({ value, label }) => ({
-						value,
-						text: label,
-						checked: value === selectedValue
-					}))
+					items: APPEAL_DEVELOPMENT_TYPES.map(
+						(/** @type {{value: string, label: string}} */ { value, label }) => ({
+							value,
+							text: capitalizeFirstLetter(label),
+							checked: value === selectedValue
+						})
+					)
 				}
 			}
 		]

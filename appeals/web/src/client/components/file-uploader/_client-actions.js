@@ -22,6 +22,7 @@ const SELECTORS = {
 	submitButton: '.pins-file-upload__submit',
 	removeButton: '.pins-file-upload__remove'
 };
+const MAX_FILE_SIZE = 26214400; // 25MB
 
 /**
  * Actions on the client for the file upload process
@@ -51,11 +52,6 @@ const clientActions = (container) => {
 	const { uploadFiles, deleteFiles, deleteUncommittedFileFromSession } = serverActions(container);
 
 	function setupDropzone() {
-		if (allowSingleFileOnly() || isNewVersionOfExistingFile()) {
-			fileInputContainer?.classList.add(CLASSES.dropZoneDisabled);
-			return;
-		}
-
 		dropZone = document.createElement('div');
 		dropZone.className = CLASSES.dropZone;
 		fileInputContainer?.parentNode?.insertBefore(dropZone, fileInputContainer);
@@ -102,7 +98,7 @@ const clientActions = (container) => {
 		}
 
 		addSelectedFiles(uploadInput?.files);
-		updateUploadButton();
+		updateUploadControlsVisibility();
 	}
 
 	if (
@@ -258,24 +254,35 @@ const clientActions = (container) => {
 			return;
 		}
 
+		stagedFiles.errors.length = 0;
+
+		if (allowSingleFileOnly() && (fileList.length > 1 || stagedFiles.files?.length)) {
+			await showErrors(
+				{
+					message: 'FILE_SPECIFIC_ERRORS',
+					details: [
+						{
+							message: 'SINGLE_FILE_ONLY',
+							guid: '',
+							name: '',
+							formId: container.dataset?.formId || ''
+						}
+					]
+				},
+				container
+			);
+			updateStagedFilesUI(stagedFiles);
+			return;
+		}
+
 		showProgressMessage(container);
 
-		let addedFiles = Array.from(fileList).map((file) => ({
+		const addedFiles = Array.from(fileList || []).map((file) => ({
 			file,
 			guid: isNewVersionOfExistingFile()
 				? container.dataset?.documentId || ''
 				: window.crypto.randomUUID()
 		}));
-
-		if (allowSingleFileOnly()) {
-			stagedFiles.files.forEach(async (file) => {
-				await removeFileByGUID(file.guid);
-			});
-
-			addedFiles = [addedFiles[0]];
-		}
-
-		stagedFiles.errors.length = 0;
 
 		for (const addedFile of addedFiles) {
 			const validationError = validateSelectedFile(addedFile.file);
@@ -284,7 +291,9 @@ const clientActions = (container) => {
 				stagedFiles.errors.push({
 					message: validationError.message || '',
 					name: addedFile.file.name,
-					guid: addedFile.guid
+					guid: addedFile.guid,
+					metadata: validationError.metadata,
+					formId: container.dataset?.formId || ''
 				});
 			}
 		}
@@ -359,20 +368,9 @@ const clientActions = (container) => {
 		}
 	};
 
-	function updateUploadButton() {
-		const filesRowsNumber = globalDataTransfer.files.length;
-
-		if (uploadButton) {
-			uploadButton.innerHTML = filesRowsNumber > 0 ? 'Add more files' : 'Choose file';
-			uploadButton.blur();
-		}
-
-		updateUploadControlsVisibility();
-	}
-
 	/**
 	 * @param {File} selectedFile
-	 * @returns {{message: string} | null}
+	 * @returns {{message: string, metadata?: {fileExtension?: string}} | null}
 	 */
 	function validateSelectedFile(selectedFile) {
 		const allowedMimeTypes = (container.dataset.allowedTypes || '').split(',');
@@ -383,17 +381,25 @@ const clientActions = (container) => {
 		const filenamesInFolder = Array.isArray(filenamesInFolderArray) ? filenamesInFolderArray : [];
 		const filenamesInStagedFiles = stagedFiles.files.map((stagedFile) => stagedFile.name);
 
-		if (filenamesInStagedFiles.includes(selectedFile.name)) {
-			return { message: 'DUPLICATE_NAME_SINGLE_FILE' };
-		}
-		if (filenamesInFolder.includes(selectedFile.name)) {
-			return { message: 'DUPLICATE_NAME_SINGLE_FILE' };
-		}
 		if (selectedFile.name.length > maximumAllowedFileNameLength) {
 			return { message: 'NAME_SINGLE_FILE' };
 		}
-		if (!allowedMimeTypes.includes(selectedFile.type)) {
-			return { message: 'TYPE_SINGLE_FILE' };
+
+		const fileMimeType = selectedFile.type || getMimeTypeFromExtension(selectedFile.name);
+
+		if (!allowedMimeTypes.includes(fileMimeType)) {
+			return {
+				message: 'DIFFERENT_FILE_EXTENSION',
+				metadata: { fileExtension: container.dataset.formattedAllowedTypes }
+			};
+		}
+
+		if (selectedFile.size > MAX_FILE_SIZE) {
+			return { message: 'SIZE_SINGLE_FILE' };
+		}
+
+		if ([...filenamesInStagedFiles, ...filenamesInFolder].includes(selectedFile.name)) {
+			return { message: 'DUPLICATE_NAME_SINGLE_FILE' };
 		}
 
 		return null;
@@ -433,7 +439,9 @@ const clientActions = (container) => {
 					...stagedFiles.errors.map((errorItem) => ({
 						message: errorItem.message,
 						name: errorItem.name,
-						guid: errorItem.guid
+						guid: errorItem.guid,
+						metadata: errorItem.metadata,
+						formId: container.dataset?.formId || ''
 					})),
 					...failedUploads
 				].flat()
@@ -493,12 +501,18 @@ const clientActions = (container) => {
 
 		const createdUploadInfoForAtLeastOneDocument = createUploadInfoForStagedDocuments();
 
+		const { formId, documentTitle } = container.dataset || {};
+
 		if (createdUploadInfoForAtLeastOneDocument) {
 			form?.submit();
 		} else {
 			showErrors(
 				{
-					message: 'NO_FILE'
+					message: 'NO_FILE',
+					formId: formId || '',
+					metadata: {
+						fileTitle: documentTitle ? documentTitle : 'file'
+					}
 				},
 				container
 			);
@@ -535,5 +549,38 @@ const clientActions = (container) => {
 
 	return { bindEvents };
 };
+
+/**
+ * @param {string} fileName
+ * @returns {string}
+ */
+function getMimeTypeFromExtension(fileName) {
+	const extension = fileName.toLowerCase().split('.').pop();
+
+	if (!extension) {
+		return '';
+	}
+
+	/** @type {Record<string, string>} */
+	const mimeTypeMap = {
+		msg: 'application/vnd.ms-outlook',
+		pdf: 'application/pdf',
+		doc: 'application/msword',
+		docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+		xls: 'application/vnd.ms-excel',
+		xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+		ppt: 'application/vnd.ms-powerpoint',
+		pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+		txt: 'text/plain',
+		jpg: 'image/jpeg',
+		jpeg: 'image/jpeg',
+		png: 'image/png',
+		gif: 'image/gif',
+		zip: 'application/zip',
+		rar: 'application/x-rar-compressed'
+	};
+
+	return mimeTypeMap[extension] || '';
+}
 
 export default clientActions;

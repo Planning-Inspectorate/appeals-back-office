@@ -184,7 +184,7 @@ const setAppealRelationships = async (tx, appealId, caseReference, relatedRefere
 					return item;
 				}
 			})
-			.filter((r) => r !== null);
+			.filter((r) => !!r);
 
 		if (appealRelationships.length > 0) {
 			await tx.appealRelationship.createMany({

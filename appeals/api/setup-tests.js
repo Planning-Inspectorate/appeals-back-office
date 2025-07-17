@@ -2,7 +2,7 @@
 import { jest } from '@jest/globals';
 import config from '#config/config.js';
 import { NODE_ENV_PRODUCTION } from '@pins/appeals/constants/support.js';
-import { notifySend } from '#notify/notify-send.js';
+import notify from '#notify/notify-send.js';
 
 const mockValidateBlob = jest.fn().mockResolvedValue(true);
 const mockRepGetById = jest.fn().mockResolvedValue({});
@@ -17,7 +17,6 @@ const mockAppealRelationshipCreateMany = jest.fn().mockResolvedValue({});
 const mockAppealDecision = jest.fn().mockResolvedValue({});
 const mockAppealFindUnique = jest.fn().mockResolvedValue({});
 const mockAppealCreate = jest.fn().mockResolvedValue({});
-const mockLpaFindUnique = jest.fn().mockResolvedValue(true);
 const mocklPAQuestionnaireCreate = jest.fn().mockResolvedValue({});
 const mocklPAQuestionnaireUpdate = jest.fn().mockResolvedValue({});
 const mockAppealStatusUpdateMany = jest.fn().mockResolvedValue({});
@@ -72,6 +71,22 @@ const mockLPAQuestionnaireIncompleteReasonsSelectedUpdate = jest.fn().mockResolv
 const mockSiteVisitCreate = jest.fn().mockResolvedValue({});
 const mockSiteVisitUpdate = jest.fn().mockResolvedValue({});
 const mockSiteVisitFindUnique = jest.fn().mockResolvedValue({});
+const mockHearingCreate = jest.fn().mockResolvedValue({});
+const mockHearingUpdate = jest.fn().mockResolvedValue({});
+const mockHearingFindUnique = jest.fn().mockResolvedValue({});
+const mockHearingDelete = jest.fn().mockResolvedValue({});
+const mockHearingEstimateCreate = jest.fn().mockResolvedValue({});
+const mockHearingEstimateUpdate = jest.fn().mockResolvedValue({});
+const mockHearingEstimateFindUnique = jest.fn().mockResolvedValue({});
+const mockHearingEstimateDelete = jest.fn().mockResolvedValue({});
+const mockInquiryCreate = jest.fn().mockResolvedValue({});
+const mockInquiryUpdate = jest.fn().mockResolvedValue({});
+const mockInquiryFindUnique = jest.fn().mockResolvedValue({});
+const mockInquiryDelete = jest.fn().mockResolvedValue({});
+const mockInquiryEstimateCreate = jest.fn().mockResolvedValue({});
+const mockInquiryEstimateUpdate = jest.fn().mockResolvedValue({});
+const mockInquiryEstimateFindUnique = jest.fn().mockResolvedValue({});
+const mockInquiryEstimateDelete = jest.fn().mockResolvedValue({});
 const mockSiteVisitTypeFindUnique = jest.fn().mockResolvedValue({});
 const mockSiteVisitTypeFindMany = jest.fn().mockResolvedValue({});
 const mockSpecialismsFindUnique = jest.fn().mockResolvedValue({});
@@ -100,17 +115,21 @@ const mockListedBuildingSelected = jest.fn().mockResolvedValue({});
 const mockServiceUserUpdate = jest.fn().mockResolvedValue({});
 const mockServiceUserDelete = jest.fn().mockResolvedValue({});
 const mockServiceUserFindUnique = jest.fn().mockResolvedValue({});
+const mockServiceUserCreate = jest.fn().mockResolvedValue({});
 const mockCaseNotesFindMany = jest.fn().mockResolvedValue({});
 const mockCaseNotesFindUnique = jest.fn().mockResolvedValue({});
 const mockCaseNotesCreate = jest.fn().mockResolvedValue({});
 const mockRepresentationRejectionReasonFindMany = jest.fn().mockResolvedValue({});
 const mockRepresentationCreate = jest.fn().mockResolvedValue({});
 const mockRepresentationAttachmentCreateMany = jest.fn().mockResolvedValue({});
+const mockRepresentationCount = jest.fn().mockResolvedValue({});
+const mockLpaFindMany = jest.fn().mockResolvedValue({});
+const mockLpaFindUnique = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
 	if (doNotMockNotifySend) {
-		return notifySend(options);
+		return notify.notifySend(options);
 	} else {
 		return Promise.resolve();
 	}
@@ -124,7 +143,8 @@ class MockPrismaClient {
 			findMany: mockRepFindMany,
 			updateMany: mockRepUpdateMany,
 			groupBy: mockRepGroupBy,
-			create: mockRepresentationCreate
+			create: mockRepresentationCreate,
+			count: mockRepresentationCount
 		};
 	}
 	get representationAttachment() {
@@ -149,6 +169,7 @@ class MockPrismaClient {
 			create: mockAddressCreate
 		};
 	}
+
 	get appeal() {
 		return {
 			findUnique: mockAppealFindUnique,
@@ -156,6 +177,13 @@ class MockPrismaClient {
 			findMany: mockAppealFindMany,
 			count: mockAppealCount,
 			create: mockAppealCreate
+		};
+	}
+
+	get appealNotification() {
+		return {
+			findUnique: mockAppealFindUnique,
+			createMany: mockAppealCreate
 		};
 	}
 
@@ -313,6 +341,42 @@ class MockPrismaClient {
 		};
 	}
 
+	get hearing() {
+		return {
+			create: mockHearingCreate,
+			update: mockHearingUpdate,
+			findUnique: mockHearingFindUnique,
+			delete: mockHearingDelete
+		};
+	}
+
+	get hearingEstimate() {
+		return {
+			create: mockHearingEstimateCreate,
+			update: mockHearingEstimateUpdate,
+			findUnique: mockHearingEstimateFindUnique,
+			delete: mockHearingEstimateDelete
+		};
+	}
+
+	get inquiry() {
+		return {
+			create: mockInquiryCreate,
+			update: mockInquiryUpdate,
+			findUnique: mockInquiryFindUnique,
+			delete: mockInquiryDelete
+		};
+	}
+
+	get inquiryEstimate() {
+		return {
+			create: mockInquiryEstimateCreate,
+			update: mockInquiryEstimateUpdate,
+			findUnique: mockInquiryEstimateFindUnique,
+			delete: mockInquiryEstimateDelete
+		};
+	}
+
 	get siteVisitType() {
 		return {
 			findUnique: mockSiteVisitTypeFindUnique,
@@ -409,12 +473,6 @@ class MockPrismaClient {
 		};
 	}
 
-	get lpa() {
-		return {
-			finUnique: mockLpaFindUnique
-		};
-	}
-
 	get inspectorDecision() {
 		return {
 			create: mockAppealDecision
@@ -439,6 +497,7 @@ class MockPrismaClient {
 
 	get serviceUser() {
 		return {
+			create: mockServiceUserCreate,
 			update: mockServiceUserUpdate,
 			findUnique: mockServiceUserFindUnique,
 			delete: mockServiceUserDelete
@@ -449,6 +508,13 @@ class MockPrismaClient {
 		return {
 			findMany: mockRepresentationRejectionReasonFindMany,
 			deleteMany: mockRepresentationRejectionReasonFindMany
+		};
+	}
+
+	get lPA() {
+		return {
+			findMany: mockLpaFindMany,
+			findUnique: mockLpaFindUnique
 		};
 	}
 
@@ -509,7 +575,9 @@ jest.unstable_mockModule('got', () => ({
 }));
 
 jest.unstable_mockModule('#notify/notify-send.js', () => ({
-	notifySend: mockNotifySend
+	...notify,
+	notifySend: mockNotifySend,
+	default: notify
 }));
 
 jest.unstable_mockModule('notifications-node-client', () => ({

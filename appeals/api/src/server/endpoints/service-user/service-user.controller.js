@@ -7,10 +7,11 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { SERVICE_USER_TYPE } from 'pins-data-model';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { capitalizeFirstLetter } from '#utils/string-utils.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
-import { upsertServiceUserAddress } from './service-user.service.js';
+import { upsertServiceUserAddress, formatServiceUser } from './service-user.service.js';
 import appealRepository from '#repositories/appeal.repository.js';
 
 /** @typedef {import('express').Request} Request */
@@ -54,7 +55,10 @@ export const updateServiceUserById = async (req, res) => {
 	await createAuditTrail({
 		appealId: parseInt(appealId),
 		azureAdUserId: req.get('azureAdUserId'),
-		details: stringTokenReplacement(AUDIT_TRAIL_SERVICE_USER_UPDATED, [userType])
+		details: stringTokenReplacement(AUDIT_TRAIL_SERVICE_USER_UPDATED, [
+			capitalizeFirstLetter(userType),
+			formatServiceUser(dbSavedResult)
+		])
 	});
 
 	await broadcasters.broadcastServiceUser(

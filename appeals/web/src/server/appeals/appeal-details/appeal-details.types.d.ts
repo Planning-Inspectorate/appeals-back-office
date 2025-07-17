@@ -351,6 +351,9 @@ export interface WebAppealTimetable extends AppealTimetable {
 	finalCommentsDueDate?: string | null;
 	s106ObligationDueDate?: string | null;
 	issueDeterminationDate?: string | null;
+	statementOfCommonGroundDueDate?: string | null;
+	planningObligationDueDate?: string | null;
+	proofOfEvidenceAndWitnessesDueDate?: null;
 	completeDate?: string | null;
 }
 
@@ -400,6 +403,7 @@ export interface WebAppeal extends SingleAppealDetailsResponse {
 		withdrawalRequestDate: string | null;
 	};
 	environmentalAssessment?: FolderInfo | null;
+	procedureType?: string | undefined;
 }
 
 export interface WebServiceUser {
@@ -412,3 +416,14 @@ export interface WebServiceUser {
 	phoneNumber?: string | null;
 	addressId?: number | null;
 }
+
+export type Lpa = {
+	id: number;
+	name: string;
+	lpaCode: string;
+	email: string | null;
+};
+
+export type LpaChangeRequest = {
+	newLpaId: number;
+};

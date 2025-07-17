@@ -8,12 +8,15 @@ const CLASSES = {
 	errorList: 'middle-errors-list',
 	visuallyHidden: 'govuk-visually-hidden',
 	errorMessage: 'govuk-error-message',
+	uploadButtonFocus: 'pins-file-upload__button-focus',
 	fileRowRed: 'colour--red'
 };
 const SELECTORS = {
 	container: '.pins-file-upload__container',
+	containerTitle: '.pins-file-upload__container-title',
 	topErrorsHook: '.top-errors-hook',
 	middleErrorsHook: '.middle-errors-hook',
+	dropZone: '.pins-file-upload__dropzone',
 	middleErrorsContainer: '.middle-errors-list',
 	filesRows: '.pins-file-upload__files-rows',
 	errorRow: '.error-row',
@@ -21,7 +24,7 @@ const SELECTORS = {
 };
 
 /**
- * @param {{message: string; guid: string;}[]} errors
+ * @param {{message: string; guid: string; formId?: string;}[]} errors
  * @returns {HTMLElement}
  */
 const buildTopErrorsMarkup = (errors) => {
@@ -42,8 +45,20 @@ const buildTopErrorsMarkup = (errors) => {
 	errors.forEach((errorItem) => {
 		const li = document.createElement('li');
 		const a = document.createElement('a');
-		a.href = `#${errorItem.guid}`;
+		const uploadButtonId = errorItem.formId
+			? `upload-file-button-${errorItem.formId}`
+			: errorItem.guid;
+		a.href = `#${uploadButtonId}`;
 		a.textContent = errorItem.message;
+		a.onclick = () => {
+			const uploadButton = document.getElementById(uploadButtonId);
+			if (uploadButton) {
+				uploadButton.classList.add(CLASSES.uploadButtonFocus);
+				uploadButton.onblur = () => {
+					uploadButton.classList.remove(CLASSES.uploadButtonFocus);
+				};
+			}
+		};
 		li.appendChild(a);
 		ul.appendChild(li);
 	});
@@ -58,14 +73,8 @@ const buildTopErrorsMarkup = (errors) => {
  * @returns {HTMLElement}
  */
 const buildMiddleErrorsMarkup = (errors) => {
-	const pageHeading = document.querySelector(SELECTORS.pageHeading);
 	const div = document.createElement('div');
 	div.className = CLASSES.errorList;
-	const h2 = document.createElement('h2');
-	h2.className = CLASSES.errorTitle;
-	h2.textContent = pageHeading?.textContent || 'Upload Documents';
-	div.appendChild(h2);
-
 	errors.forEach((errorItem) => {
 		const p = document.createElement('p');
 		p.className = CLASSES.errorMessage;
@@ -83,7 +92,7 @@ const buildMiddleErrorsMarkup = (errors) => {
 
 /**
  *
- * @param {{message: string, details?: import('#appeals/appeal-documents/appeal-documents.types').FileUploadError[]}} error
+ * @param {{message: string, formId?: string, metadata?: Record<string, any>, details?: import('#appeals/appeal-documents/appeal-documents.types').FileUploadError[]}} error
  * @param {Element} uploadForm
  */
 export const showErrors = (error, uploadForm) => {
@@ -104,13 +113,15 @@ export const showErrors = (error, uploadForm) => {
 
 	const errors =
 		error.details?.map((errorDetails) => ({
-			message: errorMessage(errorDetails.message || '', errorDetails.name),
-			guid: errorDetails.guid
+			message: errorMessage(errorDetails.message || '', errorDetails.name, errorDetails.metadata),
+			guid: errorDetails.guid,
+			formId: errorDetails.formId
 		})) || [];
 
 	if (error.message === 'FILE_SPECIFIC_ERRORS' && error.details) {
 		for (const errorDetails of error.details) {
-			const fileRow = uploadForm.querySelector(`#${CSS.escape(errorDetails.guid)}`);
+			const fileRow =
+				errorDetails.guid && uploadForm.querySelector(`#${CSS.escape(errorDetails.guid)}`);
 
 			if (fileRow && fileRow.children.length > 1) {
 				fileRow.children[0].classList.add(CLASSES.fileRowRed);
@@ -124,21 +135,24 @@ export const showErrors = (error, uploadForm) => {
 		const topErrorsElement = buildTopErrorsMarkup(errors);
 		topHook.appendChild(topErrorsElement);
 	} else {
-		formContainer.classList.add('error');
-
 		const replaceValue = error.details ? error.details[0].message : null;
-		const message = errorMessage(error.message, replaceValue);
-		const topErrorsElement = buildTopErrorsMarkup([
-			{
-				message,
-				guid: '#'
-			}
-		]);
+		const message = errorMessage(error.message, replaceValue, error.metadata);
+		const errorDetail = {
+			message,
+			guid: '#',
+			formId: error.formId
+		};
+		const topErrorsElement = buildTopErrorsMarkup([errorDetail]);
 		topHook.appendChild(topErrorsElement);
+		errors.push(errorDetail);
 	}
 	if (errors?.length && middleHook) {
 		middleHook.classList.add('govuk-form-group', 'govuk-form-group--error');
-		middleHook.insertBefore(buildMiddleErrorsMarkup(errors), middleHook.firstElementChild);
+		const containerTitle = document.querySelector(SELECTORS.containerTitle);
+		if (containerTitle) {
+			containerTitle.classList.add(CLASSES.errorTitle);
+			middleHook.insertBefore(buildMiddleErrorsMarkup(errors), containerTitle.nextSibling);
+		}
 	}
 };
 
@@ -163,4 +177,6 @@ export const hideErrors = (uploadForm) => {
 
 	middleHook?.classList.remove('govuk-form-group', 'govuk-form-group--error');
 	middleErrors?.remove();
+	const containerTitle = document.querySelector(SELECTORS.containerTitle);
+	containerTitle?.classList.remove(CLASSES.errorTitle);
 };

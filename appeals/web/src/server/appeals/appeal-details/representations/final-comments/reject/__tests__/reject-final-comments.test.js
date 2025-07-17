@@ -140,13 +140,13 @@ describe('final-comments', () => {
 				);
 				expect(unprettifiedHTML).toContain('Final comments</dt>');
 				expect(unprettifiedHTML).toContain('Supporting documents</dt>');
-				expect(unprettifiedHTML).toContain(`Not provided</dd>`);
+				expect(unprettifiedHTML).toContain(`No documents</dd>`);
 				expect(unprettifiedHTML).toContain('Review decision</dt>');
 				expect(unprettifiedHTML).toContain(
 					`Why are you rejecting the ${finalCommentsType.label}&#39;s final comments?`
 				);
 				expect(unprettifiedHTML).toContain(
-					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}">Change<span class="govuk-visually-hidden"> review decision</span></a></dd>`
+					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}?backUrl=/final-comments/${finalCommentsType.type}/reject/confirm">Change<span class="govuk-visually-hidden"> review decision</span></a></dd>`
 				);
 				expect(unprettifiedHTML).toContain(
 					`Reject ${finalCommentsType.label} final comments</button></form>`

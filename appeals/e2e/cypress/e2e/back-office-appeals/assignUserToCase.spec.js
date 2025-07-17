@@ -15,6 +15,8 @@ describe('Assign user to case', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	const viewports = [{ name: 'ipad-mini' }, { name: 'samsung-note9' }];
+
 	it(
 		'Case officer should be able to assign themselves to a case using name search',
 		{ tags: tag.smoke },
@@ -26,10 +28,8 @@ describe('Assign user to case', () => {
 				caseDetailsPage.clickAssignCaseOfficer();
 				caseDetailsPage.searchForCaseOfficer('case');
 				caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
-				caseDetailsPage.clickLinkByText('Choose');
-				caseDetailsPage.selectRadioButtonByValue('Yes');
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage('Case officer has been assigned');
+				caseDetailsPage.clickButtonByText('Assign case officer');
+				caseDetailsPage.validateBannerMessage('Success', 'Case officer assigned');
 				caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 			});
 		}
@@ -45,10 +45,8 @@ describe('Assign user to case', () => {
 				caseDetailsPage.clickAssignInspector();
 				caseDetailsPage.searchForCaseOfficer('Mctester');
 				caseDetailsPage.chooseSummaryListValue(users.appeals.inspector.email);
-				caseDetailsPage.clickLinkByText('Choose');
-				caseDetailsPage.selectRadioButtonByValue('Yes');
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage('Success', 'Inspector has been assigned');
+				caseDetailsPage.clickButtonByText('Assign inspector');
+				caseDetailsPage.validateBannerMessage('Success', 'Inspector assigned');
 				caseDetailsPage.verifyAnswerSummaryValue(users.appeals.inspector.email);
 			});
 		}
@@ -61,10 +59,8 @@ describe('Assign user to case', () => {
 			caseDetailsPage.clickAssignCaseOfficer();
 			caseDetailsPage.searchForCaseOfficer('case');
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
-			caseDetailsPage.clickChooseCaseOfficerResult(users.appeals.caseAdmin.email);
-			caseDetailsPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Success', 'Case officer has been assigned');
+			caseDetailsPage.clickButtonByText('Assign case officer');
+			caseDetailsPage.validateBannerMessage('Success', 'Case officer assigned');
 			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 		});
 	});
@@ -76,10 +72,8 @@ describe('Assign user to case', () => {
 			caseDetailsPage.clickAssignInspector();
 			caseDetailsPage.searchForCaseOfficer('case');
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
-			caseDetailsPage.clickLinkByText('Choose');
-			caseDetailsPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Success', 'Inspector has been assigned');
+			caseDetailsPage.clickButtonByText('Assign inspector');
+			caseDetailsPage.validateBannerMessage('Success', 'Inspector assigned');
 			caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 		});
 	});
@@ -113,6 +107,24 @@ describe('Assign user to case', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.validateBannerMessage('Inspector has been removed');
 			caseDetailsPage.verifyValueIsBlank(16);
+		});
+	});
+
+	viewports.forEach((viewport) => {
+		it(`should wrap service header text properly on small screens - ${viewport.name}`, () => {
+			cy.viewport(viewport.name);
+			cy.visit(urlPaths.appealsList);
+			listCasesPage.basePageElements.serviceHeader().then(($el) => {
+				const initialHeight = $el.height();
+
+				// Compare with a wider viewport
+				cy.viewport(1200, 800);
+				listCasesPage.basePageElements.serviceHeader().should(($elWide) => {
+					expect($elWide.height()).to.be.lessThan(initialHeight * 1.5);
+					expect($elWide.text()).to.contains('Casework Back Office System - Appeals');
+					expect($elWide[0].scrollWidth).to.be.lte($elWide[0].clientWidth);
+				});
+			});
 		});
 	});
 });

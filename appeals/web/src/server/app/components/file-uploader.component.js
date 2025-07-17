@@ -6,7 +6,7 @@ import logger from '#lib/logger.js';
 
 /**
  * @param {import('got').Got} apiClient
- * @param {string} caseId
+ * @param {string|number} caseId
  * @param {AddDocumentsRequest} payload
  * @returns {Promise<AddDocumentsResponse|undefined>}
  */

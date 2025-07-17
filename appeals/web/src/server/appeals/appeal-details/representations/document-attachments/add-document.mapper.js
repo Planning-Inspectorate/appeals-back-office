@@ -27,7 +27,8 @@ export const dateSubmitted = (appealDetails, errors, date, backLinkUrl) => ({
 					: dateISOStringToDayMonthYearHourMinute(getTodaysISOString()),
 			legendText: 'When was the supporting document submitted?',
 			legendIsPageHeading: true,
-			hint: 'For example, 27 3 2024'
+			hint: 'For example, 27 3 2024',
+			errors: errors
 		})
 	]
 });

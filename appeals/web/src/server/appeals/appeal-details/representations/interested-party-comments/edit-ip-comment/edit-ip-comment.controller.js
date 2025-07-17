@@ -1,6 +1,10 @@
 import url from 'url';
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
-import { updateAddress, unsetSiteVisitRequested } from './edit-ip-comment.service.js';
+import {
+	updateAddress,
+	unsetSiteVisitRequested,
+	patchInterestedPartyComment
+} from './edit-ip-comment.service.js';
 import { checkAddressPage, siteVisitRequestedPage } from './edit-ip-comment.mappers.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
@@ -78,6 +82,13 @@ export async function postCheckPage(request, response) {
 		currentAppeal.appealId,
 		currentRepresentation.represented?.id,
 		request.session.editIpComment
+	);
+
+	// patch representation with no changes, handle any linking required from address change
+	await patchInterestedPartyComment(
+		request.apiClient,
+		currentAppeal.appealId,
+		currentRepresentation.id.toString()
 	);
 
 	const redirectPath = request.query.review === 'true' ? 'review' : 'view';

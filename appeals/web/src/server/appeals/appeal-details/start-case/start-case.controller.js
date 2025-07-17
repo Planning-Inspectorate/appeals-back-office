@@ -11,6 +11,7 @@ import { getTodaysISOString } from '#lib/dates.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import featureFlags from '#common/feature-flags.js';
 import { FEATURE_FLAG_NAMES, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -20,20 +21,20 @@ export const getStartDate = async (request, response) => {
 		session
 	} = request;
 
+	if (session.startCaseAppealProcedure?.[appealId]) {
+		delete session.startCaseAppealProcedure?.[appealId];
+	}
+
 	if (
 		appealType === APPEAL_TYPE.S78 &&
-		featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_HEARING) &&
-		session.startCaseAppealProcedure?.[appealId]?.appealProcedure !== APPEAL_CASE_PROCEDURE.WRITTEN
+		(featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_HEARING) ||
+			featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_INQUIRY))
 	) {
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure${
 				request.query?.backUrl ? `?backUrl=${request.query?.backUrl}` : ''
 			}`
 		);
-	}
-
-	if (session.startCaseAppealProcedure?.[appealId]) {
-		delete session.startCaseAppealProcedure?.[appealId];
 	}
 
 	renderStartDatePage(request, response);
@@ -54,7 +55,8 @@ const renderStartDatePage = async (request, response) => {
 	const mappedPageContent = startCasePage(
 		appealId,
 		appealReference,
-		dateISOStringToDisplayDate(getTodaysISOString())
+		dateISOStringToDisplayDate(getTodaysISOString()),
+		getBackLinkUrlFromQuery(request)
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -192,6 +194,13 @@ export const postSelectProcedure = async (request, response) => {
 			return response.status(500).render('app/500.njk');
 		}
 
+		if (
+			session.startCaseAppealProcedure?.[appealId]?.appealProcedure ===
+			APPEAL_CASE_PROCEDURE.INQUIRY
+		) {
+			return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/setup/date`);
+		}
+
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure/check-and-confirm`
 		);
@@ -265,6 +274,17 @@ export const postConfirmProcedure = async (request, response) => {
 			bannerDefinitionKey: 'caseStarted',
 			appealId
 		});
+
+		if (
+			session.startCaseAppealProcedure?.[appealId]?.appealProcedure ===
+			APPEAL_CASE_PROCEDURE.HEARING
+		) {
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'timetableStarted',
+				appealId
+			});
+		}
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {

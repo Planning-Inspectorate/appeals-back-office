@@ -1,3 +1,4 @@
+import { canLinkAppeals } from '#endpoints/link-appeals/link-appeals.service.js';
 import { getLinkableAppealSummaryByCaseReference } from './linkable-appeal.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -9,11 +10,21 @@ import { getLinkableAppealSummaryByCaseReference } from './linkable-appeal.servi
  * @returns {Promise<Response>}
  */
 export const getLinkableAppealById = async (req, res) => {
-	const { appealReference } = req.params;
+	const { appealReference, linkableType } = req.params;
+
 	try {
-		const response = await getLinkableAppealSummaryByCaseReference(appealReference);
-		return res.send(response);
-	} catch (error) {
-		return res.status(error === 404 ? 404 : 500).end();
+		const linkableAppeal = await getLinkableAppealSummaryByCaseReference(appealReference);
+
+		if (linkableAppeal.source === 'horizon') {
+			return res.send(linkableAppeal);
+		}
+
+		if (!canLinkAppeals(linkableAppeal, linkableType, 'lead')) {
+			throw 409;
+		}
+
+		return res.send(linkableAppeal);
+	} catch (/** @type {*} */ statusCode) {
+		return res.status(typeof statusCode === 'number' ? statusCode : 500).end();
 	}
 };

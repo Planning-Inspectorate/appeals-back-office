@@ -27,11 +27,11 @@ describe('manage docs on appellant case', () => {
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('upload a new version');
-			caseDetailsPage.uploadSampleFile(sampleFiles.img);
+			caseDetailsPage.uploadSampleFile(sampleFiles.document2);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Document updated');
+			caseDetailsPage.validateBannerMessage('Success', 'Document updated');
 		});
 	});
 
@@ -84,7 +84,7 @@ describe('manage docs on appellant case', () => {
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('upload a new version');
-			caseDetailsPage.uploadSampleFile(sampleFiles.img);
+			caseDetailsPage.uploadSampleFile(sampleFiles.document2);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Redacted');
 			caseDetailsPage.clickButtonByText('Confirm');
@@ -113,9 +113,9 @@ describe('manage docs on appellant case', () => {
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.changeFileManageDocuments('Name');
-			caseDetailsPage.fillInput('new-file.doc', 1);
+			caseDetailsPage.fillInput('new-file', 1);
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Document filename updated');
+			caseDetailsPage.validateBannerMessage('Success', 'Document filename updated');
 		});
 	});
 });

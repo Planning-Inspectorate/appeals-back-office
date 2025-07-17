@@ -87,19 +87,21 @@ export const mapDocumentsForBlobStorage = (documents, caseReference, versionId =
  * @param {(DocumentVersion|null)[]} documents
  * @returns
  */
-export const mapDocumentsForAuditTrail = (documents) => {
-	return documents.map((document) => {
-		if (document) {
-			const fileName = document.fileName || document.documentGuid;
-			return {
-				documentName: fileName,
-				GUID: document.documentGuid
-			};
+export const mapDocumentsForAuditTrail = (documents) =>
+	documents.map((document) => {
+		if (!document) {
+			return null;
 		}
 
-		return null;
+		const fileName = document.fileName || document.documentGuid;
+		return {
+			documentName: fileName,
+			documentType: document.documentType,
+			GUID: document.documentGuid,
+			redactionStatus: document.redactionStatus?.key,
+			versionId: document.version
+		};
 	});
-};
 
 /**
  * @param {string} guid

@@ -8,10 +8,14 @@ import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateIsInThePast
 } from '#lib/dates.js';
-import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
+import {
+	mapRepresentationDocumentSummaryActionLink,
+	mapFinalCommentRepresentationStatusToLabelText
+} from '#lib/representation-utilities.js';
+import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) => {
+export const mapAppellantFinalComments = ({ appealDetails, currentRoute, request }) => {
 	const { status, isRedacted } = appealDetails.documentationSummary?.appellantFinalComments ?? {};
 
 	const statusText = (() => {
@@ -28,29 +32,14 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) => {
 				: 'Awaiting final comments';
 		}
 
-		const counts = appealDetails.documentationSummary?.appellantFinalComments?.counts ?? {};
-
-		if (counts[APPEAL_REPRESENTATION_STATUS.PUBLISHED] > 0) {
-			return 'Shared';
-		}
-
-		if (counts[APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW] > 0) {
-			return 'Ready to review';
-		}
-
-		if (counts[APPEAL_REPRESENTATION_STATUS.VALID] > 0) {
-			return isRedacted ? 'Redacted and accepted' : 'Accepted';
-		}
-
-		if (counts[APPEAL_REPRESENTATION_STATUS.INVALID] > 0) {
-			return 'Rejected';
-		}
-
-		return '';
+		return mapFinalCommentRepresentationStatusToLabelText(
+			appealDetails.documentationSummary?.appellantFinalComments?.representationStatus,
+			isRedacted
+		);
 	})();
 
 	const receivedText = (() => {
-		const { status, counts, receivedAt } =
+		const { status, representationStatus, receivedAt } =
 			appealDetails.documentationSummary?.appellantFinalComments ?? {};
 
 		if (!appealDetails.startedAt) {
@@ -59,7 +48,7 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) => {
 
 		if (
 			status === 'not_received' ||
-			(counts?.[APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW] ?? 0 > 0)
+			representationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 		) {
 			return `Due by ${dateISOStringToDisplayDate(
 				appealDetails.appealTimetable?.finalCommentsDueDate
@@ -68,6 +57,7 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) => {
 
 		return dateISOStringToDisplayDate(receivedAt);
 	})();
+
 
 	return documentationFolderTableItem({
 		id: 'appellant-final-comments',
@@ -90,4 +80,23 @@ export const mapAppellantFinalComments = ({ appealDetails, currentRoute }) => {
 			'appellant-final-comments'
 		)
 	});
+
+	if (appealDetails?.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
+		const id = 'start-case-date';
+		return { id, display: {} };
+	} else {
+		return documentationFolderTableItem({
+			id: 'appellant-final-comments',
+			text: 'Appellant final comments',
+			statusText,
+			receivedText,
+			actionHtml: mapRepresentationDocumentSummaryActionLink(
+				currentRoute,
+				appealDetails?.documentationSummary?.appellantFinalComments?.status,
+				appealDetails?.documentationSummary?.appellantFinalComments?.representationStatus,
+				'appellant-final-comments',
+				request
+			)
+		});
+	}
 };

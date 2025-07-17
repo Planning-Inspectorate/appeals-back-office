@@ -1,9 +1,12 @@
+// @ts-nocheck
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
 describe('ip-comment-rejected-deadline-extended.md', () => {
-	test('should call notify sendEmail with the correct data', async () => {
-		const notifySendData = {
+	let notifySendData;
+
+	beforeAll(() => {
+		notifySendData = {
 			doNotMockNotifySend: true,
 			templateName: 'ip-comment-rejected-deadline-extended',
 			notifyClient: {
@@ -15,7 +18,58 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
 				deadline_date: '01 January 2021',
-				reasons: ['Reason one', 'Reason two', 'Reason three']
+				reasons: ['Reason one', 'Reason two', 'Reason three'],
+				ip_comment_due_before_resubmission_deadline: true
+			}
+		};
+	});
+
+	test('should call notify sendEmail with the correct data where resubmission date is before IP deadline', async () => {
+		const expectedContent = [
+			'We have rejected your comment.',
+			'',
+			'# Appeal details',
+			'',
+			'^Appeal reference number: ABC45678',
+			'Address: 10, Test Street',
+			'Planning application reference: 12345XYZ',
+			'',
+			'## Why we rejected your comment',
+			'',
+			'We rejected your comment because:',
+			'',
+			'- Reason one',
+			'- Reason two',
+			'- Reason three',
+			'',
+			'# What happens next',
+			'',
+			'You can submit a different comment by 01 January 2021.', // TODO
+			'',
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
+		].join('\n');
+
+		await notifySend(notifySendData);
+
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{
+				id: 'mock-appeal-generic-id'
+			},
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject: 'We have rejected your comment: ABC45678'
+			}
+		);
+	});
+
+	test('should call notify sendEmail with the correct data where resubmission date is after IP deadline', async () => {
+		notifySendData = {
+			...notifySendData,
+			personalisation: {
+				...notifySendData.personalisation,
+				ip_comment_due_before_resubmission_deadline: false
 			}
 		};
 
@@ -38,9 +92,10 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'You can send a different comment to caseofficers@planninginspectorate.gov.uk. You must send your comment by 01 January 2021.',
+			'You can send a different comment to caseofficers@planninginspectorate.gov.uk by 01 January 2021.',
 			'',
-			'The Planning Inspectorate'
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
 		await notifySend(notifySendData);

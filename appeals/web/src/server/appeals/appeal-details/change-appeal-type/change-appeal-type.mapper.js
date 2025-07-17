@@ -3,6 +3,9 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { nameToString } from '#lib/person-name-formatter.js';
 import { getAppealTypesFromId } from './change-appeal-type.service.js';
+import { dateInput } from '#lib/mappers/index.js';
+import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -17,9 +20,10 @@ import { getAppealTypesFromId } from './change-appeal-type.service.js';
  * @param {Appeal} appealDetails
  * @param {AppealType[]} appealTypes
  * @param { ChangeAppealTypeRequest } changeAppeal
+ * @param {string|undefined} errorMessage
  * @returns {PageContent}
  */
-export function appealTypePage(appealDetails, appealTypes, changeAppeal) {
+export function appealTypePage(appealDetails, appealTypes, changeAppeal, errorMessage) {
 	/** @type {PageComponent} */
 	const selectAppealTypeRadiosComponent = {
 		type: 'radios',
@@ -28,11 +32,12 @@ export function appealTypePage(appealDetails, appealTypes, changeAppeal) {
 			idPrefix: 'appeal-type',
 			fieldset: {
 				legend: {
-					text: 'What type should this appeal be?',
+					text: 'Appeal type',
 					isPageHeading: true,
 					classes: 'govuk-fieldset__legend--l'
 				}
 			},
+			errorMessage: errorMessage && { text: errorMessage },
 			items: mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal)
 		}
 	};
@@ -43,8 +48,50 @@ export function appealTypePage(appealDetails, appealTypes, changeAppeal) {
 	const pageContent = {
 		title: `What type should this appeal be? - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: `Appeal ${shortAppealReference} - update appeal type`,
 		pageComponents: [selectAppealTypeRadiosComponent]
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealDetails
+ * @returns {PageContent}
+ */
+export function invalidChangeAppealType(appealDetails) {
+	const validAppealChangeTypeStatusesListItems = [
+		APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+		APPEAL_CASE_STATUS.VALIDATION
+	]
+		.map((status) => {
+			const formattedStatus = status.replace(/_/g, ' ');
+			return `<li>${formattedStatus}</li>`;
+		})
+		.join('');
+
+	/** @type {PageComponent} */
+	const messageComponent = {
+		type: 'html',
+		parameters: {
+			html: `
+			<p class="govuk-body">This is because you can only update the appeal type when the status is:</p>
+			<ul class="govuk-list govuk-list--bullet">
+				${validAppealChangeTypeStatusesListItems}
+			</ul>
+      	`
+		}
+	};
+
+	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'You cannot update the appeal type',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		preHeading: `Appeal ${shortAppealReference}`,
+		heading: 'You cannot update the appeal type',
+		pageComponents: [messageComponent]
 	};
 
 	return pageContent;
@@ -70,9 +117,10 @@ export function mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal) 
  *
  * @param {Appeal} appealDetails
  * @param { ChangeAppealTypeRequest } changeAppeal
+ * @param {string|undefined} errorMessage
  * @returns {PageContent}
  */
-export function resubmitAppealPage(appealDetails, changeAppeal) {
+export function resubmitAppealPage(appealDetails, changeAppeal, errorMessage) {
 	/** @type {PageComponent} */
 	const selectResubmitAppealComponent = {
 		type: 'radios',
@@ -97,7 +145,8 @@ export function resubmitAppealPage(appealDetails, changeAppeal) {
 					text: 'No',
 					checked: changeAppeal?.resubmit === false
 				}
-			]
+			],
+			errorMessage: errorMessage && { text: errorMessage }
 		}
 	};
 
@@ -116,15 +165,16 @@ export function resubmitAppealPage(appealDetails, changeAppeal) {
 
 /**
  * @param {Appeal} appealDetails
+ * @param {string|undefined} backUrl
  * @returns {PageContent}
  */
-export function addHorizonReferencePage(appealDetails) {
+export function addHorizonReferencePage(appealDetails, backUrl) {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `What is the reference of the new appeal on Horizon? - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
 			{
@@ -295,45 +345,31 @@ function mapAppealTypeToDisplayText(appealType) {
  * @param {Appeal} appealDetails
  * @param { number } changeDay
  * @param { number } changeMonth
- * @param { number } changeYear
+ * @param { number } changeYear,
+ * @param {import('@pins/express').ValidationErrors|undefined}  errors
  * @returns {PageContent}
  */
-export function changeAppealFinalDatePage(appealDetails, changeDay, changeMonth, changeYear) {
+export function changeAppealFinalDatePage(
+	appealDetails,
+	changeDay,
+	changeMonth,
+	changeYear,
+	errors
+) {
 	/** @type {PageComponent} */
-	const selectDateComponent = {
-		type: 'date-input',
-		parameters: {
-			id: 'change-appeal-final-date',
-			namePrefix: 'change-appeal-final-date',
-			fieldset: {
-				legend: {
-					text: 'What is the final date the appellant must resubmit by?',
-					isPageHeading: true,
-					classes: 'govuk-fieldset__legend--l'
-				}
-			},
-			hint: {
-				text: 'For example, 27 3 2023'
-			},
-			items: [
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'day',
-					value: changeDay || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'month',
-					value: changeMonth || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-					name: 'year',
-					value: changeYear || ''
-				}
-			]
-		}
-	};
+	const selectDateComponent = dateInput({
+		name: changeAppealTypeDateField,
+		id: changeAppealTypeDateField,
+		namePrefix: changeAppealTypeDateField,
+		value: {
+			day: changeDay || '',
+			month: changeMonth || '',
+			year: changeYear || ''
+		},
+		legendText: 'What is the final date the appellant must resubmit by?',
+		hint: 'For example, 27 3 2023',
+		errors: errors
+	});
 
 	/** @type {PageComponent} */
 	const insetTextComponent = {

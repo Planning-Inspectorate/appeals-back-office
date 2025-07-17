@@ -21,6 +21,7 @@ import { Folder, Document, DocumentVersion, DocumentLog } from './folders-docume
 import { InvalidIncompleteReason } from './invalid-incomplete.js';
 import { ListedBuilding } from './listed-building.js';
 import { DesignatedSiteName } from './designated-site-name.js';
+import { Notifications } from './notification.js';
 
 const partials = {
 	Address,
@@ -54,5 +55,6 @@ export const ApiDefinitions = {
 	...partials,
 	Appeal,
 	AppellantCaseUpdateRequest,
-	LpaQuestionnaireUpdateRequest
+	LpaQuestionnaireUpdateRequest,
+	Notifications
 };

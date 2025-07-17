@@ -716,12 +716,15 @@
  * @property {string} id
  * @property {{value: number}} hour
  * @property {{value: number}} minute
+ * @property {FieldsetProperties} [fieldset] Options for the fieldset component.
  */
 
 /**
  * @typedef CaseNotesProperties
  * @type {Object<string, any>}
- * @property {CaseNote[]} casenotes
+ * @property {CaseNote[]} caseNotes
+ * @property {string} sessionComment
+ * @property {number} characterLimit
  */
 
 /**

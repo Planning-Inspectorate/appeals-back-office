@@ -68,11 +68,7 @@ const appealDetailsInclude = {
 	appellant: true,
 	agent: true,
 	lpa: true,
-	appealStatus: {
-		where: {
-			valid: true
-		}
-	},
+	appealStatus: true,
 	appealTimetable: true,
 	appealType: true,
 	caseOfficer: true,
@@ -80,7 +76,11 @@ const appealDetailsInclude = {
 	inspectorDecision: true,
 	lpaQuestionnaire: {
 		include: {
-			listedBuildingDetails: true,
+			listedBuildingDetails: {
+				include: {
+					listedBuilding: true
+				}
+			},
 			designatedSiteNames: {
 				include: {
 					designatedSite: true
@@ -105,6 +105,16 @@ const appealDetailsInclude = {
 			siteVisitType: true
 		}
 	},
+	hearing: {
+		include: {
+			address: true
+		}
+	},
+	inquiry: {
+		include: {
+			address: true
+		}
+	},
 	caseNotes: true,
 	folders: {
 		include: {
@@ -119,7 +129,8 @@ const appealDetailsInclude = {
 			}
 		}
 	},
-	representations: true
+	representations: true,
+	hearingEstimate: true
 };
 
 /**
@@ -392,21 +403,42 @@ const getAppealsWithCompletedEvents = () =>
 					valid: true
 				}
 			},
-			siteVisit: {
-				OR: [
-					{
-						visitEndTime: {
-							lte: new Date()
-						}
-					},
-					{
-						visitEndTime: null,
-						visitDate: {
-							lte: new Date()
-						}
+			OR: [
+				{
+					siteVisit: {
+						OR: [
+							{
+								visitEndTime: {
+									lte: new Date()
+								}
+							},
+							{
+								visitEndTime: null,
+								visitDate: {
+									lte: new Date()
+								}
+							}
+						]
 					}
-				]
-			}
+				},
+				{
+					hearing: {
+						OR: [
+							{
+								hearingStartTime: {
+									lte: new Date()
+								}
+							},
+							{
+								hearingEndTime: null,
+								hearingStartTime: {
+									lte: new Date()
+								}
+							}
+						]
+					}
+				}
+			]
 		},
 		include: appealDetailsInclude
 	});

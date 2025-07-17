@@ -49,7 +49,7 @@ exports[`linked-appeals GET /linked-appeals/add should render the add linked app
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
                     <nav class="govuk-header__navigation pins-header-navigation"
                     aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
@@ -74,7 +74,7 @@ exports[`linked-appeals GET /linked-appeals/add should render the add linked app
             </div><a href="/appeals-service/appeal-details/1" class="govuk-back-link">Back</a>
             <main             class="govuk-main-wrapper" id="main-content">
                 <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add linked appeal</span>
                     </div>
                 </div>
                 <div class="govuk-grid-row">
@@ -83,7 +83,7 @@ exports[`linked-appeals GET /linked-appeals/add should render the add linked app
                             <div class="govuk-grid-column-full">
                                 <form method="POST" novalidate="novalidate">
                                     <div class="govuk-form-group">
-                                        <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
+                                        <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> Appeal reference</label></h1>
                                         <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
                                         name="appeal-reference" type="text">
                                     </div>
@@ -106,7 +106,7 @@ exports[`linked-appeals GET /linked-appeals/add should render the add linked app
 </body>"
 `;
 
-exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with a summary list displaying information about the linking candidate appeal, and a back link to the add linked appeal reference page 1`] = `
+exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the change lead appeal page 1`] = `
 "<body class="govuk-template__body">
     <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
         document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
@@ -120,7 +120,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
                     <nav class="govuk-header__navigation pins-header-navigation"
                     aria-label="Menu">
                         <ul class="govuk-header__navigation-list">
@@ -145,66 +145,41 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
             </div><a href="/appeals-service/appeal-details/1/linked-appeals/add" class="govuk-back-link">Back</a>
             <main             class="govuk-main-wrapper" id="main-content">
                 <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-                        <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add linked appeal</span>
                     </div>
                 </div>
                 <div class="govuk-grid-row">
                     <div class="govuk-grid-column-two-thirds">
-                        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                                <dd class="govuk-summary-list__value">TEST-12345</dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                                <dd class="govuk-summary-list__value">Assign case officer</dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                                <dd class="govuk-summary-list__value">Householder</dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                                <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                                <dd                                 class="govuk-summary-list__value">Wiltshire Council</dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                                <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                                <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                                <dd class="govuk-summary-list__value">21 February 2024</dd>
-                            </div>
-                        </dl>
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-full">
-                                <form method="post" novalidate="novalidate">
+                                <form method="POST" novalidate="novalidate">
                                     <div class="govuk-form-group">
                                         <fieldset class="govuk-fieldset">
-                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
-                                            <div class="govuk-radios"
-                                            data-module="govuk-radios">
+                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                                <h1 class="govuk-fieldset__heading"> Which is the lead appeal?</h1>
+                                            </legend>
+                                            <div class="govuk-radios" data-module="govuk-radios">
                                                 <div class="govuk-radios__item">
-                                                    <input class="govuk-radios__input" id="confirmation" name="confirmation"
-                                                    type="radio" value="lead">
-                                                    <label class="govuk-label govuk-radios__label" for="confirmation">Yes, make this the lead appeal for 351062</label>
+                                                    <input class="govuk-radios__input" id="lead-appeal" name="lead-appeal"
+                                                    type="radio" value="APP/Q9999/D/21/351062">
+                                                    <label class="govuk-label govuk-radios__label" for="lead-appeal"><span>APP/Q9999/D/21/351062</span>
+                                                        <br><span class="govuk-hint">21 The Pavement</span>
+                                                        <br><span class="govuk-hint">Householder</span>
+                                                    </label>
                                                 </div>
                                                 <div class="govuk-radios__item">
-                                                    <input class="govuk-radios__input" id="confirmation-2" name="confirmation"
-                                                    type="radio" value="child">
-                                                    <label class="govuk-label govuk-radios__label" for="confirmation-2">Yes, this is a child appeal of 351062</label>
-                                                </div>
-                                                <div class="govuk-radios__divider">or</div>
-                                                <div class="govuk-radios__item">
-                                                    <input class="govuk-radios__input" id="confirmation-4" name="confirmation"
-                                                    type="radio" value="cancel">
-                                                    <label class="govuk-label govuk-radios__label" for="confirmation-4">No, return to search</label>
+                                                    <input class="govuk-radios__input" id="lead-appeal-2" name="lead-appeal"
+                                                    type="radio" value="TEST-12345">
+                                                    <label class="govuk-label govuk-radios__label" for="lead-appeal-2"><span>TEST-12345</span>
+                                                        <br><span class="govuk-hint">96 The Avenue</span>
+                                                        <br><span class="govuk-hint">Householder</span>
+                                                    </label>
                                                 </div>
                                             </div>
                                         </fieldset>
                                     </div>
-                                    <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
                                 </form>
                             </div>
                         </div>
@@ -222,615 +197,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
 </body>"
 `;
 
-exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the appeals are already linked 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Appeals already linked.</strong>
-            </div>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">TEST-12345</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                    <dd class="govuk-summary-list__value">Assign case officer</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                    <dd class="govuk-summary-list__value">21 February 2024</dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the appeals are not already linked and the linking target is a child appeal and the linking candidate is a lead appeal 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Appeal already a lead
-                    appeal. Cannot be linked.</strong>
-            </div>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">TEST-12345</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                    <dd class="govuk-summary-list__value">Assign case officer</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                    <dd class="govuk-summary-list__value">21 February 2024</dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target and candidate are both lead appeals 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Appeals are both lead
-                    appeals and cannot be linked.</strong>
-            </div>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">TEST-12345</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                    <dd class="govuk-summary-list__value">Assign case officer</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                    <dd class="govuk-summary-list__value">21 February 2024</dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target has no linked appeals and the linking candidate is a child appeal 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Link your case to the
-                    lead of this appeal.</strong>
-            </div>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">TEST-12345</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                    <dd class="govuk-summary-list__value">Assign case officer</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                    <dd class="govuk-summary-list__value">21 February 2024</dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target is a child and the linking candidate has no existing linked appeals 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Link this appeal to
-                    your case&#39;s lead appeal.</strong>
-            </div>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">TEST-12345</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                    <dd class="govuk-summary-list__value">Assign case officer</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                    <dd class="govuk-summary-list__value">21 February 2024</dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target is a child appeal and the linking candidate is a child appeal 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Appeal already linked
-                    to another lead appeal. Cannot be linked.</strong>
-            </div>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">TEST-12345</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                    <dd class="govuk-summary-list__value">Assign case officer</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                    <dd class="govuk-summary-list__value">21 February 2024</dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the linking target is a lead and the linking candidate is a child of another appeal 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Appeal already linked
-                    to another lead appeal. Cannot be linked.</strong>
-            </div>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">TEST-12345</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                    <dd class="govuk-summary-list__value">Assign case officer</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                    <dd class="govuk-summary-list__value">21 February 2024</dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with appropriate warning text, no radio options, and a button linking back to the add linked appeal reference page with label text of "return to search", if the target and candidate are the same appeal (trying to link appeal to itself) 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> This is the appeal you
-                    are currently reviewing.</strong>
-            </div>
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">APP/Q9999/D/21/351062</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                    <dd class="govuk-summary-list__value">Assign case officer</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                    <dd class="govuk-summary-list__value">21 February 2024</dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate"><a href="/appeals-service/appeal-details/1/linked-appeals/add" role="button"
-                        draggable="false" class="govuk-button" data-module="govuk-button"> Return to search</a>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with child and cancel radio options, and a submit button with label text of "Continue", if the linking target is a lead and the candidate has no existing linked appeals 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">TEST-12345</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                    <dd class="govuk-summary-list__value">Assign case officer</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                    <dd class="govuk-summary-list__value">21 February 2024</dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
-                                <div class="govuk-radios"
-                                data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="confirmation" name="confirmation"
-                                        type="radio" value="child">
-                                        <label class="govuk-label govuk-radios__label" for="confirmation">Yes, this is a child appeal of 351062</label>
-                                    </div>
-                                    <div class="govuk-radios__divider">or</div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="confirmation-3" name="confirmation"
-                                        type="radio" value="cancel">
-                                        <label class="govuk-label govuk-radios__label" for="confirmation-3">No, return to search</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with lead and cancel radio options, and a submit button with label text of "Continue", if the linking candidate is a lead and the target has no existing linked appeals 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">TEST-12345</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                    <dd class="govuk-summary-list__value">Assign case officer</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                    <dd class="govuk-summary-list__value">21 February 2024</dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
-                                <div class="govuk-radios"
-                                data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="confirmation" name="confirmation"
-                                        type="radio" value="lead">
-                                        <label class="govuk-label govuk-radios__label" for="confirmation">Yes, make this the lead appeal for 351062</label>
-                                    </div>
-                                    <div class="govuk-radios__divider">or</div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="confirmation-3" name="confirmation"
-                                        type="radio" value="cancel">
-                                        <label class="govuk-label govuk-radios__label" for="confirmation-3">No, return to search</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render the check and confirm page with lead, child and cancel radio options, and a submit button with label text of "Continue", if neither the linking target nor the candidate have existing linked appeals 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">TEST-12345</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                    <dd class="govuk-summary-list__value">Assign case officer</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                    <dd class="govuk-summary-list__value">21 February 2024</dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
-                                <div class="govuk-radios"
-                                data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="confirmation" name="confirmation"
-                                        type="radio" value="lead">
-                                        <label class="govuk-label govuk-radios__label" for="confirmation">Yes, make this the lead appeal for 351062</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="confirmation-2" name="confirmation"
-                                        type="radio" value="child">
-                                        <label class="govuk-label govuk-radios__label" for="confirmation-2">Yes, this is a child appeal of 351062</label>
-                                    </div>
-                                    <div class="govuk-radios__divider">or</div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="confirmation-4" name="confirmation"
-                                        type="radio" value="cancel">
-                                        <label class="govuk-label govuk-radios__label" for="confirmation-4">No, return to search</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
+exports[`linked-appeals GET /linked-appeals/add/lead-appeal should render the change lead appeal page 1`] = `"<body class="govuk-template__body"><script nonce="EdcOUaJ8lczj9tIPO0lPow==">document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a><header class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header" role="banner" data-module="govuk-header"><div class="govuk-width-container"><div class="pins-row"><div class="pins-column--left"><div class="pins-header__logo"><i class="pins-header__logo-crown"></i></div><span>Planning Inspectorate</span></div><div class="pins-column--central"><p class="pins-header-domainname govuk-!-margin-top-1"> Casework Back Office System - Appeals</p><nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu"><ul class="govuk-header__navigation-list"><li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a></li><li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a></li><li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a></li></ul></nav></div></div></div></header><div class="govuk-width-container govuk-width-container"><div class="govuk-phase-banner"><p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag"> Beta</strong><span class="govuk-phase-banner__text"> This is a new service. Help us improve it and <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u" class="govuk-link" target="_blank" rel="noopener noreferrer">give your feedback (opens in a new tab)</a>.</span></p></div><a href="/appeals-service/appeal-details/1/linked-appeals/add" class="govuk-back-link">Back</a><main class="govuk-main-wrapper" id="main-content"><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add linked appeal</span></div></div><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><div class="govuk-grid-row"><div class="govuk-grid-column-full"><form method="POST" novalidate="novalidate"><div class="govuk-form-group"><fieldset class="govuk-fieldset"><legend class="govuk-fieldset__legend govuk-fieldset__legend--l"><h1 class="govuk-fieldset__heading"> Which is the lead appeal?</h1></legend><div class="govuk-radios" data-module="govuk-radios"><div class="govuk-radios__item"><input class="govuk-radios__input" id="lead-appeal" name="lead-appeal" type="radio" value="APP/Q9999/D/21/351062"><label class="govuk-label govuk-radios__label" for="lead-appeal"><span>APP/Q9999/D/21/351062</span><br><span class="govuk-hint">21 The Pavement</span><br><span class="govuk-hint">Householder</span></label></div><div class="govuk-radios__item"><input class="govuk-radios__input" id="lead-appeal-2" name="lead-appeal" type="radio" value="TEST-12345"><label class="govuk-label govuk-radios__label" for="lead-appeal-2"><span>TEST-12345</span><br><span class="govuk-hint">96 The Avenue</span><br><span class="govuk-hint">Householder</span></label></div></div></fieldset></div><button type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button"> Continue</button></form></div></div></div></div></main></div><footer class="govuk-footer" role="contentinfo"><div class="govuk-width-container "><div class="govuk-footer__meta"><div class="govuk-footer__meta-item govuk-footer__meta-item"></div></div></div></footer></body>"`;
 
 exports[`linked-appeals GET /linked-appeals/manage should render the manage linked appeals page with the expected content when the appeal is a child 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
@@ -839,7 +206,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
             <h1 class="govuk-heading-l">Manage linked appeals</h1>
         </div>
     </div>
-    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--grey single-line">Child</strong>
+    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--grey">Child</strong>
     </div>
     <h2 class="govuk-!-margin-top-6">Lead appeal of 351062</h2>
     <table class="govuk-table">
@@ -890,7 +257,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
             <h1 class="govuk-heading-l">Manage linked appeals</h1>
         </div>
     </div>
-    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--grey single-line">Lead</strong>
+    <div class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--grey">Lead</strong>
     </div>
     <h2 class="govuk-!-margin-top-6">Child appeals of 351062</h2>
     <table class="govuk-table">
@@ -991,7 +358,7 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add linked appeal</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -999,10 +366,11 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
-                            <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                            name="appeal-reference" type="text">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> Appeal reference</label></h1>
+                            <p id="appeal-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter an appeal reference</p>
+                            <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
+                            id="appeal-reference" name="appeal-reference" type="text" aria-describedby="appeal-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -1032,7 +400,7 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add linked appeal</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1040,10 +408,12 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
-                            <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                            name="appeal-reference" type="text">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> Appeal reference</label></h1>
+                            <p id="appeal-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Appeal reference must
+                                be 7 digits</p>
+                            <input class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
+                            id="appeal-reference" name="appeal-reference" type="text" aria-describedby="appeal-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -1073,7 +443,7 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add linked appeal</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1081,10 +451,12 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
-                            <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                            name="appeal-reference" type="text">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> Appeal reference</label></h1>
+                            <p id="appeal-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Appeal reference must
+                                be 7 digits</p>
+                            <input class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
+                            id="appeal-reference" name="appeal-reference" type="text" aria-describedby="appeal-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -1114,7 +486,7 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - add linked appeal</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1122,10 +494,12 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> What is the appeal reference?</label></h1>
-                            <input class="govuk-input govuk-input govuk-input--width-10" id="appeal-reference"
-                            name="appeal-reference" type="text">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="appeal-reference"> Appeal reference</label></h1>
+                            <p id="appeal-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a valid appeal
+                                reference</p>
+                            <input class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
+                            id="appeal-reference" name="appeal-reference" type="text" aria-describedby="appeal-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -1137,88 +511,4 @@ exports[`linked-appeals POST /linked-appeals/add should re-render the add linked
 </main>"
 `;
 
-exports[`linked-appeals POST /linked-appeals/add/check-and-confirm should re-render the check and confirm page with the expected error message if no radio option was selected 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirmation">Choose an option</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the appeal you&#39;re linking to</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">TEST-12345</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal status</dt>
-                    <dd class="govuk-summary-list__value">Assign case officer</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value">Householder</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Eva Sharma (Eva Sharma Ltd)</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Submission date</dt>
-                    <dd class="govuk-summary-list__value">21 February 2024</dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Is this the appeal you want to link?</legend>
-                                <div class="govuk-radios"
-                                data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="confirmation" name="confirmation"
-                                        type="radio" value="lead">
-                                        <label class="govuk-label govuk-radios__label" for="confirmation">Yes, make this the lead appeal for 351062</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="confirmation-2" name="confirmation"
-                                        type="radio" value="child">
-                                        <label class="govuk-label govuk-radios__label" for="confirmation-2">Yes, this is a child appeal of 351062</label>
-                                    </div>
-                                    <div class="govuk-radios__divider">or</div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="confirmation-4" name="confirmation"
-                                        type="radio" value="cancel">
-                                        <label class="govuk-label govuk-radios__label" for="confirmation-4">No, return to search</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
+exports[`linked-appeals POST /linked-appeals/add/lead-appeal should update the lead appeal on the confirm page after submit 1`] = `"<body class="govuk-template__body"><script nonce="EdcOUaJ8lczj9tIPO0lPow==">document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a><header class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header" role="banner" data-module="govuk-header"><div class="govuk-width-container"><div class="pins-row"><div class="pins-column--left"><div class="pins-header__logo"><i class="pins-header__logo-crown"></i></div><span>Planning Inspectorate</span></div><div class="pins-column--central"><p class="pins-header-domainname govuk-!-margin-top-1"> Casework Back Office System - Appeals</p><nav class="govuk-header__navigation pins-header-navigation" aria-label="Menu"><ul class="govuk-header__navigation-list"><li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a></li><li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a></li><li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a></li></ul></nav></div></div></div></header><div class="govuk-width-container govuk-width-container"><div class="govuk-phase-banner"><p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag"> Beta</strong><span class="govuk-phase-banner__text"> This is a new service. Help us improve it and <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u" class="govuk-link" target="_blank" rel="noopener noreferrer">give your feedback (opens in a new tab)</a>.</span></p></div><a href="/appeals-service/appeal-details/1/linked-appeals/add/lead-appeal" class="govuk-back-link">Back</a><main class="govuk-main-wrapper" id="main-content"><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span><h1 class="govuk-heading-l">Check details and add linked appeal</h1></div></div><div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds"><dl class="govuk-summary-list govuk-!-margin-bottom-5"><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt><dd class="govuk-summary-list__value"><span>1234567</span><br><span class="govuk-hint">96 The Avenue</span><br><span class="govuk-hint">Householder</span></dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flinked-appeals%2Fadd%2Fcheck-and-confirm">Change</a></dd></div><div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which is the lead appeal?</dt><dd class="govuk-summary-list__value"><span>1234567</span><br><span class="govuk-hint">96 The Avenue</span><br><span class="govuk-hint">Householder</span></dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add/lead-appeal?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Flinked-appeals%2Fadd%2Fcheck-and-confirm">Change</a></dd></div></dl><p class="govuk-body">1234567 will be the lead appeal of APP/Q9999/D/21/351062</p><div class="govuk-grid-row"><div class="govuk-grid-column-full"><form method="post" novalidate="novalidate"><button type="submit" class="govuk-button" data-module="govuk-button"> Add linked appeal</button></form></div></div></div></div></main></div><footer class="govuk-footer" role="contentinfo"><div class="govuk-width-container "><div class="govuk-footer__meta"><div class="govuk-footer__meta-item govuk-footer__meta-item"></div></div></div></footer></body>"`;

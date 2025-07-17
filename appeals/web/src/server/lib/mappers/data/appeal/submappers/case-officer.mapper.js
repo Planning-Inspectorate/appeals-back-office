@@ -1,9 +1,9 @@
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import config from '#environment/config.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapCaseOfficer = ({
-	appealDetails,
 	currentRoute,
 	skipAssignedUsersData,
 	caseOfficerUser,
@@ -23,15 +23,19 @@ export const mapCaseOfficer = ({
 		}</li></ul>`;
 	})();
 
+	const caseOfficerRoute = config.featureFlags.featureFlagSimplifyTeamAssignment
+		? 'assign-case-officer/search-case-officer'
+		: 'assign-user/case-officer';
+
 	return textSummaryListItem({
 		id: 'case-officer',
 		text: 'Case officer',
 		value: {
 			html: caseOfficerRowValue
 		},
-		link: `${currentRoute}/assign-user/case-officer`,
+		link: `${currentRoute}/${caseOfficerRoute}`,
 		editable: userHasUpdateCasePermission,
 		classes: 'appeal-case-officer',
-		actionText: appealDetails.caseOfficer ? 'Change' : 'Assign'
+		actionText: caseOfficerUser ? 'Change' : 'Assign'
 	});
 };

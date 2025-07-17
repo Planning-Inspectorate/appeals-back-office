@@ -7,10 +7,14 @@ import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateIsInThePast
 } from '#lib/dates.js';
-import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
+import {
+	mapRepresentationDocumentSummaryActionLink,
+	mapFinalCommentRepresentationStatusToLabelText
+} from '#lib/representation-utilities.js';
+import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapLPAFinalComments = ({ appealDetails, currentRoute }) => {
+export const mapLPAFinalComments = ({ appealDetails, currentRoute, request }) => {
 	const { status, isRedacted } = appealDetails.documentationSummary?.lpaFinalComments ?? {};
 
 	const statusText = (() => {
@@ -27,29 +31,14 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) => {
 				: 'Awaiting final comments';
 		}
 
-		const counts = appealDetails.documentationSummary?.lpaFinalComments?.counts ?? {};
-
-		if (counts[APPEAL_REPRESENTATION_STATUS.PUBLISHED] > 0) {
-			return 'Shared';
-		}
-
-		if (counts[APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW] > 0) {
-			return 'Ready to review';
-		}
-
-		if (counts[APPEAL_REPRESENTATION_STATUS.VALID] > 0) {
-			return isRedacted ? 'Redacted and accepted' : 'Accepted';
-		}
-
-		if (counts[APPEAL_REPRESENTATION_STATUS.INVALID] > 0) {
-			return 'Rejected';
-		}
-
-		return '';
+		return mapFinalCommentRepresentationStatusToLabelText(
+			appealDetails.documentationSummary?.lpaFinalComments?.representationStatus,
+			isRedacted
+		);
 	})();
 
 	const receivedText = (() => {
-		const { status, counts, receivedAt } =
+		const { status, representationStatus, receivedAt } =
 			appealDetails.documentationSummary?.lpaFinalComments ?? {};
 
 		if (!appealDetails.startedAt) {
@@ -58,7 +47,7 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) => {
 
 		if (
 			status === 'not_received' ||
-			(counts?.[APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW] ?? 0 > 0)
+			representationStatus === APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
 		) {
 			return `Due by ${dateISOStringToDisplayDate(
 				appealDetails.appealTimetable?.finalCommentsDueDate
@@ -67,6 +56,7 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) => {
 
 		return dateISOStringToDisplayDate(receivedAt);
 	})();
+
 
 	return documentationFolderTableItem({
 		id: 'lpa-final-comments',
@@ -89,4 +79,23 @@ export const mapLPAFinalComments = ({ appealDetails, currentRoute }) => {
 			'lpa-final-comments'
 		)
 	});
+
+	if (appealDetails?.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING) {
+		const id = 'start-case-date';
+		return { id, display: {} };
+	} else {
+		return documentationFolderTableItem({
+			id: 'lpa-final-comments',
+			text: 'LPA final comments',
+			statusText,
+			receivedText,
+			actionHtml: mapRepresentationDocumentSummaryActionLink(
+				currentRoute,
+				appealDetails?.documentationSummary?.lpaFinalComments?.status,
+				appealDetails?.documentationSummary?.lpaFinalComments?.representationStatus,
+				'lpa-final-comments',
+				request
+			)
+		});
+	}
 };

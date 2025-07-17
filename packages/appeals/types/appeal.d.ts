@@ -13,6 +13,7 @@ export interface AppealSummary {
 	appealStatus: string;
 	appealSite: Address;
 	appealType: string;
+	procedureType?: string | undefined;
 	localPlanningDepartment: string;
 	dueDate: string;
 	lpaQuestionnaireId?: number | null;
@@ -22,12 +23,14 @@ export interface AppealSummary {
 	documentationSummary: DocumentationSummary;
 	isParentAppeal: boolean;
 	isChildAppeal: boolean;
+	planningApplicationReference: string | null;
 }
 
 export interface AppealList {
 	itemCount: number;
 	items: AppealSummary[];
 	statuses: string[];
+	statusesInNationalList: string[];
 	lpas: { name: string; lpaCode: string }[];
 	inspectors: { azureAdUserId: string; id: number }[];
 	caseOfficers: { azureAdUserId: string; id: number }[];
@@ -47,4 +50,22 @@ export interface Pagination {
 	items: PaginationItem[];
 	previous: PaginationItem;
 	next: PaginationItem;
+}
+
+export type BankHolidayFeedDivisions =
+	| 'england-and-wales'
+	| 'northern-ireland'
+	| 'scotland'
+	| 'united-kingdom';
+
+interface BankHolidayFeedEvent {
+	title: string;
+	date: string;
+	notes: string;
+}
+
+export interface BankHolidayFeedEvents extends Array<BankHolidayFeedEvent> {}
+
+export interface TimetableDeadlineDate {
+	[key: string]: Date;
 }

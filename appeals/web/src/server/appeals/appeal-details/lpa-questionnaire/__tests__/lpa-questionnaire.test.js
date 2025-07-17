@@ -18,7 +18,6 @@ import {
 	documentRedactionStatuses,
 	activeDirectoryUsersData,
 	appealData,
-	appealDataFullPlanning,
 	notCheckedDocumentFolderInfoDocuments,
 	lpaQuestionnaireData,
 	fileUploadInfo,
@@ -45,7 +44,6 @@ const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details/1/lpa-questionnaire/2';
 const notificationBannerElement = '.govuk-notification-banner';
-
 const incompleteReasonIds = lpaQuestionnaireIncompleteReasons.map((reason) => reason.id);
 const incompleteReasonsWithText = lpaQuestionnaireIncompleteReasons.filter(
 	(reason) => reason.hasText === true
@@ -59,6 +57,22 @@ const incompleteReasonsWithoutTextIds = incompleteReasonsWithoutText.map((reason
 const lpaqAdditionalDocumentsFolderInfo = {
 	...additionalDocumentsFolderInfo,
 	path: 'lpa-questionnaire/lpaCaseCorrespondence'
+};
+
+const lpaqAppealData = {
+	...appealData,
+	documentationSummary: {
+		...appealData.documentationSummary,
+		lpaQuestionnaire: {
+			...appealData.documentationSummary.lpaQuestionnaire,
+			status: 'received'
+		}
+	}
+};
+
+const appealDataFullPlanning = {
+	...lpaqAppealData,
+	appealType: 'Planning appeal'
 };
 
 describe('LPA Questionnaire review', () => {
@@ -92,8 +106,8 @@ describe('LPA Questionnaire review', () => {
 		}, 10000);
 
 		it('should render a success notification banner when "green belt" is updated', async () => {
-			const appealId = appealData.appealId.toString();
-			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+			const appealId = lpaqAppealData.appealId.toString();
+			const lpaQuestionnaireId = lpaqAppealData.lpaQuestionnaireId;
 			const lpaQuestionnaireUrl = `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`;
 			const apiUrl = `/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`;
 			nock('http://test/').get(apiUrl).reply(200, lpaQuestionnaireData).persist();
@@ -116,8 +130,8 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render a "Inspector access (lpa) updated" success notification banner when the inspector access (lpa) is updated', async () => {
-			const appealId = appealData.appealId;
-			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+			const appealId = lpaqAppealData.appealId;
+			const lpaQuestionnaireId = lpaqAppealData.lpaQuestionnaireId;
 			const validData = {
 				inspectorAccessRadio: 'yes',
 				inspectorAccessDetails: 'Details'
@@ -146,8 +160,8 @@ describe('LPA Questionnaire review', () => {
 		}, 10000);
 
 		it('should render a "Safety risks updated" success notification banner when the safety risks (lpa) is updated', async () => {
-			const appealId = appealData.appealId;
-			const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+			const appealId = lpaqAppealData.appealId;
+			const lpaQuestionnaireId = lpaqAppealData.lpaQuestionnaireId;
 			const validData = {
 				safetyRisksRadio: 'yes',
 				safetyRisksDetails: 'Details'
@@ -177,8 +191,8 @@ describe('LPA Questionnaire review', () => {
 			);
 		}, 10000);
 
-		it('should render a "Neighbouring site added" success notification banner when a neighbouring site was added', async () => {
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+		it('should render a "Address added" success notification banner when a neighbouring site was added', async () => {
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireData)
@@ -212,15 +226,15 @@ describe('LPA Questionnaire review', () => {
 				rootElement: notificationBannerElement
 			}).innerHTML;
 			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Neighbouring site added');
+			expect(notificationBannerElementHTML).toContain('Address added');
 			expect(notificationBannerElementHTML).toContain('Success');
 		});
 
-		it('should render a "Neighbouring site updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
+		it('should render a "Address updated" success notification banner when an inspector/3rd party neighbouring site was updated', async () => {
 			nock('http://test/').patch(`/appeals/1/neighbouring-sites`).reply(200, {
 				siteId: 1
 			});
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireData)
@@ -241,17 +255,17 @@ describe('LPA Questionnaire review', () => {
 				rootElement: notificationBannerElement
 			}).innerHTML;
 			expect(notificationBannerElementHTML).toMatchSnapshot();
-			expect(notificationBannerElementHTML).toContain('Neighbouring site updated');
+			expect(notificationBannerElementHTML).toContain('Address updated');
 			expect(notificationBannerElementHTML).toContain('Success');
 		});
 
-		it('should render a "Neighbouring site removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
+		it('should render a "Address removed" success notification banner when an inspector/3rd party neighbouring site was removed', async () => {
 			const appealReference = '1';
 
 			nock('http://test/').delete(`/appeals/${appealReference}/neighbouring-sites`).reply(200, {
 				siteId: 1
 			});
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireData)
@@ -267,7 +281,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 			expect(notificationBannerElementHTML).toMatchSnapshot();
 			expect(notificationBannerElementHTML).toContain('Success');
-			expect(notificationBannerElementHTML).toContain('Neighbouring site removed');
+			expect(notificationBannerElementHTML).toContain('Address removed');
 		});
 
 		it('should render an "LPA questionnaire incomplete" notification banner, including the LPA questionnaire due date, when the LPA questionnaire is marked as incomplete', async () => {
@@ -335,7 +349,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render a "Notification methods updated" success notification banner when notification methods are changed', async () => {
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireData)
@@ -358,7 +372,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render a "Column 2 threshold criteria status changed" success notification banner when meets eia column two threshold is changed', async () => {
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireDataNotValidated)
@@ -382,7 +396,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render an "Environmental statement status changed" success notification banner when eia requires environmental statement is changed', async () => {
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireDataNotValidated)
@@ -406,7 +420,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render a "Description of development updated" success notification banner when eia development description is changed', async () => {
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireDataNotValidated)
@@ -428,7 +442,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render a "Development category updated" success notification banner when eia environmental impact schedule is changed', async () => {
-			nock('http://test/').get(`/appeals/1`).reply(200, appealData).persist();
+			nock('http://test/').get(`/appeals/1`).reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get(`/appeals/1/lpa-questionnaires/2`)
 				.reply(200, lpaQuestionnaireDataNotValidated)
@@ -494,8 +508,8 @@ describe('LPA Questionnaire review', () => {
 
 		describe('banner ordering', () => {
 			it('should render success banners before (above) important banners', async () => {
-				const appealId = appealData.appealId.toString();
-				const lpaQuestionnaireId = appealData.lpaQuestionnaireId;
+				const appealId = lpaqAppealData.appealId.toString();
+				const lpaQuestionnaireId = lpaqAppealData.lpaQuestionnaireId;
 
 				nock('http://test/')
 					.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
@@ -611,6 +625,10 @@ describe('LPA Questionnaire review', () => {
 					label: 'Screening opinion documents'
 				},
 				{
+					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.EIA_SCOPING_OPINION}`,
+					label: 'Scoping opinion documents'
+				},
+				{
 					folderPath: `${APPEAL_CASE_STAGE.LPA_QUESTIONNAIRE}/${APPEAL_DOCUMENT_TYPE.EIA_SCREENING_DIRECTION}`,
 					label: 'Screening direction documents'
 				},
@@ -633,7 +651,7 @@ describe('LPA Questionnaire review', () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}`)
 					.reply(200, {
-						...appealData,
+						...lpaqAppealData,
 						appealId
 					})
 					.persist();
@@ -792,7 +810,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get(`/appeals/2`)
 				.reply(200, {
-					...appealData,
+					...lpaqAppealData,
 					appealId: 2,
 					appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
 				});
@@ -831,7 +849,7 @@ describe('LPA Questionnaire review', () => {
 				nock('http://test/')
 					.get(`/appeals/3`)
 					.reply(200, {
-						...appealData,
+						...lpaqAppealData,
 						appealId: 3,
 						appealStatus
 					});
@@ -855,7 +873,7 @@ describe('LPA Questionnaire review', () => {
 					'name="reviewOutcome" type="radio" value="incomplete">'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain('Continue</button>');
-			}, 10000);
+			}, 50000);
 		}
 
 		describe('show more', () => {
@@ -1146,7 +1164,10 @@ describe('LPA Questionnaire review', () => {
 	describe('GET / with unchecked documents', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get(`/appeals/${appealData.appealId}`).reply(200, appealData).persist();
+			nock('http://test/')
+				.get(`/appeals/${lpaqAppealData.appealId}`)
+				.reply(200, lpaqAppealData)
+				.persist();
 		});
 
 		it('should render a notification banner when a file is unscanned', async () => {
@@ -1386,7 +1407,7 @@ describe('LPA Questionnaire review', () => {
 			const response = await request.post(`${baseUrl}/incomplete`).send({
 				incompleteReason: incompleteReasonsWithTextIds[0],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'a'.repeat(
-					textInputCharacterLimits.defaultInputLength + 1
+					textInputCharacterLimits.checkboxTextItemsLength + 1
 				)
 			});
 
@@ -1400,7 +1421,9 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Text in text fields cannot exceed 300 characters</a>');
+			expect(errorSummaryHtml).toContain(
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
+			);
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if multiple incomplete reasons with text were provided but any of the matching text properties exceed the character limit', async () => {
@@ -1408,7 +1431,7 @@ describe('LPA Questionnaire review', () => {
 				incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 				[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'test reason text 1',
 				[`incompleteReason-${incompleteReasonsWithTextIds[1]}`]: 'a'.repeat(
-					textInputCharacterLimits.defaultInputLength + 1
+					textInputCharacterLimits.checkboxTextItemsLength + 1
 				)
 			});
 
@@ -1422,7 +1445,9 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Text in text fields cannot exceed 300 characters</a>');
+			expect(errorSummaryHtml).toContain(
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
+			);
 		});
 
 		it('should redirect to the check and confirm page if a single incomplete reason without text was provided', async () => {
@@ -1488,7 +1513,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get(`/appeals/1`)
 				.reply(200, {
-					...appealData,
+					...lpaqAppealData,
 					appealId: 1
 				});
 		});
@@ -1501,12 +1526,12 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get(`/appeals/2`)
 				.reply(200, {
-					...appealData,
+					...lpaqAppealData,
 					appealId: 2,
 					documentationSummary: {
-						...appealData.documentationSummary,
+						...lpaqAppealData.documentationSummary,
 						lpaQuestionnaire: {
-							...appealData.documentationSummary.lpaQuestionnaire,
+							...lpaqAppealData.documentationSummary.lpaQuestionnaire,
 							dueDate: '2024-10-11T10:27:06.626Z'
 						}
 					}
@@ -1549,7 +1574,7 @@ describe('LPA Questionnaire review', () => {
 			nock('http://test/')
 				.get(`/appeals/1`)
 				.reply(200, {
-					...appealData,
+					...lpaqAppealData,
 					appealId: 1
 				});
 		});
@@ -1599,7 +1624,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Date must include a day, a month and a year');
+			expect(errorSummaryHtml).toContain('Enter the date');
 		});
 
 		it('should re-render the update date page with the expected error message if provided date is not in the future', async () => {
@@ -1630,7 +1655,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Date must be in the future</a>');
+			expect(errorSummaryHtml).toContain('The date must be in the future</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid day was provided', async () => {
@@ -1862,7 +1887,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Date must be a valid date</a>');
+			expect(errorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {
@@ -1986,7 +2011,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 		});
 		afterEach(() => {
@@ -2012,10 +2037,10 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
@@ -2045,10 +2070,10 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -2078,10 +2103,10 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -2111,10 +2136,10 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
@@ -2127,7 +2152,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData);
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/')
 				.get('/appeals/1/documents/1/versions')
@@ -2152,14 +2177,16 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Upload an updated document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
@@ -2185,14 +2212,14 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Update additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -2218,14 +2245,14 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Update additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -2251,14 +2278,14 @@ describe('LPA Questionnaire review', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Update additional document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h1>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
@@ -2271,7 +2298,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-document-details/:folderId/', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -2335,7 +2362,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -2370,7 +2397,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -2405,7 +2432,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -2440,7 +2467,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 		});
@@ -2449,7 +2476,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-document-details/:folderId/:documentId', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -2513,7 +2540,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -2548,7 +2575,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -2583,7 +2610,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -2618,7 +2645,7 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 		});
@@ -2699,7 +2726,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a day</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a day</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is non-numeric', async () => {
@@ -2726,7 +2755,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date day must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date day must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is less than 1', async () => {
@@ -2754,7 +2785,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence received date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -2783,7 +2814,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence received date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -2811,7 +2842,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a month</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a month</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is non-numeric', async () => {
@@ -2838,7 +2871,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date month must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date month must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is less than 1', async () => {
@@ -2866,7 +2901,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence received date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -2895,7 +2930,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence received date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -2923,7 +2958,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a year</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a year</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate year is non-numeric', async () => {
@@ -2950,7 +2987,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date year must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date year must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate is not a valid date', async () => {
@@ -2977,7 +3016,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must be a valid date</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must be a valid date</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate is in the future', async () => {
@@ -3005,7 +3046,9 @@ describe('LPA Questionnaire review', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date cannot be a future date</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date cannot be a future date</a>'
+			);
 		});
 
 		it('should send a patch request to the appeal documents endpoint and redirect to the lpa questionnaire page, if complete and valid document details were provided', async () => {
@@ -3051,7 +3094,7 @@ describe('LPA Questionnaire review', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('File name');
-			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
+			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo">');
 		});
 	});
 
@@ -3066,7 +3109,7 @@ describe('LPA Questionnaire review', () => {
 		it(`should send a patch request to the appeal documents endpoint and redirect to the manage individual document page, if a new valid document name is provided`, async () => {
 			const response = await request
 				.post(`${baseUrl}/change-document-name/1/1`)
-				.send({ fileName: 'new-name.jpeg', documentId: '1' });
+				.send({ fileName: 'new-name', documentId: '1' });
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toContain(`Found. Redirecting to ${baseUrl}/manage-documents/1/1`);
@@ -3076,7 +3119,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3144,7 +3187,7 @@ describe('LPA Questionnaire review', () => {
 	describe('POST /lpa-questionnaire/1/add-documents/:folderId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3226,7 +3269,7 @@ describe('LPA Questionnaire review', () => {
 	describe('GET /lpa-questionnaire/1/add-documents/:folderId/:documentId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3295,7 +3338,7 @@ describe('LPA Questionnaire review', () => {
 	describe('POST /lpa-questionnaire/1/add-documents/:folderId/:documentId/check-your-answers', () => {
 		beforeEach(() => {
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, appealData).persist();
+			nock('http://test/').get('/appeals/1').reply(200, lpaqAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/document-redaction-statuses')
 				.reply(200, documentRedactionStatuses)
@@ -3358,7 +3401,9 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Document updated</p>');
+			expect(notificationBannerElementHTML).toContain(
+				'Agreement to change description evidence updated</p>'
+			);
 		});
 	});
 
@@ -3410,6 +3455,9 @@ describe('LPA Questionnaire review', () => {
 			expect(unprettifiedElement.innerHTML).toContain('sample-20s-documentFolderInfo.mp4</span>');
 			expect(unprettifiedElement.innerHTML).toContain('ph0-documentFolderInfo.jpeg</span>');
 			expect(unprettifiedElement.innerHTML).toContain('ph1-documentFolderInfo.jpeg</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/${documentFolderInfo.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>`
+			);
 		});
 
 		it('should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is additional documents', async () => {
@@ -3747,6 +3795,96 @@ describe('LPA Questionnaire review', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+	});
+	describe('change LPA link', () => {
+		const lpaList = [
+			{
+				id: 1,
+				lpaCode: 'Q1111',
+				name: 'System Test Borough Council 2',
+				email: 'test@example.com'
+			},
+			{
+				id: 2,
+				lpaCode: 'MAID',
+				name: 'Maidstone Borough Council',
+				email: 'test2@example.com'
+			},
+			{
+				id: 3,
+				lpaCode: 'BARN',
+				name: 'Barnsley Metropolitan Borough Council',
+				email: 'test3@example.com'
+			},
+			{
+				id: 4,
+				lpaCode: 'Q9999',
+				name: 'System Test Borough Council',
+				email: 'test4@example.com'
+			}
+		];
+
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/local-planning-authorities').reply(200, lpaList);
+		});
+		afterEach(teardown);
+
+		describe('GET /lpa-questionnaire/1/change-appeal-details/local-planning-authority', () => {
+			it('should render the local planning authority page', async () => {
+				const response = await request.get(
+					`${baseUrl}/change-appeal-details/local-planning-authority`
+				);
+				const element = parseHtml(response.text);
+
+				expect(response.text).toContain(`<a href="${baseUrl}" class="govuk-back-link">Back</a>`);
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Local planning authority');
+				expect(element.innerHTML).not.toContain(lpaList[0].name);
+				expect(element.innerHTML).toContain(lpaList[1].name);
+				expect(element.innerHTML).toContain(lpaList[2].name);
+				expect(element.innerHTML).not.toContain(lpaList[3].name);
+				expect(element.innerHTML).not.toContain(`checked`);
+				expect(element.innerHTML).toContain('Continue</button>');
+			});
+		});
+
+		describe('POST /lpa-questionnaire/1/change-appeal-details/local-planning-authority', () => {
+			beforeEach(() => {
+				nock('http://test/').post('/appeals/1/lpa').reply(200, { success: true });
+			});
+
+			afterEach(() => {
+				nock.cleanAll();
+			});
+			it('should redirect to correct url when lpa field is populated and valid', async () => {
+				const response = await request
+					.post(`${baseUrl}/change-appeal-details/local-planning-authority`)
+					.send({ localPlanningAuthority: 2 });
+
+				expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}`);
+				expect(response.statusCode).toBe(302);
+			});
+
+			it('should re-render the page with an error message if required field is missing', async () => {
+				const response = await request
+					.post(`${baseUrl}/change-appeal-details/local-planning-authority`)
+					.send({});
+
+				expect(response.statusCode).toBe(200);
+
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Local planning authority</h1>');
+
+				const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHTML).toContain('Select the local planning authority');
+			});
 		});
 	});
 });

@@ -18,10 +18,12 @@ import {
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import {
 	getDocumentRedactionStatuses,
-	getFileInfo
+	getFileInfo,
+	getDocumentFileType
 } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { capitalize } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 
@@ -39,7 +41,7 @@ export const getDocumentUpload = async (request, response) => {
 	}
 
 	let uploadPageHeadingText = '';
-
+	let documentTitle = undefined;
 	switch (costsCategory) {
 		case 'lpa':
 			uploadPageHeadingText = `Upload LPA costs ${costsDocumentType} document`;
@@ -49,6 +51,7 @@ export const getDocumentUpload = async (request, response) => {
 			break;
 		default:
 			uploadPageHeadingText = `Upload ${costsCategory} costs ${costsDocumentType} document`;
+			documentTitle = `${costsCategory} costs ${costsDocumentType}`;
 			break;
 	}
 
@@ -57,6 +60,7 @@ export const getDocumentUpload = async (request, response) => {
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
+		documentTitle: documentTitle,
 		nextPageUrl:
 			costsCategory === 'decision'
 				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}`
@@ -87,6 +91,7 @@ export const postDocumentUploadPage = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getDocumentVersionUpload = async (request, response) => {
 	const {
+		apiClient,
 		currentAppeal,
 		currentFolder,
 		params: { costsCategory, costsDocumentType, documentId }
@@ -95,6 +100,19 @@ export const getDocumentVersionUpload = async (request, response) => {
 	if (!currentAppeal || !currentFolder) {
 		return response.status(404).render('app/404.njk');
 	}
+
+	const [pageHeading, uploadContainerHeading] = (() => {
+		if (!costsDocumentType) {
+			return [];
+		}
+
+		const categoryText = costsCategory === 'lpa' ? 'LPA' : costsCategory;
+		const headingText = `${categoryText} ${costsDocumentType}`;
+
+		return [capitalizeFirstLetter(headingText), `Upload ${headingText}`];
+	})();
+
+	const allowedType = await getDocumentFileType(apiClient, currentAppeal.appealId, documentId);
 
 	await renderDocumentUpload({
 		request,
@@ -108,7 +126,13 @@ export const getDocumentVersionUpload = async (request, response) => {
 			costsCategory === 'decision'
 				? `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/decision/add-document-details/${currentFolder.folderId}/${documentId}`
 				: `/appeals-service/appeal-details/${currentAppeal.appealId}/costs/${costsCategory}/${costsDocumentType}/add-document-details/${currentFolder.folderId}/${documentId}`,
-		allowMultipleFiles: false
+		allowMultipleFiles: false,
+		allowedTypes: allowedType ? [allowedType] : undefined,
+		...(pageHeading &&
+			uploadContainerHeading && {
+				pageHeadingTextOverride: pageHeading,
+				uploadContainerHeadingTextOverride: uploadContainerHeading
+			})
 	});
 };
 
@@ -346,7 +370,12 @@ export const getManageFolder = async (request, response) => {
 			costsCategory === 'decision'
 				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/manage-documents/${currentFolder.folderId}/{{documentId}}`
 				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/manage-documents/${currentFolder.folderId}/{{documentId}}`,
+		addButtonUrl:
+			costsCategory === 'decision'
+				? `/appeals-service/appeal-details/${request.params.appealId}/costs/decision/upload-documents/${currentFolder.folderId}`
+				: `/appeals-service/appeal-details/${request.params.appealId}/costs/${costsCategory}/${costsDocumentType}/upload-documents/${currentFolder.folderId}`,
 		pageHeadingTextOverride: costsCategoryLabel,
+		addButtonTextOverride: `Add document${costsCategory === 'decision' ? 's' : ''}`,
 		...(costsCategory === 'decision' && {
 			dateColumnLabelTextOverride: 'Decision date'
 		})

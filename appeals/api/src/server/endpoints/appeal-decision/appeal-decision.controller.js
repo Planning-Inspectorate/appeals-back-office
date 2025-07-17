@@ -2,6 +2,7 @@ import { publishDecision } from './appeal-decision.service.js';
 import { ERROR_INVALID_APPEAL_STATE } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { APPEAL_CASE_DECISION_OUTCOME, APPEAL_CASE_STATUS } from 'pins-data-model';
+import { isCurrentStatus } from '#utils/current-status.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -20,7 +21,7 @@ export const postInspectorDecision = async (req, res) => {
 		expectedOutcome = APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION;
 	}
 
-	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.ISSUE_DETERMINATION) {
+	if (!isCurrentStatus(appeal, APPEAL_CASE_STATUS.ISSUE_DETERMINATION)) {
 		return res.status(400).send({ errors: { state: ERROR_INVALID_APPEAL_STATE } });
 	}
 

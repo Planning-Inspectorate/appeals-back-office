@@ -29,23 +29,38 @@ export const summaryList = (appealDetails, comment, finalCommentsType, attachmen
 							}
 						}
 					]
+				},
+				actions: {
+					items: [
+						{
+							href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/redact?backUrl=/final-comments/${finalCommentsType}/accept`,
+							text: 'Redact',
+							visuallyHiddenText: 'Redact statement'
+						}
+					]
 				}
 			},
 			{
 				key: { text: 'Supporting documents' },
-				value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
-				...(comment.attachments?.length > 0
-					? {
-							actions: {
-								items: [
+				value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
+				actions: {
+					items: [
+						...(comment.attachments?.length > 0
+							? [
 									{
-										text: 'Change',
-										href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}`
+										text: 'Manage',
+										href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/final-comments/${finalCommentsType}/accept`,
+										visuallyHiddenText: 'supporting documents'
 									}
-								]
-							}
-					  }
-					: {})
+							  ]
+							: []),
+						{
+							text: 'Add',
+							href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/add-document/?backUrl=/final-comments/${finalCommentsType}/accept`,
+							visuallyHiddenText: 'supporting documents'
+						}
+					]
+				}
 			},
 			{
 				key: { text: 'Review decisions' },
@@ -54,7 +69,7 @@ export const summaryList = (appealDetails, comment, finalCommentsType, attachmen
 					items: [
 						{
 							text: 'Change',
-							href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/`
+							href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}?backUrl=/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/accept`
 						}
 					]
 				}

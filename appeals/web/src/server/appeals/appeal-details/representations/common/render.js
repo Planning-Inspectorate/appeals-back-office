@@ -5,7 +5,7 @@ import logger from '#lib/logger.js';
 
 /**
  *
- * @param {(appealDetails: Appeal, comment: Representation, session: import('express-session').Session & Record<string, string>) => PageContent} contentMapper
+ * @param {(appealDetails: Appeal, comment: Representation, session: import('express-session').Session & Record<string, string>, errors: import("@pins/express").ValidationErrors | undefined) => PageContent} contentMapper
  * @param {string} templatePath,
  * @returns {import('@pins/express').RenderHandler<any, any, any>}
  */
@@ -17,7 +17,7 @@ export const render = (contentMapper, templatePath) => (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	const pageContent = contentMapper(currentAppeal, currentRepresentation, session);
+	const pageContent = contentMapper(currentAppeal, currentRepresentation, session, errors);
 
 	return response.status(200).render(templatePath, {
 		errors,

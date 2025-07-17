@@ -1,0 +1,17 @@
+{%- extends "app/layouts/app.layout.njk" -%}
+{%- from "govuk/components/button/macro.njk" import govukButton -%}
+{%- from "../app/components/page-heading.njk" import pageHeading -%}
+
+{%- set pageTitle = pageContent.title if pageContent.title else '' -%}
+{%- set backLinkUrl = pageContent.backLinkUrl -%}
+{%- set backLinkText = pageContent.backLinkText -%}
+
+{%- set gridColumnClasses = gridColumnClasses if gridColumnClasses else 'govuk-grid-column-full' -%}
+
+{%- block pageHeading -%}
+	{{ pageHeading(pageContent) }}
+{%- endblock -%}
+
+{%- block pageContent -%}
+	{%- include "../app/includes/check-and-confirm-page-content.pattern.njk" -%}
+{%- endblock -%}

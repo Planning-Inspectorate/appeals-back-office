@@ -1,4 +1,4 @@
-import isFPA from '#utils/is-fpa.js';
+import isFPA from '@pins/appeals/utils/is-fpa.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.Timetable} Timetable */
@@ -42,6 +42,18 @@ export const mapAppealTimetable = (data) => {
 				s106ObligationDueDate:
 					(appeal.appealTimetable.s106ObligationDueDate &&
 						appeal.appealTimetable.s106ObligationDueDate.toISOString()) ||
+					null,
+				statementOfCommonGroundDueDate:
+					(appeal.appealTimetable.statementOfCommonGroundDueDate &&
+						appeal.appealTimetable.statementOfCommonGroundDueDate.toISOString()) ||
+					null,
+				planningObligationDueDate:
+					(appeal.appealTimetable.planningObligationDueDate &&
+						appeal.appealTimetable.planningObligationDueDate.toISOString()) ||
+					null,
+				proofOfEvidenceAndWitnessesDueDate:
+					(appeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate &&
+						appeal.appealTimetable.proofOfEvidenceAndWitnessesDueDate.toISOString()) ||
 					null
 			})
 		};

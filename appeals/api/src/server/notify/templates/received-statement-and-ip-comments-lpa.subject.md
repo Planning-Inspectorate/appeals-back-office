@@ -1,1 +1,1 @@
-Submit your final comments: ((appeal_reference_number))
+{{subject}}: {{appeal_reference_number}}

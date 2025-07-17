@@ -41,7 +41,7 @@ describe('withdrawal', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				`Upload appellant&#39;s withdrawal request</h1>`
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 		});
 	});
 
@@ -121,13 +121,13 @@ describe('withdrawal', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="withdrawal-request-date-day" type="text" value="" inputmode="numeric">'
+				'name="withdrawal-request-date-day" type="text" inputmode="numeric">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="withdrawal-request-date-month" type="text" value="" inputmode="numeric">'
+				'name="withdrawal-request-date-month" type="text" inputmode="numeric">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'name="withdrawal-request-date-year" type="text" value="" inputmode="numeric">'
+				'name="withdrawal-request-date-year" type="text" inputmode="numeric">'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});

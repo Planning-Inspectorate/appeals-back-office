@@ -1,7 +1,8 @@
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
+import { addressToMultilineStringHtml, representationHasAddress } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -38,9 +39,7 @@ export function generateCommentSummaryList(
 	comment,
 	{ isReviewPage } = { isReviewPage: false }
 ) {
-	const { addressLine1, postCode } = comment.represented?.address ?? {};
-	const hasAddress = addressLine1 && postCode;
-
+	const hasAddress = representationHasAddress(comment);
 	const commentIsDocument = !comment.originalRepresentation && comment.attachments?.length;
 	const folderId = comment.attachments?.[0]?.documentVersion?.document?.folderId ?? null;
 
@@ -65,7 +64,10 @@ export function generateCommentSummaryList(
 		: null;
 
 	const { address, name, email } = comment.represented || {};
-
+	const redactMatching = checkRedactedText(
+		comment.originalRepresentation,
+		comment.redactedRepresentation
+	);
 	const rows = [
 		{
 			key: { text: 'Interested party' },
@@ -116,13 +118,15 @@ export function generateCommentSummaryList(
 			value: { html: dateISOStringToDisplayDate(comment.created) }
 		},
 		{
-			key: { text: comment.redactedRepresentation ? 'Original comment' : 'Comment' },
+			key: {
+				text: comment.redactedRepresentation && redactMatching ? 'Original comment' : 'Comment'
+			},
 			value: {
 				text: commentIsDocument ? 'Added as a document' : comment.originalRepresentation
 			},
 			actions: {
 				items:
-					commentIsDocument || isReviewPage
+					commentIsDocument || isReviewPage || (redactMatching && comment.redactedRepresentation)
 						? []
 						: [
 								{
@@ -132,12 +136,25 @@ export function generateCommentSummaryList(
 						  ]
 			}
 		},
-		...(comment.redactedRepresentation
-			? [{ key: { text: 'Redacted comment' }, value: { text: comment.redactedRepresentation } }]
+		...(comment.redactedRepresentation && redactMatching
+			? [
+					{
+						key: { text: 'Redacted comment' },
+						value: { text: comment.redactedRepresentation },
+						actions: {
+							items: [
+								{
+									text: 'Change',
+									href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/${comment.id}/redact`
+								}
+							]
+						}
+					}
+			  ]
 			: []),
 		{
 			key: { text: 'Supporting documents' },
-			value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
+			value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
 			actions: {
 				items: [
 					...(filteredAttachments?.length

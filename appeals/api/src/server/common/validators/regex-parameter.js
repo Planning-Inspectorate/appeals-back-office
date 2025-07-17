@@ -5,9 +5,16 @@ import { body } from 'express-validator';
 /**
  * @param {string} parameterName
  * @param {RegExp} regex
+ * @param {string | null} parentKeyOptional
  * @returns {ValidationChain}
  */
-const validateRegex = (parameterName, regex) =>
-	body(parameterName).exists({ checkFalsy: true }).matches(regex);
+const validateRegex = (parameterName, regex, parentKeyOptional = null) => {
+	const chain = body(parameterName);
+
+	if (parentKeyOptional) {
+		chain.if(body(parentKeyOptional).exists({ values: 'null' }));
+	}
+	return chain.exists({ checkFalsy: true }).matches(regex);
+};
 
 export default validateRegex;

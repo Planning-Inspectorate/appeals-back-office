@@ -2,21 +2,109 @@
 import { request } from '#tests/../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal } from '#tests/appeals/mocks.js';
-import formatDate from '#utils/date-formatter.js';
+import { fullPlanningAppeal, householdAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import {
 	ERROR_NOT_FOUND,
 	ERROR_INVALID_APPEAL_STATE,
 	ERROR_CANNOT_BE_EMPTY_STRING,
-	ERROR_MUST_BE_STRING,
-	FRONT_OFFICE_URL
+	ERROR_MUST_BE_STRING
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const appealTypes = [
-	{ id: 1, shorthand: 'A', code: 'A', type: 'TYPE A', enabled: false },
-	{ id: 2, shorthand: 'B', code: 'B', type: 'TYPE B', enabled: false }
+	{
+		id: 1,
+		type: 'Householder',
+		key: 'D',
+		processCode: 'HAS',
+		enabled: true
+	},
+	{
+		id: 2,
+		type: 'Enforcement notice appeal',
+		key: 'C',
+		processCode: null,
+		enabled: false
+	},
+	{
+		id: 3,
+		type: 'Enforcement listed building and conservation area appeal',
+		key: 'F',
+		processCode: null,
+		enabled: false
+	},
+	{
+		id: 4,
+		type: 'Discontinuance notice appeal',
+		key: 'G',
+		processCode: null,
+		enabled: false
+	},
+	{
+		id: 5,
+		type: 'Advertisement appeal',
+		key: 'H',
+		processCode: null,
+		enabled: false
+	},
+	{
+		id: 6,
+		type: 'Community infrastructure levy',
+		key: 'L',
+		processCode: null,
+		enabled: false
+	},
+	{
+		id: 7,
+		type: 'Planning obligation appeal',
+		key: 'Q',
+		processCode: null,
+		enabled: false
+	},
+	{
+		id: 8,
+		type: 'Affordable housing obligation appeal',
+		key: 'S',
+		processCode: null,
+		enabled: false
+	},
+	{
+		id: 9,
+		type: 'Call-in application',
+		key: 'V',
+		processCode: null,
+		enabled: false
+	},
+	{
+		id: 10,
+		type: 'Planning appeal',
+		key: 'W',
+		processCode: null,
+		enabled: false
+	},
+	{
+		id: 11,
+		type: 'Lawful development certificate appeal',
+		key: 'X',
+		processCode: null,
+		enabled: false
+	},
+	{
+		id: 12,
+		type: 'Planning listed building and conservation area appeal',
+		key: 'Y',
+		processCode: null,
+		enabled: false
+	},
+	{
+		id: 13,
+		type: 'Commercial (CAS) appeal',
+		key: 'Z',
+		processCode: null,
+		enabled: false
+	}
 ];
 const appealsWithValidStatus = [
 	{
@@ -84,8 +172,8 @@ describe('appeal change type resubmit routes', () => {
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/appeal-change-request`)
 				.send({
-					newAppealTypeId: 12,
-					newAppealTypeFinalDate: '2024-02-02'
+					newAppealTypeId: 16,
+					newAppealTypeFinalDate: '2026-02-16T11:43:27.096Z'
 				})
 				.set('azureAdUserId', azureAdUserId);
 
@@ -117,59 +205,60 @@ describe('appeal change type resubmit routes', () => {
 				}
 			});
 		});
-		test('returns 200 when appeal status is correct', async () => {
+		test.each([
+			['household', householdAppeal, 13],
+			['fullPlanning', fullPlanningAppeal, 1],
+			['listedBuilding', listedBuildingAppeal, 1]
+		])('returns 200 when appeal status is correct: %s', async (_, appeal, newType) => {
 			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 			// @ts-ignore
 			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
 
 			const response = await request
-				.post(`/appeals/${householdAppeal.id}/appeal-change-request`)
+				.post(`/appeals/${appeal.id}/appeal-change-request`)
 				.send({
-					newAppealTypeId: 1,
+					newAppealTypeId: newType,
 					newAppealTypeFinalDate: '3000-02-05T00:00:00.000Z'
 				})
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 				data: {
-					caseResubmittedTypeId: 1,
+					caseResubmittedTypeId: newType,
 					caseUpdatedDate: expect.any(Date)
 				},
 				where: {
-					id: householdAppeal.id
+					id: appeal.id
 				}
 			});
 
 			expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
 				create: {
-					appealId: householdAppeal.id,
+					appealId: appeal.id,
 					caseResubmissionDueDate: new Date('3000-02-05T23:59:00.000Z')
 				},
 				update: {
 					caseResubmissionDueDate: new Date('3000-02-05T23:59:00.000Z')
 				},
 				where: {
-					appealId: householdAppeal.id
+					appealId: appeal.id
 				},
 				include: {
 					appeal: true
 				}
 			});
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
-			// eslint-disable-next-line no-undef
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				notifyClient: expect.anything(),
 				personalisation: {
-					existing_appeal_type: 'Householder',
-					appeal_reference_number: '1345264',
-					lpa_reference: '48269/APP/2021/1482',
-					appeal_type: 'type a',
-					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-					url: FRONT_OFFICE_URL,
+					existing_appeal_type: appeal.appealType.type,
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					appeal_type: appealTypes[newType - 1].type.toLowerCase(),
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					due_date: formatDate(new Date('3000-02-05'), false)
 				},
 				recipientEmail: 'test@136s7.com',
@@ -192,7 +281,7 @@ describe('appeal change type transfer routes', () => {
 			const response = await request
 				.post(`/appeals/${householdAppeal.id}/appeal-transfer-request`)
 				.send({
-					newAppealTypeId: 12
+					newAppealTypeId: 16
 				})
 				.set('azureAdUserId', azureAdUserId);
 

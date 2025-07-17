@@ -1,4 +1,3 @@
-import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
 
 /**
@@ -11,12 +10,12 @@ export const getCaseContacts = (mappedData) => ({
 		rows: [
 			mappedData.appeal.appellant.display.summaryListItem,
 			mappedData.appeal.agent.display.summaryListItem,
-			removeSummaryListActions({
+			{
 				...mappedData.appeal.lpaContactDetails.display.summaryListItem,
 				key: {
 					text: 'LPA'
 				}
-			})
+			}
 		].filter(isDefined)
 	}
 });

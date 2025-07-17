@@ -1,4 +1,9 @@
-module.exports = {
+export default {
+	testTimeout: 50000,
+	transform: {},
+	moduleNameMapper: {
+		'^uuid$': 'uuid'
+	},
 	collectCoverageFrom: ['./src/**/*.js'],
 	coveragePathIgnorePatterns: [
 		'node_modules',
@@ -14,6 +19,6 @@ module.exports = {
 			lines: 95
 		}
 	},
-	workerThreads: true,
+	workerThreads: false,
 	workerIdleMemoryLimit: '500MB'
 };

@@ -28,7 +28,7 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 				happyPathHelper.assignCaseOfficer(caseRef);
 				happyPathHelper.reviewAppellantCase(caseRef);
 				caseDetailsPage.clickAccordionByButton('Case management');
-				caseDetailsPage.clickLinkByText('View');
+				caseDetailsPage.clickViewCaseHistory();
 				caseDetailsPage.verifyTableCellTextCaseHistory(
 					users.appeals.caseAdmin.email + ' was added to the team'
 				);
@@ -48,14 +48,14 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 				caseDetailsPage.clickChangeSiteOwnership();
 				caseDetailsPage.selectRadioButtonByValue('Owns some of the land');
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage('Site ownership updated');
+				caseDetailsPage.validateBannerMessage('Success', 'Site ownership updated');
 				caseDetailsPage.clickBackLink();
 				caseDetailsPage.clickAccordionByButton('Case management');
-				caseDetailsPage.clickLinkByText('View');
+				caseDetailsPage.clickViewCaseHistory();
 				caseDetailsPage.verifyTableCellTextCaseHistory(
-					'Document sample-file.doc uploaded (version 2)'
+					`Document sample-file.doc uploaded (version 1, no redaction required)`
 				);
-				caseDetailsPage.verifyTableCellTextCaseHistory('Site ownership updated');
+				caseDetailsPage.verifyTableCellTextCaseHistory('updated to Partially owned');
 			});
 		}
 	);

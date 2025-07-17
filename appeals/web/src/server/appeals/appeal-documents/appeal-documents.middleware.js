@@ -32,3 +32,15 @@ export const validateCaseDocumentId = async (req, res, next) => {
 
 	next();
 };
+
+/**
+ * @type {import("express").RequestHandler}
+ * @returns {void}
+ */
+export const clearUncommittedFilesFromSession = (req, res, next) => {
+	if (req.session.fileUploadInfo) {
+		delete req.session.fileUploadInfo;
+		delete req.session.inspectorDecision;
+	}
+	next();
+};

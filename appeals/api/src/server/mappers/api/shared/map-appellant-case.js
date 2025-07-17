@@ -58,7 +58,9 @@ export const mapAppellantCase = (data) => {
 			developmentDescription: {
 				details: appellantCase?.originalDevelopmentDescription || null,
 				isChanged: appellantCase?.changedDevelopmentDescription === true
-			}
+			},
+			// @ts-ignore
+			typeOfPlanningApplication: appellantCase?.typeOfPlanningApplication || null
 		};
 	}
 };

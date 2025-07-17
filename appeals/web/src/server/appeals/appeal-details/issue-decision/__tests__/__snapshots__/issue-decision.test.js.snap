@@ -1,43 +1,92 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`issue-decision GET /check-invalid-decision should render the check your answer page for invalid decision 1`] = `
+exports[`issue-decision GET /appellant-costs-decision should render the appellant cost decision page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check your answers</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - issue decision</span>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <form method="POST" novalidate="novalidate">
-                <dl class="govuk-summary-list">
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
-                        <dd class="govuk-summary-list__value">Invalid</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision">Change<span class="govuk-visually-hidden"> decision</span></a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reasons</dt>
-                        <dd class="govuk-summary-list__value">Reasons!</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/invalid-reason">Change<span class="govuk-visually-hidden"> invalid reasons</span></a>
-                        </dd>
-                    </div>
-                </dl>
-                <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                    <strong                     class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You are about to send
-                        the decision to relevant parties and close the appeal. Make sure you have
-                        reviewed the decision information.</strong>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Do you want to issue the appellant&#39;s costs decision?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appellant-costs-decision" name="appellantCostsDecision"
+                                        type="radio" value="true">
+                                        <label class="govuk-label govuk-radios__label" for="appellant-costs-decision">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appellant-costs-decision-2" name="appellantCostsDecision"
+                                        type="radio" value="false">
+                                        <label class="govuk-label govuk-radios__label" for="appellant-costs-decision-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
                 </div>
-                <div class="govuk-form-group">
-                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send"
-                            type="checkbox" value="yes">
-                            <label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to the relevant parties</label>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`issue-decision GET /appellant-costs-decision-letter-upload should render the decision letter upload page with a file upload component 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - issue decision</span>
+            <h1             class="govuk-heading-l">Appellant costs decision letter</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="8" data-document-type="appellantCostsDecision" data-document-stage="costs"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="appellant costs decision letter" data-allowed-types="application/pdf"
+            data-formatted-allowed-types="PDF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="W10=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload appellant costs decision letter</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Send decision</button>
-            </form>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </main>"
@@ -46,7 +95,8 @@ exports[`issue-decision GET /check-invalid-decision should render the check your
 exports[`issue-decision GET /decision should render the 'what is the decision' page with the expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - issue decision</span>
+            <h1             class="govuk-heading-l">Decision</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -54,6 +104,17 @@ exports[`issue-decision GET /decision should render the 'what is the decision' p
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant</dt>
+                                <dd class="govuk-summary-list__value">Roger Simmons</dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                                <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
+                                <dd class="govuk-summary-list__value">Householder</dd>
+                            </div>
+                        </dl>
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
@@ -77,77 +138,16 @@ exports[`issue-decision GET /decision should render the 'what is the decision' p
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="decision-4" name="decision" type="radio"
-                                        value="Invalid">
+                                        value="Invalid" data-aria-controls="conditional-decision-4">
                                         <label class="govuk-label govuk-radios__label" for="decision-4">Invalid</label>
                                     </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`issue-decision GET /decision-letter-date should render a 500 error page if fileUploadInfo is not present in the session 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists.</p>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`issue-decision GET /decision-letter-date should render the decision letter date page with the expected content if fileUploadInfo is present in the session 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Enter date of decision letter</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="decision-letter-date-hint">
-                                <div id="decision-letter-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="decision-letter-date">
-                                    <div class="govuk-date-input__item">
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-decision-4">
                                         <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="decision-letter-date-day" name="decision-letter-date-day" type="text"
-                                            value="" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="decision-letter-date-month" name="decision-letter-date-month" type="text"
-                                            value="" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="decision-letter-date-year" name="decision-letter-date-year" type="text"
-                                            value="" inputmode="numeric">
+                                            <label class="govuk-label govuk-label--s" for="invalid-reason">Reason</label>
+                                            <div id="invalid-reason-hint" class="govuk-hint">We will share the reason with the relevant parties</div>
+                                            <textarea class="govuk-textarea"
+                                            id="invalid-reason" name="invalidReason" rows="5" aria-describedby="invalid-reason-hint"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -169,39 +169,32 @@ exports[`issue-decision GET /decision-letter-upload should render the decision l
         <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Upload decision letter</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - issue decision</span>
+            <h1             class="govuk-heading-l">Decision letter</h1>
         </div>
     </div>
-    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong         class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Before uploading, check
-            that you have:</strong>
-    </div>
-    <ul class="govuk-list govuk-list--bullet">
-        <li>added the correct appeal reference</li>
-        <li>added the decision date and visit date</li>
-        <li>added the correct site address</li>
-        <li>added the decision to the top and bottom of the letter</li>
-        <li>signed the letter</li>
-    </ul>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/issue-decision/decision-letter-date"
-            data-case-id="1" data-case-reference="APP/Q9999/D/21/351062" data-folder-id="123"
-            data-document-type="caseDecisionLetter" data-document-stage="appeal-decision"
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/issue-decision/decision"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="123" data-document-type="caseDecisionLetter" data-document-stage="appeal-decision"
             data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
-            data-allowed-types=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,">
+            data-document-title="decision letter" data-allowed-types="application/pdf"
+            data-formatted-allowed-types="PDF">
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body colour--secondary pins-file-upload__instructions">
-                            <label for="upload-file-1">Choose a single file to upload.</label><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF, 	or TIFF.</span><span>The file must be smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload decision letter</h2>
                             <div class="pins-file-upload__upload">
-                                <input class="display--none" id="upload-file-1" accept=".pdf,application/pdf,.doc,application/msword,.docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.ppt,application/vnd.ms-powerpoint,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation,.xls,application/vnd.ms-excel,.xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,.msg,application/vnd.ms-outlook,.jpg,image/jpeg,.jpeg,image/jpeg,.mpeg,video/mpeg,.mp3,audio/mpeg,.mp4,video/mp4,.mov,video/quicktime,.png,image/png,.tif,image/tiff,.tiff,image/tiff,"
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
-                                <button type='button' class="pins-file-upload__button govuk-button">Select files</button>
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
                             </div>
                             <div id="file-list-1">
                                 <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
@@ -222,30 +215,80 @@ exports[`issue-decision GET /decision-letter-upload should render the decision l
 </main>"
 `;
 
-exports[`issue-decision GET /invalid-reason should render the invalid reason page 1`] = `
+exports[`issue-decision GET /issue-appellant-costs-decision-letter-upload should render the decision letter upload page with a file upload component 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - issue appellant costs decision</span>
+            <h1             class="govuk-heading-l">Appellant costs decision letter</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="8" data-document-type="appellantCostsDecision" data-document-stage="costs"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="appellant costs decision letter" data-allowed-types="application/pdf"
+            data-formatted-allowed-types="PDF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="W10=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload appellant costs decision letter</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`issue-decision GET /issue-decision/check-your-appellant-costs-decision should render the check your decision page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Why is the appeal invalid?</h1>
+            <h1 class="govuk-heading-l">Check details and issue appellant costs decision</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                        data-maxlength="1000">
-                            <div id="decision-invalid-reason-hint" class="govuk-hint">This information will be shared with all parties.</div>
-                            <textarea class="govuk-textarea govuk-js-character-count"
-                            id="decision-invalid-reason" name="decisionInvalidReason" rows="15" aria-describedby="decision-invalid-reason-info decision-invalid-reason-hint"></textarea>
-                            <div id="decision-invalid-reason-info" class="govuk-hint govuk-character-count__message">You can enter up to 1000 characters</div>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
+            <form method="POST" novalidate="novalidate">
+                <dl class="govuk-summary-list">
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant costs decision letter</dt>
+                        <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/2/test-document-appellant.pdf"
+                            target="_blank">test-document-appellant.pdf</a>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/issue-appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-appellant-costs-decision">Change<span class="govuk-visually-hidden"> appellant cost decision letter</span></a>
+                            </dd>
+                    </div>
+                </dl>
+                <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the decision.</p>
+                <button                 type="submit" class="govuk-button" data-module="govuk-button">Issue appellant costs decision</button>
+            </form>
         </div>
     </div>
 </main>"
@@ -255,7 +298,7 @@ exports[`issue-decision GET /issue-decision/check-your-decision should render th
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check your answers</h1>
+            <h1 class="govuk-heading-l">Check details and issue decision</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -264,63 +307,132 @@ exports[`issue-decision GET /issue-decision/check-your-decision should render th
                 <dl class="govuk-summary-list">
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision</dt>
                         <dd class="govuk-summary-list__value">Allowed</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision">Change<span class="govuk-visually-hidden"> decision</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision</span></a>
                         </dd>
                     </div>
                     <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
-                        <dd class="govuk-summary-list__value">test-document.txt</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload">Change<span class="govuk-visually-hidden"> decision letter</span></a>
+                        <dd class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.pdf"
+                            target="_blank">test-document.pdf</a>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> decision letter</span></a>
                         </dd>
                     </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision date</dt>
-                        <dd class="govuk-summary-list__value">1 January 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/decision-letter-date">Change<span class="govuk-visually-hidden"> decision date</span></a>
-                        </dd>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to issue the appellant&#39;s costs decision?</dt>
+                        <dd                         class="govuk-summary-list__value">Yes</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision</span></a>
+                            </dd>
+                    </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant costs decision letter</dt>
+                        <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/2/test-document-appellant.pdf"
+                            target="_blank">test-document-appellant.pdf</a>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> appellant cost decision letter</span></a>
+                            </dd>
+                    </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you want to issue the LPA&#39;s costs decision?</dt>
+                        <dd                         class="govuk-summary-list__value">Yes</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> lpa cost decision</span></a>
+                            </dd>
+                    </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA costs decision letter</dt>
+                        <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/3/test-document-lpa.pdf"
+                            target="_blank">test-document-lpa.pdf</a>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-decision">Change<span class="govuk-visually-hidden"> lpa costs decision letter</span></a>
+                            </dd>
                     </div>
                 </dl>
-                <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                    <strong                     class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You are about to send
-                        the decision to relevant parties and close the appeal. Make sure you have
-                        reviewed the decision information.</strong>
-                </div>
-                <div class="govuk-form-group">
-                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input class="govuk-checkboxes__input" id="ready-to-send" name="ready-to-send"
-                            type="checkbox" value="yes">
-                            <label class="govuk-label govuk-checkboxes__label" for="ready-to-send">This decision is ready to be sent to the relevant parties</label>
-                        </div>
-                    </div>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Send decision</button>
+                <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the decision.</p>
+                <button                 type="submit" class="govuk-button" data-module="govuk-button">Issue decision</button>
             </form>
         </div>
     </div>
 </main>"
 `;
 
-exports[`issue-decision POST /decision-letter-date should re-render the decision letter date page with an error message if the provided date day is invalid 1`] = `
+exports[`issue-decision GET /issue-decision/check-your-lpa-costs-decision should render the check your decision page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#decision-letter-date-day">Decision letter date day must be between 1 and 31</a>
-                            </li>
-                            <li><a href="#">Decision letter date must be a valid date</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and issue LPA costs decision</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Enter date of decision letter</h1>
+        <div class="govuk-grid-column-two-thirds">
+            <form method="POST" novalidate="novalidate">
+                <dl class="govuk-summary-list">
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA costs decision letter</dt>
+                        <dd                         class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/APP/Q9999/D/21/351062/download-uncommitted/2/test-document-lpa.pdf"
+                            target="_blank">test-document-lpa.pdf</a>
+                            </dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/issue-lpa-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F1%2Fissue-decision%2F%2Fcheck-your-lpa-costs-decision">Change<span class="govuk-visually-hidden"> lpa costs decision letter</span></a>
+                            </dd>
+                    </div>
+                </dl>
+                <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the decision.</p>
+                <button                 type="submit" class="govuk-button" data-module="govuk-button">Issue LPA costs decision</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`issue-decision GET /issue-lpa-costs-decision-letter-upload should render the decision letter upload page with a file upload component 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - issue LPA costs decision</span>
+            <h1             class="govuk-heading-l">LPA costs decision letter</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="9" data-document-type="lpaCostsDecision" data-document-stage="costs"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="LPA costs decision letter" data-allowed-types="application/pdf"
+            data-formatted-allowed-types="PDF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="W10=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload LPA costs decision letter</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`issue-decision GET /lpa-costs-decision should render the LPA cost decision page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - issue decision</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -329,32 +441,20 @@ exports[`issue-decision POST /decision-letter-date should re-render the decision
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="decision-letter-date-hint">
-                                <div id="decision-letter-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="decision-letter-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="decision-letter-date-day" name="decision-letter-date-day" type="text"
-                                            value="32" inputmode="numeric">
-                                        </div>
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Do you want to issue the LPA&#39;s costs decision?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="lpa-costs-decision" name="lpaCostsDecision"
+                                        type="radio" value="true">
+                                        <label class="govuk-label govuk-radios__label" for="lpa-costs-decision">Yes</label>
                                     </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="decision-letter-date-month" name="decision-letter-date-month" type="text"
-                                            value="11" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="decision-letter-date-year" name="decision-letter-date-year" type="text"
-                                            value="2024" inputmode="numeric">
-                                        </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="lpa-costs-decision-2" name="lpaCostsDecision"
+                                        type="radio" value="false">
+                                        <label class="govuk-label govuk-radios__label" for="lpa-costs-decision-2">No</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -369,209 +469,87 @@ exports[`issue-decision POST /decision-letter-date should re-render the decision
 </main>"
 `;
 
-exports[`issue-decision POST /decision-letter-date should re-render the decision letter date page with an error message if the provided date month is invalid 1`] = `
+exports[`issue-decision GET /lpa-costs-decision-letter-upload should render the decision letter upload page with a file upload component 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#decision-letter-date-month">Decision letter date month must be between 1 and 12</a>
-                            </li>
-                            <li><a href="#">Decision letter date must be a valid date</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+        <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - issue decision</span>
+            <h1             class="govuk-heading-l">LPA costs decision letter</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Enter date of decision letter</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="decision-letter-date-hint">
-                                <div id="decision-letter-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="decision-letter-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="decision-letter-date-day" name="decision-letter-date-day" type="text"
-                                            value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="decision-letter-date-month" name="decision-letter-date-month" type="text"
-                                            value="13" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="decision-letter-date-year" name="decision-letter-date-year" type="text"
-                                            value="2024" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
+        <div class="govuk-grid-column-full">
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/issue-decision/lpa-costs-decision"
+            data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
+            data-folder-id="9" data-document-type="lpaCostsDecision" data-document-stage="costs"
+            data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1" data-blob-storage-container="document-service-uploads"
+            data-document-title="LPA costs decision letter" data-allowed-types="application/pdf"
+            data-formatted-allowed-types="PDF">
+                <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
+                data-filenames-in-folder="W10=">
+                    <div class="pins-file-upload__container">
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
                         </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
+                        <div class="middle-errors-hook">
+                            <h2 class="pins-file-upload__container-title">Upload LPA costs decision letter</h2>
+                            <div class="pins-file-upload__upload">
+                                <input class="display--none" id="upload-file-1" accept="application/pdf"
+                                type="file" name="files" value="Choose file" aria-controls="file-list-1">
+                                <div>
+                                    <button type='button' class="pins-file-upload__button govuk-button--secondary"
+                                    data-cy="upload-file-button" id="upload-file-button-1">Choose file</button><span class='govuk-body pins-file-upload__dropzone-text'>or drop file</span>
+                                </div>
+                            </div>
+                            <div id="file-list-1">
+                                <h2 class="display--sr-only" id="file-list-title-1">List of files to upload</h2>
+                                <ul class="pins-file-upload__files-rows" aria-describedby="file-list-title-1"
+                                aria-live="polite"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="display--flex">
+                        <button type="submit" class="govuk-button pins-file-upload__submit" data-module="govuk-button"
+                        id="submit-button-1">Continue</button>
+                        <div class="progress-hook"></div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </main>"
 `;
 
-exports[`issue-decision POST /decision-letter-date should re-render the decision letter date page with an error message if the provided date year is invalid 1`] = `
+exports[`issue-decision POST /appellant-costs-decision-letter-upload should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#decision-letter-date-year">Decision letter date year must be a number</a>
-                            </li>
-                            <li><a href="#">Decision letter date must be a valid date</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Enter date of decision letter</h1>
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="decision-letter-date-hint">
-                                <div id="decision-letter-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="decision-letter-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="decision-letter-date-day" name="decision-letter-date-day" type="text"
-                                            value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="decision-letter-date-month" name="decision-letter-date-month" type="text"
-                                            value="11" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="decision-letter-date-year" name="decision-letter-date-year" type="text"
-                                            value="x" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
         </div>
     </div>
 </main>"
 `;
 
-exports[`issue-decision POST /decision-letter-date should re-render the decision letter date page with an error message if the provided date year is not in the past 1`] = `
+exports[`issue-decision POST /appellant-costs-decision-letter-upload should render a 500 error page if upload-info is not present in the request body 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Date must be today or in the past</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Enter date of decision letter</h1>
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="decision-letter-date-hint">
-                                <div id="decision-letter-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="decision-letter-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="decision-letter-date-day" name="decision-letter-date-day" type="text"
-                                            value="1" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                            id="decision-letter-date-month" name="decision-letter-date-month" type="text"
-                                            value="11" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="decision-letter-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                            id="decision-letter-date-year" name="decision-letter-date-year" type="text"
-                                            value="3000" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
         </div>
     </div>
 </main>"
@@ -611,90 +589,155 @@ exports[`issue-decision POST /decision-letter-upload should render a 500 error p
 </main>"
 `;
 
-exports[`issue-decision POST /invalid-reason should re-render the invalid reason page with the expected error message if no invalid reason text is provided 1`] = `
+exports[`issue-decision POST /issue-appellant-costs-decision-letter-upload should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#decision-invalid-reason">Enter invalid reason</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Why is the appeal invalid?</h1>
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                        data-maxlength="1000">
-                            <div id="decision-invalid-reason-hint" class="govuk-hint">This information will be shared with all parties.</div>
-                            <textarea class="govuk-textarea govuk-js-character-count"
-                            id="decision-invalid-reason" name="decisionInvalidReason" rows="15" aria-describedby="decision-invalid-reason-info decision-invalid-reason-hint"></textarea>
-                            <div id="decision-invalid-reason-info" class="govuk-hint govuk-character-count__message">You can enter up to 1000 characters</div>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
         </div>
     </div>
 </main>"
 `;
 
-exports[`issue-decision POST /invalid-reason should re-render the invalid reason page with the expected error message if the provided invalid reason text exceeds the character limit 1`] = `
+exports[`issue-decision POST /issue-appellant-costs-decision-letter-upload should render a 500 error page if upload-info is not present in the request body 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#decision-invalid-reason">Invalid reason must be 1000 characters or less</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Why is the appeal invalid?</h1>
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
-                        data-maxlength="1000">
-                            <div id="decision-invalid-reason-hint" class="govuk-hint">This information will be shared with all parties.</div>
-                            <textarea class="govuk-textarea govuk-js-character-count"
-                            id="decision-invalid-reason" name="decisionInvalidReason" rows="15" aria-describedby="decision-invalid-reason-info decision-invalid-reason-hint">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</textarea>
-                            <div                             id="decision-invalid-reason-info" class="govuk-hint govuk-character-count__message">You can enter up to 1000 characters</div>
-                </div>
-                <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                data-module="govuk-button">Continue</button>
-                </form>
-            </div>
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
         </div>
     </div>
+</main>"
+`;
+
+exports[`issue-decision POST /issue-decision/check-your-appellant-costs-decision should render a 500 error page if no decision files are sent 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`issue-decision POST /issue-decision/check-your-decision should render a 500 error page if no decision files are sent 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`issue-decision POST /issue-decision/check-your-lpa-costs-decision should render a 500 error page if no decision files are sent 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`issue-decision POST /issue-lpa-costs-decision-letter-upload should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`issue-decision POST /issue-lpa-costs-decision-letter-upload should render a 500 error page if upload-info is not present in the request body 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`issue-decision POST /lpa-costs-decision-letter-upload should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`issue-decision POST /lpa-costs-decision-letter-upload should render a 500 error page if upload-info is not present in the request body 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
     </div>
 </main>"
 `;

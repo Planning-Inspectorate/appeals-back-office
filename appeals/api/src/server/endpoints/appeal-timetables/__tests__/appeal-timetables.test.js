@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
+import { mapValues } from 'lodash-es';
 import {
-	AUDIT_TRAIL_CASE_TIMELINE_UPDATED,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_MUST_BE_BUSINESS_DAY,
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
@@ -11,12 +11,17 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal, fullPlanningAppeal } from '#tests/appeals/mocks.js';
+import { householdAppeal, fullPlanningAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { add } from 'date-fns';
-import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
+import {
+	recalculateDateIfNotBusinessDay,
+	setTimeInTimeZone
+} from '@pins/appeals/utils/business-days.js';
 import { DEADLINE_HOUR } from '@pins/appeals/constants/dates.js';
 import { DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
+import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
+import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -53,6 +58,19 @@ const fullPlanningAppealWithTimetable = {
 	}
 };
 
+const listedBuildingAppealWithTimetable = {
+	...listedBuildingAppeal,
+	caseStartedDate: new Date(2022, 4, 22),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 1,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z'),
+		lpaStatementDueDate: null
+	}
+};
+
 describe('appeal timetables routes', () => {
 	beforeEach(() => {
 		// @ts-ignore
@@ -72,7 +90,7 @@ describe('appeal timetables routes', () => {
 				lpaStatementDueDate: utcDate.toISOString()
 			};
 
-			const householdAppealReponseBody = {
+			const householdAppealResponseBody = {
 				lpaQuestionnaireDueDate: responseDateSet
 			};
 			const fullPlanningAppealResponseBody = {
@@ -88,6 +106,7 @@ describe('appeal timetables routes', () => {
 					id: 1,
 					azureAdUserId
 				});
+				databaseConnector.appealTimetable.update.mockResolvedValue(1);
 
 				const { appealTimetable, id } = houseAppealWithTimetable;
 				const response = await request
@@ -96,7 +115,7 @@ describe('appeal timetables routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
-					data: householdAppealReponseBody,
+					data: householdAppealResponseBody,
 					where: {
 						id: appealTimetable.id
 					}
@@ -104,7 +123,7 @@ describe('appeal timetables routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_CASE_TIMELINE_UPDATED,
+						details: 'Timetable updated:<br>• LPA questionnaire due date changed to 10 June 2024',
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
@@ -113,31 +132,85 @@ describe('appeal timetables routes', () => {
 				expect(response.body).toEqual(householdAppealRequestBody);
 			});
 
-			test('updates a full planning appeal timetable', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+			test.each([
+				[
+					'full planning',
+					fullPlanningAppealWithTimetable,
+					fullPlanningAppealRequestBody,
+					fullPlanningAppealResponseBody
+				],
+				[
+					'listed building',
+					listedBuildingAppealWithTimetable,
+					fullPlanningAppealRequestBody,
+					fullPlanningAppealResponseBody
+				]
+			])(
+				'updates a %s appeal timetable and sends notify',
+				async (_, appealWithTimetable, requestBody, responseBody) => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appealWithTimetable);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send(fullPlanningAppealRequestBody)
-					.set('azureAdUserId', azureAdUserId);
+					const { appealTimetable, id } = appealWithTimetable;
+					const response = await request
+						.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
+						.send(requestBody)
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
-					data: fullPlanningAppealResponseBody,
-					where: {
-						id: appealTimetable.id
-					}
-				});
+					expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
+						data: responseBody,
+						where: {
+							id: appealTimetable.id
+						}
+					});
 
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(fullPlanningAppealRequestBody);
-			});
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.any(Object),
+						personalisation: {
+							appeal_reference_number: appealWithTimetable.reference,
+							final_comments_due_date: dateISOStringToDisplayDate(
+								responseBody?.finalCommentsDueDate
+							),
+							ip_comments_due_date: dateISOStringToDisplayDate(responseBody?.ipCommentsDueDate),
+							lpa_questionnaire_due_date: dateISOStringToDisplayDate(
+								responseBody?.lpaQuestionnaireDueDate
+							),
+							lpa_reference: appealWithTimetable.applicationReference,
+							lpa_statement_due_date: dateISOStringToDisplayDate(responseBody?.lpaStatementDueDate),
+							site_address: `${appealWithTimetable.address.addressLine1}, ${appealWithTimetable.address.addressLine2}, ${appealWithTimetable.address.addressTown}, ${appealWithTimetable.address.addressCounty}, ${appealWithTimetable.address.postcode}, ${appealWithTimetable.address.addressCountry}`
+						},
+						recipientEmail: appealWithTimetable.agent.email,
+						templateName: 'appeal-timetable-updated'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						notifyClient: expect.any(Object),
+						personalisation: {
+							appeal_reference_number: appealWithTimetable.reference,
+							final_comments_due_date: dateISOStringToDisplayDate(
+								responseBody?.finalCommentsDueDate
+							),
+							ip_comments_due_date: dateISOStringToDisplayDate(responseBody?.ipCommentsDueDate),
+							lpa_questionnaire_due_date: dateISOStringToDisplayDate(
+								responseBody?.lpaQuestionnaireDueDate
+							),
+							lpa_reference: appealWithTimetable.applicationReference,
+							lpa_statement_due_date: dateISOStringToDisplayDate(responseBody?.lpaStatementDueDate),
+							site_address: `${appealWithTimetable.address.addressLine1}, ${appealWithTimetable.address.addressLine2}, ${appealWithTimetable.address.addressTown}, ${appealWithTimetable.address.addressCounty}, ${appealWithTimetable.address.postcode}, ${appealWithTimetable.address.addressCountry}`
+						},
+						recipientEmail: appealWithTimetable.lpa.email,
+						templateName: 'appeal-timetable-updated'
+					});
+
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual(requestBody);
+				}
+			);
 
 			test('returns an error if appealId is not numeric', async () => {
 				// @ts-ignore
@@ -209,372 +282,134 @@ describe('appeal timetables routes', () => {
 				});
 			});
 
-			test('returns an error if issueDeterminationDate is not in the correct format', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
+			[
+				'issueDeterminationDate',
+				'lpaQuestionnaireDueDate',
+				'lpaStatementDueDate',
+				'statementOfCommonGroundDueDate',
+				'planningObligationDueDate'
+			].forEach((fieldName) => {
+				test(`returns an error if ${fieldName} is not in the correct format`, async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
 
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send({
-						issueDeterminationDate: '05/05/2023'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					const { appealTimetable, id } = houseAppealWithTimetable;
+					const response = await request
+						.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
+						.send({
+							[fieldName]: '05/05/2023'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						issueDeterminationDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
-					}
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							[fieldName]: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+						}
+					});
 				});
-			});
 
-			test('returns an error if issueDeterminationDate does not contain leading zeros', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
+				test(`returns an error if ${fieldName} does not contain leading zeros`, async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
 
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send({
-						issueDeterminationDate: '2023-5-5'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					const { appealTimetable, id } = houseAppealWithTimetable;
+					const response = await request
+						.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
+						.send({
+							[fieldName]: '2023-5-5'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						issueDeterminationDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
-					}
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							[fieldName]: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+						}
+					});
 				});
-			});
 
-			test('returns an error if issueDeterminationDate is not in the future', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
+				test(`returns an error if ${fieldName} is not in the future`, async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
 
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const body = {
-					issueDeterminationDate: '2023-06-04T23:59:00.000Z'
-				};
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
+					const { appealTimetable, id } = houseAppealWithTimetable;
+					const body = {
+						[fieldName]: '2023-06-04T23:59:00.000Z'
+					};
+					const response = await request
+						.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
+						.send(body)
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						issueDeterminationDate: ERROR_MUST_BE_IN_FUTURE
-					}
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							[fieldName]: ERROR_MUST_BE_IN_FUTURE
+						}
+					});
 				});
-			});
 
-			test('returns an error if issueDeterminationDate is a weekend day', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
+				test(`returns an error if ${fieldName} is a weekend day`, async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
 
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const body = {
-					issueDeterminationDate: '2099-09-19T23:59:00.000Z'
-				};
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
+					const { appealTimetable, id } = houseAppealWithTimetable;
+					const body = {
+						[fieldName]: '2099-09-19T23:59:00.000Z'
+					};
+					const response = await request
+						.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
+						.send(body)
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						issueDeterminationDate: ERROR_MUST_BE_BUSINESS_DAY
-					}
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							[fieldName]: ERROR_MUST_BE_BUSINESS_DAY
+						}
+					});
 				});
-			});
 
-			test('returns an error if issueDeterminationDate is a bank holiday day', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
+				test(`returns an error if ${fieldName} is a bank holiday day`, async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
 
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const body = {
-					issueDeterminationDate: '2025-12-25T23:59:00.000Z'
-				};
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
+					const { appealTimetable, id } = houseAppealWithTimetable;
+					const body = {
+						[fieldName]: '2025-12-25T23:59:00.000Z'
+					};
+					const response = await request
+						.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
+						.send(body)
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						issueDeterminationDate: ERROR_MUST_BE_BUSINESS_DAY
-					}
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							[fieldName]: ERROR_MUST_BE_BUSINESS_DAY
+						}
+					});
 				});
-			});
 
-			test('returns an error if issueDeterminationDate is not a valid date', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
+				test(`returns an error if ${fieldName} is not a valid date`, async () => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
 
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send({
-						issueDeterminationDate: '2099-02-30'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					const { appealTimetable, id } = houseAppealWithTimetable;
+					const response = await request
+						.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
+						.send({
+							[fieldName]: '2099-02-30'
+						})
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						issueDeterminationDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
-					}
-				});
-			});
-
-			test('returns an error if lpaQuestionnaireDueDate is not in the correct format', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
-
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send({
-						lpaQuestionnaireDueDate: '05/05/2023'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
-					}
-				});
-			});
-
-			test('returns an error if lpaQuestionnaireDueDate does not contain leading zeros', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
-
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send({
-						lpaQuestionnaireDueDate: '2023-5-5'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
-					}
-				});
-			});
-
-			test('returns an error if lpaQuestionnaireDueDate is not in the future', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
-
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const body = {
-					lpaQuestionnaireDueDate: '2023-06-04T23:59:00.000Z'
-				};
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_IN_FUTURE
-					}
-				});
-			});
-
-			test('returns an error if lpaQuestionnaireDueDate is a weekend day', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
-
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const body = {
-					lpaQuestionnaireDueDate: '2099-09-19T23:59:00.000Z'
-				};
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_BUSINESS_DAY
-					}
-				});
-			});
-
-			test('returns an error if lpaQuestionnaireDueDate is a bank holiday day', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
-
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const body = {
-					lpaQuestionnaireDueDate: '2025-12-25T23:59:00.000Z'
-				};
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_BUSINESS_DAY
-					}
-				});
-			});
-
-			test('returns an error if lpaQuestionnaireDueDate is not a valid date', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
-
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send({
-						lpaQuestionnaireDueDate: '2023-02-30'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaQuestionnaireDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
-					}
-				});
-			});
-
-			test('returns an error if lpaStatementDueDate is not in the correct format', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
-
-				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send({
-						lpaStatementDueDate: '05/05/2023'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaStatementDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
-					}
-				});
-			});
-
-			test('returns an error if lpaStatementDueDate does not contain leading zeros', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
-
-				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send({
-						lpaStatementDueDate: '2023-5-5'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaStatementDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
-					}
-				});
-			});
-
-			test('returns an error if lpaStatementDueDate is not in the future', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
-
-				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
-				const body = {
-					lpaStatementDueDate: '2023-06-04T23:59:00.000Z'
-				};
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaStatementDueDate: ERROR_MUST_BE_IN_FUTURE
-					}
-				});
-			});
-
-			test('returns an error if lpaStatementDueDate is a weekend day', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
-
-				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
-				const body = {
-					lpaStatementDueDate: '2099-09-19T23:59:00.000Z'
-				};
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaStatementDueDate: ERROR_MUST_BE_BUSINESS_DAY
-					}
-				});
-			});
-
-			test('returns an error if lpaStatementDueDate is a bank holiday day', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
-
-				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
-				const body = {
-					lpaStatementDueDate: '2025-12-25T23:59:00.000Z'
-				};
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send(body)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaStatementDueDate: ERROR_MUST_BE_BUSINESS_DAY
-					}
-				});
-			});
-
-			test('returns an error if lpaStatementDueDate is not a valid date', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
-
-				const { appealTimetable, id } = fullPlanningAppealWithTimetable;
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send({
-						lpaStatementDueDate: '2023-02-30'
-					})
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(400);
-				expect(response.body).toEqual({
-					errors: {
-						lpaStatementDueDate: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
-					}
+					expect(response.status).toEqual(400);
+					expect(response.body).toEqual({
+						errors: {
+							[fieldName]: ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT
+						}
+					});
 				});
 			});
 
@@ -630,7 +465,7 @@ describe('appeal timetables routes', () => {
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
-					data: householdAppealReponseBody,
+					data: householdAppealResponseBody,
 					where: {
 						id: appealTimetable.id
 					}
@@ -646,73 +481,127 @@ describe('appeal timetables routes', () => {
 	});
 	describe('/appeals/:appealId/appeal-timetables', () => {
 		describe('POST', () => {
-			test('updates a household appeal timetable', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
-
-				const { id } = householdAppeal;
-				const response = await request
-					.post(`/appeals/${id}/appeal-timetables/`)
-					.send()
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(201);
-				expect(response.body).toEqual({ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' });
-
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						appeal_reference_number: '1345264',
-						appeal_type: 'Householder',
-						appellant_email_address: 'test@136s7.com',
-						comment_deadline: '',
-						due_date: '12 June 2024',
-						final_comments_deadline: '',
-						ip_comments_deadline: '',
-						local_planning_authority: 'Maidstone Borough Council',
-						lpa_reference: '48269/APP/2021/1482',
-						lpa_statement_deadline: '',
-						procedure_type: 'a written procedure',
-						questionnaire_due_date: '12 June 2024',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024',
-						url: 'https://www.gov.uk/appeal-planning-inspectorate'
+			test.each([
+				[
+					'householdAppeal',
+					houseAppealWithTimetable,
+					{ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' },
+					{}
+				],
+				[
+					'fullPlanningAppeal',
+					fullPlanningAppealWithTimetable,
+					{
+						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-24T22:59:00.000Z'
 					},
-					recipientEmail: 'test@136s7.com',
-					templateName: 'appeal-start-date-change-appellant'
-				});
-				// eslint-disable-next-line no-undef
-				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-					notifyClient: expect.anything(),
-					personalisation: {
-						appeal_reference_number: '1345264',
-						appeal_type: 'Householder',
-						appellant_email_address: 'test@136s7.com',
-						comment_deadline: '',
-						due_date: '12 June 2024',
-						final_comments_deadline: '',
-						ip_comments_deadline: '',
-						local_planning_authority: 'Maidstone Borough Council',
-						lpa_reference: '48269/APP/2021/1482',
-						lpa_statement_deadline: '',
-						procedure_type: 'a written procedure',
-						questionnaire_due_date: '12 June 2024',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024',
-						url: 'https://www.gov.uk/appeal-planning-inspectorate'
+					{
+						statement_of_common_ground_deadline: '',
+						planning_obligation_deadline: ''
+					}
+				],
+				[
+					'listedBuildingAppeal',
+					listedBuildingAppealWithTimetable,
+					{
+						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-24T22:59:00.000Z'
 					},
-					recipientEmail: 'test@136s7.com',
-					templateName: 'appeal-start-date-change-lpa'
-				});
-			});
+					{}
+				]
+			])(
+				'updates a %s appeal timetable',
+				async (_, appeal, expectedResponse, additionalPersonalisation) => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+
+					const { id } = appeal;
+					const response = await request
+						.post(`/appeals/${id}/appeal-timetables/`)
+						.send()
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(response.body).toEqual(expectedResponse);
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							comment_deadline: '',
+							due_date: '12 June 2024',
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedResponse.finalCommentsDueDate || ''
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedResponse.ipCommentsDueDate || ''
+							),
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedResponse.lpaStatementDueDate || ''
+							),
+							procedure_type: 'written representations',
+							questionnaire_due_date: '12 June 2024',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							we_will_email_when:
+								'when you can view information from other parties in the appeals service.',
+							site_visit: true,
+							costs_info: true
+						},
+						recipientEmail: appeal.appellant.email,
+						templateName: 'appeal-start-date-change-appellant'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							comment_deadline: '',
+							due_date: '12 June 2024',
+							final_comments_deadline: dateISOStringToDisplayDate(
+								expectedResponse.finalCommentsDueDate || ''
+							),
+							ip_comments_deadline: dateISOStringToDisplayDate(
+								expectedResponse.ipCommentsDueDate || ''
+							),
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: dateISOStringToDisplayDate(
+								expectedResponse.lpaStatementDueDate || ''
+							),
+							procedure_type: 'written representations',
+							questionnaire_due_date: '12 June 2024',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							...additionalPersonalisation
+						},
+						recipientEmail: appeal.lpa.email,
+						templateName: 'appeal-start-date-change-lpa'
+					});
+				}
+			);
+
 			test('start a household appeal timetable', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
@@ -731,15 +620,14 @@ describe('appeal timetables routes', () => {
 				expect(response.status).toEqual(201);
 				expect(response.body).toEqual({ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' });
 
-				// eslint-disable-next-line no-undef
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 					notifyClient: expect.anything(),
 					personalisation: {
 						appeal_reference_number: '1345264',
 						appeal_type: 'Householder',
-						appellant_email_address: 'test@136s7.com',
+						appellant_email_address: householdAppeal.appellant.email,
 						comment_deadline: '',
 						due_date: '12 June 2024',
 						final_comments_deadline: '',
@@ -747,22 +635,25 @@ describe('appeal timetables routes', () => {
 						local_planning_authority: 'Maidstone Borough Council',
 						lpa_reference: '48269/APP/2021/1482',
 						lpa_statement_deadline: '',
-						procedure_type: 'a written procedure',
+						procedure_type: 'written representations',
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						start_date: '5 June 2024',
-						url: 'https://www.gov.uk/appeal-planning-inspectorate'
+						we_will_email_when:
+							'when you can view information from other parties in the appeals service.',
+						site_visit: true,
+						costs_info: true
 					},
-					recipientEmail: 'test@136s7.com',
+					recipientEmail: householdAppeal.appellant.email,
 					templateName: 'appeal-valid-start-case-appellant'
 				});
-				// eslint-disable-next-line no-undef
+
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					notifyClient: expect.anything(),
 					personalisation: {
 						appeal_reference_number: '1345264',
 						appeal_type: 'Householder',
-						appellant_email_address: 'test@136s7.com',
+						appellant_email_address: householdAppeal.appellant.email,
 						comment_deadline: '',
 						due_date: '12 June 2024',
 						final_comments_deadline: '',
@@ -770,14 +661,237 @@ describe('appeal timetables routes', () => {
 						local_planning_authority: 'Maidstone Borough Council',
 						lpa_reference: '48269/APP/2021/1482',
 						lpa_statement_deadline: '',
-						procedure_type: 'a written procedure',
+						procedure_type: 'written representations',
 						questionnaire_due_date: '12 June 2024',
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_date: '5 June 2024',
-						url: 'https://www.gov.uk/appeal-planning-inspectorate'
+						start_date: '5 June 2024'
 					},
-					recipientEmail: 'test@136s7.com',
+					recipientEmail: householdAppeal.lpa.email,
 					templateName: 'appeal-valid-start-case-lpa'
+				});
+			});
+
+			describe.each([
+				[
+					'fullPlanning',
+					{ ...fullPlanningAppeal, procedureType: { key: 'hearing' } },
+					{ statement_of_common_ground_deadline: '10 July 2024', planning_obligation_deadline: '' }
+				],
+				['listedBuilding', { ...listedBuildingAppeal, procedureType: { key: 'hearing' } }, {}]
+			])('for a %s appeal', (appealType, appeal, personalisation) => {
+				test(`start an appeal timetable with a hearing procedure type`, async () => {
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal
+					});
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+
+					const s78timetableDto = {
+						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
+						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+					};
+					const s78timetable = mapValues(s78timetableDto, (date) => new Date(date));
+
+					const { id } = appeal;
+					const response = await request
+						.post(`/appeals/${id}/appeal-timetables/`)
+						.send({ procedureType: 'hearing' })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(response.body).toEqual(s78timetableDto);
+
+					expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
+						create: { ...s78timetable, appealId: id },
+						update: { ...s78timetable },
+						where: { appealId: id },
+						include: { appeal: true }
+					});
+
+					const auditDetails =
+						appealType === 'fullPlanning'
+							? ['The case timeline was created', 'Case started\nAppeal procedure: hearing']
+							: ['The case timeline was created'];
+
+					auditDetails.forEach((details) => {
+						expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+							data: {
+								appealId: id,
+								details,
+								loggedAt: expect.any(Date),
+								userId: 1
+							}
+						});
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							comment_deadline: '',
+							due_date: '12 June 2024',
+							final_comments_deadline: '24 July 2024',
+							ip_comments_deadline: '10 July 2024',
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: '10 July 2024',
+							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+							questionnaire_due_date: '12 June 2024',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							we_will_email_when: [
+								'to let you know when you can view information from other parties in the appeals service',
+								'when we set up your hearing'
+							],
+							site_visit: false,
+							costs_info: false
+						},
+						recipientEmail: appeal.appellant.email,
+						templateName: 'appeal-valid-start-case-s78-appellant'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							comment_deadline: '',
+							due_date: '12 June 2024',
+							final_comments_deadline: '24 July 2024',
+							ip_comments_deadline: '10 July 2024',
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: '10 July 2024',
+							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+							questionnaire_due_date: '12 June 2024',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							...personalisation
+						},
+						recipientEmail: appeal.lpa.email,
+						templateName: 'appeal-valid-start-case-s78-lpa'
+					});
+				});
+
+				test(`restart an appeal timetable with a hearing procedure type`, async () => {
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal,
+						caseStartedDate: '2024-06-05T22:59:00.000Z'
+					});
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+
+					const s78timetableDto = {
+						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
+						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+					};
+					const s78timetable = mapValues(s78timetableDto, (date) => new Date(date));
+
+					const { id } = appeal;
+					const response = await request
+						.post(`/appeals/${id}/appeal-timetables/`)
+						.send({ startDate: '2024-06-05T22:59:00.000Z' })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(response.body).toEqual(s78timetableDto);
+
+					expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
+						create: { ...s78timetable, appealId: id },
+						update: { ...s78timetable },
+						where: { appealId: id },
+						include: { appeal: true }
+					});
+
+					const auditDetails =
+						appealType === 'fullPlanning'
+							? ['The case timeline was created', 'Case started\nAppeal procedure: hearing']
+							: ['The case timeline was created'];
+
+					auditDetails.forEach((details) => {
+						expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+							data: {
+								appealId: id,
+								details,
+								loggedAt: expect.any(Date),
+								userId: 1
+							}
+						});
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							comment_deadline: '',
+							due_date: '12 June 2024',
+							final_comments_deadline: '24 July 2024',
+							ip_comments_deadline: '10 July 2024',
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: '10 July 2024',
+							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+							questionnaire_due_date: '12 June 2024',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							we_will_email_when: [
+								'to let you know when you can view information from other parties in the appeals service',
+								'when we set up your hearing'
+							],
+							site_visit: false,
+							costs_info: false
+						},
+						recipientEmail: appeal.appellant.email,
+						templateName: 'appeal-start-date-change-appellant'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							comment_deadline: '',
+							due_date: '12 June 2024',
+							final_comments_deadline: '24 July 2024',
+							ip_comments_deadline: '10 July 2024',
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: '10 July 2024',
+							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+							questionnaire_due_date: '12 June 2024',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							...personalisation
+						},
+						recipientEmail: appeal.lpa.email,
+						templateName: 'appeal-start-date-change-lpa'
+					});
 				});
 			});
 

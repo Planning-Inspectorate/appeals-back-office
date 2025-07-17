@@ -34,7 +34,45 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
 import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
+import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 
+/** @typedef {'all-fields-day' | 'day-month' | 'month-year' | 'day-year' | 'day' | 'month' | 'year'} DateFieldKey */
+
+/**
+ * @param {import("@pins/express").ValidationErrors | undefined} errors
+ * @returns {Record<string, { param: string; [key: string]: any; }> | undefined}
+ */
+export const mapErrorsForDocumentDates = (errors) => {
+	if (!errors) {
+		return;
+	}
+
+	const dateFields = {
+		'all-fields-day': 'day',
+		'day-month': 'day',
+		'month-year': 'month',
+		'day-year': 'day',
+		day: 'day',
+		month: 'month',
+		year: 'year'
+	};
+
+	return Object.entries(errors).reduce(
+		(/**@type {import("@pins/express").ValidationErrors} */ newErrors, [key, error]) => {
+			const { param } = error;
+
+			if (param in dateFields) {
+				const newKey = `${key}.${dateFields[/** @type {DateFieldKey} */ (param)]}`;
+				newErrors[newKey] = error;
+			} else {
+				newErrors[key] = error;
+			}
+
+			return newErrors;
+		},
+		{}
+	);
+};
 /**
  * @param {Object} params
  * @param {import('@pins/express/types/express.js').Request} params.request
@@ -44,9 +82,13 @@ import { permissionNames } from '#environment/permissions.js';
  * @param {string} [params.nextPageUrl]
  * @param {boolean} [params.isLateEntry]
  * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.preHeadingTextOverride]
+ * @param {string} [params.uploadContainerHeadingTextOverride]
+ * @param {string} [params.documentTitle]
  * @param {PageComponent[]} [params.pageBodyComponents]
  * @param {boolean} [params.allowMultipleFiles]
  * @param {string} [params.documentType]
+ * @param {string[]} [params.allowedTypes]
  */
 export const renderDocumentUpload = async ({
 	request,
@@ -56,9 +98,13 @@ export const renderDocumentUpload = async ({
 	nextPageUrl,
 	isLateEntry = false,
 	pageHeadingTextOverride,
+	preHeadingTextOverride,
+	uploadContainerHeadingTextOverride = '',
+	documentTitle,
 	pageBodyComponents,
 	allowMultipleFiles = true,
-	documentType
+	documentType,
+	allowedTypes
 }) => {
 	const {
 		currentFolder,
@@ -104,26 +150,29 @@ export const renderDocumentUpload = async ({
 			.sort((a, b) => b - a)[0];
 	}
 
-	const mappedPageContent = await documentUploadPage(
+	const mappedPageContent = await documentUploadPage({
 		appealId,
-		appealDetails.appealReference,
-		`${currentFolder.folderId}`,
-		currentFolder.path,
+		appealReference: appealDetails.appealReference,
+		folderId: `${currentFolder.folderId}`,
+		folderPath: currentFolder.path,
 		documentId,
-		// @ts-ignore
 		documentName,
 		latestVersion,
 		backButtonUrl,
 		nextPageUrl,
 		isLateEntry,
-		session.fileUploadInfo,
+		fileUploadInfo: session.fileUploadInfo,
 		errors,
 		pageHeadingTextOverride,
+		preHeadingTextOverride,
 		pageBodyComponents,
 		allowMultipleFiles,
-		_documentType,
-		filenamesInFolder
-	);
+		documentType: _documentType,
+		filenamesInFolder,
+		allowedTypes,
+		uploadContainerHeadingTextOverride,
+		documentTitle
+	});
 
 	return response.status(200).render('appeals/documents/document-upload.njk', mappedPageContent);
 };
@@ -133,8 +182,9 @@ export const renderDocumentUpload = async ({
  * @param {import('@pins/express/types/express.js').Request} params.request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
  * @param {string} params.nextPageUrl
+ * @param {function} [params.callBack]
  */
-export const postDocumentUpload = async ({ request, response, nextPageUrl }) => {
+export const postDocumentUpload = async ({ request, response, nextPageUrl, callBack }) => {
 	const { body, currentAppeal, currentFolder } = request;
 
 	if (!currentAppeal || !currentFolder) {
@@ -171,7 +221,11 @@ export const postDocumentUpload = async ({ request, response, nextPageUrl }) => 
 		files: uncommittedFiles
 	};
 
-	response.redirect(nextPageUrl);
+	if (callBack) {
+		await callBack();
+	}
+
+	await response.redirect(nextPageUrl);
 };
 
 /**
@@ -217,7 +271,8 @@ export const renderDocumentDetails = async ({
 		redactionStatuses,
 		pageHeadingTextOverride,
 		dateLabelTextOverride,
-		documentId
+		documentId,
+		errors
 	});
 
 	const isAdditionalDocument = folderIsAdditionalDocuments(currentFolder.path);
@@ -225,7 +280,7 @@ export const renderDocumentDetails = async ({
 	return response.render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,
 		displayLateEntryContent: isAdditionalDocument && isLateEntry,
-		errors
+		errors: mapErrorsForDocumentDates(errors)
 	});
 };
 
@@ -235,7 +290,9 @@ export const renderDocumentDetails = async ({
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
  * @param {string} params.backLinkUrl
  * @param {string} params.viewAndEditUrl
+ * @param {string} params.addButtonUrl
  * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
  */
 export const renderManageFolder = async ({
@@ -243,7 +300,9 @@ export const renderManageFolder = async ({
 	response,
 	backLinkUrl,
 	viewAndEditUrl,
+	addButtonUrl,
 	pageHeadingTextOverride,
+	addButtonTextOverride,
 	dateColumnLabelTextOverride
 }) => {
 	const { currentFolder, errors } = request;
@@ -255,9 +314,11 @@ export const renderManageFolder = async ({
 	const mappedPageContent = manageFolderPage({
 		backLinkUrl,
 		viewAndEditUrl,
+		addButtonUrl,
 		folder: currentFolder,
 		request,
 		pageHeadingTextOverride,
+		addButtonTextOverride,
 		dateColumnLabelTextOverride
 	});
 
@@ -475,7 +536,8 @@ export const renderUploadDocumentsCheckAndConfirm = async ({
 		}),
 		...(summaryListDateLabelOverride && {
 			summaryListDateLabelOverride
-		})
+		}),
+		folderPath: currentFolder.path
 	});
 
 	return response.render('patterns/check-and-confirm-page.pattern.njk', {
@@ -647,7 +709,8 @@ export const postUploadDocumentVersionCheckAndConfirm = async ({
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'documentVersionAdded',
-			appealId: currentAppeal.appealId
+			appealId: currentAppeal.appealId,
+			text: `${mapFolderNameToDisplayLabel(currentFolder?.path) || 'Document'} updated`
 		});
 
 		if (nextPageUrl) {
@@ -706,6 +769,14 @@ export const renderChangeDocumentFileName = async ({ request, response, backButt
 };
 
 /**
+ * @param {string} fileName
+ * @returns {string | undefined}
+ */
+const getFileExtension = (fileName) => {
+	return fileName.split('.').pop();
+};
+
+/**
  * @param {Object} params
  * @param {import('@pins/express/types/express.js').Request} params.request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} params.response
@@ -736,7 +807,12 @@ export const postChangeDocumentFileName = async ({
 			return response.status(500).render('app/500.njk');
 		}
 
-		const apiRequest = mapDocumentFileNameFormDataToAPIRequest(body);
+		const fileDetails = {
+			...body,
+			fileName: `${body.fileName}.${getFileExtension(currentFile.name)}`
+		};
+
+		const apiRequest = mapDocumentFileNameFormDataToAPIRequest(fileDetails);
 		const updateDocumentsResult = await updateDocument(apiClient, appealId, apiRequest);
 
 		if (updateDocumentsResult) {
@@ -792,12 +868,12 @@ export const renderChangeDocumentDetails = async ({ request, response, backButto
 		backButtonUrl,
 		currentFolder,
 		currentFile,
-		redactionStatuses
+		redactionStatuses,
+		errors
 	);
-
 	return response.status(200).render('appeals/documents/add-document-details.njk', {
 		pageContent: mappedPageContent,
-		errors
+		errors: mapErrorsForDocumentDates(errors)
 	});
 };
 
@@ -957,7 +1033,8 @@ export const postDeleteDocument = async ({
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'documentDeleted',
-			appealId
+			appealId,
+			text: `${mapFolderNameToDisplayLabel(currentFolder?.path) || 'Document'} removed`
 		});
 		return response.redirect(returnUrl);
 	}

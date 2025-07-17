@@ -5,7 +5,7 @@
  * @param {Address} address
  * @returns {SingleAddressResponse}
  */
-const formatAddress = (address) => ({
+export const formatAddress = (address) => ({
 	addressId: address.id,
 	addressLine1: address.addressLine1,
 	addressLine2: address.addressLine2,
@@ -16,10 +16,24 @@ const formatAddress = (address) => ({
 });
 
 /**
+ * @param {SingleAddressResponse} address
+ * @returns {Address}
+ */
+export const formatAddressForDb = (address) => ({
+	id: address.addressId,
+	addressLine1: address.addressLine1,
+	addressLine2: address.addressLine2,
+	addressTown: address.town,
+	addressCounty: address.county,
+	postcode: address.postcode,
+	addressCountry: address.country
+});
+
+/**
  * @param {Address} address
  * @returns {string}
  */
-const formatAddressSingleLine = (address) => {
+export const formatAddressSingleLine = (address) => {
 	const parts = [
 		address.addressLine1,
 		address.addressLine2,
@@ -32,4 +46,11 @@ const formatAddressSingleLine = (address) => {
 	return parts.filter((part) => part).join(', ');
 };
 
-export { formatAddress, formatAddressSingleLine };
+/**
+ * @param {Address} a
+ * @returns {string}
+ * */
+export const formatAddressMultiline = (a) =>
+	[a.addressLine1, a.addressLine2, a.addressTown, a.addressCounty, a.postcode]
+		.filter(Boolean)
+		.join('\n');

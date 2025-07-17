@@ -15,6 +15,9 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { notifySend } from '#notify/notify-send.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -25,22 +28,27 @@ import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
  * @returns {Promise<Response>}
  */
 export const linkAppeal = async (req, res) => {
+	const { appeal: currentAppeal, notifyClient } = req;
 	const { linkedAppealId, isCurrentAppealParent } = req.body;
-	const currentAppeal = req.appeal;
 	const linkedAppeal = await appealRepository.getAppealById(Number(linkedAppealId));
 
 	if (!linkedAppeal) {
 		return res.status(404).end();
 	}
 
-	const currentAppealType = isCurrentAppealParent ? 'lead' : 'child';
-	const linkedAppealType = !isCurrentAppealParent ? 'lead' : 'child';
+	const canLinkCurrentAppeal = canLinkAppeals(
+		currentAppeal,
+		'linked',
+		isCurrentAppealParent ? 'lead' : 'child'
+	);
+	const canLinkLinkedAppeal = canLinkAppeals(
+		linkedAppeal,
+		'linked',
+		isCurrentAppealParent ? 'child' : 'lead'
+	);
 
-	if (
-		!canLinkAppeals(currentAppeal, currentAppealType) ||
-		!canLinkAppeals(linkedAppeal, linkedAppealType)
-	) {
-		return res.status(400).send({
+	if (!(canLinkCurrentAppeal && canLinkLinkedAppeal)) {
+		return res.status(409).send({
 			errors: {
 				body: ERROR_LINKING_APPEALS
 			}
@@ -66,11 +74,50 @@ export const linkAppeal = async (req, res) => {
 		  };
 
 	const result = await appealRepository.linkAppeal(relationship);
-	await createAuditTrail({
-		appealId: currentAppeal.id,
-		azureAdUserId: req.get('azureAdUserId'),
-		details: AUDIT_TRAIL_APPEAL_LINK_ADDED
-	});
+
+	const siteAddress = currentAppeal.address
+		? formatAddressSingleLine(currentAppeal.address)
+		: 'Address not available';
+
+	const personalisation = {
+		appeal_reference_number: currentAppeal.reference,
+		lead_appeal_reference_number: relationship.parentRef,
+		child_appeal_reference_number: relationship.childRef,
+		lpa_reference: currentAppeal.applicationReference || '',
+		site_address: siteAddress,
+		event_type: 'site visit'
+	};
+
+	const appellantEmail = currentAppeal.agent?.email || currentAppeal.appellant?.email;
+	const lpaEmail = currentAppeal.lpa?.email || '';
+
+	await Promise.all([
+		notifySend({
+			templateName: 'link-appeal',
+			notifyClient,
+			recipientEmail: appellantEmail,
+			personalisation
+		}),
+
+		notifySend({
+			templateName: 'link-appeal',
+			notifyClient,
+			recipientEmail: lpaEmail,
+			personalisation
+		}),
+
+		createAuditTrail({
+			appealId: currentAppeal.id,
+			azureAdUserId: req.get('azureAdUserId'),
+			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_ADDED, [linkedAppeal.reference])
+		}),
+
+		createAuditTrail({
+			appealId: linkedAppeal.id,
+			azureAdUserId: req.get('azureAdUserId'),
+			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_ADDED, [currentAppeal.reference])
+		})
+	]);
 
 	await broadcasters.broadcastAppeal(currentAppeal.id);
 	return res.status(201).send(result);
@@ -85,8 +132,8 @@ export const linkExternalAppeal = async (req, res) => {
 	const { isCurrentAppealParent, linkedAppealReference } = req.body;
 	const currentAppeal = req.appeal;
 	const currentAppealType = isCurrentAppealParent ? 'lead' : 'child';
-	if (!canLinkAppeals(currentAppeal, currentAppealType)) {
-		return res.status(400).send({
+	if (!canLinkAppeals(currentAppeal, 'linked', currentAppealType)) {
+		return res.status(409).send({
 			errors: {
 				body: ERROR_LINKING_APPEALS
 			}
@@ -124,7 +171,9 @@ export const linkExternalAppeal = async (req, res) => {
 	await createAuditTrail({
 		appealId: currentAppeal.id,
 		azureAdUserId: req.get('azureAdUserId'),
-		details: AUDIT_TRAIL_APPEAL_LINK_ADDED
+		details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_LINK_ADDED, [
+			formattedLinkedAppeal.appealReference || linkedAppealReference
+		])
 	});
 
 	await broadcasters.broadcastAppeal(currentAppeal.id);

@@ -12,12 +12,12 @@ import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documen
  * @param {Appeal} appealDetails
  * @param {Representation} lpaStatement
  * @param {import('#lib/api/allocation-details.api.js').AllocationDetailsSpecialism[]} specialismData
- * @param {SessionWithAuth & { acceptLPAStatement?: { allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[], forcedAllocation: boolean } }} session
+ * @param {SessionWithAuth & { acceptLPAStatement?: { [key: number]: { allocationLevelAndSpecialisms: string, allocationLevel: string, allocationSpecialisms: string[], forcedAllocation: boolean } } }} session
  * @returns {PageContent}
  * */
 export const confirmPage = (appealDetails, lpaStatement, specialismData, session) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-	const sessionData = session.acceptLPAStatement;
+	const sessionData = session.acceptLPAStatement?.[appealDetails.appealId];
 	const updatingAllocation = sessionData?.allocationLevelAndSpecialisms === 'yes';
 
 	const specialisms = (() => {
@@ -52,10 +52,6 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 	const pageComponents = [
 		{
 			type: 'summary-list',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
 			parameters: {
 				rows: [
 					{
@@ -71,11 +67,20 @@ export const confirmPage = (appealDetails, lpaStatement, specialismData, session
 									}
 								}
 							]
+						},
+						actions: {
+							items: [
+								{
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/redact`,
+									text: 'Redact',
+									visuallyHiddenText: 'Redact statement'
+								}
+							]
 						}
 					},
 					{
 						key: { text: 'Supporting documents' },
-						value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' },
+						value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
 						actions: {
 							items: [
 								...(lpaStatement.attachments?.length > 0

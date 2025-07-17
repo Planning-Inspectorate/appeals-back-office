@@ -1,6 +1,7 @@
 /** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetCaseNotesResponse} GetCaseNotesResponse */
 
 import { caseNotesWithMappedUsers } from './case-notes.formatter.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 
 /**
  * @param {GetCaseNotesResponse} appealCaseNotes
@@ -26,7 +27,8 @@ export const generateCaseNotes = async (appealCaseNotes, request) => {
 					type: 'case-notes',
 					parameters: {
 						caseNotes: mappedCaseNotes.caseNotes,
-						sessionComment: mappedCaseNotes.sessionComment
+						sessionComment: mappedCaseNotes.sessionComment,
+						characterLimit: textInputCharacterLimits.caseNoteTextInputLength
 					}
 				}
 			]

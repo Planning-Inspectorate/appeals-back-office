@@ -121,6 +121,24 @@ export const appealsApiClient = {
 		}
 	},
 
+	async simulateHearingElapsed(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/hearing-elapsed`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+
+			expect(response.status).eq(200);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+
 	async simulateStatementsElapsed(reference) {
 		try {
 			const url = `${baseUrl}appeals/${reference}/statements-elapsed`;
@@ -168,22 +186,6 @@ export const appealsApiClient = {
 
 			const result = await response.json();
 			return result;
-		} catch {
-			return false;
-		}
-	},
-	async setAppealTimetables(appealId) {
-		try {
-			const url = `${baseUrl}appeals/${appealId}/appeal-timetables`;
-			const response = await fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-				}
-			});
-
-			return await response.json();
 		} catch {
 			return false;
 		}
@@ -248,15 +250,91 @@ export const appealsApiClient = {
 			return false;
 		}
 	},
-	async getAppealDetails(appealId) {
+
+	async addHearing(appealId, date) {
 		try {
-			const url = `${baseUrl}appeals/${appealId}`;
+			const requestBody = createApiSubmission(appealsApiRequests.hearingDetails);
+			requestBody.hearingStartTime = date.toISOString();
+			requestBody.hearingEndTime = date.toISOString();
+			const url = `${baseUrl}appeals/${appealId}/hearing`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify(requestBody)
+			});
+
+			expect(response.status).eq(201);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+
+	async deleteHearing(appealId, hearingId) {
+		try {
+			const url = `${baseUrl}appeals/${appealId}/hearing/${hearingId}`;
+			const response = await fetch(url, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(200);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+
+	async getNotifyEmails(reference) {
+		try {
+			const url = `${baseUrl}appeals/${reference}/notify-emails-sent`;
 			const response = await fetch(url, {
 				method: 'GET',
 				headers: {
 					'Content-Type': 'application/json',
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				}
+			});
+			expect(response.status).to.eq(200);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+
+	async updateAppealCases(appealId, appellantCaseId, requestBody) {
+		try {
+			const url = `${baseUrl}appeals/${appealId}/appellant-cases/${appellantCaseId}`;
+			const response = await fetch(url, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify(requestBody)
+			});
+			expect(response.status).eq(200);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+
+	async updateTimeTable(appealId, timeTableId, requestBody) {
+		try {
+			const url = `${baseUrl}appeals/${appealId}/appeal-timetables/${timeTableId}`;
+			const response = await fetch(url, {
+				method: 'PATCH',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify(requestBody)
 			});
 			expect(response.status).eq(200);
 			return await response.json();

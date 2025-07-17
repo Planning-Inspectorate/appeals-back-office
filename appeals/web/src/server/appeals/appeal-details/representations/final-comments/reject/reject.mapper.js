@@ -85,7 +85,25 @@ export const confirmRejectFinalCommentPage = (
 					},
 					{
 						key: { text: 'Supporting documents' },
-						value: attachmentsList ? { html: attachmentsList } : { text: 'Not provided' }
+						value: attachmentsList ? { html: attachmentsList } : { text: 'No documents' },
+						actions: {
+							items: [
+								...(comment.attachments?.length > 0
+									? [
+											{
+												text: 'Manage',
+												href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/manage-documents/${comment.attachments?.[0]?.documentVersion?.document?.folderId}/?backUrl=/final-comments/${finalCommentsType}/reject/confirm`,
+												visuallyHiddenText: 'supporting documents'
+											}
+									  ]
+									: []),
+								{
+									text: 'Add',
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/add-document/?backUrl=/final-comments/${finalCommentsType}/reject/confirm`,
+									visuallyHiddenText: 'supporting documents'
+								}
+							]
+						}
 					},
 					{
 						key: { text: 'Review decision' },
@@ -93,7 +111,7 @@ export const confirmRejectFinalCommentPage = (
 						actions: {
 							items: [
 								{
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}`,
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}?backUrl=/final-comments/${finalCommentsType}/reject/confirm`,
 									text: 'Change',
 									visuallyHiddenText: 'review decision'
 								}
@@ -107,12 +125,21 @@ export const confirmRejectFinalCommentPage = (
 							)}'s final comments?`
 						},
 						value: {
-							html: rejectionReasonHtml(rejectionReasons)
+							html: '',
+							pageComponents: [
+								{
+									type: 'show-more',
+									parameters: {
+										html: rejectionReasonHtml(rejectionReasons),
+										labelText: 'Read more'
+									}
+								}
+							]
 						},
 						actions: {
 							items: [
 								{
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/reject`,
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/reject?backUrl=/final-comments/${finalCommentsType}/reject/confirm`,
 									text: 'Change',
 									visuallyHiddenText: 'rejections reasons'
 								}

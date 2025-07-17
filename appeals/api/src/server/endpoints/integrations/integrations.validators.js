@@ -2,7 +2,7 @@ import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
 import { loadAllSchemas } from 'pins-data-model';
 import BackOfficeAppError from '#utils/app-error.js';
-import { setCache, getCache } from '#utils/cache-data.js';
+import { setCache, getCache } from '@pins/appeals/utils/cache-data.js';
 
 export const schemas = {
 	commands: {
@@ -16,7 +16,9 @@ export const schemas = {
 		appealHas: 'appeal-has',
 		appealS78: 'appeal-s78',
 		appealEvent: 'appeal-event',
-		appealRepresentation: 'appeal-representation'
+		appealRepresentation: 'appeal-representation',
+		listedBuilding: 'listed-building',
+		appealEventEstimate: 'appeal-event-estimate'
 	}
 };
 

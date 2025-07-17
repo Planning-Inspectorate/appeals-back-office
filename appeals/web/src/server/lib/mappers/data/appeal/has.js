@@ -12,15 +12,19 @@ import { mapCaseOfficer } from './submappers/case-officer.mapper.js';
 import { mapCaseProcedure } from './submappers/case-procedure.mapper.js';
 import { mapCompleteDate } from './submappers/complete-date.mapper.js';
 import { mapCostsAppellantApplication } from './submappers/costs-appellant-application.mapper.js';
-import { mapCostsDecision } from './submappers/costs-decision.mapper.js';
+import { mapCostsAppellantCorrespondence } from './submappers/costs-appellant-correspondence.mapper.js';
+import { mapCostsAppellantWithdrawal } from './submappers/costs-appellant-withdrawal.mapper.js';
+import { mapCostsAppellantDecision } from './submappers/costs-appellant-decision.mapper.js';
+import { mapCostsLpaApplication } from './submappers/costs-lpa-application.mapper.js';
+import { mapCostsLpaCorrespondence } from './submappers/costs-lpa-correspondence.mapper.js';
+import { mapCostsLpaWithdrawal } from './submappers/costs-lpa-withdrawal.mapper.js';
+import { mapCostsLpaDecision } from './submappers/costs-lpa-decision.mapper.js';
 import { mapCrossTeamCorrespondence } from './submappers/cross-team-correspondence.mapper.js';
 import { mapDecision } from './submappers/decision.mapper.js';
 import { mapDownloadCaseFiles } from './submappers/case-files-download.mapper.js';
 import { mapInspectorCorrespondence } from './submappers/inspector-correspondence.mapper.js';
-import { mapAppellantCorrespondence } from './submappers/appellant-correspondence.mapper.js';
 import { mapInspectorNeighbouringSites } from './submappers/inspector-neighbouring-sites.mapper.js';
 import { mapInspector } from './submappers/inspector.mapper.js';
-import { mapIssueDeterminationDate } from './submappers/issue-determination-date.mapper.js';
 import { mapLeadOrChild } from './submappers/lead-or-child.mapper.js';
 import { mapLinkedAppeals } from './submappers/linked-appeals.mapper.js';
 import { mapLocalPlanningAuthority } from './submappers/local-planning-authority.mapper.js';
@@ -28,6 +32,7 @@ import { mapLpaContactDetails } from './submappers/lpa-contact-details.mapper.js
 import { mapLpaQuestionnaireDueDate } from './submappers/lpa-questionnaire-due-date.mapper.js';
 import { mapLpaQuestionnaire } from './submappers/lpa-questionnaire.mapper.js';
 import { mapLpaReference } from './submappers/lpa-reference.mapper.js';
+import { mapMainPartyCorrespondence } from './submappers/main-party-correspondence.mapper.js';
 import { mapOtherAppeals } from './submappers/other-appeals.mapper.js';
 import { mapSiteAddress } from './submappers/site-address.mapper.js';
 import { mapSiteVisitTimetable } from './submappers/site-visit-timetable.mapper.js';
@@ -75,15 +80,20 @@ export const submaps = {
 	inspector: mapInspector,
 	crossTeamCorrespondence: mapCrossTeamCorrespondence,
 	inspectorCorrespondence: mapInspectorCorrespondence,
-	appellantCorrespondence: mapAppellantCorrespondence,
+	mainPartyCorrespondence: mapMainPartyCorrespondence,
 	caseHistory: mapCaseHistory,
 	appealWithdrawal: mapAppealWithdrawal,
 	appellantCase: mapAppellantCase,
 	lpaQuestionnaire: mapLpaQuestionnaire,
 	appealDecision: mapAppealDecision,
 	costsAppellantApplication: mapCostsAppellantApplication,
-	costsDecision: mapCostsDecision,
-	issueDeterminationDate: mapIssueDeterminationDate,
+	costsAppellantWithdrawal: mapCostsAppellantWithdrawal,
+	costsAppellantDecision: mapCostsAppellantDecision,
+	costsAppellantCorrespondence: mapCostsAppellantCorrespondence,
+	costsLpaApplication: mapCostsLpaApplication,
+	costsLpaWithdrawal: mapCostsLpaWithdrawal,
+	costsLpaDecision: mapCostsLpaDecision,
+	costsLpaCorrespondence: mapCostsLpaCorrespondence,
 	completeDate: mapCompleteDate,
 	downloadCaseFiles: mapDownloadCaseFiles,
 	lpaHealthAndSafety: mapLpaHealthAndSafety,

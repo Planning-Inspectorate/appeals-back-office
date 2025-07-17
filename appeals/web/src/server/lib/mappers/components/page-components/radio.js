@@ -65,6 +65,7 @@ export function conditionalFormatter(id, name, hint, details, type = 'textarea')
  * @param {string} [params.customYesLabel]
  * @param {string} [params.customNoLabel]
  * @param {string|Object} [params.hint]
+ * @param {string|undefined|null} [params.errorMessage]
  * @returns {RadiosPageComponent}
  */
 export function yesNoInput({
@@ -77,7 +78,8 @@ export function yesNoInput({
 	yesConditional,
 	customYesLabel,
 	customNoLabel,
-	hint
+	hint,
+	errorMessage
 }) {
 	/** @type {RadioItem} */
 	const yes = {
@@ -108,7 +110,8 @@ export function yesNoInput({
 					text: customNoLabel || 'No',
 					checked: value === false || value === 'false' || value === 'no'
 				}
-			]
+			],
+			errorMessage: errorMessage ? { text: errorMessage } : undefined
 		}
 	};
 	if (legendText) {
@@ -130,6 +133,7 @@ export function yesNoInput({
  * @param {string|null} [params.value]
  * @param {string} [params.legendText]
  * @param {boolean} [params.legendIsPageHeading]
+ * @param {string} [params.errorMessage]
  * @returns {PageComponent}
  */
 export function radiosInput({
@@ -138,7 +142,8 @@ export function radiosInput({
 	idPrefix,
 	value,
 	legendText,
-	legendIsPageHeading = false
+	legendIsPageHeading = false,
+	errorMessage
 }) {
 	/** @type {PageComponent} */
 	const component = {
@@ -147,7 +152,8 @@ export function radiosInput({
 			name,
 			idPrefix,
 			items,
-			value
+			value,
+			errorMessage: errorMessage ? { text: errorMessage } : undefined
 		}
 	};
 	if (legendText) {

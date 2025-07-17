@@ -9,10 +9,11 @@ import { moveItemInArray } from '#lib/array-utilities.js';
 
 /**
  * @param {Appeal} appealDetails
+ * @param {'valid' | 'redact'} flowRoute
  * @param {Record<string, string>} [sessionData]
  * @returns {PageContent}
  */
-export function allocationCheckPage(appealDetails, sessionData) {
+export function allocationCheckPage(appealDetails, flowRoute, sessionData) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent} */
@@ -42,7 +43,9 @@ export function allocationCheckPage(appealDetails, sessionData) {
 
 	return {
 		title: 'Allocation level',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement${
+			flowRoute === 'valid' ? '' : `/${flowRoute}`
+		}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Allocation level',
 		submitButtonText: 'Continue',
@@ -53,19 +56,12 @@ export function allocationCheckPage(appealDetails, sessionData) {
 
 /**
  * @param {Appeal} appealDetails
- * @param {Representation} lpaStatement
  * @param {string[]} allocationLevels
  * @param {Record<string, string>} sessionData
  * @param {'valid' | 'redact'} flowRoute
  * @returns {PageContent}
  * */
-export function allocationLevelPage(
-	appealDetails,
-	lpaStatement,
-	allocationLevels,
-	sessionData,
-	flowRoute
-) {
+export function allocationLevelPage(appealDetails, allocationLevels, sessionData, flowRoute) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent[]} */
@@ -79,9 +75,11 @@ export function allocationLevelPage(
 
 	return {
 		title: 'Allocation level',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/${
-			sessionData?.forcedAllocation ? '' : `${flowRoute}/allocation-check`
-		}`,
+		backLinkUrl: sessionData?.forcedAllocation
+			? `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement${
+					flowRoute === 'valid' ? '' : `/${flowRoute}`
+			  }`
+			: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/${flowRoute}/allocation-check`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Allocation level',
 		submitButtonText: 'Continue',
@@ -93,9 +91,10 @@ export function allocationLevelPage(
  * @param {Appeal} appealDetails
  * @param {{ id: number, name: string }[]} specialisms
  * @param {Record<string, string>} sessionData
+ * @param {'valid'|'redact'} flowRoute
  * @returns {PageContent}
  * */
-export function allocationSpecialismsPage(appealDetails, specialisms, sessionData) {
+export function allocationSpecialismsPage(appealDetails, specialisms, sessionData, flowRoute) {
 	// move "General allocation" to the top as per A2-1426
 	let specialismsSorted = specialisms.slice();
 	const generalAllocationIndex = specialisms.findIndex(
@@ -134,7 +133,7 @@ export function allocationSpecialismsPage(appealDetails, specialisms, sessionDat
 
 	return {
 		title: 'Allocation specialisms',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/valid/allocation-level`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/lpa-statement/${flowRoute}/allocation-level`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Allocation specialisms',
 		submitButtonText: 'Continue',

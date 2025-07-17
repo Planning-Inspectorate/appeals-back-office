@@ -1,3 +1,4 @@
+// @ts-nocheck
 /** @typedef {import('@pins/appeals.api').Schema.AuditTrail} AuditTrail */
 /** @typedef {import('@pins/appeals.api').Appeals.GetAuditTrailsResponse} GetAuditTrailsResponse */
 
@@ -7,8 +8,7 @@
  */
 const formatAuditTrail = (auditTrail) =>
 	auditTrail
-		? // @ts-ignore
-		  auditTrail.map(({ details, loggedAt, user, doc }) => ({
+		? auditTrail.map(({ details, loggedAt, user, doc }) => ({
 				azureAdUserId: user?.azureAdUserId || '',
 				details,
 				loggedDate: loggedAt,
@@ -18,7 +18,8 @@ const formatAuditTrail = (auditTrail) =>
 							documentGuid: doc.document?.latestDocumentVersion?.documentGuid || '',
 							stage: doc.document?.latestDocumentVersion?.stage || '',
 							folderId: doc.document?.folderId,
-							documentType: doc.document?.latestDocumentVersion?.documentType
+							documentType: doc.document?.latestDocumentVersion?.documentType,
+							redactionStatus: doc.document?.latestDocumentVersion?.redactionStatus?.key
 					  }
 					: undefined
 		  }))

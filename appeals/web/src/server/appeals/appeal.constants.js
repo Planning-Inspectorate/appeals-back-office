@@ -1,5 +1,5 @@
 /**
- * @typedef {'appealDetails'|'appellantCase'|'lpaQuestionnaire'|'manageDocuments'|'manageFolder'|'manageRelatedAppeals'|'manageNeighbouringSites'|'ipComments'|'viewIpComment'|'reviewIpComment'|'lpaStatement'|'viewFinalComments'} ServicePageName
+ * @typedef {'appealDetails'|'appellantCase'|'lpaQuestionnaire'|'manageDocuments'|'manageFolder'|'manageRelatedAppeals'|'manageNeighbouringSites'|'ipComments'|'viewIpComment'|'reviewIpComment'|'lpaStatement'|'viewFinalComments'|'appealDecision'} ServicePageName
  */
 
 export const paginationDefaultSettings = {
@@ -10,6 +10,8 @@ export const paginationDefaultSettings = {
 export const textInputCharacterLimits = {
 	defaultAddressInputLength: 250,
 	defaultInputLength: 300,
+	caseNoteTextInputLength: 500,
+	checkboxTextItemsLength: 1000,
 	defaultTextareaLength: 1000,
 	expandedTextareaLength: 8000
 };

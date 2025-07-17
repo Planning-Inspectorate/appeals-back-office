@@ -4,9 +4,10 @@ import {
 	dateIsInThePast
 } from '#lib/dates.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapLpaQuestionnaire = ({ appealDetails, currentRoute }) => {
+export const mapLpaQuestionnaire = ({ appealDetails, currentRoute, request }) => {
 	const { status } = appealDetails.documentationSummary?.lpaQuestionnaire ?? {};
 
 	const statusText = (() => {
@@ -37,11 +38,18 @@ export const mapLpaQuestionnaire = ({ appealDetails, currentRoute }) => {
 	})();
 
 	const actionHtml = (() => {
-		switch (status) {
+		switch (status?.toLowerCase()) {
 			case 'received':
-				return `<a href="${currentRoute}/lpa-questionnaire/${appealDetails?.lpaQuestionnaireId}" data-cy="review-lpa-questionnaire" class="govuk-link">Review<span class="govuk-visually-hidden"> L P A questionnaire</span></a>`;
-			case 'Complete':
-				return `<a href="${currentRoute}/lpa-questionnaire/${appealDetails?.lpaQuestionnaireId}" data-cy="review-lpa-questionnaire" class="govuk-link">View<span class="govuk-visually-hidden"> L P A questionnaire</span></a>`;
+				return `<a href="${addBackLinkQueryToUrl(
+					request,
+					`${currentRoute}/lpa-questionnaire/${appealDetails?.lpaQuestionnaireId}`
+				)}" data-cy="review-lpa-questionnaire" class="govuk-link">Review<span class="govuk-visually-hidden"> L P A questionnaire</span></a>`;
+			case 'complete':
+			case 'incomplete':
+				return `<a href="${addBackLinkQueryToUrl(
+					request,
+					`${currentRoute}/lpa-questionnaire/${appealDetails?.lpaQuestionnaireId}`
+				)}" data-cy="review-lpa-questionnaire" class="govuk-link">View<span class="govuk-visually-hidden"> L P A questionnaire</span></a>`;
 			default:
 				return '';
 		}

@@ -1,0 +1,657 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`set up inquiry GET /inquiry/setup/address should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - start case</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Do you know the address of where the inquiry will take place?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="address-known" name="addressKnown"
+                                        type="radio" value="yes" checked>
+                                        <label class="govuk-label govuk-radios__label" for="address-known">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="address-known-2" name="addressKnown"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="address-known-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`set up inquiry GET /inquiry/setup/address-details should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Inquiry address</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="address-line-1">Address line 1</label>
+                            <input class="govuk-input" id="address-line-1" name="addressLine1"
+                            type="text" value="">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                            <input class="govuk-input" id="address-line-2"
+                            name="addressLine2" type="text" value="">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="town">Town or city</label>
+                            <input class="govuk-input govuk-input govuk-input--width-20"
+                            id="town" name="town" type="text" value="">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="county">County (optional)</label>
+                            <input class="govuk-input govuk-input govuk-input--width-20"
+                            id="county" name="county" type="text" value="">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="post-code">Postcode</label>
+                            <input class="govuk-input govuk-input govuk-input--width-10"
+                            id="post-code" name="postCode" type="text" value="">
+                        </div>
+                        <div class="govuk-form-group">
+                            <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                            value="">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`set up inquiry GET /inquiry/setup/check-details should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and start case</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+                                <dd class="govuk-summary-list__value">Inquiry</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/select-procedure"
+                                    data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <h3 class="govuk-heading-m">Inquiry details</h3>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry Date</dt>
+                                <dd class="govuk-summary-list__value">1 February 3025</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/date"
+                                    data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry Date</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
+                                <dd class="govuk-summary-list__value">12:00pm</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/date"
+                                    data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
+                                <dd                                 class="govuk-summary-list__value"></dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/estimation"
+                                        data-cy="change-inquiry-expected-number-of-days">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
+                                <dd                                 class="govuk-summary-list__value">Yes</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/address"
+                                        data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address of where the inquiry will take place</dt>
+                                <dd                                 class="govuk-summary-list__value">Flat 9
+                                    <br>123 Gerbil Drive
+                                    <br>Blarberton
+                                    <br>Slabshire
+                                    <br>X25 3YZ</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/address-details"
+                                        data-cy="change-inquiey-address">Change<span class="govuk-visually-hidden"> Address of where the inquiry will take place</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <h3 class="govuk-heading-m">Timetable due dates</h3>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
+                                <dd class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                    data-cy="change-lpa-questionnaire-due">Change<span class="govuk-visually-hidden"> LPA questionnaire due</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement due</dt>
+                                <dd class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                    data-cy="change-statement-due">Change<span class="govuk-visually-hidden"> Statement due</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
+                                <dd                                 class="govuk-summary-list__value"></dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                        data-cy="change-interested-party-comments-due">Change<span class="govuk-visually-hidden"> Interested party comments due</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement of common ground due</dt>
+                                <dd                                 class="govuk-summary-list__value"></dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                        data-cy="change-statement-of-common-ground-due">Change<span class="govuk-visually-hidden"> Statement of common ground due</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Proof of evidence and witnesses due</dt>
+                                <dd                                 class="govuk-summary-list__value"></dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                        data-cy="change-proof-of-evidence-and-witnesses-due">Change<span class="govuk-visually-hidden"> Proof of evidence and witnesses due</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation due</dt>
+                                <dd class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/timetable-due-dates"
+                                    data-cy="change-planning-obligation-due">Change<span class="govuk-visually-hidden"> Planning obligation due</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <p class="govuk-body">We’ll start the timetable now and send emails to the relevant parties.</p>
+                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Start case</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`set up inquiry GET /inquiry/setup/date should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - start case</span>
+            <h1 class="govuk-heading-l">Inquiry date and time</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="inquiry-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Date</legend>
+                                <div id="inquiry-date-hint" class="govuk-hint">For example, 31 3 2025</div>
+                                <div class="govuk-date-input" id="inquiry-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="inquiry-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="inquiry-date-day" name="inquiry-date-day" type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="inquiry-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="inquiry-date-month" name="inquiry-date-month" type="text" value=""
+                                            inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="inquiry-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                            id="inquiry-date-year" name="inquiry-date-year" type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Time</legend>
+                            <div id="hearing-date-hint" class="govuk-hint">For example, 9:00 or 13:15</div>
+                            <div class="govuk-date-input">
+                                <div class="govuk-date-input__item govuk-!-margin-right-1">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="inquiry-time-hour">Hour</label>
+                                        <input class="govuk-input govuk-input--width-2" id="inquiry-time-hour"
+                                        name="inquiry-time-hour" type="text" value="10">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item govuk-!-font-size-19 govuk-!-padding-0 govuk-!-margin-right-1">:</div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="inquiry-time-minute">Minute</label>
+                                        <input class="govuk-input govuk-input--width-2" id="inquiry-time-minute"
+                                        name="inquiry-time-minute" type="text" value="00">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`set up inquiry GET /inquiry/setup/estimation should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - set up inquiry</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                    <h1 class="govuk-fieldset__heading"> Do you know the expected number of days to carry out the inquiry?</h1>
+                                </legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inquiry-estimation-yes-no" name="inquiryEstimationYesNo"
+                                        type="radio" value="yes" data-aria-controls="conditional-inquiry-estimation-yes-no">
+                                        <label class="govuk-label govuk-radios__label" for="inquiry-estimation-yes-no">Yes</label>
+                                    </div>
+                                    <div class="govuk-radios__conditional govuk-radios__conditional--hidden"
+                                    id="conditional-inquiry-estimation-yes-no">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-label--s" for="inquiry-estimation-days">Expected number of days to carry out the inquiry</label>
+                                            <div class="govuk-input__wrapper">
+                                                <input class="govuk-input govuk-input--width-3" id="inquiry-estimation-days"
+                                                name="inquiryEstimationDays" type="text">
+                                                <div class="govuk-input__suffix" aria-hidden="true">Days</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="inquiry-estimation-yes-no-2" name="inquiryEstimationYesNo"
+                                        type="radio" value="no">
+                                        <label class="govuk-label govuk-radios__label" for="inquiry-estimation-yes-no-2">No</label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`set up inquiry GET /inquiry/setup/timetable-due-dates should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="lpa-questionnaire-due-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">LPA questionnaire due date</legend>
+                                <div id="lpa-questionnaire-due-date-hint"
+                                class="govuk-hint">For example, 31 3 2025</div>
+                                <div class="govuk-date-input" id="lpa-questionnaire-due-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="lpa-questionnaire-due-date-day" name="lpa-questionnaire-due-date-day"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="lpa-questionnaire-due-date-month" name="lpa-questionnaire-due-date-month"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="lpa-questionnaire-due-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                            id="lpa-questionnaire-due-date-year" name="lpa-questionnaire-due-date-year"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-due-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement due date</legend>
+                                <div id="statement-due-date-hint" class="govuk-hint">For example, 31 3 2025</div>
+                                <div class="govuk-date-input" id="statement-due-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="statement-due-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="statement-due-date-day" name="statement-due-date-day" type="text" value=""
+                                            inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="statement-due-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="statement-due-date-month" name="statement-due-date-month" type="text"
+                                            value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="statement-due-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                            id="statement-due-date-year" name="statement-due-date-year" type="text"
+                                            value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="ip-comments-due-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Interested party comments</legend>
+                                <div id="ip-comments-due-date-hint"
+                                class="govuk-hint">For example, 31 3 2025</div>
+                                <div class="govuk-date-input" id="ip-comments-due-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="ip-comments-due-date-day" name="ip-comments-due-date-day" type="text"
+                                            value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="ip-comments-due-date-month" name="ip-comments-due-date-month" type="text"
+                                            value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="ip-comments-due-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                            id="ip-comments-due-date-year" name="ip-comments-due-date-year" type="text"
+                                            value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="statement-of-common-ground-due-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Statement of common ground due date</legend>
+                                <div id="statement-of-common-ground-due-date-hint"
+                                class="govuk-hint">For example, 31 3 2025</div>
+                                <div class="govuk-date-input" id="statement-of-common-ground-due-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="statement-of-common-ground-due-date-day" name="statement-of-common-ground-due-date-day"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="statement-of-common-ground-due-date-month" name="statement-of-common-ground-due-date-month"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="statement-of-common-ground-due-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                            id="statement-of-common-ground-due-date-year" name="statement-of-common-ground-due-date-year"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="proof-of-evidence-and-witnesses-due-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Proof of evidence and witnesses due date</legend>
+                                <div id="proof-of-evidence-and-witnesses-due-date-hint"
+                                class="govuk-hint">For example, 31 3 2025</div>
+                                <div class="govuk-date-input" id="proof-of-evidence-and-witnesses-due-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="proof-of-evidence-and-witnesses-due-date-day" name="proof-of-evidence-and-witnesses-due-date-day"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="proof-of-evidence-and-witnesses-due-date-month" name="proof-of-evidence-and-witnesses-due-date-month"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="proof-of-evidence-and-witnesses-due-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                            id="proof-of-evidence-and-witnesses-due-date-year" name="proof-of-evidence-and-witnesses-due-date-year"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="planning-obligation-due-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Planning obligation due date</legend>
+                                <div id="planning-obligation-due-date-hint"
+                                class="govuk-hint">For example, 31 3 2025</div>
+                                <div class="govuk-date-input" id="planning-obligation-due-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="planning-obligation-due-date-day" name="planning-obligation-due-date-day"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="planning-obligation-due-date-month" name="planning-obligation-due-date-month"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="planning-obligation-due-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                            id="planning-obligation-due-date-year" name="planning-obligation-due-date-year"
+                                            type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`set up inquiry POST /inquiry/setup/address-details should re-render the page if addressLine1 is an empty string 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#address-line-1">Enter address line 1</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`set up inquiry POST /inquiry/setup/address-details should re-render the page if addressLine1 is null 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#address-line-1">Enter address line 1</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`set up inquiry POST /inquiry/setup/address-details should re-render the page if the postcode is an empty string 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#post-code">Enter postcode</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`set up inquiry POST /inquiry/setup/address-details should re-render the page if the postcode is invalid 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#post-code">Enter a full UK postcode</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`set up inquiry POST /inquiry/setup/address-details should re-render the page if the postcode is null 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#post-code">Enter postcode</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`set up inquiry POST /inquiry/setup/address-details should re-render the page if town is an empty string 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#town">Enter town or city</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`set up inquiry POST /inquiry/setup/address-details should re-render the page if town is null 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#town">Enter town or city</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;

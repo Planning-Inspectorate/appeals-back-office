@@ -12,6 +12,7 @@ declare global {
 			visitType: SiteVisitType;
 			validationOutcome: ValidationOutcome;
 			documentRedactionStatusIds: number[];
+			address: Schema.Address;
 		}
 	}
 }
@@ -40,6 +41,7 @@ interface SingleAppealDetailsResponse {
 	appealSite: AppealSite;
 	appealStatus: string;
 	stateList: StateStub[];
+	completedStateList: string[];
 	transferStatus?: {
 		transferredAppealType: string;
 		transferredAppealReference: string;
@@ -59,10 +61,13 @@ interface SingleAppealDetailsResponse {
 		lpaWithdrawalFolder?: FolderInfo | null;
 		lpaCorrespondenceFolder?: FolderInfo | null;
 		decisionFolder?: FolderInfo | null;
+		appellantDecisionFolder?: FolderInfo | null;
+		lpaDecisionFolder?: FolderInfo | null;
 	};
 	decision: {
 		folderId: number;
 		outcome?: string | null;
+		invalidReason?: string | null;
 		documentId?: string | null;
 		documentName?: string | null;
 		letterDate?: string | null;
@@ -71,6 +76,7 @@ interface SingleAppealDetailsResponse {
 	internalCorrespondence: {
 		crossTeam?: FolderInfo | null;
 		inspector?: FolderInfo | null;
+		mainParty?: FolderInfo | null;
 	};
 	documentationSummary: DocumentationSummary;
 	healthAndSafety: {
@@ -114,15 +120,14 @@ interface SingleAppealDetailsResponse {
 	createdAt: string;
 	startedAt?: string | null;
 	validAt?: string | null;
-	internalCorrespondence: {
-		crossTeam?: FolderInfo | null;
-		inspector?: FolderInfo | null;
-	};
 	withdrawal: {
 		withdrawalFolder?: FolderInfo | null;
 		withdrawalRequestDate: Date | null;
 	};
 	eiaScreeningRequired?: boolean | null;
+	hearingEstimate?: HearingEstimate | null;
+	hearing?: Hearing | null;
+	inquiry?: Inquiry | null;
 }
 
 interface UpdateAppealRequest {
@@ -198,6 +203,7 @@ interface SingleAppellantCaseResponse {
 		planningObligation?: FolderInfo | null;
 		ownershipCertificate?: FolderInfo | null;
 		otherNewDocuments?: FolderInfo | null;
+		statementCommonGround?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	isGreenBelt?: boolean | null;
@@ -215,6 +221,7 @@ interface SingleAppellantCaseResponse {
 	appellantProcedurePreferenceDuration?: number | null;
 	appellantProcedurePreferenceWitnessCount?: number | null;
 	developmentType?: string | null;
+	typeOfPlanningApplication?: string | null;
 }
 
 interface UpdateAppellantCaseRequest {
@@ -316,9 +323,11 @@ interface SingleLPAQuestionnaireResponse {
 		consultationResponses?: FolderInfo | null;
 		eiaEnvironmentalStatement?: FolderInfo | null;
 		eiaScreeningOpinion?: FolderInfo | null;
+		eiaScopingOpinion?: FolderInfo | null;
 		eiaScreeningDirection?: FolderInfo | null;
 		otherRelevantPolicies?: FolderInfo | null;
 		appealNotification?: FolderInfo | null;
+		historicEnglandConsultation?: FolderInfo | null;
 	};
 	validation: ValidationOutcomeResponse | null;
 	lpaNotificationMethods?: LPANotificationMethodDetails[] | null;
@@ -362,6 +371,7 @@ interface SingleLPAQuestionnaireResponse {
 	eiaSensitiveAreaDetails: string | null;
 	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
+	preserveGrantLoan?: boolean;
 }
 
 interface UpdateLPAQuestionnaireRequest {
@@ -395,6 +405,7 @@ interface UpdateLPAQuestionnaireRequest {
 	eiaSensitiveAreaDetails: string | null;
 	consultedBodiesDetails: string | null;
 	reasonForNeighbourVisits: string | null;
+	preserveGrantLoan?: boolean;
 }
 
 interface UpdateLPAQuestionnaireValidationOutcomeParams {
@@ -446,6 +457,8 @@ interface LinkableAppealSummary {
 	agentName?: string | undefined | null;
 	submissionDate: string;
 	source: 'horizon' | 'back-office';
+	childAppeals?: AppealRelationship[];
+	parentAppeals?: AppealRelationship[];
 }
 
 export interface AppealAllocation {
@@ -469,6 +482,28 @@ interface NeighbouringSite {
 	address: AppealSite;
 }
 
+interface HearingEstimate {
+	preparationTime?: number;
+	sittingTime?: number;
+	reportingTime?: number;
+}
+
+interface Hearing {
+	hearingId: number;
+	hearingStartTime: string;
+	hearingEndTime?: string;
+	addressId?: number;
+	address: Schema.Address;
+}
+
+interface Inquiry {
+	inquiryId: number;
+	inquiryStartTime: string;
+	inquiryEndTime?: string;
+	address: Schema.Address;
+	addressId?: number;
+}
+
 interface AppealTimetable {
 	appealTimetableId: number;
 	caseResubmissionDueDate?: string | null;
@@ -479,6 +514,9 @@ interface AppealTimetable {
 	finalCommentsDueDate?: string | null;
 	s106ObligationDueDate?: string | null;
 	issueDeterminationDate?: string | null;
+	statementOfCommonGroundDueDate?: string | null;
+	planningObligationDueDate?: string | null;
+	proofOfEvidenceAndWitnessesDueDate?: string | null;
 }
 
 interface UpdateTimetableRequest {
@@ -508,6 +546,7 @@ interface AppealListResponse {
 	appealSite: AppealSite;
 	appealStatus: string;
 	appealType?: string;
+	procedureType?: string;
 	createdAt: Date;
 	localPlanningDepartment: string;
 	dueDate: Date | undefined | null;
@@ -516,8 +555,10 @@ interface AppealListResponse {
 	documentationSummary: DocumentationSummary;
 	isParentAppeal: boolean | null;
 	isChildAppeal: boolean | null;
+	planningApplicationReference: string | null;
+	isHearingSetup: boolean | null;
+	hasHearingAddress: boolean | null;
 }
-
 interface DocumentationSummary {
 	appellantCase?: DocumentationSummaryEntry;
 	lpaQuestionnaire?: DocumentationSummaryEntry;
@@ -850,6 +891,60 @@ type UpdateDocumentAvCheckRequest = {
 	version: number;
 };
 
+type CreateHearing = {
+	appealId: number;
+	hearingStartTime: Date | string;
+	hearingEndTime: Date | string | undefined;
+	address: Omit<Schema.Address, 'id'> | undefined;
+};
+
+type CreateInquiry = {
+	appealId: number;
+	inquiryStartTime: Date | string;
+	inquiryEndTime: Date | string | undefined;
+	address: Omit<Schema.Address, 'id'> | undefined;
+	startDate: Date | string;
+	estimatedDays: string | Date | undefined;
+	lpaQuestionnaireDueDate: Date | string;
+	statementDueDate: Date | string;
+	ipCommentsDueDate: Date | string;
+	statementOfCommonGroundDueDate: Date | string;
+	proofOfEvidenceAndWitnessesDueDate: Date | string;
+	planningObligationDueDate: Date | string;
+};
+
+type UpdateHearing = {
+	appealId: number;
+	hearingId: number;
+	hearingStartTime: Date | string;
+	hearingEndTime: Date | string | undefined;
+	addressId?: number;
+	address?: Omit<Schema.Address, 'id'> | null;
+};
+
+type CancelHearing = {
+	appealId?: number;
+	hearingId: number;
+};
+
+type HearingResponse = {
+	appealId: number;
+	hearingId: number;
+	hearingStartTime: Date;
+	hearingEndTime: Date | null;
+	address: Schema.Address | null;
+	addressId: number | null;
+};
+
+type InquiryResponse = {
+	appealId: number;
+	inquiryId: number;
+	inquiryStartTime: Date;
+	inquiryEndTime: Date | null;
+	address: Schema.Address | null;
+	addressId: number | null;
+};
+
 type ListedBuildingDetailsResponse = {
 	id: number;
 	listEntry: string;
@@ -931,5 +1026,14 @@ export {
 	ServiceUserResponse,
 	GetCaseNotesResponse,
 	GetCaseNoteResponse,
-	StateStub
+	StateStub,
+	HearingAddress,
+	CreateHearing,
+	UpdateHearing,
+	CancelHearing,
+	HearingResponse,
+	InquiryResponse,
+	CreateInquiry,
+	InquiryAddress,
+	UpdateAppealDecisionRequest
 };

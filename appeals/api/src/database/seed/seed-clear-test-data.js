@@ -7,14 +7,29 @@ import { databaseConnector } from '../../server/utils/database-connector.js';
 
 async function deleteTestRecords() {
 	const lpaCodes = localPlanningDepartmentList.map((lpa) => lpa.lpaCode);
-	const appealIDs = await getAppeals(lpaCodes);
+
+	const appeals = await getAppeals(lpaCodes);
+	if (appeals.length === 0) {
+		console.log('Nothing to delete.');
+		return;
+	}
+
+	const appealIDs = appeals.map((a) => a.id);
+	const appeaRefs = appeals.map((a) => a.reference);
 	const representationIDs = await getReps(appealIDs);
 	const appellantCaseIDs = await getAppellantCases(appealIDs);
 	const lpaqIDs = await getLpaQuestionnaires(appealIDs);
 	const docIDs = await getDocuments(appealIDs);
 
 	try {
-		await deleteAppealData(appealIDs, appellantCaseIDs, lpaqIDs, docIDs, representationIDs);
+		await deleteAppealData(
+			appealIDs,
+			appeaRefs,
+			appellantCaseIDs,
+			lpaqIDs,
+			docIDs,
+			representationIDs
+		);
 	} catch (error) {
 		console.error(error);
 		throw error;
@@ -26,6 +41,7 @@ async function deleteTestRecords() {
 /**
  *
  * @param {number[]} appealIDs
+ * @param {string[]} appealRefs
  * @param {number[]} appellantCasesIDs
  * @param {number[]} lpaqIDs
  * @param {string[]} documentIDs
@@ -33,15 +49,56 @@ async function deleteTestRecords() {
  */
 const deleteAppealData = async (
 	appealIDs,
+	appealRefs,
 	appellantCasesIDs,
 	lpaqIDs,
 	documentIDs,
 	representationIDs
 ) => {
+	const deleteHearing = databaseConnector.hearing.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteInquiry = databaseConnector.inquiry.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteHearingEstimate = databaseConnector.hearingEstimate.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
+	const deleteInquiryEstimate = databaseConnector.inquiryEstimate.deleteMany({
+		where: {
+			appealId: {
+				in: appealIDs
+			}
+		}
+	});
+
 	const deleteAppeals = databaseConnector.appeal.deleteMany({
 		where: {
 			id: {
 				in: appealIDs
+			}
+		}
+	});
+
+	const deleteAppealNotifications = databaseConnector.appealNotification.deleteMany({
+		where: {
+			caseReference: {
+				in: appealRefs
 			}
 		}
 	});
@@ -333,14 +390,19 @@ const deleteAppealData = async (
 	await deleteDocAvScans;
 	await deleteDecisions;
 	await deleteDocumentAudits;
-	await deleteRepsInvalidIncomplete;
 	await deleteRepsInvalidIncompleteCustom;
+	await deleteRepsInvalidIncomplete;
 	await deleteRepsAttachments;
 	await deleteReps;
 	await deleteDocumentVersions;
 	await deleteDocuments;
 
+	if (appealIDs.length > 0) {
+		await deleteFolders;
+	}
+
 	await databaseConnector.$transaction([
+		deleteAppealNotifications,
 		deleteCaseNotes,
 		deleteAudits,
 		deleteSpecialisms,
@@ -364,14 +426,17 @@ const deleteAppealData = async (
 		deleteSiteVisits,
 		deleteReps,
 		deleteRepsAttachments,
-		deleteFolders,
-		deleteAppeals
+		deleteHearingEstimate,
+		deleteHearing,
+		deleteAppeals,
+		deleteInquiry,
+		deleteInquiryEstimate
 	]);
 };
 
 /**
  * @param {string[]} lpaCodes
- * @returns {Promise<number[]>}
+ * @returns {Promise<{id: number, reference: string}[]>}
  */
 const getAppeals = async (lpaCodes) => {
 	const appeals = await databaseConnector.appeal.findMany({
@@ -383,10 +448,17 @@ const getAppeals = async (lpaCodes) => {
 			}
 		},
 		select: {
-			id: true
+			id: true,
+			reference: true
 		}
 	});
-	return appeals.map((appeal) => appeal.id);
+
+	return appeals.map((appeal) => {
+		return {
+			id: appeal.id,
+			reference: appeal.reference
+		};
+	});
 };
 
 /**

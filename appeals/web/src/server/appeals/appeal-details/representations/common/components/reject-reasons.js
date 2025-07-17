@@ -64,6 +64,6 @@ export const buildRejectionReasons = (reasonOptions, reasons, reasonsText) => {
 export const rejectionReasonHtml = (reasons) => {
 	return buildHtmlList({
 		...(reasons ? { items: reasons } : {}),
-		listClasses: 'govuk-list govuk-!-margin-top-0 govuk-list--bullet'
+		listClasses: 'govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet'
 	});
 };

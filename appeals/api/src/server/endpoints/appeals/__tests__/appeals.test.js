@@ -2,7 +2,7 @@
 import { jest } from '@jest/globals';
 import { request } from '../../../app-test.js';
 import {
-	ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS,
+	ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS,
 	ERROR_MUST_BE_BOOLEAN,
 	ERROR_MUST_BE_GREATER_THAN_ZERO,
 	ERROR_MUST_BE_NUMBER,
@@ -14,7 +14,7 @@ import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal } from '#tests/appeals/mocks.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.service.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -98,19 +98,21 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written',
+							hasHearingAddress: true,
+							isHearingSetup: true
 						},
 						{
 							appealId: fullPlanningAppeal.id,
@@ -150,19 +152,21 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: fullPlanningAppeal.applicationReference,
+							procedureType: 'Written',
+							hasHearingAddress: true,
+							isHearingSetup: true
 						}
 					],
 					lpas,
@@ -171,7 +175,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -225,19 +230,21 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: fullPlanningAppeal.applicationReference,
+							procedureType: 'Written',
+							hasHearingAddress: true,
+							isHearingSetup: true
 						}
 					],
 					lpas,
@@ -246,7 +253,8 @@ describe('appeals list routes', () => {
 					page: 2,
 					pageCount: 2,
 					pageSize: 1,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -276,6 +284,11 @@ describe('appeals list routes', () => {
 											contains: 'MD21'
 										}
 									}
+								},
+								{
+									applicationReference: {
+										contains: 'MD21'
+									}
 								}
 							],
 							appealStatus: {
@@ -328,19 +341,21 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written',
+							hasHearingAddress: true,
+							isHearingSetup: true
 						}
 					],
 					lpas,
@@ -349,7 +364,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -379,6 +395,11 @@ describe('appeals list routes', () => {
 											contains: 'md21'
 										}
 									}
+								},
+								{
+									applicationReference: {
+										contains: 'md21'
+									}
 								}
 							],
 							appealStatus: {
@@ -431,19 +452,21 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written',
+							hasHearingAddress: true,
+							isHearingSetup: true
 						}
 					],
 					lpas,
@@ -452,7 +475,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -482,6 +506,11 @@ describe('appeals list routes', () => {
 											contains: 'MD21 5XY'
 										}
 									}
+								},
+								{
+									applicationReference: {
+										contains: 'MD21 5XY'
+									}
 								}
 							],
 							appealStatus: {
@@ -534,19 +563,21 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written',
+							hasHearingAddress: true,
+							isHearingSetup: true
 						}
 					],
 					lpas,
@@ -555,7 +586,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -624,19 +656,21 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written',
+							hasHearingAddress: true,
+							isHearingSetup: true
 						}
 					],
 					lpas,
@@ -645,7 +679,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -716,19 +751,21 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written',
+							hasHearingAddress: true,
+							isHearingSetup: true
 						}
 					],
 					lpas,
@@ -737,7 +774,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -805,20 +843,22 @@ describe('appeals list routes', () => {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								},
 								appellantFinalComments: {
 									receivedAt: null,
 									representationStatus: null,
 									status: 'not_received',
-									counts: {},
 									isRedacted: false
 								}
 							},
 							dueDate: null,
 							isParentAppeal: false,
-							isChildAppeal: false
+							isChildAppeal: false,
+							planningApplicationReference: householdAppeal.applicationReference,
+							procedureType: 'Written',
+							hasHearingAddress: true,
+							isHearingSetup: true
 						}
 					],
 					lpas,
@@ -827,7 +867,8 @@ describe('appeals list routes', () => {
 					page: 1,
 					pageCount: 1,
 					pageSize: 30,
-					statuses: ['assign_case_officer']
+					statuses: ['assign_case_officer'],
+					statusesInNationalList: ['assign_case_officer']
 				});
 			});
 
@@ -917,20 +958,20 @@ describe('appeals list routes', () => {
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						searchTerm: ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS
+						searchTerm: ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS('2', '50')
 					}
 				});
 			});
 
-			test('returns an error if searchTerm is more than 8 characters', async () => {
+			test('returns an error if searchTerm is more than 50 characters', async () => {
 				const response = await request
-					.get('/appeals?searchTerm=aaaaaaaaa')
+					.get(`/appeals?searchTerm=${'a'.repeat(51)}`)
 					.set('azureAdUserId', azureAdUserId);
 
 				expect(response.status).toEqual(400);
 				expect(response.body).toEqual({
 					errors: {
-						searchTerm: ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS
+						searchTerm: ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS('2', '50')
 					}
 				});
 			});
@@ -1038,19 +1079,21 @@ test('gets appeals when given a appealTypeId param', async () => {
 						receivedAt: null,
 						representationStatus: null,
 						status: 'not_received',
-						counts: {},
 						isRedacted: false
 					},
 					appellantFinalComments: {
 						receivedAt: null,
 						representationStatus: null,
 						status: 'not_received',
-						counts: {},
 						isRedacted: false
 					}
 				},
 				isParentAppeal: false,
-				isChildAppeal: false
+				isChildAppeal: false,
+				planningApplicationReference: householdAppeal.applicationReference,
+				procedureType: 'Written',
+				hasHearingAddress: true,
+				isHearingSetup: true
 			}
 		],
 		lpas,
@@ -1059,7 +1102,8 @@ test('gets appeals when given a appealTypeId param', async () => {
 		page: 1,
 		pageCount: 1,
 		pageSize: 30,
-		statuses: ['assign_case_officer']
+		statuses: ['assign_case_officer'],
+		statusesInNationalList: ['assign_case_officer']
 	});
 });
 
@@ -1114,31 +1158,31 @@ describe('mapAppealToDueDate Tests', () => {
 		};
 	});
 
-	test('maps STATE_TARGET_READY_TO_START status', () => {
+	test('maps STATE_TARGET_READY_TO_START status', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.READY_TO_START;
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, 'Incomplete', new Date('2023-02-01'));
+		const dueDate = await mapAppealToDueDate(mockAppeal, 'Incomplete', new Date('2023-02-01'));
 		expect(dueDate).toEqual(new Date('2023-02-01'));
 	});
 
-	test('maps STATE_TARGET_READY_TO_START status with Incomplete status', () => {
+	test('maps STATE_TARGET_READY_TO_START status with Incomplete status', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.READY_TO_START;
 		const createdAtPlusFiveDate = new Date('2023-01-06T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusFiveDate);
 	});
 
-	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE', () => {
+	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
 
 		const createdAtPlusTenDate = new Date('2023-01-11T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusTenDate);
 	});
 
-	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE status with appealTimetable lpaQuestionnaireDueDate', () => {
+	test('maps STATE_TARGET_LPA_QUESTIONNAIRE_DUE status with appealTimetable lpaQuestionnaireDueDate', async () => {
 		let mockAppealWithTimetable = {
 			...mockAppeal,
 			appealTimetable: {
@@ -1152,39 +1196,40 @@ describe('mapAppealToDueDate Tests', () => {
 		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE;
 
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
 		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
 	});
 
-	test('maps STATE_TARGET_ASSIGN_CASE_OFFICER', () => {
+	test('maps STATE_TARGET_ASSIGN_CASE_OFFICER', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER;
 
 		const createdAtPlusFifteenDate = new Date('2023-01-16T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusFifteenDate);
 	});
 
-	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit available', () => {
+	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit available', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
-
-		const createdAtPlusTenBusinessDays = new Date('2023-02-15T00:00:00.000Z');
+		const createdAtPlusFortyBusinessDays = new Date('2023-03-29T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
-		expect(dueDate).toEqual(createdAtPlusTenBusinessDays);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
+		expect(dueDate).toEqual(createdAtPlusFortyBusinessDays);
 	});
 
-	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit not available', () => {
+	test('maps STATE_TARGET_ISSUE_DETERMINATION when site visit not available', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 
-		const createdAtPlusThirtyBusinessDays = new Date('2023-02-10T00:00:00.000Z');
+		const createdAtPlusThirtyBusinessDays = new Date('2025-07-04T00:00:00.000Z');
+		mockAppeal.caseCreatedDate = new Date('2025-05-22T00:00:00.000Z');
+
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusThirtyBusinessDays);
 	});
 
-	test('maps STATE_TARGET_ISSUE_DETERMINATION status with appealTimetable issueDeterminationDate', () => {
+	test('maps STATE_TARGET_ISSUE_DETERMINATION status with appealTimetable issueDeterminationDate', async () => {
 		let mockAppealWithTimetable = {
 			...mockAppeal,
 			appealTimetable: {
@@ -1196,22 +1241,23 @@ describe('mapAppealToDueDate Tests', () => {
 			}
 		};
 		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
-
+		mockAppealWithTimetable.caseCreatedDate = new Date('2025-05-22T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
-		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
+		const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
+		// dueDate.setDate(dueDate.getDate());
+		expect(dueDate).toEqual(new Date('2025-07-04T00:00:00.000Z'));
 	});
 
-	test('maps STATE_TARGET_STATEMENT_REVIEW', () => {
+	test('maps STATE_TARGET_STATEMENT_REVIEW', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.STATEMENTS;
 
 		const createdAtPlusFiftyFiveDate = new Date('2023-02-25T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusFiftyFiveDate);
 	});
 
-	test('maps STATE_TARGET_STATEMENT_REVIEW status with appealTimetable lpaStatementDueDate', () => {
+	test('maps STATE_TARGET_STATEMENT_REVIEW status with appealTimetable lpaStatementDueDate', async () => {
 		let mockAppealWithTimetable = {
 			...mockAppeal,
 			appealTimetable: {
@@ -1226,26 +1272,41 @@ describe('mapAppealToDueDate Tests', () => {
 		mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.STATEMENTS;
 
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
 		expect(dueDate).toEqual(new Date('2023-03-01T00:00:00.000Z'));
 	});
 
-	test('maps STATE_TARGET_FINAL_COMMENT_REVIEW', () => {
+	test('maps STATE_TARGET_FINAL_COMMENT_REVIEW', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.FINAL_COMMENTS;
 
 		const createdAtPlusSixtyDate = new Date('2023-03-02T00:00:00.000Z');
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(createdAtPlusSixtyDate);
 	});
 
-	test('handles STATE_TARGET_AWAITING_SITE_VISIT', () => {
+	test('handles STATE_TARGET_AWAITING_SITE_VISIT', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
 		mockAppeal.siteVisit = { visitDate: new Date('2023-02-01T00:00:00.000Z') };
+		mockAppeal.procedureType = {
+			key: APPEAL_CASE_PROCEDURE.WRITTEN
+		};
 
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toEqual(mockAppeal.siteVisit.visitDate);
+	});
+
+	test('handles STATE_TARGET_AWAITING_HEARING', async () => {
+		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.AWAITING_EVENT;
+		mockAppeal.hearing = { hearingStartTime: new Date('2023-02-01T00:00:00.000Z') };
+		mockAppeal.procedureType = {
+			key: APPEAL_CASE_PROCEDURE.HEARING
+		};
+
+		// @ts-ignore
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
+		expect(dueDate).toEqual(mockAppeal.hearing.hearingStartTime);
 	});
 
 	describe('handles STATE_TARGET_SITE_VISIT', () => {
@@ -1263,35 +1324,35 @@ describe('mapAppealToDueDate Tests', () => {
 			mockAppealWithTimetable.appealStatus[0].status = APPEAL_CASE_STATUS.EVENT;
 		});
 
-		test('when final comments due date does not exist', () => {
+		test('when final comments due date does not exist', async () => {
 			// @ts-ignore
-			const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+			const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
 			expect(dueDate).toEqual(mockAppealWithTimetable.appealTimetable.lpaQuestionnaireDueDate);
 		});
 
-		test('when final comments due date does exist', () => {
+		test('when final comments due date does exist', async () => {
 			// @ts-ignore
 			mockAppealWithTimetable.appealTimetable.finalCommentsDueDate = new Date(
 				'2023-03-22T00:00:00.000Z'
 			);
-			const dueDate = mapAppealToDueDate(mockAppealWithTimetable, '', null);
+			const dueDate = await mapAppealToDueDate(mockAppealWithTimetable, '', null);
 			expect(dueDate).toEqual(mockAppealWithTimetable.appealTimetable.finalCommentsDueDate);
 		});
 	});
 
-	test('handles STATE_TARGET_COMPLETE', () => {
+	test('handles STATE_TARGET_COMPLETE', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.COMPLETE;
 
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toBeNull();
 	});
 
-	test('handles unexpected status (default case)', () => {
+	test('handles unexpected status (default case)', async () => {
 		mockAppeal.appealStatus[0].status = 'unexpected_status';
 
 		// @ts-ignore
-		const dueDate = mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
 		expect(dueDate).toBeUndefined();
 	});
 });

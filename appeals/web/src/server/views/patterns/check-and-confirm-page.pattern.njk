@@ -13,26 +13,5 @@
 {%- endblock -%}
 
 {%- block pageContent -%}
-	{%- for component in pageContent.pageComponents -%}
-		{%- if component.type !== 'notification-banner' and component.type !== 'error-summary' and component.type !== 'checkboxes' and component.type !== 'radios' -%}
-			{%- include "../appeals/components/page-component.njk" -%}
-		{%- endif -%}
-	{%- endfor -%}
-	<div class="govuk-grid-row">
-		<div class="govuk-grid-column-full">
-			<form method="post" novalidate="novalidate">
-				{%- for component in pageContent.pageComponents -%}
-					{%- if component.type === 'checkboxes' or component.type === 'radios' -%}
-						{%- include "../appeals/components/page-component.njk" -%}
-					{%- endif -%}
-				{%- endfor -%}
-				{%- set defaultButtonProperties = {
-					text:"Confirm",
-					type: "submit",
-					preventDoubleClick: true
-				} -%}
-				{{ govukButton(pageContent.submitButtonProperties if pageContent.submitButtonProperties else defaultButtonProperties) }}
-			</form>
-		</div>
-	</div>
+	{%- include "../app/includes/check-and-confirm-page-content.pattern.njk" -%}
 {%- endblock -%}

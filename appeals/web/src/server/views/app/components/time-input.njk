@@ -1,3 +1,67 @@
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
 {% macro govukTimeInput(params) %}
-	<label class="govuk-label govuk-visually-hidden" for="{{ params.id }}-hour">Hour</label><input class="govuk-input govuk-input--width-2" id="{{ params.id }}-hour" name="{{ params.id }}-hour" type="number" value="{{ params.hour.value if params.hour and params.hour.value else '' }}">&nbsp;:&nbsp;<label class="govuk-label govuk-visually-hidden" for="{{ params.id }}-minute">Minute</label><input class="govuk-input govuk-input--width-2" id="{{ params.id }}-minute" name="{{ params.id }}-minute" type="number" value="{{ params.minute.value if params.minute and params.minute.value else '' }}">
+{% if params.errorMessage %}
+	<div class="govuk-form-group govuk-form-group--error">
+{% endif %}
+	{% set innerContent %}
+		{% if params.hint.text or params.hint.html %}
+			<div id="hearing-date-hint" class="govuk-hint">
+				{{ params.hint.html | safe | trim | indent(8) if params.hint.html else params.hint.text }}
+			</div>
+		{% endif %}
+
+	{% if params.errorMessage%}
+			<p id="time-error" class="govuk-error-message">
+			{{params.errorMessage}}
+			</p>
+		{% endif %}
+		{% if params.showLabels %}
+			<div class="govuk-date-input">
+				<div class="govuk-date-input__item govuk-!-margin-right-1">
+					{{ govukInput({
+						id: params.id + '-hour',
+						name: params.id + '-hour',
+						label: {
+							text: 'Hour'
+						},
+						classes: "govuk-input--width-2",
+						value: params.hour.value
+					}) }}
+				</div>
+				<div class="govuk-date-input__item govuk-!-font-size-19 govuk-!-padding-0 govuk-!-margin-right-1">
+				:
+				</div>
+				<div class="govuk-date-input__item">
+					{{ govukInput({
+						id: params.id + '-minute',
+						name: params.id + '-minute',
+						label: {
+							text: 'Minute'
+						},
+						classes: "govuk-input--width-2",
+						value: params.minute.value
+					}) }}
+				</div>
+			</div>
+		{% else %}
+			<label class="govuk-label govuk-visually-hidden" for="{{ params.id }}-hour">Hour</label>
+			<input class="govuk-input govuk-input--width-2" id="{{ params.id }}-hour" name="{{ params.id }}-hour" type="text" value="{{ params.hour.value if params.hour and params.hour.value else '' }}">
+			:
+			<label class="govuk-label govuk-visually-hidden" for="{{ params.id }}-minute">Minute</label>
+			<input class="govuk-input govuk-input--width-2" id="{{ params.id }}-minute" name="{{ params.id }}-minute" type="text" value="{{ params.minute.value if params.minute and params.minute.value else '' }}">
+		{% endif %}
+	{% endset %}
+
+	{% if params.fieldset %}
+		{% call govukFieldset(params.fieldset) %}
+			{{ innerContent | safe }}
+		{% endcall %}
+	{% else %}
+		{{ innerContent | safe }}
+	{% endif %}
+{% if params.errorMessage %}
+	</div>
+{% endif %}
 {% endmacro %}

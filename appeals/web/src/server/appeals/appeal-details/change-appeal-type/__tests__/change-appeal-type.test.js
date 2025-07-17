@@ -3,6 +3,7 @@ import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
 import { appealData, appealTypesData } from '#testing/app/fixtures/referencedata.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -16,6 +17,15 @@ const checkTransferPath = '/check-transfer';
 
 /** @typedef {import('../../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 
+const validAppealChangeTypeStatuses = [
+	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+	APPEAL_CASE_STATUS.VALIDATION
+];
+
+const invalidAppealChangeTypeStatuses = Object.values(APPEAL_CASE_STATUS).filter(
+	(status) => !validAppealChangeTypeStatuses.includes(status)
+);
+
 describe('change-appeal-type', () => {
 	beforeEach(() => {
 		installMockApi();
@@ -25,16 +35,53 @@ describe('change-appeal-type', () => {
 	afterEach(teardown);
 
 	describe('GET /change-appeal-type/appeal-type', () => {
-		it('should render the appeal type page', async () => {
-			const response = await request.get(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`);
-			const element = parseHtml(response.text);
+		invalidAppealChangeTypeStatuses.forEach((status) => {
+			it(`should render the you cannot update the appeal type page for appeals with status ${status}`, async () => {
+				const amendedAppeal = {
+					...appealData,
+					appealId: '123943',
+					appealStatus: status
+				};
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What type should this appeal be?</h1>');
-			expect(element.innerHTML).toContain(
-				'<input class="govuk-radios__input" id="appeal-type" name="appealType"'
-			);
-			expect(element.innerHTML).toContain('Continue</button>');
+				installMockApi();
+				nock('http://test/').get('/appeals/123943').reply(200, amendedAppeal);
+				nock('http://test/').get('/appeals/123943/appeal-types').reply(200, appealTypesData);
+
+				const response = await request.get(
+					`${baseUrl}/123943${changeAppealTypePath}/${appealTypePath}`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('You cannot update the appeal type</h1>');
+				expect(element.innerHTML).toContain('govuk-list govuk-list--bullet');
+			});
+		});
+
+		validAppealChangeTypeStatuses.forEach((status) => {
+			it(`should render the appeal type page for appeals with status ${status}`, async () => {
+				const amendedAppeal = {
+					...appealData,
+					appealId: '123943',
+					appealStatus: status
+				};
+
+				installMockApi();
+				nock('http://test/').get('/appeals/123943').reply(200, amendedAppeal);
+				nock('http://test/').get('/appeals/123943/appeal-types').reply(200, appealTypesData);
+
+				const response = await request.get(
+					`${baseUrl}/123943${changeAppealTypePath}/${appealTypePath}`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Appeal type</h1>');
+				expect(element.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="appeal-type" name="appealType"'
+				);
+				expect(element.innerHTML).toContain('Continue</button>');
+			});
 		});
 	});
 
@@ -54,8 +101,17 @@ describe('change-appeal-type', () => {
 		});
 
 		it('should re-render the appeal type page with an error message if required field is missing', async () => {
+			const amendedAppeal = {
+				...appealData,
+				appealId: '123943',
+				appealStatus: APPEAL_CASE_STATUS.VALIDATION
+			};
+
+			nock('http://test/').get('/appeals/123943').reply(200, amendedAppeal);
+			nock('http://test/').get('/appeals/123943/appeal-types').reply(200, appealTypesData);
+
 			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`)
+				.post(`${baseUrl}/123943${changeAppealTypePath}/${appealTypePath}`)
 				.send({
 					appealType: ''
 				});
@@ -63,7 +119,7 @@ describe('change-appeal-type', () => {
 			expect(response.statusCode).toBe(200);
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('What type should this appeal be?</h1>');
+			expect(element.innerHTML).toContain('Appeal type</h1>');
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -71,7 +127,7 @@ describe('change-appeal-type', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Please choose an appeal type</a>');
+			expect(unprettifiedErrorSummaryHTML).toContain('Select the appeal type</a>');
 		});
 	});
 
@@ -135,7 +191,7 @@ describe('change-appeal-type', () => {
 
 			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Please specify if the appeal should be resubmitted</a>'
+				'Select yes if the appellant should be asked to resubmit the appeal</a>'
 			);
 		});
 	});
@@ -148,9 +204,7 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'What is the final date the appellant must resubmit by?</h1>'
-			);
+			expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -209,9 +263,7 @@ describe('change-appeal-type', () => {
 
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain(
-			'What is the final date the appellant must resubmit by?</h1>'
-		);
+		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 			rootElement: '.govuk-error-summary',
@@ -219,9 +271,7 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain(
-			'Final date must include a day, a month and a year'
-		);
+		expect(unprettifiedErrorSummaryHTML).toContain('Enter the deadline to resubmit the appeal');
 	});
 
 	it('should re-render the final date page with an error message if the provided date day is invalid', async () => {
@@ -237,9 +287,7 @@ describe('change-appeal-type', () => {
 
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain(
-			'What is the final date the appellant must resubmit by?</h1>'
-		);
+		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 			rootElement: '.govuk-error-summary',
@@ -247,8 +295,9 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date day must be between 1 and 31</a>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain(
+			'Deadline to resubmit the appeal day must be between 1 and 31</a>'
+		);
 	});
 
 	it('should re-render the final date page with an error message if the provided date month is invalid', async () => {
@@ -264,9 +313,7 @@ describe('change-appeal-type', () => {
 
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain(
-			'What is the final date the appellant must resubmit by?</h1>'
-		);
+		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 			rootElement: '.govuk-error-summary',
@@ -274,8 +321,9 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date month must be between 1 and 12</a>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain(
+			'Deadline to resubmit the appeal month must be between 1 and 12</a>'
+		);
 	});
 
 	it('should re-render the final date page with an error message if the provided date year is invalid', async () => {
@@ -291,9 +339,7 @@ describe('change-appeal-type', () => {
 
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain(
-			'What is the final date the appellant must resubmit by?</h1>'
-		);
+		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 			rootElement: '.govuk-error-summary',
@@ -301,8 +347,9 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date year must be a number</a>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain(
+			'Deadline to resubmit the appeal year must be a number</a>'
+		);
 	});
 
 	it('should re-render the final date page with an error message if an invalid date was provided', async () => {
@@ -318,9 +365,7 @@ describe('change-appeal-type', () => {
 
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain(
-			'What is the final date the appellant must resubmit by?</h1>'
-		);
+		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 			rootElement: '.govuk-error-summary',
@@ -328,7 +373,9 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Final date must be a valid date</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain(
+			'Deadline to resubmit the appeal must be a real date</a>'
+		);
 	});
 
 	it('should re-render the final date page with an error message if the provided date is not a business day', async () => {
@@ -344,9 +391,7 @@ describe('change-appeal-type', () => {
 
 		const element = parseHtml(response.text);
 		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain(
-			'What is the final date the appellant must resubmit by?</h1>'
-		);
+		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
 		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 			rootElement: '.govuk-error-summary',
@@ -354,7 +399,7 @@ describe('change-appeal-type', () => {
 		}).innerHTML;
 
 		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Date must be a business day</a>');
+		expect(unprettifiedErrorSummaryHTML).toContain('The date must be a business day</a>');
 	});
 	describe('GET /change-appeal-type/add-horizon-reference', () => {
 		it('should render the add horizon reference page', async () => {

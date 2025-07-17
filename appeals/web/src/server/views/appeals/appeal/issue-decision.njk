@@ -1,5 +1,6 @@
 {%- extends "app/layouts/app-two-column.layout.njk" -%}
 {%- from "govuk/components/button/macro.njk" import govukButton -%}
+{%- from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner -%}
 {%- from "../../app/components/page-heading.njk" import pageHeading -%}
 
 {%- set backLinkUrl = pageContent.backLinkUrl -%}
@@ -7,17 +8,37 @@
 {%- set pageTitle = pageContent.title if pageContent.title else 'Change' -%}
 
 {%- block pageHeading -%}
+	{%- set notificationBanners = [] -%}
+	{%- for component in pageContent.pageComponents -%}
+		{%- if component.type === 'notification-banner' -%}
+			{%- set _ = notificationBanners.push(component) -%}
+		{%- endif -%}
+	{%- endfor -%}
+	{%- if notificationBanners | length -%}
+	<div class="govuk-grid-row">
+		<div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+			{%- for component in notificationBanners -%}
+				{{ govukNotificationBanner(component.parameters | assign({ classes: "govuk-!-margin-bottom-5" })) }}
+			{%- endfor -%}
+		</div>
+	</div>
+	{%- endif -%}
 	{{ pageHeading(pageContent) }}
 {%- endblock -%}
 
 {%- block pageContent -%}
 	<form method="POST" novalidate="novalidate">
 		{%- for component in pageContent.pageComponents -%}
-			{%- include "../components/page-component.njk" -%}
+			{%- if component.type !== 'notification-banner' -%}
+				{%- include "../components/page-component.njk" -%}
+			{%- endif -%}
 		{%- endfor -%}
+		{%- if not viewOnly -%}
+		<p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the decision.</p>
 		{{ govukButton({
 			text: pageContent.submitButtonText if pageContent.submitButtonText else "Continue",
 			type: "submit"
 		}) }}
+		{%- endif -%}
 	</form>
 {%- endblock -%}

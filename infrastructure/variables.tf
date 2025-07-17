@@ -9,11 +9,14 @@ variable "alerts_enabled" {
 variable "apps_config" {
   description = "Config for the apps"
   type = object({
-    app_service_plan_sku       = string
-    functions_node_version     = number
-    functions_service_plan_sku = string
-    node_environment           = string
-    private_endpoint_enabled   = bool
+    app_service_plan_sku              = string
+    functions_node_version            = number
+    functions_service_plan_sku        = string
+    node_environment                  = string
+    private_endpoint_enabled          = bool
+    session_max_age                   = string
+    use_system_test_bc_for_change_lpa = bool # Whether to allow STBC/STBC2 on change LPA list
+    front_office_url                  = string
 
     auth = object({
       client_id = string
@@ -38,8 +41,17 @@ variable "apps_config" {
     })
 
     featureFlags = object({
-      featureFlagS78Written = bool
-      featureFlagS78Hearing = bool
+      featureFlagS78Written             = bool
+      featureFlagS78Hearing             = bool
+      featureFlagS78Inquiry             = bool
+      featureFlagLinkedAppeals          = bool
+      featureFlagS20                    = bool
+      featureFlagCAS                    = bool
+      featureFlagIssueDecision          = bool
+      featureFlagReIssueDecision        = bool
+      featureFlagSimplifyTeamAssignment = bool
+      featureFlagChangeAppealType       = bool
+      featureFlagPdfDownload            = bool
     })
 
     logging = object({
@@ -52,9 +64,12 @@ variable "apps_config" {
       family   = string
       sku_name = string
     })
-
-    session_max_age = string
   })
+}
+
+variable "beta_feedback_url" {
+  description = "URL for beta feedback form"
+  type        = string
 }
 
 variable "common_config" {
@@ -168,6 +183,7 @@ variable "sb_topic_names" {
       listed_building       = string
       service_user          = string
       appeal_representation = string
+      appeal_event_estimate = string
     })
   })
 }
@@ -236,7 +252,3 @@ variable "waf_rate_limits" {
   })
 }
 
-variable "beta_feedback_url" {
-  description = "URL for beta feedback form"
-  type        = string
-}

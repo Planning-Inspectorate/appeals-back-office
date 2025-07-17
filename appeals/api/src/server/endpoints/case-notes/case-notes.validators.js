@@ -5,6 +5,6 @@ import { validationErrorHandler } from '#middleware/error-handler.js';
 
 export const postCaseNoteValidator = composeMiddleware(
 	validateIdParameter('appealId'),
-	validateTextAreaParameter('comment', 300),
+	validateTextAreaParameter('comment', 500),
 	validationErrorHandler
 );

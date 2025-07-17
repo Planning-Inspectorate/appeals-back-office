@@ -27,7 +27,10 @@ describe('related appeals', () => {
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
+				caseDetailsPage.validateBannerMessage(
+					'Success',
+					`This appeal is now related to ${caseRefToLink}`
+				);
 			});
 		});
 	});
@@ -42,13 +45,19 @@ describe('related appeals', () => {
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
+					caseDetailsPage.validateBannerMessage(
+						'Success',
+						`This appeal is now related to ${firstCaseRefToLink}`
+					);
 					caseDetailsPage.clickAddRelatedAppeals();
 					caseDetailsPage.fillInput(secondCaseRefToLink);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
+					caseDetailsPage.validateBannerMessage(
+						'Success',
+						`This appeal is now related to ${secondCaseRefToLink}`
+					);
 				});
 			});
 		});
@@ -67,7 +76,10 @@ describe('related appeals', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('This appeal is now related to ' + caseRef);
+			caseDetailsPage.validateBannerMessage(
+				'Success',
+				`This appeal is now related to ${horizonAppealId}`
+			);
 		});
 	});
 });

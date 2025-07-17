@@ -24,3 +24,12 @@ export async function upsertServiceUserAddress(id, data) {
 
 	return await serviceUserRepository.getServiceUserById(id);
 }
+
+/**
+ * @param {import('@pins/appeals.api').Schema.ServiceUser} su
+ * @returns {string}
+ * */
+export const formatServiceUser = (su) =>
+	[`${su.firstName} ${su.lastName}`, su.organisationName, su.email, su.phoneNumber]
+		.filter(Boolean)
+		.join('\n');

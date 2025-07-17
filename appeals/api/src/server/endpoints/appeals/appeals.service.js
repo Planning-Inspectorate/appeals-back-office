@@ -5,31 +5,36 @@ import { formatAppeal } from '#endpoints/appeals/appeals.formatter.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import {
+	fetchBankHolidaysForDivision,
+	getNumberOfBankHolidaysBetweenDates
+} from '@pins/appeals/utils/business-days.js';
+import { addBusinessDays } from 'date-fns';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
 
+const allStatusesOrdered = [
+	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+	APPEAL_CASE_STATUS.VALIDATION,
+	APPEAL_CASE_STATUS.READY_TO_START,
+	APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+	APPEAL_CASE_STATUS.EVENT,
+	APPEAL_CASE_STATUS.AWAITING_EVENT,
+	APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+	APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+	APPEAL_CASE_STATUS.COMPLETE,
+	APPEAL_CASE_STATUS.STATEMENTS,
+	APPEAL_CASE_STATUS.FINAL_COMMENTS
+];
+
 /**
  * @param {{ appealStatus: { status: string; }[] }[]} rawStatuses
  * @returns {string[]}
  */
 export const mapAppealStatuses = (rawStatuses) => {
-	const statusOrder = [
-		APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
-		APPEAL_CASE_STATUS.VALIDATION,
-		APPEAL_CASE_STATUS.READY_TO_START,
-		APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
-		APPEAL_CASE_STATUS.EVENT,
-		APPEAL_CASE_STATUS.AWAITING_EVENT,
-		APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
-		APPEAL_CASE_STATUS.AWAITING_TRANSFER,
-		APPEAL_CASE_STATUS.COMPLETE,
-		APPEAL_CASE_STATUS.STATEMENTS,
-		APPEAL_CASE_STATUS.FINAL_COMMENTS
-	];
-
 	const extractedStatuses = [
 		...new Set(
 			rawStatuses
@@ -43,11 +48,26 @@ export const mapAppealStatuses = (rawStatuses) => {
 	// return the two arrays above with duplicates removed
 	return Array.from(
 		new Set([
-			...statusOrder.filter((status) => extractedStatuses.includes(status)),
+			...allStatusesOrdered.filter((status) => extractedStatuses.includes(status)),
 			...extractedStatuses
 		])
 	);
 };
+
+/**
+ * @param {Date} eventDate
+ * @param {number} businessDays
+ * @returns {Promise<Date>}
+ */
+async function calculateIssueDecisionDeadline(eventDate, businessDays) {
+	const deadline = addBusinessDays(eventDate, businessDays);
+	const numberOfBankHolidays = getNumberOfBankHolidaysBetweenDates(
+		eventDate,
+		deadline,
+		await fetchBankHolidaysForDivision()
+	);
+	return addBusinessDays(new Date(deadline), numberOfBankHolidays);
+}
 
 /**
  *
@@ -127,7 +147,7 @@ const mapAppeals = (appeals) =>
  * @param {number} caseOfficerId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
- * @returns {Promise<{mappedStatuses: string[], mappedLPAs: any[], mappedInspectors: any[], mappedCaseOfficers: any[], mappedAppeals: any[], itemCount: number}>}
+ * @returns {Promise<{mappedStatuses: string[], statusesInNationalList: string[], mappedLPAs: any[], mappedInspectors: any[], mappedCaseOfficers: any[], mappedAppeals: any[], itemCount: number}>}
  */
 const retrieveAppealListData = async (
 	pageNumber,
@@ -159,9 +179,11 @@ const retrieveAppealListData = async (
 	const mappedLPAs = mapAppealLPAs(appeals);
 	const mappedInspectors = await mapInspectors(appeals);
 	const mappedCaseOfficers = await mapCaseOfficers(appeals);
+	const statusesInNationalList = await appealListRepository.getAppealsStatusesInNationalList();
 
 	return {
 		mappedStatuses,
+		statusesInNationalList,
 		mappedLPAs,
 		mappedInspectors,
 		mappedCaseOfficers,
@@ -183,4 +205,4 @@ async function updateCompletedEvents(azureAdUserId) {
 	await Promise.all(appealsToUpdate.map((appeal) => broadcasters.broadcastAppeal(appeal.id)));
 }
 
-export { retrieveAppealListData, updateCompletedEvents };
+export { calculateIssueDecisionDeadline, retrieveAppealListData, updateCompletedEvents };

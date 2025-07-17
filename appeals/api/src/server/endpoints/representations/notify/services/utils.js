@@ -1,6 +1,6 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { addDays } from '#utils/business-days.js';
-import formatDate from '#utils/date-formatter.js';
+import { addDays } from '@pins/appeals/utils/business-days.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('#endpoints/representations/representations.service.js').UpdatedDBRepresentation} Representation */
@@ -27,15 +27,21 @@ export const formatReasons = (representation) => {
 
 /**
  * @param {boolean} allowResubmit
+ * @param {Date | null} dueDate
+ * @param {number} numDays
  * @returns {Promise<string>}
  */
-export const formatExtendedDeadline = async (allowResubmit) => {
-	if (!allowResubmit) {
-		return '';
+export const formatExtendedDeadline = async (allowResubmit, dueDate, numDays) => {
+	if (!allowResubmit) return '';
+
+	const extendedDate = await addDays(new Date().toISOString(), numDays);
+
+	if (!dueDate) {
+		return formatDate(extendedDate, false);
 	}
 
-	const date = await addDays(new Date().toISOString(), 7);
-	return formatDate(date, false);
+	const finalDate = extendedDate.getTime() > dueDate.getTime() ? extendedDate : dueDate;
+	return formatDate(finalDate, false);
 };
 
 /**

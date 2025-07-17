@@ -187,6 +187,7 @@ export default {
 			key: 'complete'
 		}
 	],
+	completedStateList: ['assign_case_officer', 'validation', 'ready_to_start'],
 	appealTimetable: {
 		id: 1,
 		appealId: 1,

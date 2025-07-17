@@ -8,7 +8,11 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import { kilobyte, megabyte, gigabyte } from '#appeals/appeal.constants.js';
-import { mapNotificationBannersFromSession, createNotificationBanner } from '#lib/mappers/index.js';
+import {
+	mapNotificationBannersFromSession,
+	createNotificationBanner,
+	documentDateInput
+} from '#lib/mappers/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -26,27 +30,33 @@ import { folderIsAdditionalDocuments } from '#lib/documents.js';
  * @typedef {import('@pins/appeals.api').Api.DocumentVersionAuditEntry} DocumentVersionAuditEntry
  * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
  */
+
 /**
- * @param {string} appealId
- * @param {string} appealReference
- * @param {string} folderId
- * @param {string} folderPath
- * @param {string} documentId
- * @param {string} documentName
- * @param {number} latestVersion
- * @param {string} backButtonUrl
- * @param {string|undefined} nextPageUrl
- * @param {boolean} isLateEntry
- * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfo} fileUploadInfo
- * @param {import('@pins/express').ValidationErrors|undefined} errors
- * @param {string} [pageHeadingTextOverride]
- * @param {PageComponent[]} [pageBodyComponents]
- * @param {boolean} [allowMultipleFiles]
- * @param {string} [documentType]
- * @param {string} [filenamesInFolder]
+ * @param {Object} params
+ * @param {string} params.appealId
+ * @param {string} params.appealReference
+ * @param {string} params.folderId
+ * @param {string} params.folderPath
+ * @param {string} params.documentId
+ * @param {string|undefined} params.documentName
+ * @param {number|undefined} params.latestVersion
+ * @param {string} params.backButtonUrl
+ * @param {string|undefined} params.nextPageUrl
+ * @param {boolean} params.isLateEntry
+ * @param {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfo} params.fileUploadInfo
+ * @param {import('@pins/express').ValidationErrors|undefined} params.errors
+ * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.preHeadingTextOverride]
+ * @param {PageComponent[]} [params.pageBodyComponents]
+ * @param {boolean} [params.allowMultipleFiles]
+ * @param {string} [params.documentType]
+ * @param {string} [params.filenamesInFolder]
+ * @param {string[]} [params.allowedTypes]
+ * @param {string} [params.uploadContainerHeadingTextOverride]
+ * @param {string} [params.documentTitle]
  * @returns {Promise<import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters>}
  */
-export async function documentUploadPage(
+export async function documentUploadPage({
 	appealId,
 	appealReference,
 	folderId,
@@ -60,14 +70,21 @@ export async function documentUploadPage(
 	fileUploadInfo,
 	errors,
 	pageHeadingTextOverride,
+	preHeadingTextOverride,
 	pageBodyComponents = [],
 	allowMultipleFiles,
 	documentType,
-	filenamesInFolder
-) {
+	filenamesInFolder,
+	allowedTypes = [],
+	uploadContainerHeadingTextOverride = '',
+	documentTitle = ''
+}) {
 	const isAdditionalDocument = folderIsAdditionalDocuments(folderPath);
 	const pageHeadingText =
 		pageHeadingTextOverride || mapAddDocumentsPageHeading(folderPath, documentId);
+	const uploadContainerHeadingText = uploadContainerHeadingTextOverride || pageHeadingText;
+	const preHeadingText =
+		preHeadingTextOverride || 'Appeal ' + appealShortReference(appealReference);
 	const pathComponents = folderPath ? folderPath.split('/') : [];
 	const documentStage = pathComponents.length > 0 ? pathComponents[0] : 'unknown';
 	const documentTypeComputed =
@@ -97,10 +114,13 @@ export async function documentUploadPage(
 		documentStage: documentStage,
 		serviceName: documentName || pageHeadingText,
 		pageTitle: pageHeadingTextOverride || 'Upload documents',
-		appealShortReference: appealShortReference(appealReference),
 		pageHeadingText,
+		preHeadingText,
 		pageBodyComponents,
+		uploadContainerHeadingText,
+		documentTitle,
 		documentType: documentTypeComputed,
+		allowedTypes,
 		nextPageUrl:
 			nextPageUrl?.replace('{{folderId}}', folderId) ||
 			backButtonUrl?.replace('{{folderId}}', folderId),
@@ -295,6 +315,14 @@ function mapManageFolderPageHeading(folderPath) {
 }
 
 /**
+ * @param {string} fileName
+ * @returns {string}
+ */
+function stripFileExtension(fileName) {
+	return fileName.replace(/\.\w+$/, '');
+}
+
+/**
  * @param {Object} params
  * @param {string} params.backLinkUrl
  * @param {FolderInfo} params.folder
@@ -304,6 +332,7 @@ function mapManageFolderPageHeading(folderPath) {
  * @param {string} [params.pageHeadingTextOverride]
  * @param {string} [params.dateLabelTextOverride]
  * @param {string} [params.documentId]
+ * @param {import("@pins/express").ValidationErrors | undefined} [params.errors]
  * @returns {PageContent}
  */
 export function addDocumentDetailsPage({
@@ -314,7 +343,8 @@ export function addDocumentDetailsPage({
 	redactionStatuses,
 	pageHeadingTextOverride,
 	dateLabelTextOverride,
-	documentId
+	documentId,
+	errors
 }) {
 	/** @type {PageContent} */
 	const pageContent = {
@@ -330,7 +360,8 @@ export function addDocumentDetailsPage({
 				bodyItems,
 				index,
 				redactionStatuses,
-				dateLabelTextOverride
+				dateLabelTextOverride,
+				errors
 			});
 		})
 	};
@@ -346,6 +377,7 @@ export function addDocumentDetailsPage({
  * @param {number} params.index
  * @param {RedactionStatus[]} params.redactionStatuses
  * @param {string} [params.dateLabelTextOverride]
+ * @param {import("@pins/express").ValidationErrors | undefined} params.errors
  * @returns {PageComponent[]}
  */
 function mapFileUploadInfoItemToDocumentDetailsPageComponents({
@@ -354,7 +386,8 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents({
 	bodyItems,
 	index,
 	redactionStatuses,
-	dateLabelTextOverride
+	dateLabelTextOverride,
+	errors
 }) {
 	const receivedDateDayMonthYear = dateISOStringToDayMonthYearHourMinute(
 		uncommittedFile.receivedDate
@@ -380,50 +413,26 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents({
 				value: uncommittedFile.GUID
 			}
 		},
-		{
-			type: 'date-input',
-			parameters: {
-				id: `items[${index}]receivedDate`,
-				namePrefix: `items[${index}][receivedDate]`,
-				fieldset: {
-					legend: {
-						text: dateLabelTextOverride || 'Date received'
-					}
-				},
-				items: [
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-						id: `items[${index}].receivedDate.day`,
-						name: '[day]',
-						label: 'Day',
-						value:
-							(bodyRecievedDateDay !== undefined
-								? bodyRecievedDateDay
-								: receivedDateDayMonthYear?.day) || ''
-					},
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-						id: `items[${index}].receivedDate.month`,
-						name: '[month]',
-						label: 'Month',
-						value:
-							(bodyRecievedDateMonth !== undefined
-								? bodyRecievedDateMonth
-								: receivedDateDayMonthYear?.month) || ''
-					},
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-						id: `items[${index}].receivedDate.year`,
-						name: '[year]',
-						label: 'Year',
-						value:
-							(bodyRecievedDateYear !== undefined
-								? bodyRecievedDateYear
-								: receivedDateDayMonthYear?.year) || ''
-					}
-				]
-			}
-		},
+		documentDateInput({
+			value: {
+				day:
+					(bodyRecievedDateDay !== undefined
+						? bodyRecievedDateDay
+						: receivedDateDayMonthYear?.day) || '',
+				month:
+					(bodyRecievedDateMonth !== undefined
+						? bodyRecievedDateMonth
+						: receivedDateDayMonthYear?.month) || '',
+				year:
+					(bodyRecievedDateYear !== undefined
+						? bodyRecievedDateYear
+						: receivedDateDayMonthYear?.year) || ''
+			},
+			legendText: dateLabelTextOverride || 'Date received',
+			hint: 'For example, 27 3 2007',
+			appealDocumentIndex: index,
+			errors: errors
+		}),
 		{
 			wrapperHtml: {
 				opening: '',
@@ -478,9 +487,10 @@ function mapFileUploadInfoItemToDocumentDetailsPageComponents({
 /**
  * @param {DocumentVersionInfo} item
  * @param {RedactionStatus[]} redactionStatuses
+ * @param {import("@pins/express").ValidationErrors | undefined} [errors]
  * @returns {PageComponent[]}
  */
-function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionStatuses) {
+function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionStatuses, errors) {
 	const dateReceived = dateISOStringToDayMonthYearHourMinute(item.dateReceived);
 	const bodyRecievedDateDay = dateReceived?.day;
 	const bodyRecievedDateMonth = dateReceived?.month;
@@ -501,41 +511,17 @@ function mapDocumentDetailsItemToDocumentDetailsPageComponents(item, redactionSt
 				value: item.documentId
 			}
 		},
-		{
-			type: 'date-input',
-			parameters: {
-				id: `items[0]receivedDate`,
-				namePrefix: `items[0][receivedDate]`,
-				fieldset: {
-					legend: {
-						text: 'Date received'
-					}
-				},
-				items: [
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-						id: `items[0].receivedDate.day`,
-						name: '[day]',
-						label: 'Day',
-						value: bodyRecievedDateDay || ''
-					},
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-						id: `items[0].receivedDate.month`,
-						name: '[month]',
-						label: 'Month',
-						value: bodyRecievedDateMonth || ''
-					},
-					{
-						classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-						id: `items[0].receivedDate.year`,
-						name: '[year]',
-						label: 'Year',
-						value: bodyRecievedDateYear || ''
-					}
-				]
-			}
-		},
+		documentDateInput({
+			value: {
+				day: bodyRecievedDateDay || '',
+				month: bodyRecievedDateMonth || '',
+				year: bodyRecievedDateYear || ''
+			},
+			legendText: 'Date received',
+			hint: '',
+			appealDocumentIndex: 0,
+			errors: errors
+		}),
 		{
 			wrapperHtml: {
 				opening: '',
@@ -595,7 +581,9 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
 	const pageComponents = [
 		{
 			wrapperHtml: {
-				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${item.originalFilename}</h2>`,
+				opening: `<div class="govuk-form-group"><h2 class="govuk-heading-m">${stripFileExtension(
+					item.originalFilename
+				)}</h2>`,
 				closing: ''
 			},
 			type: 'input',
@@ -618,7 +606,7 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
 					text: 'File name',
 					classes: 'govuk-caption-m govuk-!-margin-bottom-3'
 				},
-				value: fileName
+				value: stripFileExtension(fileName)
 			}
 		}
 	];
@@ -640,6 +628,7 @@ function mapDocumentNameItemToDocumentNamePageComponents(item, fileName) {
  * @param {string} [params.titleTextOverride]
  * @param {string} [params.summaryListNameLabelOverride]
  * @param {string} [params.summaryListDateLabelOverride]
+ * @param {string} [params.folderPath]
  * @returns {PageContent}
  */
 export function addDocumentsCheckAndConfirmPage({
@@ -654,14 +643,26 @@ export function addDocumentsCheckAndConfirmPage({
 	documentFileName,
 	titleTextOverride,
 	summaryListNameLabelOverride,
-	summaryListDateLabelOverride
+	summaryListDateLabelOverride,
+	folderPath
 }) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: titleTextOverride || 'Check your answers',
 		backLinkUrl,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
-		heading: 'Check your answers',
+		heading:
+			folderPath === 'internal/mainPartyCorrespondence'
+				? 'Check details and add main party correspondence'
+				: 'Check your answers',
+		submitButtonProperties: {
+			text:
+				folderPath === 'internal/mainPartyCorrespondence'
+					? 'Add main party correspondence'
+					: 'Confirm',
+			type: 'submit',
+			preventDoubleClick: true
+		},
 		pageComponents: []
 	};
 
@@ -853,18 +854,22 @@ export function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEd
  * @param {Object} params
  * @param {string} params.backLinkUrl
  * @param {string} params.viewAndEditUrl
+ * @param {string} params.addButtonUrl
  * @param {FolderInfo} params.folder - API type needs to be updated (should be Folder, but there are worse problems with that type)
  * @param {import('@pins/express/types/express.js').Request} params.request
  * @param {string} [params.pageHeadingTextOverride]
+ * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
  * @returns {PageContent}
  */
 export function manageFolderPage({
 	backLinkUrl,
 	viewAndEditUrl,
+	addButtonUrl,
 	folder,
 	request,
 	pageHeadingTextOverride,
+	addButtonTextOverride,
 	dateColumnLabelTextOverride
 }) {
 	const notificationBanners = mapNotificationBannersFromSession(
@@ -900,6 +905,15 @@ export function manageFolderPage({
 			}
 		});
 	}
+
+	/** @type {PageComponent} */
+	const buttonComponent = {
+		type: 'button',
+		parameters: {
+			text: addButtonTextOverride || 'Add documents',
+			href: addButtonUrl?.replace('{{folderId}}', folder.folderId.toString())
+		}
+	};
 
 	/** @type {PageContent} */
 	const pageContent = {
@@ -974,7 +988,8 @@ export function manageFolderPage({
 						mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl)
 					])
 				}
-			}
+			},
+			buttonComponent
 		]
 	};
 
@@ -1106,7 +1121,7 @@ function mapDocumentNameHtmlProperty(document, documentVersion) {
 		htmlProperty.pageComponents.push({
 			type: 'html',
 			parameters: {
-				html: `<strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>`
+				html: `<strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>`
 			}
 		});
 	}
@@ -1390,7 +1405,6 @@ export async function manageDocumentPage({
 				{
 					type: 'table',
 					parameters: {
-						classes: 'govuk-!-font-size-16',
 						head: [
 							{
 								text: 'Version'
@@ -1843,9 +1857,10 @@ export function changeDocumentFileNamePage(backLinkUrl, folder, file) {
  * @param {FolderInfo} folder
  * @param {Document} file
  * @param {RedactionStatus[]} redactionStatuses
+ * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
-export function changeDocumentDetailsPage(backLinkUrl, folder, file, redactionStatuses) {
+export function changeDocumentDetailsPage(backLinkUrl, folder, file, redactionStatuses, errors) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Change document details',
@@ -1855,7 +1870,8 @@ export function changeDocumentDetailsPage(backLinkUrl, folder, file, redactionSt
 		heading: `${folderPathToFolderNameText(folder.path)} documents`,
 		pageComponents: mapDocumentDetailsItemToDocumentDetailsPageComponents(
 			file.latestDocumentVersion,
-			redactionStatuses
+			redactionStatuses,
+			errors
 		)
 	};
 

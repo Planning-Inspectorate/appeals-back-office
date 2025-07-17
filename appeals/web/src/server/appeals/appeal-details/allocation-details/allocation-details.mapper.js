@@ -1,5 +1,4 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-
 /**
  * @typedef {import("#lib/api/allocation-details.api.js").AllocationDetailsLevel} AllocationDetailsLevel
  * @typedef {import("#lib/api/allocation-details.api.js").AllocationDetailsSpecialism} AllocationDetailsSpecialism
@@ -10,12 +9,14 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  * @param {{ allocationDetailsLevels: AllocationDetailsLevel[] }} allocationDetailsData
  * @param { string | undefined } selectedAllocationLevel
  * @param {Appeal} appealDetails
+ * @param {string | undefined} errorMessage
  * @returns {PageContent}
  */
 export function allocationDetailsLevelPage(
 	allocationDetailsData,
 	selectedAllocationLevel,
-	appealDetails
+	appealDetails,
+	errorMessage = undefined
 ) {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
@@ -42,7 +43,8 @@ export function allocationDetailsLevelPage(
 					items: allocationDetailsData.allocationDetailsLevels.map((item) => ({
 						value: item.level,
 						text: item.level
-					}))
+					})),
+					errorMessage: errorMessage && { text: errorMessage }
 				}
 			}
 		]
@@ -56,13 +58,15 @@ export function allocationDetailsLevelPage(
  * @param { AllocationDetailsLevel | undefined } selectedAllocationLevel
  * @param { number[] } selectedAllocationSpecialisms
  * @param {Appeal} appealDetails
+ * @param {string | undefined} errorMessage
  * @returns {PageContent}
  */
 export function allocationDetailsSpecialismPage(
 	allocationDetailsData,
 	selectedAllocationLevel,
 	selectedAllocationSpecialisms,
-	appealDetails
+	appealDetails,
+	errorMessage
 ) {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
@@ -91,7 +95,8 @@ export function allocationDetailsSpecialismPage(
 						value: item.id,
 						checked:
 							selectedAllocationSpecialisms && selectedAllocationSpecialisms.includes(item.id)
-					}))
+					})),
+					errorMessage: errorMessage && { text: errorMessage }
 				}
 			}
 		]

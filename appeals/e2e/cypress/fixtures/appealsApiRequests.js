@@ -49,7 +49,7 @@ const appealsApiRequests = {
 		},
 		users: [
 			{
-				emailAddress: 'test@test.com',
+				emailAddress: 'appellant@test.com',
 				firstName: 'Testy',
 				lastName: 'McTest',
 				salutation: 'string',
@@ -58,7 +58,7 @@ const appealsApiRequests = {
 				organisation: 'K+C'
 			},
 			{
-				emailAddress: 'test@test.com',
+				emailAddress: 'agent@test.com',
 				firstName: 'Agent',
 				lastName: 'Bond',
 				salutation: 'string',
@@ -92,7 +92,7 @@ const appealsApiRequests = {
 					neighbouringSiteSafetyDetails: 'magna proident incididunt in non'
 				}
 			],
-			affectedListedBuildingNumbers: ['10001', '10002'],
+			affectedListedBuildingNumbers: ['1021466', '1021468'],
 			lpaCostsAppliedFor: false,
 			// S78 fields
 			extraConditions: null,
@@ -109,7 +109,7 @@ const appealsApiRequests = {
 			lpaProcedurePreferenceDetails: 'pref details lpa',
 			lpaProcedurePreferenceDuration: 3,
 			reasonForNeighbourVisits: null,
-			changedListedBuildingNumbers: ['14214', '62354'],
+			changedListedBuildingNumbers: ['1021469', '1021470'],
 			designatedSitesNames: ['cSAC', 'SAC', 'customVal1', 'customVal2'],
 			eiaSensitiveAreaDetails: null,
 			consultedBodiesDetails: null,
@@ -137,7 +137,7 @@ const appealsApiRequests = {
 		representationType: 'comment',
 		representationSubmittedDate: new Date(),
 		newUser: {
-			emailAddress: 'test@test.com',
+			emailAddress: 'interestedparty@test.com',
 			firstName: 'Testy',
 			lastName: 'McTest',
 			salutation: 'Mr',
@@ -167,6 +167,19 @@ const appealsApiRequests = {
 		representationType: 'final_comment',
 		representationSubmittedDate: '2025-01-22T13:48:35.847Z',
 		lpaCode: 'Q9999'
+	},
+	hearingDetails: {
+		hearingStartTime: '2026-11-10T00:00:00.000Z',
+		hearingEndTime: '2026-11-10T00:00:00.000Z',
+		addressId: 1,
+		address: {
+			addressLine1: '1 Grove Cottage',
+			addressLine2: 'Shotesham Road',
+			country: 'United Kingdom',
+			county: 'Devon',
+			postcode: 'NR35 2ND',
+			town: 'Woodton'
+		}
 	}
 };
 

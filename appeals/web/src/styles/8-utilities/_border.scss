@@ -1,3 +1,14 @@
+@use "../../../node_modules/govuk-frontend/dist/govuk/settings/_colours-applied"
+	as colors;
+@import "../../../node_modules/govuk-frontend/dist/govuk/settings/_spacing";
+@import "../../../node_modules/govuk-frontend/dist/govuk/helpers/_spacing";
+
 .pins-border-bottom {
 	border-bottom: 1px solid #b1b4b6;
+}
+
+.pins-notify-preview-border {
+	border: 5px solid colors.$govuk-border-colour;
+	padding: govuk-spacing(4);
+	margin-bottom: govuk-spacing(6);
 }

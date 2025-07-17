@@ -5,10 +5,6 @@ import {
 	viewInterestedPartyCommentPage
 } from './view-and-review.mapper.js';
 import { patchInterestedPartyCommentStatus } from './view-and-review.service.js';
-import {
-	postDeleteDocument,
-	renderDeleteDocument
-} from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { render } from '#appeals/appeal-details/representations/common/render.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
@@ -60,7 +56,7 @@ export const postReviewInterestedPartyComment = async (request, response, next) 
 		appealId,
 		commentId,
 		status,
-		body.siteVisitRequested === 'site-visit'
+		body['site-visit-request'] === 'site-visit'
 	);
 
 	addNotificationBannerToSession({
@@ -70,31 +66,4 @@ export const postReviewInterestedPartyComment = async (request, response, next) 
 	});
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/interested-party-comments`);
-};
-
-/** @type {import('@pins/express').RequestHandler<Response>} */
-export const getDeleteDocument = async (request, response) => {
-	const {
-		params: { commentId }
-	} = request;
-
-	await renderDeleteDocument({
-		request,
-		response,
-		backButtonUrl: `/appeals-service/appeal-details/${request.params.appealId}/interested-party-comments/${commentId}/manage-documents/{{folderId}}/{{documentId}}`
-	});
-};
-/** @type {import('@pins/express').RequestHandler<Response>} */
-export const postDeleteDocumentPage = async (request, response) => {
-	const {
-		params: { commentId }
-	} = request;
-
-	await postDeleteDocument({
-		request,
-		response,
-		returnUrl: `/appeals-service/appeal-details/${request.params.appealId}/interested-party-comments`,
-		cancelUrl: `/appeals-service/appeal-details/${request.params.appealId}/interested-party-comments/${commentId}/manage-documents/{{folderId}}/{{documentId}}`,
-		uploadNewDocumentUrl: `/appeals-service/appeal-details/${request.params.appealId}/interested-party-comments/add-documents/{{folderId}}`
-	});
 };

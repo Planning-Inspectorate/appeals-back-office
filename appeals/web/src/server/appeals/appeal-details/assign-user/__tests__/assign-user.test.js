@@ -8,7 +8,7 @@ import { activeDirectoryUsersData } from '#testing/app/fixtures/referencedata.js
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
-const baseUrl = '/appeals-service/appeal-details';
+const baseUrl = '/appeals-service/appeal-details/1';
 
 describe('assign-user', () => {
 	beforeEach(() => {
@@ -21,239 +21,33 @@ describe('assign-user', () => {
 	});
 	afterEach(teardown);
 
-	describe('GET /assign-user/case-officer', () => {
-		it('should render the assign case officer page', async () => {
-			const response = await request.get(`${baseUrl}/1/assign-user/case-officer`);
+	describe('GET /assign-case-officer/search-case-officer', () => {
+		it('should render the search for case officer page with expected content', async () => {
+			const response = await request.get(`${baseUrl}/assign-case-officer/search-case-officer`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Find a case officer</h1>');
-			expect(element.innerHTML).toContain('Search by name or email address</label>');
-			expect(element.innerHTML).toContain('name="searchTerm" type="text" value="">');
-			expect(element.innerHTML).toContain('Search</button>');
-		});
-	});
-
-	describe('POST /assign-user/case-officer', () => {
-		it('should re-render the assign case officer page with the expected error message if a search term is not provided', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/case-officer`).send({
-				searchTerm: ''
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Find a case officer</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Enter a name or email address</a>');
-		});
-
-		it('should re-render the assign case officer page with the expected error message if search term is shorter than 2 characters', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/case-officer`).send({
-				searchTerm: 'a'
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Find a case officer</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Search term must be between 2 and 80 characters in length</a>'
-			);
-		});
-
-		it('should re-render the assign case officer page with the expected error message if search term is longer than 80 characters', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/case-officer`).send({
-				searchTerm: 'a'.repeat(81)
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Find a case officer</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Search term must be between 2 and 80 characters in length</a>'
-			);
-		});
-
-		it('should re-render the assign case officer page with a list of search results if a valid search term is provided', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/case-officer`).send({
-				searchTerm: 'john'
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Find a case officer</h1>');
-			expect(element.innerHTML).toContain('Results</h2>');
-			expect(element.innerHTML).toContain('Matches for <strong>');
 			expect(element.innerHTML).toContain(
-				'Choose<span class="govuk-visually-hidden"> Smith, John</span></a>'
+				'Search for case officer by name or email address</label></h1>'
 			);
+			expect(element.innerHTML).toContain('accessible-autocomplete" id="users" name="user"');
+			expect(element.innerHTML).toContain('Continue</button>');
 		});
+	});
 
-		it('should re-render the assign case officer page with "No matches for" if no search results are found', async () => {
-			// @ts-ignore
-			usersService.getUsersByRole = jest.fn().mockResolvedValue([]);
-
-			const searchTerm = 'bob';
+	describe('POST /assign-case-officer/search-case-officer', () => {
+		it('should re-render the assign case officer page with the expected error message if a user is not provided', async () => {
 			const response = await request
-				.post(`${baseUrl}/1/assign-user/case-officer`)
-				.send({ searchTerm });
+				.post(`${baseUrl}/assign-case-officer/search-case-officer`)
+				.send({
+					user: ''
+				});
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Find a case officer</h1>');
-			expect(element.innerHTML).toContain('Results</h2>');
-			expect(element.innerHTML).toContain('No matches for <strong>');
-		});
-	});
-
-	describe('GET /assign-user/inspector', () => {
-		it('should render the assign inspector page', async () => {
-			const response = await request.get(`${baseUrl}/1/assign-user/inspector`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Find an inspector</h1>');
-			expect(element.innerHTML).toContain('Search by name or email address</label>');
-			expect(element.innerHTML).toContain('name="searchTerm" type="text" value="">');
-			expect(element.innerHTML).toContain('Search</button>');
-		});
-	});
-
-	describe('POST /assign-user/inspector', () => {
-		it('should re-render the assign inspector page with the expected error message if a search term is not provided', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/inspector`).send({
-				searchTerm: ''
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Find an inspector</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Enter a name or email address</a>');
-		});
-
-		it('should re-render the assign inspector page with the expected error message if search term is shorter than 2 characters', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/inspector`).send({
-				searchTerm: 'a'
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Find an inspector</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Search term must be between 2 and 80 characters in length</a>'
-			);
-		});
-
-		it('should re-render the assign inspector page with the expected error message if search term is longer than 80 characters', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/inspector`).send({
-				searchTerm: 'a'.repeat(81)
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Find an inspector</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Search term must be between 2 and 80 characters in length</a>'
-			);
-		});
-
-		it('should re-render the assign inspector page with a list of search results if a valid search term is provided', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/inspector`).send({
-				searchTerm: 'john'
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Find an inspector</h1>');
-			expect(element.innerHTML).toContain('Results</h2>');
-			expect(element.innerHTML).toContain('Matches for <strong>');
 			expect(element.innerHTML).toContain(
-				'Choose<span class="govuk-visually-hidden"> Smith, John</span></a>'
+				'Search for case officer by name or email address</label></h1>'
 			);
-		});
-
-		it('should re-render the assign inspector page with "No matches for" if no search results are found', async () => {
-			// @ts-ignore
-			usersService.getUsersByRole = jest.fn().mockResolvedValue([]);
-
-			const searchTerm = 'bob';
-			const response = await request
-				.post(`${baseUrl}/1/assign-user/inspector`)
-				.send({ searchTerm });
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Find an inspector</h1>');
-			expect(element.innerHTML).toContain('Results</h2>');
-			expect(element.innerHTML).toContain('No matches for <strong>');
-		});
-	});
-
-	describe('GET /assign-user/case-officer/1/confirm', () => {
-		it('should render the confirm assign case officer page', async () => {
-			const response = await request.get(`${baseUrl}/1/assign-user/case-officer/1/confirm`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Assign this case officer</h1>');
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('name="confirm" type="radio" value="yes">');
-			expect(unprettifiedElement.innerHTML).toContain('name="confirm" type="radio" value="no">');
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
-		});
-	});
-
-	describe('POST /assign-user/case-officer/1/confirm', () => {
-		it('should re-render the confirm assign case officer page with the expected error message if a confirmation option is not selected', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/case-officer/1/confirm`).send({
-				confirm: ''
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Assign this case officer</h1>');
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -262,368 +56,169 @@ describe('assign-user', () => {
 
 			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Select yes if you would like to assign this case officer</a>'
+				'Enter a case officer’s name or email address</a>'
 			);
 		});
 
-		it('should re-render the confirm assign case officer page with the expected error message if the selected confirmation value is anything other than "yes" or "no"', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/case-officer/1/confirm`).send({
-				confirm: '1'
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Assign this case officer</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Something went wrong</a>');
-		});
-
-		it('should redirect to the assign case officer page if the selected confirmation value is "no"', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/case-officer/1/confirm`).send({
-				confirm: 'no'
-			});
+		it('should save user to the session and redirect to check details page if user selected', async () => {
+			const response = await request
+				.post(`${baseUrl}/assign-case-officer/search-case-officer`)
+				.send({
+					user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
+				});
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/assign-user/case-officer'
+				'Found. Redirecting to /appeals-service/appeal-details/1/assign-case-officer/check-details'
+			);
+		});
+	});
+
+	describe('GET /assign-inspector/search-inspector', () => {
+		it('should render the search for inspector page with expected content', async () => {
+			const response = await request.get(`${baseUrl}/assign-inspector/search-inspector`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'Search for inspector by name or email address</label></h1>'
+			);
+			expect(element.innerHTML).toContain('accessible-autocomplete" id="users" name="user"');
+			expect(element.innerHTML).toContain('Continue</button>');
+		});
+	});
+
+	describe('POST /assign-inspector/search-inspector', () => {
+		it('should re-render the assign inspector page with the expected error message if a user is not provided', async () => {
+			const response = await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
+				user: ''
+			});
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				'Search for inspector by name or email address</label></h1>'
+			);
+
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain(
+				'Enter an inspector’s name or email address</a>'
 			);
 		});
 
-		it('should redirect to the case details page if the selected confirmation value is "yes"', async () => {
+		it('should save user to the session and redirect to check details page if user selected', async () => {
+			const response = await request
+				.post(`${baseUrl}/assign-case-officer/search-case-officer`)
+				.send({
+					user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(
+				'Found. Redirecting to /appeals-service/appeal-details/1/assign-case-officer/check-details'
+			);
+		});
+	});
+
+	describe('GET /assign-case-officer/check-details', () => {
+		it('should render the case officer check details page', async () => {
+			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
+				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
+			});
+			const response = await request.get(`${baseUrl}/assign-case-officer/check-details`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and assign case officer</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'class="govuk-summary-list__key"> Case officer</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Smith, John');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<br>John.Smith@planninginspectorate.gov.uk</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'assign-case-officer/search-case-officer">Change'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Assign case officer</button>');
+		});
+	});
+
+	describe('POST /assign-case-officer/check-details', () => {
+		it('should redirect to the case details page when user clicks on "Assign case officer"', async () => {
 			nock('http://test/').patch('/appeals/1').reply(200, { caseOfficer: 'updatedCaseOfficerId' });
-
-			const response = await request.post(`${baseUrl}/1/assign-user/case-officer/1/confirm`).send({
-				confirm: 'yes'
+			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
+				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
 			});
+			const response = await request.post(`${baseUrl}/assign-case-officer/check-details`).send();
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
+		// 	const response = await request
+		// 		.post(`${baseUrl}/appellant-case/site-address/change/1`)
+		// 		.send({
+		// 			addressLine1: '1 Grove Cottage',
+		// 			county: 'Devon',
+		// 			postCode: 'NR35 2ND',
+		// 			town: 'Woodton'
+		// 		});
+
+		// 	expect(response.statusCode).toBe(302);
+
+		// 	const appellantCaseResponse = await request.get(`${baseUrl}/appeal-details`);
+		// 	const notificationBannerElementHTML = parseHtml(appellantCaseResponse.text, {
+		// 		rootElement: '.govuk-notification-banner'
+		// 	}).innerHTML;
+
+		// 	expect(notificationBannerElementHTML).toContain('Success</h3>');
+		// 	expect(notificationBannerElementHTML).toContain('Case officer Assigned</p>');
+		// });
 	});
 
-	describe('GET /assign-user/inspector/1/confirm', () => {
-		it('should render the confirm assign inspector page', async () => {
-			const response = await request.get(`${baseUrl}/1/assign-user/inspector/1/confirm`);
+	describe('GET /assign-inspector/check-details', () => {
+		it('should render the inspector check details page', async () => {
+			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
+				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
+			});
+			const response = await request.get(`${baseUrl}/assign-inspector/check-details`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Assign this inspector</h1>');
+			expect(element.innerHTML).toContain('Check details and assign inspector</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('name="confirm" type="radio" value="yes">');
-			expect(unprettifiedElement.innerHTML).toContain('name="confirm" type="radio" value="no">');
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'class="govuk-summary-list__key"> Inspector</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Smith, John');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<br>John.Smith@planninginspectorate.gov.uk</dd>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('assign-inspector/search-inspector">Change');
+			expect(unprettifiedElement.innerHTML).toContain('Assign inspector</button>');
 		});
 	});
 
-	describe('POST /assign-user/inspector/1/confirm', () => {
-		it('should re-render the confirm assign inspector page with the expected error message if a confirmation option is not selected', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/inspector/1/confirm`).send({
-				confirm: ''
+	describe('POST /assign-inspector/check-details', () => {
+		it('should redirect to the case details page when user clicks on "Assign inspector"', async () => {
+			nock('http://test/').patch('/appeals/1').reply(200, { caseOfficer: 'updatedCaseOfficerId' });
+			await request.post(`${baseUrl}/assign-inspector/search-inspector`).send({
+				user: '{"id": "923ac03b-9031-4cf4-8b17-348c274321f9", "name": "Smith, John", "email": "John.Smith@planninginspectorate.gov.uk"}'
 			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Assign this inspector</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Select yes if you would like to assign this inspector</a>'
-			);
-		});
-
-		it('should re-render the confirm assign inspector page with the expected error message if the selected confirmation value is anything other than "yes" or "no"', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/inspector/1/confirm`).send({
-				confirm: '1'
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Assign this inspector</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Something went wrong</a>');
-		});
-
-		it('should redirect to the assign inspector page if the selected confirmation value is "no"', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-user/inspector/1/confirm`).send({
-				confirm: 'no'
-			});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/assign-user/inspector'
-			);
-		});
-
-		it('should send a patch request to the appeals/:appealId API endpoint and redirect to the case details page when the selected confirmation value is "yes"', async () => {
-			nock('http://test/').patch('/appeals/1').reply(200, { inspector: 'updatedInspectorId' });
-
-			const response = await request.post(`${baseUrl}/1/assign-user/inspector/1/confirm`).send({
-				confirm: 'yes'
-			});
+			const response = await request.post(`${baseUrl}/assign-inspector/check-details`).send();
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
-		});
-	});
-
-	describe('GET /unassign-user/case-officer/1/confirm', () => {
-		it('should render a 404 error page, as it should not be possible to unassign a case officer (only assign or change the case officer)', async () => {
-			const response = await request.get(`${baseUrl}/1/unassign-user/case-officer/1/confirm`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Page not found</h1>');
-		});
-	});
-
-	describe('GET /unassign-user/inspector/1/confirm', () => {
-		it('should render the confirm unassign inspector page', async () => {
-			const response = await request.get(`${baseUrl}/1/unassign-user/inspector/1/confirm`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Remove this inspector</h1>');
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('name="confirm" type="radio" value="yes">');
-			expect(unprettifiedElement.innerHTML).toContain('name="confirm" type="radio" value="no">');
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
-		});
-	});
-
-	describe('POST /unassign-user/inspector/1/confirm', () => {
-		it('should re-render the confirm unassign inspector page with the expected error message if a confirmation option is not selected', async () => {
-			const response = await request.post(`${baseUrl}/1/unassign-user/inspector/1/confirm`).send({
-				confirm: ''
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Remove this inspector</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Select yes if you would like to unassign this inspector</a>'
-			);
-		});
-
-		it('should re-render the confirm unassign inspector page with the expected error message if the selected confirmation value is anything other than "yes" or "no"', async () => {
-			const response = await request.post(`${baseUrl}/1/unassign-user/inspector/1/confirm`).send({
-				confirm: '1'
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Remove this inspector</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Something went wrong</a>');
-		});
-
-		it('should redirect to the assign inspector page if the selected confirmation value is "no"', async () => {
-			const response = await request.post(`${baseUrl}/1/unassign-user/inspector/1/confirm`).send({
-				confirm: 'no'
-			});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/assign-user/inspector'
-			);
-		});
-
-		it('should redirect to the assign new inspector page if the selected confirmation value is "yes"', async () => {
-			nock('http://test/').patch('/appeals/1').reply(200, { inspector: '' });
-
-			const response = await request.post(`${baseUrl}/1/unassign-user/inspector/1/confirm`).send({
-				confirm: 'yes'
-			});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/assign-new-user/inspector'
-			);
-		});
-	});
-
-	describe('GET /assign-new-user/case-officer', () => {
-		it('should render the assign new case officer page', async () => {
-			const response = await request.get(`${baseUrl}/1/assign-new-user/case-officer`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Assign a new case officer?</h1>');
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('name="confirm" type="radio" value="yes">');
-			expect(unprettifiedElement.innerHTML).toContain('name="confirm" type="radio" value="no">');
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
-		});
-	});
-
-	describe('POST /assign-new-user/case-officer', () => {
-		it('should re-render the assign new case officer page with the expected error message if a confirmation option is not selected', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-new-user/case-officer`).send({
-				confirm: ''
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Assign a new case officer?</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Select yes if you would like to assign a new case officer</a>'
-			);
-		});
-
-		it('should re-render the assign new case officer page with the expected error message if the selected confirmation value is anything other than "yes" or "no"', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-new-user/case-officer`).send({
-				confirm: '1'
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Assign a new case officer?</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Something went wrong</a>');
-		});
-
-		it('should redirect to the case details page if the selected confirmation value is "no"', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-new-user/case-officer`).send({
-				confirm: 'no'
-			});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
-		});
-
-		it('should redirect to the assign case officer page if the selected confirmation value is "yes"', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-new-user/case-officer`).send({
-				confirm: 'yes'
-			});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/assign-user/case-officer'
-			);
-		});
-	});
-
-	describe('GET /assign-new-user/inspector', () => {
-		it('should render the assign new inspector page', async () => {
-			const response = await request.get(`${baseUrl}/1/assign-new-user/inspector`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Assign a new inspector?</h1>');
-
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain('name="confirm" type="radio" value="yes">');
-			expect(unprettifiedElement.innerHTML).toContain('name="confirm" type="radio" value="no">');
-			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
-		});
-	});
-
-	describe('POST /assign-new-user/inspector', () => {
-		it('should re-render the assign new inspector page with the expected error message if a confirmation option is not selected', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-new-user/inspector`).send({
-				confirm: ''
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Assign a new inspector?</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Select yes if you would like to assign a new inspector</a>'
-			);
-		});
-
-		it('should re-render the assign new inspector page with the expected error message if the selected confirmation value is anything other than "yes" or "no"', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-new-user/inspector`).send({
-				confirm: '1'
-			});
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Assign a new inspector?</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Something went wrong</a>');
-		});
-
-		it('should redirect to the case details page if the selected confirmation value is "no"', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-new-user/inspector`).send({
-				confirm: 'no'
-			});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
-		});
-
-		it('should redirect to the assign inspector page if the selected confirmation value is "yes"', async () => {
-			const response = await request.post(`${baseUrl}/1/assign-new-user/inspector`).send({
-				confirm: 'yes'
-			});
-
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/assign-user/inspector'
-			);
 		});
 	});
 });

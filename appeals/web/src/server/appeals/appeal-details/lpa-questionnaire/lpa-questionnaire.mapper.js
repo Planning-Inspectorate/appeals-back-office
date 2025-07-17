@@ -6,7 +6,8 @@ import {
 	yesNoInput,
 	createNotificationBanner,
 	mapNotificationBannersFromSession,
-	sortNotificationBanners
+	sortNotificationBanners,
+	dateInput
 } from '#lib/mappers/index.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '#lib/mappers/data/lpa-questionnaire/mapper.js';
@@ -45,9 +46,18 @@ import { permissionNames } from '#environment/permissions.js';
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string|undefined} backUrl
  * @returns {Promise<PageContent>}
  */
-export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRoute, session) {
+export async function lpaQuestionnairePage(
+	lpaqDetails,
+	appealDetails,
+	currentRoute,
+	session,
+	request,
+	backUrl
+) {
 	const mappedLpaqDetails = initialiseAndMapLPAQData(
 		lpaqDetails,
 		appealDetails,
@@ -58,6 +68,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		appealDetails,
 		currentRoute,
 		session,
+		request,
 		true
 	);
 
@@ -67,6 +78,8 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 		mappedAppealDetails,
 		mappedLpaqDetails
 	);
+
+	const lpaText = 'LPA';
 
 	/**
 	 * @type {PageComponent}
@@ -88,7 +101,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 							{
 								...mappedAppealDetails.appeal.localPlanningAuthority.display.summaryListItem,
 								key: {
-									text: 'LPA'
+									text: lpaText
 								}
 							}
 					  ]
@@ -183,7 +196,7 @@ export async function lpaQuestionnairePage(lpaqDetails, appealDetails, currentRo
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `LPA questionnaire - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'LPA questionnaire',
 		headingClasses: 'govuk-heading-xl govuk-!-margin-bottom-3',
@@ -267,6 +280,7 @@ export function environmentServiceTeamReviewCasePage(appealData, lpaQuestionnair
 /**
  * @param {Appeal} appealData
  * @param {string|number} lpaQuestionnaireId
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {number} [dueDateDay]
  * @param {number} [dueDateMonth]
  * @param {number} [dueDateYear]
@@ -275,6 +289,7 @@ export function environmentServiceTeamReviewCasePage(appealData, lpaQuestionnair
  */
 export function updateDueDatePage(
 	appealData,
+	errors,
 	lpaQuestionnaireId,
 	dueDateDay,
 	dueDateMonth,
@@ -307,35 +322,19 @@ export function updateDueDatePage(
 			type: 'submit'
 		},
 		pageComponents: [
-			{
-				type: 'date-input',
-				parameters: {
-					id: 'due-date',
-					namePrefix: 'due-date',
-					hint: {
-						text: 'For example, 27 3 2007'
-					},
-					...(existingDueDateDayMonthYear && {
-						items: [
-							{
-								name: 'day',
-								classes: 'govuk-input--width-2',
-								value: existingDueDateDayMonthYear.day
-							},
-							{
-								name: 'month',
-								classes: 'govuk-input--width-2',
-								value: existingDueDateDayMonthYear.month
-							},
-							{
-								name: 'year',
-								classes: 'govuk-input--width-4',
-								value: existingDueDateDayMonthYear.year
-							}
-						]
-					})
-				}
-			}
+			dateInput({
+				name: 'due-date',
+				id: 'due-date',
+				namePrefix: 'due-date',
+				value: {
+					day: existingDueDateDayMonthYear?.day,
+					month: existingDueDateDayMonthYear?.month,
+					year: existingDueDateDayMonthYear?.year
+				},
+				legendText: '',
+				hint: 'For example, 27 3 2023',
+				errors: errors
+			})
 		]
 	};
 
@@ -408,11 +407,20 @@ export function checkAndConfirmPage(
 						text: 'Incomplete reasons'
 					},
 					value: {
-						html: mapReasonsToReasonsListHtml(
-							incompleteReasonOptions,
-							incompleteReasons,
-							incompleteReasonsText
-						)
+						html: '',
+						pageComponents: [
+							{
+								type: 'show-more',
+								parameters: {
+									html: mapReasonsToReasonsListHtml(
+										incompleteReasonOptions,
+										incompleteReasons,
+										incompleteReasonsText
+									),
+									labelText: 'Read more'
+								}
+							}
+						]
 					},
 					actions: {
 						items: [
@@ -456,13 +464,18 @@ export function checkAndConfirmPage(
 		}
 	};
 
+	/** @type {PageComponent[]} */
+	const pageComponents = [summaryListComponent, insetTextComponent];
+
+	preRenderPageComponents(pageComponents);
+
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check answers',
 		backLinkUrl: `/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/incomplete/date`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check your answers before confirming your review',
-		pageComponents: [summaryListComponent, insetTextComponent],
+		pageComponents,
 		submitButtonText: 'Confirm'
 	};
 
@@ -720,11 +733,23 @@ function generateCaseTypeSpecificComponents(appealDetails, mappedAppealDetails, 
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.HOUSEHOLDER:
 			return generateHASLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
+		case APPEAL_TYPE.COMMERCIAL:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.COMMERCIAL_APPEAL)) {
+				return generateHASLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
+			} else {
+				throw new Error('Feature flag inactive for CAS');
+			}
 		case APPEAL_TYPE.S78:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
 				return generateS78LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
 			} else {
 				throw new Error('Feature flag inactive for S78');
+			}
+		case APPEAL_TYPE.PLANNED_LISTED_BUILDING:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20)) {
+				return generateS20LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
+			} else {
+				throw new Error('Feature flag inactive for S20');
 			}
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');
@@ -895,42 +920,9 @@ const generateHASLpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
  * @param {{appeal: MappedInstructions}} mappedAppealDetails
  * @returns {PageComponent[]}
  */
-const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetails) => {
+const generateSharedS78S20LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetails) => {
 	/** @type {PageComponent[]} */
 	const pageComponents = [];
-
-	pageComponents.push({
-		/** @type {'summary-list'} */
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			attributes: {
-				id: 'constraints-summary'
-			},
-			card: {
-				title: {
-					text: '1. Constraints, designations and other issues'
-				}
-			},
-			rows: [
-				mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem,
-				mappedLPAQData.lpaq?.changedListedBuildingDetails?.display.summaryListItem,
-				mappedLPAQData.lpaq?.affectsListedBuildingDetails?.display.summaryListItem,
-				mappedLPAQData.lpaq?.affectsScheduledMonument?.display.summaryListItem,
-				mappedLPAQData.lpaq?.conservationAreaMap?.display.summaryListItem,
-				mappedLPAQData.lpaq?.hasProtectedSpecies?.display.summaryListItem,
-				mappedLPAQData.lpaq?.siteWithinGreenBelt?.display.summaryListItem,
-				mappedLPAQData.lpaq?.isAonbNationalLandscape?.display.summaryListItem,
-				mappedLPAQData.lpaq?.inNearOrLikelyToAffectDesignatedSites?.display.summaryListItem,
-				mappedLPAQData.lpaq?.treePreservationPlan?.display.summaryListItem,
-				mappedLPAQData.lpaq?.isGypsyOrTravellerSite?.display.summaryListItem,
-				mappedLPAQData.lpaq?.definitiveMapStatement?.display.summaryListItem
-			].filter(isDefined)
-		}
-	});
 
 	pageComponents.push({
 		/** @type {'summary-list'} */
@@ -952,6 +944,7 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 				mappedLPAQData.lpaq?.eiaEnvironmentalStatement?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScreeningOpinion?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaScreeningDirection?.display.summaryListItem,
+				mappedLPAQData.lpaq?.eiaScopingOpinion?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaDevelopmentDescription?.display.summaryListItem,
 				mappedLPAQData.lpaq?.eiaSensitiveAreaDetails?.display.summaryListItem
 			].filter(isDefined)
@@ -1075,6 +1068,108 @@ const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetai
 			].filter(isDefined)
 		}
 	});
+
+	return pageComponents;
+};
+/**
+ *
+ * @param {{lpaq: MappedInstructions}} mappedLPAQData
+ * @param {{appeal: MappedInstructions}} mappedAppealDetails
+ * @returns {PageComponent[]}
+ */
+const generateS78LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetails) => {
+	/** @type {PageComponent[]} */
+	const pageComponents = [];
+
+	pageComponents.push({
+		/** @type {'summary-list'} */
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			attributes: {
+				id: 'constraints-summary'
+			},
+			card: {
+				title: {
+					text: '1. Constraints, designations and other issues'
+				}
+			},
+			rows: [
+				mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem,
+				mappedLPAQData.lpaq?.changedListedBuildingDetails?.display.summaryListItem,
+				mappedLPAQData.lpaq?.affectsListedBuildingDetails?.display.summaryListItem,
+				mappedLPAQData.lpaq?.affectsScheduledMonument?.display.summaryListItem,
+				mappedLPAQData.lpaq?.conservationAreaMap?.display.summaryListItem,
+				mappedLPAQData.lpaq?.hasProtectedSpecies?.display.summaryListItem,
+				mappedLPAQData.lpaq?.siteWithinGreenBelt?.display.summaryListItem,
+				mappedLPAQData.lpaq?.isAonbNationalLandscape?.display.summaryListItem,
+				mappedLPAQData.lpaq?.inNearOrLikelyToAffectDesignatedSites?.display.summaryListItem,
+				mappedLPAQData.lpaq?.treePreservationPlan?.display.summaryListItem,
+				mappedLPAQData.lpaq?.isGypsyOrTravellerSite?.display.summaryListItem,
+				mappedLPAQData.lpaq?.definitiveMapStatement?.display.summaryListItem
+			].filter(isDefined)
+		}
+	});
+
+	pageComponents.push(
+		...generateSharedS78S20LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails)
+	);
+	return pageComponents;
+};
+
+/**
+ *
+ * @param {{lpaq: MappedInstructions}} mappedLPAQData
+ * @param {{appeal: MappedInstructions}} mappedAppealDetails
+ * @returns {PageComponent[]}
+ */
+const generateS20LpaQuestionnaireComponents = (mappedLPAQData, mappedAppealDetails) => {
+	/** @type {PageComponent[]} */
+	const pageComponents = [];
+
+	const rows = [
+		mappedLPAQData.lpaq?.isCorrectAppealType?.display.summaryListItem,
+		mappedLPAQData.lpaq?.changedListedBuildingDetails?.display.summaryListItem,
+		mappedLPAQData.lpaq?.affectsListedBuildingDetails?.display.summaryListItem,
+		mappedLPAQData.lpaq?.grantLoanToPreserve?.display.summaryListItem,
+		mappedLPAQData.lpaq?.affectsScheduledMonument?.display.summaryListItem,
+		mappedLPAQData.lpaq?.conservationAreaMap?.display.summaryListItem,
+		mappedLPAQData.lpaq?.hasProtectedSpecies?.display.summaryListItem,
+		mappedLPAQData.lpaq?.siteWithinGreenBelt?.display.summaryListItem,
+		mappedLPAQData.lpaq?.isAonbNationalLandscape?.display.summaryListItem,
+		mappedLPAQData.lpaq?.inNearOrLikelyToAffectDesignatedSites?.display.summaryListItem,
+		mappedLPAQData.lpaq?.treePreservationPlan?.display.summaryListItem,
+		mappedLPAQData.lpaq?.isGypsyOrTravellerSite?.display.summaryListItem,
+		mappedLPAQData.lpaq?.definitiveMapStatement?.display.summaryListItem,
+		mappedLPAQData.lpaq?.historicEnglandConsultation?.display.summaryListItem
+	];
+
+	pageComponents.push({
+		/** @type {'summary-list'} */
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			attributes: {
+				id: 'constraints-summary'
+			},
+			card: {
+				title: {
+					text: '1. Constraints, designations and other issues'
+				}
+			},
+			rows: [...rows].filter(isDefined)
+		}
+	});
+
+	pageComponents.push(
+		...generateSharedS78S20LpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails)
+	);
 
 	return pageComponents;
 };

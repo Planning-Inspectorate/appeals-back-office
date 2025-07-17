@@ -2,7 +2,15 @@
 export const errorAddressLine1 = (/** @type {Error}*/ errors) => {
 	return errors?.addressLine1
 		? {
-				text: 'Enter address line 1, typically the building and street'
+				text: errors.addressLine1.msg
+		  }
+		: undefined;
+};
+
+export const errorAddressLine2 = (/** @type {Error}*/ errors) => {
+	return errors?.addressLine2
+		? {
+				text: errors.addressLine2.msg
 		  }
 		: undefined;
 };
@@ -10,7 +18,15 @@ export const errorAddressLine1 = (/** @type {Error}*/ errors) => {
 export const errorTown = (/** @type {Error}*/ errors) => {
 	return errors?.town
 		? {
-				text: 'Enter town or city'
+				text: errors.town.msg
+		  }
+		: undefined;
+};
+
+export const errorCounty = (/** @type {Error}*/ errors) => {
+	return errors?.county
+		? {
+				text: errors.county.msg
 		  }
 		: undefined;
 };
@@ -18,7 +34,7 @@ export const errorTown = (/** @type {Error}*/ errors) => {
 export const errorPostcode = (/** @type {Error}*/ errors) => {
 	return errors?.postCode
 		? {
-				text: 'Enter a full UK postcode'
+				text: errors.postCode.msg
 		  }
 		: undefined;
 };
@@ -94,3 +110,6 @@ export const errorAddressProvidedRadio = (/** @type {Error} */ errors) => {
 		  }
 		: undefined;
 };
+
+export const getErrorByFieldname = (/** @type {Error} */ errors, /** @type {string} */ fieldName) =>
+	errors?.[fieldName]?.msg ? { text: errors[fieldName].msg } : undefined;

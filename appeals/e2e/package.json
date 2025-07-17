@@ -23,7 +23,7 @@
 		"@faker-js/faker": "^7.6.0",
 		"cypress": "^13.6.4",
 		"dotenv": "^16.0.3",
-		"eslint-plugin-cypress": "^2.12.1",
+		"eslint-plugin-cypress": "^4.3.0",
 		"fs-extra": "^11.2.0",
 		"puppeteer": "^24.3.0"
 	}

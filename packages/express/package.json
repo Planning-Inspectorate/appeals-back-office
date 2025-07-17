@@ -16,9 +16,9 @@
   },
   "dependencies": {
     "express": "^4.21.0",
-    "express-session": "1.17.2",
+    "express-session": "1.18.1",
     "express-validator": "^6.14.0",
-    "kleur": "4.1.4",
+    "kleur": "4.1.5",
     "lodash-es": "^4.17.21"
   }
 }

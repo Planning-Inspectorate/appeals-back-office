@@ -32,9 +32,24 @@ import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { linkedAppealStatus } from '#lib/appeals-formatter.js';
 import httpMocks from 'node-mocks-http';
-import { getOriginPathname, isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
+import {
+	getOriginPathname,
+	isInternalUrl,
+	safeRedirect,
+	addBackLinkQueryToUrl,
+	getBackLinkUrlFromQuery,
+	stripQueryString,
+	preserveQueryString
+} from '#lib/url-utilities.js';
 import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
+import {
+	mapStatusText,
+	mapAppealProcedureTypeToEventName,
+	mapStatusFilterLabel
+} from '#lib/appeal-status.js';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 describe('Libraries', () => {
 	describe('addressFormatter', () => {
@@ -915,7 +930,7 @@ describe('Libraries', () => {
 				);
 
 				expect(result).toEqual(
-					'<ul class="govuk-list govuk-!-margin-top-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
+					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
 				);
 			});
 
@@ -923,7 +938,7 @@ describe('Libraries', () => {
 				const result = mapReasonsToReasonsListHtml(appellantCaseInvalidReasons, ['22', '23'], {});
 
 				expect(result).toEqual(
-					'<ul class="govuk-list govuk-!-margin-top-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
+					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
 				);
 			});
 
@@ -933,7 +948,7 @@ describe('Libraries', () => {
 				});
 
 				expect(result).toEqual(
-					'<ul class="govuk-list govuk-!-margin-top-0 govuk-list--bullet"><li>Documents have not been submitted on time: test reason text 1</li><li>Documents have not been submitted on time: test reason text 2</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
+					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time: test reason text 1</li><li>Documents have not been submitted on time: test reason text 2</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
 				);
 			});
 		});
@@ -1243,88 +1258,6 @@ describe('linkedAppealStatus', () => {
 	});
 });
 
-describe('isInternalUrl', () => {
-	test('should return true for URL starting with a single slash', () => {
-		const url = '/appeals-service/all-cases';
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: 'https://localhost/',
-			secure: false,
-			headers: {
-				host: 'localhost'
-			}
-		});
-		expect(isInternalUrl(url, request)).toBe(true);
-	});
-
-	test('should return true for fully qualified internal HTTP URL', () => {
-		const url = 'http://localhost/appeals-service/all-cases';
-
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: 'http://localhost/',
-			secure: false,
-			headers: {
-				host: 'localhost'
-			}
-		});
-
-		expect(isInternalUrl(url, request)).toBe(true);
-	});
-
-	test('should return true for fully qualified internal HTTPS URL', () => {
-		const url = 'https://localhost/appeals-service/all-cases';
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			}
-		});
-		expect(isInternalUrl(url, request)).toBe(true);
-	});
-
-	test('should return false for external URL', () => {
-		const url = 'https://external-phishing-url.com';
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			}
-		});
-		expect(isInternalUrl(url, request)).toBe(false);
-	});
-
-	test('should return false for an invalid URL', () => {
-		const url = '://bad.url';
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: 'http://localhost',
-			secure: false,
-			headers: {
-				host: 'localhost'
-			}
-		});
-		expect(isInternalUrl(url, request)).toBe(false);
-	});
-
-	test('should handle URLs without protocols', () => {
-		const url = '//localhost/appeals-service/all-cases';
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: 'http://localhost/appeals-service/all-cases',
-			secure: false,
-			headers: {
-				host: 'localhost'
-			}
-		});
-		expect(isInternalUrl(url, request)).toBe(true);
-	});
-});
-
 describe('stringIsValidPostcodeFormat', () => {
 	it('returns true when passed a string in valid UK postcode format (uppercase)', () => {
 		expect(stringIsValidPostcodeFormat('A1 1AA')).toBe(true);
@@ -1381,198 +1314,612 @@ describe('stringIsValidPostcodeFormat', () => {
 	});
 });
 
-describe('getOriginPathname', () => {
-	it('should return the pathname for a standard URL', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			originalUrl: '/appeals-service/all-cases'
+describe('url-utilities', () => {
+	describe('isInternalUrl', () => {
+		test('should return true for URL starting with a single slash', () => {
+			const url = '/appeals-service/all-cases';
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: 'https://localhost/',
+				secure: false,
+				headers: {
+					host: 'localhost'
+				}
+			});
+			expect(isInternalUrl(url, request)).toBe(true);
 		});
 
-		const result = getOriginPathname(request);
+		test('should return true for fully qualified internal HTTP URL', () => {
+			const url = 'http://localhost/appeals-service/all-cases';
 
-		expect(result).toBe('/appeals-service/all-cases');
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: 'http://localhost/',
+				secure: false,
+				headers: {
+					host: 'localhost'
+				}
+			});
+
+			expect(isInternalUrl(url, request)).toBe(true);
+		});
+
+		test('should return true for fully qualified internal HTTPS URL', () => {
+			const url = 'https://localhost/appeals-service/all-cases';
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				}
+			});
+			expect(isInternalUrl(url, request)).toBe(true);
+		});
+
+		test('should return false for external URL', () => {
+			const url = 'https://external-phishing-url.com';
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				}
+			});
+			expect(isInternalUrl(url, request)).toBe(false);
+		});
+
+		test('should return false for an invalid URL', () => {
+			const url = '://bad.url';
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: 'http://localhost',
+				secure: false,
+				headers: {
+					host: 'localhost'
+				}
+			});
+			expect(isInternalUrl(url, request)).toBe(false);
+		});
+
+		test('should handle URLs without protocols', () => {
+			const url = '//localhost/appeals-service/all-cases';
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: 'http://localhost/appeals-service/all-cases',
+				secure: false,
+				headers: {
+					host: 'localhost'
+				}
+			});
+			expect(isInternalUrl(url, request)).toBe(true);
+		});
 	});
 
-	it('should return the pathname for a URL with query parameters', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases?search=test',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			originalUrl: '/appeals-service/all-cases?search=test'
+	describe('getOriginPathname', () => {
+		it('should return the pathname for a standard URL', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				originalUrl: '/appeals-service/all-cases'
+			});
+
+			const result = getOriginPathname(request);
+
+			expect(result).toBe('/appeals-service/all-cases');
 		});
 
-		const result = getOriginPathname(request);
+		it('should return the pathname for a URL with query parameters', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases?search=test',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				originalUrl: '/appeals-service/all-cases?search=test'
+			});
 
-		expect(result).toBe('/appeals-service/all-cases');
+			const result = getOriginPathname(request);
+
+			expect(result).toBe('/appeals-service/all-cases');
+		});
+
+		it('should return the pathname for a URL with hash parameters', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases#section1',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				originalUrl: '/appeals-service/all-cases#section1'
+			});
+
+			const result = getOriginPathname(request);
+
+			expect(result).toBe('/appeals-service/all-cases');
+		});
+
+		it('should return the pathname for an HTTP URL', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: false,
+				headers: {
+					host: 'localhost'
+				},
+				originalUrl: '/appeals-service/all-cases'
+			});
+
+			const result = getOriginPathname(request);
+
+			expect(result).toBe('/appeals-service/all-cases');
+		});
+
+		it('should return the pathname for a URL with port', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost:3000'
+				},
+				originalUrl: '/appeals-service/all-cases'
+			});
+
+			const result = getOriginPathname(request);
+
+			expect(result).toBe('/appeals-service/all-cases');
+		});
+
+		it('should handle empty originalUrl gracefully', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				originalUrl: ''
+			});
+
+			const result = getOriginPathname(request);
+
+			expect(result).toBe('/');
+		});
 	});
 
-	it('should return the pathname for a URL with hash parameters', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases#section1',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			originalUrl: '/appeals-service/all-cases#section1'
+	describe('safeRedirect', () => {
+		it('should redirect to the provided internal URL', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				protocol: 'https',
+				originalUrl: '/appeals-service/all-cases'
+			});
+			const response = httpMocks.createResponse();
+			const url = '/appeals-service/new-case';
+
+			safeRedirect(request, response, url);
+
+			expect(response._getRedirectUrl()).toBe('/appeals-service/new-case');
 		});
 
-		const result = getOriginPathname(request);
+		it('should redirect to the homepage if the URL is external', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				protocol: 'https',
+				originalUrl: '/appeals-service/all-cases'
+			});
+			const response = httpMocks.createResponse();
+			const url = 'https://external-phishing-url.com';
 
-		expect(result).toBe('/appeals-service/all-cases');
+			safeRedirect(request, response, url);
+
+			expect(response._getRedirectUrl()).toBe('/');
+		});
+
+		it('should redirect to the homepage if the URL is a protocol-relative URL', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				protocol: 'https',
+				originalUrl: '/appeals-service/all-cases'
+			});
+			const response = httpMocks.createResponse();
+			const url = '//localhost/appeals-service/new-case';
+
+			safeRedirect(request, response, url);
+
+			expect(response._getRedirectUrl()).toBe('//localhost/appeals-service/new-case');
+		});
+
+		it('should handle invalid URLs by redirecting to the homepage', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				protocol: 'https',
+				originalUrl: '/appeals-service/all-cases'
+			});
+			const response = httpMocks.createResponse();
+			const url = '://bad.url';
+
+			safeRedirect(request, response, url);
+
+			expect(response._getRedirectUrl()).toBe('/');
+		});
+
+		it('should redirect to the homepage if the provided URL is null, undefined, or an empty string', () => {
+			const request = httpMocks.createRequest({
+				method: 'GET',
+				url: '/appeals-service/all-cases',
+				secure: true,
+				headers: {
+					host: 'localhost'
+				},
+				protocol: 'https',
+				originalUrl: '/appeals-service/all-cases'
+			});
+			const response = httpMocks.createResponse();
+			const url = '';
+
+			safeRedirect(request, response, url);
+
+			expect(response._getRedirectUrl()).toBe('/');
+		});
 	});
 
-	it('should return the pathname for an HTTP URL', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: false,
-			headers: {
-				host: 'localhost'
-			},
-			originalUrl: '/appeals-service/all-cases'
+	describe('addBackLinkQueryToUrl', () => {
+		it('should append a backUrl query with the URI-encoded originalUrl value from the supplied request to the supplied url', () => {
+			expect(
+				addBackLinkQueryToUrl(
+					// @ts-ignore
+					{ originalUrl: '/test/original/url?withOwnQuery=true' },
+					'/supplied/url'
+				)
+			).toBe('/supplied/url?backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue');
 		});
 
-		const result = getOriginPathname(request);
+		it('should move the URL hash to the end of the URL (after the query string) if a hash is present in the supplied URL', () => {
+			expect(
+				addBackLinkQueryToUrl(
+					// @ts-ignore
+					{ originalUrl: '/test/original/url?withOwnQuery=true' },
+					'/supplied/url#with-hash'
+				)
+			).toBe('/supplied/url?backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue#with-hash');
+		});
 
-		expect(result).toBe('/appeals-service/all-cases');
+		it('should append a backUrl query and keep any existing query string intact', () => {
+			expect(
+				addBackLinkQueryToUrl(
+					// @ts-ignore
+					{ originalUrl: '/test/original/url?withOwnQuery=true' },
+					'/supplied/url?originalQuery1=true&originalQuery2=false'
+				)
+			).toBe(
+				'/supplied/url?originalQuery1=true&originalQuery2=false&backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue'
+			);
+		});
+
+		it('should append a backUrl query and keep any existing query string intact and add the hash', () => {
+			expect(
+				addBackLinkQueryToUrl(
+					// @ts-ignore
+					{ originalUrl: '/test/original/url?withOwnQuery=true' },
+					'/supplied/url?originalQuery1=true&originalQuery2=false#with-hash'
+				)
+			).toBe(
+				'/supplied/url?originalQuery1=true&originalQuery2=false&backUrl=%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue#with-hash'
+			);
+		});
 	});
 
-	it('should return the pathname for a URL with port', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost:3000'
-			},
-			originalUrl: '/appeals-service/all-cases'
+	describe('preserveQueryString', () => {
+		it('should return the supplied URL with the query string intact', () => {
+			expect(
+				preserveQueryString(
+					// @ts-ignore
+					{ originalUrl: '/original/url/with-query?testQuery=someValue' },
+					'/test/url/with-query'
+				)
+			).toBe('/test/url/with-query?testQuery=someValue');
 		});
 
-		const result = getOriginPathname(request);
+		it('should return the unaltered URL with no query string', () => {
+			expect(
+				preserveQueryString(
+					// @ts-ignore
+					{ originalUrl: '/original/url/with-query' },
+					'/test/url/with-query'
+				)
+			).toBe('/test/url/with-query');
+		});
 
-		expect(result).toBe('/appeals-service/all-cases');
+		it('should return the supplied URL with the query string intact and no hash', () => {
+			expect(
+				preserveQueryString(
+					// @ts-ignore
+					{ originalUrl: '/original/url/with-query?testQuery=someValue' },
+					'/new/url/with-query#with-hash'
+				)
+			).toBe('/new/url/with-query?testQuery=someValue');
+		});
+
+		it('should return the supplied URL with the query string except for the excluded query params', () => {
+			expect(
+				preserveQueryString(
+					// @ts-ignore
+					{ originalUrl: '/original/url/with-query?testQuery=someValue&excludeQuery=true' },
+					'/test/url/with-query',
+					{ exclude: ['excludeQuery'] }
+				)
+			).toBe('/test/url/with-query?testQuery=someValue');
+		});
 	});
 
-	it('should handle empty originalUrl gracefully', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			originalUrl: ''
+	describe('getBackLinkUrlFromQuery', () => {
+		it('should return undefined if the supplied request.query does not contain a backUrl property', () => {
+			// @ts-ignore
+			expect(getBackLinkUrlFromQuery({ query: {} })).toBe(undefined);
 		});
+		it('should return the URI-decoded value from the supplied request.query.backUrl property, if request.query contains a backUrl property', () => {
+			const query = { backUrl: '%2Ftest%2Foriginal%2Furl%3FwithOwnQuery%3Dtrue' };
+			expect(
+				// @ts-ignore
+				getBackLinkUrlFromQuery({ query })
+			).toBe('/test/original/url?withOwnQuery=true');
+		});
+	});
 
-		const result = getOriginPathname(request);
-
-		expect(result).toBe('/');
+	describe('stripQueryString', () => {
+		it('should return the supplied URL with the query string removed, if there is a query string', () => {
+			expect(stripQueryString('/test/url/with-query?testQuery=someValue')).toBe(
+				'/test/url/with-query'
+			);
+		});
+		it('should return the supplied URL with the whole query string removed, if there is a query string whose value contains another query string', () => {
+			expect(
+				stripQueryString('/test/url/with-query?testQuery=someValue/with/?additionalQuery=true')
+			).toBe('/test/url/with-query');
+		});
+		it('should return the supplied URL intact, if there is no query string', () => {
+			expect(stripQueryString('/test/url/without-query')).toBe('/test/url/without-query');
+		});
 	});
 });
 
-describe('safeRedirect', () => {
-	it('should redirect to the provided internal URL', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			protocol: 'https',
-			originalUrl: '/appeals-service/all-cases'
+describe('appeal-status', () => {
+	describe('mapStatusText', () => {
+		const appealTypesNotIncludingHouseholderAndS78 = [
+			APPEAL_TYPE.HOUSEHOLDER,
+			APPEAL_TYPE.S78,
+			APPEAL_TYPE.ENFORCEMENT_NOTICE,
+			APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+			APPEAL_TYPE.DISCONTINUANCE_NOTICE,
+			APPEAL_TYPE.ADVERTISEMENT,
+			APPEAL_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY,
+			APPEAL_TYPE.PLANNING_OBLIGATION,
+			APPEAL_TYPE.AFFORDABLE_HOUSING_OBLIGATION,
+			APPEAL_TYPE.CALL_IN_APPLICATION,
+			APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+			APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+			APPEAL_TYPE.COMMERCIAL
+		];
+
+		for (const appealType of appealTypesNotIncludingHouseholderAndS78) {
+			it(`should return the appealStatus unchanged if the appeal type is anything other than HAS or S78 (${appealType})`, () => {
+				expect(
+					mapStatusText(
+						APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+						appealType,
+						APPEAL_CASE_PROCEDURE.WRITTEN
+					)
+				).toBe(APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER);
+			});
+		}
+
+		const appealStatusesNotIncludingEventStatuses = [
+			APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+			APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+			APPEAL_CASE_STATUS.CLOSED,
+			APPEAL_CASE_STATUS.COMPLETE,
+			APPEAL_CASE_STATUS.EVIDENCE,
+			APPEAL_CASE_STATUS.FINAL_COMMENTS,
+			APPEAL_CASE_STATUS.INVALID,
+			APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+			APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			APPEAL_CASE_STATUS.READY_TO_START,
+			APPEAL_CASE_STATUS.STATEMENTS,
+			APPEAL_CASE_STATUS.TRANSFERRED,
+			APPEAL_CASE_STATUS.VALIDATION,
+			APPEAL_CASE_STATUS.WITHDRAWN,
+			APPEAL_CASE_STATUS.WITNESSES
+		];
+
+		for (const appealStatus of appealStatusesNotIncludingEventStatuses) {
+			it(`should return the appealStatus unchanged (${appealStatus}) if appealStatus is not an event status`, () => {
+				expect(mapStatusText(appealStatus, APPEAL_TYPE.S78, APPEAL_CASE_PROCEDURE.WRITTEN)).toBe(
+					appealStatus
+				);
+			});
+		}
+
+		it(`should return 'site_visit_ready_to_set_up' if appealStatus is 'event' and appealProcedureType is undefined`, () => {
+			expect(mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.S78, undefined)).toBe(
+				'site_visit_ready_to_set_up'
+			);
 		});
-		const response = httpMocks.createResponse();
-		const url = '/appeals-service/new-case';
 
-		safeRedirect(request, response, url);
+		it(`should return 'site_visit_ready_to_set_up' if appealStatus is 'event' and appealProcedureType is 'written'`, () => {
+			expect(
+				mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.S78, APPEAL_CASE_PROCEDURE.WRITTEN)
+			).toBe('site_visit_ready_to_set_up');
+		});
 
-		expect(response._getRedirectUrl()).toBe('/appeals-service/new-case');
+		it(`should return 'hearing_ready_to_set_up' if appealStatus is 'event' and appealProcedureType is 'hearing'`, () => {
+			expect(
+				mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.S78, APPEAL_CASE_PROCEDURE.HEARING)
+			).toBe('hearing_ready_to_set_up');
+		});
+
+		it(`should return 'inquiry_ready_to_set_up' if appealStatus is 'event' and appealProcedureType is 'inquiry'`, () => {
+			expect(
+				mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.S78, APPEAL_CASE_PROCEDURE.INQUIRY)
+			).toBe('inquiry_ready_to_set_up');
+		});
+
+		it(`should return 'awaiting_site_visit' if appealStatus is 'awaiting_event' and appealProcedureType is undefined`, () => {
+			expect(mapStatusText(APPEAL_CASE_STATUS.AWAITING_EVENT, APPEAL_TYPE.S78, undefined)).toBe(
+				'awaiting_site_visit'
+			);
+		});
+
+		it(`should return 'awaiting_site_visit' if appealStatus is 'awaiting_event' and appealProcedureType is 'written'`, () => {
+			expect(
+				mapStatusText(
+					APPEAL_CASE_STATUS.AWAITING_EVENT,
+					APPEAL_TYPE.S78,
+					APPEAL_CASE_PROCEDURE.WRITTEN
+				)
+			).toBe('awaiting_site_visit');
+		});
+
+		it(`should return 'awaiting_hearing' if appealStatus is 'awaiting_event' and appealProcedureType is 'hearing'`, () => {
+			expect(
+				mapStatusText(
+					APPEAL_CASE_STATUS.AWAITING_EVENT,
+					APPEAL_TYPE.S78,
+					APPEAL_CASE_PROCEDURE.HEARING
+				)
+			).toBe('awaiting_hearing');
+		});
+
+		it(`should return 'awaiting_inquiry' if appealStatus is 'awaiting_event' and appealProcedureType is 'inquiry'`, () => {
+			expect(
+				mapStatusText(
+					APPEAL_CASE_STATUS.AWAITING_EVENT,
+					APPEAL_TYPE.S78,
+					APPEAL_CASE_PROCEDURE.INQUIRY
+				)
+			).toBe('awaiting_inquiry');
+		});
 	});
 
-	it('should redirect to the homepage if the URL is external', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
-			},
-			protocol: 'https',
-			originalUrl: '/appeals-service/all-cases'
+	describe('mapAppealProcedureTypeToEventName', () => {
+		it(`should return 'hearing' if appealProcedureType is 'hearing'`, () => {
+			expect(mapAppealProcedureTypeToEventName(APPEAL_CASE_PROCEDURE.HEARING)).toBe('hearing');
 		});
-		const response = httpMocks.createResponse();
-		const url = 'https://external-phishing-url.com';
 
-		safeRedirect(request, response, url);
+		it(`should return 'inquiry' if appealProcedureType is 'inquiry'`, () => {
+			expect(mapAppealProcedureTypeToEventName(APPEAL_CASE_PROCEDURE.INQUIRY)).toBe('inquiry');
+		});
 
-		expect(response._getRedirectUrl()).toBe('/');
+		it(`should return 'site_visit' if appealProcedureType is 'written'`, () => {
+			expect(mapAppealProcedureTypeToEventName(APPEAL_CASE_PROCEDURE.WRITTEN)).toBe('site_visit');
+		});
+
+		it(`should return 'site_visit' if appealProcedureType is undefined`, () => {
+			expect(mapAppealProcedureTypeToEventName(undefined)).toBe('site_visit');
+		});
 	});
 
-	it('should redirect to the homepage if the URL is a protocol-relative URL', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
+	describe('mapStatusFilterLabel', () => {
+		const testCases = [
+			{
+				appealStatus: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+				expectedLabel: 'Assign case officer'
 			},
-			protocol: 'https',
-			originalUrl: '/appeals-service/all-cases'
-		});
-		const response = httpMocks.createResponse();
-		const url = '//localhost/appeals-service/new-case';
-
-		safeRedirect(request, response, url);
-
-		expect(response._getRedirectUrl()).toBe('//localhost/appeals-service/new-case');
-	});
-
-	it('should handle invalid URLs by redirecting to the homepage', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
+			{
+				appealStatus: APPEAL_CASE_STATUS.AWAITING_EVENT,
+				expectedLabel: 'Awaiting event'
 			},
-			protocol: 'https',
-			originalUrl: '/appeals-service/all-cases'
-		});
-		const response = httpMocks.createResponse();
-		const url = '://bad.url';
-
-		safeRedirect(request, response, url);
-
-		expect(response._getRedirectUrl()).toBe('/');
-	});
-
-	it('should redirect to the homepage if the provided URL is null, undefined, or an empty string', () => {
-		const request = httpMocks.createRequest({
-			method: 'GET',
-			url: '/appeals-service/all-cases',
-			secure: true,
-			headers: {
-				host: 'localhost'
+			{
+				appealStatus: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+				expectedLabel: 'Awaiting transfer'
 			},
-			protocol: 'https',
-			originalUrl: '/appeals-service/all-cases'
-		});
-		const response = httpMocks.createResponse();
-		const url = '';
+			{
+				appealStatus: APPEAL_CASE_STATUS.CLOSED,
+				expectedLabel: 'Closed'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+				expectedLabel: 'Complete'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.EVENT,
+				expectedLabel: 'Event ready to set up'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.EVIDENCE,
+				expectedLabel: 'Evidence'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.INVALID,
+				expectedLabel: 'Invalid'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+				expectedLabel: 'Issue decision'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				expectedLabel: 'LPA questionnaire'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.READY_TO_START,
+				expectedLabel: 'Ready to start'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+				expectedLabel: 'Statements'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.TRANSFERRED,
+				expectedLabel: 'Transferred'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.VALIDATION,
+				expectedLabel: 'Validation'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.WITHDRAWN,
+				expectedLabel: 'Withdrawn'
+			},
+			{
+				appealStatus: APPEAL_CASE_STATUS.WITNESSES,
+				expectedLabel: 'Witnesses'
+			}
+		];
 
-		safeRedirect(request, response, url);
-
-		expect(response._getRedirectUrl()).toBe('/');
+		for (const testCase of testCases) {
+			it(`should return '${testCase.expectedLabel}' if appealStatus is '${testCase.appealStatus}'`, () => {
+				expect(mapStatusFilterLabel(testCase.appealStatus)).toBe(testCase.expectedLabel);
+			});
+		}
 	});
 });
 

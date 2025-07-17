@@ -14,13 +14,22 @@ const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
 describe('Progress S78 to decision', () => {
+	const expectedSections = [
+		'Overview',
+		'Site',
+		'Timetable',
+		'Documentation',
+		'Costs',
+		'Contacts',
+		'Team',
+		'Case management'
+	];
+
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
 	it(`Completes a S78 appeal to decision`, { tags: tag.smoke }, () => {
-		let todaysDate = new Date();
-
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseRef) => {
@@ -33,6 +42,9 @@ describe('Progress S78 to decision', () => {
 
 			happyPathHelper.startS78Case(caseRef, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+
+			// Display all expected case detail sections for written cases
+			caseDetailsPage.verifyCaseDetailsSection(expectedSections);
 
 			happyPathHelper.reviewS78Lpaq(caseRef);
 			caseDetailsPage.checkStatusOfCase('Statements', 0);
@@ -68,15 +80,17 @@ describe('Progress S78 to decision', () => {
 			caseDetailsPage.clickIssueDecision(caseRef);
 			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Allowed'));
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.document);
+			caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.pdf);
 			caseDetailsPage.clickButtonByText('Continue');
-			dateTimeSection.enterDecisionLetterDate(new Date());
+			caseDetailsPage.selectRadioButtonByValue('No');
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectCheckbox();
-			caseDetailsPage.clickButtonByText('Send Decision');
+			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.clickButtonByText('Issue Decision');
+			caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
 			caseDetailsPage.checkStatusOfCase('Complete', 0);
 			caseDetailsPage.checkDecisionOutcome('Allowed');
-			caseDetailsPage.viewDecisionLetter('View decision letter');
+			caseDetailsPage.viewDecisionLetter('View decision');
 		});
 	});
 });

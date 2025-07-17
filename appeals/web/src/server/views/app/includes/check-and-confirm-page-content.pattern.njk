@@ -1,0 +1,40 @@
+{%- if pageContent.prePageComponents and pageContent.prePageComponents | length -%}
+<div class="govuk-grid-row">
+	<div class="{{ pageContent.prePageWrapperColumnClass if pageContent.prePageWrapperColumnClass else 'govuk-grid-column-full' }}">
+	{%- for component in pageContent.prePageComponents -%}
+		{%- include "../../appeals/components/page-component.njk" -%}
+	{%- endfor -%}
+	</div>
+</div>
+{%- endif -%}
+{%- for component in pageContent.pageComponents -%}
+	{%- if component.type !== 'notification-banner' and component.type !== 'error-summary' and component.type !== 'checkboxes' and component.type !== 'radios' -%}
+		{%- include "../../appeals/components/page-component.njk" -%}
+	{%- endif -%}
+{%- endfor -%}
+<div class="govuk-grid-row">
+	<div class="govuk-grid-column-full">
+		<form method="post" novalidate="novalidate">
+			{%- for component in pageContent.pageComponents -%}
+				{%- if component.type === 'checkboxes' or component.type === 'radios' -%}
+					{%- include "../../appeals/components/page-component.njk" -%}
+				{%- endif -%}
+			{%- endfor -%}
+			{%- set defaultButtonProperties = {
+				text:"Confirm",
+				type: "submit",
+				preventDoubleClick: true
+			} -%}
+			{{ govukButton(pageContent.submitButtonProperties if pageContent.submitButtonProperties else defaultButtonProperties) }}
+		</form>
+	</div>
+</div>
+{%- if pageContent.postPageComponents and pageContent.postPageComponents | length -%}
+<div class="govuk-grid-row">
+	<div class="{{ pageContent.postPageWrapperColumnClass if pageContent.postPageWrapperColumnClass else 'govuk-grid-column-full' }}">
+	{%- for component in pageContent.postPageComponents -%}
+		{%- include "../../appeals/components/page-component.njk" -%}
+	{%- endfor -%}
+	</div>
+</div>
+{%- endif -%}

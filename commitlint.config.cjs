@@ -14,16 +14,13 @@ const scopes = [
 ];
 
 // dependabot commit scopes
-const dependabotScopes = [
-	'deps',
-	'deps-dev'
-];
+const dependabotScopes = ['deps', 'deps-dev'];
 
 /** @type {import('@commitlint/types').UserConfig} */
 module.exports = {
 	extends: ['@commitlint/config-conventional'],
 	rules: {
-		'body-max-line-length': [2,	'always', 120], // dependabot needs longer lines, the value is somewhat arbitrary
+		'body-max-line-length': [2, 'always', 120], // dependabot needs longer lines, the value is somewhat arbitrary
 		'scope-enums': [
 			2,
 			'always',
@@ -111,5 +108,7 @@ module.exports = {
 				}
 			}
 		}
-	]
+	],
+	// ignore commits from dependabot - check for "chore(deps" which also captures "chore(deps-dev)"
+	ignores: [(commit) => commit.startsWith('chore(deps') && commit.includes('dependabot')]
 };

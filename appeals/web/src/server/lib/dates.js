@@ -57,6 +57,18 @@ export const dateIsTodayOrInThePast = (dayMonthYearHourMinute) => {
 };
 
 /**
+ * @param {DayMonthYearHourMinute} dayMonthYearHourMinute
+ * @param {DayMonthYearHourMinute} dateToCompare
+ * @returns {boolean}
+ */
+export const dateIsAfter = (dayMonthYearHourMinute, dateToCompare) => {
+	const date = new Date(dayMonthYearHourMinuteToISOString(dayMonthYearHourMinute));
+	const dateAfter = new Date(dayMonthYearHourMinuteToISOString(dateToCompare));
+
+	return isAfter(date, dateAfter);
+};
+
+/**
  * @param {string | null | undefined} dateISOString
  * @returns {string}
  */
@@ -284,4 +296,44 @@ export const oneMonthBefore = (date) => {
 	const dateOneMonthBefore = new Date(date.getTime());
 	dateOneMonthBefore.setMonth(dateOneMonthBefore.getMonth() - 1);
 	return dateOneMonthBefore;
+};
+
+/**
+ * Returns the days with one or no decimal places, followed by 'day' or 'days
+ * @param {string | number | undefined} days
+ * @returns {string}
+ */
+export const formatDays = (days) => {
+	if (typeof days === 'undefined') {
+		return '';
+	}
+
+	const numberOfDays = typeof days === 'string' ? parseFloat(days) : days;
+	const suffix = numberOfDays === 1 ? 'day' : 'days';
+
+	return `${numberOfDays} ${suffix}`;
+};
+
+/**
+ *
+ * @param {string | Date} date
+ * @param {Number} hours
+ * @param {Number} minutes
+ * @returns {Date}
+ */
+export const setTimeInTimeZone = (date, hours, minutes) => {
+	const ymd = formatInTimeZone(date, DEFAULT_TIMEZONE, 'yyyy-MM-dd');
+	const paddedHours = hours.toString().padStart(2, '0');
+	const paddedMinutes = minutes.toString().padStart(2, '0');
+	return zonedTimeToUtc(`${ymd} ${paddedHours}:${paddedMinutes}`, DEFAULT_TIMEZONE);
+};
+
+export const getExampleDateHint = (daysFromToday = 45, inFuture = true) => {
+	const date = new Date(Date.now());
+	date.setDate(date.getDate() + (inFuture ? daysFromToday : -daysFromToday));
+	return [
+		date.getDate(),
+		date.getMonth() + 1, // Months are zero-based
+		date.getFullYear()
+	].join(' ');
 };

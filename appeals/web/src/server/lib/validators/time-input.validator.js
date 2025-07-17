@@ -3,57 +3,48 @@ import { body } from 'express-validator';
 import { capitalize } from 'lodash-es';
 import { timeIsBeforeTime } from '#lib/times.js';
 
+/**
+ * @typedef {import('express-validator').ValidationChain} ValidationChain
+ * @typedef {import('express-validator').CustomValidator} CustomValidator
+ */
+
+/**
+ * Creates a validator for a time input component.
+ * @param {string} [fieldNamePrefix]
+ * @param {string | null} [messageFieldNamePrefix]
+ * @param {ValidationChain | CustomValidator} [continueValidationCondition]
+ * @returns {import('express').RequestHandler<any>}
+ */
 export const createTimeInputValidator = (
 	fieldNamePrefix = 'time',
-	messageFieldNamePrefix = 'time',
+	messageFieldNamePrefix = null,
 	// @ts-ignore
 	// eslint-disable-next-line no-unused-vars
 	continueValidationCondition = (value) => true
-) =>
-	createValidator(
+) => {
+	return createValidator(
 		body(`${fieldNamePrefix}-hour`)
 			.if(continueValidationCondition)
-			.trim()
-			.notEmpty()
-			.withMessage(capitalize(`${messageFieldNamePrefix} must include an hour`))
-			.bail()
-			.isInt()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}hour must be a number`
-				)
-			)
-			.bail()
-			.isInt({ min: 0, max: 23 })
-			.withMessage(
-				capitalize(
-					`${
-						(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''
-					}hour cannot be less than 0 or greater than 23`
-				)
-			),
-		body(`${fieldNamePrefix}-minute`)
-			.if(continueValidationCondition)
-			.trim()
-			.notEmpty()
-			.withMessage(capitalize(`${messageFieldNamePrefix} must include a minute`))
-			.bail()
-			.isInt()
-			.withMessage(
-				capitalize(
-					`${(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''}minute must be a number`
-				)
-			)
-			.bail()
-			.isInt({ min: 0, max: 59 })
-			.withMessage(
-				capitalize(
-					`${
-						(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''
-					}minute cannot be less than 0 or greater than 59`
-				)
-			)
+			.custom((hour, { req }) => {
+				const minute = req.body[`${fieldNamePrefix}-minute`]?.trim();
+				hour = hour?.trim();
+
+				if (!hour || !minute) {
+					throw new Error(`Enter the ${messageFieldNamePrefix}`);
+				}
+				if (!/^\d+$/.test(hour) || !/^\d+$/.test(minute)) {
+					const error = new Error(`Enter a ${messageFieldNamePrefix} using numbers 0 to 9`);
+					throw error;
+				}
+				const [hourNum, minuteNum] = [parseInt(hour, 10), parseInt(minute, 10)];
+				if (minuteNum < 0 || minuteNum > 59 || hourNum < 0 || hourNum > 23) {
+					const error = new Error(`Enter a real ${messageFieldNamePrefix}`);
+					throw error;
+				}
+				return true;
+			})
 	);
+};
 
 export const createStartTimeBeforeEndTimeValidator = (
 	startTimeFieldNamePrefix = 'startTime',
@@ -63,25 +54,30 @@ export const createStartTimeBeforeEndTimeValidator = (
 	// @ts-ignore
 	// eslint-disable-next-line no-unused-vars
 	continueValidationCondition = (value) => true
-) =>
-	createValidator(
-		body()
+) => {
+	return createValidator(
+		body(`${startTimeFieldNamePrefix}-hour`)
 			.if(continueValidationCondition)
-			.custom((bodyFields) => {
-				const startTimeHour = parseInt(bodyFields[`${startTimeFieldNamePrefix}-hour`], 10);
-				const startTimeMinute = parseInt(bodyFields[`${startTimeFieldNamePrefix}-minute`], 10);
-				const endTimeHour = parseInt(bodyFields[`${endTimeFieldNamePrefix}-hour`], 10);
-				const endTimeMinute = parseInt(bodyFields[`${endTimeFieldNamePrefix}-minute`], 10);
+			.custom((_, { req }) => {
+				const startTimeHour = parseInt(req.body[`${startTimeFieldNamePrefix}-hour`], 10);
+				const startTimeMinute = parseInt(req.body[`${startTimeFieldNamePrefix}-minute`], 10);
+				const endTimeHour = parseInt(req.body[`${endTimeFieldNamePrefix}-hour`], 10);
+				const endTimeMinute = parseInt(req.body[`${endTimeFieldNamePrefix}-minute`], 10);
 
-				return (
+				if (
 					!Number.isNaN(startTimeHour) &&
 					!Number.isNaN(startTimeMinute) &&
 					!Number.isNaN(endTimeHour) &&
 					!Number.isNaN(endTimeMinute) &&
-					timeIsBeforeTime(startTimeHour, startTimeMinute, endTimeHour, endTimeMinute)
-				);
+					!timeIsBeforeTime(startTimeHour, startTimeMinute, endTimeHour, endTimeMinute)
+				) {
+					throw new Error(
+						`${capitalize(
+							startTimeMessageFieldNamePrefix
+						)} must be before ${endTimeMessageFieldNamePrefix}`
+					);
+				}
+				return true;
 			})
-			.withMessage(
-				`${startTimeMessageFieldNamePrefix} must be before ${endTimeMessageFieldNamePrefix}`
-			)
 	);
+};

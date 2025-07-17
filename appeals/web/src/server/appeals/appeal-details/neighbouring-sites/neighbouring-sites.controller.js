@@ -51,7 +51,7 @@ const renderAddNeighbouringSite = async (request, response) => {
 		errors
 	);
 
-	return response.status(200).render('patterns/change-page.pattern.njk', {
+	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,
 		errors
 	});
@@ -243,7 +243,7 @@ const renderRemoveNeighbouringSite = async (request, response) => {
 
 	const appealDetails = request.currentAppeal;
 
-	const mappedPageContents = removeNeighbouringSitePage(appealDetails, origin, siteId);
+	const mappedPageContents = removeNeighbouringSitePage(appealDetails, origin, siteId, errors);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,

@@ -2,6 +2,7 @@
 /** @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase */
 
 import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import { createSharedS20S78Fields } from '#mappers/integration/shared/s20s78/appellant-case-fields.js';
 
 /**
  *
@@ -11,6 +12,10 @@ import { APPEAL_CASE_TYPE } from 'pins-data-model';
 export const mapAppellantCaseIn = (command) => {
 	const casedata = command.casedata;
 	const isS78 = casedata.caseType === APPEAL_CASE_TYPE.W;
+	const isS20 = casedata.caseType === APPEAL_CASE_TYPE.Y;
+
+	// @ts-ignore
+	const sharedFields = createSharedS20S78Fields(command);
 
 	const knowsAllOwners = casedata.knowsAllOwners
 		? {
@@ -55,24 +60,13 @@ export const mapAppellantCaseIn = (command) => {
 		...(knowsOtherOwners && { knowsOtherOwners }),
 		isGreenBelt: casedata.isGreenBelt,
 		typeOfPlanningApplication: casedata.typeOfPlanningApplication,
+		...(isS20 && { ...sharedFields }),
 		...(isS78 && {
-			appellantProcedurePreference: casedata.appellantProcedurePreference,
-			appellantProcedurePreferenceDetails: casedata.appellantProcedurePreferenceDetails,
-			appellantProcedurePreferenceDuration: casedata.appellantProcedurePreferenceDuration,
-			appellantProcedurePreferenceWitnessCount: casedata.appellantProcedurePreferenceWitnessCount,
-			planningObligation: casedata.planningObligation,
-			statusPlanningObligation: casedata.statusPlanningObligation,
+			...sharedFields,
 			agriculturalHolding: casedata.agriculturalHolding,
 			tenantAgriculturalHolding: casedata.tenantAgriculturalHolding,
 			otherTenantsAgriculturalHolding: casedata.otherTenantsAgriculturalHolding,
-			informedTenantsAgriculturalHolding: casedata.informedTenantsAgriculturalHolding,
-			siteViewableFromRoad: casedata.siteViewableFromRoad,
-			caseworkReason: casedata.caseworkReason,
-			developmentType: casedata.developmentType,
-			jurisdiction: casedata.jurisdiction,
-			numberOfResidencesNetChange: casedata.numberOfResidencesNetChange,
-			siteGridReferenceEasting: casedata.siteGridReferenceEasting,
-			siteGridReferenceNorthing: casedata.siteGridReferenceNorthing
+			informedTenantsAgriculturalHolding: casedata.informedTenantsAgriculturalHolding
 		})
 	};
 

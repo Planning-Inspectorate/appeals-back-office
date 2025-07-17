@@ -4,6 +4,7 @@ export const producers = {
 	boDocument: 'appeal-document',
 	boServiceUser: 'appeal-service-user',
 	boEventData: 'appeal-event',
+	boEventEstimate: 'appeal-event-estimate',
 	boBlobMove: 'appeal-document-to-move',
 	boRepresentation: 'appeal-representation'
 };

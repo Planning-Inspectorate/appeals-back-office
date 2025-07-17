@@ -13,6 +13,10 @@ exports[`final-comments GET / should render the redact appellant final comments 
             <div id="original-comment" class="govuk-inset-text govuk-!-margin-top-2">
                 <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
             </div>
+            <div class="govuk-button-group">
+                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
+                id="revert-button">Revert to original appellant final comments</button>
+            </div>
             <div class="govuk-form-group">
                 <label class="govuk-label govuk-label--s" for="redact-textarea">Redacted final comments:</label>
                 <textarea class="govuk-textarea" id="redact-textarea"
@@ -22,8 +26,9 @@ exports[`final-comments GET / should render the redact appellant final comments 
                 <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
                 id="redact-button">Redact selected text</button>
                 <button type="submit" class="govuk-button govuk-button--secondary"
-                data-module="govuk-button" id="undo-button">Undo all changes</button>
+                data-module="govuk-button" id="undo-button">Undo changes</button>
             </div>
+            <p class="govuk-visually-hidden" id="saved-textarea">Awaiting final comments review</p>
             <div class="govuk-button-group">
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </div>
@@ -45,6 +50,10 @@ exports[`final-comments GET / should render the redact lpa final comments page w
             <div id="original-comment" class="govuk-inset-text govuk-!-margin-top-2">
                 <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
             </div>
+            <div class="govuk-button-group">
+                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
+                id="revert-button">Revert to original LPA final comments</button>
+            </div>
             <div class="govuk-form-group">
                 <label class="govuk-label govuk-label--s" for="redact-textarea">Redacted final comments:</label>
                 <textarea class="govuk-textarea" id="redact-textarea"
@@ -54,8 +63,9 @@ exports[`final-comments GET / should render the redact lpa final comments page w
                 <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
                 id="redact-button">Redact selected text</button>
                 <button type="submit" class="govuk-button govuk-button--secondary"
-                data-module="govuk-button" id="undo-button">Undo all changes</button>
+                data-module="govuk-button" id="undo-button">Undo changes</button>
             </div>
+            <p class="govuk-visually-hidden" id="saved-textarea">Awaiting final comments review</p>
             <div class="govuk-button-group">
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </div>

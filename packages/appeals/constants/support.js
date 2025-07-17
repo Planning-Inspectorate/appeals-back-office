@@ -7,11 +7,16 @@ export const VALIDATION_OUTCOME_COMPLETE = 'Complete';
 export const VALIDATION_OUTCOME_INCOMPLETE = 'Incomplete';
 export const VALIDATION_OUTCOME_INVALID = 'Invalid';
 export const VALIDATION_OUTCOME_VALID = 'Valid';
+export const VALIDATION_OUTCOME_CANCEL = 'Cancel';
 
 export const CASE_OUTCOME_ALLOWED = 'allowed';
 export const CASE_OUTCOME_DISMISSED = 'dismissed';
 export const CASE_OUTCOME_SPLIT_DECISION = 'split decision';
 export const CASE_OUTCOME_INVALID = 'invalid';
+
+export const DECISION_TYPE_INSPECTOR = 'inspector-decision';
+export const DECISION_TYPE_APPELLANT_COSTS = 'appellant-costs-decision';
+export const DECISION_TYPE_LPA_COSTS = 'lpa-costs-decision';
 
 export const AUDIT_TRAIL_REP_SHARED = '{replacement0} shared';
 export const AUDIT_TRAIL_REP_LPA_STATEMENT_STATUS_UPDATED =
@@ -48,10 +53,13 @@ export const AUDIT_TRAIL_ASSIGNED_CASE_OFFICER =
 export const AUDIT_TRAIL_ASSIGNED_INSPECTOR =
 	'The inspector {replacement0} was assigned to the case';
 export const AUDIT_TRAIL_MODIFIED_APPEAL = 'The {replacement0} property was updated';
+export const AUDIT_TRAIL_CASE_STARTED = 'Case started\nAppeal procedure: {replacement0}';
 export const AUDIT_TRAIL_CASE_TIMELINE_CREATED = 'The case timeline was created';
 export const AUDIT_TRAIL_CASE_TIMELINE_UPDATED = 'The case timeline was updated';
+export const AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED =
+	'{replacement0} due date changed to {replacement1}';
 export const AUDIT_TRAIL_DOCUMENT_UPLOADED =
-	'Document {replacement0} uploaded (version {replacement1})';
+	'Document {replacement0} uploaded (version {replacement1}, {replacement2})';
 export const AUDIT_TRAIL_DOCUMENT_IMPORTED = 'The document {replacement0} was received';
 export const AUDIT_TRAIL_DOCUMENT_DELETED =
 	'Version {replacement1} of document {replacement0} was removed';
@@ -75,8 +83,8 @@ export const AUDIT_TRAIL_REMOVED_INSPECTOR =
 	'The inspector {replacement0} was removed from the case';
 export const AUDIT_TRAIL_SITE_VISIT_ARRANGED = 'The site visit was arranged for {replacement0}';
 export const AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED = 'The site visit type was selected';
-export const AUDIT_TRAIL_APPEAL_LINK_ADDED = 'A linked appeal was added';
-export const AUDIT_TRAIL_APPEAL_LINK_REMOVED = 'A linked appeal was removed';
+export const AUDIT_TRAIL_APPEAL_LINK_ADDED = 'Linked appeal {replacement0} added';
+export const AUDIT_TRAIL_APPEAL_LINK_REMOVED = 'Linked appeal {replacement0} removed';
 export const AUDIT_TRAIL_APPEAL_RELATION_ADDED = 'A related appeal was added';
 export const AUDIT_TRAIL_APPEAL_RELATION_REMOVED = 'A related appeal was removed';
 export const AUDIT_TRAIL_APPLICATION_REFERENCE_UPDATED = 'Planning application reference updated';
@@ -84,23 +92,49 @@ export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_ADDED = 'A neighbouring address wa
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_UPDATED = 'A neighbouring address was updated';
 export const AUDIT_TRAIL_NEIGHBOURING_ADDRESS_REMOVED = 'A neighbouring address was removed';
 export const AUDIT_TRAIL_SYSTEM_UUID = '00000000-0000-0000-0000-000000000000';
-export const AUDIT_TRAIL_SERVICE_USER_UPDATED = 'The {replacement0}’s details were updated';
+export const AUDIT_TRAIL_SERVICE_USER_UPDATED =
+	'{replacement0} contact details updated to\n{replacement1}';
 export const AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED =
-	'The {replacement0}’s address details were updated';
+	"The {replacement0}'s address details were updated";
 export const AUDIT_TRAIL_SERVICE_USER_REMOVED = 'The {replacement0} was removed';
-export const AUDIT_TRAIL_ADDRESS_UPDATED = 'Site address updated';
-export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Appellant case updated';
-export const AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED = 'Site area updated';
-export const AUDIT_TRAIL_IS_GREEN_BELT_UPDATED = 'Green belt status updated';
-export const AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED = 'Site ownership updated';
-export const AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED = 'Owners known updated';
-export const AUDIT_TRAIL_SITE_ACCESS_DETAILS_UPDATED = 'Inspector access (appellant) updated';
+export const AUDIT_TRAIL_ADDRESS_UPDATED = 'Site address updated to\n{replacement0}';
+export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Case updated';
+export const AUDIT_TRAIL_DEVELOPMENT_TYPE_UPDATED = 'Development type updated to {replacement0}';
+export const AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED = 'Site area updated to {replacement0} m²';
+export const AUDIT_TRAIL_IS_GREEN_BELT_UPDATED =
+	"'Is the site in a green belt?' updated to {replacement0}";
+export const AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED =
+	"'Does the appellant own all of the land involved in the appeal?' updated to {replacement0}";
+export const AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED =
+	"'Does the appellant know who owns the land involved in the appeal?' updated to {replacement0}";
+export const AUDIT_TRAIL_SITE_ACCESS_DETAILS_UPDATED =
+	"'Will an inspector need to access your land or property?' updated to\n{replacement0}";
 export const AUDIT_TRAIL_SITE_SAFETY_DETAILS_UPDATED =
-	'Site health and safety risks (appellant answer) updated';
-export const AUDIT_TRAIL_APPLICATION_DATE_UPDATED = 'Date application submitted updated';
+	"'Are there any health and safety issues on the appeal site?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPLICATION_DATE_UPDATED =
+	'Application submitted date updated to {replacement0}';
 export const AUDIT_TRAIL_DEVELOPMENT_DESCRIPTION_UPDATED =
-	'Original development description has been updated';
-export const AUDIT_TRAIL_APPLICATION_DECISION_DATE_UPDATED = 'Application decision date updated';
+	'Description of development updated to\n{replacement0}';
+export const AUDIT_TRAIL_APPLICATION_DECISION_DATE_UPDATED =
+	'Application decision date updated to {replacement0}';
+export const AUDIT_TRAIL_AGRICULTURAL_HOLDING_UPDATED =
+	"'Is the appeal site part of an agricultural holding?' updated to {replacement0}";
+export const AUDIT_TRAIL_TENANT_AGRICULTURAL_HOLDING_UPDATED =
+	"'Are you a tenant of the agricultural holding?' updated to {replacement0}";
+export const AUDIT_TRAIL_OTHER_TENANTS_AGRICULTURAL_HOLDING_UPDATED =
+	"'Are there any other tenants?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPLICATION_DECISION_UPDATED =
+	"'Was your application granted or refused?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_UPDATED =
+	"'How would you prefer us to decide your appeal?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_DETAILS_UPDATED =
+	"'Why would you prefer this appeal procedure?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_DURATION_UPDATED =
+	"'How many days would you expect the inquiry to last?' updated to {replacement0}";
+export const AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_WITNESS_COUNT_UPDATED =
+	"'How many witnesses would you expect to give evidence at the inquiry?' updated to {replacement0}";
+export const AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED =
+	"'What is the status of your planning obligation?' updated to {replacement0}";
 export const AUDIT_TRAIL_LPAQ_UPDATED = 'LPA questionnaire updated';
 export const AUDIT_TRAIL_LPAQ_IS_CORRECT_APPEAL_TYPE_UPDATED =
 	'Correct appeal type (LPA response) has been updated';
@@ -141,6 +175,32 @@ export const AUDIT_TRAIL_LISTED_BUILDING_ADDED = 'A listed building was added';
 export const AUDIT_TRAIL_LISTED_BUILDING_UPDATED = 'A listed building was updated';
 export const AUDIT_TRAIL_LISTED_BUILDING_REMOVED = 'A listed building was removed';
 
+export const AUDIT_TRAIL_LPA_UPDATED = 'LPA updated to {replacement0}';
+
+export const AUDIT_TRAIL_HEARING_SET_UP = 'Hearing set up on {replacement0}';
+export const AUDIT_TRAIL_HEARING_DATE_UPDATED = 'Hearing date updated to {replacement0}';
+export const AUDIT_TRAIL_HEARING_ADDRESS_ADDED = 'The hearing address has been added';
+export const AUDIT_TRAIL_HEARING_ADDRESS_UPDATED = 'Hearing address updated to {replacement0}';
+export const AUDIT_TRAIL_HEARING_CANCELLED = 'Hearing cancelled';
+export const AUDIT_TRAIL_HEARING_ESTIMATES_ADDED = 'Hearing estimates added';
+export const AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED = 'Hearing estimates updated';
+export const AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED = 'Hearing estimates removed';
+
+export const AUDIT_TRAIL_INQUIRY_SET_UP = 'Inquiry set up on {replacement0}';
+export const AUDIT_TRAIL_INQUIRY_DATE_UPDATED = 'Inquiry date updated to {replacement0}';
+export const AUDIT_TRAIL_INQUIRY_ADDRESS_ADDED = 'The inquiry address has been added';
+export const AUDIT_TRAIL_INQUIRY_ADDRESS_UPDATED = 'Inquiry address updated to {replacement0}';
+export const AUDIT_TRAIL_INQUIRY_CANCELLED = 'Inquiry cancelled';
+export const AUDIT_TRAIL_INQUIRY_ESTIMATES_ADDED = 'Inquiry estimates added';
+export const AUDIT_TRAIL_INQUIRY_ESTIMATES_UPDATED = 'Inquiry estimates updated';
+export const AUDIT_TRAIL_INQUIRY_ESTIMATES_REMOVED = 'Inquiry estimates removed';
+
+export const AUDIT_TRAIL_DECISION_ISSUED = 'Decision issued: {replacement0}';
+export const AUDIT_TRAIL_DECISION_LETTER_UPDATED = 'Decision letter {replacement0} updated';
+export const AUDIT_TRAIL_CORRECTION_NOTICE_ADDED = 'Correction notice added: {replacement0} ';
+export const AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED = 'Appellant costs decision issued';
+export const AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED = 'LPA costs decision issued';
+
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
@@ -175,6 +235,7 @@ export const ERROR_GOV_NOTIFY_CONNECTIVITY =
 	'Gov notify connectivity. Error Code: {replacement0}, template ID: {replacement1}';
 export const ERROR_NO_RECIPIENT_EMAIL = 'recipient email not found';
 export const ERROR_GOV_NOTIFY_API_KEY_NOT_SET = 'gov notify api key is not set';
+export const ERROR_NOTIFICATION_PERSONALISATION = 'email personalisation is incorrect';
 export const ERROR_INVALID_APPEAL_TYPE = `must be one of ${APPEAL_TYPE_SHORTHAND_FPA}, ${APPEAL_TYPE_SHORTHAND_HAS}`;
 export const ERROR_INVALID_APPEAL_TYPE_REP = `Representations not accepted on this appeal type`;
 export const ERROR_INVALID_APPELLANT_CASE_VALIDATION_OUTCOME = `must be one of ${VALIDATION_OUTCOME_INCOMPLETE}, ${VALIDATION_OUTCOME_INVALID}, ${VALIDATION_OUTCOME_VALID}`;
@@ -185,6 +246,10 @@ export const ERROR_INVALID_REPRESENTATION_TYPE = `must be one of ${Object.values
 	APPEAL_REPRESENTATION_TYPE
 ).join(', ')}`;
 export const ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS = 'must be between 2 and 8 characters';
+export const ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS = (
+	/** @type {string} */ min,
+	/** @type {string} */ max
+) => `must be between ${min} and ${max} characters`;
 export const ERROR_MAX_LENGTH_CHARACTERS = 'must be {replacement0} characters or less';
 export const ERROR_MUST_BE_ARRAY_OF_NUMBERS = 'must be an array of numbers';
 export const ERROR_MUST_BE_ARRAY_OF_STRINGS = 'must be an array of strings';
@@ -201,6 +266,7 @@ export const ERROR_MUST_BE_INCOMPLETE_INVALID_REASON =
 	'must be an array of objects containing a required id number parameter and an optional text string array parameter containing 10 or less items';
 export const ERROR_MUST_BE_NUMBER = 'must be a number';
 export const ERROR_NUMBER_RANGE = 'must be a number between {replacement0} and {replacement1}';
+export const ERROR_NUMBER_INCREMENTS = 'must be in increments of {replacement0}';
 export const ERROR_MUST_BE_SET_AS_HEADER = 'must be set as a header';
 export const ERROR_MUST_BE_STRING = 'must be a string';
 export const ERROR_MUST_BE_UUID = 'must be a uuid';
@@ -234,6 +300,8 @@ export const ERROR_INVALID_APPELLANT_CASE_DATA =
 export const ERROR_INVALID_LPAQ_DATA = 'The integration payload LPA_QUESTIONNAIRE is invalid.';
 export const ERROR_INVALID_REP_DATA = 'The integration payload APPEAL_REPRESENTATION is invalid.';
 export const ERROR_INVALID_DOCUMENT_DATA = 'The integration payload DOCUMENT is invalid.';
+export const ERROR_INVALID_LISTED_BUILDING_DATA =
+	'The integration payload LISTED_BUILDING is invalid.';
 export const ERROR_INVALID_APPEAL_STATE = 'The action is invalid on the current appeal state.';
 export const ERROR_CASE_OUTCOME_MUST_BE_ONE_OF = `The case outcome must be one of ${CASE_OUTCOME_ALLOWED}, ${CASE_OUTCOME_DISMISSED}, ${CASE_OUTCOME_SPLIT_DECISION}`;
 export const ERROR_REP_OUTCOME_MUST_BE_ONE_OF = `The representation status must be one of ${APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW}, ${APPEAL_REPRESENTATION_STATUS.INVALID}, ${APPEAL_REPRESENTATION_STATUS.VALID}`;
@@ -258,6 +326,7 @@ export const LENGTH_10 = 10;
 export const LENGTH_250 = 250;
 export const LENGTH_300 = 300;
 export const LENGTH_1000 = 1000;
+export const LENGTH_8000 = 8000;
 
 export const NODE_ENV_PRODUCTION = 'production';
 
@@ -275,27 +344,42 @@ export const CASE_RELATIONSHIP_RELATED = 'related';
 
 // Static config
 export const CONFIG_BANKHOLIDAYS_FEED_URL = 'https://www.gov.uk/bank-holidays.json';
-export const FRONT_OFFICE_URL = 'https://www.gov.uk/appeal-planning-inspectorate';
+
+const s78timetable = {
+	lpaQuestionnaireDueDate: {
+		daysFromStartDate: 5
+	},
+	ipCommentsDueDate: {
+		daysFromStartDate: 25
+	},
+	appellantStatementDueDate: {
+		daysFromStartDate: 25
+	},
+	lpaStatementDueDate: {
+		daysFromStartDate: 25
+	},
+	finalCommentsDueDate: {
+		daysFromStartDate: 35
+	},
+	s106ObligationDueDate: {
+		daysFromStartDate: 35
+	}
+};
 
 export const CONFIG_APPEAL_TIMETABLE = {
 	W: {
-		lpaQuestionnaireDueDate: {
-			daysFromStartDate: 5
-		},
-		ipCommentsDueDate: {
+		...s78timetable
+	},
+	H: {
+		...s78timetable,
+		statementOfCommonGroundDueDate: {
 			daysFromStartDate: 25
-		},
-		appellantStatementDueDate: {
+		}
+	},
+	I: {
+		...s78timetable,
+		statementOfCommonGroundDueDate: {
 			daysFromStartDate: 25
-		},
-		lpaStatementDueDate: {
-			daysFromStartDate: 25
-		},
-		finalCommentsDueDate: {
-			daysFromStartDate: 35
-		},
-		s106ObligationDueDate: {
-			daysFromStartDate: 35
 		}
 	},
 	D: {

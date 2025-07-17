@@ -8,7 +8,7 @@
 				{{ govukCharacterCount({
 					name: "comment",
 					id: "comment",
-					maxlength: 300,
+					maxlength: params.characterLimit if params.characterLimit else 500,
 					rows: 5,
 					value: params.sessionComment
 				})}}

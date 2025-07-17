@@ -10,6 +10,7 @@ import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { validateAppeal } from '../appeal-details.middleware.js';
 import { permissionNames } from '#environment/permissions.js';
 import {
+	clearUncommittedFilesFromSession,
 	validateCaseDocumentId,
 	validateCaseFolderId
 } from '../../appeal-documents/appeal-documents.middleware.js';
@@ -31,6 +32,8 @@ import developmentDescriptionRouter from './development-description/development-
 import applicationOutcomeRouter from './application-outcome/application-outcome.router.js';
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 import applicationDevelopmentTypeRouter from './application-development-type/application-development-type.router.js';
+import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
+import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -161,9 +164,16 @@ router.use(
 	applicationDevelopmentTypeRouter
 );
 
+router.use(
+	'/change-appeal-details/local-planning-authority',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	changeLpaRouter
+);
+
 router
 	.route('/')
-	.get(validateAppeal, asyncHandler(controller.getAppellantCase))
+	.get(validateAppeal, clearUncommittedFilesFromSession, asyncHandler(controller.getAppellantCase))
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
@@ -248,6 +258,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postAddDocumentDetails)
 	);
 
@@ -268,6 +279,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postDocumentVersionDetails)
 	);
 
@@ -323,6 +335,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postChangeDocumentVersionDetails)
 	);
 

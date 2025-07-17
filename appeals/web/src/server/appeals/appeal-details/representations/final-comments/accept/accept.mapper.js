@@ -4,6 +4,7 @@ import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappe
 import { redactInput } from '#appeals/appeal-details/representations/common/components/redact-input.js';
 import { summaryList } from './components/summary-list.js';
 import { getAttachmentList } from '#appeals/appeal-details/representations/common/document-attachment-list.js';
+import { findButtonText } from '#lib/revert-text.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -22,7 +23,7 @@ export const acceptFinalCommentPage = (
 	session
 ) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
-
+	const buttonText = findButtonText(finalCommentsType);
 	/** @type {PageComponent[]} */
 	const pageComponents = [
 		wrapComponents(
@@ -34,7 +35,12 @@ export const acceptFinalCommentPage = (
 					},
 					'Original final comments:'
 				),
-				...redactInput({ representation, labelText: 'Redacted final comments:', session }),
+				...redactInput({
+					representation,
+					labelText: 'Redacted final comments:',
+					session,
+					buttonText: buttonText
+				}),
 				buttonComponent(
 					'Continue',
 					{ type: 'submit' },

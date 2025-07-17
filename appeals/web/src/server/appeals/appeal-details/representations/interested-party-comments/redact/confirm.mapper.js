@@ -3,6 +3,7 @@
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 import { summaryList } from './components/summary-list.js';
 
 /**
@@ -14,8 +15,12 @@ import { summaryList } from './components/summary-list.js';
 export const confirmRedactInterestedPartyCommentPage = (appealDetails, comment, session) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
+	const redactMatching = checkRedactedText(
+		comment.originalRepresentation,
+		session?.redactedRepresentation
+	);
 	/** @type {PageComponent[]} */
-	const pageComponents = [summaryList(appealDetails, comment, session)];
+	const pageComponents = [summaryList(appealDetails, comment, session, redactMatching)];
 
 	preRenderPageComponents(pageComponents);
 
@@ -24,9 +29,9 @@ export const confirmRedactInterestedPartyCommentPage = (appealDetails, comment, 
 		title: 'Confirm redaction',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/redact`,
 		preHeading: `Appeal ${shortReference}`,
-		heading: 'Check details and redact comment',
+		heading: redactMatching ? 'Check details and redact comment' : 'Check Details',
 		forceRenderSubmitButton: true,
-		submitButtonText: 'Redact and accept comment',
+		submitButtonText: redactMatching ? 'Redact and accept comment' : 'Accept comment',
 		pageComponents
 	};
 

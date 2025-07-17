@@ -2,7 +2,7 @@ import { composeMiddleware } from '@pins/express';
 import { query } from 'express-validator';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import {
-	ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS,
+	ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS,
 	ERROR_MUST_BE_GREATER_THAN_ZERO,
 	ERROR_MUST_BE_NUMBER,
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
@@ -52,8 +52,8 @@ const getAppealsValidator = composeMiddleware(
 	query('searchTerm')
 		.optional()
 		.isString()
-		.isLength({ min: 2, max: 8 })
-		.withMessage(ERROR_LENGTH_BETWEEN_2_AND_8_CHARACTERS),
+		.isLength({ min: 2, max: 50 })
+		.withMessage(ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS('2', '50')),
 	validationErrorHandler
 );
 

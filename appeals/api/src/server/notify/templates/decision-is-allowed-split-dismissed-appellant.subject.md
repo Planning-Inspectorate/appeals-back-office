@@ -1,1 +1,1 @@
-Appeal decision: ((appeal_reference_number))
+Appeal decision: {{appeal_reference_number}}

@@ -2,9 +2,11 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { addressToString } from '#lib/address-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { appealStatusToStatusTag } from '#lib/nunjucks-filters/status-tag.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
-import { mapStatusText } from '#lib/appeal-status.js';
+import { mapStatusText, mapStatusFilterLabel } from '#lib/appeal-status.js';
+import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import { isFeatureActive } from '#common/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
@@ -53,9 +55,9 @@ export function nationalListPage(
 			inspectorFilter
 		].some((filter) => filter && filter !== 'all');
 
-	const appealStatusFilterItemsArray = ['all', ...(appeals?.statuses || [])].map(
+	const appealStatusFilterItemsArray = ['all', ...(appeals?.statusesInNationalList || [])].map(
 		(appealStatus) => ({
-			text: appealStatusToStatusTag(appealStatus),
+			text: mapStatusFilterLabel(appealStatus),
 			value: appealStatus,
 			selected: appealStatusFilter === appealStatus
 		})
@@ -100,6 +102,19 @@ export function nationalListPage(
 		selected: inspectorFilter === String(inspector?.id)
 	}));
 
+	//TODO: maybe make this a shared function across web
+	const enabledAppealTypes = [APPEAL_CASE_TYPE.D];
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
+		enabledAppealTypes.push(APPEAL_CASE_TYPE.W);
+	}
+	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20)) {
+		enabledAppealTypes.push(APPEAL_CASE_TYPE.Y);
+	}
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
+		enabledAppealTypes.push(APPEAL_CASE_TYPE.Z);
+	}
 	const appealTypeFilterItemsArray = [
 		{
 			text: 'All',
@@ -107,7 +122,7 @@ export function nationalListPage(
 			selected: appealTypeFilter === 'all'
 		},
 		...appealTypes
-			.filter(({ key }) => key === 'D' || key === 'W')
+			.filter(({ key }) => enabledAppealTypes.includes(key))
 			.map(({ type, id }) => ({
 				text: type,
 				value: id.toString(),
@@ -135,10 +150,25 @@ export function nationalListPage(
 
 	const searchInputErrorMessage = {};
 
+	/** @type {PageComponent[]} */
+	let errorSummaryPageComponents = [];
+
 	if (searchTermError) {
 		searchInputErrorMessage.errorMessage = {
 			text: searchTermError
 		};
+		errorSummaryPageComponents.push({
+			type: 'error-summary',
+			parameters: {
+				titleText: 'There is a problem',
+				errorList: [
+					{
+						text: searchTermError,
+						href: '#searchTerm'
+					}
+				]
+			}
+		});
 	}
 
 	let clearFilterUrl = urlWithoutQuery;
@@ -161,7 +191,7 @@ export function nationalListPage(
 				id: 'searchTerm',
 				name: 'searchTerm',
 				label: {
-					text: 'Enter appeal reference or postcode (include spaces)',
+					text: 'Enter the appeal reference, planning application reference or postcode (including spaces)',
 					classes: 'govuk-caption-m govuk-!-margin-bottom-3 colour--secondary'
 				},
 				value: searchTerm,
@@ -372,9 +402,13 @@ export function nationalListPage(
 						closing: '</div></div>'
 					},
 					parameters: {
+						classes: 'govuk-table--small-text-until-tablet govuk-table--case-list',
 						head: [
 							{
 								text: 'Appeal reference'
+							},
+							{
+								text: 'Planning application reference'
 							},
 							{
 								text: 'Site address'
@@ -401,10 +435,19 @@ export function nationalListPage(
 									)}" data-cy="${shortReference}" >${shortReference}</a>`
 								},
 								{
-									text: addressToString(appeal.appealSite)
+									html: `<span class="govuk-!-width-one-third">
+										${appeal.planningApplicationReference}
+									</span>`
 								},
 								{
-									text: appeal.localPlanningDepartment
+									// text: addressToString(appeal.appealSite),
+									html: `<span class="govuk-!-width-one-third">${addressToString(
+										appeal.appealSite
+									)}</span>`
+								},
+								{
+									// text: appeal.localPlanningDepartment,
+									html: `<span class="govuk-!-width-one-third">${appeal.localPlanningDepartment}</span>`
 								},
 								{
 									text: appeal.appealType
@@ -415,7 +458,11 @@ export function nationalListPage(
 										{
 											type: 'status-tag',
 											parameters: {
-												status: mapStatusText(appeal.appealStatus, appeal.appealType)
+												status: mapStatusText(
+													appeal.appealStatus,
+													appeal.appealType,
+													appeal.procedureType
+												)
 											}
 										}
 									]
@@ -431,7 +478,7 @@ export function nationalListPage(
 	const pageContent = {
 		title: 'All cases',
 		heading: 'Search all cases',
-		pageComponents: [...searchPageContent, ...appealsDataPageContent]
+		pageComponents: [...searchPageContent, ...appealsDataPageContent, ...errorSummaryPageComponents]
 	};
 
 	if (pageContent.pageComponents) {

@@ -2,17 +2,18 @@
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal } from '#tests/appeals/mocks.js';
-import formatDate from '#utils/date-formatter.js';
+import { fullPlanningAppeal, householdAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { add, sub } from 'date-fns';
 import {
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_NOT_BE_IN_FUTURE
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import config from '#config/config.js';
-import { recalculateDateIfNotBusinessDay, setTimeInTimeZone } from '#utils/business-days.js';
-
+import {
+	recalculateDateIfNotBusinessDay,
+	setTimeInTimeZone
+} from '@pins/appeals/utils/business-days.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('appeal withdrawal routes', () => {
@@ -61,12 +62,16 @@ describe('appeal withdrawal routes', () => {
 			});
 		});
 
-		test('returns 200 when all good', async () => {
+		test.each([
+			['household', householdAppeal],
+			['fullPlanning', fullPlanningAppeal],
+			['listedBuilding', listedBuildingAppeal]
+		])('returns 200 when appeal: %s is withdrawn', async (_, appeal) => {
 			const correctAppealState = {
-				...householdAppeal,
+				...appeal,
 				appealStatus: [
 					{
-						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						status: APPEAL_CASE_STATUS.EVENT,
 						valid: true
 					}
 				]
@@ -78,46 +83,41 @@ describe('appeal withdrawal routes', () => {
 			const utcDate = setTimeInTimeZone(withoutWeekends, 10, 0);
 
 			const response = await request
-				.post(`/appeals/${householdAppeal.id}/withdrawal`)
+				.post(`/appeals/${appeal.id}/withdrawal`)
 				.send({
 					withdrawalRequestDate: utcDate.toISOString()
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
-			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.appealWithdrawn.appellant.id,
-				'test@136s7.com',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						withdrawal_date: formatDate(utcDate, false)
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					withdrawal_date: formatDate(utcDate, false),
+					event_set: true,
+					event_type: 'site visit'
+				},
+				recipientEmail: 'test@136s7.com',
+				templateName: 'appeal-withdrawn-appellant'
+			});
 
-			// eslint-disable-next-line no-undef
-			expect(mockSendEmail).toHaveBeenCalledWith(
-				config.govNotify.template.appealWithdrawn.lpa.id,
-				'maid@lpa-email.gov.uk',
-				{
-					emailReplyToId: null,
-					personalisation: {
-						appeal_reference_number: '1345264',
-						lpa_reference: '48269/APP/2021/1482',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						withdrawal_date: formatDate(utcDate, false)
-					},
-					reference: null
-				}
-			);
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					withdrawal_date: formatDate(utcDate, false),
+					event_set: true,
+					event_type: 'site visit'
+				},
+				recipientEmail: 'maid@lpa-email.gov.uk',
+				templateName: 'appeal-withdrawn-lpa'
+			});
 
 			expect(response.status).toEqual(200);
 		});

@@ -7,6 +7,7 @@ import {
 } from 'pins-data-model';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
+import { importListedBuildingsDataset } from './seed-listed-buildings.js';
 /**
  * Static data required by the back-office service
  */
@@ -445,8 +446,11 @@ export const representationRejectionReasons = [
  * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
  */
 export async function seedStaticData(databaseConnector) {
-	const systemUserId = '00000000-0000-0000-0000-000000000000';
+	await importListedBuildingsDataset(
+		'https://files.planning.data.gov.uk/dataset/listed-building.json'
+	);
 
+	const systemUserId = '00000000-0000-0000-0000-000000000000';
 	await databaseConnector.user.upsert({
 		where: {
 			azureAdUserId: systemUserId
@@ -460,7 +464,7 @@ export async function seedStaticData(databaseConnector) {
 	for (const appealType of appealTypes) {
 		await databaseConnector.appealType.upsert({
 			create: appealType,
-			where: { type: appealType.type },
+			where: { key: appealType.key },
 			update: appealType
 		});
 	}

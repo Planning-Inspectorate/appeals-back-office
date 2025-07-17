@@ -2,16 +2,17 @@ import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import {
 	createDateInputDateInPastOrTodayValidator,
 	createDateInputDateValidityValidator,
-	createDateInputFieldsValidator
+	createDateInputFieldsValidator,
+	extractAndProcessDateErrors
 } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './add-ip-comment.controller.js';
 import {
 	validateCheckAddress,
-	validateInterestedPartyAddress,
 	validateInterestedPartyDetails
 } from './add-ip-comment.validators.js';
+import { validateInterestedPartyAddress } from '../common/validators.js';
 import { validateRedactionStatus } from '../../representations.validators.js';
 
 const router = createRouter({ mergeParams: true });
@@ -61,9 +62,10 @@ router
 	.route('/date-submitted')
 	.get(asyncHandler(controller.renderDateSubmitted))
 	.post(
-		createDateInputFieldsValidator('', 'submitted date', 'day', 'month', 'year'),
-		createDateInputDateValidityValidator('', 'submitted date', 'day', 'month', 'year'),
-		createDateInputDateInPastOrTodayValidator('', 'submitted date', 'day', 'month', 'year'),
+		createDateInputFieldsValidator('date', 'Submitted date'),
+		createDateInputDateValidityValidator('date', 'Submitted date'),
+		createDateInputDateInPastOrTodayValidator('date', 'Submitted date'),
+		extractAndProcessDateErrors({ fieldNamePrefix: 'date' }),
 		saveBodyToSession('addIpComment'),
 		asyncHandler(controller.postDateSubmitted)
 	);

@@ -1,8 +1,9 @@
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapAppellantCase = ({ appealDetails, currentRoute }) => {
+export const mapAppellantCase = ({ appealDetails, currentRoute, request }) => {
 	const { status } = appealDetails.documentationSummary?.appellantCase ?? {};
 
 	const statusText = (() => {
@@ -31,7 +32,10 @@ export const mapAppellantCase = ({ appealDetails, currentRoute }) => {
 			return '';
 		}
 
-		return `<a href="${currentRoute}/appellant-case" data-cy="review-appellant-case" class="govuk-link">${
+		return `<a href="${addBackLinkQueryToUrl(
+			request,
+			`${currentRoute}/appellant-case`
+		)}" data-cy="review-appellant-case" class="govuk-link">${
 			_status === 'received' ? 'Review' : 'View'
 		}<span class="govuk-visually-hidden"> appellant case</span></a>`;
 	})();

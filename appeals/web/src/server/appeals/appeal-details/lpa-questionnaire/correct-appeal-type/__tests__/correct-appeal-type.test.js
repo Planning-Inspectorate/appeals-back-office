@@ -23,7 +23,7 @@ describe('correct-appeal-type', () => {
 			const elementInnerHtml = parseHtml(response.text).innerHTML;
 
 			expect(elementInnerHtml).toMatchSnapshot();
-			expect(elementInnerHtml).toContain('Is Householder the correct type of appeal?</h1>');
+			expect(elementInnerHtml).toContain('Is householder the correct type of appeal?</h1>');
 		});
 	});
 

@@ -7,16 +7,16 @@ import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
 } from '@pins/appeals/constants/support.js';
-import config from '#config/config.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import formatDate, { formatTime } from '#utils/date-formatter.js';
-import { format } from 'date-fns';
+import formatDate, { formatTime } from '@pins/appeals/utils/date-formatter.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
-import { toCamelCase } from '#utils/string-utils.js';
 // eslint-disable-next-line no-unused-vars
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
+import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
+import { formatInTimeZone } from 'date-fns-tz';
+import { notifySend } from '#notify/notify-send.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateSiteVisitData} UpdateSiteVisitData */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateSiteVisitData} CreateSiteVisitData */
@@ -25,10 +25,12 @@ import { EventType } from '@pins/event-client';
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('express').NextFunction} NextFunction */
 
+/** @typedef {import('./site-visits.types.js').VisitNotificationTemplateIds}  VisitNotificationTemplateIds */
+
 /**
  * @param {string} azureAdUserId
  * @param {CreateSiteVisitData} siteVisitData
- * @param {*} notifyClient
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @returns {Promise<void>}
  */
 export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient) => {
@@ -53,13 +55,12 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 				appealId,
 				azureAdUserId,
 				details: stringTokenReplacement(AUDIT_TRAIL_SITE_VISIT_ARRANGED, [
-					format(new Date(visitDate), DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
+					formatInTimeZone(new Date(visitDate), DEFAULT_TIMEZONE, DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
 				])
 			});
 		}
 
-		const visitTypeKey = toCamelCase(`${siteVisitData.visitType.name}`);
-		const notifyTemplateIds = config.govNotify.template.siteVisitSchedule[visitTypeKey] || {};
+		const notifyTemplateIds = fetchSiteVisitScheduleTemplateIds(siteVisitData.visitType.name);
 
 		const emailVariables = {
 			appeal_reference_number: siteVisitData.appealReferenceNumber,
@@ -68,16 +69,17 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 			start_time: formatTime(siteVisitData.visitStartTime),
 			end_time: formatTime(siteVisitData.visitEndTime),
 			visit_date: formatDate(new Date(siteVisitData.visitDate || ''), false),
-			inspector_name: siteVisitData.inspectorName
+			inspector_name: siteVisitData.inspectorName || ''
 		};
 
 		if (notifyTemplateIds.appellant && siteVisitData.appellantEmail) {
 			try {
-				await notifyClient.sendEmail(
-					notifyTemplateIds.appellant,
-					siteVisitData.appellantEmail,
-					emailVariables
-				);
+				await notifySend({
+					templateName: notifyTemplateIds.appellant,
+					notifyClient,
+					recipientEmail: siteVisitData.appellantEmail,
+					personalisation: emailVariables
+				});
 			} catch (error) {
 				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 			}
@@ -85,7 +87,12 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 
 		if (notifyTemplateIds.lpa && siteVisitData.lpaEmail) {
 			try {
-				await notifyClient.sendEmail(notifyTemplateIds.lpa, siteVisitData.lpaEmail, emailVariables);
+				await notifySend({
+					templateName: notifyTemplateIds.lpa,
+					notifyClient,
+					recipientEmail: siteVisitData.lpaEmail,
+					personalisation: emailVariables
+				});
 			} catch (error) {
 				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 			}
@@ -118,7 +125,7 @@ const checkSiteVisitExists = async (req, res, next) => {
 /**
  * @param {string} azureAdUserId
  * @param {UpdateSiteVisitData} updateSiteVisitData
- * @param {import('notifications-node-client').NotifyClient} notifyClient
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  */
 const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient) => {
 	try {
@@ -135,7 +142,7 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 		};
 
 		const appealId = Number(updateSiteVisitData.appealId);
-		const notifyTemplateIds = fetchVisitNotificationTemplateIds(
+		const notifyTemplateIds = fetchRescheduleTemplateIds(
 			updateSiteVisitData.visitType.name,
 			updateSiteVisitData.previousVisitType,
 			updateSiteVisitData.siteVisitChangeType
@@ -170,16 +177,17 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 			start_time: formatTime(updateSiteVisitData.visitStartTime),
 			end_time: formatTime(updateSiteVisitData.visitEndTime),
 			visit_date: formatDate(new Date(updateSiteVisitData.visitDate || ''), false),
-			inspector_name: updateSiteVisitData.inspectorName
+			inspector_name: updateSiteVisitData.inspectorName || ''
 		};
 
 		if (notifyTemplateIds.appellant && updateSiteVisitData.appellantEmail) {
 			try {
-				await notifyClient.sendEmail(
-					notifyTemplateIds.appellant,
-					updateSiteVisitData.appellantEmail,
-					emailVariables
-				);
+				await notifySend({
+					templateName: notifyTemplateIds.appellant,
+					notifyClient,
+					recipientEmail: updateSiteVisitData.appellantEmail,
+					personalisation: emailVariables
+				});
 			} catch (error) {
 				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 			}
@@ -187,11 +195,12 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 
 		if (notifyTemplateIds.lpa && updateSiteVisitData.lpaEmail) {
 			try {
-				await notifyClient.sendEmail(
-					notifyTemplateIds.lpa,
-					updateSiteVisitData.lpaEmail,
-					emailVariables
-				);
+				await notifySend({
+					templateName: notifyTemplateIds.lpa,
+					notifyClient,
+					recipientEmail: updateSiteVisitData.lpaEmail,
+					personalisation: emailVariables
+				});
 			} catch (error) {
 				throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
 			}
@@ -207,8 +216,10 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
  * @param {string} visitType
  * @param {string} previousVisitType
  * @param {string} siteVisitChangeType
+ *
+ * @returns {VisitNotificationTemplateIds}
  */
-const fetchVisitNotificationTemplateIds = (visitType, previousVisitType, siteVisitChangeType) => {
+const fetchRescheduleTemplateIds = (visitType, previousVisitType, siteVisitChangeType) => {
 	switch (siteVisitChangeType) {
 		case 'unchanged':
 			return {};
@@ -216,28 +227,95 @@ const fetchVisitNotificationTemplateIds = (visitType, previousVisitType, siteVis
 		case 'date-time':
 			if (visitType === 'Access required') {
 				return {
-					appellant: {
-						id: config.govNotify.template.siteVisitChange.accessRequiredDateChange.appellant.id
-					}
+					appellant: 'site-visit-change-access-required-date-change-appellant'
 				};
 			} else if (visitType === 'Accompanied') {
 				return {
-					appellant: {
-						id: config.govNotify.template.siteVisitChange.accompaniedDateChange.appellant.id
-					},
-					lpa: { id: config.govNotify.template.siteVisitChange.accompaniedDateChange.lpa.id }
+					appellant: 'site-visit-change-accompanied-date-change-appellant',
+					lpa: 'site-visit-change-accompanied-date-change-lpa'
 				};
 			}
 			return {};
 
 		case 'all':
 		case 'visit-type': {
-			const transitionKey = toCamelCase(`${previousVisitType} To ${visitType}`);
-			return config.govNotify.template.siteVisitChange[transitionKey] || {};
+			const transitionKey = `${previousVisitType} To ${visitType}`;
+			return getRescheduleTemplateEnvVarNames(transitionKey);
 		}
+
 		default:
 			return {};
 	}
 };
 
-export { checkSiteVisitExists, updateSiteVisit, fetchVisitNotificationTemplateIds };
+/**
+ * @param {string} transitionKey
+ * @returns {VisitNotificationTemplateIds}
+ */
+const getRescheduleTemplateEnvVarNames = (transitionKey) => {
+	switch (transitionKey) {
+		case 'Accompanied To Access required':
+			return {
+				appellant: 'site-visit-change-accompanied-to-access-required-appellant',
+				lpa: 'site-visit-change-accompanied-to-access-required-lpa'
+			};
+		case 'Accompanied To Unaccompanied':
+			return {
+				appellant: 'site-visit-change-accompanied-to-unaccompanied-appellant',
+				lpa: 'site-visit-change-accompanied-to-unaccompanied-lpa'
+			};
+		case 'Access required To Accompanied':
+			return {
+				appellant: 'site-visit-change-access-required-to-accompanied-appellant',
+				lpa: 'site-visit-change-access-required-to-accompanied-lpa'
+			};
+		case 'Access required To Unaccompanied':
+			return {
+				appellant: 'site-visit-change-access-required-to-unaccompanied-appellant'
+			};
+		case 'Unaccompanied To Access required':
+			return {
+				appellant: 'site-visit-change-unaccompanied-to-access-required-appellant'
+			};
+		case 'Unaccompanied To Accompanied':
+			return {
+				appellant: 'site-visit-change-unaccompanied-to-accompanied-appellant',
+				lpa: 'site-visit-change-unaccompanied-to-accompanied-lpa'
+			};
+		default:
+			return {};
+	}
+};
+
+/**
+ * @param {string} visitTypeName
+ * @returns {VisitNotificationTemplateIds}
+ */
+const fetchSiteVisitScheduleTemplateIds = (visitTypeName) => {
+	const visitTypeKey = visitTypeName.replace(/\s+/g, '').toLowerCase();
+
+	switch (visitTypeKey) {
+		case 'accessrequired':
+			return {
+				appellant: 'site-visit-schedule-access-required-appellant'
+			};
+		case 'accompanied':
+			return {
+				appellant: 'site-visit-schedule-accompanied-appellant',
+				lpa: 'site-visit-schedule-accompanied-lpa'
+			};
+		case 'unaccompanied':
+			return {
+				appellant: 'site-visit-schedule-unaccompanied-appellant'
+			};
+		default:
+			return {};
+	}
+};
+
+export {
+	checkSiteVisitExists,
+	updateSiteVisit,
+	fetchRescheduleTemplateIds,
+	fetchSiteVisitScheduleTemplateIds
+};

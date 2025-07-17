@@ -2,8 +2,7 @@
  * @typedef {import('#appeals/appeal.constants.js').ServicePageName} ServicePageName
  */
 
-/** @typedef {'allocationDetailsUpdated'|'appealAwaitingTransfer'|'appealLinked'|'appealTypeChanged'|'appealUnlinked'|'appealValidAndReadyToStart'|'appealWithdrawn'|'appellantCaseInvalidOrIncomplete'|'appellantCaseNotValid'|'appellantFinalCommentsAcceptSuccess'|'appellantFinalCommentsAwaitingReview'|'assignCaseOfficer'|'caseOfficerAdded'|'caseOfficerRemoved'|'caseProgressed'|'caseStarted'|'changePage'|'commentsAndLpaStatementShared'|'costsDocumentAdded'|'documentAdded'|'documentDeleted'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentVersionAdded'|'finalCommentsAppellantRejectionSuccess'|'finalCommentsDocumentAddedSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsRedactionSuccess'|'finalCommentsShared'|'horizonReferenceAdded'|'inspectorAdded'|'inspectorRemoved'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsDocumentAddedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsValidSuccess'|'internalCorrespondenceDocumentAdded'|'issuedDecisionInvalid'|'issuedDecisionValid'|'lpaFinalCommentsAcceptSuccess'|'lpaFinalCommentsAwaitingReview'|'lpaqReviewComplete'|'lpaqReviewIncomplete'|'lpaQuestionnaireNotValid'|'lpaStatementAccepted'|'lpaStatementAwaitingReview'|'lpaStatementDocumentAddedSuccess'|'lpaStatementIncomplete'|'lpaStatementRedactedAndAccepted'|'neighbouringSiteAdded'|'neighbouringSiteAffected'|'neighbouringSiteRemoved'|'neighbouringSiteUpdated'|'notCheckedDocument'|'progressedToFinalComments'|'progressFromFinalComments'|'progressFromStatements'|'readyForDecision'|'readyForLpaQuestionnaireReview'|'readyForSetUpSiteVisit'|'readyForValidation'|'relatedAppeal'|'shareCommentsAndLpaStatement'|'shareFinalComments'|'siteAddressUpdated'|'siteVisitChangedDefault'|'siteVisitNoChanges'|'siteVisitRescheduled'|'siteVisitScheduled'|'siteVisitTypeChanged'|'startDateChanged'|'timetableDueDateUpdated'|'updateLpaStatement'} NotificationBannerDefinitionKey  */
-
+/** @typedef {'allocationDetailsUpdated'|'allocationDetailsAdded'|'appealAwaitingTransfer'|'appealLinked'|'appealTypeChanged'|'appealTypeUpdated'|'appealUnlinked'|'appealValidAndReadyToStart'|'appealWithdrawn'|'appellantCaseInvalidOrIncomplete'|'appellantCaseNotValid'|'appellantFinalCommentsAcceptSuccess'|'appellantFinalCommentsAwaitingReview'|'assignCaseOfficer'|'caseOfficerAdded'|'caseOfficerRemoved'|'caseProgressed'|'caseStarted'|'changePage'|'commentsAndLpaStatementShared'|'costsDocumentAdded'|'documentAdded'|'documentDeleted'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentVersionAdded'|'finalCommentsAppellantRejectionSuccess'|'finalCommentsDocumentAddedSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsRedactionSuccess'|'finalCommentsShared'|'horizonReferenceAdded'|'inspectorAdded'|'inspectorRemoved'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsDocumentAddedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsValidSuccess'|'internalCorrespondenceDocumentAdded'|'issuedDecisionInvalid'|'issuedDecisionValid'|'lpaCostsDecisionIssued'|'appellantCostsDecisionIssued'|'lpaFinalCommentsAcceptSuccess'|'lpaFinalCommentsAwaitingReview'|'lpaqReviewComplete'|'lpaqReviewIncomplete'|'lpaQuestionnaireNotValid'|'lpaStatementAccepted'|'lpaStatementAwaitingReview'|'lpaStatementDocumentAddedSuccess'|'lpaStatementIncomplete'|'lpaStatementRedactedAndAccepted'|'neighbouringSiteAdded'|'neighbouringSiteAffected'|'neighbouringSiteRemoved'|'neighbouringSiteUpdated'|'notCheckedDocument'|'progressedToFinalComments'|'progressFromFinalComments'|  'progressHearingCaseWithNoRepsFromStatements'| 'progressedToHearingReadyToSetUp' |'progressFromStatements'|'readyForDecision'|'readyForLpaQuestionnaireReview'|'readyForSetUpSiteVisit'|'readyForValidation'|'relatedAppeal'|'shareCommentsAndLpaStatement'|'shareFinalComments'|'siteAddressUpdated'|'siteVisitChangedDefault'|'siteVisitNoChanges'|'siteVisitRescheduled'|'siteVisitScheduled'|'siteVisitTypeChanged'|'startDateChanged'|'timetableDueDateUpdated'|'updateLpaStatement'|'lpaChanged'|'hearingEstimatesAdded'|'hearingEstimatesChanged'|'hearingSetUp'|'hearingUpdated'|'hearingCancelled'|'timetableStarted'|'addHearingAddress'|'setupHearing'|'linkedAppealAdded'|'decisionLetterUpdated'|'caseOfficerAssigned'|'inspectorAssigned'} NotificationBannerDefinitionKey */
 /**
  * @typedef {Object} NotificationBannerDefinition
  * @property {'success'|'important'} type
@@ -19,7 +18,7 @@ export const notificationBannerDefinitions = {
 	siteVisitScheduled: {
 		pages: ['appealDetails'],
 		type: 'success',
-		text: 'Site visit scheduled'
+		text: 'Site visit set up'
 	},
 	siteVisitRescheduled: {
 		pages: ['appealDetails'],
@@ -39,12 +38,17 @@ export const notificationBannerDefinitions = {
 	siteVisitChangedDefault: {
 		pages: ['appealDetails'],
 		type: 'success',
-		text: 'Site visit changed'
+		text: 'Site visit updated'
 	},
 	allocationDetailsUpdated: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Allocation details added'
+		text: 'Allocation level updated'
+	},
+	allocationDetailsAdded: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Allocation level added'
 	},
 	caseOfficerAdded: {
 		type: 'success',
@@ -100,7 +104,7 @@ export const notificationBannerDefinitions = {
 			'lpaQuestionnaire',
 			'lpaStatement',
 			'viewFinalComments',
-			'ipComments'
+			'viewIpComment'
 		],
 		text: 'Document removed'
 	},
@@ -125,6 +129,10 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails']
 	},
 	progressFromStatements: {
+		type: 'important',
+		pages: ['appealDetails']
+	},
+	progressHearingCaseWithNoRepsFromStatements: {
 		type: 'important',
 		pages: ['appealDetails']
 	},
@@ -169,17 +177,17 @@ export const notificationBannerDefinitions = {
 	neighbouringSiteAdded: {
 		type: 'success',
 		pages: ['appealDetails', 'lpaQuestionnaire'],
-		text: 'Neighbouring site added'
+		text: 'Address added'
 	},
 	neighbouringSiteUpdated: {
 		type: 'success',
 		pages: ['appealDetails', 'lpaQuestionnaire'],
-		text: 'Neighbouring site updated'
+		text: 'Address updated'
 	},
 	neighbouringSiteRemoved: {
 		type: 'success',
 		pages: ['appealDetails', 'lpaQuestionnaire', 'manageNeighbouringSites'],
-		text: 'Neighbouring site removed'
+		text: 'Address removed'
 	},
 	appealValidAndReadyToStart: {
 		type: 'important',
@@ -202,13 +210,13 @@ export const notificationBannerDefinitions = {
 	},
 	siteAddressUpdated: {
 		type: 'success',
-		pages: ['appellantCase'],
+		pages: ['appealDetails', 'appellantCase'],
 		text: 'Site address updated'
 	},
 	timetableDueDateUpdated: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Timetable updated'
+		text: 'Timetable due dates updated'
 	},
 	changePage: {
 		type: 'success',
@@ -324,7 +332,12 @@ export const notificationBannerDefinitions = {
 	progressedToFinalComments: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Progressed to Final Comments'
+		text: 'Progressed to final comments'
+	},
+	progressedToHearingReadyToSetUp: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Progressed to hearing ready to set up'
 	},
 	finalCommentsShared: {
 		type: 'success',
@@ -389,12 +402,85 @@ export const notificationBannerDefinitions = {
 	issuedDecisionValid: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Decision sent'
+		text: 'Decision issued'
 	},
 	issuedDecisionInvalid: {
 		type: 'success',
 		pages: ['appealDetails'],
 		text: 'Appeal invalid'
+	},
+	lpaCostsDecisionIssued: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA costs decision issued'
+	},
+	appellantCostsDecisionIssued: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appellant costs decision issued'
+	},
+	lpaChanged: {
+		type: 'success',
+		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
+		text: 'LPA updated'
+	},
+	hearingEstimatesAdded: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Hearing estimates added'
+	},
+	hearingEstimatesChanged: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Hearing estimates updated'
+	},
+	hearingSetUp: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Hearing set up'
+	},
+	hearingUpdated: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Hearing updated'
+	},
+	timetableStarted: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Timetable started'
+	},
+	addHearingAddress: {
+		type: 'important',
+		pages: ['appealDetails']
+	},
+	hearingCancelled: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Hearing cancelled'
+	},
+	setupHearing: {
+		type: 'important',
+		pages: ['appealDetails']
+	},
+	linkedAppealAdded: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Linked appeal added'
+	},
+	decisionLetterUpdated: {
+		type: 'success',
+		pages: ['appealDecision'],
+		text: 'Decision letter updated'
+	},
+	caseOfficerAssigned: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Case officer assigned'
+	},
+	inspectorAssigned: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Inspector assigned'
 	}
 };
 
@@ -406,6 +492,7 @@ const appealActionRequiredToNotificationBannerMapping = {
 	issueDecision: 'readyForDecision',
 	progressFromFinalComments: 'progressFromFinalComments',
 	progressFromStatements: 'progressFromStatements',
+	progressHearingCaseWithNoRepsFromStatements: 'progressHearingCaseWithNoRepsFromStatements',
 	reviewAppellantCase: 'readyForValidation',
 	awaitingAppellantUpdate: 'readyForValidation',
 	reviewAppellantFinalComments: 'appellantFinalCommentsAwaitingReview',
@@ -417,7 +504,11 @@ const appealActionRequiredToNotificationBannerMapping = {
 	shareFinalComments: 'shareFinalComments',
 	shareIpCommentsAndLpaStatement: 'shareCommentsAndLpaStatement',
 	startAppeal: 'appealValidAndReadyToStart',
-	updateLpaStatement: 'updateLpaStatement'
+	updateLpaStatement: 'updateLpaStatement',
+	addHearingAddress: 'addHearingAddress',
+	setupHearing: 'setupHearing',
+	linkedAppealAdded: 'linkedAppealAdded',
+	decisionLetterUpdated: 'decisionLetterUpdated'
 };
 
 /**

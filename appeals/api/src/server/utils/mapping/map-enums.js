@@ -96,7 +96,7 @@ export const isValidAppealType = (appealType) =>
 
 /**
  * @param {string | null | undefined} developmentType
- * @returns {developmentType is AppealS78Case['eiaDevelopmentDescription']}
+ * @returns {developmentType is AppealS78Case['developmentType']}
  */
 export const isValidDevelopmentType = (developmentType) => {
 	if (!developmentType) return false;

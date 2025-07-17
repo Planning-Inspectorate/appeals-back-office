@@ -26,10 +26,11 @@ const renderChangeSiteAddress = async (request, response) => {
 		currentAppeal,
 		backLinkUrl,
 		request.session.siteAddress,
+		request,
 		errors
 	);
 
-	return response.status(200).render('patterns/change-page.pattern.njk', {
+	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,
 		errors
 	});

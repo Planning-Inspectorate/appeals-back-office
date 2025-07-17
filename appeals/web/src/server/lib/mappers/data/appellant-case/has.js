@@ -14,13 +14,15 @@ import { mapDevelopmentDescription } from './submappers/development-description.
 import { mapApplicationDecision } from './submappers/application-decision.js';
 import { mapChangedDevelopmentDescriptionDocument } from './submappers/changed-development-description-document.js';
 import { mapLocalPlanningAuthority } from './submappers/local-planning-authority.js';
-import { mapAppealType } from './submappers/appeal-type.js';
+import { mapApplicationType } from './submappers/application-type.js';
 import { mapInspectorAccess } from './submappers/inspector-access.js';
 import { mapHealthAndSafetyIssues } from './submappers/health-and-safety-issues.js';
 import { mapApplicationForm } from './submappers/application-form.js';
 import { mapDecisionLetter } from './submappers/decision-letter.js';
 import { mapAppealStatement } from './submappers/appeal-statement.js';
 import { mapCostsDocument } from './submappers/costs-document.js';
+import { mapRelatedAppeals } from './submappers/related-appeals.js';
+import { mapStatementCommonGroundDocument } from './submappers/statement-common-ground.js';
 
 export const submaps = {
 	appellant: mapAppellant,
@@ -41,9 +43,11 @@ export const submaps = {
 	applicationDecisionDate: mapApplicationDecisionDate,
 	decisionLetter: mapDecisionLetter,
 	applicationDecision: mapApplicationDecision,
-	appealType: mapAppealType,
+	applicationType: mapApplicationType,
 	appealStatement: mapAppealStatement,
 	costsDocument: mapCostsDocument,
 	additionalDocuments: mapAdditionalDocuments,
-	reviewOutcome: mapReviewOutcome
+	reviewOutcome: mapReviewOutcome,
+	relatedAppeals: mapRelatedAppeals,
+	statementCommonGround: mapStatementCommonGroundDocument
 };

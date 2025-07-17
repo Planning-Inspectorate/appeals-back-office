@@ -168,14 +168,6 @@ Cypress.Commands.add('setCurrentCookies', (cookies) => {
 	});
 });
 
-Cypress.Commands.add('populateTimetable', (reference) => {
-	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
-		const appealId = await details.appealId;
-		return await appealsApiClient.setAppealTimetables(appealId);
-	});
-});
-
 Cypress.Commands.add('getBusinessActualDate', (date, days) => {
 	return cy.wrap(null).then(() => {
 		const formattedDate = new Date(date).toISOString();
@@ -195,10 +187,72 @@ Cypress.Commands.add('addAllocationLevelAndSpecialisms', (reference) => {
 	});
 });
 
-Cypress.Commands.add('getAppealDetails', (reference) => {
+Cypress.Commands.add('addHearingDetails', (reference, date) => {
 	return cy.wrap(null).then(async () => {
 		const details = await appealsApiClient.loadCaseDetails(reference);
 		const appealId = await details.appealId;
-		return await appealsApiClient.getAppealDetails(appealId);
+		return await appealsApiClient.addHearing(appealId, date);
+	});
+});
+
+Cypress.Commands.add('deleteHearing', (reference) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		const hearingId = await details.hearing.hearingId;
+		return await appealsApiClient.deleteHearing(appealId, hearingId);
+	});
+});
+
+Cypress.Commands.add('checkNotifySent', (reference, templates) => {
+	const expectedTemplates = [].concat(templates);
+
+	return cy.wrap(null).then(async () => {
+		// returns an array of email objects sent for the given reference
+		const emails = await appealsApiClient.getNotifyEmails(reference);
+
+		// creates an array of unique sent email templates that match expected
+		const foundTemplateNames = [...new Set(emails.map((email) => email.template))];
+
+		// creates a list of expected templates that were not found
+		const missingTemplates = expectedTemplates.filter(
+			(expected) => !foundTemplateNames.includes(expected)
+		);
+
+		expect(missingTemplates, `Expected, but not found:${missingTemplates}`).to.be.empty;
+	});
+});
+
+Cypress.Commands.add('updateAppealDetails', (reference, caseDetails) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = details.appealId;
+		const appellantCaseId = details.appellantCaseId;
+		return await appealsApiClient.updateAppealCases(appealId, appellantCaseId, caseDetails);
+	});
+});
+
+Cypress.Commands.add('updateTimeTableDetails', (reference, timeTableDetails) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		const appealTimetableId = await details.appealTimetable.appealTimetableId;
+		return await appealsApiClient.updateTimeTable(appealId, appealTimetableId, timeTableDetails);
+	});
+});
+
+Cypress.Commands.add('simulateHearingElapsed', (reference) => {
+	return cy.wrap(null).then(async () => {
+		return appealsApiClient.simulateHearingElapsed(reference).then(() => {
+			cy.log(`Simulated hearing elapsed for case ref ${reference}`);
+		});
+	});
+});
+
+Cypress.Commands.add('navigateToAppealDetailsPage', (reference) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		cy.visit(`appeals-service/appeal-details/${appealId}`);
 	});
 });

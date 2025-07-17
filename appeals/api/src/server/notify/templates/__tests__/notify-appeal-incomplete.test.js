@@ -38,7 +38,8 @@ describe('appeal-incomplete.md', () => {
 			'- The original application form is incomplete',
 			'- Other: Appellant contact information is incorrect or missing',
 			'',
-			'The Planning Inspectorate'
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
 		await notifySend(notifySendData);

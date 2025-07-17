@@ -1,16 +1,34 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { CASE_OUTCOME_INVALID, ERROR_NO_RECIPIENT_EMAIL } from '@pins/appeals/constants/support.js';
+import {
+	AUDIT_TRAIL_DECISION_ISSUED,
+	CASE_OUTCOME_INVALID,
+	ERROR_NO_RECIPIENT_EMAIL
+} from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-// eslint-disable-next-line no-unused-vars
-import NotifyClient from '#utils/notify-client.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
 import { notifySend } from '#notify/notify-send.js';
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} Decision */
 /** @typedef {import('@pins/appeals.api').Appeals} DecisionType */
+/** @typedef {import('#endpoints/appeals.js').NotifyClient} NotifyClient
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {string} appealDocumentType
+ * @returns {boolean}
+ */
+const hasCostsDocument = (appeal, appealDocumentType) => {
+	const folder = appeal.folders?.find(
+		(folder) => folder.path === `${APPEAL_CASE_STAGE.COSTS}/${appealDocumentType}`
+	);
+	return !!folder?.documents?.length;
+};
 
 /**
  *
@@ -35,6 +53,7 @@ export const publishInvalidDecision = async (
 
 	if (result) {
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+		const lpaEmail = appeal.lpa?.email || '';
 		const siteAddress = appeal.address
 			? formatAddressSingleLine(appeal.address)
 			: 'Address not available';
@@ -42,26 +61,46 @@ export const publishInvalidDecision = async (
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			reasons: invalidDecisionReason
+			reasons: [invalidDecisionReason]
 		};
 
 		if (!recipientEmail || !appeal.lpa?.email) {
 			throw new Error(ERROR_NO_RECIPIENT_EMAIL);
 		}
+
+		const hasAppellantCostsDecision = hasCostsDocument(
+			appeal,
+			APPEAL_DOCUMENT_TYPE.APPELLANT_COSTS_DECISION_LETTER
+		);
+
+		const hasLpaCostsDecision = hasCostsDocument(
+			appeal,
+			APPEAL_DOCUMENT_TYPE.LPA_COSTS_DECISION_LETTER
+		);
+
 		await Promise.all([
-			notifySend({
+			await notifySend({
 				templateName: 'decision-is-invalid-appellant',
 				notifyClient,
 				recipientEmail,
-				personalisation
+				personalisation: { ...personalisation, has_costs_decision: hasAppellantCostsDecision }
 			}),
-			notifySend({
+			await notifySend({
 				templateName: 'decision-is-invalid-lpa',
 				notifyClient,
-				recipientEmail,
-				personalisation
+				recipientEmail: lpaEmail,
+				personalisation: { ...personalisation, has_costs_decision: hasLpaCostsDecision }
 			})
 		]);
+
+		await createAuditTrail({
+			appealId: appeal.id,
+			azureAdUserId: azureUserId,
+			details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+				outcome[0].toUpperCase() + outcome.slice(1)
+			])
+		});
+
 		await transitionState(appeal.id, azureUserId, APPEAL_CASE_STATUS.INVALID);
 		await broadcasters.broadcastAppeal(appeal.id);
 

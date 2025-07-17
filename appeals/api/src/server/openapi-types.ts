@@ -348,6 +348,19 @@ export interface RepresentationData {
 }
 
 export interface DecisionInfo {
+	decisions?: {
+		/** @example "inspector-decision" */
+		decisionType?: string;
+		/** @example "allowed" */
+		outcome?: string;
+		/** @example "c957e9d0-1a02-4650-acdc-f9fdd689c210" */
+		documentGuid?: string;
+		/** @example "2024-08-17" */
+		documentDate?: string;
+	}[];
+}
+
+export interface OldDecisionInfo {
 	/** @example "allowed" */
 	outcome?: string;
 	/** @example "c957e9d0-1a02-4650-acdc-f9fdd689c210" */
@@ -452,6 +465,7 @@ export interface Folder {
 				| 'appellantCaseWithdrawalLetter'
 				| 'appellantCostsApplication'
 				| 'appellantCostsCorrespondence'
+				| 'appellantCostsDecisionLetter'
 				| 'appellantCostsWithdrawal'
 				| 'appellantFinalComment'
 				| 'appellantProofOfEvidence'
@@ -463,26 +477,29 @@ export interface Folder {
 				| 'communityInfrastructureLevy'
 				| 'conservationMap'
 				| 'consultationResponses'
-				| 'costsDecisionLetter'
 				| 'crossTeamCorrespondence'
 				| 'definitiveMapStatement'
 				| 'designAccessStatement'
 				| 'developmentPlanPolicies'
 				| 'eiaEnvironmentalStatement'
+				| 'eiaScopingOpinion'
 				| 'eiaScreeningDirection'
 				| 'eiaScreeningOpinion'
 				| 'emergingPlan'
 				| 'environmentalAssessment'
+				| 'historicEnglandConsultation'
 				| 'inspectorCorrespondence'
 				| 'interestedPartyComment'
 				| 'lpaCaseCorrespondence'
 				| 'lpaCostsApplication'
 				| 'lpaCostsCorrespondence'
+				| 'lpaCostsDecisionLetter'
 				| 'lpaCostsWithdrawal'
 				| 'lpaFinalComment'
 				| 'lpaProofOfEvidence'
 				| 'lpaStatement'
 				| 'lpaWitnessesEvidence'
+				| 'mainPartyCorrespondence'
 				| 'newPlansDrawings'
 				| 'originalApplicationForm'
 				| 'otherNewDocuments'
@@ -548,6 +565,7 @@ export interface Folder {
 				| 'appellantCaseWithdrawalLetter'
 				| 'appellantCostsApplication'
 				| 'appellantCostsCorrespondence'
+				| 'appellantCostsDecisionLetter'
 				| 'appellantCostsWithdrawal'
 				| 'appellantFinalComment'
 				| 'appellantProofOfEvidence'
@@ -559,26 +577,29 @@ export interface Folder {
 				| 'communityInfrastructureLevy'
 				| 'conservationMap'
 				| 'consultationResponses'
-				| 'costsDecisionLetter'
 				| 'crossTeamCorrespondence'
 				| 'definitiveMapStatement'
 				| 'designAccessStatement'
 				| 'developmentPlanPolicies'
 				| 'eiaEnvironmentalStatement'
+				| 'eiaScopingOpinion'
 				| 'eiaScreeningDirection'
 				| 'eiaScreeningOpinion'
 				| 'emergingPlan'
 				| 'environmentalAssessment'
+				| 'historicEnglandConsultation'
 				| 'inspectorCorrespondence'
 				| 'interestedPartyComment'
 				| 'lpaCaseCorrespondence'
 				| 'lpaCostsApplication'
 				| 'lpaCostsCorrespondence'
+				| 'lpaCostsDecisionLetter'
 				| 'lpaCostsWithdrawal'
 				| 'lpaFinalComment'
 				| 'lpaProofOfEvidence'
 				| 'lpaStatement'
 				| 'lpaWitnessesEvidence'
+				| 'mainPartyCorrespondence'
 				| 'newPlansDrawings'
 				| 'originalApplicationForm'
 				| 'otherNewDocuments'
@@ -1001,14 +1022,24 @@ export interface SingleAppealResponse {
 			/** @example "costs/lpaCorrespondence" */
 			path?: string;
 		};
-		decisionFolder?: {
+		appellantDecisionFolder?: {
 			/** @example "118" */
 			caseId?: string;
 			/** @example [] */
 			documents?: any[];
-			/** @example 2400 */
+			/** @example 2401 */
 			folderId?: number;
-			/** @example "costs/decision" */
+			/** @example "costs/appellantDecision" */
+			path?: string;
+		};
+		lpaDecisionFolder?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2402 */
+			folderId?: number;
+			/** @example "costs/lpaDecision" */
 			path?: string;
 		};
 	};
@@ -1031,6 +1062,16 @@ export interface SingleAppealResponse {
 			/** @example 2122 */
 			folderId?: number;
 			/** @example "internal/inspectorCorrespondence" */
+			path?: string;
+		};
+		mainParty?: {
+			/** @example "118" */
+			caseId?: string;
+			/** @example [] */
+			documents?: any[];
+			/** @example 2123 */
+			folderId?: number;
+			/** @example "internal/mainPartyCorrespondence" */
 			path?: string;
 		};
 	};
@@ -1123,6 +1164,8 @@ export interface SingleAppealResponse {
 	};
 	/** @example [] */
 	stateList?: any[];
+	/** @example ["awaiting_event"] */
+	completedStateList?: string[];
 }
 
 export interface SingleAppellantCaseResponse {
@@ -1229,6 +1272,12 @@ export interface SingleAppellantCaseResponse {
 		};
 		otherNewDocuments?: {
 			/** @example 4575 */
+			folderId?: number;
+			/** @example [] */
+			documents?: any[];
+		};
+		statementCommonGround?: {
+			/** @example 4576 */
 			folderId?: number;
 			/** @example [] */
 			documents?: any[];
@@ -1612,6 +1661,22 @@ export interface SingleLPAQuestionnaireResponse {
 				caseId?: number;
 			}[];
 		};
+		scopingOpinion?: {
+			/** @example 1 */
+			folderId?: number;
+			/** @example "path/to/document/folder" */
+			path?: string;
+			documents?: {
+				/** @example "fdadc281-f686-40ee-97cf-9bafdd02b1cb" */
+				id?: string;
+				/** @example "an appeal related document.pdf" */
+				name?: string;
+				/** @example 1 */
+				folderId?: number;
+				/** @example 2 */
+				caseId?: number;
+			}[];
+		};
 		siteNotice?: {
 			/** @example 1 */
 			folderId?: number;
@@ -1645,6 +1710,22 @@ export interface SingleLPAQuestionnaireResponse {
 			}[];
 		};
 		treePreservationOrder?: {
+			/** @example 1 */
+			folderId?: number;
+			/** @example "path/to/document/folder" */
+			path?: string;
+			documents?: {
+				/** @example "fdadc281-f686-40ee-97cf-9bafdd02b1cb" */
+				id?: string;
+				/** @example "an appeal related document.pdf" */
+				name?: string;
+				/** @example 1 */
+				folderId?: number;
+				/** @example 2 */
+				caseId?: number;
+			}[];
+		};
+		historicEnglandConsultation?: {
 			/** @example 1 */
 			folderId?: number;
 			/** @example "path/to/document/folder" */
@@ -1757,6 +1838,8 @@ export interface SingleLPAQuestionnaireResponse {
 	};
 	/** @example "The inspector needs to access the neighbouring site" */
 	reasonForNeighbourVisits?: string;
+	/** @example true */
+	preserveGrantLoan?: boolean;
 }
 
 export interface UpdateAppellantCaseRequest {
@@ -1857,6 +1940,8 @@ export interface UpdateLPAQuestionnaireRequest {
 	validationOutcome?: string;
 	/** @example true */
 	isGreenBelt?: boolean;
+	/** @example true */
+	preserveGrantLoan?: boolean;
 }
 
 export type UpdateLPAQuestionnaireResponse = object;
@@ -2112,6 +2197,12 @@ export interface UpdateAppealTimetableRequest {
 	lpaQuestionnaireDueDate?: string;
 	/** @example "2024-08-12" */
 	statementReviewDate?: string;
+	/** @example "2024-08-12" */
+	statementOfCommonGroundDueDate?: string;
+	/** @example "2024-08-13" */
+	planningObligationDueDate?: string;
+	/** @example "2024-08-14" */
+	proofOfEvidenceAndWitnessesDueDate?: string;
 }
 
 export interface UpdateAppealTimetableResponse {
@@ -2123,6 +2214,12 @@ export interface UpdateAppealTimetableResponse {
 	lpaQuestionnaireDueDate?: string;
 	/** @example "2024-08-12T01:00:00.000Z" */
 	statementReviewDate?: string;
+	/** @example "2024-08-12T01:00:00.000Z" */
+	statementOfCommonGroundDueDate?: string;
+	/** @example "2024-08-13T01:00:00.000Z" */
+	planningObligationDueDate?: string;
+	/** @example "2024-08-14T01:00:00.000Z" */
+	proofOfEvidenceAndWitnessesDueDate?: string;
 }
 
 export interface AllDocumentRedactionStatusesResponse {
@@ -2206,6 +2303,22 @@ export interface RepRejectionReasonsUpdateRequest {
 		/** @example ["Illegible or Incomplete Documentation","Previously Decided or Duplicate Appeal"] */
 		text?: string[];
 	}[];
+}
+
+export type LPAs = {
+	/** @example 1 */
+	id?: number;
+	/** @example "Bristol City Council" */
+	name?: string;
+	/** @example "BRIS" */
+	lpaCode?: string;
+	/** @example "bris@lpa-email.gov.uk" */
+	email?: string;
+}[];
+
+export interface LPAChangeRequest {
+	/** @example 2 */
+	newLpaId?: number;
 }
 
 export interface SingleLinkableAppealSummaryResponse {
@@ -2395,6 +2508,256 @@ export interface EiaScreeningRequiredRequest {
 	eiaScreeningRequired?: boolean;
 }
 
+export interface CreateHearingRequest {
+	/**
+	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	hearingStartTime?: string;
+	/**
+	 * Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	hearingEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+}
+
+export interface UpdateHearingRequest {
+	/**
+	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	hearingStartTime?: string;
+	/**
+	 * Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	hearingEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+}
+
+export interface HearingResponse {
+	/** @example 1 */
+	appealId?: number;
+	/** @example 1 */
+	hearingId?: number;
+	/**
+	 * Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2014-11-14T00:00:00+00:00"
+	 */
+	hearingStartTime?: string;
+	/**
+	 * Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2014-11-14T00:00:00+00:00"
+	 */
+	hearingEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+}
+
+export interface HearingEstimate {
+	/** @example 1.5 */
+	preparationTime?: number;
+	/** @example 0.5 */
+	sittingTime?: number;
+	/** @example 2 */
+	reportingTime?: number;
+}
+
+export interface HearingEstimateCreateRequest {
+	/** @example 1.5 */
+	preparationTime?: number;
+	/** @example 0.5 */
+	sittingTime?: number;
+	/** @example 2 */
+	reportingTime?: number;
+}
+
+export interface HearingEstimateUpdateRequest {
+	/** @example 1.5 */
+	preparationTime?: number;
+	/** @example 0.5 */
+	sittingTime?: number;
+	/** @example 2 */
+	reportingTime?: number;
+}
+
+export interface HearingEstimateResponse {
+	/** @example 1 */
+	hearingEstimateId?: number;
+}
+
+export interface CancelHearing {
+	/** @example 1 */
+	appealId?: number;
+	/** @example 1 */
+	hearingId?: number;
+}
+
+export interface CreateInquiryRequest {
+	/**
+	 * Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	inquiryStartTime?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	inquiryEndTime?: string;
+	/**
+	 * Date string of the timetable: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	startDate?: string;
+	/**
+	 * Estimated number of days
+	 * @example "5"
+	 */
+	estimatedDays?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	lpaQuestionnaireDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	statementDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	ipCommentsDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	statementOfCommonGroundDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	proofOfEvidenceAndWitnessesDueDate?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	planningObligationDueDate?: string;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+}
+
+export interface InquiryResponse {
+	/** @example 1 */
+	appealId?: number;
+	/** @example 1 */
+	inquiryId?: number;
+	/**
+	 * Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2014-11-14T00:00:00+00:00"
+	 */
+	inquiryStartTime?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2014-11-14T00:00:00+00:00"
+	 */
+	inquiryEndTime?: string;
+	/** @example 1 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+}
+
+export interface InquiryEstimate {
+	/** @example 1.5 */
+	estimatedTime?: number;
+}
+
+export interface InquiryEstimateCreateRequest {
+	/** @example 1.5 */
+	estimatedTime?: number;
+}
+
+export interface InquiryEstimateUpdateRequest {
+	/** @example 1.5 */
+	estimatedTime?: number;
+}
+
+export interface InquiryEstimateResponse {
+	/** @example 1 */
+	inquiryEstimateId?: number;
+}
+
 export interface Address {
 	addressId?: number;
 	addressLine1: string;
@@ -2439,6 +2802,10 @@ export interface Timetable {
 	finalCommentsDueDate?: string | null;
 	/** @format date-time */
 	s106ObligationDueDate?: string | null;
+	/** @format date-time */
+	statementOfCommonGroundDueDate?: string | null;
+	/** @format date-time */
+	planningObligationDueDate?: string | null;
 }
 
 export interface TransferStatus {
@@ -2572,6 +2939,7 @@ export interface AppealDecision {
 				| 'appellantCaseWithdrawalLetter'
 				| 'appellantCostsApplication'
 				| 'appellantCostsCorrespondence'
+				| 'appellantCostsDecisionLetter'
 				| 'appellantCostsWithdrawal'
 				| 'appellantFinalComment'
 				| 'appellantProofOfEvidence'
@@ -2583,26 +2951,29 @@ export interface AppealDecision {
 				| 'communityInfrastructureLevy'
 				| 'conservationMap'
 				| 'consultationResponses'
-				| 'costsDecisionLetter'
 				| 'crossTeamCorrespondence'
 				| 'definitiveMapStatement'
 				| 'designAccessStatement'
 				| 'developmentPlanPolicies'
 				| 'eiaEnvironmentalStatement'
+				| 'eiaScopingOpinion'
 				| 'eiaScreeningDirection'
 				| 'eiaScreeningOpinion'
 				| 'emergingPlan'
 				| 'environmentalAssessment'
+				| 'historicEnglandConsultation'
 				| 'inspectorCorrespondence'
 				| 'interestedPartyComment'
 				| 'lpaCaseCorrespondence'
 				| 'lpaCostsApplication'
 				| 'lpaCostsCorrespondence'
+				| 'lpaCostsDecisionLetter'
 				| 'lpaCostsWithdrawal'
 				| 'lpaFinalComment'
 				| 'lpaProofOfEvidence'
 				| 'lpaStatement'
 				| 'lpaWitnessesEvidence'
+				| 'mainPartyCorrespondence'
 				| 'newPlansDrawings'
 				| 'originalApplicationForm'
 				| 'otherNewDocuments'
@@ -2668,6 +3039,7 @@ export interface AppealDecision {
 				| 'appellantCaseWithdrawalLetter'
 				| 'appellantCostsApplication'
 				| 'appellantCostsCorrespondence'
+				| 'appellantCostsDecisionLetter'
 				| 'appellantCostsWithdrawal'
 				| 'appellantFinalComment'
 				| 'appellantProofOfEvidence'
@@ -2679,26 +3051,29 @@ export interface AppealDecision {
 				| 'communityInfrastructureLevy'
 				| 'conservationMap'
 				| 'consultationResponses'
-				| 'costsDecisionLetter'
 				| 'crossTeamCorrespondence'
 				| 'definitiveMapStatement'
 				| 'designAccessStatement'
 				| 'developmentPlanPolicies'
 				| 'eiaEnvironmentalStatement'
+				| 'eiaScopingOpinion'
 				| 'eiaScreeningDirection'
 				| 'eiaScreeningOpinion'
 				| 'emergingPlan'
 				| 'environmentalAssessment'
+				| 'historicEnglandConsultation'
 				| 'inspectorCorrespondence'
 				| 'interestedPartyComment'
 				| 'lpaCaseCorrespondence'
 				| 'lpaCostsApplication'
 				| 'lpaCostsCorrespondence'
+				| 'lpaCostsDecisionLetter'
 				| 'lpaCostsWithdrawal'
 				| 'lpaFinalComment'
 				| 'lpaProofOfEvidence'
 				| 'lpaStatement'
 				| 'lpaWitnessesEvidence'
+				| 'mainPartyCorrespondence'
 				| 'newPlansDrawings'
 				| 'originalApplicationForm'
 				| 'otherNewDocuments'
@@ -2750,6 +3125,7 @@ export interface AppealDecision {
 	documentName?: string | null;
 	/** @format date-time */
 	letterDate?: string | null;
+	invalidReason?: string | null;
 	virusCheckStatus?: 'affected' | 'not_scanned' | 'scanned';
 	outcome?: 'allowed' | 'dismissed' | 'invalid' | 'split_decision';
 }
@@ -2787,6 +3163,7 @@ export interface AppealWithdrawal {
 					| 'appellantCaseWithdrawalLetter'
 					| 'appellantCostsApplication'
 					| 'appellantCostsCorrespondence'
+					| 'appellantCostsDecisionLetter'
 					| 'appellantCostsWithdrawal'
 					| 'appellantFinalComment'
 					| 'appellantProofOfEvidence'
@@ -2798,26 +3175,29 @@ export interface AppealWithdrawal {
 					| 'communityInfrastructureLevy'
 					| 'conservationMap'
 					| 'consultationResponses'
-					| 'costsDecisionLetter'
 					| 'crossTeamCorrespondence'
 					| 'definitiveMapStatement'
 					| 'designAccessStatement'
 					| 'developmentPlanPolicies'
 					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
 					| 'eiaScreeningDirection'
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
 					| 'environmentalAssessment'
+					| 'historicEnglandConsultation'
 					| 'inspectorCorrespondence'
 					| 'interestedPartyComment'
 					| 'lpaCaseCorrespondence'
 					| 'lpaCostsApplication'
 					| 'lpaCostsCorrespondence'
+					| 'lpaCostsDecisionLetter'
 					| 'lpaCostsWithdrawal'
 					| 'lpaFinalComment'
 					| 'lpaProofOfEvidence'
 					| 'lpaStatement'
 					| 'lpaWitnessesEvidence'
+					| 'mainPartyCorrespondence'
 					| 'newPlansDrawings'
 					| 'originalApplicationForm'
 					| 'otherNewDocuments'
@@ -2883,6 +3263,7 @@ export interface AppealWithdrawal {
 					| 'appellantCaseWithdrawalLetter'
 					| 'appellantCostsApplication'
 					| 'appellantCostsCorrespondence'
+					| 'appellantCostsDecisionLetter'
 					| 'appellantCostsWithdrawal'
 					| 'appellantFinalComment'
 					| 'appellantProofOfEvidence'
@@ -2894,26 +3275,29 @@ export interface AppealWithdrawal {
 					| 'communityInfrastructureLevy'
 					| 'conservationMap'
 					| 'consultationResponses'
-					| 'costsDecisionLetter'
 					| 'crossTeamCorrespondence'
 					| 'definitiveMapStatement'
 					| 'designAccessStatement'
 					| 'developmentPlanPolicies'
 					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
 					| 'eiaScreeningDirection'
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
 					| 'environmentalAssessment'
+					| 'historicEnglandConsultation'
 					| 'inspectorCorrespondence'
 					| 'interestedPartyComment'
 					| 'lpaCaseCorrespondence'
 					| 'lpaCostsApplication'
 					| 'lpaCostsCorrespondence'
+					| 'lpaCostsDecisionLetter'
 					| 'lpaCostsWithdrawal'
 					| 'lpaFinalComment'
 					| 'lpaProofOfEvidence'
 					| 'lpaStatement'
 					| 'lpaWitnessesEvidence'
+					| 'mainPartyCorrespondence'
 					| 'newPlansDrawings'
 					| 'originalApplicationForm'
 					| 'otherNewDocuments'
@@ -3006,6 +3390,7 @@ export interface Document {
 			| 'appellantCaseWithdrawalLetter'
 			| 'appellantCostsApplication'
 			| 'appellantCostsCorrespondence'
+			| 'appellantCostsDecisionLetter'
 			| 'appellantCostsWithdrawal'
 			| 'appellantFinalComment'
 			| 'appellantProofOfEvidence'
@@ -3017,26 +3402,29 @@ export interface Document {
 			| 'communityInfrastructureLevy'
 			| 'conservationMap'
 			| 'consultationResponses'
-			| 'costsDecisionLetter'
 			| 'crossTeamCorrespondence'
 			| 'definitiveMapStatement'
 			| 'designAccessStatement'
 			| 'developmentPlanPolicies'
 			| 'eiaEnvironmentalStatement'
+			| 'eiaScopingOpinion'
 			| 'eiaScreeningDirection'
 			| 'eiaScreeningOpinion'
 			| 'emergingPlan'
 			| 'environmentalAssessment'
+			| 'historicEnglandConsultation'
 			| 'inspectorCorrespondence'
 			| 'interestedPartyComment'
 			| 'lpaCaseCorrespondence'
 			| 'lpaCostsApplication'
 			| 'lpaCostsCorrespondence'
+			| 'lpaCostsDecisionLetter'
 			| 'lpaCostsWithdrawal'
 			| 'lpaFinalComment'
 			| 'lpaProofOfEvidence'
 			| 'lpaStatement'
 			| 'lpaWitnessesEvidence'
+			| 'mainPartyCorrespondence'
 			| 'newPlansDrawings'
 			| 'originalApplicationForm'
 			| 'otherNewDocuments'
@@ -3102,6 +3490,7 @@ export interface Document {
 			| 'appellantCaseWithdrawalLetter'
 			| 'appellantCostsApplication'
 			| 'appellantCostsCorrespondence'
+			| 'appellantCostsDecisionLetter'
 			| 'appellantCostsWithdrawal'
 			| 'appellantFinalComment'
 			| 'appellantProofOfEvidence'
@@ -3113,26 +3502,29 @@ export interface Document {
 			| 'communityInfrastructureLevy'
 			| 'conservationMap'
 			| 'consultationResponses'
-			| 'costsDecisionLetter'
 			| 'crossTeamCorrespondence'
 			| 'definitiveMapStatement'
 			| 'designAccessStatement'
 			| 'developmentPlanPolicies'
 			| 'eiaEnvironmentalStatement'
+			| 'eiaScopingOpinion'
 			| 'eiaScreeningDirection'
 			| 'eiaScreeningOpinion'
 			| 'emergingPlan'
 			| 'environmentalAssessment'
+			| 'historicEnglandConsultation'
 			| 'inspectorCorrespondence'
 			| 'interestedPartyComment'
 			| 'lpaCaseCorrespondence'
 			| 'lpaCostsApplication'
 			| 'lpaCostsCorrespondence'
+			| 'lpaCostsDecisionLetter'
 			| 'lpaCostsWithdrawal'
 			| 'lpaFinalComment'
 			| 'lpaProofOfEvidence'
 			| 'lpaStatement'
 			| 'lpaWitnessesEvidence'
+			| 'mainPartyCorrespondence'
 			| 'newPlansDrawings'
 			| 'originalApplicationForm'
 			| 'otherNewDocuments'
@@ -3200,6 +3592,7 @@ export interface DocumentVersion {
 		| 'appellantCaseWithdrawalLetter'
 		| 'appellantCostsApplication'
 		| 'appellantCostsCorrespondence'
+		| 'appellantCostsDecisionLetter'
 		| 'appellantCostsWithdrawal'
 		| 'appellantFinalComment'
 		| 'appellantProofOfEvidence'
@@ -3211,26 +3604,29 @@ export interface DocumentVersion {
 		| 'communityInfrastructureLevy'
 		| 'conservationMap'
 		| 'consultationResponses'
-		| 'costsDecisionLetter'
 		| 'crossTeamCorrespondence'
 		| 'definitiveMapStatement'
 		| 'designAccessStatement'
 		| 'developmentPlanPolicies'
 		| 'eiaEnvironmentalStatement'
+		| 'eiaScopingOpinion'
 		| 'eiaScreeningDirection'
 		| 'eiaScreeningOpinion'
 		| 'emergingPlan'
 		| 'environmentalAssessment'
+		| 'historicEnglandConsultation'
 		| 'inspectorCorrespondence'
 		| 'interestedPartyComment'
 		| 'lpaCaseCorrespondence'
 		| 'lpaCostsApplication'
 		| 'lpaCostsCorrespondence'
+		| 'lpaCostsDecisionLetter'
 		| 'lpaCostsWithdrawal'
 		| 'lpaFinalComment'
 		| 'lpaProofOfEvidence'
 		| 'lpaStatement'
 		| 'lpaWitnessesEvidence'
+		| 'mainPartyCorrespondence'
 		| 'newPlansDrawings'
 		| 'originalApplicationForm'
 		| 'otherNewDocuments'
@@ -3372,19 +3768,31 @@ export type AppellantCase = {
 		isChanged?: boolean;
 	};
 	developmentType?:
-		| 'agriculture-aquaculture'
-		| 'change-extensions'
-		| 'chemical-industry'
-		| 'energy-industry'
-		| 'extractive-industry'
-		| 'food-industry'
-		| 'infrastructure-projects'
-		| 'mineral-industry'
-		| 'other-projects'
-		| 'production-processing-of-metals'
-		| 'rubber-industry'
-		| 'textile-industries'
-		| 'tourism-leisure'
+		| 'change-of-use'
+		| 'householder'
+		| 'major-dwellings'
+		| 'major-industry-storage'
+		| 'major-offices'
+		| 'major-retail-services'
+		| 'major-traveller-caravan'
+		| 'mineral-workings'
+		| 'minor-dwellings'
+		| 'minor-industry-storage'
+		| 'minor-offices'
+		| 'minor-retail-services'
+		| 'minor-traveller-caravan'
+		| 'other-major'
+		| 'other-minor'
+		| null;
+	typeOfPlanningApplication?:
+		| 'full-appeal'
+		| 'householder-planning'
+		| 'listed-building'
+		| 'minor-commercial-development'
+		| 'outline-planning'
+		| 'prior-approval'
+		| 'removal-or-variation-of-conditions'
+		| 'reserved-matters'
 		| null;
 	validation?: {
 		outcome?: string | null;
@@ -3458,6 +3866,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -3469,26 +3878,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -3554,6 +3966,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -3565,26 +3978,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -3664,6 +4080,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -3675,26 +4092,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -3760,6 +4180,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -3771,26 +4192,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -3870,6 +4294,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -3881,26 +4306,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -3966,6 +4394,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -3977,26 +4406,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -4076,6 +4508,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -4087,26 +4520,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -4172,6 +4608,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -4183,26 +4620,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -4282,6 +4722,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -4293,26 +4734,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -4378,6 +4822,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -4389,26 +4834,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -4488,6 +4936,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -4499,26 +4948,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -4584,6 +5036,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -4595,26 +5048,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -4694,6 +5150,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -4705,26 +5162,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -4790,6 +5250,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -4801,26 +5262,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -4900,6 +5364,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -4911,26 +5376,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -4996,6 +5464,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -5007,26 +5476,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -5106,6 +5578,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -5117,26 +5590,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -5202,6 +5678,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -5213,26 +5690,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -5312,6 +5792,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -5323,26 +5804,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -5408,6 +5892,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -5419,26 +5904,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -5518,6 +6006,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -5529,26 +6018,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -5614,6 +6106,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -5625,26 +6118,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -5724,6 +6220,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -5735,26 +6232,29 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -5820,6 +6320,7 @@ export type AppellantCase = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -5831,26 +6332,243 @@ export type AppellantCase = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'rule6ProofOfEvidence'
+						| 'rule6Statement'
+						| 'rule6WitnessesEvidence'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		statementCommonGround?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appealNotification'
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
+						| 'appellantCostsWithdrawal'
+						| 'appellantFinalComment'
+						| 'appellantProofOfEvidence'
+						| 'appellantStatement'
+						| 'appellantWitnessesEvidence'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
+						| 'inspectorCorrespondence'
+						| 'interestedPartyComment'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
+						| 'lpaCostsWithdrawal'
+						| 'lpaFinalComment'
+						| 'lpaProofOfEvidence'
+						| 'lpaStatement'
+						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'rule6ProofOfEvidence'
+						| 'rule6Statement'
+						| 'rule6WitnessesEvidence'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appealNotification'
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
+						| 'appellantCostsWithdrawal'
+						| 'appellantFinalComment'
+						| 'appellantProofOfEvidence'
+						| 'appellantStatement'
+						| 'appellantWitnessesEvidence'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
+						| 'inspectorCorrespondence'
+						| 'interestedPartyComment'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
+						| 'lpaCostsWithdrawal'
+						| 'lpaFinalComment'
+						| 'lpaProofOfEvidence'
+						| 'lpaStatement'
+						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -5965,6 +6683,7 @@ export type LpaQuestionnaire = {
 	eiaSensitiveAreaDetails?: string | null;
 	consultedBodiesDetails?: string | null;
 	reasonForNeighbourVisits?: string | null;
+	preserveGrantLoan?: boolean | null;
 	designatedSiteNames?:
 		| {
 				id: number;
@@ -6041,6 +6760,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -6052,26 +6772,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -6137,6 +6860,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -6148,26 +6872,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -6247,6 +6974,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -6258,26 +6986,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -6343,6 +7074,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -6354,26 +7086,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -6453,6 +7188,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -6464,26 +7200,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -6549,6 +7288,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -6560,26 +7300,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -6659,6 +7402,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -6670,26 +7414,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -6755,6 +7502,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -6766,26 +7514,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -6865,6 +7616,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -6876,26 +7628,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -6961,6 +7716,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -6972,26 +7728,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -7071,6 +7830,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -7082,26 +7842,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -7167,6 +7930,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -7178,26 +7942,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -7277,6 +8044,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -7288,26 +8056,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -7373,6 +8144,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -7384,26 +8156,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -7483,6 +8258,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -7494,26 +8270,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -7579,6 +8358,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -7590,26 +8370,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -7689,6 +8472,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -7700,26 +8484,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -7785,6 +8572,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -7796,26 +8584,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -7895,6 +8686,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -7906,26 +8698,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -7991,6 +8786,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -8002,26 +8798,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -8101,6 +8900,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -8112,26 +8912,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -8197,6 +9000,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -8208,26 +9012,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -8307,6 +9114,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -8318,26 +9126,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -8403,6 +9214,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -8414,26 +9226,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -8513,6 +9328,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -8524,26 +9340,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -8609,6 +9428,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -8620,26 +9440,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -8719,6 +9542,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -8730,26 +9554,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -8815,6 +9642,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -8826,26 +9654,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -8925,6 +9756,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -8936,26 +9768,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -9021,6 +9856,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -9032,26 +9868,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -9131,6 +9970,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -9142,26 +9982,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -9227,6 +10070,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -9238,26 +10082,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -9337,6 +10184,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -9348,26 +10196,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -9433,6 +10284,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -9444,26 +10296,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -9543,6 +10398,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -9554,26 +10410,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -9639,6 +10498,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -9650,26 +10510,243 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'rule6ProofOfEvidence'
+						| 'rule6Statement'
+						| 'rule6WitnessesEvidence'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		eiaScopingOpinion?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appealNotification'
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
+						| 'appellantCostsWithdrawal'
+						| 'appellantFinalComment'
+						| 'appellantProofOfEvidence'
+						| 'appellantStatement'
+						| 'appellantWitnessesEvidence'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
+						| 'inspectorCorrespondence'
+						| 'interestedPartyComment'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
+						| 'lpaCostsWithdrawal'
+						| 'lpaFinalComment'
+						| 'lpaProofOfEvidence'
+						| 'lpaStatement'
+						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'rule6ProofOfEvidence'
+						| 'rule6Statement'
+						| 'rule6WitnessesEvidence'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appealNotification'
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
+						| 'appellantCostsWithdrawal'
+						| 'appellantFinalComment'
+						| 'appellantProofOfEvidence'
+						| 'appellantStatement'
+						| 'appellantWitnessesEvidence'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
+						| 'inspectorCorrespondence'
+						| 'interestedPartyComment'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
+						| 'lpaCostsWithdrawal'
+						| 'lpaFinalComment'
+						| 'lpaProofOfEvidence'
+						| 'lpaStatement'
+						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -9749,6 +10826,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -9760,26 +10838,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -9845,6 +10926,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -9856,26 +10938,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -9955,6 +11040,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -9966,26 +11052,29 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -10051,6 +11140,7 @@ export type LpaQuestionnaire = {
 						| 'appellantCaseWithdrawalLetter'
 						| 'appellantCostsApplication'
 						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
 						| 'appellantCostsWithdrawal'
 						| 'appellantFinalComment'
 						| 'appellantProofOfEvidence'
@@ -10062,26 +11152,243 @@ export type LpaQuestionnaire = {
 						| 'communityInfrastructureLevy'
 						| 'conservationMap'
 						| 'consultationResponses'
-						| 'costsDecisionLetter'
 						| 'crossTeamCorrespondence'
 						| 'definitiveMapStatement'
 						| 'designAccessStatement'
 						| 'developmentPlanPolicies'
 						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
 						| 'eiaScreeningDirection'
 						| 'eiaScreeningOpinion'
 						| 'emergingPlan'
 						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
 						| 'inspectorCorrespondence'
 						| 'interestedPartyComment'
 						| 'lpaCaseCorrespondence'
 						| 'lpaCostsApplication'
 						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
 						| 'lpaCostsWithdrawal'
 						| 'lpaFinalComment'
 						| 'lpaProofOfEvidence'
 						| 'lpaStatement'
 						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'rule6ProofOfEvidence'
+						| 'rule6Statement'
+						| 'rule6WitnessesEvidence'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				}[];
+			}[];
+		};
+		historicEnglandConsultation?: {
+			caseId: number;
+			folderId: number;
+			path: string;
+			documents: {
+				/** @format uuid */
+				id: string;
+				caseId?: number;
+				folderId?: number;
+				name: string;
+				/** @format date-time */
+				createdAt?: string;
+				latestDocumentVersion?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appealNotification'
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
+						| 'appellantCostsWithdrawal'
+						| 'appellantFinalComment'
+						| 'appellantProofOfEvidence'
+						| 'appellantStatement'
+						| 'appellantWitnessesEvidence'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
+						| 'inspectorCorrespondence'
+						| 'interestedPartyComment'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
+						| 'lpaCostsWithdrawal'
+						| 'lpaFinalComment'
+						| 'lpaProofOfEvidence'
+						| 'lpaStatement'
+						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
+						| 'newPlansDrawings'
+						| 'originalApplicationForm'
+						| 'otherNewDocuments'
+						| 'otherPartyRepresentations'
+						| 'otherRelevantPolicies'
+						| 'ownershipCertificate'
+						| 'planningObligation'
+						| 'planningOfficerReport'
+						| 'plansDrawings'
+						| 'rule6ProofOfEvidence'
+						| 'rule6Statement'
+						| 'rule6WitnessesEvidence'
+						| 'statementCommonGround'
+						| 'supplementaryPlanning'
+						| 'treePreservationPlan'
+						| 'uncategorised'
+						| 'whoNotified'
+						| 'whoNotifiedLetterToNeighbours'
+						| 'whoNotifiedPressAdvert'
+						| 'whoNotifiedSiteNotice';
+					stage?:
+						| 'appeal-decision'
+						| 'appellant-case'
+						| 'costs'
+						| 'evidence'
+						| 'final-comments'
+						| 'internal'
+						| 'lpa-questionnaire'
+						| 'statements'
+						| 'third-party-comments'
+						| 'witnesses';
+					documentURI: string;
+					isLateEntry?: boolean;
+					isDeleted?: boolean;
+					versionAudit?:
+						| {
+								/** @format date-time */
+								loggedAt: string;
+								/** @format uuid */
+								user: string;
+								action: string;
+								details: string;
+						  }[]
+						| null;
+				};
+				allVersions?: {
+					/** @format uuid */
+					id: string;
+					version: number;
+					fileName?: string;
+					originalFileName?: string;
+					size?: number;
+					mime?: string;
+					/** @format date-time */
+					createdAt?: string;
+					/** @format date-time */
+					dateReceived?: string;
+					redactionStatus: 'no_redaction_required' | 'not_redacted' | 'redacted';
+					virusCheckStatus: 'affected' | 'not_scanned' | 'scanned';
+					documentType?:
+						| 'appealNotification'
+						| 'appellantCaseCorrespondence'
+						| 'appellantCaseWithdrawalLetter'
+						| 'appellantCostsApplication'
+						| 'appellantCostsCorrespondence'
+						| 'appellantCostsDecisionLetter'
+						| 'appellantCostsWithdrawal'
+						| 'appellantFinalComment'
+						| 'appellantProofOfEvidence'
+						| 'appellantStatement'
+						| 'appellantWitnessesEvidence'
+						| 'applicationDecisionLetter'
+						| 'caseDecisionLetter'
+						| 'changedDescription'
+						| 'communityInfrastructureLevy'
+						| 'conservationMap'
+						| 'consultationResponses'
+						| 'crossTeamCorrespondence'
+						| 'definitiveMapStatement'
+						| 'designAccessStatement'
+						| 'developmentPlanPolicies'
+						| 'eiaEnvironmentalStatement'
+						| 'eiaScopingOpinion'
+						| 'eiaScreeningDirection'
+						| 'eiaScreeningOpinion'
+						| 'emergingPlan'
+						| 'environmentalAssessment'
+						| 'historicEnglandConsultation'
+						| 'inspectorCorrespondence'
+						| 'interestedPartyComment'
+						| 'lpaCaseCorrespondence'
+						| 'lpaCostsApplication'
+						| 'lpaCostsCorrespondence'
+						| 'lpaCostsDecisionLetter'
+						| 'lpaCostsWithdrawal'
+						| 'lpaFinalComment'
+						| 'lpaProofOfEvidence'
+						| 'lpaStatement'
+						| 'lpaWitnessesEvidence'
+						| 'mainPartyCorrespondence'
 						| 'newPlansDrawings'
 						| 'originalApplicationForm'
 						| 'otherNewDocuments'
@@ -10226,6 +11533,10 @@ export interface Appeal {
 		finalCommentsDueDate?: string | null;
 		/** @format date-time */
 		s106ObligationDueDate?: string | null;
+		/** @format date-time */
+		statementOfCommonGroundDueDate?: string | null;
+		/** @format date-time */
+		planningObligationDueDate?: string | null;
 	};
 	transferStatus?: {
 		transferredAppealType: string;
@@ -10305,6 +11616,7 @@ export interface Appeal {
 					| 'appellantCaseWithdrawalLetter'
 					| 'appellantCostsApplication'
 					| 'appellantCostsCorrespondence'
+					| 'appellantCostsDecisionLetter'
 					| 'appellantCostsWithdrawal'
 					| 'appellantFinalComment'
 					| 'appellantProofOfEvidence'
@@ -10316,26 +11628,29 @@ export interface Appeal {
 					| 'communityInfrastructureLevy'
 					| 'conservationMap'
 					| 'consultationResponses'
-					| 'costsDecisionLetter'
 					| 'crossTeamCorrespondence'
 					| 'definitiveMapStatement'
 					| 'designAccessStatement'
 					| 'developmentPlanPolicies'
 					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
 					| 'eiaScreeningDirection'
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
 					| 'environmentalAssessment'
+					| 'historicEnglandConsultation'
 					| 'inspectorCorrespondence'
 					| 'interestedPartyComment'
 					| 'lpaCaseCorrespondence'
 					| 'lpaCostsApplication'
 					| 'lpaCostsCorrespondence'
+					| 'lpaCostsDecisionLetter'
 					| 'lpaCostsWithdrawal'
 					| 'lpaFinalComment'
 					| 'lpaProofOfEvidence'
 					| 'lpaStatement'
 					| 'lpaWitnessesEvidence'
+					| 'mainPartyCorrespondence'
 					| 'newPlansDrawings'
 					| 'originalApplicationForm'
 					| 'otherNewDocuments'
@@ -10401,6 +11716,7 @@ export interface Appeal {
 					| 'appellantCaseWithdrawalLetter'
 					| 'appellantCostsApplication'
 					| 'appellantCostsCorrespondence'
+					| 'appellantCostsDecisionLetter'
 					| 'appellantCostsWithdrawal'
 					| 'appellantFinalComment'
 					| 'appellantProofOfEvidence'
@@ -10412,26 +11728,29 @@ export interface Appeal {
 					| 'communityInfrastructureLevy'
 					| 'conservationMap'
 					| 'consultationResponses'
-					| 'costsDecisionLetter'
 					| 'crossTeamCorrespondence'
 					| 'definitiveMapStatement'
 					| 'designAccessStatement'
 					| 'developmentPlanPolicies'
 					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
 					| 'eiaScreeningDirection'
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
 					| 'environmentalAssessment'
+					| 'historicEnglandConsultation'
 					| 'inspectorCorrespondence'
 					| 'interestedPartyComment'
 					| 'lpaCaseCorrespondence'
 					| 'lpaCostsApplication'
 					| 'lpaCostsCorrespondence'
+					| 'lpaCostsDecisionLetter'
 					| 'lpaCostsWithdrawal'
 					| 'lpaFinalComment'
 					| 'lpaProofOfEvidence'
 					| 'lpaStatement'
 					| 'lpaWitnessesEvidence'
+					| 'mainPartyCorrespondence'
 					| 'newPlansDrawings'
 					| 'originalApplicationForm'
 					| 'otherNewDocuments'
@@ -10483,6 +11802,7 @@ export interface Appeal {
 		documentName?: string | null;
 		/** @format date-time */
 		letterDate?: string | null;
+		invalidReason?: string | null;
 		virusCheckStatus?: 'affected' | 'not_scanned' | 'scanned';
 		outcome?: 'allowed' | 'dismissed' | 'invalid' | 'split_decision';
 	};
@@ -10520,6 +11840,7 @@ export interface Appeal {
 					| 'appellantCaseWithdrawalLetter'
 					| 'appellantCostsApplication'
 					| 'appellantCostsCorrespondence'
+					| 'appellantCostsDecisionLetter'
 					| 'appellantCostsWithdrawal'
 					| 'appellantFinalComment'
 					| 'appellantProofOfEvidence'
@@ -10531,26 +11852,29 @@ export interface Appeal {
 					| 'communityInfrastructureLevy'
 					| 'conservationMap'
 					| 'consultationResponses'
-					| 'costsDecisionLetter'
 					| 'crossTeamCorrespondence'
 					| 'definitiveMapStatement'
 					| 'designAccessStatement'
 					| 'developmentPlanPolicies'
 					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
 					| 'eiaScreeningDirection'
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
 					| 'environmentalAssessment'
+					| 'historicEnglandConsultation'
 					| 'inspectorCorrespondence'
 					| 'interestedPartyComment'
 					| 'lpaCaseCorrespondence'
 					| 'lpaCostsApplication'
 					| 'lpaCostsCorrespondence'
+					| 'lpaCostsDecisionLetter'
 					| 'lpaCostsWithdrawal'
 					| 'lpaFinalComment'
 					| 'lpaProofOfEvidence'
 					| 'lpaStatement'
 					| 'lpaWitnessesEvidence'
+					| 'mainPartyCorrespondence'
 					| 'newPlansDrawings'
 					| 'originalApplicationForm'
 					| 'otherNewDocuments'
@@ -10616,6 +11940,7 @@ export interface Appeal {
 					| 'appellantCaseWithdrawalLetter'
 					| 'appellantCostsApplication'
 					| 'appellantCostsCorrespondence'
+					| 'appellantCostsDecisionLetter'
 					| 'appellantCostsWithdrawal'
 					| 'appellantFinalComment'
 					| 'appellantProofOfEvidence'
@@ -10627,26 +11952,29 @@ export interface Appeal {
 					| 'communityInfrastructureLevy'
 					| 'conservationMap'
 					| 'consultationResponses'
-					| 'costsDecisionLetter'
 					| 'crossTeamCorrespondence'
 					| 'definitiveMapStatement'
 					| 'designAccessStatement'
 					| 'developmentPlanPolicies'
 					| 'eiaEnvironmentalStatement'
+					| 'eiaScopingOpinion'
 					| 'eiaScreeningDirection'
 					| 'eiaScreeningOpinion'
 					| 'emergingPlan'
 					| 'environmentalAssessment'
+					| 'historicEnglandConsultation'
 					| 'inspectorCorrespondence'
 					| 'interestedPartyComment'
 					| 'lpaCaseCorrespondence'
 					| 'lpaCostsApplication'
 					| 'lpaCostsCorrespondence'
+					| 'lpaCostsDecisionLetter'
 					| 'lpaCostsWithdrawal'
 					| 'lpaFinalComment'
 					| 'lpaProofOfEvidence'
 					| 'lpaStatement'
 					| 'lpaWitnessesEvidence'
+					| 'mainPartyCorrespondence'
 					| 'newPlansDrawings'
 					| 'originalApplicationForm'
 					| 'otherNewDocuments'
@@ -10725,19 +12053,31 @@ export interface AppellantCaseUpdateRequest {
 		isChanged?: boolean;
 	};
 	developmentType?:
-		| 'agriculture-aquaculture'
-		| 'change-extensions'
-		| 'chemical-industry'
-		| 'energy-industry'
-		| 'extractive-industry'
-		| 'food-industry'
-		| 'infrastructure-projects'
-		| 'mineral-industry'
-		| 'other-projects'
-		| 'production-processing-of-metals'
-		| 'rubber-industry'
-		| 'textile-industries'
-		| 'tourism-leisure'
+		| 'change-of-use'
+		| 'householder'
+		| 'major-dwellings'
+		| 'major-industry-storage'
+		| 'major-offices'
+		| 'major-retail-services'
+		| 'major-traveller-caravan'
+		| 'mineral-workings'
+		| 'minor-dwellings'
+		| 'minor-industry-storage'
+		| 'minor-offices'
+		| 'minor-retail-services'
+		| 'minor-traveller-caravan'
+		| 'other-major'
+		| 'other-minor'
+		| null;
+	typeOfPlanningApplication?:
+		| 'full-appeal'
+		| 'householder-planning'
+		| 'listed-building'
+		| 'minor-commercial-development'
+		| 'outline-planning'
+		| 'prior-approval'
+		| 'removal-or-variation-of-conditions'
+		| 'reserved-matters'
 		| null;
 	appellantCaseValidationOutcomeId?: number | null;
 	validationOutcome?: {
@@ -10798,6 +12138,7 @@ export interface LpaQuestionnaireUpdateRequest {
 	eiaSensitiveAreaDetails?: string | null;
 	consultedBodiesDetails?: string | null;
 	reasonForNeighbourVisits?: string | null;
+	preserveGrantLoan?: boolean | null;
 	designatedSiteNames?:
 		| {
 				id: number;
@@ -10830,3 +12171,13 @@ export interface LpaQuestionnaireUpdateRequest {
 	lpaCostsAppliedFor?: boolean | null;
 	designatedSiteNameCustom?: string | null;
 }
+
+export type Notifications = {
+	caseReference: string;
+	recipient: string;
+	template: string;
+	subject: string;
+	message: string;
+	dateCreated: string;
+	success: boolean;
+}[];

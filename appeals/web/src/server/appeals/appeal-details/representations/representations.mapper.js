@@ -2,13 +2,13 @@ import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
-import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
-/** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
-/** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
-/** @typedef {import("#appeals/appeal-details/representations/types.js").RepresentationRejectionReason} RepresentationRejectionReason */
-/** @typedef {import("#appeals/appeal-details/representations/types.js").RejectionReasonUpdateInput} RejectionReasonUpdateInput */
-/** @typedef {import("#appeals/appeal-details/representations/types.js").RejectionReasons} RejectionReasons */
+/** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} Appeal */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RepresentationRejectionReason} RepresentationRejectionReason */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RejectionReasonUpdateInput} RejectionReasonUpdateInput */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').RejectionReasons} RejectionReasons */
 
 /**
  * @param {Representation} comment
@@ -115,27 +115,36 @@ export function mapRejectionReasonPayload(rejectionReasons) {
 
 /**
  * @param {Appeal} appeal
- * @param {string | undefined} backUrl
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} [backUrl]
  * @returns {PageContent}
  * */
-export function statementAndCommentsSharePage(appeal, backUrl) {
+export function statementAndCommentsSharePage(appeal, request, backUrl) {
 	const shortAppealReference = appealShortReference(appeal.appealReference);
 
 	const ipCommentsText = (() => {
 		const numIpComments = appeal.documentationSummary?.ipComments?.counts?.valid ?? 0;
 
 		return numIpComments > 0
-			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments?backUrl=/share#valid" class="govuk-link">${numIpComments} interested party comments</a>`
+			? `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appeal.appealId}/interested-party-comments#valid`
+			  )}" class="govuk-link">${numIpComments} interested party comments</a>`
 			: null;
 	})();
 
-	const statementsText =
+	const lpaStatementText =
 		appeal.documentationSummary?.lpaStatement?.representationStatus ===
-		APPEAL_REPRESENTATION_STATUS.VALID
-			? `<a href="/appeals-service/appeal-details/${appeal.appealId}/lpa-statement?backUrl=/share" class="govuk-link">1 statement</a>`
+			APPEAL_REPRESENTATION_STATUS.VALID ||
+		appeal.documentationSummary?.lpaStatement?.representationStatus ===
+			APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			? `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appeal.appealId}/lpa-statement`
+			  )}" class="govuk-link">1 statement</a>`
 			: null;
 
-	const valueTexts = [ipCommentsText, statementsText].filter(Boolean);
+	const valueTexts = [ipCommentsText, lpaStatementText].filter(Boolean);
 
 	/** @type {PageComponent} */
 	const textComponent =
@@ -155,14 +164,18 @@ export function statementAndCommentsSharePage(appeal, backUrl) {
 					}
 			  };
 
-	const heading =
-		valueTexts.length > 0 ? 'Share IP comments and statements' : 'Progress to final comments';
-
-	const backLinkUrl = constructUrl(backUrl, appeal.appealId);
+	let heading;
+	if (appeal.procedureType === 'Hearing') {
+		heading = 'Progress to hearing ready to set up';
+	} else if (valueTexts.length > 0) {
+		heading = 'Share IP comments and statements';
+	} else {
+		heading = 'Progress to final comments';
+	}
 
 	return {
 		title: heading,
-		backLinkUrl,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appeal.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading,
 		pageComponents: [
@@ -182,10 +195,11 @@ export function statementAndCommentsSharePage(appeal, backUrl) {
 
 /**
  * @param {Appeal} appeal
+ * @param {import('@pins/express/types/express.js').Request} request
  * @param {string | undefined} backUrl
  * @returns {PageContent}
  * */
-export function finalCommentsSharePage(appeal, backUrl) {
+export function finalCommentsSharePage(appeal, request, backUrl) {
 	const hasValidFinalCommentsAppellant =
 		appeal.documentationSummary.appellantFinalComments?.representationStatus ===
 		COMMENT_STATUS.VALID;
@@ -193,16 +207,25 @@ export function finalCommentsSharePage(appeal, backUrl) {
 		appeal.documentationSummary.lpaFinalComments?.representationStatus === COMMENT_STATUS.VALID;
 
 	const infoText = (() => {
+		const appellantFinalCommentsLink = `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+			request,
+			`/appeals-service/appeal-details/${appeal.appealId}/final-comments/appellant`
+		)}">appellant final comments</a>`;
+		const lpaFinalCommentsLink = `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+			request,
+			`/appeals-service/appeal-details/${appeal.appealId}/final-comments/lpa`
+		)}">LPA final comments</a>`;
+
 		if (hasValidFinalCommentsAppellant && hasValidFinalCommentsLPA) {
-			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/appellant?backUrl=/share">appellant final comments</a> and <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/lpa?backUrl=/share">LPA final comments</a> with the relevant parties.`;
+			return `We’ll share ${appellantFinalCommentsLink} and ${lpaFinalCommentsLink} with the relevant parties.`;
 		}
 
 		if (hasValidFinalCommentsAppellant && !hasValidFinalCommentsLPA) {
-			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/appellant?backUrl=/share">appellant final comments</a> with the relevant parties.`;
+			return `We’ll share ${appellantFinalCommentsLink} with the relevant parties.`;
 		}
 
 		if (!hasValidFinalCommentsAppellant && hasValidFinalCommentsLPA) {
-			return `We’ll share <a class="govuk-link" href="/appeals-service/appeal-details/${appeal.appealId}/final-comments/lpa?backUrl=/share">LPA final comments</a> with the relevant parties.`;
+			return `We’ll share ${lpaFinalCommentsLink} with the relevant parties.`;
 		}
 
 		return `There are no final comments to share.`;
@@ -215,12 +238,10 @@ export function finalCommentsSharePage(appeal, backUrl) {
 		: 'Do not progress the case if you are awaiting any late final comments.';
 	const submitButtonText = hasItemsToShare ? 'Share final comments' : 'Progress case';
 
-	const backLinkUrl = constructUrl(backUrl, appeal.appealId);
-
 	/** @type {PageContent} */
 	const pageContent = {
 		title,
-		backLinkUrl,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appeal.appealId}`,
 		preHeading: `Appeal ${appealShortReference(appeal.appealReference)}`,
 		heading: title,
 		pageComponents: [

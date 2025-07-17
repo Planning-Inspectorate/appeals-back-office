@@ -15,9 +15,13 @@ import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
-import formatDate from '#utils/date-formatter.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { notifySend } from '#notify/notify-send.js';
+import { EventType } from '@pins/event-client';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { isCurrentStatus } from '#utils/current-status.js';
+import config from '#config/config.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -70,6 +74,7 @@ export const getRepresentation = representationRepository.getById;
  * @property {{ firstName: string, lastName: string, email: string }} ipDetails
  * @property {{ addressLine1: string, addressLine2?: string, town: string, county?: string, postCode: string }} ipAddress
  * @property {string[]} attachments
+ * @property {string | undefined} dateCreated
  * @property {string} redactionStatus
  * @property {string} source
  *
@@ -81,7 +86,8 @@ export const createRepresentation = async (appealId, input) => {
 	const { ipDetails, ipAddress } = input;
 
 	const address =
-		ipAddress &&
+		ipAddress?.addressLine1 &&
+		ipAddress?.postCode &&
 		(await addressRepository.createAddress({
 			addressLine1: ipAddress.addressLine1,
 			addressLine2: ipAddress.addressLine2,
@@ -94,14 +100,15 @@ export const createRepresentation = async (appealId, input) => {
 		firstName: ipDetails.firstName,
 		lastName: ipDetails.lastName,
 		email: ipDetails.email,
-		addressId: address?.id
+		addressId: address ? address.id : undefined
 	});
 
 	const representation = await representationRepository.createRepresentation({
 		appealId,
 		representedId: represented.id,
 		representationType: input.representationType,
-		source: input.source
+		source: input.source,
+		dateCreated: input.dateCreated
 	});
 
 	if (input.attachments.length > 0) {
@@ -190,8 +197,17 @@ export async function updateRepresentation(repId, payload) {
  * @type {PublishFunction}
  * */
 export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) {
-	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.STATEMENTS) {
+	if (!isCurrentStatus(appeal, APPEAL_CASE_STATUS.STATEMENTS)) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish LPA statement', 409);
+	}
+
+	const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
+	for (const documentUpdated of documentsUpdated) {
+		await broadcasters.broadcastDocument(
+			documentUpdated.documentGuid,
+			documentUpdated.version,
+			EventType.Update
+		);
 	}
 
 	const result = await representationRepository.updateRepresentations(
@@ -222,28 +238,64 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		false
 	);
 
+	const [hasLpaStatement, hasLpaComment, hasIpComments] = [
+		'LPA_STATEMENT',
+		'COMMENT',
+		'APPELLANT_FINAL_COMMENT'
+	].map((type) =>
+		result.some((rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE[type])
+	);
+
 	try {
-		if (
-			result.some((rep) =>
-				[APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT || APPEAL_REPRESENTATION_TYPE.COMMENT].includes(
-					rep.representationType
-				)
-			)
-		) {
-			await notifyPublished(
+		if (hasLpaStatement || hasLpaComment) {
+			let whatHappensNextAppellant;
+			let whatHappensNextLpa;
+			let lpaSubject;
+			let appellantSubject;
+			if (String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.HEARING) {
+				lpaSubject = `We've received all statements and comments`;
+				appellantSubject = `We have received the local planning authority's questionnaire, all statements and comments from interested parties`;
+				if (appeal.hearing?.hearingStartTime) {
+					whatHappensNextAppellant = `Your hearing is on ${formatDate(
+						appeal.hearing?.hearingStartTime,
+						false
+					)}.\n\nWe will contact you if we need any more information.`;
+					whatHappensNextLpa = `The hearing is on ${formatDate(
+						appeal.hearing?.hearingStartTime,
+						false
+					)}.`;
+				} else {
+					whatHappensNextAppellant = `We will contact you if we need any more information.`;
+					whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
+				}
+			} else {
+				lpaSubject = 'Submit your final comments';
+				appellantSubject = 'Submit your final comments';
+				whatHappensNextAppellant = `You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
+				whatHappensNextLpa = `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
+			}
+
+			await notifyPublished({
 				appeal,
 				notifyClient,
-				'received-statement-and-ip-comments-lpa',
-				appeal.lpa?.email,
-				finalCommentsDueDate
-			);
-			await notifyPublished(
+				hasLpaStatement,
+				hasIpComments,
+				templateName: 'received-statement-and-ip-comments-lpa',
+				recipientEmail: appeal.lpa?.email,
+				finalCommentsDueDate,
+				whatHappensNext: whatHappensNextLpa,
+				subject: lpaSubject
+			});
+
+			await notifyPublished({
 				appeal,
 				notifyClient,
-				'received-statement-and-ip-comments-appellant',
-				appeal.agent?.email || appeal.appellant?.email,
-				finalCommentsDueDate
-			);
+				templateName: 'received-statement-and-ip-comments-appellant',
+				recipientEmail: appeal.agent?.email || appeal.appellant?.email,
+				finalCommentsDueDate,
+				whatHappensNext: whatHappensNextAppellant,
+				subject: appellantSubject
+			});
 		}
 	} catch (error) {
 		logger.error(error);
@@ -254,8 +306,17 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 
 /** @type {PublishFunction} */
 export async function publishFinalComments(appeal, azureAdUserId, notifyClient) {
-	if (appeal.appealStatus[0].status !== APPEAL_CASE_STATUS.FINAL_COMMENTS) {
+	if (!isCurrentStatus(appeal, APPEAL_CASE_STATUS.FINAL_COMMENTS)) {
 		throw new BackOfficeAppError('appeal in incorrect state to publish final comments', 409);
+	}
+
+	const documentsUpdated = await documentRepository.setRedactionStatusOnValidation(appeal.id);
+	for (const documentUpdated of documentsUpdated) {
+		await broadcasters.broadcastDocument(
+			documentUpdated.documentGuid,
+			documentUpdated.version,
+			EventType.Update
+		);
 	}
 
 	const result = await representationRepository.updateRepresentations(
@@ -292,19 +353,33 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 }
 
 /**
- * @param {Appeal} appeal
- * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
- * @param {string} templateName
- * @param {string | null} [recipientEmail]
- * @param {string} [finalCommentsDueDate]
- * */
-async function notifyPublished(
+ * @typedef {object} NotifyPublished
+ * @property {Appeal} appeal
+ * @property {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @property {string} templateName
+ * @property {string | null} [recipientEmail]
+ * @property {string} [finalCommentsDueDate]
+ * @property {string} [whatHappensNext]
+ * @property {boolean} [hasLpaStatement]
+ * @property {boolean} [hasIpComments]
+ * @property {string} [subject]
+ */
+
+/**
+ * @param {NotifyPublished} options
+ * @returns {Promise<void>}
+ */
+async function notifyPublished({
 	appeal,
 	notifyClient,
 	templateName,
 	recipientEmail,
-	finalCommentsDueDate = ''
-) {
+	finalCommentsDueDate = '',
+	whatHappensNext = '',
+	hasLpaStatement = false,
+	hasIpComments = false,
+	subject = ''
+}) {
 	const lpaReference = appeal.applicationReference;
 	if (!lpaReference) {
 		throw new Error(
@@ -329,7 +404,11 @@ async function notifyPublished(
 			appeal_reference_number: appeal.reference,
 			site_address: siteAddress,
 			lpa_reference: lpaReference,
-			final_comments_deadline: finalCommentsDueDate
+			final_comments_deadline: finalCommentsDueDate,
+			what_happens_next: whatHappensNext,
+			has_ip_comments: hasIpComments,
+			has_statement: hasLpaStatement,
+			...(subject ? { subject } : {})
 		}
 	});
 }
@@ -344,7 +423,12 @@ function notifyLpaFinalCommentsPublished(appeal, notifyClient) {
 		throw new Error(`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no LPA email address in appeal`);
 	}
 
-	return notifyPublished(appeal, notifyClient, 'final-comments-done-lpa', recipientEmail);
+	return notifyPublished({
+		appeal,
+		notifyClient,
+		templateName: 'final-comments-done-lpa',
+		recipientEmail
+	});
 }
 
 /**
@@ -359,5 +443,10 @@ function notifyAppellantFinalCommentsPublished(appeal, notifyClient) {
 		);
 	}
 
-	return notifyPublished(appeal, notifyClient, 'final-comments-done-appellant', recipientEmail);
+	return notifyPublished({
+		appeal,
+		notifyClient,
+		templateName: 'final-comments-done-appellant',
+		recipientEmail
+	});
 }

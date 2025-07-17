@@ -1,4 +1,5 @@
 import listStates from '#state/list-states.js';
+import { currentStatus } from '#utils/current-status.js';
 
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 /** @typedef {import('@pins/appeals.api').Appeals.StateStub} StateStub */
@@ -9,9 +10,9 @@ import listStates from '#state/list-states.js';
  * @returns {StateStub[]}
  */
 export function mapStateList(data) {
-	const { appealType, procedureType, appealStatus } = data.appeal;
+	const { appealType, procedureType } = data.appeal;
 
-	const status = appealStatus?.[0]?.status;
+	const status = currentStatus(data.appeal);
 	if (!appealType || !status) {
 		return [];
 	}

@@ -1,6 +1,11 @@
 import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
 import createStateMachine from './create-state-machine.js';
 import logger from '#utils/logger.js';
+import {
+	APPEAL_TYPE_SHORTHAND_HAS,
+	APPEAL_TYPE_SHORTHAND_FPA
+} from '@pins/appeals/constants/support.js';
+import isFPA from '@pins/appeals/utils/is-fpa.js';
 
 /** @typedef {import('#db-client').AppealType} AppealType */
 /** @typedef {import('#db-client').ProcedureType} ProcedureType */
@@ -13,8 +18,11 @@ import logger from '#utils/logger.js';
  * @returns {StateStub[]}
  * */
 function listStates(appealType, procedureType, currentState) {
+	const appealTypeKey = isFPA(appealType.key)
+		? APPEAL_TYPE_SHORTHAND_FPA
+		: APPEAL_TYPE_SHORTHAND_HAS;
 	const stateMachine = createStateMachine(
-		appealType.key,
+		appealTypeKey,
 		procedureType?.key || APPEAL_CASE_PROCEDURE.WRITTEN,
 		currentState
 	);
@@ -30,11 +38,11 @@ function listStates(appealType, procedureType, currentState) {
 			const { validAppealTypes, validProcedureTypes } = state.meta;
 
 			if (!procedureType) {
-				return validAppealTypes.includes(appealType.key);
+				return validAppealTypes.includes(appealTypeKey);
 			}
 
 			return (
-				validAppealTypes.includes(appealType.key) && validProcedureTypes.includes(procedureType.key)
+				validAppealTypes.includes(appealTypeKey) && validProcedureTypes.includes(procedureType.key)
 			);
 		})
 		.sort((a, b) => states[a].order - states[b].order);

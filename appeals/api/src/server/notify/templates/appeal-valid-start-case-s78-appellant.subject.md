@@ -1,1 +1,1 @@
-We have started your appeal: ((appeal_reference_number))
+We have started your appeal: {{appeal_reference_number}}

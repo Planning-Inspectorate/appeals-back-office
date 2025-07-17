@@ -1,5 +1,6 @@
 import {
 	createAddressLine1Validator,
+	createAddressLine2Validator,
 	createTownValidator,
 	createPostcodeValidator
 } from '#lib/validators/address.validator.js';
@@ -10,11 +11,7 @@ const maxLength = textInputCharacterLimits.defaultAddressInputLength;
 
 export const validateChangeSiteAddress = createValidator(
 	createAddressLine1Validator(),
-	createTextInputOptionalValidator(
-		'addressLine2',
-		maxLength,
-		`Address line 2 must be ${maxLength} characters or less`
-	),
+	createAddressLine2Validator(),
 	createTownValidator(),
 	createTextInputOptionalValidator(
 		'county',

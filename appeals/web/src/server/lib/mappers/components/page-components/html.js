@@ -2,7 +2,7 @@
  * @param {string} tag
  * @param {Record<string, string>} [attrs]
  * @param {string} [content]
- * @returns {PageComponent}
+ * @returns {HtmlPageComponent}
  * */
 export const simpleHtmlComponent = (tag, attrs = {}, content) => {
 	const attrsItems = Object.entries(attrs).map(([key, value]) => `${key}="${value}"`);

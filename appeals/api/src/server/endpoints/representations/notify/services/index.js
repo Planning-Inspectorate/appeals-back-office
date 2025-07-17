@@ -6,9 +6,9 @@
  * code will the switching logic for you.
  */
 
-import { FRONT_OFFICE_URL } from '@pins/appeals/constants/support.js';
 import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
 import { notifySend } from '#notify/notify-send.js';
+import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js';
 
 /**
  * @typedef {object} ServiceArgs
@@ -31,10 +31,13 @@ export const ipCommentRejection = async ({
 }) => {
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
-	const extendedDeadline = await formatExtendedDeadline(allowResubmit);
+	const { ipCommentsDueDate = null } = appeal.appealTimetable || {};
+	const { ipCommentDueBeforeResubmissionDeadline, resubmissionDueDate } =
+		await getDetailsForCommentResubmission(allowResubmit, ipCommentsDueDate);
 	const recipientEmail = representation.represented?.email;
+
 	if (recipientEmail) {
-		const templateName = extendedDeadline
+		const templateName = resubmissionDueDate
 			? 'ip-comment-rejected-deadline-extended'
 			: 'ip-comment-rejected';
 
@@ -42,9 +45,9 @@ export const ipCommentRejection = async ({
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			url: FRONT_OFFICE_URL,
 			reasons,
-			deadline_date: extendedDeadline
+			deadline_date: resubmissionDueDate,
+			ip_comment_due_before_resubmission_deadline: ipCommentDueBeforeResubmissionDeadline
 		};
 
 		await notifySend({
@@ -74,7 +77,6 @@ export const appellantFinalCommentRejection = async ({ notifyClient, appeal, rep
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			url: FRONT_OFFICE_URL,
 			reasons
 		}
 	});
@@ -98,7 +100,6 @@ export const lpaFinalCommentRejection = async ({ notifyClient, appeal, represent
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			url: FRONT_OFFICE_URL,
 			reasons
 		}
 	});
@@ -113,7 +114,8 @@ export const lpaStatementIncomplete = async ({
 }) => {
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
-	const extendedDeadline = await formatExtendedDeadline(allowResubmit);
+	const { lpaStatementDueDate = null } = appeal.appealTimetable || {};
+	const extendedDeadline = await formatExtendedDeadline(allowResubmit, lpaStatementDueDate, 3);
 
 	const recipientEmail = appeal.lpa?.email;
 	if (!recipientEmail) {
@@ -128,7 +130,6 @@ export const lpaStatementIncomplete = async ({
 			appeal_reference_number: appeal.reference,
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
-			url: FRONT_OFFICE_URL,
 			deadline_date: extendedDeadline,
 			reasons
 		}

@@ -147,7 +147,8 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
  * @returns {string}
  */
 function getSchemaForCaseType(caseType) {
-	return caseType === APPEAL_CASE_TYPE.W ? schemas.events.appealS78 : schemas.events.appealHas;
+	//TODO: Align data model - currently defaulting to S78 schema
+	return caseType === APPEAL_CASE_TYPE.D ? schemas.events.appealHas : schemas.events.appealS78;
 }
 
 /**

@@ -3,7 +3,7 @@ import {
 	dateISOStringToDisplayTime12hr,
 	getDayFromISODate
 } from '#lib/dates.js';
-import { mapUser } from '#appeals/appeal-details/audit/audit.service.js';
+import { tryMapUsers } from '#appeals/appeal-details/audit/audit.mapper.js';
 
 /** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetCaseNotesResponse} GetCaseNotesResponse */
 /**
@@ -14,6 +14,7 @@ import { mapUser } from '#appeals/appeal-details/audit/audit.service.js';
  */
 export const caseNotesWithMappedUsers = async (unmappedCaseNotes, session) => {
 	const caseNotes = [...unmappedCaseNotes];
+
 	return {
 		sessionComment: session.comment || '',
 		caseNotes: await Promise.all(
@@ -23,7 +24,7 @@ export const caseNotesWithMappedUsers = async (unmappedCaseNotes, session) => {
 					dayOfWeek: getDayFromISODate(caseNote.createdAt),
 					time: dateISOStringToDisplayTime12hr(caseNote.createdAt),
 					commentText: caseNote.comment,
-					userName: (await mapUser(caseNote.azureAdUserId, session)).split('@')[0]
+					userName: (await tryMapUsers(caseNote.azureAdUserId, session)).split('@')[0]
 				};
 			})
 		)

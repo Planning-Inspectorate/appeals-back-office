@@ -23,7 +23,7 @@ import {
 	fileUploadInfo
 } from '#testing/app/fixtures/referencedata.js';
 import usersService from '#appeals/appeal-users/users-service.js';
-import { capitalize, cloneDeep } from 'lodash-es';
+import { capitalize, cloneDeep, upperCase } from 'lodash-es';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
@@ -97,7 +97,7 @@ describe('costs', () => {
 						expect(unprettifiedElement.innerHTML).toContain(
 							'<div class="govuk-grid-row pins-file-upload"'
 						);
-						expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+						expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 					});
 				}
 			}
@@ -184,9 +184,11 @@ describe('costs', () => {
 						const element = parseHtml(response.text);
 
 						expect(element.innerHTML).toMatchSnapshot();
-						expect(element.innerHTML).toContain('Upload an updated document</h1>');
+						expect(element.innerHTML).toContain(
+							`${costsCategory === 'lpa' ? 'LPA' : 'Appellant'} ${costsDocumentType}</h1>`
+						);
 						expect(element.innerHTML).toContain('<div class="govuk-grid-row pins-file-upload"');
-						expect(element.innerHTML).toContain('Select files</button>');
+						expect(element.innerHTML).toContain('Choose file</button>');
 					});
 				}
 			}
@@ -400,10 +402,30 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date must include a day' },
-							{ value: 'a', expectedError: 'Received date day must be a number' },
-							{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
-							{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
+							{
+								value: '',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date must include a day`
+							},
+							{
+								value: 'a',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date day must be a number`
+							},
+							{
+								value: '0',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date day must be between 1 and 31`
+							},
+							{
+								value: '32',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date day must be between 1 and 31`
+							}
 						];
 
 						for (const testCase of testCases) {
@@ -442,10 +464,30 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date must include a month' },
-							{ value: 'a', expectedError: 'Received date month must be a number' },
-							{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
-							{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
+							{
+								value: '',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date must include a month`
+							},
+							{
+								value: 'a',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date month must be a number`
+							},
+							{
+								value: '0',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date month must be between 1 and 12`
+							},
+							{
+								value: '13',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date month must be between 1 and 12`
+							}
 						];
 
 						for (const testCase of testCases) {
@@ -484,9 +526,24 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date must include a year' },
-							{ value: 'a', expectedError: 'Received date year must be a number' },
-							{ value: '202', expectedError: 'Received date year must be 4 digits' }
+							{
+								value: '',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date must include a year`
+							},
+							{
+								value: 'a',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date year must be a number`
+							},
+							{
+								value: '202',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date year must be 4 digits`
+							}
 						];
 
 						for (const testCase of testCases) {
@@ -551,7 +608,11 @@ describe('costs', () => {
 							rootElement: '.govuk-error-summary'
 						});
 
-						expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
+						expect(errorSummaryElement.innerHTML).toContain(
+							`${
+								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+							} costs ${costsDocumentType} received date must be a valid date`
+						);
 					});
 
 					it(`should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, if complete and valid document details were provided (${costsCategory} ${costsDocumentType})`, async () => {
@@ -736,10 +797,30 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date must include a day' },
-							{ value: 'a', expectedError: 'Received date day must be a number' },
-							{ value: '0', expectedError: 'Received date day must be between 1 and 31' },
-							{ value: '32', expectedError: 'Received date day must be between 1 and 31' }
+							{
+								value: '',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date must include a day`
+							},
+							{
+								value: 'a',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date day must be a number`
+							},
+							{
+								value: '0',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date day must be between 1 and 31`
+							},
+							{
+								value: '32',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date day must be between 1 and 31`
+							}
 						];
 
 						for (const testCase of testCases) {
@@ -778,10 +859,30 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date must include a month' },
-							{ value: 'a', expectedError: 'Received date month must be a number' },
-							{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
-							{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
+							{
+								value: '',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date must include a month`
+							},
+							{
+								value: 'a',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date month must be a number`
+							},
+							{
+								value: '0',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date month must be between 1 and 12`
+							},
+							{
+								value: '13',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date month must be between 1 and 12`
+							}
 						];
 
 						for (const testCase of testCases) {
@@ -820,9 +921,24 @@ describe('costs', () => {
 						expect(addDocumentsResponse.statusCode).toBe(302);
 
 						const testCases = [
-							{ value: '', expectedError: 'Received date must include a year' },
-							{ value: 'a', expectedError: 'Received date year must be a number' },
-							{ value: '202', expectedError: 'Received date year must be 4 digits' }
+							{
+								value: '',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date must include a year`
+							},
+							{
+								value: 'a',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date year must be a number`
+							},
+							{
+								value: '202',
+								expectedError: `${
+									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+								} costs ${costsDocumentType} received date year must be 4 digits`
+							}
 						];
 
 						for (const testCase of testCases) {
@@ -887,7 +1003,11 @@ describe('costs', () => {
 							rootElement: '.govuk-error-summary'
 						});
 
-						expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
+						expect(errorSummaryElement.innerHTML).toContain(
+							`${
+								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+							} costs ${costsDocumentType} received date must be a valid date`
+						);
 					});
 
 					it(`should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, if complete and valid document details were provided (${costsCategory} ${costsDocumentType})`, async () => {
@@ -1194,6 +1314,9 @@ describe('costs', () => {
 								costsCategory === 'appellant' ? 'Appellant' : 'LPA'
 							} costs ${costsDocumentType} documents</h1>`
 						);
+						expect(unprettifiedElement.innerHTML).toContain(
+							`<a href="/appeals-service/appeal-details/1/costs/${costsCategory}/${costsDocumentType}/upload-documents/${costsFolder.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>`
+						);
 					});
 				}
 			}
@@ -1263,7 +1386,7 @@ describe('costs', () => {
 							'test-pdf-documentFileVersionsInfo.pdf</h1>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+							'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 						);
 						expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
 						expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
@@ -1287,7 +1410,7 @@ describe('costs', () => {
 							'test-pdf-documentFileVersionsInfo.pdf</h1>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+							'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 						);
 						expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
 						expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
@@ -1312,7 +1435,7 @@ describe('costs', () => {
 							'test-pdf-documentFileVersionsInfo.pdf</h1>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain(
-							'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
+							'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
 						expect(unprettifiedElement.innerHTML).toContain('Remove current version');
@@ -1344,10 +1467,10 @@ describe('costs', () => {
 							'test-pdf-documentFileVersionsInfo.pdf</h1>'
 						);
 						expect(unprettifiedElement.innerHTML).not.toContain(
-							'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+							'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 						);
 						expect(unprettifiedElement.innerHTML).not.toContain(
-							'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
+							'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
 						);
 						expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
 						expect(unprettifiedElement.innerHTML).toContain('Remove current version');
@@ -1485,7 +1608,9 @@ describe('costs', () => {
 							rootElement: '.govuk-error-summary'
 						});
 
-						expect(errorSummaryElement.innerHTML).toContain('Answer must be provided');
+						expect(errorSummaryElement.innerHTML).toContain(
+							'Select yes if you are sure you want to remove this version'
+						);
 					});
 
 					it(`should not send an API request to delete the document, and should redirect to the manage document page, if answer "no" was provided (${costsCategory} ${costsDocumentType})`, async () => {
@@ -1549,7 +1674,7 @@ describe('costs', () => {
 
 						expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 						expect(unprettifiedElement.innerHTML).toContain('File name');
-						expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
+						expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo">');
 					});
 				}
 			}
@@ -1572,7 +1697,7 @@ describe('costs', () => {
 							.post(
 								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/change-document-name/1/1`
 							)
-							.send({ fileName: 'new-name.jpeg', documentId: '1' });
+							.send({ fileName: 'new-name', documentId: '1' });
 
 						expect(response.statusCode).toBe(302);
 						expect(response.text).toContain(
@@ -1600,7 +1725,7 @@ describe('costs', () => {
 				expect(unprettifiedElement.innerHTML).toContain(
 					'<div class="govuk-grid-row pins-file-upload"'
 				);
-				expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+				expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 			});
 		});
 
@@ -1673,7 +1798,7 @@ describe('costs', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 				expect(element.innerHTML).toContain('Upload an updated document</h1>');
 				expect(element.innerHTML).toContain('<div class="govuk-grid-row pins-file-upload"');
-				expect(element.innerHTML).toContain('Select files</button>');
+				expect(element.innerHTML).toContain('Choose file</button>');
 			});
 		});
 
@@ -2592,6 +2717,9 @@ describe('costs', () => {
 
 				expect(unprettifiedElement.innerHTML).toContain('Manage folder</span><h1');
 				expect(unprettifiedElement.innerHTML).toContain(`Costs decision documents</h1>`);
+				expect(unprettifiedElement.innerHTML).toContain(
+					`<a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/${costsFolder?.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>`
+				);
 			});
 		});
 
@@ -2656,7 +2784,7 @@ describe('costs', () => {
 					'test-pdf-documentFileVersionsInfo.pdf</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
 				expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
@@ -2680,7 +2808,7 @@ describe('costs', () => {
 					'test-pdf-documentFileVersionsInfo.pdf</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain('Upload a new version');
 				expect(unprettifiedElement.innerHTML).not.toContain('Remove current version');
@@ -2705,7 +2833,7 @@ describe('costs', () => {
 					'test-pdf-documentFileVersionsInfo.pdf</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
+					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
 				expect(unprettifiedElement.innerHTML).toContain('Remove current version');
@@ -2737,10 +2865,10 @@ describe('costs', () => {
 					'test-pdf-documentFileVersionsInfo.pdf</h1>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain(
-					'<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>'
+					'<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).not.toContain(
-					'<strong class="govuk-tag govuk-tag--red single-line">Virus detected</strong>'
+					'<strong class="govuk-tag govuk-tag--red">Virus detected</strong>'
 				);
 				expect(unprettifiedElement.innerHTML).toContain('Upload a new version');
 				expect(unprettifiedElement.innerHTML).toContain('Remove current version');
@@ -2866,7 +2994,9 @@ describe('costs', () => {
 					rootElement: '.govuk-error-summary'
 				});
 
-				expect(errorSummaryElement.innerHTML).toContain('Answer must be provided');
+				expect(errorSummaryElement.innerHTML).toContain(
+					'Select yes if you are sure you want to remove this version'
+				);
 			});
 
 			it(`should not send an API request to delete the document, and should redirect to the manage document page, if answer "no" was provided`, async () => {

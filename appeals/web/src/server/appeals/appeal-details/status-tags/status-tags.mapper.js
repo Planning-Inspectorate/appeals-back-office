@@ -1,10 +1,14 @@
 import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
-import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
 import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
-import { mapDecisionOutcome } from '../issue-decision/issue-decision.mapper.js';
+import { isStatePassed } from '#lib/appeal-status.js';
+import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
+import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { getFileVersionsInfo } from '#appeals/appeal-documents/appeal.documents.service.js';
+import config from '#environment/config.js';
+import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
@@ -13,68 +17,106 @@ import { mapDecisionOutcome } from '../issue-decision/issue-decision.mapper.js';
  * @returns {Promise<PageComponent[]>}
  */
 export const generateStatusTags = async (mappedData, appealDetails, request) => {
-	/** @type {PageComponent|undefined} */
-	let statusTag;
+	/** @type {PageComponent[]} */
+	const statusTags = [];
 
 	if (mappedData.appeal.appealStatus.display?.statusTag) {
-		statusTag = {
+		statusTags.push({
 			type: 'status-tag',
+			parameters: {
+				...mappedData.appeal.appealStatus.display.statusTag,
+				classes: 'pins-status-tag--full-width'
+			}
+		});
+	}
+	if (mappedData.appeal.leadOrChild.display?.statusTag) {
+		statusTags.push({
+			type: 'status-tag',
+			parameters: {
+				...mappedData.appeal.leadOrChild.display.statusTag
+			}
+		});
+	}
+
+	const statusTagsComponentGroup = [];
+
+	if (statusTags.length) {
+		statusTagsComponentGroup.push({
+			type: 'html',
 			wrapperHtml: {
 				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
 				closing: '</div></div>'
 			},
 			parameters: {
-				...mappedData.appeal.appealStatus.display.statusTag
+				html: renderPageComponentsToHtml(statusTags)
 			}
-		};
+		});
 	}
 
-	/** @type {PageComponent|undefined} */
-	let leadOrChildTag;
-
-	if (mappedData.appeal.leadOrChild.display?.statusTag) {
-		leadOrChildTag = {
-			type: 'status-tag',
-			parameters: {
-				...mappedData.appeal.leadOrChild.display.statusTag
-			}
-		};
-	}
-
-	const statusTagsComponentGroup = statusTag ? [statusTag] : [];
-
-	if (leadOrChildTag) {
-		statusTagsComponentGroup.push(leadOrChildTag);
-	}
-
-	const isAppealComplete = appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE;
 	const isAppealWithdrawn = appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
-	if (isAppealComplete && statusTag && appealDetails.decision.documentId) {
-		const letterDate = appealDetails.decision?.letterDate
+	const isAppealInvalid = appealDetails.appealStatus === APPEAL_CASE_STATUS.INVALID;
+
+	if (
+		isAppealInvalid ||
+		(isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
+			(appealDetails.decision.documentId ||
+				appealDetails.costs.appellantDecisionFolder?.documents?.length ||
+				appealDetails.costs.lpaDecisionFolder?.documents?.length))
+	) {
+		const { latestDocumentVersion: latestFileVersion, allVersions = [] } =
+			(await getFileVersionsInfo(
+				request.apiClient,
+				appealDetails.appealId.toString(),
+				appealDetails.decision.documentId || ''
+			)) || {};
+		const originalLetterDate = dateISOStringToDisplayDate(allVersions[0]?.dateReceived);
+
+		const latestLetterDate = appealDetails.decision?.letterDate
 			? dateISOStringToDisplayDate(appealDetails.decision.letterDate)
 			: dateISOStringToDisplayDate(getTodaysISOString());
 
-		const virusCheckStatus = mapVirusCheckStatus(
-			appealDetails.decision.virusCheckStatus || APPEAL_VIRUS_CHECK_STATUS.NOT_SCANNED
+		const insetTextRows = [];
+
+		if (appealDetails.decision?.outcome) {
+			insetTextRows.push(`Decision: ${mapDecisionOutcome(appealDetails.decision.outcome)}`);
+			insetTextRows.push(
+				latestFileVersion && latestFileVersion?.version > 1
+					? `Decision issued on ${originalLetterDate} (updated on ${latestLetterDate})`
+					: `Decision issued on ${latestLetterDate}`
+			);
+		}
+
+		const hasCostsAppellantDecision = Boolean(
+			appealDetails.costs.appellantDecisionFolder?.documents?.length
 		);
+		const hasCostsLpaDecision = Boolean(appealDetails.costs.lpaDecisionFolder?.documents?.length);
+
+		if (hasCostsAppellantDecision) {
+			insetTextRows.push(`Appellant costs decision: Issued`);
+		}
+
+		if (hasCostsLpaDecision) {
+			insetTextRows.push(`LPA costs decision: Issued`);
+		}
+
+		if (appealDetails.decision?.outcome || hasCostsAppellantDecision || hasCostsLpaDecision) {
+			insetTextRows.push(
+				config.featureFlags.featureFlagIssueDecision
+					? getViewDecisionLink(appealDetails.appealId)
+					: getViewDecisionLinkOld(appealDetails)
+			);
+		}
+
+		const html =
+			`<ul class="govuk-list">` + insetTextRows.map((row) => `<li>${row}</li>`).join('') + `</ul>`;
 
 		statusTagsComponentGroup.push({
 			type: 'inset-text',
 			parameters: {
-				html: `<p>Appeal completed: ${letterDate}</p>
-						<p>Decision: ${mapDecisionOutcome(appealDetails.decision?.outcome || '')}</p>
-						<p>${
-							!(virusCheckStatus.checked && virusCheckStatus.safe)
-								? '<span class="govuk-body">View decision letter</span> '
-								: ''
-						}${generateDecisionDocumentDownloadHtml(appealDetails, 'View decision letter')}</p>`
+				html
 			}
 		});
-	} else if (
-		isAppealWithdrawn &&
-		statusTag &&
-		appealDetails?.withdrawal?.withdrawalFolder?.documents?.length
-	) {
+	} else if (isAppealWithdrawn && appealDetails?.withdrawal?.withdrawalFolder?.documents?.length) {
 		const withdrawalRequestDate =
 			appealDetails.withdrawal?.withdrawalRequestDate &&
 			dateISOStringToDisplayDate(appealDetails.withdrawal?.withdrawalRequestDate);
@@ -99,7 +141,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 					parameters: {
 						html: `<p>Withdrawn: ${withdrawalRequestDate}</p>
 								<p><span class="govuk-body">View withdrawal request</span>
-								<strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong></p>`
+								<strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong></p>`
 					}
 				});
 			}
@@ -152,5 +194,23 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		}
 	}
 
+	// @ts-ignore
 	return statusTagsComponentGroup;
 };
+
+/**
+ * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
+ * @returns {string}
+ */
+const getViewDecisionLinkOld = (appealDetails) => {
+	const decisionDownloadHtml = generateDecisionDocumentDownloadHtml(appealDetails, 'View decision');
+
+	if (decisionDownloadHtml.includes('Virus')) {
+		return `<span class="govuk-body">View decision </span>${decisionDownloadHtml}`;
+	}
+
+	return decisionDownloadHtml;
+};
+
+const getViewDecisionLink = (/** @type {number} */ appealId) =>
+	`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/view-decision">View decision</a>`;

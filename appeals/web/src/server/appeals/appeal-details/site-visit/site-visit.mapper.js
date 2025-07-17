@@ -1,5 +1,5 @@
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
-import { removeSummaryListActions } from '#lib/mappers/index.js';
+import { dateInput, removeSummaryListActions } from '#lib/mappers/index.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { padNumberWithZero } from '#lib/string-utilities.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
@@ -8,7 +8,8 @@ import {
 	dayMonthYearHourMinuteToISOString,
 	dateISOStringToDayMonthYearHourMinute
 } from '#lib/dates.js';
-
+import { timeInput } from '#lib/mappers/components/page-components/time.js';
+import { siteVisitDateField } from './site-visits.constants.js';
 /**
  * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -50,7 +51,9 @@ export function mapGetApiVisitTypeToWebVisitType(getApiVisitType) {
  * @param {'schedule' | 'manage'} pageType
  * @param {Appeal} appealDetails
  * @param {string} currentRoute
+ * @param {string|undefined} backUrl
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {import('@pins/express/types/express.js').Request} request
  * @param {WebSiteVisitType|null|undefined} visitType
  * @param {string|number|null|undefined} visitDateDay
  * @param {string|number|null|undefined} visitDateMonth
@@ -59,13 +62,16 @@ export function mapGetApiVisitTypeToWebVisitType(getApiVisitType) {
  * @param {string|number|null|undefined} visitStartTimeMinute
  * @param {string|number|null|undefined} visitEndTimeHour
  * @param {string|number|null|undefined} visitEndTimeMinute
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {Promise<PageContent>}
  */
 export async function scheduleOrManageSiteVisitPage(
 	pageType,
 	appealDetails,
 	currentRoute,
+	backUrl,
 	session,
+	request,
 	visitType,
 	visitDateDay,
 	visitDateMonth,
@@ -73,9 +79,16 @@ export async function scheduleOrManageSiteVisitPage(
 	visitStartTimeHour,
 	visitStartTimeMinute,
 	visitEndTimeHour,
-	visitEndTimeMinute
+	visitEndTimeMinute,
+	errors
 ) {
-	const mappedData = await initialiseAndMapAppealData(appealDetails, currentRoute, session, true);
+	const mappedData = await initialiseAndMapAppealData(
+		appealDetails,
+		currentRoute,
+		session,
+		request,
+		true
+	);
 	const titlePrefix = capitalize(pageType);
 
 	visitType ??= mapGetApiVisitTypeToWebVisitType(appealDetails.siteVisit?.visitType);
@@ -157,44 +170,25 @@ export async function scheduleOrManageSiteVisitPage(
 					value: 'accompanied',
 					text: 'Accompanied'
 				}
-			]
+			],
+			errorMessage: errors && errors['visit-type']?.msg && { text: errors['visit-type']?.msg }
 		}
 	};
 
-	/** @type {PageComponent} */
-	const selectDateComponent = {
-		type: 'date-input',
-		parameters: {
-			id: 'visit-date',
-			namePrefix: 'visit-date',
-			fieldset: {
-				legend: {
-					text: 'Select date',
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
-			hint: {
-				text: 'For example, 27 3 2023'
-			},
-			items: [
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'day',
-					value: visitDateDay || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'month',
-					value: visitDateMonth || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-					name: 'year',
-					value: visitDateYear || ''
-				}
-			]
-		}
-	};
+	// /** @type {PageComponent} */
+	const selectDateComponent = dateInput({
+		name: siteVisitDateField,
+		id: siteVisitDateField,
+		namePrefix: siteVisitDateField,
+		value: {
+			day: visitDateDay,
+			month: visitDateMonth,
+			year: visitDateYear
+		},
+		legendText: 'Select date',
+		hint: 'For example, 27 3 2023',
+		errors: errors
+	});
 
 	/** @type {PageComponent} */
 	const selectTimeHtmlComponent = {
@@ -204,43 +198,25 @@ export async function scheduleOrManageSiteVisitPage(
 		}
 	};
 
-	/** @type {PageComponent} */
-	const selectStartTimeComponent = {
-		type: 'time-input',
-		wrapperHtml: {
-			opening:
-				'<fieldset class="govuk-fieldset govuk-!-margin-bottom-4"><legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>',
-			closing: '</fieldset>'
-		},
-		parameters: {
-			id: 'visit-start-time',
-			hour: {
-				value: visitStartTimeHour
-			},
-			minute: {
-				value: visitStartTimeMinute
-			}
-		}
-	};
+	const selectStartTimeComponent = timeInput({
+		id: 'visit-start-time',
+		value: { hour: visitStartTimeHour, minute: visitStartTimeMinute },
+		legendText: 'Start time',
+		legendClasses: 'govuk-fieldset__legend--s',
+		fieldsetClasses: 'govuk-!-margin-bottom-4',
+		showLabels: false,
+		errorMessage: errors?.['visit-start-time-hour']?.msg
+	});
 
-	/** @type {PageComponent} */
-	const selectEndTimeComponent = {
-		type: 'time-input',
-		wrapperHtml: {
-			opening:
-				'<fieldset class="govuk-fieldset govuk-!-margin-bottom-6"><legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>',
-			closing: '</fieldset>'
-		},
-		parameters: {
-			id: 'visit-end-time',
-			hour: {
-				value: visitEndTimeHour
-			},
-			minute: {
-				value: visitEndTimeMinute
-			}
-		}
-	};
+	const selectEndTimeComponent = timeInput({
+		id: 'visit-end-time',
+		value: { hour: visitEndTimeHour, minute: visitEndTimeMinute },
+		legendText: 'End time',
+		legendClasses: 'govuk-fieldset__legend--s',
+		fieldsetClasses: 'govuk-!-margin-bottom-6',
+		showLabels: false,
+		errorMessage: errors?.['visit-end-time-hour']?.msg
+	});
 
 	/** @type {PageComponent} */
 	const insetTextComponent = {
@@ -255,7 +231,7 @@ export async function scheduleOrManageSiteVisitPage(
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `${titlePrefix} site visit - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: `${titlePrefix} site visit`,
 		submitButtonText: 'Confirm',
@@ -399,7 +375,7 @@ export function scheduleOrManageSiteVisitConfirmationPage(pageType, appealDetail
 			break;
 		case 'all':
 		default:
-			pageContent.title = 'Site visit changed';
+			pageContent.title = 'Site visit updated';
 			pageContent.pageComponents = [
 				{
 					type: 'panel',

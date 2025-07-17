@@ -5,6 +5,7 @@ apps_config = {
   node_environment           = "development"
   private_endpoint_enabled   = false
   session_max_age            = 10800000
+  front_office_url           = "https://appeals-service-dev.planninginspectorate.gov.uk"
 
   auth = {
     client_id = "64c20f53-becf-4b7e-ba62-c1dc9b03ccf9" # Appeals Back Office DEV
@@ -26,34 +27,25 @@ apps_config = {
     service_bus_broadcast_enabled = true
     enable_test_endpoints         = true
     notify_template_ids = {
-      appeal_generic_id                                               = "3fd5fc42-d77f-42c2-984a-cf9b89e4c415"
-      appeal_withdrawn_appellant_id                                   = "5f58736a-bd1b-4215-a288-0d5f25ceab43"
-      appeal_withdrawn_lpa_id                                         = "6eb8dc75-e141-4e06-a8ee-241e7f7c448c"
-      site_visit_change_accompanied_date_change_appellant_id          = "3bd2cd75-bf1e-4256-8a4c-5c5739bc0ecc"
-      site_visit_change_accompanied_date_change_lpa_id                = "5d23f669-a1d2-4232-9171-10f956dfb400"
-      site_visit_change_accompanied_to_access_required_appellant_id   = "f9bd99e7-f3f1-4836-a2dc-018dfdece854"
-      site_visit_change_accompanied_to_access_required_lpa_id         = "15acdaee-ca9d-4001-bb93-9f50ab29226d"
-      site_visit_change_accompanied_to_unaccompanied_appellant_id     = "5056b6fe-095f-45ad-abb5-0a582ef274c3"
-      site_visit_change_accompanied_to_unaccompanied_lpa_id           = "15acdaee-ca9d-4001-bb93-9f50ab29226d"
-      site_visit_change_access_required_date_change_appellant_id      = "1b963d2c-ae50-45c4-abbb-149481c69074"
-      site_visit_change_access_required_to_accompanied_appellant_id   = "0b7d9246-99b8-43d7-8205-02a3c9762691"
-      site_visit_change_access_required_to_accompanied_lpa_id         = "03a6616e-3e0c-4f28-acd5-f4e873847457"
-      site_visit_change_access_required_to_unaccompanied_appellant_id = "a4964a74-af84-45c2-a61b-162a92f94087"
-      site_visit_change_unaccompanied_to_access_required_appellant_id = "f9bd99e7-f3f1-4836-a2dc-018dfdece854"
-      site_visit_change_unaccompanied_to_accompanied_appellant_id     = "771691cb-81cc-444a-8db0-dbbd4f66b61f"
-      site_visit_change_unaccompanied_to_accompanied_lpa_id           = "03a6616e-3e0c-4f28-acd5-f4e873847457"
-      site_visit_schedule_access_required_appellant_id                = "44ff947d-f93d-4333-9366-97ab7a5aa722"
-      site_visit_schedule_accompanied_appellant_id                    = "4002346f-fd65-42fe-b663-36600b85080c"
-      site_visit_schedule_accompanied_lpa_id                          = "03a6616e-3e0c-4f28-acd5-f4e873847457"
-      site_visit_schedule_unaccompanied_appellant_id                  = "a33bb800-56d9-46a4-ba64-35d9d0263666"
-      valid_appellant_case_id                                         = "3b4b74b4-b604-411b-9c98-5be2c6f3bdfd"
+      appeal_generic_id = "3fd5fc42-d77f-42c2-984a-cf9b89e4c415"
     }
   }
 
   featureFlags = {
-    featureFlagS78Written = true
-    featureFlagS78Hearing = true
+    featureFlagS78Written             = true
+    featureFlagS78Hearing             = true
+    featureFlagS78Inquiry             = true
+    featureFlagLinkedAppeals          = true
+    featureFlagS20                    = true
+    featureFlagCAS                    = true
+    featureFlagIssueDecision          = true
+    featureFlagReIssueDecision        = true
+    featureFlagSimplifyTeamAssignment = true
+    featureFlagChangeAppealType       = true
+    featureFlagPdfDownload            = true
   }
+
+  use_system_test_bc_for_change_lpa = true
 
   logging = {
     level_file   = "silent"

@@ -1,5 +1,8 @@
+import { isStatePassed } from '#lib/appeal-status.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapIpCommentsDueDate = ({
@@ -8,16 +11,28 @@ export const mapIpCommentsDueDate = ({
 	userHasUpdateCasePermission
 }) => {
 	const id = 'ip-comments-due-date';
+
+	const useNewTimetableRoute = [
+		APPEAL_TYPE.HOUSEHOLDER,
+		APPEAL_TYPE.S78,
+		APPEAL_TYPE.PLANNED_LISTED_BUILDING
+	].includes(appealDetails.appealType || '');
+
 	if (!appealDetails.startedAt) {
 		return { id, display: {} };
 	}
+
 	return textSummaryListItem({
 		id,
 		text: 'Interested party comments due',
 		value: dateISOStringToDisplayDate(appealDetails.appealTimetable?.ipCommentsDueDate),
-		link: `${currentRoute}/appeal-timetables/ip-comments`,
+		link: useNewTimetableRoute
+			? `${currentRoute}/timetable/edit`
+			: `${currentRoute}/appeal-timetables/ip-comments`,
 		editable:
-			appealDetails.documentationSummary?.ipComments?.counts?.published === 0 &&
+			(useNewTimetableRoute
+				? !isStatePassed(appealDetails, APPEAL_CASE_STATUS.STATEMENTS)
+				: !appealDetails.documentationSummary.ipComments?.counts?.published) &&
 			userHasUpdateCasePermission &&
 			Boolean(appealDetails.startedAt),
 		classes: 'appeal-ip-comments-due-date'

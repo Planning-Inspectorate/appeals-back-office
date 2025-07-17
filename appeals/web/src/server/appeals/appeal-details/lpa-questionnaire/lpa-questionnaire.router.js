@@ -10,7 +10,8 @@ import { permissionNames } from '#environment/permissions.js';
 
 import {
 	validateCaseFolderId,
-	validateCaseDocumentId
+	validateCaseDocumentId,
+	clearUncommittedFilesFromSession
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
 import neighbouringSitesRouter from '../neighbouring-sites/neighbouring-sites.router.js';
@@ -36,6 +37,9 @@ import eiaDevelopmentDescriptionRouter from './environmental-impact-assessment/e
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
 import designatedSitesRouter from './designated-sites/designated-sites.router.js';
+import preserveGrantLoanRouter from './preserve-grant-loan/preserve-grant-loan.router.js';
+import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
+import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -209,9 +213,26 @@ router.use(
 	designatedSitesRouter
 );
 
+router.use(
+	'/:lpaQuestionnaireId/change-appeal-details/local-planning-authority',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	changeLpaRouter
+);
+router.use(
+	'/:lpaQuestionnaireId/preserve-grant-loan',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	preserveGrantLoanRouter
+);
+
 router
 	.route('/:lpaQuestionnaireId')
-	.get(validateAppeal, asyncHandler(controller.getLpaQuestionnaire))
+	.get(
+		validateAppeal,
+		clearUncommittedFilesFromSession,
+		asyncHandler(controller.getLpaQuestionnaire)
+	)
 	.post(
 		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
@@ -315,6 +336,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postAddDocumentDetails)
 	);
 
@@ -335,6 +357,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postDocumentVersionDetails)
 	);
 
@@ -360,6 +383,7 @@ router
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		validateCaseDocumentId,
+		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postAddDocumentDetails)
 	);
 
@@ -397,6 +421,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postChangeDocumentVersionDetails)
 	);
 

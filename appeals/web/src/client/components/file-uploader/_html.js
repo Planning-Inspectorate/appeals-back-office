@@ -20,9 +20,10 @@ const SELECTORS = {
 /**
  * @param {string} type
  * @param {string?} replaceValue
+ * @param {Record<string,string>?} additionalValues
  * @returns {string}
  */
-export const errorMessage = (type, replaceValue) => {
+export const errorMessage = (type, replaceValue, additionalValues = {}) => {
 	/** @type {Record<string,string>} */
 	const index = {
 		GENERIC: 'Something went wrong, please try again',
@@ -31,14 +32,28 @@ export const errorMessage = (type, replaceValue) => {
 		ADDITIONAL_DOCUMENTS_CONFIRMATION_REQUIRED:
 			'Please confirm that the document does not belong anywhere else',
 		TIMEOUT: 'There was a timeout and your files could not be uploaded',
-		NO_FILE: 'Select a file',
+		NO_FILE: 'Select the {fileTitle}',
+		SIZE_SINGLE_FILE: `The selected file must be smaller than 25MB`,
 		GENERIC_SINGLE_FILE: `{REPLACE_VALUE} could not be added`,
 		NAME_SINGLE_FILE: `{REPLACE_VALUE} could not be added because the file name is too long or contains special characters. Rename the file and try again.`,
-		TYPE_SINGLE_FILE: `{REPLACE_VALUE} could not be added because it is not an allowed file type`,
-		DUPLICATE_NAME_SINGLE_FILE: `"{REPLACE_VALUE}" could not be added because a file with this name already exists. Files cannot have duplicate names.`
+		DUPLICATE_NAME_SINGLE_FILE: `"{REPLACE_VALUE}" could not be added because a file with this name already exists. Files cannot have duplicate names.`,
+		DIFFERENT_FILE_EXTENSION: `The selected file must be a {fileExtension}`,
+		SINGLE_FILE_ONLY: `You can only upload 1 file`
 	};
 
-	return index[type] ? index[type].replace('{REPLACE_VALUE}', replaceValue || '') : index.GENERIC;
+	let message = index[type];
+
+	if (!message) {
+		return index.GENERIC;
+	}
+
+	if (additionalValues) {
+		for (const [key, value] of Object.entries(additionalValues)) {
+			message = message.replace(`{${key}}`, value);
+		}
+	}
+
+	return message.replace('{REPLACE_VALUE}', replaceValue || '');
 };
 
 /**
@@ -104,7 +119,7 @@ export const buildErrorListItem = (error) => {
 
 	const p = document.createElement('p');
 	p.className = CLASSES.errorMessage;
-	p.textContent = errorMessage(error.message, error.name);
+	p.textContent = errorMessage(error.message, error.name, error.metadata);
 
 	li.appendChild(p);
 

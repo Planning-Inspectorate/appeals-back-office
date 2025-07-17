@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`audit GET /:appealId/audit should render the case history page with a row for each audit log entry 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-8">Case history</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">Date and time</th>
+                        <th scope="col" class="govuk-table__header govuk-!-width-two-quarters">Details</th>
+                        <th scope="col" class="govuk-table__header govuk-!-width-one-quarter">User</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:55</span>
+                        </td>
+                        <td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Issue decision</strong>
+                        </td>
+                        <td class="govuk-table__cell">System</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:55</span>
+                        </td>
+                        <td class="govuk-table__cell">
+                            <div class="pins-show-more" data-label="" data-mode="text" data-toggle-text-collapsed="Show more"
+                            data-toggle-text-expanded="Show less">Thise case has over 300 characters in the details field. This is a test
+                                to ensure that the system can handle long text entries without issues.
+                                The case has progressed to &lt;strong class=&quot;govuk-tag govuk-tag--grey&quot;&gt;Awaiting
+                                LPA questionnaire&lt;/strong&gt;. There should be over 300 character in
+                                this field to test the system&#39;s ability to handle long text entries
+                                without truncation or errors. - it should show the show more compoonent</div>
+                        </td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:55</span>
+                        </td>
+                        <td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--yellow">Awaiting site visit</strong>
+                        </td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:55</span>
+                        </td>
+                        <td class="govuk-table__cell">The site visit was arranged for Thursday 2 October</td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:55</span>
+                        </td>
+                        <td class="govuk-table__cell">Final comments shared</td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:55</span>
+                        </td>
+                        <td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Site visit ready to set up</strong>
+                        </td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:55</span>
+                        </td>
+                        <td class="govuk-table__cell">LPA final comments accepted</td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:55</span>
+                        </td>
+                        <td class="govuk-table__cell">Appellant final comments accepted</td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:54</span>
+                        </td>
+                        <td class="govuk-table__cell">Statements and IP comments shared</td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:54</span>
+                        </td>
+                        <td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Final comments</strong>
+                        </td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:52</span>
+                        </td>
+                        <td class="govuk-table__cell">LPA questionnaire updated</td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:52</span>
+                        </td>
+                        <td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Statements</strong>
+                        </td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:52</span>
+                        </td>
+                        <td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
+                        </td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:52</span>
+                        </td>
+                        <td class="govuk-table__cell">The case timeline was created</td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:52</span>
+                        </td>
+                        <td class="govuk-table__cell">Case updated</td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">27 May 2025
+                            <br><span>10:52</span>
+                        </td>
+                        <td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Ready to start</strong>
+                        </td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">1 October 2024
+                            <br><span>11:00</span>
+                        </td>
+                        <td class="govuk-table__cell">Case note added:
+                            <br>A case note you should see.</td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell">1 October 2024
+                            <br><span>11:00</span>
+                        </td>
+                        <td class="govuk-table__cell">Case note added:
+                            <br>A case note you should see.</td>
+                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;

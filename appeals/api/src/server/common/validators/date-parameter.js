@@ -7,7 +7,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { body } from 'express-validator';
 import { dateIsAfterDate, dateIsPastOrToday } from '#utils/date-comparison.js';
-import { recalculateDateIfNotBusinessDay } from '#utils/business-days.js';
+import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 

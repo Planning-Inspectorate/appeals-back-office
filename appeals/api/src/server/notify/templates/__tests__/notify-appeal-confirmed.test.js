@@ -13,7 +13,8 @@ describe('appeal-confirmed.md', () => {
 			personalisation: {
 				lpa_reference: '48269/APP/2021/1482',
 				appeal_reference_number: '134526',
-				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
+				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+				feedback_link: 'https://forms.office.com/r/9U4Sq9rEff'
 			}
 		};
 

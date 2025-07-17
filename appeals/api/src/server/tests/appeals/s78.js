@@ -197,7 +197,10 @@ export default {
 		lpaStatementDueDate: new Date('2024-11-20T23:59:00.000Z'),
 		finalCommentsDueDate: new Date('2024-12-04T23:59:00.000Z'),
 		s106ObligationDueDate: new Date('2024-12-04T23:59:00.000Z'),
-		issueDeterminationDate: null
+		statementOfCommonGroundDueDate: new Date('2024-12-04T23:59:00.000Z'),
+		planningObligationDueDate: new Date('2024-12-04T23:59:00.000Z'),
+		issueDeterminationDate: null,
+		proofOfEvidenceAndWitnessesDueDate: new Date('2024-12-04T23:59:00.000Z')
 	},
 	appealType: {
 		id: 2,

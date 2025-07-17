@@ -25,13 +25,13 @@ describe('Schedule site visit', () => {
 				happyPathHelper.assignCaseOfficer(caseRef);
 				happyPathHelper.reviewAppellantCase(caseRef);
 				happyPathHelper.startCase(caseRef);
-				caseDetailsPage.clickChangeVisitTypeHasSiteDetails();
+				caseDetailsPage.clickSetUpSiteVisitType();
 				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
 				dateTimeSection.enterVisitDate(visitDate);
 				dateTimeSection.enterVisitStartTime('08', '00');
 				dateTimeSection.enterVisitEndTime('12', '00');
 				caseDetailsPage.clickButtonByText('Confirm');
-				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit scheduled');
+				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
 				caseDetailsPage.validateAnswer('Visit Type', visitType);
 			});
 		});
@@ -49,9 +49,73 @@ describe('Schedule site visit', () => {
 				dateTimeSection.enterVisitStartTime('08', '00');
 				dateTimeSection.enterVisitEndTime('12', '00');
 				caseDetailsPage.clickButtonByText('Confirm');
-				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit scheduled');
+				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
 				caseDetailsPage.validateAnswer('Visit type', visitType);
 			});
+		});
+	});
+
+	it('should show an error when visit type is not selected', () => {
+		cy.createCase().then((caseRef) => {
+			happyPathHelper.assignCaseOfficer(caseRef);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.startCase(caseRef);
+			caseDetailsPage.clickSetUpSiteVisitType();
+
+			// Don’t select a radio button
+			dateTimeSection.enterVisitDate(happyPathHelper.validVisitDate());
+			dateTimeSection.enterVisitStartTime('08', '00');
+			dateTimeSection.enterVisitEndTime('12', '00');
+
+			caseDetailsPage.clickButtonByText('Confirm');
+
+			caseDetailsPage.validateErrorMessage('Select visit type');
+			caseDetailsPage.validateInLineErrorMessage('Select visit type');
+		});
+	});
+
+	// start time only required for accompanied visits and access required
+	// end time only required for access required
+	// no times required for unnaccompanied visits
+	it('should show an error when a past date is entered for the site visit', () => {
+		cy.createCase().then((caseRef) => {
+			happyPathHelper.assignCaseOfficer(caseRef);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.startCase(caseRef);
+			caseDetailsPage.clickSetUpSiteVisitType();
+			caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
+
+			const yesterday = happyPathHelper.getYesterday();
+
+			dateTimeSection.enterVisitDate(yesterday);
+			dateTimeSection.enterVisitStartTime('08', '00');
+			dateTimeSection.enterVisitEndTime('12', '00');
+
+			caseDetailsPage.clickButtonByText('Confirm');
+
+			caseDetailsPage.validateErrorMessage('The site visit date must be in the future');
+			caseDetailsPage.validateInLineErrorMessage('The site visit date must be in the future');
+		});
+	});
+
+	it('should show an error when the start time is after the end time', () => {
+		cy.createCase().then((caseRef) => {
+			happyPathHelper.assignCaseOfficer(caseRef);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.startCase(caseRef);
+			caseDetailsPage.clickSetUpSiteVisitType();
+			caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
+
+			const futureDate = happyPathHelper.validVisitDate();
+
+			dateTimeSection.enterVisitDate(futureDate);
+			dateTimeSection.enterVisitStartTime('15', '00'); // 3:00 PM
+			dateTimeSection.enterVisitEndTime('14', '00'); // 2:00 PM
+
+			caseDetailsPage.clickButtonByText('Confirm');
+
+			caseDetailsPage.validateErrorMessage('Start time must be before end time');
+			caseDetailsPage.validateInLineErrorMessage('Start time must be before end time');
 		});
 	});
 });

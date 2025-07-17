@@ -1,27 +1,27 @@
 FROM node:22-alpine3.20
 
-# add chromium
 RUN apk add --no-cache \
     chromium \
     freetype \
     harfbuzz \
-    ttf-freefont
-    # perhaps needed if we do web requests?
-    # ca-certificates \
-    # nss \
+    ttf-freefont \
+    nss
 
 WORKDIR /opt
 
-# Copy deps
-COPY appeals/pdf-service-api/package*.json ./packages/pdf-service-api/
-COPY package*.json ./
+COPY package.json package-lock.json ./
 
-# Install
-RUN npm ci --workspaces --if-present --omit=dev
+COPY appeals ./appeals
+COPY packages ./packages
 
-# Copy app
-WORKDIR /opt/packages/pdf-service-api
-COPY appeals/pdf-service-api/src ./src
+RUN echo "Running npm ci for the entire workspace..." && \
+    npm ci --omit=dev --ignore-scripts && \
+    echo "npm ci completed."
+
+WORKDIR /opt/appeals/pdf-service-api
+
+RUN mkdir -p /opt/appeals/pdf-service-api/src/public/assets && \
+    chown -R 1000:1000 /opt/appeals/pdf-service-api/src/public
 
 ARG GIT_SHA
 ENV GIT_SHA=$GIT_SHA

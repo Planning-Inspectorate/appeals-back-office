@@ -10,7 +10,7 @@ export class Page {
 	 *********************************************************/
 
 	selectors = {
-		accordion: '.govuk-accordion',
+		accordion: '.govuk-accordion__section-heading-text-focus',
 		accordionButton: '.govuk-accordion__section-button',
 		accordionToggleText: '.govuk-accordion__section-toggle-text',
 		accordionSectionHeader: '.govuk-accordion__section-header',
@@ -25,8 +25,10 @@ export class Page {
 		centralCol: '.pins-column--central',
 		checkbox: '.govuk-checkboxes__item',
 		errorMessage: '.govuk-error-message',
+		inLineErrorMessage: '.govuk-form-group--error .govuk-error-message',
 		formGroup: '.govuk-form-group',
 		fullColumn: '.govuk-grid-column-full',
+		twoThirdColumn: '.govuk-grid-column-two-thirds',
 		headingLeft: '.govuk-heading-l',
 		input: '.govuk-input',
 		leftCol: '.pins-column--left',
@@ -55,11 +57,14 @@ export class Page {
 		summaryListActions: '.govuk-summary-list__actions',
 		summaryListKey: '.govuk-summary-list__key',
 		summaryListValue: '.govuk-summary-list__value',
+		summaryDetails: '.govuk-details__summary',
 		summaryErrorMessages: '.govuk-list.govuk-error-summary__list',
 		xlHeader: '.govuk-heading-xl',
 		projectManagement: 'span.font-weight--700:nth-child(2)', // TODO Use specific data-cy selector
 		unpublish: 'a.govuk-button:nth-child(5)', // TODO Use specific data-cy selector
-		caseRefTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)' // TODO Use specific data-cy selector
+		caseRefTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)', // TODO Use specific data-cy selector
+		serviceHeader: '.pins-header-domainname',
+		users: '#users'
 	};
 
 	basePageElements = {
@@ -84,6 +89,7 @@ export class Page {
 			cy.contains(this.selectors.tableCell, question, { matchCase: false }).nextUntil('a'),
 		enterDate: () => cy.get(this.selectors.dateInput),
 		errorMessage: () => cy.get(this.selectors.errorMessage),
+		inLineErrorMessage: () => cy.get(this.selectors.inLineErrorMessage),
 		summaryErrorMessages: () => cy.get(this.selectors.summaryErrorMessages),
 		input: () => cy.get(this.selectors.input),
 		linkByText: (text) => cy.contains(this.selectors.link, text, { matchCase: true }),
@@ -113,7 +119,14 @@ export class Page {
 		textArea: () => cy.get(this.selectors.textArea),
 		genericText: () => cy.get(this.selectors.body),
 		projectManagement: () => cy.get(this.selectors.projectManagement),
-		unpublishLink: () => cy.get(this.selectors.unpublish)
+		unpublishLink: () => cy.get(this.selectors.unpublish),
+		errorMessageLink: (link) => cy.get(`a[href='#${link}']`),
+		serviceHeader: () => cy.get(this.selectors.serviceHeader),
+		xlHeader: () => cy.get(this.selectors.xlHeader),
+		twoThirdColumn: () => cy.get(this.selectors.twoThirdColumn),
+		link: () => cy.get(this.selectors.link),
+		usersInput: () => cy.get(this.selectors.users),
+		summaryDetails: () => cy.get(this.selectors.summaryDetails)
 	};
 
 	/********************************************************
@@ -206,6 +219,10 @@ export class Page {
 		this.basePageElements.textArea().eq(index).clear().type(text);
 	}
 
+	fillUsersInput(text, index = 0) {
+		this.basePageElements.usersInput().type(text);
+	}
+
 	clearSearchResults() {
 		this.basePageElements.clearSearchResultsLink().click();
 	}
@@ -249,22 +266,16 @@ export class Page {
 	}
 
 	validateBannerMessage(title, message) {
-		// this.basePageElements.bannerHeader().then(($banner) => {
-		// 	expect($banner.text().trim()).eq(successMessage);
-		// });
+		cy.get('.govuk-notification-banner').then(($banners) => {
+			const matchingBanners = $banners.filter((index, banner) => {
+				const bannerText = Cypress.$(banner).text().trim();
+				return bannerText.includes(title) && bannerText.includes(message);
+			});
 
-		// Allow for multiple banners on a page
-		// TODO Move selectors out
-		cy.get('.govuk-notification-banner').each(($banner) => {
-			cy.wrap($banner)
-				.find('.govuk-notification-banner__title')
-				.then(($title) => {
-					if ($title.text().includes(title)) {
-						cy.wrap($banner)
-							.find('.govuk-notification-banner__heading')
-							.should('contain.text', message);
-					}
-				});
+			expect(
+				matchingBanners.length,
+				`Expected to find a banner with title "${title}" and message "${message}"`
+			).to.be.at.eq(1);
 		});
 	}
 
@@ -275,6 +286,10 @@ export class Page {
 	}
 
 	validateErrorMessage(errorMessage) {
+		this.basePageElements.errorMessage().contains(errorMessage).should('exist');
+	}
+
+	validateInLineErrorMessage(errorMessage) {
 		this.basePageElements.errorMessage().contains(errorMessage).should('exist');
 	}
 
@@ -341,5 +356,34 @@ export class Page {
 
 	validateSectionHeader(sectionHeader) {
 		this.basePageElements.sectionHeader().should('have.text', sectionHeader);
+	}
+
+	checkErrorMessageDisplays(errorMessage) {
+		cy.get('li').contains(errorMessage).should('be.visible');
+	}
+
+	verifyInlineErrorMessage(element) {
+		cy.get(`#${element}`).should('be.visible');
+	}
+
+	verifyInputFieldIsFocusedWhenErrorMessageLinkIsClicked(link, attribute, value) {
+		this.basePageElements.errorMessageLink(link).click();
+		cy.focused().should('have.attr', attribute, value);
+	}
+
+	verifyTagOnPersonalListPage(caseRef, expectedTagText) {
+		cy.get(this.selectors.link)
+			.contains(caseRef)
+			.parents('tr')
+			.find('.govuk-tag')
+			.should('have.text', expectedTagText);
+	}
+
+	verifyTagOnAllCasesPage(caseRef, expectedTagText) {
+		cy.getByData(caseRef)
+			.parent('td')
+			.siblings('.govuk-table__cell')
+			.find('.govuk-tag')
+			.should('have.text', expectedTagText);
 	}
 }

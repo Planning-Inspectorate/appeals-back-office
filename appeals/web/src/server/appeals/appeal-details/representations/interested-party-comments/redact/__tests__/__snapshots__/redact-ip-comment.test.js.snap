@@ -21,6 +21,11 @@ exports[`redact renders the confirm redaction page 1`] = `
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact">Change<span class="govuk-visually-hidden"> redacted comment</span></a>
                     </dd>
                 </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/add-document?backUrl=/interested-party-comments/3670/redact/confirm">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    </dd>
+                </div>
             </dl>
         </div>
     </div>
@@ -45,6 +50,10 @@ exports[`redact renders the redact page 1`] = `
         <form method="POST" class="govuk-grid-column-two-thirds">
             <p class="govuk-body govuk-!-margin-bottom-0">Original comment:</p>
             <div id="original-comment" class="govuk-inset-text govuk-!-margin-top-2">Awaiting review comment 47</div>
+            <div class="govuk-button-group">
+                <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
+                id="revert-button">Revert to original comment</button>
+            </div>
             <div class="govuk-form-group">
                 <label class="govuk-label govuk-label--s" for="redact-textarea">Redacted comment</label>
                 <textarea class="govuk-textarea" id="redact-textarea"
@@ -54,8 +63,9 @@ exports[`redact renders the redact page 1`] = `
                 <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button"
                 id="redact-button">Redact selected text</button>
                 <button type="submit" class="govuk-button govuk-button--secondary"
-                data-module="govuk-button" id="undo-button">Undo all changes</button>
+                data-module="govuk-button" id="undo-button">Undo changes</button>
             </div>
+            <p class="govuk-visually-hidden" id="saved-textarea">Awaiting review comment 47</p>
             <div class="govuk-button-group">
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </div>

@@ -1,6 +1,6 @@
 module "app_web" {
   #checkov:skip=CKV_TF_1: Use of commit hash are not required for our Terraform modules
-  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.40"
+  source = "github.com/Planning-Inspectorate/infrastructure-modules.git//modules/node-app-service?ref=1.49"
 
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
@@ -80,11 +80,24 @@ module "app_web" {
     RETRY_STATUS_CODES = "408,413,429,500,502,503,504,521,522,524"
 
     #feature flags
-    FEATURE_FLAG_S78_WRITTEN = var.apps_config.featureFlags.featureFlagS78Written
-    FEATURE_FLAG_S78_HEARING = var.apps_config.featureFlags.featureFlagS78Hearing
+    FEATURE_FLAG_S78_WRITTEN              = var.apps_config.featureFlags.featureFlagS78Written
+    FEATURE_FLAG_S78_HEARING              = var.apps_config.featureFlags.featureFlagS78Hearing
+    FEATURE_FLAG_S78_INQUIRY              = var.apps_config.featureFlags.featureFlagS78Inquiry
+    FEATURE_FLAG_LINKED_APPEALS           = var.apps_config.featureFlags.featureFlagLinkedAppeals
+    FEATURE_FLAG_S20                      = var.apps_config.featureFlags.featureFlagS20
+    FEATURE_FLAG_CAS                      = var.apps_config.featureFlags.featureFlagCAS
+    FEATURE_FLAG_ISSUE_DECISION           = var.apps_config.featureFlags.featureFlagIssueDecision
+    FEATURE_FLAG_RE_ISSUE_DECISION        = var.apps_config.featureFlags.featureFlagReIssueDecision
+    FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT = var.apps_config.featureFlags.featureFlagSimplifyTeamAssignment
+    FEATURE_FLAG_CHANGE_APPEAL_TYPE       = var.apps_config.featureFlags.featureFlagChangeAppealType
+    FEATURE_FLAG_PDF_DOWNLOAD             = var.apps_config.featureFlags.featureFlagPdfDownload
+
+    #change LPA
+    USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA = var.apps_config.use_system_test_bc_for_change_lpa
 
     # external URLs
     BETA_FEEDBACK_URL = var.beta_feedback_url
+
   }
 
   providers = {

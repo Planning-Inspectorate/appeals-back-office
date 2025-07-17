@@ -422,9 +422,9 @@ describe('add-ip-comment', () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
 				.send({
-					day: '30',
-					month: '10',
-					year: '2024'
+					'date-day': '30',
+					'date-month': '10',
+					'date-year': '2024'
 				});
 
 			expect(response.statusCode).toBe(302);
@@ -437,9 +437,9 @@ describe('add-ip-comment', () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
 				.send({
-					day: '30',
-					month: '10',
-					year: '2024'
+					'date-day': '30',
+					'date-month': '10',
+					'date-year': '2024'
 				});
 
 			expect(response.statusCode).toBe(302);
@@ -452,9 +452,9 @@ describe('add-ip-comment', () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
 				.send({
-					day: '31',
-					month: '10',
-					year: '2024'
+					'date-day': '31',
+					'date-month': '10',
+					'date-year': '2024'
 				});
 
 			expect(response.statusCode).toBe(400);
@@ -477,9 +477,9 @@ describe('add-ip-comment', () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
 				.send({
-					day: '',
-					month: '',
-					year: ''
+					'date-day': '',
+					'date-month': '',
+					'date-year': ''
 				});
 
 			expect(response.statusCode).toBe(400);
@@ -495,16 +495,16 @@ describe('add-ip-comment', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Submitted date must include a day, a month and a year');
+			expect(errorSummaryHtml).toContain('Enter the submitted date');
 		});
 
 		it('should return 400 on invalid date input with appropriate error messages', async () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
 				.send({
-					day: '99',
-					month: '99',
-					year: '9999'
+					'date-day': '99',
+					'date-month': '99',
+					'date-year': '9999'
 				});
 
 			expect(response.statusCode).toBe(400);
@@ -520,7 +520,7 @@ describe('add-ip-comment', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Submitted date must be a valid date');
+			expect(errorSummaryHtml).toContain('Submitted date day must be between 1 and 31');
 		});
 	});
 

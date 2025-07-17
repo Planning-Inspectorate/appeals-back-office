@@ -36,7 +36,9 @@ const getAuditTrail = (appealId) =>
 				select: {
 					document: {
 						include: {
-							latestDocumentVersion: true
+							latestDocumentVersion: {
+								include: { redactionStatus: true }
+							}
 						}
 					}
 				}

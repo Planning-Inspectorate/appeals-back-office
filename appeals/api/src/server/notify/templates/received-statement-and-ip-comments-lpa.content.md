@@ -1,16 +1,19 @@
-We’ve received comments from interested parties.
+{% if has_ip_comments -%}
+   We’ve received comments from interested parties.
+{% endif -%}
 
-You can [view this information in the appeals service](https://appeal-planning-decision.service.gov.uk/manage-appeals/your-email-address).
+{% if has_ip_comments -%}
+You can [view this information in the appeals service]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}).
+{% endif -%}
 
-# Appeal details
+{% include 'parts/appeal-details.md' %}
 
-^Appeal reference number: ((appeal_reference_number))
-Address: ((site_address))
-Planning application reference: ((lpa_reference))
-
+{% if what_happens_next -%}
 # What happens next
 
-You need to [submit your final comments](https://appeal-planning-decision.service.gov.uk/manage-appeals/your-email-address) by ((final_comments_deadline)).
+{{what_happens_next}}
+
+{% endif -%}
 
 The Planning Inspectorate
 caseofficers@planninginspectorate.gov.uk

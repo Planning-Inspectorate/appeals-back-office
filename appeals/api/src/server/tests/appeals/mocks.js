@@ -4,6 +4,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import has from './has.js';
 import s78 from './s78.js';
+import s20 from './s20.js';
 
 import {
 	azureAdUserId,
@@ -13,7 +14,7 @@ import {
 	completeLPAQuestionnaireOutcome,
 	incompleteLPAQuestionnaireOutcome
 } from '#tests/shared/mocks.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS, APPEAL_TYPE_OF_PLANNING_APPLICATION } from 'pins-data-model';
 
 export const auditTrails = [
 	{
@@ -85,6 +86,10 @@ export const appealHas = {
 
 export const appealS78 = {
 	...s78
+};
+
+export const appealS20 = {
+	...s20
 };
 
 export const householdAppeal = {
@@ -168,7 +173,8 @@ export const householdAppeal = {
 		appellantProcedurePreference: 'Hearing',
 		appellantProcedurePreferenceDetails: 'Reason for preference',
 		appellantProcedurePreferenceDuration: 5,
-		appellantProcedurePreferenceWitnessCount: 1
+		appellantProcedurePreferenceWitnessCount: 1,
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
 	},
 	caseOfficer: {
 		id: 1,
@@ -188,6 +194,38 @@ export const householdAppeal = {
 			id: 1,
 			name: 'Access required',
 			key: 'site_visit_access_required'
+		}
+	},
+	hearing: {
+		id: 1,
+		appealId: 1,
+		hearingStartTime: new Date('2022-03-31T01:00:00.000Z'),
+		hearingEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		addressId: 1,
+		address: {
+			id: 1,
+			addressLine1: '96 The Avenue',
+			addressLine2: 'Leftfield',
+			addressCountry: 'United Kingdom',
+			addressCounty: 'Kent',
+			postcode: 'MD21 5XY',
+			addressTown: 'Maidstone'
+		}
+	},
+	inquiry: {
+		id: 1,
+		appealId: 1,
+		inquiryStartTime: new Date('2022-03-31T01:00:00.000Z'),
+		inquiryEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		addressId: 1,
+		address: {
+			id: 1,
+			addressLine1: '96 The Avenue',
+			addressLine2: 'Leftfield',
+			addressCountry: 'United Kingdom',
+			addressCounty: 'Kent',
+			postcode: 'MD21 5XY',
+			addressTown: 'Maidstone'
 		}
 	},
 	parentAppeals: [],
@@ -246,7 +284,109 @@ export const fullPlanningAppeal = {
 		isAgriculturalHolding: true,
 		isAgriculturalHoldingTenant: true,
 		isDevelopmentDescriptionStillCorrect: false,
-		newDevelopmentDescription: 'A new extension has been added at the back'
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+	},
+	representations: []
+};
+
+export const listedBuildingAppeal = {
+	...fullPlanningAppeal,
+	id: 3,
+	appealType: {
+		id: 12,
+		type: 'Planning listed building and conservation area',
+		key: 'Y'
+	},
+	representations: []
+};
+
+export const listedBuildingAppealAppellantCaseValid = {
+	...fullPlanningAppeal,
+	id: 4,
+	appealType: {
+		id: 12,
+		type: 'Planning listed building and conservation area',
+		key: 'Y'
+	},
+	representations: []
+};
+export const listedBuildingAppealAppellantCaseIncomplete = {
+	...fullPlanningAppeal,
+	id: 5,
+	appealType: {
+		id: 12,
+		type: 'Planning listed building and conservation area',
+		key: 'Y'
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true,
+		hasOtherTenants: true,
+		hasPlanningObligation: true,
+		hasSeparateOwnershipCertificate: true,
+		hasToldTenants: false,
+		isAgriculturalHolding: true,
+		isAgriculturalHoldingTenant: true,
+		isDevelopmentDescriptionStillCorrect: false,
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		...incompleteAppellantCaseOutcome
+	},
+
+	caseExtensionDate: new Date(2099, 6, 14),
+	representations: []
+};
+
+export const listedBuildingAppealAppellantCaseInvalid = {
+	...fullPlanningAppeal,
+	id: 6,
+	appealType: {
+		id: 12,
+		type: 'Planning listed building and conservation area',
+		key: 'Y'
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true,
+		hasOtherTenants: true,
+		hasPlanningObligation: true,
+		hasSeparateOwnershipCertificate: true,
+		hasToldTenants: false,
+		isAgriculturalHolding: true,
+		isAgriculturalHoldingTenant: true,
+		isDevelopmentDescriptionStillCorrect: false,
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		...invalidAppellantCaseOutcome
+	},
+	representations: []
+};
+
+export const fullPlanningAppealCaseValid = {
+	...householdAppeal,
+	id: 2,
+	appealType: {
+		id: 1,
+		key: APPEAL_TYPE_SHORTHAND_FPA,
+		type: 'Full Planning'
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true,
+		hasOtherTenants: true,
+		hasPlanningObligation: true,
+		hasSeparateOwnershipCertificate: true,
+		hasToldTenants: false,
+		isAgriculturalHolding: true,
+		isAgriculturalHoldingTenant: true,
+		isDevelopmentDescriptionStillCorrect: false,
+		newDevelopmentDescription: 'A new extension has been added at the back',
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL,
+		...validAppellantCaseOutcome
 	},
 	representations: []
 };
@@ -290,6 +430,12 @@ export const householdAppealLPAQuestionnaireComplete = {
 
 export const householdAppealLPAQuestionnaireIncomplete = {
 	...householdAppeal,
+	appealStatus: [
+		{
+			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			valid: true
+		}
+	],
 	lpaQuestionnaire: {
 		...householdAppeal.lpaQuestionnaire,
 		...incompleteLPAQuestionnaireOutcome
@@ -303,6 +449,8 @@ export const fullPlanningAppealAppellantCaseIncomplete = {
 		...fullPlanningAppeal.appellantCase,
 		...incompleteAppellantCaseOutcome
 	},
+	caseExtensionDate: new Date(2099, 6, 14),
+
 	id: 5
 };
 
@@ -317,8 +465,29 @@ export const fullPlanningAppealAppellantCaseInvalid = {
 
 export const fullPlanningAppealLPAQuestionnaireIncomplete = {
 	...fullPlanningAppeal,
+	appealStatus: [
+		{
+			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			valid: true
+		}
+	],
 	lpaQuestionnaire: {
 		...fullPlanningAppeal.lpaQuestionnaire,
+		...incompleteLPAQuestionnaireOutcome
+	},
+	id: 5
+};
+
+export const listedBuildingAppealLPAQuestionnaireIncomplete = {
+	...listedBuildingAppeal,
+	appealStatus: [
+		{
+			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			valid: true
+		}
+	],
+	lpaQuestionnaire: {
+		...listedBuildingAppeal.lpaQuestionnaire,
 		...incompleteLPAQuestionnaireOutcome
 	},
 	id: 5

@@ -1,15 +1,22 @@
 /** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@pins/appeals.api').Schema.DesignatedSite} DesignatedSite */
 
+import { createSharedS20S78Fields } from '#mappers/integration/shared/s20s78/questionnaire-fields.js';
+
 /**
  *
  * @param {Pick<LPAQuestionnaireCommand, 'casedata'>} command
- * @param {boolean} isS78
  * @param {DesignatedSite[]} designatedSites
  * @returns {Omit<import('#db-client').Prisma.LPAQuestionnaireCreateInput, 'appeal'>}
  */
-export const mapQuestionnaireIn = (command, isS78, designatedSites) => {
+export const mapQuestionnaireIn = (command, designatedSites) => {
 	const casedata = command.casedata;
+
+	const isS20 = casedata.caseType === 'Y';
+	const isS78 = casedata.caseType === 'W';
+
+	const sharedFields = createSharedS20S78Fields(command, designatedSites);
+
 	const siteAccessDetails =
 		casedata.siteAccessDetails != null && casedata.siteAccessDetails.length > 0
 			? casedata.siteAccessDetails[0]
@@ -37,6 +44,7 @@ export const mapQuestionnaireIn = (command, isS78, designatedSites) => {
 
 	const listedBuildingsData = mapListedBuildings(casedata, isS78);
 
+	//@ts-ignore
 	return {
 		lpaQuestionnaireSubmittedDate: casedata.lpaQuestionnaireSubmittedDate,
 		lpaStatement: casedata.lpaStatement,
@@ -54,34 +62,10 @@ export const mapQuestionnaireIn = (command, isS78, designatedSites) => {
 			}
 		}),
 		reasonForNeighbourVisits: casedata.reasonForNeighbourVisits,
-		...(isS78 && {
-			lpaStatement: casedata.lpaStatement,
-			affectsScheduledMonument: casedata.affectsScheduledMonument,
-			isAonbNationalLandscape: casedata.isAonbNationalLandscape,
-			isGypsyOrTravellerSite: casedata.isGypsyOrTravellerSite,
-			isPublicRightOfWay: casedata.isPublicRightOfWay,
-			...mapDesignatedSiteNames(casedata, designatedSites),
-			eiaEnvironmentalImpactSchedule: casedata.eiaEnvironmentalImpactSchedule,
-			eiaDevelopmentDescription: casedata.eiaDevelopmentDescription,
-			eiaSensitiveAreaDetails: casedata.eiaSensitiveAreaDetails,
-			eiaColumnTwoThreshold: casedata.eiaColumnTwoThreshold,
-			eiaScreeningOpinion: casedata.eiaScreeningOpinion,
-			eiaRequiresEnvironmentalStatement: casedata.eiaRequiresEnvironmentalStatement,
-			eiaCompletedEnvironmentalStatement: casedata.eiaCompletedEnvironmentalStatement,
-			consultedBodiesDetails: casedata.consultedBodiesDetails,
-			hasProtectedSpecies: casedata.hasProtectedSpecies,
-			hasTreePreservationOrder: casedata.hasTreePreservationOrder,
-			hasStatutoryConsultees: casedata.hasStatutoryConsultees,
-			hasConsultationResponses: casedata.hasConsultationResponses,
-			hasEmergingPlan: casedata.hasEmergingPlan,
-			hasSupplementaryPlanningDocs: casedata.hasSupplementaryPlanningDocs,
-			hasInfrastructureLevy: casedata.hasInfrastructureLevy,
-			isInfrastructureLevyFormallyAdopted: casedata.isInfrastructureLevyFormallyAdopted,
-			infrastructureLevyAdoptedDate: casedata.infrastructureLevyAdoptedDate,
-			infrastructureLevyExpectedDate: casedata.infrastructureLevyExpectedDate,
-			lpaProcedurePreference: casedata.lpaProcedurePreference,
-			lpaProcedurePreferenceDetails: casedata.lpaProcedurePreferenceDetails,
-			lpaProcedurePreferenceDuration: casedata.lpaProcedurePreferenceDuration
+		...(isS78 && { ...sharedFields }),
+		...(isS20 && {
+			...sharedFields,
+			preserveGrantLoan: casedata.preserveGrantLoan
 		})
 	};
 };
@@ -113,37 +97,4 @@ const mapListedBuildings = (casedata, isS78) => {
 	const combinedListedBuildings = [...affectedListedBuildings, ...changedListedBuildings];
 
 	return combinedListedBuildings.length > 0 ? combinedListedBuildings : null;
-};
-
-/**
- *
- * @param {import('pins-data-model').Schemas.LPAQS78SubmissionProperties} casedata
- * @param {DesignatedSite[]} designatedSites
- * @returns {*|undefined}
- */
-const mapDesignatedSiteNames = (casedata, designatedSites) => {
-	if (casedata.designatedSitesNames && casedata.designatedSitesNames.length > 0) {
-		const defaultSiteNames = designatedSites.map((site) => site.key);
-
-		const siteNames = casedata.designatedSitesNames.filter((site) =>
-			defaultSiteNames.includes(site)
-		);
-
-		const customSiteName = casedata.designatedSitesNames.find(
-			(/** @type {string} */ site) => !defaultSiteNames.includes(site)
-		);
-
-		return {
-			designatedSiteNames: {
-				create: siteNames.map((site) => {
-					return {
-						designatedSite: {
-							connect: { key: site }
-						}
-					};
-				})
-			},
-			designatedSiteNameCustom: customSiteName
-		};
-	}
 };

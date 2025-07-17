@@ -14,7 +14,7 @@ exports[`application-development-type GET /change should render the development 
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Check the Development type</h1>
+                                    <h1 class="govuk-fieldset__heading"> Development type</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -34,7 +34,7 @@ exports[`application-development-type GET /change should render the development 
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-4" name="developmentType"
-                                        type="radio" value="major-general-industry">
+                                        type="radio" value="major-industry-storage">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-4">Major general industry/storage/warehousing</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -44,17 +44,17 @@ exports[`application-development-type GET /change should render the development 
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-6" name="developmentType"
-                                        type="radio" value="major-retail">
+                                        type="radio" value="major-retail-services">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-6">Major retail and services</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-7" name="developmentType"
-                                        type="radio" value="major-traveller">
+                                        type="radio" value="major-traveller-caravan">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-7">Major traveller and caravan pitches</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-8" name="developmentType"
-                                        type="radio" value="mineral-working">
+                                        type="radio" value="mineral-workings">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-8">Mineral working</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -64,7 +64,7 @@ exports[`application-development-type GET /change should render the development 
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-10" name="developmentType"
-                                        type="radio" value="minor-general-industry">
+                                        type="radio" value="minor-industry-storage">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-10">Minor general industry/storage/warehousing</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -74,12 +74,12 @@ exports[`application-development-type GET /change should render the development 
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-12" name="developmentType"
-                                        type="radio" value="minor-retail">
+                                        type="radio" value="minor-retail-services">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-12">Minor retail and services</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-13" name="developmentType"
-                                        type="radio" value="minor-traveller">
+                                        type="radio" value="minor-traveller-caravan">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-13">Minor traveller and caravan pitches</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -134,7 +134,7 @@ exports[`application-development-type POST /change should re-render page if inva
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Check the Development type</h1>
+                                    <h1 class="govuk-fieldset__heading"> Development type</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -154,7 +154,7 @@ exports[`application-development-type POST /change should re-render page if inva
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-4" name="developmentType"
-                                        type="radio" value="major-general-industry">
+                                        type="radio" value="major-industry-storage">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-4">Major general industry/storage/warehousing</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -164,17 +164,17 @@ exports[`application-development-type POST /change should re-render page if inva
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-6" name="developmentType"
-                                        type="radio" value="major-retail">
+                                        type="radio" value="major-retail-services">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-6">Major retail and services</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-7" name="developmentType"
-                                        type="radio" value="major-traveller">
+                                        type="radio" value="major-traveller-caravan">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-7">Major traveller and caravan pitches</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-8" name="developmentType"
-                                        type="radio" value="mineral-working">
+                                        type="radio" value="mineral-workings">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-8">Mineral working</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -184,7 +184,7 @@ exports[`application-development-type POST /change should re-render page if inva
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-10" name="developmentType"
-                                        type="radio" value="minor-general-industry">
+                                        type="radio" value="minor-industry-storage">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-10">Minor general industry/storage/warehousing</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -194,12 +194,12 @@ exports[`application-development-type POST /change should re-render page if inva
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-12" name="developmentType"
-                                        type="radio" value="minor-retail">
+                                        type="radio" value="minor-retail-services">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-12">Minor retail and services</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-13" name="developmentType"
-                                        type="radio" value="minor-traveller">
+                                        type="radio" value="minor-traveller-caravan">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-13">Minor traveller and caravan pitches</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -254,7 +254,7 @@ exports[`application-development-type POST /change should re-render page if no s
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> Check the Development type</h1>
+                                    <h1 class="govuk-fieldset__heading"> Development type</h1>
                                 </legend>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
@@ -274,7 +274,7 @@ exports[`application-development-type POST /change should re-render page if no s
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-4" name="developmentType"
-                                        type="radio" value="major-general-industry">
+                                        type="radio" value="major-industry-storage">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-4">Major general industry/storage/warehousing</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -284,17 +284,17 @@ exports[`application-development-type POST /change should re-render page if no s
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-6" name="developmentType"
-                                        type="radio" value="major-retail">
+                                        type="radio" value="major-retail-services">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-6">Major retail and services</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-7" name="developmentType"
-                                        type="radio" value="major-traveller">
+                                        type="radio" value="major-traveller-caravan">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-7">Major traveller and caravan pitches</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-8" name="developmentType"
-                                        type="radio" value="mineral-working">
+                                        type="radio" value="mineral-workings">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-8">Mineral working</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -304,7 +304,7 @@ exports[`application-development-type POST /change should re-render page if no s
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-10" name="developmentType"
-                                        type="radio" value="minor-general-industry">
+                                        type="radio" value="minor-industry-storage">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-10">Minor general industry/storage/warehousing</label>
                                     </div>
                                     <div class="govuk-radios__item">
@@ -314,12 +314,12 @@ exports[`application-development-type POST /change should re-render page if no s
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-12" name="developmentType"
-                                        type="radio" value="minor-retail">
+                                        type="radio" value="minor-retail-services">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-12">Minor retail and services</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="developmentType-13" name="developmentType"
-                                        type="radio" value="minor-traveller">
+                                        type="radio" value="minor-traveller-caravan">
                                         <label class="govuk-label govuk-radios__label" for="developmentType-13">Minor traveller and caravan pitches</label>
                                     </div>
                                     <div class="govuk-radios__item">

@@ -41,3 +41,68 @@ export function safeRedirect(request, response, url) {
 		return response.redirect('/');
 	}
 }
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} urlString
+ * @returns {string}
+ */
+export function addBackLinkQueryToUrl(request, urlString) {
+	return addQueryParamsToUrl(urlString, { backUrl: request.originalUrl });
+}
+
+/**
+ * @param {string} urlString
+ * @param {Record<string, string>} queryParams
+ * @returns {string}
+ */
+export function addQueryParamsToUrl(urlString, queryParams) {
+	const [urlWithQuery, hash] = urlString.split('#');
+	const [url, queryString] = urlWithQuery.split('?');
+
+	const newQueryString = new URLSearchParams(queryString);
+	Object.entries(queryParams).forEach(([key, value]) => {
+		newQueryString.set(key, value);
+	});
+
+	return `${url}?${newQueryString.toString()}${hash ? `#${hash}` : ''}`;
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @returns {string|undefined}
+ */
+export function getBackLinkUrlFromQuery(request) {
+	if (!request.query.backUrl) {
+		return;
+	}
+	return decodeURIComponent(request.query.backUrl.toString());
+}
+
+/**
+ * @param {string} url
+ * @returns {string}
+ */
+export function stripQueryString(url) {
+	return url.split('?')[0];
+}
+
+/**
+ * Returns the specified URL with the same query params as the original URL of the request,
+ * optionally excluding specific params.
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} urlString
+ * @param {{ exclude?: string[] }} [options]
+ * @returns {string}
+ */
+export function preserveQueryString(request, urlString, { exclude = [] } = {}) {
+	const [urlWithoutHash] = request.originalUrl.split('#');
+	const [, queryString] = urlWithoutHash.split('?');
+
+	const queryParams = new URLSearchParams(queryString);
+	exclude.forEach((param) => {
+		queryParams.delete(param);
+	});
+
+	return `${urlString.split('#')[0]}${queryParams.toString() ? `?${queryParams.toString()}` : ''}`;
+}

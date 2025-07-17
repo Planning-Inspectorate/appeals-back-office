@@ -59,6 +59,11 @@ model Appeal {
   childAppeals          AppealRelationship[] @relation("parentAppeal")
   representations       Representation[]
   caseNotes             CaseNote[]
+  hearing               Hearing?
+  appealNotifications   AppealNotification[]
+  hearingEstimate       HearingEstimate?
+  inquiry               Inquiry?
+  inquiryEstimate       InquiryEstimate?
 
   @@index([addressId])
   @@index([appealTypeId])
@@ -105,17 +110,20 @@ model AppealType {
 /// AppealTimetable model
 /// Contains deadlines for appeal stages.
 model AppealTimetable {
-  id                        Int       @id @default(autoincrement())
-  appeal                    Appeal    @relation(fields: [appealId], references: [id])
-  appealId                  Int       @unique
-  caseResubmissionDueDate   DateTime?
-  lpaQuestionnaireDueDate   DateTime?
-  ipCommentsDueDate         DateTime?
-  appellantStatementDueDate DateTime?
-  lpaStatementDueDate       DateTime?
-  finalCommentsDueDate      DateTime?
-  s106ObligationDueDate     DateTime?
-  issueDeterminationDate    DateTime?
+  id                                 Int       @id @default(autoincrement())
+  appeal                             Appeal    @relation(fields: [appealId], references: [id])
+  appealId                           Int       @unique
+  caseResubmissionDueDate            DateTime?
+  lpaQuestionnaireDueDate            DateTime?
+  ipCommentsDueDate                  DateTime?
+  appellantStatementDueDate          DateTime?
+  lpaStatementDueDate                DateTime?
+  finalCommentsDueDate               DateTime?
+  s106ObligationDueDate              DateTime?
+  issueDeterminationDate             DateTime?
+  statementOfCommonGroundDueDate     DateTime?
+  planningObligationDueDate          DateTime?
+  proofOfEvidenceAndWitnessesDueDate DateTime?
 }
 
 /// AppealStatus model
@@ -229,6 +237,8 @@ model Address {
   Appeal            Appeal[]
   ServiceUser       ServiceUser[]
   NeighbouringSites NeighbouringSite[]
+  Hearing           Hearing[]
+  Inquiry           Inquiry[]
 }
 
 /// NeighbouringSite model
@@ -416,6 +426,7 @@ model LPAQuestionnaire {
   eiaScreeningOpinion                 Boolean?
   eiaRequiresEnvironmentalStatement   Boolean?
   eiaCompletedEnvironmentalStatement  Boolean?
+  eiaScopingOpinion                   Boolean?
   consultedBodiesDetails              String?
   hasProtectedSpecies                 Boolean?
   hasStatutoryConsultees              Boolean?
@@ -444,6 +455,10 @@ model LPAQuestionnaire {
   siteNoticesSentDate                 DateTime?
   designatedSiteNameCustom            String?
   designatedSiteNames                 DesignatedSiteSelected[]
+
+  //S20 fields
+  historicEnglandConsultation Boolean?
+  preserveGrantLoan           Boolean?
 
   @@index([appealId])
   @@index([isGreenBelt])
@@ -494,7 +509,8 @@ model LPAQuestionnaireIncompleteReasonText {
 model ListedBuildingSelected {
   id                    Int               @id @default(autoincrement())
   lpaQuestionnaireId    Int?
-  listEntry             String?
+  listEntry             String
+  listedBuilding        ListedBuilding    @relation(fields: [listEntry], references: [reference], onUpdate: NoAction, onDelete: NoAction)
   affectsListedBuilding Boolean           @default(true)
   lpaQuestionnaire      LPAQuestionnaire? @relation(fields: [lpaQuestionnaireId], references: [id])
 }
@@ -795,4 +811,75 @@ model CaseNote {
   archived  Boolean  @default(false)
 
   @@index([caseId])
+}
+
+//Hearing model
+//Store hearing related information
+model Hearing {
+  id               Int       @id @default(autoincrement())
+  appealId         Int       @unique
+  hearingStartTime DateTime
+  hearingEndTime   DateTime?
+  addressId        Int?
+  address          Address?  @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  appeal           Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+//Inquiry model
+//Store Inquiry related information
+model Inquiry {
+  id               Int       @id @default(autoincrement())
+  appealId         Int       @unique
+  inquiryStartTime DateTime
+  inquiryEndTime   DateTime?
+  addressId        Int?
+  address          Address?  @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  appeal           Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// ListedBuilding model
+/// Stores the listed buildings dataset
+model ListedBuilding {
+  reference String                   @id
+  name      String
+  grade     String
+  selected  ListedBuildingSelected[]
+}
+
+/// AppealNotification model
+/// Stores a log of sent notifications
+model AppealNotification {
+  id            Int      @id @default(autoincrement())
+  case          Appeal   @relation(fields: [caseReference], references: [reference])
+  caseReference String
+  template      String
+  subject       String
+  recipient     String
+  message       String   @db.NVarChar(Max)
+  success       Boolean  @default(true)
+  dateCreated   DateTime @default(now())
+
+  @@index([caseReference])
+  @@index([template])
+  @@index([dateCreated(sort: Desc)])
+}
+
+/// HearingEstimate model
+/// Contains information on the hearing estimates for an appeal
+model HearingEstimate {
+  id              Int      @id @default(autoincrement())
+  appealId        Int      @unique
+  preparationTime Decimal?
+  sittingTime     Decimal?
+  reportingTime   Decimal?
+  appeal          Appeal   @relation(fields: [appealId], references: [id])
+}
+
+/// InquiryEstimate model
+/// Contains information on the inquiry estimates for an appeal
+model InquiryEstimate {
+  id            Int      @id @default(autoincrement())
+  appealId      Int      @unique
+  estimatedTime Decimal?
+  appeal        Appeal   @relation(fields: [appealId], references: [id])
 }

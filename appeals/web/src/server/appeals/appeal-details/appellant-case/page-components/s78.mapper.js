@@ -1,5 +1,4 @@
-import { removeSummaryListActions } from '#lib/mappers/index.js';
-import { generateHASComponents } from './has.mapper.js';
+import { generateS20Components } from './s20.mapper.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
@@ -20,7 +19,7 @@ export function generateS78Components(
 	mappedAppellantCaseData,
 	userHasUpdateCasePermission
 ) {
-	const pageComponents = generateHASComponents(
+	const pageComponents = generateS20Components(
 		appealDetails,
 		appellantCaseData,
 		mappedAppellantCaseData,
@@ -67,131 +66,6 @@ export function generateS78Components(
 		};
 
 		pageComponents[siteDetailsComponentIndex] = appealSiteSummary;
-	}
-
-	const applicationSummaryComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' &&
-			component.parameters.attributes?.id === 'application-summary'
-	);
-
-	if (applicationSummaryComponentIndex !== -1) {
-		/**
-		 * @type {PageComponent}
-		 */
-		const applicationSummary = {
-			type: 'summary-list',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
-			parameters: {
-				attributes: {
-					id: 'application-summary'
-				},
-				card: {
-					title: {
-						text: '3. Application details'
-					}
-				},
-				rows: [
-					removeSummaryListActions(
-						mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
-					),
-					mappedAppellantCaseData.applicationReference.display.summaryListItem,
-					mappedAppellantCaseData.applicationDate.display.summaryListItem,
-					mappedAppellantCaseData.developmentDescription.display.summaryListItem,
-					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
-					mappedAppellantCaseData.applicationDecision.display.summaryListItem,
-					mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
-					mappedAppellantCaseData.developmentType.display.summaryListItem
-				]
-			}
-		};
-
-		pageComponents[applicationSummaryComponentIndex] = applicationSummary;
-	}
-
-	const appealSummaryComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' && component.parameters.attributes?.id === 'appeal-summary'
-	);
-
-	if (appealSummaryComponentIndex !== -1) {
-		/**
-		 * @type {PageComponent}
-		 */
-		const appealSummary = {
-			type: 'summary-list',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
-			parameters: {
-				attributes: {
-					id: 'appeal-summary'
-				},
-				card: {
-					title: {
-						text: '4. Appeal details'
-					}
-				},
-				rows: [
-					removeSummaryListActions(mappedAppellantCaseData.appealType.display.summaryListItem),
-					mappedAppellantCaseData.procedurePreference.display.summaryListItem,
-					mappedAppellantCaseData.procedurePreferenceDetails.display.summaryListItem,
-					mappedAppellantCaseData.procedurePreferenceDuration.display.summaryListItem,
-					mappedAppellantCaseData.inquiryNumberOfWitnesses.display.summaryListItem
-				]
-			}
-		};
-
-		pageComponents[appealSummaryComponentIndex] = appealSummary;
-	}
-
-	const uploadedDocumentsComponentIndex = pageComponents.findIndex(
-		(component) =>
-			component.type === 'summary-list' &&
-			component.parameters.attributes?.id === 'uploaded-documents'
-	);
-
-	if (uploadedDocumentsComponentIndex !== -1) {
-		/**
-		 * @type {PageComponent}
-		 */
-		const uploadedDocuments = {
-			type: 'summary-list',
-			wrapperHtml: {
-				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-				closing: '</div></div>'
-			},
-			parameters: {
-				attributes: {
-					id: 'uploaded-documents'
-				},
-				card: {
-					title: {
-						text: '5. Upload documents'
-					}
-				},
-				rows: [
-					mappedAppellantCaseData.applicationForm.display.summaryListItem,
-					mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
-					mappedAppellantCaseData.decisionLetter.display.summaryListItem,
-					mappedAppellantCaseData.appealStatement.display.summaryListItem,
-					mappedAppellantCaseData.statusPlanningObligation.display.summaryListItem,
-					mappedAppellantCaseData.planningObligation.display.summaryListItem,
-					mappedAppellantCaseData.ownershipCertificate.display.summaryListItem,
-					mappedAppellantCaseData.costsDocument.display.summaryListItem,
-					mappedAppellantCaseData.designAccessStatement.display.summaryListItem,
-					mappedAppellantCaseData.supportingDocuments.display.summaryListItem,
-					mappedAppellantCaseData.newPlansDrawings.display.summaryListItem,
-					mappedAppellantCaseData.otherNewDocuments.display.summaryListItem
-				]
-			}
-		};
-
-		pageComponents[uploadedDocumentsComponentIndex] = uploadedDocuments;
 	}
 
 	return pageComponents;

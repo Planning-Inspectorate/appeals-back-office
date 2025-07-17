@@ -1,456 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`assign-user GET /assign-new-user/case-officer should render the assign new case officer page 1`] = `
+exports[`assign-user GET /assign-case-officer/check-details should render the case officer check details page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Assign a new case officer?</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
+            <h1 class="govuk-heading-l">Check details and assign case officer</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <div class="govuk-radios" data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case officer</dt>
+                    <dd class="govuk-summary-list__value">Smith, John
+                        <br>John.Smith@planninginspectorate.gov.uk</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-case-officer/search-case-officer">Change <span class="govuk-visually-hidden">Address</span></a>
+                    </dd>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user GET /assign-new-user/inspector should render the assign new inspector page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Assign a new inspector?</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <div class="govuk-radios" data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user GET /assign-user/case-officer should render the assign case officer page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Find a case officer</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="search-term">Search by name or email address</label>
-                    <input class="govuk-input" id="search-term"
-                    name="searchTerm" type="text" value="">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Search</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user GET /assign-user/case-officer/1/confirm should render the confirm assign case officer page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Assign this case officer</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">John.Smith@planninginspectorate.gov.uk</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user GET /assign-user/inspector should render the assign inspector page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Find an inspector</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="search-term">Search by name or email address</label>
-                    <input class="govuk-input" id="search-term"
-                    name="searchTerm" type="text" value="">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Search</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user GET /assign-user/inspector/1/confirm should render the confirm assign inspector page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Assign this inspector</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">John.Smith@planninginspectorate.gov.uk</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user GET /unassign-user/case-officer/1/confirm should render a 404 error page, as it should not be possible to unassign a case officer (only assign or change the case officer) 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Page not found</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body">If you typed the web address, check it is correct.</p>
-            <p class="govuk-body">If you pasted the web address, check you copied the entire address.</p>
-            <p             class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
-                the problem persists</p>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user GET /unassign-user/inspector/1/confirm should render the confirm unassign inspector page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Remove this inspector</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">John.Smith@planninginspectorate.gov.uk</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-new-user/case-officer should re-render the assign new case officer page with the expected error message if a confirmation option is not selected 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Select yes if you would like to assign a new case officer</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Assign a new case officer?</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <div class="govuk-radios" data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-new-user/case-officer should re-render the assign new case officer page with the expected error message if the selected confirmation value is anything other than "yes" or "no" 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Something went wrong</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Assign a new case officer?</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <div class="govuk-radios" data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-new-user/inspector should re-render the assign new inspector page with the expected error message if a confirmation option is not selected 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Select yes if you would like to assign a new inspector</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Assign a new inspector?</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <div class="govuk-radios" data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-new-user/inspector should re-render the assign new inspector page with the expected error message if the selected confirmation value is anything other than "yes" or "no" 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Something went wrong</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Assign a new inspector?</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <div class="govuk-radios" data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-user/case-officer should re-render the assign case officer page with "No matches for" if no search results are found 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Find a case officer</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="search-term">Search by name or email address</label>
-                    <input class="govuk-input" id="search-term"
-                    name="searchTerm" type="text" value="bob">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Search</button>
-            </form>
+            </dl>
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
-                    <h2 class="govuk-heading-m">Results</h2>
-                    <p class="govuk-body">No matches for <strong>bob</strong>
-                    </p>
-                    <dl class="govuk-summary-list"></dl>
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Assign case officer</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -458,37 +29,55 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
 </main>"
 `;
 
-exports[`assign-user POST /assign-user/case-officer should re-render the assign case officer page with a list of search results if a valid search term is provided 1`] = `
+exports[`assign-user GET /assign-case-officer/search-case-officer should render the search for case officer page with expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Find a case officer</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062  - Assign case officer</span>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
+            <form method="post" novalidate class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="search-term">Search by name or email address</label>
-                    <input class="govuk-input" id="search-term"
-                    name="searchTerm" type="text" value="john">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-fieldset__legend--l" for="users"> Search for case officer by name or email address</label></h1>
+                    <select class="govuk-select accessible-autocomplete" id="users" name="user"
+                    data-cy="search-users">
+                        <option value=""></option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;923ac03b-9031-4cf4-8b17-348c274321f9&quot;,&quot;name&quot;:&quot;Smith, John&quot;,&quot;email&quot;:&quot;John.Smith@planninginspectorate.gov.uk&quot;}">Smith, John (John.Smith@planninginspectorate.gov.uk)</option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Doe, Jane&quot;,&quot;email&quot;:&quot;Jane.Doe@planninginspectorate.gov.uk&quot;}">Doe, Jane (Jane.Doe@planninginspectorate.gov.uk)</option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;3&quot;,&quot;name&quot;:&quot;Bloggs, Joe&quot;,&quot;email&quot;:&quot;Joe.Bloggs@planninginspectorate.gov.uk&quot;}">Bloggs, Joe (Joe.Bloggs@planninginspectorate.gov.uk)</option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;4&quot;,&quot;name&quot;:&quot;Jenkins, Leeroy&quot;,&quot;email&quot;:&quot;Leeroy.Jenkins@planninginspectorate.gov.uk&quot;}">Jenkins, Leeroy (Leeroy.Jenkins@planninginspectorate.gov.uk)</option>
+                    </select>
                 </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Search</button>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`assign-user GET /assign-inspector/check-details should render the inspector check details page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
+            <h1 class="govuk-heading-l">Check details and assign inspector</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inspector</dt>
+                    <dd class="govuk-summary-list__value">Smith, John
+                        <br>John.Smith@planninginspectorate.gov.uk</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-inspector/search-inspector">Change <span class="govuk-visually-hidden">Address</span></a>
+                    </dd>
+                </div>
+            </dl>
             <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
-                    <h2 class="govuk-heading-m">Results</h2>
-                    <p class="govuk-body">Matches for <strong>john</strong>
-                    </p>
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Smith, John</dt>
-                            <dd class="govuk-summary-list__value">John.Smith@planninginspectorate.gov.uk</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/case-officer/923ac03b-9031-4cf4-8b17-348c274321f9/confirm"
-                                data-cy="john.smith@planninginspectorate.gov.uk">Choose<span class="govuk-visually-hidden"> Smith, John</span></a>
-                            </dd>
-                        </div>
-                    </dl>
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Assign inspector</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -496,162 +85,25 @@ exports[`assign-user POST /assign-user/case-officer should re-render the assign 
 </main>"
 `;
 
-exports[`assign-user POST /assign-user/case-officer should re-render the assign case officer page with the expected error message if a search term is not provided 1`] = `
+exports[`assign-user GET /assign-inspector/search-inspector should render the search for inspector page with expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#search-term">Enter a name or email address</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Find a case officer</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062  - Assign inspector</span>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
+            <form method="post" novalidate class="govuk-!-margin-bottom-5">
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="search-term">Search by name or email address</label>
-                    <input class="govuk-input" id="search-term"
-                    name="searchTerm" type="text" value="">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Search</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-user/case-officer should re-render the assign case officer page with the expected error message if search term is longer than 80 characters 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#search-term">Search term must be between 2 and 80 characters in length</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Find a case officer</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="search-term">Search by name or email address</label>
-                    <input class="govuk-input" id="search-term"
-                    name="searchTerm" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Search</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-user/case-officer should re-render the assign case officer page with the expected error message if search term is shorter than 2 characters 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#search-term">Search term must be between 2 and 80 characters in length</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Find a case officer</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="search-term">Search by name or email address</label>
-                    <input class="govuk-input" id="search-term"
-                    name="searchTerm" type="text" value="a">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Search</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-user/case-officer/1/confirm should re-render the confirm assign case officer page with the expected error message if a confirmation option is not selected 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Select yes if you would like to assign this case officer</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Assign this case officer</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">John.Smith@planninginspectorate.gov.uk</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-fieldset__legend--l" for="users"> Search for inspector by name or email address</label></h1>
+                    <select class="govuk-select accessible-autocomplete" id="users" name="user"
+                    data-cy="search-users">
+                        <option value=""></option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;923ac03b-9031-4cf4-8b17-348c274321f9&quot;,&quot;name&quot;:&quot;Smith, John&quot;,&quot;email&quot;:&quot;John.Smith@planninginspectorate.gov.uk&quot;}">Smith, John (John.Smith@planninginspectorate.gov.uk)</option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Doe, Jane&quot;,&quot;email&quot;:&quot;Jane.Doe@planninginspectorate.gov.uk&quot;}">Doe, Jane (Jane.Doe@planninginspectorate.gov.uk)</option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;3&quot;,&quot;name&quot;:&quot;Bloggs, Joe&quot;,&quot;email&quot;:&quot;Joe.Bloggs@planninginspectorate.gov.uk&quot;}">Bloggs, Joe (Joe.Bloggs@planninginspectorate.gov.uk)</option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;4&quot;,&quot;name&quot;:&quot;Jenkins, Leeroy&quot;,&quot;email&quot;:&quot;Leeroy.Jenkins@planninginspectorate.gov.uk&quot;}">Jenkins, Leeroy (Leeroy.Jenkins@planninginspectorate.gov.uk)</option>
+                    </select>
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
@@ -660,7 +112,7 @@ exports[`assign-user POST /assign-user/case-officer/1/confirm should re-render t
 </main>"
 `;
 
-exports[`assign-user POST /assign-user/case-officer/1/confirm should re-render the confirm assign case officer page with the expected error message if the selected confirmation value is anything other than "yes" or "no" 1`] = `
+exports[`assign-user POST /assign-case-officer/search-case-officer should re-render the assign case officer page with the expected error message if a user is not provided 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -669,7 +121,7 @@ exports[`assign-user POST /assign-user/case-officer/1/confirm should re-render t
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Something went wrong</a>
+                            <li><a href="#user">Enter a case officer’s name or email address</a>
                             </li>
                         </ul>
                     </div>
@@ -678,30 +130,24 @@ exports[`assign-user POST /assign-user/case-officer/1/confirm should re-render t
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Assign this case officer</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062  - Assign case officer</span>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">John.Smith@planninginspectorate.gov.uk</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
+            <form method="post" novalidate class="govuk-!-margin-bottom-5">
+                <div class="govuk-form-group govuk-form-group--error">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-fieldset__legend--l" for="users"> Search for case officer by name or email address</label></h1>
+                    <p id="users-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a case officer’s
+                        name or email address</p>
+                    <select class="govuk-select accessible-autocomplete govuk-select--error"
+                    id="users" name="user" aria-describedby="users-error" data-cy="search-users">
+                        <option value=""></option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;923ac03b-9031-4cf4-8b17-348c274321f9&quot;,&quot;name&quot;:&quot;Smith, John&quot;,&quot;email&quot;:&quot;John.Smith@planninginspectorate.gov.uk&quot;}">Smith, John (John.Smith@planninginspectorate.gov.uk)</option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Doe, Jane&quot;,&quot;email&quot;:&quot;Jane.Doe@planninginspectorate.gov.uk&quot;}">Doe, Jane (Jane.Doe@planninginspectorate.gov.uk)</option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;3&quot;,&quot;name&quot;:&quot;Bloggs, Joe&quot;,&quot;email&quot;:&quot;Joe.Bloggs@planninginspectorate.gov.uk&quot;}">Bloggs, Joe (Joe.Bloggs@planninginspectorate.gov.uk)</option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;4&quot;,&quot;name&quot;:&quot;Jenkins, Leeroy&quot;,&quot;email&quot;:&quot;Leeroy.Jenkins@planninginspectorate.gov.uk&quot;}">Jenkins, Leeroy (Leeroy.Jenkins@planninginspectorate.gov.uk)</option>
+                    </select>
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>
@@ -710,76 +156,7 @@ exports[`assign-user POST /assign-user/case-officer/1/confirm should re-render t
 </main>"
 `;
 
-exports[`assign-user POST /assign-user/inspector should re-render the assign inspector page with "No matches for" if no search results are found 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Find an inspector</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="search-term">Search by name or email address</label>
-                    <input class="govuk-input" id="search-term"
-                    name="searchTerm" type="text" value="bob">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Search</button>
-            </form>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
-                    <h2 class="govuk-heading-m">Results</h2>
-                    <p class="govuk-body">No matches for <strong>bob</strong>
-                    </p>
-                    <dl class="govuk-summary-list"></dl>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-user/inspector should re-render the assign inspector page with a list of search results if a valid search term is provided 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Find an inspector</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="search-term">Search by name or email address</label>
-                    <input class="govuk-input" id="search-term"
-                    name="searchTerm" type="text" value="john">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Search</button>
-            </form>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full govuk-!-margin-bottom-5">
-                    <h2 class="govuk-heading-m">Results</h2>
-                    <p class="govuk-body">Matches for <strong>john</strong>
-                    </p>
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Smith, John</dt>
-                            <dd class="govuk-summary-list__value">John.Smith@planninginspectorate.gov.uk</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-user/inspector/923ac03b-9031-4cf4-8b17-348c274321f9/confirm"
-                                data-cy="john.smith@planninginspectorate.gov.uk">Choose<span class="govuk-visually-hidden"> Smith, John</span></a>
-                            </dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-user/inspector should re-render the assign inspector page with the expected error message if a search term is not provided 1`] = `
+exports[`assign-user POST /assign-inspector/search-inspector should re-render the assign inspector page with the expected error message if a user is not provided 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -788,7 +165,7 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#search-term">Enter a name or email address</a>
+                            <li><a href="#user">Enter an inspector’s name or email address</a>
                             </li>
                         </ul>
                     </div>
@@ -797,294 +174,24 @@ exports[`assign-user POST /assign-user/inspector should re-render the assign ins
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Find an inspector</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062  - Assign inspector</span>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="search-term">Search by name or email address</label>
-                    <input class="govuk-input" id="search-term"
-                    name="searchTerm" type="text" value="">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Search</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-user/inspector should re-render the assign inspector page with the expected error message if search term is longer than 80 characters 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#search-term">Search term must be between 2 and 80 characters in length</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Find an inspector</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="search-term">Search by name or email address</label>
-                    <input class="govuk-input" id="search-term"
-                    name="searchTerm" type="text" value="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Search</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-user/inspector should re-render the assign inspector page with the expected error message if search term is shorter than 2 characters 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#search-term">Search term must be between 2 and 80 characters in length</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Find an inspector</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="assignUserSearch" method="post" novalidate="novalidate" class="govuk-!-margin-bottom-5">
-                <div class="govuk-form-group">
-                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
-                    for="search-term">Search by name or email address</label>
-                    <input class="govuk-input" id="search-term"
-                    name="searchTerm" type="text" value="a">
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Search</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-user/inspector/1/confirm should re-render the confirm assign inspector page with the expected error message if a confirmation option is not selected 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Select yes if you would like to assign this inspector</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Assign this inspector</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">John.Smith@planninginspectorate.gov.uk</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /assign-user/inspector/1/confirm should re-render the confirm assign inspector page with the expected error message if the selected confirmation value is anything other than "yes" or "no" 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Something went wrong</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Assign this inspector</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">John.Smith@planninginspectorate.gov.uk</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /unassign-user/inspector/1/confirm should re-render the confirm unassign inspector page with the expected error message if a confirmation option is not selected 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Select yes if you would like to unassign this inspector</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Remove this inspector</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">John.Smith@planninginspectorate.gov.uk</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
-                </div>
-                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
-            </form>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`assign-user POST /unassign-user/inspector/1/confirm should re-render the confirm unassign inspector page with the expected error message if the selected confirmation value is anything other than "yes" or "no" 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Something went wrong</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Remove this inspector</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form name="confirmAssignOrUnassignUser" method="post" novalidate="novalidate">
-                <div class="govuk-form-group">
-                    <fieldset class="govuk-fieldset">
-                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">John.Smith@planninginspectorate.gov.uk</legend>
-                        <div class="govuk-radios"
-                        data-module="govuk-radios">
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm" name="confirm" type="radio"
-                                value="yes">
-                                <label class="govuk-label govuk-radios__label" for="confirm">Yes</label>
-                            </div>
-                            <div class="govuk-radios__item">
-                                <input class="govuk-radios__input" id="confirm-2" name="confirm" type="radio"
-                                value="no">
-                                <label class="govuk-label govuk-radios__label" for="confirm-2">No</label>
-                            </div>
-                        </div>
-                    </fieldset>
+            <form method="post" novalidate class="govuk-!-margin-bottom-5">
+                <div class="govuk-form-group govuk-form-group--error">
+                    <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-fieldset__legend--l" for="users"> Search for inspector by name or email address</label></h1>
+                    <p id="users-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter an inspector’s
+                        name or email address</p>
+                    <select class="govuk-select accessible-autocomplete govuk-select--error"
+                    id="users" name="user" aria-describedby="users-error" data-cy="search-users">
+                        <option value=""></option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;923ac03b-9031-4cf4-8b17-348c274321f9&quot;,&quot;name&quot;:&quot;Smith, John&quot;,&quot;email&quot;:&quot;John.Smith@planninginspectorate.gov.uk&quot;}">Smith, John (John.Smith@planninginspectorate.gov.uk)</option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;2&quot;,&quot;name&quot;:&quot;Doe, Jane&quot;,&quot;email&quot;:&quot;Jane.Doe@planninginspectorate.gov.uk&quot;}">Doe, Jane (Jane.Doe@planninginspectorate.gov.uk)</option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;3&quot;,&quot;name&quot;:&quot;Bloggs, Joe&quot;,&quot;email&quot;:&quot;Joe.Bloggs@planninginspectorate.gov.uk&quot;}">Bloggs, Joe (Joe.Bloggs@planninginspectorate.gov.uk)</option>
+                        <option value="{&quot;@odata.type&quot;:&quot;#microsoft.graph.user&quot;,&quot;id&quot;:&quot;4&quot;,&quot;name&quot;:&quot;Jenkins, Leeroy&quot;,&quot;email&quot;:&quot;Leeroy.Jenkins@planninginspectorate.gov.uk&quot;}">Jenkins, Leeroy (Leeroy.Jenkins@planninginspectorate.gov.uk)</option>
+                    </select>
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
             </form>

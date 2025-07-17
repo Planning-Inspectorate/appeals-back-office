@@ -1,67 +1,67 @@
 parameters:
-  - name: Environment
-    type: string
-    default: 'test'
-    values:
-      - 'dev'
-      - 'test'
+    - name: Environment
+      type: string
+      default: 'dev'
+      values:
+          - 'dev'
+          - 'test'
 
 variables:
-  - name: APP
-    value: 'appeals'
-  - group: e2e-${{ parameters.Environment }}
+    - name: APP
+      value: 'appeals'
+    - group: e2e-${{ parameters.Environment }}
 
-# PR trigger disabled, until process has been agreed by team
 pr: none
-
-# pr:
-#   branches:
-#     include:
-#       - main
-#   paths:
-#     include:
-#       - appeals/e2e/cypress/e2e/back-office-appeals
 
 trigger: none
 
+schedules:
+    - cron: "0 2 * * 1-5"
+      displayName: Weekday test run
+      branches:
+          include:
+              - main
+      always: true
+
 jobs:
-  - job: Run_Cypress_Tests_For_Appeals
-    pool: pins-odt-agent-pool-tests
+    - job: Run_Cypress_Tests_For_Appeals
+      timeoutInMinutes: 90
+      pool: pins-odt-agent-pool-tests
 
-    steps:
-      - task: NodeTool@0
-        inputs:
-          versionSpec: "22.x"
-        displayName: "Install Node.js"
+      steps:
+          - task: NodeTool@0
+            inputs:
+                versionSpec: "22.x"
+            displayName: "Install Node.js"
 
-      - task: ShellScript@2
-        inputs:
-          scriptPath: 'appeals/e2e/install-chromium.sh'
-        displayName: 'Install Chromium'
-        condition: eq(variables['agent.os'], 'Linux')
+          - task: ShellScript@2
+            inputs:
+                scriptPath: 'appeals/e2e/install-chromium.sh'
+            displayName: 'Install Chromium'
+            condition: eq(variables['agent.os'], 'Linux')
 
-      - task: Npm@1
-        inputs:
-          command: "install"
-          workingDir: $(System.DefaultWorkingDirectory)/appeals/e2e
-        displayName: "Install Dependencies"
+          - task: Npm@1
+            inputs:
+                command: "install"
+                workingDir: $(System.DefaultWorkingDirectory)/appeals/e2e
+            displayName: "Install Dependencies"
 
-      - task: ShellScript@2
-        inputs:
-          scriptPath: 'appeals/e2e/run-tests.sh'
-        env:
-          BASE_URL: $(APPEALS_BASE_URL)
-          CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
-          CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)
-          INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
-          VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
-          USER_PASSWORD: $(USER_PASSWORD)
-          HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
-        displayName: "Run Cypress Tests"
+          - task: ShellScript@2
+            inputs:
+                scriptPath: 'appeals/e2e/run-tests.sh'
+            env:
+                BASE_URL: $(APPEALS_BASE_URL)
+                CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
+                CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)
+                INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
+                VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
+                USER_PASSWORD: $(USER_PASSWORD)
+                HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
+            displayName: "Run Cypress Tests"
 
-      - task: PublishBuildArtifacts@1
-        inputs:
-          pathToPublish: 'appeals/e2e/cypress/screenshots'
-          artifactName: 'FailedTests'
-        displayName: "Publish Failed Tests Artifacts"
-        condition: failed()
+          - task: PublishBuildArtifacts@1
+            inputs:
+                pathToPublish: 'appeals/e2e/cypress/screenshots'
+                artifactName: 'FailedTests'
+            displayName: "Publish Failed Tests Artifacts"
+            condition: failed()

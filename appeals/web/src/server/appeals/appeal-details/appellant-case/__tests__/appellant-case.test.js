@@ -24,7 +24,9 @@ import {
 	appellantCaseDataInvalidOutcome,
 	fileUploadInfo,
 	text300Characters,
-	text301Characters
+	text301Characters,
+	appealDataListedBuilding,
+	appealDataCasPlanning
 } from '#testing/app/fixtures/referencedata.js';
 import { cloneDeep } from 'lodash-es';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
@@ -35,7 +37,12 @@ import {
 	calculateIncompleteDueDate,
 	oneMonthBefore
 } from '#lib/dates.js';
-import { APPEAL_CASE_STATUS, APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import {
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_STAGE,
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
+} from 'pins-data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -104,6 +111,28 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('4. Appeal details</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('5. Upload documents</h2>');
 			expect(unprettifiedElement.innerHTML).toContain('Additional documents</h2>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there other appeals linked to your development?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Which local planning authority (LPA) do you want to appeal against?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the application reference number?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What date did you submit your application?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Was your application granted or refused?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What’s the date on the decision letter from the local planning authority?​</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Decision letter from the local planning authority</dt>'
+			);
 		});
 
 		it('should render the appellant case page with the expected content (Full planning appeal / S78)', async () => {
@@ -115,7 +144,10 @@ describe('appellant-case', () => {
 				});
 			nock('http://test/')
 				.get('/appeals/2/appellant-cases/0')
-				.reply(200, appellantCaseDataNotValidated);
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL
+				});
 
 			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
 			const element = parseHtml(response.text);
@@ -154,6 +186,118 @@ describe('appellant-case', () => {
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'How many witnesses would you expect to give evidence at the inquiry?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there other appeals linked to your development?</dt>'
+			);
+		});
+		it('should render the appellant case page with the expected content (Listed building planning appeal / S20)', async () => {
+			nock('http://test/')
+				.get('/appeals/3')
+				.reply(200, {
+					...appealDataListedBuilding,
+					appealId: 3
+				});
+			nock('http://test/')
+				.get('/appeals/3/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LISTED_BUILDING
+				});
+
+			const response = await request.get(`${baseUrl}/3${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('Design and access statement</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('New plans or drawings</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the status of your planning obligation?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Planning obligation</dt>');
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'Is the appeal site part of an agricultural holding?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'Are you a tenant of the agricultural holding?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).not.toContain('Are there any other tenants?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Separate ownership certificate and agricultural land declaration</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Other new supporting documents</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How would you prefer us to decide your appeal?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Why would you prefer this appeal procedure?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many days would you expect the inquiry to last?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'How many witnesses would you expect to give evidence at the inquiry?</dt>'
+			);
+		});
+
+		it('should render the appellant case page with the expected content (CAS planning)', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataCasPlanning,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					typeOfPlanningApplication:
+						APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
+				});
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('1. Appellant details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('2. Site details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('4. Appeal details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('5. Upload documents</h2>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Additional documents</h2>');
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Which local planning authority (LPA) do you want to appeal against?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What is the application reference number?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What date did you submit your application?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Enter the description of development that you submitted in your application</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there other appeals linked to your development?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Was your application granted or refused?</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What’s the date on the decision letter from the local planning authority?​</dt>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Decision letter from the local planning authority</dt>'
 			);
 		});
 
@@ -1428,7 +1572,7 @@ describe('appellant-case', () => {
 				.send({
 					invalidReason: invalidReasonsWithTextIds[0],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: 'a'.repeat(
-						textInputCharacterLimits.defaultInputLength + 1
+						textInputCharacterLimits.checkboxTextItemsLength + 1
 					)
 				});
 
@@ -1441,7 +1585,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Text in text fields cannot exceed 300 characters</a>'
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
 			);
 		});
 
@@ -1452,7 +1596,7 @@ describe('appellant-case', () => {
 					invalidReason: [invalidReasonsWithTextIds[0], invalidReasonsWithTextIds[1]],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: 'test reason text 1',
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: 'a'.repeat(
-						textInputCharacterLimits.defaultInputLength + 1
+						textInputCharacterLimits.checkboxTextItemsLength + 1
 					)
 				});
 
@@ -1465,7 +1609,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Text in text fields cannot exceed 300 characters</a>'
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
 			);
 		});
 
@@ -1488,7 +1632,7 @@ describe('appellant-case', () => {
 				.send({
 					invalidReason: invalidReasonsWithTextIds[0],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: [
-						'a'.repeat(textInputCharacterLimits.defaultInputLength)
+						'a'.repeat(textInputCharacterLimits.checkboxTextItemsLength)
 					]
 				});
 
@@ -1517,11 +1661,11 @@ describe('appellant-case', () => {
 				.send({
 					invalidReason: [invalidReasonsWithTextIds[0], invalidReasonsWithTextIds[1]],
 					[`invalidReason-${invalidReasonsWithTextIds[0]}`]: [
-						'a'.repeat(textInputCharacterLimits.defaultInputLength)
+						'a'.repeat(textInputCharacterLimits.checkboxTextItemsLength)
 					],
 					[`invalidReason-${invalidReasonsWithTextIds[1]}`]: [
-						'a'.repeat(textInputCharacterLimits.defaultInputLength),
-						'a'.repeat(textInputCharacterLimits.defaultInputLength)
+						'a'.repeat(textInputCharacterLimits.checkboxTextItemsLength),
+						'a'.repeat(textInputCharacterLimits.checkboxTextItemsLength)
 					]
 				});
 
@@ -1675,7 +1819,7 @@ describe('appellant-case', () => {
 				.send({
 					incompleteReason: incompleteReasonsWithTextIds[0],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'a'.repeat(
-						textInputCharacterLimits.defaultInputLength + 1
+						textInputCharacterLimits.checkboxTextItemsLength + 1
 					)
 				});
 
@@ -1688,7 +1832,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Text in text fields cannot exceed 300 characters</a>'
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
 			);
 		});
 
@@ -1699,7 +1843,7 @@ describe('appellant-case', () => {
 					incompleteReason: [incompleteReasonsWithTextIds[0], incompleteReasonsWithTextIds[1]],
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'test reason text 1',
 					[`incompleteReason-${incompleteReasonsWithTextIds[0]}`]: 'a'.repeat(
-						textInputCharacterLimits.defaultInputLength + 1
+						textInputCharacterLimits.checkboxTextItemsLength + 1
 					)
 				});
 
@@ -1712,7 +1856,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Text in text fields cannot exceed 300 characters</a>'
+				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
 			);
 		});
 
@@ -1992,7 +2136,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a day, a month and a year');
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter the date');
 		});
 
 		it('should re-render the update date page with the expected error message if provided date is not in the future', async () => {
@@ -2028,7 +2172,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be in the future</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('The date must be in the future</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid day was provided', async () => {
@@ -2302,7 +2446,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {
@@ -2581,7 +2725,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must include a day, a month and a year');
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter the date');
 		});
 
 		it('should re-render the valid date page with the expected error message if provided date is not in the past', async () => {
@@ -2662,7 +2806,6 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain('Date day must be a number</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
 		describe('should re-render the update date page with the expected error message if an invalid month was provided', () => {
@@ -2710,7 +2853,6 @@ describe('appellant-case', () => {
 
 					expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 					expect(unprettifiedErrorSummaryHtml).toContain(expectedErrorMessageHtml);
-					expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 				});
 			});
 		});
@@ -2738,7 +2880,6 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be 4 digits</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid year "abc" was provided', async () => {
@@ -2764,7 +2905,6 @@ describe('appellant-case', () => {
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be a number</a>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid date was provided', async () => {
@@ -2789,7 +2929,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a valid date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if date was in past but prior to the date the case was received', async () => {
@@ -2883,10 +3023,10 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
@@ -2914,10 +3054,10 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -2945,10 +3085,10 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -2976,10 +3116,10 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -3007,10 +3147,10 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose files</button>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
@@ -3049,14 +3189,16 @@ describe('appellant-case', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Upload an updated document</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Evidence of your agreement to change the description of development</h1>'
+			);
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
@@ -3084,10 +3226,10 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -3115,10 +3257,10 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -3146,10 +3288,10 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Warning</span>');
@@ -3177,10 +3319,10 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<div class="govuk-grid-row pins-file-upload"'
 			);
-			expect(unprettifiedElement.innerHTML).toContain('Select files</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Choose file</button>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 			expect(unprettifiedElement.innerHTML).not.toContain('Warning</span>');
@@ -3382,7 +3524,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -3419,7 +3561,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -3456,7 +3598,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -3493,7 +3635,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -3530,7 +3672,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 		});
@@ -3617,7 +3759,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a day</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a day</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is non-numeric', async () => {
@@ -3646,7 +3790,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date day must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date day must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is less than 1', async () => {
@@ -3676,7 +3822,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence received date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -3707,7 +3853,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence received date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -3737,7 +3883,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a month</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a month</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is non-numeric', async () => {
@@ -3766,7 +3914,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date month must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date month must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is less than 1', async () => {
@@ -3796,7 +3946,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence received date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -3827,7 +3977,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence received date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -3857,7 +4007,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a year</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a year</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate year is non-numeric', async () => {
@@ -3886,7 +4038,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date year must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date year must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate is not a valid date', async () => {
@@ -3915,7 +4069,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must be a valid date</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must be a valid date</a>'
+			);
 		});
 
 		it('should send a patch request to the appeal documents endpoint and redirect to the check your answers page, if complete and valid document details were provided', async () => {
@@ -4011,7 +4167,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -4048,7 +4204,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -4085,7 +4241,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -4122,7 +4278,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).not.toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).not.toContain('What is late entry?</span>');
 		});
@@ -4159,7 +4315,7 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</legend>');
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<strong class="govuk-tag govuk-tag--pink single-line">Late entry</strong>'
+				'<strong class="govuk-tag govuk-tag--pink">Late entry</strong>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('What is late entry?</span>');
 		});
@@ -4247,7 +4403,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a day</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a day</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is non-numeric', async () => {
@@ -4276,7 +4434,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date day must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date day must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate day is less than 1', async () => {
@@ -4306,7 +4466,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence received date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -4337,7 +4497,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence received date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -4367,7 +4527,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a month</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a month</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is non-numeric', async () => {
@@ -4396,7 +4558,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date month must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date month must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate month is less than 1', async () => {
@@ -4426,7 +4590,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence received date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -4457,7 +4621,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence received date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -4487,7 +4651,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must include a year</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must include a year</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate year is non-numeric', async () => {
@@ -4516,7 +4682,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date year must be a number</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date year must be a number</a>'
+			);
 		});
 
 		it('should re-render the document details page with the expected error message if receivedDate is not a valid date', async () => {
@@ -4545,7 +4713,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedElement.innerHTML).toContain('Received date must be a valid date</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change description evidence received date must be a valid date</a>'
+			);
 		});
 
 		it('should send a patch request to the appeal documents endpoint and redirect to the check your answers page, if complete and valid document details were provided', async () => {
@@ -4873,7 +5043,9 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(notificationBannerElementHTML).toContain('Success</h3>');
-			expect(notificationBannerElementHTML).toContain('Document updated</p>');
+			expect(notificationBannerElementHTML).toContain(
+				'Agreement to change description evidence updated</p>'
+			);
 		});
 	});
 
@@ -4929,6 +5101,9 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('sample-20s-documentFolderInfo.mp4</span>');
 			expect(unprettifiedElement.innerHTML).toContain('ph0-documentFolderInfo.jpeg</span>');
 			expect(unprettifiedElement.innerHTML).toContain('ph1-documentFolderInfo.jpeg</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a href="/appeals-service/appeal-details/1/appellant-case/add-documents/${documentFolderInfo.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>`
+			);
 		});
 
 		it('should render the manage documents listing page with the expected heading, if the folderId is valid, and the folder is additional documents', async () => {
@@ -5232,6 +5407,103 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).not.toContain(
 				'<strong class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> Removing the only version of a document will delete the document from the case</strong>'
 			);
+		});
+	});
+	describe('change LPA page', () => {
+		const lpaList = [
+			{
+				id: 1,
+				lpaCode: 'Q1111',
+				name: 'System Test Borough Council 2',
+				email: 'test@example.com'
+			},
+			{
+				id: 2,
+				lpaCode: 'MAID',
+				name: 'Maidstone Borough Council',
+				email: 'test2@example.com'
+			},
+			{
+				id: 3,
+				lpaCode: 'BARN',
+				name: 'Barnsley Metropolitan Borough Council',
+				email: 'test3@example.com'
+			},
+			{
+				id: 4,
+				lpaCode: 'Q9999',
+				name: 'System Test Borough Council',
+				email: 'test4@example.com'
+			}
+		];
+
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/local-planning-authorities').reply(200, lpaList);
+		});
+		afterEach(teardown);
+		describe('GET /appellant-case/change-appeal-details/local-planning-authority', () => {
+			it('should render the local planning authority page', async () => {
+				const response = await request.get(
+					`${baseUrl}/1${appellantCasePagePath}/change-appeal-details/local-planning-authority`
+				);
+
+				const element = parseHtml(response.text);
+
+				expect(response.text).toContain(
+					`<a href="${baseUrl}/1${appellantCasePagePath}" class="govuk-back-link">Back</a>`
+				);
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Local planning authority');
+				expect(element.innerHTML).not.toContain(lpaList[0].name);
+				expect(element.innerHTML).toContain(lpaList[1].name);
+				expect(element.innerHTML).toContain(lpaList[2].name);
+				expect(element.innerHTML).not.toContain(lpaList[3].name);
+				expect(element.innerHTML).not.toContain(`checked`);
+				expect(element.innerHTML).toContain('Continue</button>');
+			});
+		});
+
+		describe('POST /appellant-case/change-appeal-details/local-planning-authority', () => {
+			beforeEach(() => {
+				nock('http://test/').post('/appeals/1/lpa').reply(200, { success: true });
+			});
+
+			afterEach(() => {
+				nock.cleanAll();
+			});
+
+			it('should redirect to correct url when lpa field is populated and valid', async () => {
+				const response = await request
+					.post(
+						`${baseUrl}/1${appellantCasePagePath}/change-appeal-details/local-planning-authority`
+					)
+					.send({ localPlanningAuthority: 2 });
+
+				expect(response.text).toEqual(`Found. Redirecting to ${baseUrl}/1${appellantCasePagePath}`);
+				expect(response.statusCode).toBe(302);
+			});
+
+			it('should re-render the page with an error message if required field is missing', async () => {
+				const response = await request
+					.post(
+						`${baseUrl}/1${appellantCasePagePath}/change-appeal-details/local-planning-authority`
+					)
+					.send({});
+
+				expect(response.statusCode).toBe(200);
+
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Local planning authority</h1>');
+
+				const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHTML).toContain('Select the local planning authority');
+			});
 		});
 	});
 });

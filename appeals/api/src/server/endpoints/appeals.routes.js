@@ -23,6 +23,7 @@ import { addressesRoutes } from './addresses/addresses.routes.js';
 import { appealTimetablesRoutes } from './appeal-timetables/appeal-timetables.routes.js';
 import { documentRedactionStatusesRoutes } from './document-redaction-statuses/document-redaction-statuses.routes.js';
 import { auditTrailsRoutes } from './audit-trails/audit-trails.routes.js';
+import { decisionRoutes } from './decision/decision.routes.js';
 import { appealsDecisionRoutes } from './appeal-decision/appeal-decision.routes.js';
 import { invalidAppealDecisionRoutes } from './invalid-appeal-decision/invalid-appeal-decision.routes.js';
 import { changeAppealTypeRoutes } from './change-appeal-type/change-appeal-type.routes.js';
@@ -39,13 +40,21 @@ import { listedBuildingRoutes } from './listed-buildings/listed-buildings.routes
 import { caseNotesRoutes } from './case-notes/case-notes.routes.js';
 import { representationRejectionReasonsRoutes } from './representation-rejection-reasons/representation-rejection-reasons.routes.js';
 import { environmentalImpactAssessmentRoutes } from './environmental-impact-assessment/environmental-impact-assessment.routes.js';
+import { appealNotificationRouter } from './notifications/notifications.routes.js';
 import { testUtilsRoutes } from './test-utils/test-utils.routes.js';
-
+import { localPlanningAuthoritiesRoutes } from './local-planning-authorities/local-planning-authorities.routes.js';
+import { hearingRoutes } from './hearings/hearing.routes.js';
+import { historicEnglandRoutes } from './historic-england/historic-england.routes.js';
+import { hearingEstimatesRoutes } from './hearing-estimates/hearing-estimates.routes.js';
 import { default as appealDetailsRoutes } from './appeal-details/appeal-details.routes.js';
+import { notifyPreviewRouter } from './notify-preview/notify-preview.routes.js';
+import { inquiryRoutes } from './Inquiry/inquiry.routes.js';
+import { inquiryEstimatesRoutes } from './inquiry-estimates/inquiry-estimates.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
 router.use(businessDaysRoutes);
+router.use(historicEnglandRoutes);
 
 router.use('/', checkAzureAdUserIdHeaderExists);
 router.use('/', initNotifyClientAndAddToRequest);
@@ -64,9 +73,11 @@ router.use(appealTypeRoutes);
 router.use(procedureTypesRoutes);
 router.use(siteVisitTypesRoutes);
 router.use(representationRejectionReasonsRoutes);
+router.use(localPlanningAuthoritiesRoutes);
 
 router.use(appealsRoutes);
 router.use(appealDetailsRoutes);
+router.use(decisionRoutes);
 router.use(appealsDecisionRoutes);
 router.use(invalidAppealDecisionRoutes);
 router.use(addressesRoutes);
@@ -85,6 +96,9 @@ router.use(environmentalImpactAssessmentRoutes);
 router.use(representationRoutes);
 router.use(listedBuildingRoutes);
 router.use(caseNotesRoutes);
+router.use(appealNotificationRouter);
+router.use(hearingRoutes);
+router.use(notifyPreviewRouter);
 
 if (config.enableTestEndpoints) {
 	router.use(testUtilsRoutes);
@@ -92,5 +106,9 @@ if (config.enableTestEndpoints) {
 
 router.use(linkedAppealsRoutes);
 router.use(transferredAppealsRoutes);
+router.use(hearingEstimatesRoutes);
+
+router.use(inquiryRoutes);
+router.use(inquiryEstimatesRoutes);
 
 export { router as appealsRoutes };

@@ -1,1 +1,1 @@
-Complete your appeal statement: ((appeal_reference_number))
+Complete your appeal statement: {{appeal_reference_number}}

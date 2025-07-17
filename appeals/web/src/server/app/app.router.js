@@ -23,6 +23,7 @@ import { addApiClientToRequest } from '../lib/middleware/add-apiclient-to-reques
 import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
 import logger from '#lib/logger.js';
 import { deleteUncommittedDocumentFromSession } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 
 const router = createRouter();
 
@@ -69,7 +70,7 @@ router.route('/auth/signout').get(handleSignout);
 
 router
 	.route('/documents/:caseId/bulk-download/:filename?')
-	.get(addApiClientToRequest, asyncHandler(getBulkDocumentDownload));
+	.get(addApiClientToRequest, validateAppeal, asyncHandler(getBulkDocumentDownload));
 
 router
 	.route('/documents/:caseId/download/:guid/:filename?')
@@ -109,6 +110,13 @@ router.route('/case/:caseReference').get((req, res) => {
 	}
 
 	return res.status(404);
+});
+
+router.get('/favicon.ico', (req, res) => {
+	res.redirect('/assets/images/favicon.ico');
+});
+router.get('/images/favicon.ico', (req, res) => {
+	res.redirect('/assets/images/favicon.ico');
 });
 
 export default router;

@@ -68,16 +68,30 @@ export const validateStringParameterAllowingEmpty = (parameterName, maxLength = 
 
 /**
  * @param {string} parameterName
+ * @param {number} maxLength
+ * @param {string | null} parentKeyIsOptional
  * @returns {ValidationChain}
  */
-export const validateRequiredStringParameter = (parameterName, maxLength = LENGTH_300) =>
-	body(parameterName)
+export const validateRequiredStringParameter = (
+	parameterName,
+	maxLength = LENGTH_300,
+	parentKeyIsOptional = null
+) => {
+	const chain = body(parameterName);
+
+	if (parentKeyIsOptional) {
+		chain.if(body(parentKeyIsOptional).exists({ values: 'null' }));
+	}
+
+	return chain
+
 		.isString()
 		.withMessage(ERROR_MUST_BE_STRING)
 		.notEmpty()
 		.withMessage(ERROR_CANNOT_BE_EMPTY_STRING)
 		.isLength({ max: maxLength })
 		.withMessage(stringTokenReplacement(ERROR_MAX_LENGTH_CHARACTERS, [maxLength]));
+};
 
 /**
  * @param {string} parameterName

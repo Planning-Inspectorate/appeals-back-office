@@ -5,10 +5,10 @@ import { getLinkableAppealById } from './linkable-appeal.controller.js';
 const router = createRouter();
 
 router.get(
-	'/linkable-appeal/:appealReference',
+	'/linkable-appeal/:appealReference/:linkableType',
 	/*
 		#swagger.tags = ['Linkable appeals']
-		#swagger.path = '/appeals/linkable-appeal/{appealReference}'
+		#swagger.path = '/appeals/linkable-appeal/{appealReference}/{linkableType}'
 		#swagger.description = Gets a single related appeal by id from BO or Horizon. If mocking use 1000000 for valid case on horizon, 2000000 for unpublished case on horizon, any for case not found on horizon
 		#swagger.parameters['azureAdUserId'] = {
 			in: 'header',
@@ -27,6 +27,8 @@ router.get(
 		}
 		#swagger.responses[400] = {}
 		#swagger.responses[404] = {}
+		#swagger.responses[409] = {}
+		#swagger.responses[432] = {}
 	 */
 	asyncHandler(getLinkableAppealById)
 );

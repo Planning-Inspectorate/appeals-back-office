@@ -317,8 +317,10 @@ describe('interested-party-comments', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Date submitted</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Redaction status</th>');
 			expect(unprettifiedElement.innerHTML).toContain('Actions</th>');
-
 			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFolderInfo.pdf</span>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<a href="/appeals-service/appeal-details/2/interested-party-comments/5/add-document" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>`
+			);
 		});
 	});
 
@@ -437,7 +439,7 @@ describe('interested-party-comments', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('Change document details</span><h1');
 			expect(unprettifiedElement.innerHTML).toContain('File name');
-			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo.jpeg">');
+			expect(unprettifiedElement.innerHTML).toContain('value="ph0-documentFileInfo">');
 		});
 	});
 

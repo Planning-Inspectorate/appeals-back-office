@@ -1,56 +1,31 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import {
-	createDateInputFieldsValidator,
-	createDateInputDateValidityValidator,
-	createDateInputDateInFutureValidator,
-	createDateInputDateInPastOrTodayValidator,
-	createDateInputDateBusinessDayValidator
-} from '#lib/validators/date-input.validator.js';
-import { createTextareaValidator } from '#lib/validators/textarea-validator.js';
+import { createTextareaConditionalValidator } from '#lib/validators/textarea-validator.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 
-export const validateDueDateFields = createDateInputFieldsValidator('due-date');
-export const validateDueDateValid = createDateInputDateValidityValidator('due-date');
-export const validateDueDateInFuture = createDateInputDateInFutureValidator('due-date');
-export const validateTextArea = createTextareaValidator(
-	'decisionInvalidReason',
-	'Enter invalid reason',
-	textInputCharacterLimits.defaultTextareaLength,
-	`Invalid reason must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
-);
-
 export const validateDecision = createValidator(
-	body('decision').trim().notEmpty().withMessage('Please issue a decision')
+	body('decision').trim().notEmpty().withMessage('Select the decision')
 );
 
-export const validateDecisionLetterDate = createValidator(
-	body('decision-letter-date')
+export const validateAppellantCostsDecision = createValidator(
+	body('appellantCostsDecision')
 		.trim()
 		.notEmpty()
-		.withMessage('Please tell us the date on your decision letter')
+		.withMessage("Select yes if you want to issue the appellant's cost decision")
 );
-export const validateVisitDateFields = createDateInputFieldsValidator(
-	'decision-letter-date',
-	'decision letter date'
-);
-export const validateVisitDateValid = createDateInputDateValidityValidator(
-	'decision-letter-date',
-	'decision letter date'
-);
-export const validateDueDateInPastOrToday =
-	createDateInputDateInPastOrTodayValidator('decision-letter-date');
 
-export const validateCheckDecision = createValidator(
-	body('ready-to-send')
+export const validateLpaCostsDecision = createValidator(
+	body('lpaCostsDecision')
 		.trim()
 		.notEmpty()
-		.withMessage('Please confirm that the decision is ready to be sent to all parties')
-		.bail()
-		.equals('yes')
-		.withMessage('Please confirm that the decision is ready to be sent to all parties')
+		.withMessage("Select yes if you want to issue the LPA's cost decision")
 );
 
-export const validateDecisionDateIsBusinessDay = await createDateInputDateBusinessDayValidator(
-	'decision-letter-date'
+export const validateInvalidReason = createTextareaConditionalValidator(
+	'invalidReason',
+	'decision',
+	'Invalid',
+	'Enter a reason',
+	textInputCharacterLimits.defaultTextareaLength,
+	`Reason must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
 );

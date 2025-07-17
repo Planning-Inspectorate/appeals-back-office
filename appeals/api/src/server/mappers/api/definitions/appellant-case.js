@@ -1,7 +1,7 @@
 import { InvalidIncompleteReason } from './invalid-incomplete.js';
 import { Folder } from './folders-documents.js';
 import { AppealSummary } from './appeal-summary.js';
-import { APPEAL_DEVELOPMENT_TYPE } from 'pins-data-model';
+import { APPEAL_DEVELOPMENT_TYPE, APPEAL_TYPE_OF_PLANNING_APPLICATION } from 'pins-data-model';
 
 const updateableFields = {
 	applicationDate: {
@@ -97,6 +97,11 @@ const updateableFields = {
 		type: 'string',
 		nullable: true,
 		enum: [...Object.values(APPEAL_DEVELOPMENT_TYPE)]
+	},
+	typeOfPlanningApplication: {
+		type: 'string',
+		nullable: true,
+		enum: [...Object.values(APPEAL_TYPE_OF_PLANNING_APPLICATION)]
 	}
 };
 
@@ -224,7 +229,8 @@ const appellantCase = {
 				newPlansDrawings: { ...Folder },
 				planningObligation: { ...Folder },
 				ownershipCertificate: { ...Folder },
-				otherNewDocuments: { ...Folder }
+				otherNewDocuments: { ...Folder },
+				statementCommonGround: { ...Folder }
 			}
 		}
 	}

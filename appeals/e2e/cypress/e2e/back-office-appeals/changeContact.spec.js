@@ -3,35 +3,43 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { urlPaths } from '../../support/urlPaths';
+import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 
 const caseDetailsPage = new CaseDetailsPage();
+const listCasesPage = new ListCasesPage();
 
 describe('change contacts', () => {
+	let caseRef;
+
+	before(() => {
+		cy.createCase().then((ref) => {
+			caseRef = ref;
+			cy.login(users.appeals.caseAdmin);
+			happyPathHelper.assignCaseOfficer(ref);
+		});
+	});
+
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
+		caseDetailsPage.navigateToAppealsService();
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickCaseNotes();
 	});
 
 	it(`change contact appellant`, () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickChangeAppellant();
-			caseDetailsPage.inputAppellantEmailAddress('appellant@test.com');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Appellant details updated');
-			caseDetailsPage.verifyAppellantEmailAddress('Appellant', 'appellant@test.com');
-		});
+		caseDetailsPage.clickChangeAppellant();
+		caseDetailsPage.inputAppellantEmailAddress('appellant@test.com');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.validateBannerMessage('Success', 'Appellant details updated');
+		caseDetailsPage.verifyAppellantEmailAddress('Appellant', 'appellant@test.com');
 	});
 
 	it(`change contact agent`, () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickChangeAgent();
-			caseDetailsPage.inputAgentEmailAddress('agent@test.com');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Agent details updated');
-			caseDetailsPage.verifyAppellantEmailAddress('Agent', 'agent@test.com');
-		});
+		caseDetailsPage.clickChangeAgent();
+		caseDetailsPage.inputAgentEmailAddress('agent@test.com');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.validateBannerMessage('Success', 'Agent details updated');
+		caseDetailsPage.verifyAppellantEmailAddress('Agent', 'agent@test.com');
 	});
 });

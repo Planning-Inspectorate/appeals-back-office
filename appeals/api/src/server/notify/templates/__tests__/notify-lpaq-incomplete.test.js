@@ -40,7 +40,8 @@ describe('lpaq-incomplete.md', () => {
 			'- Documents or information are missing: Policy is missing',
 			'- Other: Addresses are incorrect or missing',
 			'',
-			'The Planning Inspectorate'
+			'The Planning Inspectorate',
+			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');
 
 		await notifySend(notifySendData);

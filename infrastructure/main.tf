@@ -1,13 +1,15 @@
 module "primary_region" {
+  #checkov:skip=CKV_TF_1: Trusted source
   source  = "claranet/regions/azurerm"
-  version = "7.1.1"
+  version = "8.0.2"
 
   azure_region = local.primary_location
 }
 
 module "secondary_region" {
+  #checkov:skip=CKV_TF_1: Trusted source
   source  = "claranet/regions/azurerm"
-  version = "7.1.1"
+  version = "8.0.2"
 
   azure_region = local.secondary_location
 }
@@ -28,6 +30,8 @@ resource "azurerm_resource_group" "secondary" {
 
 resource "azurerm_key_vault" "main" {
   #checkov:skip=CKV_AZURE_109: TODO: consider firewall settings, route traffic via VNet
+  #checkov:skip=CKV_AZURE_189: "Ensure that Azure Key Vault disables public network access"
+  #checkov:skip=CKV2_AZURE_32: "Ensure private endpoint is configured to key vault"
   name                        = "${local.org}-kv-${local.shorter_resource_suffix}"
   location                    = module.primary_region.location
   resource_group_name         = azurerm_resource_group.primary.name

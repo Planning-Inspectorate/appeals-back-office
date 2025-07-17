@@ -3,7 +3,7 @@
  */
 
 /**
- * @param {string} appealId
+ * @param {string|number} appealId
  * @param {string} lpaQuestionnaireId
  * @param {import('got').Got} apiClient
  * @returns {Promise<LpaQuestionnaire>}

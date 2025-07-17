@@ -1,7 +1,9 @@
 import {
 	APPEAL_REDACTED_STATUS,
 	APPEAL_VIRUS_CHECK_STATUS,
-	APPEAL_CASE_STATUS
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from 'pins-data-model';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import {
@@ -132,6 +134,17 @@ export const appealsNationalList = {
 		'issue_determination',
 		'complete'
 	],
+	statusesInNationalList: [
+		'assign_case_officer',
+		'lpa_questionnaire',
+		'statements',
+		'ready_to_start',
+		'validation',
+		'final_comments',
+		'invalid',
+		'issue_determination',
+		'withdrawn'
+	],
 	lpas: [{ lpaCode: '1', name: 'Test LPA' }],
 	inspectors: [{ azureAdUserId: activeDirectoryUsersData[0].id, id: 0 }],
 	caseOfficers: [{ azureAdUserId: activeDirectoryUsersData[1].id, id: 1 }],
@@ -159,6 +172,7 @@ export const appealData = {
 	},
 	appealStatus: 'received_appeal',
 	stateList: [],
+	completedStateList: [],
 	appealTimetable: {
 		appealTimetableId: 1053,
 		lpaQuestionnaireDueDate: '2023-10-11T01:00:00.000Z',
@@ -221,12 +235,25 @@ export const appealData = {
 			folderId: 7,
 			path: 'costs/costsDecisionLetter',
 			documents: []
+		},
+		appellantDecisionFolder: {
+			caseId: '1',
+			folderId: 8,
+			path: 'costs/appellantCostsDecision',
+			documents: []
+		},
+		lpaDecisionFolder: {
+			caseId: '1',
+			folderId: 9,
+			path: 'costs/lpaCostsDecision',
+			documents: []
 		}
 	},
 	decision: {
 		folderId: 123,
 		outcome: 'dismissed',
 		documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
+		documentName: 'decision-letter.pdf',
 		letterDate: '2023-12-25T00:00:00.000Z'
 	},
 	internalCorrespondence: {
@@ -240,6 +267,12 @@ export const appealData = {
 			caseId: '1',
 			folderId: 11,
 			path: 'internal/inspector',
+			documents: []
+		},
+		mainParty: {
+			caseId: '1',
+			folderId: 22,
+			path: 'internal/mainParty',
 			documents: []
 		}
 	},
@@ -313,6 +346,19 @@ export const appealData = {
 		visitStartTime: '2023-10-09T08:38:00.000Z',
 		visitType: 'Accompanied'
 	},
+	hearing: {
+		hearingId: 0,
+		hearingEndTime: undefined,
+		hearingStartTime: '2023-10-09T08:38:00.000Z',
+		addressId: 99,
+		address: {
+			addressId: 1,
+			addressLine1: '96 The Avenue',
+			addressLine2: 'Maidstone',
+			county: 'Kent',
+			postCode: 'MD21 5XY'
+		}
+	},
 	createdAt: '2023-05-21T10:27:06.626Z',
 	startedAt: '2023-05-23T10:27:06.626Z',
 	validAt: '2023-05-23T10:27:06.626Z',
@@ -338,14 +384,49 @@ export const appealData = {
 	}
 };
 
+export const appealDataIssuedDecision = {
+	...appealData,
+	completedStateList: ['final_comments', 'event', 'awaiting_event', 'issue_determination']
+};
+
+export const publishedAppealData = {
+	...appealData,
+	appealId: 2,
+	appellantCaseId: 2,
+	appealReference: 'APP/Q9999/D/21/SHAREDTEST',
+	appealStatus: 'statements',
+	documentationSummary: {
+		...appealData.documentationSummary,
+		ipComments: {
+			counts: {
+				published: 2,
+				awaiting_review: 0,
+				valid: 0,
+				invalid: 0
+			}
+		}
+	}
+};
+
 export const appealDataFullPlanning = {
 	...appealData,
 	appealType: 'Planning appeal'
 };
 
+export const appealDataListedBuilding = {
+	...appealData,
+	appealType: 'Planning listed building and conservation area appeal'
+};
+
+export const appealDataCasPlanning = {
+	...appealData,
+	appealType: 'Commercial (CAS) appeal'
+};
+
 export const appellantCaseDataNotValidated = {
 	appealId: 1,
 	appealReference: 'TEST/919276',
+	typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING,
 	appealSite: {
 		addressId: 1,
 		addressLine1: '96 The Avenue',
@@ -446,6 +527,11 @@ export const appellantCaseDataNotValidated = {
 			documents: [],
 			folderId: 70457,
 			path: 'appellant-case/originalApplicationForm'
+		},
+		statementCommonGround: {
+			documents: [],
+			folderId: 70458,
+			path: 'appellant-case/statementCommonGround'
 		}
 	},
 	hasAdvertisedAppeal: null,
@@ -808,13 +894,18 @@ export const lpaQuestionnaireData = {
 	listedBuildingDetails: [
 		{
 			id: 1,
-			listEntry: '123456',
+			listEntry: '1234567',
 			affectsListedBuilding: true
 		},
 		{
 			id: 2,
-			listEntry: '123457',
+			listEntry: '1234568',
 			affectsListedBuilding: true
+		},
+		{
+			id: 3,
+			listEntry: '1234569',
+			affectsListedBuilding: false
 		}
 	],
 	localPlanningDepartment: 'Dorset Council',
@@ -1433,6 +1524,13 @@ export const inspectorDecisionData = {
 	outcome: 'dismissed',
 	documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
 	letterDate: '2023-12-25T00:00:00.000Z'
+};
+
+export const inspectorDecisionfile = {
+	outcome: 'dismissed',
+	GUID: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',
+	letterDate: '2023-12-25T00:00:00.000Z',
+	name: 'Decision letter'
 };
 
 export const allocationDetailsData = {
@@ -2172,6 +2270,7 @@ export const assignedAppealsPage2 = {
 				postCode: 'BS7 8LQ'
 			},
 			appealStatus: 'event',
+			procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
 			appealType: 'Householder',
 			createdAt: '2025-03-04T14:30:30.013Z',
 			localPlanningDepartment: 'Worthing Borough Council',
@@ -2812,6 +2911,12 @@ export const folderInfoInspectorCorrespondence = {
 	path: 'internal/inspectorCorrespondence'
 };
 
+export const folderInfoMainPartyCorrespondence = {
+	...costsFolderInfoAppellantApplication,
+	folderId: 22,
+	path: 'internal/mainPartyCorrespondence'
+};
+
 export const appealCostsDocumentItem = {
 	guid: 'd2197025-5edb-4477-8e98-2a1bf13ed2ea',
 	name: '_821df3b2-08ea-4f56-b8e7-97c3502cd73a_test-doc-alternate.docx',
@@ -2860,6 +2965,9 @@ export const appealCostsDocumentItem = {
 
 export const fileUploadInfo =
 	'[{"name": "test-document.txt", "GUID": "1", "fileRowId": "1", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case", "redactionStatus": 3}]';
+
+export const fileUploadInfo2 =
+	'[{"name": "test-document2.txt", "GUID": "100", "fileRowId": "2", "blobStoreUrl": "/", "mimeType": "txt", "documentType": "txt", "size": 1, "stage": "appellant-case", "redactionStatus": 3}]';
 
 export const withdrawalRequestData = {
 	withdrawal: {
@@ -3130,6 +3238,55 @@ export const interestedPartyCommentForReview = {
 			postCode: ''
 		}
 	}
+};
+
+export const interestedPartyCommentsPublished = {
+	itemCount: 2, // Example: 2 published comments
+	items: [
+		{
+			id: 5001,
+			origin: 'citizen',
+			author: 'Alice Wonderland',
+			status: 'published',
+			originalRepresentation: 'Comment 1',
+			redactedRepresentation: '',
+			created: '2025-04-01T09:15:00.000Z',
+			notes: 'Some internal notes if applicable',
+			attachments: [],
+			represented: {
+				id: 3838,
+				name: 'Lee Thornton',
+				email: 'test1@example.com',
+				address: {
+					addressLine1: '',
+					postCode: ''
+				}
+			}
+		},
+		{
+			id: 5002,
+			origin: 'organisation',
+			author: 'Cheshire Cat Council',
+			status: 'published',
+			originalRepresentation: 'Comment 2',
+			redactedRepresentation: null,
+			created: '2025-04-02T14:05:30.000Z',
+			notes: '',
+			attachments: [],
+			represented: {
+				id: 3838,
+				name: 'Lee Thornton',
+				email: 'test1@example.com',
+				address: {
+					addressLine1: '',
+					postCode: ''
+				}
+			}
+		}
+	],
+	page: 1,
+	pageCount: 1, // Assuming all items fit on one page for this mock
+	pageSize: 25 // Example page size (should match service default or query)
 };
 
 export const finalCommentsTypes = [
@@ -3406,7 +3563,8 @@ export const appealDataToGetRequiredActions = {
 	},
 	arrangeSiteVisit: {
 		...baseAppealDataToGetRequiredActions,
-		appealStatus: APPEAL_CASE_STATUS.EVENT
+		appealStatus: APPEAL_CASE_STATUS.EVENT,
+		procedureType: APPEAL_CASE_PROCEDURE.WRITTEN
 	},
 	assignCaseOfficer: {
 		...baseAppealDataToGetRequiredActions,
@@ -3668,6 +3826,11 @@ export const appealDataToGetRequiredActions = {
 			}
 		}
 	},
+	setupHearing: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.EVENT,
+		procedureType: APPEAL_CASE_PROCEDURE.HEARING
+	},
 	startAppeal: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.READY_TO_START
@@ -3777,3 +3940,110 @@ export const designatedSiteNames = [
 		name: 'test custom designation'
 	}
 ];
+
+export const caseAuditLog = [
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details:
+			"Thise case has over 300 characters in the details field. This is a test to ensure that the system can handle long text entries without issues. The case has progressed to awaiting_lpa_questionnaire. There should be over 300 character in this field to test the system's ability to handle long text entries without truncation or errors. - it should show the show more compoonent",
+		loggedDate: '2025-05-27T09:55:30.175Z'
+	},
+	{
+		azureAdUserId: '00000000-0000-0000-0000-000000000000',
+		details: 'The case has progressed to issue_determination',
+		loggedDate: '2025-05-27T09:55:36.910Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case has progressed to awaiting_event',
+		loggedDate: '2025-05-27T09:55:30.175Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The site visit was arranged for Thursday 2 October',
+		loggedDate: '2025-05-27T09:55:30.106Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'Final comments shared',
+		loggedDate: '2025-05-27T09:55:22.784Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case has progressed to event',
+		loggedDate: '2025-05-27T09:55:22.781Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'LPA final comments accepted',
+		loggedDate: '2025-05-27T09:55:09.783Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'Appellant final comments accepted',
+		loggedDate: '2025-05-27T09:55:05.167Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'Statements and IP comments shared',
+		loggedDate: '2025-05-27T09:54:59.262Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case has progressed to final_comments',
+		loggedDate: '2025-05-27T09:54:59.237Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'LPA questionnaire updated',
+		loggedDate: '2025-05-27T09:52:39.322Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case has progressed to statements',
+		loggedDate: '2025-05-27T09:52:39.253Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case has progressed to lpa_questionnaire',
+		loggedDate: '2025-05-27T09:52:30.000Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case timeline was created',
+		loggedDate: '2025-05-27T09:52:29.903Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'Case updated',
+		loggedDate: '2025-05-27T09:52:23.680Z'
+	},
+	{
+		azureAdUserId: activeDirectoryUsersData[0].id,
+		details: 'The case has progressed to ready_to_start',
+		loggedDate: '2025-05-27T09:52:23.597Z'
+	}
+];
+
+export const template = {
+	renderedHtml: [
+		`<div class="pins-notify-preview-border">`,
+		`We have corrected the appeal decision letter.<br><br>`,
+		`<h2>Appeal details</h2>`,
+		`<div class="govuk-inset-text">`,
+		`  Appeal reference number: 12345 <br>`,
+		`  Address: 2222<br>`,
+		`  Planning application reference: planningApplicationReference<br>`,
+		`</div>`,
+		`<h2>Why we corrected the appeal decision letter</h2>`,
+		`correctionNotice<br><br>`,
+		`<a href="https://appeals-service-test.planninginspectorate.gov.uk/manage-appeals/12345" class="govuk-link">Sign in to our service</a> to view the decision letter dated dateISOStringToDisplayDate(file.receivedDate).<br><br>`,
+		`<h2>The Planning Inspectorate's role</h2>`,
+		`The Planning Inspectorate cannot change or revoke the decision. Only the High Court can change this decision.<br><br>`,
+		`<h2>Feedback</h2>`,
+		`We welcome your feedback on our appeals service. Tell us on this short <a href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u" class="govuk-link">feedback form</a>.<br><br>`,
+		`The Planning Inspectorate<br><br>`,
+		`caseofficers@planninginspectorate.gov.uk<br><br>`,
+		`</div>`
+	].join('\n')
+};

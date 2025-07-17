@@ -10,6 +10,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { horizonGetCaseSuccessResponse } from '#tests/horizon/mocks.js';
 import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
+import { cloneDeep } from 'lodash-es';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
@@ -105,7 +106,7 @@ describe('appeal linked appeals routes', () => {
 				expect(response.status).toEqual(400);
 			});
 
-			test('returns 400 when an internal appeal is already a parent', async () => {
+			test('returns 409 when an internal appeal is already a parent', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValueOnce({
 					...householdAppeal,
@@ -120,7 +121,73 @@ describe('appeal linked appeals routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(400);
+				expect(response.status).toEqual(409);
+			});
+
+			test('returns 201 when an internal appeal is linked', async () => {
+				const childAppeal = cloneDeep({ ...householdAppeal, id: 2, reference: '4567654' });
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValueOnce(childAppeal);
+				// @ts-ignore
+				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+				got.post.mockReturnValueOnce({
+					json: jest
+						.fn()
+						.mockResolvedValueOnce(parseHorizonGetCaseResponse(horizonGetCaseSuccessResponse))
+				});
+
+				const response = await request
+					.post(`/appeals/${householdAppeal.id}/link-appeal`)
+					.send({
+						...linkedAppealRequest,
+						linkedAppealReference: '123456'
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(201);
+				expect(databaseConnector.appealRelationship.create).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.appealRelationship.create).toHaveBeenCalledWith({
+					data: {
+						parentId: householdAppeal.id,
+						parentRef: householdAppeal.reference,
+						childRef: childAppeal.reference,
+						childId: childAppeal.id,
+						type: CASE_RELATIONSHIP_LINKED,
+						externalSource: false
+					}
+				});
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						lead_appeal_reference_number: householdAppeal.reference,
+						child_appeal_reference_number: childAppeal.reference,
+						event_type: 'site visit',
+						lpa_reference: householdAppeal.applicationReference,
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
+					},
+					recipientEmail: householdAppeal.agent.email,
+					templateName: 'link-appeal'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					notifyClient: expect.anything(),
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						lead_appeal_reference_number: householdAppeal.reference,
+						child_appeal_reference_number: childAppeal.reference,
+						event_type: 'site visit',
+						lpa_reference: householdAppeal.applicationReference,
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
+					},
+					recipientEmail: householdAppeal.agent.email,
+					templateName: 'link-appeal'
+				});
 			});
 
 			test('returns 200 when an external appeal reference is received', async () => {

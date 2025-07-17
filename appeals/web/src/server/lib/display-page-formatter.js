@@ -56,27 +56,27 @@ export const formatListOfNotificationMethodsToHtml = (notificationMethods) => {
  * @returns {string}
  */
 export const formatListOfLinkedAppeals = (listOfAppeals) => {
-	if (listOfAppeals && listOfAppeals.length > 0) {
-		let formattedLinks = '';
-
-		for (let i = 0; i < listOfAppeals.length; i++) {
-			const shortAppealReference = appealShortReference(listOfAppeals[i].appealReference);
-			const linkUrl = listOfAppeals[i].externalSource
-				? generateHorizonAppealUrl(listOfAppeals[i].appealId)
-				: `/appeals-service/appeal-details/${listOfAppeals[i].appealId}`;
-			const linkAriaLabel = `Appeal ${numberToAccessibleDigitLabel(shortAppealReference || '')}`;
-			const relationshipText = listOfAppeals[i].isParentAppeal ? ' (Lead)' : ' (Child)';
-
-			formattedLinks +=
-				linkUrl.length > 0
-					? `<li><a href="${linkUrl}" class="govuk-link" data-cy="linked-appeal-${shortAppealReference}" aria-label="${linkAriaLabel}">${shortAppealReference}</a> ${relationshipText}</li>`
-					: `<li><span class="govuk-body">${shortAppealReference}</span> ${relationshipText}</li>`;
-		}
-
-		return `<ul class="govuk-list govuk-list--bullet">${formattedLinks}</ul>`;
+	if (!listOfAppeals || listOfAppeals.length === 0) {
+		return '<span>No linked appeals</span>';
 	}
 
-	return '<span>No appeals</span>';
+	let formattedLinks = '';
+
+	for (let i = 0; i < listOfAppeals.length; i++) {
+		const shortAppealReference = appealShortReference(listOfAppeals[i].appealReference);
+		const linkUrl = listOfAppeals[i].externalSource
+			? generateHorizonAppealUrl(listOfAppeals[i].appealId)
+			: `/appeals-service/appeal-details/${listOfAppeals[i].appealId}`;
+		const linkAriaLabel = `Appeal ${numberToAccessibleDigitLabel(shortAppealReference || '')}`;
+		const relationshipText = listOfAppeals[i].isParentAppeal ? ' (lead)' : '';
+
+		formattedLinks +=
+			linkUrl.length > 0
+				? `<li><a href="${linkUrl}" class="govuk-link" data-cy="linked-appeal-${shortAppealReference}" aria-label="${linkAriaLabel}">${shortAppealReference}</a> ${relationshipText}</li>`
+				: `<li><span class="govuk-body">${shortAppealReference}</span> ${relationshipText}</li>`;
+	}
+
+	return `<ul class="govuk-list govuk-list--bullet">${formattedLinks}</ul>`;
 };
 
 /**

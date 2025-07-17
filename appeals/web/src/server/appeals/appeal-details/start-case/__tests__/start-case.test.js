@@ -107,6 +107,42 @@ describe('start-case', () => {
 				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure?backUrl=/test/back/url'
 			);
 		});
+
+		it('should redirect to the select procedure page if the appeal type is S78 and the S78 hearing feature flag is enabled, and the select procedure type page was previously submitted with an option selected', async () => {
+			featureFlags.isFeatureActive = () => true;
+
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const postSelectProcedureResponse = await request
+				.post('/appeals-service/appeal-details/1/start-case/select-procedure')
+				.send({
+					appealProcedure: 'written'
+				});
+
+			expect(postSelectProcedureResponse.statusCode).toBe(302);
+			expect(postSelectProcedureResponse.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+			);
+
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request.get(`${baseUrl}/1/start-case/add?backUrl=/test/back/url`);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure?backUrl=/test/back/url'
+			);
+		});
 	});
 
 	describe('POST /start-case/add', () => {
@@ -120,6 +156,7 @@ describe('start-case', () => {
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
+
 	describe('GET /start-case/change', () => {
 		it('should render the change start date page with the expected content', async () => {
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
@@ -272,6 +309,65 @@ describe('start-case', () => {
 				'name="appealProcedure" type="radio" value="hearing" checked>'
 			);
 			expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry">');
+		});
+
+		it('should render the select procedure page with no option preselected if the flow was restarted after submitting the select procedure page with an option selected', async () => {
+			featureFlags.isFeatureActive = () => true;
+
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const postSelectProcedureResponse = await request
+				.post('/appeals-service/appeal-details/1/start-case/select-procedure')
+				.send({
+					appealProcedure: 'written'
+				});
+
+			expect(postSelectProcedureResponse.statusCode).toBe(302);
+			expect(postSelectProcedureResponse.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
+			);
+
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const getStartCaseAddResponse = await request.get(
+				`${baseUrl}/1/start-case/add?backUrl=/test/back/url`
+			);
+
+			expect(getStartCaseAddResponse.statusCode).toBe(302);
+			expect(getStartCaseAddResponse.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure?backUrl=/test/back/url'
+			);
+
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/start-case/select-procedure'
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).toContain('Appeal procedure</h1>');
+			expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="written">');
+			expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="hearing">');
+			expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry">');
+			expect(unprettifiedHtml).not.toContain('checked');
 		});
 	});
 

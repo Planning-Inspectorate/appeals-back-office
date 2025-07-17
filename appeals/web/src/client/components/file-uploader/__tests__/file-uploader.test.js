@@ -102,4 +102,49 @@ describe('file upload', () => {
 
 		expect(uploadInput.files).toHaveLength(2);
 	});
+
+	test('should accept .msg file even if MIME type is missing', async () => {
+		const msgFile = new File(['sample outlook msg'], 'sample.msg', { type: '' });
+
+		await waitFor(() => {
+			fireEvent.change(uploadInput, {
+				target: {
+					files: [msgFile]
+				}
+			});
+		});
+
+		expect(uploadInput.files).toHaveLength(1);
+		expect(uploadInput.files[0].name).toBe('sample.msg');
+	});
+
+	test('should reject unsupported file type with unknown extension', async () => {
+		const unknownFile = new File(['unknown'], 'mystery.xyz', { type: '' });
+
+		await waitFor(() => {
+			fireEvent.change(uploadInput, {
+				target: {
+					files: [unknownFile]
+				}
+			});
+		});
+
+		expect(uploadInput.files[0].name).toBe('mystery.xyz');
+	});
+
+	test('should handle one valid and one invalid file in the same batch', async () => {
+		const valid = new File(['hello'], 'file.pdf', { type: 'application/pdf' });
+		const invalid = new File(['bad'], 'file.xyz', { type: '' });
+
+		await waitFor(() => {
+			fireEvent.change(uploadInput, {
+				target: {
+					files: [valid, invalid]
+				}
+			});
+		});
+
+		expect(uploadInput.files[0].name).toBe('file.pdf');
+		expect(uploadInput.files[1].name).toBe('file.xyz');
+	});
 });

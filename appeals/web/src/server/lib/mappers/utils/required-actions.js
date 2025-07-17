@@ -1,4 +1,4 @@
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import {
@@ -8,14 +8,15 @@ import {
 	// @ts-ignore
 } from '@pins/appeals/constants/support.js';
 
-/** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'issueDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments'|'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'issueDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'} AppealRequiredAction */
 
 /**
  * This logic is documented in `docs/reference/appeal-action-required-logic.md`. Please ensure this document is kept updated to reflect any changes made in this function.
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal|import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} appealDetails
+ * @param { 'summary'|'detail' } view
  * @returns {AppealRequiredAction[]}
  */
-export function getRequiredActionsForAppeal(appealDetails) {
+export function getRequiredActionsForAppeal(appealDetails, view) {
 	/** @type {AppealRequiredAction[]} */
 	const actions = [];
 
@@ -30,7 +31,41 @@ export function getRequiredActionsForAppeal(appealDetails) {
 			actions.push('addHorizonReference');
 			break;
 		case APPEAL_CASE_STATUS.EVENT:
-			actions.push('arrangeSiteVisit');
+			// @ts-ignore
+			if (
+				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase()
+			) {
+				actions.push('arrangeSiteVisit');
+			}
+
+			if (
+				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING.toLowerCase()
+			) {
+				// @ts-ignore
+				if (
+					// @ts-ignore
+					(view === 'detail' && !appealDetails.hearing) ||
+					// @ts-ignore
+					(view === 'summary' && !appealDetails.isHearingSetup)
+				) {
+					actions.push('setupHearing');
+					break;
+				}
+
+				if (
+					(view === 'detail' &&
+						// @ts-ignore
+						appealDetails.hearing &&
+						// @ts-ignore
+						!appealDetails.hearing?.addressId &&
+						// @ts-ignore
+						!appealDetails.hearing?.address) ||
+					// @ts-ignore
+					(view === 'summary' && !appealDetails.hasHearingAddress)
+				) {
+					actions.push('addHearingAddress');
+				}
+			}
 			break;
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
 			actions.push('issueDecision');
@@ -124,6 +159,8 @@ export function getRequiredActionsForAppeal(appealDetails) {
 			) {
 				if (hasItemsToShare) {
 					actions.push('shareIpCommentsAndLpaStatement');
+				} else if (appealDetails.procedureType === 'Hearing') {
+					actions.push('progressHearingCaseWithNoRepsFromStatements');
 				} else {
 					actions.push('progressFromStatements');
 				}

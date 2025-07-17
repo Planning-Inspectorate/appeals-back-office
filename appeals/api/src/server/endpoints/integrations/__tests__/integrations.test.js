@@ -6,11 +6,13 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	validAppellantCase,
+	validAppellantCaseS78,
 	validLpaQuestionnaire,
 	validRepresentationIp,
 	validRepresentationAppellantFinalComment,
 	validRepresentationLpaStatement,
 	appealIngestionInput,
+	appealIngestionInputS78,
 	docIngestionInput
 } from '#tests/integrations/mocks.js';
 import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE, APPEAL_REDACTED_STATUS } from 'pins-data-model';
@@ -59,7 +61,7 @@ describe('/appeals/case-submission', () => {
 			const payload = {
 				casedata: {
 					...validPayload,
-					caseType: APPEAL_CASE_TYPE.Y
+					caseType: APPEAL_CASE_TYPE.Q
 				},
 				users: validAppellantCase.users,
 				documents: []
@@ -70,7 +72,7 @@ describe('/appeals/case-submission', () => {
 			expect(response.status).toEqual(400);
 			expect(response.body).toEqual({
 				errors: {
-					details: `Error validating case types: ${APPEAL_CASE_TYPE.Y} not currently supported`,
+					details: `Error validating case types: ${payload.casedata.caseType} not currently supported`,
 					integration: ERROR_INVALID_APPELLANT_CASE_DATA
 				}
 			});
@@ -97,6 +99,40 @@ describe('/appeals/case-submission', () => {
 					reference: expect.any(String),
 					submissionId: expect.any(String),
 					...appealIngestionInput
+				}
+			});
+			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+				where: { id: 100 },
+				data: {
+					reference: expect.any(String),
+					appealStatus: {
+						create: {
+							status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+							createdAt: expect.any(String)
+						}
+					}
+				}
+			});
+
+			expect(databaseConnector.document.createMany).toHaveBeenCalled();
+			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
+			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
+
+			expect(databaseConnector.appeal.findUnique).toHaveBeenCalled();
+			expect(response.status).toEqual(201);
+			expect(response.body).toEqual(result);
+		});
+
+		test('POST valid s78 appellant case payload and create appeal', async () => {
+			const result = createIntegrationMocks(appealIngestionInputS78);
+			const payload = validAppellantCaseS78;
+			const response = await request.post('/appeals/case-submission').send(payload);
+
+			expect(databaseConnector.appeal.create).toHaveBeenCalledWith({
+				data: {
+					reference: expect.any(String),
+					submissionId: expect.any(String),
+					...appealIngestionInputS78
 				}
 			});
 			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({

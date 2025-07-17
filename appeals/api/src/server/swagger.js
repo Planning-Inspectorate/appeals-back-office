@@ -103,6 +103,17 @@ export const spec = {
 			...validRepresentationIp
 		},
 		DecisionInfo: {
+			decisions: [
+				{
+					decisionType: 'inspector-decision',
+					outcome: 'allowed',
+					documentGuid: 'c957e9d0-1a02-4650-acdc-f9fdd689c210',
+					documentDate: '2024-08-17'
+				}
+			]
+		},
+		//ToDo: Remove once the new version of issue decisions is released
+		OldDecisionInfo: {
 			outcome: 'allowed',
 			documentGuid: 'c957e9d0-1a02-4650-acdc-f9fdd689c210',
 			documentDate: '2024-08-17'
@@ -283,11 +294,17 @@ export const spec = {
 					folderId: 2302,
 					path: 'costs/lpaCorrespondence'
 				},
-				decisionFolder: {
+				appellantDecisionFolder: {
 					caseId: '118',
 					documents: [],
-					folderId: 2400,
-					path: 'costs/decision'
+					folderId: 2401,
+					path: 'costs/appellantDecision'
+				},
+				lpaDecisionFolder: {
+					caseId: '118',
+					documents: [],
+					folderId: 2402,
+					path: 'costs/lpaDecision'
 				}
 			},
 			internalCorrespondence: {
@@ -302,6 +319,12 @@ export const spec = {
 					documents: [],
 					folderId: 2122,
 					path: 'internal/inspectorCorrespondence'
+				},
+				mainParty: {
+					caseId: '118',
+					documents: [],
+					folderId: 2123,
+					path: 'internal/mainPartyCorrespondence'
 				}
 			},
 			neighbouringSites: [],
@@ -364,7 +387,8 @@ export const spec = {
 					status: 'not_received'
 				}
 			},
-			stateList: []
+			stateList: [],
+			completedStateList: ['awaiting_event']
 		},
 		SingleAppellantCaseResponse: {
 			agriculturalHolding: {
@@ -434,6 +458,10 @@ export const spec = {
 				},
 				otherNewDocuments: {
 					folderId: 4575,
+					documents: []
+				},
+				statementCommonGround: {
+					folderId: 4576,
 					documents: []
 				}
 			},
@@ -533,9 +561,11 @@ export const spec = {
 				representationsFromOtherParties: folderWithDocs,
 				responsesOrAdvice: folderWithDocs,
 				screeningDirection: folderWithDocs,
+				scopingOpinion: folderWithDocs,
 				siteNotice: folderWithDocs,
 				supplementaryPlanningtestDocuments: folderWithDocs,
-				treePreservationOrder: folderWithDocs
+				treePreservationOrder: folderWithDocs,
+				historicEnglandConsultation: folderWithDocs
 			},
 			doesAffectAListedBuilding: true,
 			doesAffectAScheduledMonument: true,
@@ -594,7 +624,8 @@ export const spec = {
 				outcome: 'Incomplete',
 				incompleteReasons: ['Documents or information are missing', 'Policies are missing', 'Other']
 			},
-			reasonForNeighbourVisits: 'The inspector needs to access the neighbouring site'
+			reasonForNeighbourVisits: 'The inspector needs to access the neighbouring site',
+			preserveGrantLoan: true
 		},
 		UpdateAppellantCaseRequest: {
 			appealDueDate: '2024-12-13',
@@ -654,7 +685,8 @@ export const spec = {
 			scheduleType: 1,
 			sensitiveAreaDetails: 'The area is liable to flooding',
 			validationOutcome: 'incomplete',
-			isGreenBelt: true
+			isGreenBelt: true,
+			preserveGrantLoan: true
 		},
 		UpdateLPAQuestionnaireResponse: {},
 		AllAppellantCaseIncompleteReasonsResponse: [
@@ -827,13 +859,19 @@ export const spec = {
 			finalCommentReviewDate: '2024-08-09',
 			issueDeterminationDate: '2024-08-10',
 			lpaQuestionnaireDueDate: '2024-08-11',
-			statementReviewDate: '2024-08-12'
+			statementReviewDate: '2024-08-12',
+			statementOfCommonGroundDueDate: '2024-08-12',
+			planningObligationDueDate: '2024-08-13',
+			proofOfEvidenceAndWitnessesDueDate: '2024-08-14'
 		},
 		UpdateAppealTimetableResponse: {
 			finalCommentReviewDate: '2024-08-09T01:00:00.000Z',
 			issueDeterminationDate: '2024-08-10T01:00:00.000Z',
 			lpaQuestionnaireDueDate: '2024-08-11T01:00:00.000Z',
-			statementReviewDate: '2024-08-12T01:00:00.000Z'
+			statementReviewDate: '2024-08-12T01:00:00.000Z',
+			statementOfCommonGroundDueDate: '2024-08-12T01:00:00.000Z',
+			planningObligationDueDate: '2024-08-13T01:00:00.000Z',
+			proofOfEvidenceAndWitnessesDueDate: '2024-08-14T01:00:00.000Z'
 		},
 		AllDocumentRedactionStatusesResponse: {
 			id: 1,
@@ -901,6 +939,17 @@ export const spec = {
 					text: ['Illegible or Incomplete Documentation', 'Previously Decided or Duplicate Appeal']
 				}
 			]
+		},
+		LPAs: [
+			{
+				id: 1,
+				name: 'Bristol City Council',
+				lpaCode: 'BRIS',
+				email: 'bris@lpa-email.gov.uk'
+			}
+		],
+		LPAChangeRequest: {
+			newLpaId: 2
 		}
 	},
 	'@definitions': {
@@ -1168,6 +1217,407 @@ export const spec = {
 				eiaScreeningRequired: {
 					type: 'boolean',
 					example: true
+				}
+			}
+		},
+		CreateHearingRequest: {
+			type: 'object',
+			properties: {
+				hearingStartTime: {
+					type: 'string',
+					description: 'Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				hearingEndTime: {
+					type: 'string',
+					description: 'Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				addressId: {
+					type: 'number',
+					example: 1
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
+		UpdateHearingRequest: {
+			type: 'object',
+			properties: {
+				hearingStartTime: {
+					type: 'string',
+					description: 'Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				hearingEndTime: {
+					type: 'string',
+					description: 'Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				addressId: {
+					type: 'number',
+					example: 1
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
+		HearingResponse: {
+			type: 'object',
+			properties: {
+				appealId: {
+					type: 'number',
+					example: 1
+				},
+				hearingId: {
+					type: 'number',
+					example: 1
+				},
+				hearingStartTime: {
+					type: 'string',
+					description: 'Date string of the hearing start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2014-11-14T00:00:00+00:00'
+				},
+				hearingEndTime: {
+					type: 'string',
+					description: 'Date string of the hearing end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2014-11-14T00:00:00+00:00'
+				},
+				addressId: {
+					type: 'number',
+					example: 1
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
+		HearingEstimate: {
+			type: 'object',
+			properties: {
+				preparationTime: {
+					type: 'number',
+					example: 1.5
+				},
+				sittingTime: {
+					type: 'number',
+					example: 0.5
+				},
+				reportingTime: {
+					type: 'number',
+					example: 2
+				}
+			}
+		},
+		HearingEstimateCreateRequest: {
+			type: 'object',
+			properties: {
+				preparationTime: {
+					type: 'number',
+					example: 1.5
+				},
+				sittingTime: {
+					type: 'number',
+					example: 0.5
+				},
+				reportingTime: {
+					type: 'number',
+					example: 2
+				}
+			}
+		},
+		HearingEstimateUpdateRequest: {
+			type: 'object',
+			properties: {
+				preparationTime: {
+					type: 'number',
+					example: 1.5
+				},
+				sittingTime: {
+					type: 'number',
+					example: 0.5
+				},
+				reportingTime: {
+					type: 'number',
+					example: 2
+				}
+			}
+		},
+		HearingEstimateResponse: {
+			type: 'object',
+			properties: {
+				hearingEstimateId: {
+					type: 'number',
+					example: 1
+				}
+			}
+		},
+		CancelHearing: {
+			type: 'object',
+			properties: {
+				appealId: {
+					type: 'number',
+					example: 1
+				},
+				hearingId: {
+					type: 'number',
+					example: 1
+				}
+			}
+		},
+		CreateInquiryRequest: {
+			type: 'object',
+			properties: {
+				inquiryStartTime: {
+					type: 'string',
+					description: 'Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				inquiryEndTime: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				startDate: {
+					type: 'string',
+					description: 'Date string of the timetable: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				estimatedDays: {
+					type: 'string',
+					description: 'Estimated number of days',
+					example: '5'
+				},
+				lpaQuestionnaireDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				statementDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				ipCommentsDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				statementOfCommonGroundDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				proofOfEvidenceAndWitnessesDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				planningObligationDueDate: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
+		InquiryResponse: {
+			type: 'object',
+			properties: {
+				appealId: {
+					type: 'number',
+					example: 1
+				},
+				inquiryId: {
+					type: 'number',
+					example: 1
+				},
+				inquiryStartTime: {
+					type: 'string',
+					description: 'Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2014-11-14T00:00:00+00:00'
+				},
+				inquiryEndTime: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2014-11-14T00:00:00+00:00'
+				},
+				addressId: {
+					type: 'number',
+					example: 1
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				}
+			}
+		},
+		InquiryEstimate: {
+			type: 'object',
+			properties: {
+				estimatedTime: {
+					type: 'number',
+					example: 1.5
+				}
+			}
+		},
+		InquiryEstimateCreateRequest: {
+			type: 'object',
+			properties: {
+				estimatedTime: {
+					type: 'number',
+					example: 1.5
+				}
+			}
+		},
+		InquiryEstimateUpdateRequest: {
+			type: 'object',
+			properties: {
+				estimatedTime: {
+					type: 'number',
+					example: 1.5
+				}
+			}
+		},
+		InquiryEstimateResponse: {
+			type: 'object',
+			properties: {
+				inquiryEstimateId: {
+					type: 'number',
+					example: 1
 				}
 			}
 		},

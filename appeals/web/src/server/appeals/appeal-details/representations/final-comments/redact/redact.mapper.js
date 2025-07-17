@@ -5,6 +5,7 @@ import { redactInput } from '#appeals/appeal-details/representations/common/comp
 import { summaryList } from './components/summary-list.js';
 import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
 import { getAttachmentList } from '#appeals/appeal-details/representations/common/document-attachment-list.js';
+import { findButtonText } from '#lib/revert-text.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -18,6 +19,7 @@ import { getAttachmentList } from '#appeals/appeal-details/representations/commo
  */
 export const redactFinalCommentPage = (appealDetails, comment, finalCommentsType, session) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
+	const buttonText = findButtonText(finalCommentsType);
 
 	/** @type {PageComponent[]} */
 	const pageComponents = [
@@ -47,7 +49,12 @@ export const redactFinalCommentPage = (appealDetails, comment, finalCommentsType
 						]
 					}
 				},
-				...redactInput({ representation: comment, labelText: 'Redacted final comments:', session }),
+				...redactInput({
+					representation: comment,
+					labelText: 'Redacted final comments:',
+					session,
+					buttonText: buttonText
+				}),
 				buttonComponent(
 					'Continue',
 					{ type: 'submit' },

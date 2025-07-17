@@ -11,6 +11,7 @@ import {
 } from './site-visit.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import usersService from '#appeals/appeal-users/users-service.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /**
  *
@@ -41,7 +42,9 @@ const renderScheduleOrManageSiteVisit = async (request, response, pageType) => {
 			pageType,
 			appealDetails,
 			request.originalUrl,
+			getBackLinkUrlFromQuery(request),
 			request.session,
+			request,
 			visitType,
 			visitDateDay,
 			visitDateMonth,
@@ -49,7 +52,8 @@ const renderScheduleOrManageSiteVisit = async (request, response, pageType) => {
 			visitStartTimeHour,
 			visitStartTimeMinute,
 			visitEndTimeHour,
-			visitEndTimeMinute
+			visitEndTimeMinute,
+			errors
 		);
 
 		return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -224,7 +228,7 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 
 				addNotificationBannerToSession({
 					session: request.session,
-					bannerDefinitionKey: successBannerAndChangeType.bannerType,
+					bannerDefinitionKey: 'siteVisitChangedDefault',
 					appealId: appealDetails.appealId
 				});
 

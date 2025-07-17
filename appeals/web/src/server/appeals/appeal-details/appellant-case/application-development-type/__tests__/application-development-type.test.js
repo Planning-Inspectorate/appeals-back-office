@@ -23,7 +23,7 @@ describe('application-development-type', () => {
 			const html = parseHtml(response.text).innerHTML;
 
 			expect(html).toMatchSnapshot();
-			expect(html).toContain('Check the Development type</h1>');
+			expect(html).toContain('Development type</h1>');
 		});
 	});
 
@@ -61,7 +61,7 @@ describe('application-development-type', () => {
 			const html = parseHtml(response.text).innerHTML;
 
 			expect(html).toMatchSnapshot();
-			expect(html).toContain('Check the Development type</h1>');
+			expect(html).toContain('Development type</h1>');
 			expect(html).toContain('Select a development type');
 		});
 
@@ -77,7 +77,7 @@ describe('application-development-type', () => {
 			const html = parseHtml(response.text).innerHTML;
 
 			expect(html).toMatchSnapshot();
-			expect(html).toContain('Check the Development type</h1>');
+			expect(html).toContain('Development type</h1>');
 			expect(html).toContain('Select a valid development type from the list');
 		});
 	});

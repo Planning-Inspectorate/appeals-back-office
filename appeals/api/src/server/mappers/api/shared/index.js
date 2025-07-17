@@ -14,16 +14,23 @@ import { mapAppealDecision } from './map-appeal-decision.js';
 import { mapAppealFolders } from './map-folders-documents.js';
 import { mapAppellantCase } from './map-appellant-case.js';
 import { mapLpaQuestionnaire } from './map-lpa-questionnaire.js';
+import { mapHearing } from './map-hearing.js';
+import { mapHearingEstimate } from './map-hearing-estimate.js';
+import { mapCompletedStateList } from '#mappers/api/shared/map-completed-state-list.js';
+import { mapInquiry } from './map-inquiry.js';
 
 export const apiSharedMappers = {
 	appealSummary: mapAppealSummary,
 	appealStatus: mapAppealStatus,
 	team: mapAppealTeam,
 	siteVisit: mapSiteVisit,
+	hearing: mapHearing,
+	inquiry: mapInquiry,
 	allocationDetails: mapAllocationDetails,
 	appealTimetable: mapAppealTimetable,
 	documentationSummary: mapDocumentationSummary,
 	stateList: mapStateList,
+	completedStateList: mapCompletedStateList,
 	decision: mapAppealDecision,
 	appealRelationships: mapAppealRelationships,
 	neighbouringSites: mapNeighbouringSites,
@@ -31,5 +38,6 @@ export const apiSharedMappers = {
 	appellantCase: mapAppellantCase,
 	lpaQuestionnaire: mapLpaQuestionnaire,
 	withdrawal: mapAppealWithdrawal,
-	folders: mapAppealFolders
+	folders: mapAppealFolders,
+	hearingEstimate: mapHearingEstimate
 };

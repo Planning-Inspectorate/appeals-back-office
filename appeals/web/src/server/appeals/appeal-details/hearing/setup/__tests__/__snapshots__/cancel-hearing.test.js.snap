@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cancel hearing GET /hearing/cancel should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Confirm that you want to cancel the hearing</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">We’ll send an email to the appellant and LPA to tell them the hearing
+                has been cancelled.</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button" id="cancelHearing">Cancel hearing</button>
+                    </form>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body"><a href="/appeals-service/appeal-details/2" class="govuk-link" id="keepHearing">Keep hearing</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

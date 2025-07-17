@@ -24,7 +24,11 @@ import {
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getViewWithdrawalDocumentFolder = async (request, response) => {
-	const { errors, currentAppeal } = request;
+	const {
+		errors,
+		currentAppeal,
+		params: { appealId }
+	} = request;
 
 	if (!currentAppeal || currentAppeal.appealStatus !== APPEAL_CASE_STATUS.WITHDRAWN) {
 		return response.status(404).render('app/404');
@@ -33,7 +37,8 @@ export const getViewWithdrawalDocumentFolder = async (request, response) => {
 	request.currentFolder = currentAppeal.withdrawal?.withdrawalFolder;
 
 	const mappedPageContent = manageWithdrawalRequestFolderPage(
-		`/appeals-service/appeal-details/${request.params.appealId}`,
+		appealId,
+		`/appeals-service/appeal-details/${appealId}`,
 		currentAppeal.withdrawal?.withdrawalFolder,
 		currentAppeal.withdrawal?.withdrawalRequestDate,
 		request,
@@ -192,7 +197,8 @@ const renderDateWithdrawalRequest = async (request, response) => {
 		currentAppeal,
 		withdrawalRequestDay,
 		withdrawalRequestMonth,
-		withdrawalRequestYear
+		withdrawalRequestYear,
+		errors
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {

@@ -1,9 +1,14 @@
+// @ts-nocheck
 import { notifySend } from '#notify/notify-send.js';
 import { jest } from '@jest/globals';
 
 describe('decision-is-invalid-lpa.md', () => {
-	test('should call notify sendEmail with the correct data', async () => {
-		const notifySendData = {
+	let notifySendData;
+	let expectedContentA;
+	let expectedContentB;
+
+	beforeEach(() => {
+		notifySendData = {
 			doNotMockNotifySend: true,
 			templateName: 'decision-is-invalid-lpa',
 			notifyClient: {
@@ -19,7 +24,7 @@ describe('decision-is-invalid-lpa.md', () => {
 			}
 		};
 
-		const expectedContent = [
+		expectedContentA = [
 			'# Appeal details',
 			'',
 			'^Appeal reference number: ABC45678',
@@ -28,27 +33,56 @@ describe('decision-is-invalid-lpa.md', () => {
 			'',
 			'# Appeal decision',
 			'',
-			"We've decided that the appeal is invalid. We've closed the appeal.",
+			'We have reviewed the appeal and decided that it is not valid. We have contacted the appellant to tell them our decision.',
 			'',
-			'# Why the appeal is invalid',
+			'The appeal is now closed.',
+			'',
+			'# Why the appeal is not valid',
 			'',
 			'- Reason one',
 			'- Reason two',
 			'- Reason three',
-			'',
-			'# The Planning Inspectorate’s role',
-			'',
-			'We consider all of the information submitted by all parties in the appeal, but only include key points in our decision.',
-			'',
-			'We cannot change or discuss the decision.',
-			'',
+			''
+		];
+
+		expectedContentB = [
 			'# Feedback',
 			'',
-			'We welcome your feedback on our appeals service. Tell us on this short [feedback form](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).',
+			'This is a new service. Help us improve it and [give your feedback (opens in new tab)](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).',
 			'',
 			'The Planning Inspectorate',
-			'caseofficers@planninginspectorate.gov.uk'
+			'allcustomerteam@planninginspectorate.gov.uk'
+		];
+	});
+
+	test('should call notify sendEmail with the correct data when there are cost decisions', async () => {
+		notifySendData.personalisation.has_costs_decision = true;
+		const expectedContent = [
+			...expectedContentA,
+			'# Costs decision',
+			'',
+			'[Sign in to our service](/mock-front-office-url/manage-appeals/ABC45678) to view the costs decision.',
+			'',
+			...expectedContentB
 		].join('\n');
+
+		await notifySend(notifySendData);
+
+		expect(notifySendData.notifyClient.sendEmail).toHaveBeenCalledWith(
+			{
+				id: 'mock-appeal-generic-id'
+			},
+			'test@136s7.com',
+			{
+				content: expectedContent,
+				subject: 'Appeal invalid: ABC45678'
+			}
+		);
+	});
+
+	test('should call notify sendEmail with the correct data when there are no cost decisions', async () => {
+		notifySendData.personalisation.has_costs_decision = false;
+		const expectedContent = [...expectedContentA, ...expectedContentB].join('\n');
 
 		await notifySend(notifySendData);
 

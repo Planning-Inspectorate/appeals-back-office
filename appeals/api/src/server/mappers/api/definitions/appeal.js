@@ -115,6 +115,18 @@ const appeal = {
 				properties: {
 					...Folder.properties
 				}
+			},
+			appellantDecisionFolder: {
+				type: 'object',
+				properties: {
+					...Folder.properties
+				}
+			},
+			lpaDecisionFolder: {
+				type: 'object',
+				properties: {
+					...Folder.properties
+				}
 			}
 		},
 		internalCorrespondence: {
@@ -125,6 +137,12 @@ const appeal = {
 				}
 			},
 			inspector: {
+				type: 'object',
+				properties: {
+					...Folder.properties
+				}
+			},
+			mainParty: {
 				type: 'object',
 				properties: {
 					...Folder.properties

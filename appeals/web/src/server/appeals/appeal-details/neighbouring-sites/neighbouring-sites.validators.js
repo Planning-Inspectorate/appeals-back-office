@@ -1,5 +1,6 @@
 import {
 	createAddressLine1Validator,
+	createAddressLine2Validator,
 	createTownValidator,
 	createPostcodeValidator
 } from '#lib/validators/address.validator.js';
@@ -11,11 +12,7 @@ const maxLength = textInputCharacterLimits.defaultAddressInputLength;
 
 export const validateAddNeighbouringSite = createValidator(
 	createAddressLine1Validator(),
-	createTextInputOptionalValidator(
-		'addressLine2',
-		maxLength,
-		`Address line 2 must be ${maxLength} characters or less`
-	),
+	createAddressLine2Validator(),
 	createTownValidator(),
 	createTextInputOptionalValidator(
 		'county',
@@ -26,5 +23,8 @@ export const validateAddNeighbouringSite = createValidator(
 );
 
 export const validateNeighbouringSiteDeleteAnswer = createValidator(
-	body('remove-neighbouring-site').trim().notEmpty().withMessage('Answer must be provided')
+	body('remove-neighbouring-site')
+		.trim()
+		.notEmpty()
+		.withMessage('Select yes if you want to remove this site')
 );

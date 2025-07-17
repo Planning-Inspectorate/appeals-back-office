@@ -2,7 +2,7 @@
  * @param {string} text
  * @param {ButtonProperties} [options]
  * @param {SharedPageComponentProperties} [outerOptions]
- * @returns {PageComponent}
+ * @returns {ButtonPageComponent}
  * */
 export const buttonComponent = (text, options = {}, outerOptions = {}) => ({
 	type: 'button',

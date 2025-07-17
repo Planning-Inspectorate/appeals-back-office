@@ -15,10 +15,13 @@ import {
 	postChangeDocumentFileName,
 	renderChangeDocumentFileName
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalize } from 'lodash-es';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { documentNameFromCategory } from './internal-correspondence.service.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getDocumentUpload = async (request, response) => {
@@ -32,9 +35,13 @@ export const getDocumentUpload = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
-	if (!['cross-team', 'inspector', 'appellant'].includes(correspondenceCategory)) {
+	if (!['cross-team', 'inspector', 'appellant', 'main-party'].includes(correspondenceCategory)) {
 		return response.status(400).render('app/500.njk');
 	}
+
+	let pageHeadingTextOverride = `Upload ${correspondenceCategory} correspondence`;
+	if (correspondenceCategory === 'main-party')
+		pageHeadingTextOverride = 'Upload main party correspondence';
 
 	await renderDocumentUpload({
 		request,
@@ -42,7 +49,7 @@ export const getDocumentUpload = async (request, response) => {
 		appealDetails: currentAppeal,
 		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}`,
-		pageHeadingTextOverride: `Upload ${correspondenceCategory} correspondence`
+		pageHeadingTextOverride
 	});
 };
 
@@ -64,6 +71,7 @@ export const postDocumentUploadPage = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const getDocumentVersionUpload = async (request, response) => {
 	const {
+		apiClient,
 		currentAppeal,
 		currentFolder,
 		params: { correspondenceCategory, documentId }
@@ -73,13 +81,22 @@ export const getDocumentVersionUpload = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const allowedType = await getDocumentFileType(apiClient, currentAppeal.appealId, documentId);
+
+	const documentName = documentNameFromCategory(correspondenceCategory);
+
 	await renderDocumentUpload({
 		request,
 		response,
 		appealDetails: currentAppeal,
 		backButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/${documentId}`,
 		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/add-document-details/${currentFolder.folderId}/${documentId}`,
-		allowMultipleFiles: false
+		allowMultipleFiles: false,
+		allowedTypes: allowedType ? [allowedType] : undefined,
+		...(documentName && {
+			pageHeadingTextOverride: capitalizeFirstLetter(documentName),
+			uploadContainerHeadingTextOverride: `Upload ${documentName}`
+		})
 	});
 };
 
@@ -114,6 +131,10 @@ export const getAddDocumentDetails = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	let pageHeadingTextOverride = `${capitalize(correspondenceCategory)} correspondence`;
+	if (correspondenceCategory === 'main-party')
+		pageHeadingTextOverride = 'Main party correspondence';
+
 	await renderDocumentDetails({
 		request,
 		response,
@@ -122,7 +143,7 @@ export const getAddDocumentDetails = async (request, response) => {
 		}/internal-correspondence/${correspondenceCategory}/upload-documents/${
 			currentFolder?.folderId
 		}${documentId ? `/${documentId}` : ''}`,
-		pageHeadingTextOverride: `${capitalize(correspondenceCategory)} correspondence`,
+		pageHeadingTextOverride,
 		documentId
 	});
 };
@@ -272,12 +293,17 @@ export const getManageFolder = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	let pageHeadingTextOverride = `${capitalize(correspondenceCategory)} correspondence documents`;
+	if (correspondenceCategory === 'main-party')
+		pageHeadingTextOverride = 'Main party correspondence documents';
+
 	await renderManageFolder({
 		request,
 		response,
 		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}`,
 		viewAndEditUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/manage-documents/${currentFolder.folderId}/{{documentId}}`,
-		pageHeadingTextOverride: `${capitalize(correspondenceCategory)} correspondence documents`
+		addButtonUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/internal-correspondence/${correspondenceCategory}/upload-documents/${currentFolder.folderId}`,
+		pageHeadingTextOverride
 	});
 };
 

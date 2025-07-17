@@ -4,7 +4,6 @@
  */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { yesNoInput } from '#lib/mappers/index.js';
 
 /**
  * @param {Appeal} appealData
@@ -16,10 +15,10 @@ export function addAffectedListedBuildingPage(appealData, currentListedBuilding)
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Add affected listed building',
+		title: 'Affected listed building entry number',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
-		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Add affected listed building`,
+		preHeading: `Appeal ${shortAppealReference} - add affected listed building`,
+		heading: `Affected listed building entry number`,
 		pageComponents: [
 			{
 				type: 'input',
@@ -27,8 +26,8 @@ export function addAffectedListedBuildingPage(appealData, currentListedBuilding)
 					id: 'affectedListedBuilding',
 					name: 'affectedListedBuilding',
 					type: 'text',
-					label: {
-						text: 'Listed building number'
+					hint: {
+						text: 'This is a 7 digit number from Historic England'
 					},
 					value: currentListedBuilding ?? ''
 				}
@@ -48,10 +47,13 @@ export function addAffectedListedBuildingCheckAndConfirmPage(appealData, current
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Details of affected listed building you're adding to ${shortAppealReference}`,
+		title: `Check details and add affected listed building`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/add`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Check your answer',
+		heading: 'Check details and add affected listed building',
+		submitButtonProperties: {
+			text: 'Add affected listed building'
+		},
 		pageComponents: [
 			{
 				type: 'summary-list',
@@ -60,7 +62,7 @@ export function addAffectedListedBuildingCheckAndConfirmPage(appealData, current
 					rows: [
 						{
 							key: {
-								text: 'Listed building number'
+								text: 'Affected listed building'
 							},
 							value: {
 								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${currentListedBuilding}" class="govuk-link" target="_blank">${currentListedBuilding}</a>`
@@ -95,19 +97,18 @@ export function manageAffectedListedBuildingPage(appealData, lpaQuestionnaireDat
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Add affected listed buildings',
+		title: 'Affected listed buildings',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Add affected listed buildings',
+		heading: 'Affected listed buildings',
 		pageComponents: [
 			{
 				type: 'table',
 				parameters: {
-					caption: 'Listed buildings',
 					captionClasses: 'govuk-table__caption--m',
 					firstCellIsHeader: false,
 					head: [
-						{ text: 'Listed building' },
+						{ text: 'Listed building number' },
 						{ text: 'Action', classes: 'govuk-!-text-align-right' }
 					],
 					rows: affectedListedBuildings
@@ -183,33 +184,26 @@ export function removeAffectedListedBuildingPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Remove affected listed building',
+		title: 'Confirm that you want to remove the affected listed building',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/manage`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Remove affected listed building',
-		prePageComponents: [
+		heading: 'Confirm that you want to remove the affected listed building',
+		submitButtonText: 'Remove affected listed building',
+		pageComponents: [
 			{
-				type: 'summary-list',
+				type: 'html',
 				parameters: {
-					classes: 'govuk-summary-list--no-border',
-					rows: [
-						{
-							key: {
-								text: 'Listed building'
-							},
-							value: {
-								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuilding}" class="govuk-link" target="_blank">${listedBuilding}</a>`
-							}
-						}
-					]
+					html: `<p class="govuk-body"><a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuilding}" class="govuk-link" target="_blank">${listedBuilding}</a></p>`
 				}
 			}
 		],
-		pageComponents: [
-			yesNoInput({
-				name: 'removeAffectedListedBuilding',
-				legendText: 'Do you want to remove this listed building?'
-			})
+		postPageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body"><a href="/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/manage" class="govuk-link" target="_blank">Cancel</a></p>`
+				}
+			}
 		]
 	};
 
@@ -239,10 +233,10 @@ export function changeAffectedListedBuildingPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'Change affected listed building',
+		title: 'Affected listed building entry number',
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/manage`,
-		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Change affected listed building',
+		preHeading: `Appeal ${shortAppealReference} - update affected listed building`,
+		heading: 'Affected listed building entry number',
 		pageComponents: [
 			{
 				type: 'input',
@@ -250,8 +244,8 @@ export function changeAffectedListedBuildingPage(
 					id: 'affectedListedBuilding',
 					name: 'affectedListedBuilding',
 					type: 'text',
-					label: {
-						text: 'Listed building number'
+					hint: {
+						text: 'This is a 7 digit number from Historic England'
 					},
 					value: listedBuildingValue
 				}
@@ -277,10 +271,13 @@ export function changeAffectedListedBuildingCheckAndConfirmPage(
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Details of affected listed building you're updating for ${shortAppealReference}`,
+		title: `Check details and update affected listed building`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/lpa-questionnaire/${appealData.lpaQuestionnaireId}/affected-listed-buildings/change/${listedBuildingId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: `Check your answer`,
+		heading: `Check details and update affected listed building`,
+		submitButtonProperties: {
+			text: 'Update affected listed building'
+		},
 		pageComponents: [
 			{
 				type: 'summary-list',
@@ -289,7 +286,7 @@ export function changeAffectedListedBuildingCheckAndConfirmPage(
 					rows: [
 						{
 							key: {
-								text: 'Listed building'
+								text: 'Affected listed building'
 							},
 							value: {
 								html: `<a href="https://historicengland.org.uk/listing/the-list/list-entry/${listedBuildingData}" class="govuk-link" target="_blank">${listedBuildingData}</a>`

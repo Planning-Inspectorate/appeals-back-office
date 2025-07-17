@@ -9,34 +9,30 @@ exports[`lpa-statements GET / should render the review LPA statement page with t
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement</dt>
-                            <dd class="govuk-summary-list__value">
-                                <div class="pins-show-more" data-label="Statement" data-mode="text">Every single thing in the world has its own personality - and it is up
-                                    to you to make friends with the little rascals. Steve wants reflections,
-                                    so let&#39;s give him eflections It&#39;s amazing what you can do with
-                                    a little love in your heart. Clouds are free they come and go as they please.
-                                    The secret to doing anything is believing that you can do it. Anything
-                                    hatyou believe you can do strong enough, you can do. Anything. As long
-                                    as you believe. It looks so good, I might as well not stop. This present
-                                    moment is perfect simply due to the fact you&#39;re xperiencingit. Making
-                                    all those little fluffies that live in the clouds. You don&#39;t want to
-                                    kill all your dark areas they are very important. I will take some magic
-                                    white, and a little bit of andykebrown and a little touch of yellow. Anyone
-                                    can paint. Each highlight must have it&#39;s own private shadow. Don&#39;t
-                                    fiddle with it all day.</div>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                            <dd class="govuk-summary-list__value">Not provided</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-statement/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
-                            </dd>
-                        </div>
-                    </dl>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Statement</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Statement" data-mode="text">Every single thing in the world has its own personality - and it is up
+                            to you to make friends with the little rascals. Steve wants reflections,
+                            so let&#39;s give him eflections It&#39;s amazing what you can do with
+                            a little love in your heart. Clouds are free they come and go as they please.
+                            The secret to doing anything is believing that you can do it. Anything
+                            hatyou believe you can do strong enough, you can do. Anything. As long
+                            as you believe. It looks so good, I might as well not stop. This present
+                            moment is perfect simply due to the fact you&#39;re xperiencingit. Making
+                            all those little fluffies that live in the clouds. You don&#39;t want to
+                            kill all your dark areas they are very important. I will take some magic
+                            white, and a little bit of andykebrown and a little touch of yellow. Anyone
+                            can paint. Each highlight must have it&#39;s own private shadow. Don&#39;t
+                            fiddle with it all day.</div>
+                    </dd>
                 </div>
-            </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">No documents</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-statement/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    </dd>
+                </div>
+            </dl>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -81,34 +77,30 @@ exports[`lpa-statements GET / should render the review LPA statement page with t
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement</dt>
-                            <dd class="govuk-summary-list__value">
-                                <div class="pins-show-more" data-label="Statement" data-mode="text">Every single thing in the world has its own personality - and it is up
-                                    to you to make friends with the little rascals. Steve wants reflections,
-                                    so let&#39;s give him eflections It&#39;s amazing what you can do with
-                                    a little love in your heart. Clouds are free they come and go as they please.
-                                    The secret to doing anything is believing that you can do it. Anything
-                                    hatyou believe you can do strong enough, you can do. Anything. As long
-                                    as you believe. It looks so good, I might as well not stop. This present
-                                    moment is perfect simply due to the fact you&#39;re xperiencingit. Making
-                                    all those little fluffies that live in the clouds. You don&#39;t want to
-                                    kill all your dark areas they are very important. I will take some magic
-                                    white, and a little bit of andykebrown and a little touch of yellow. Anyone
-                                    can paint. Each highlight must have it&#39;s own private shadow. Don&#39;t
-                                    fiddle with it all day.</div>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                            <dd class="govuk-summary-list__value">Not provided</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-statement/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
-                            </dd>
-                        </div>
-                    </dl>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Statement</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Statement" data-mode="text">Every single thing in the world has its own personality - and it is up
+                            to you to make friends with the little rascals. Steve wants reflections,
+                            so let&#39;s give him eflections It&#39;s amazing what you can do with
+                            a little love in your heart. Clouds are free they come and go as they please.
+                            The secret to doing anything is believing that you can do it. Anything
+                            hatyou believe you can do strong enough, you can do. Anything. As long
+                            as you believe. It looks so good, I might as well not stop. This present
+                            moment is perfect simply due to the fact you&#39;re xperiencingit. Making
+                            all those little fluffies that live in the clouds. You don&#39;t want to
+                            kill all your dark areas they are very important. I will take some magic
+                            white, and a little bit of andykebrown and a little touch of yellow. Anyone
+                            can paint. Each highlight must have it&#39;s own private shadow. Don&#39;t
+                            fiddle with it all day.</div>
+                    </dd>
                 </div>
-            </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">No documents</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-statement/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    </dd>
+                </div>
+            </dl>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -151,36 +143,32 @@ exports[`lpa-statements GET / should render the view LPA statement page with the
             <h1 class="govuk-heading-l">LPA statement</h1>
         </div>
     </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement</dt>
-                    <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Statement" data-mode="text">Every single thing in the world has its own personality - and it is up
-                            to you to make friends with the little rascals. Steve wants reflections,
-                            so let&#39;s give him eflections It&#39;s amazing what you can do with
-                            a little love in your heart. Clouds are free they come and go as they please.
-                            The secret to doing anything is believing that you can do it. Anything
-                            hatyou believe you can do strong enough, you can do. Anything. As long
-                            as you believe. It looks so good, I might as well not stop. This present
-                            moment is perfect simply due to the fact you&#39;re xperiencingit. Making
-                            all those little fluffies that live in the clouds. You don&#39;t want to
-                            kill all your dark areas they are very important. I will take some magic
-                            white, and a little bit of andykebrown and a little touch of yellow. Anyone
-                            can paint. Each highlight must have it&#39;s own private shadow. Don&#39;t
-                            fiddle with it all day.</div>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-statement/redact">Redact<span class="govuk-visually-hidden"> statement</span></a>
-                    </dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
-                    <dd class="govuk-summary-list__value">Not provided</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-statement/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
-                    </dd>
-                </div>
-            </dl>
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement</dt>
+            <dd class="govuk-summary-list__value">
+                <div class="pins-show-more" data-label="Statement" data-mode="text">Every single thing in the world has its own personality - and it is up
+                    to you to make friends with the little rascals. Steve wants reflections,
+                    so let&#39;s give him eflections It&#39;s amazing what you can do with
+                    a little love in your heart. Clouds are free they come and go as they please.
+                    The secret to doing anything is believing that you can do it. Anything
+                    hatyou believe you can do strong enough, you can do. Anything. As long
+                    as you believe. It looks so good, I might as well not stop. This present
+                    moment is perfect simply due to the fact you&#39;re xperiencingit. Making
+                    all those little fluffies that live in the clouds. You don&#39;t want to
+                    kill all your dark areas they are very important. I will take some magic
+                    white, and a little bit of andykebrown and a little touch of yellow. Anyone
+                    can paint. Each highlight must have it&#39;s own private shadow. Don&#39;t
+                    fiddle with it all day.</div>
+            </dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-statement/redact">Redact<span class="govuk-visually-hidden"> statement</span></a>
+            </dd>
         </div>
-    </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+            <dd class="govuk-summary-list__value">No documents</dd>
+            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-statement/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+            </dd>
+        </div>
+    </dl>
 </main>"
 `;
 
@@ -254,7 +242,8 @@ exports[`lpa-statements GET /manage-documents/:folderId/ should render manage fo
                 </tbody>
             </table>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/2/lpa-statement/add-document"
+    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>
 </main>"
 `;
 
@@ -304,7 +293,7 @@ exports[`lpa-statements GET /manage-documents/:folderId/:documentId should rende
                     <dd class="govuk-summary-list__value">
                         <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
                         </div>
-                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                        <div class="govuk-!-margin-bottom-1"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                         </div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-statement/manage-documents/change-document-name/1/1">Change<span class="govuk-visually-hidden"> test-pdf-documentFileVersionsInfo.pdf name</span></a>
@@ -334,7 +323,7 @@ exports[`lpa-statements GET /manage-documents/:folderId/:documentId should rende
                 <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Version history</span>
                 </summary>
                 <div class="govuk-details__text">
-                    <table class="govuk-table govuk-!-font-size-16">
+                    <table class="govuk-table">
                         <thead class="govuk-table__head">
                             <tr class="govuk-table__row">
                                 <th scope="col" class="govuk-table__header">Version</th>
@@ -349,8 +338,8 @@ exports[`lpa-statements GET /manage-documents/:folderId/:documentId should rende
                                 <td class="govuk-table__cell">1</td>
                                 <td class="govuk-table__cell">
                                     <div class="govuk-!-margin-bottom-2"><span class="govuk-body">test-pdf-documentFileVersionsInfo.pdf</span>
-                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">CURRENT VERSION</strong>
-                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow single-line">Virus scanning</strong>
+                                    </div><strong class="govuk-tag govuk-tag--blue single-line govuk-!-margin-bottom-2">Current version</strong>
+                                    <div                                     class="govuk-!-margin-bottom-2"><strong class="govuk-tag govuk-tag--yellow">Virus scanning</strong>
                 </div>
                 </td>
                 <td class="govuk-table__cell">
@@ -387,29 +376,29 @@ exports[`lpa-statements GET change-document-details/:folderId/:documentId should
                     </div>
                     <div class="govuk-form-group">
                         <fieldset class="govuk-fieldset" role="group">
-                            <legend class="govuk-fieldset__legend">Date received</legend>
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Date received</legend>
                             <div class="govuk-date-input" id="items[0]receivedDate">
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.day">Day</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="items[0].receivedDate.day" name="items[0][receivedDate]-[day]" type="text"
+                                        <label class="govuk-label govuk-date-input__label" for="items-0-received-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="items-0-received-date-day" name="items[0][receivedDate]-[day]" type="text"
                                         value="11" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.month">Month</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-2"
-                                        id="items[0].receivedDate.month" name="items[0][receivedDate]-[month]"
+                                        <label class="govuk-label govuk-date-input__label" for="items-0-received-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                        id="items-0-received-date-month" name="items[0][receivedDate]-[month]"
                                         type="text" value="10" inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
-                                        <label class="govuk-label govuk-date-input__label" for="items[0].receivedDate.year">Year</label>
-                                        <input class="govuk-input govuk-date-input__input govuk-input govuk-date-input__input govuk-input--width-4"
-                                        id="items[0].receivedDate.year" name="items[0][receivedDate]-[year]" type="text"
+                                        <label class="govuk-label govuk-date-input__label" for="items-0-received-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                        id="items-0-received-date-year" name="items[0][receivedDate]-[year]" type="text"
                                         value="2023" inputmode="numeric">
                                     </div>
                                 </div>
@@ -458,7 +447,7 @@ exports[`lpa-statements GET change-document-name/:folderId/:documentId should re
         <div class="govuk-grid-column-two-thirds">
             <form method="post" novalidate="novalidate">
                 <div class="govuk-form-group">
-                    <h2 class="govuk-heading-m">ph0-documentFileInfo.jpeg</h2>
+                    <h2 class="govuk-heading-m">ph0-documentFileInfo</h2>
                     <div class="govuk-form-group">
                         <input class="govuk-input" id="documentId" name="documentId" type="hidden"
                         value="d51f408c-7c6f-4f49-bcc0-abbb5bea3be6">
@@ -466,7 +455,7 @@ exports[`lpa-statements GET change-document-name/:folderId/:documentId should re
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3" for="file-name">File name</label>
                         <input class="govuk-input" id="file-name" name="fileName"
-                        type="text" value="ph0-documentFileInfo.jpeg">
+                        type="text" value="ph0-documentFileInfo">
                     </div>
                 </div>
                 <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>

@@ -4,7 +4,8 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
 	mapNotificationBannersFromSession,
 	createNotificationBanner,
-	sortNotificationBanners
+	sortNotificationBanners,
+	dateInput
 } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
@@ -16,6 +17,7 @@ import {
 	mapRedactionStatusKeyToName,
 	mapUncommittedDocumentDownloadUrl
 } from '../../appeal-documents/appeal-documents.mapper.js';
+import { dateFieldNamePrefix } from './withdrawl.constants.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -30,6 +32,7 @@ import {
  */
 
 /**
+ * @param {string|number} appealId
  * @param {string} backLinkUrl
  * @param {FolderInfo} folder
  * @param {string} withdrawalRequestDate
@@ -38,6 +41,7 @@ import {
  * @returns {PageContent}
  */
 export function manageWithdrawalRequestFolderPage(
+	appealId,
 	backLinkUrl,
 	folder,
 	withdrawalRequestDate,
@@ -153,50 +157,32 @@ export function manageWithdrawalRequestFolderPage(
  * @param {string} withdrawalRequestDay
  * @param {string} withdrawalRequestMonth
  * @param {string} withdrawalRequestYear
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
 export function dateWithdrawalRequestPage(
 	appealData,
 	withdrawalRequestDay,
 	withdrawalRequestMonth,
-	withdrawalRequestYear
+	withdrawalRequestYear,
+	errors
 ) {
 	const title = 'Date of withdrawal request';
 
-	/** @type {PageComponent} */
-	const selectDateComponent = {
-		type: 'date-input',
-		parameters: {
-			id: 'withdrawal-request-date',
-			namePrefix: 'withdrawal-request-date',
-			fieldset: {
-				legend: {
-					text: 'Enter date',
-					classes: 'govuk-fieldset__legend--m'
-				}
-			},
-			hint: {
-				text: 'For example, 27 11 2023'
-			},
-			items: [
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'day',
-					value: withdrawalRequestDay || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'month',
-					value: withdrawalRequestMonth || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-					name: 'year',
-					value: withdrawalRequestYear || ''
-				}
-			]
-		}
-	};
+	// /** @type {PageComponent} */
+	const selectDateComponent = dateInput({
+		name: dateFieldNamePrefix,
+		id: dateFieldNamePrefix,
+		namePrefix: dateFieldNamePrefix,
+		value: {
+			day: withdrawalRequestDay,
+			month: withdrawalRequestMonth,
+			year: withdrawalRequestYear
+		},
+		legendText: 'Enter date',
+		hint: 'For example, 27 3 2023',
+		errors: errors
+	});
 
 	return {
 		title,

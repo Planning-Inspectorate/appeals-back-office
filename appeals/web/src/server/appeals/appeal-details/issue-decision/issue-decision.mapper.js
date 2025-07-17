@@ -1,28 +1,102 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import {
+	preRenderPageComponents,
+	renderPageComponentsToHtml
+} from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
+import {
+	mapDocumentDownloadUrl,
+	mapUncommittedDocumentDownloadUrl
+} from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
+import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import {
+	DECISION_TYPE_APPELLANT_COSTS,
+	DECISION_TYPE_LPA_COSTS,
+	LENGTH_300
+} from '@pins/appeals/constants/support.js';
+import {
+	baseUrl,
+	buildLogicData,
+	mapDecisionOutcome
+} from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import config from '#environment/config.js';
+import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
- */
-/**
  * @typedef {import('./issue-decision.types.js').InspectorDecisionRequest} InspectorDecisionRequest
+ * @typedef {import('./issue-decision.types.js').AppellantCostsDecisionRequest} AppellantCostsDecisionRequest
+ * @typedef {import('./issue-decision.types.js').LpaCostsDecisionRequest} LpaCostsDecisionRequest
+ * @typedef {import('#appeals/appeal-documents/appeal-documents.types').FileUploadInfoItem} FileUploadInfoItem
+ * @typedef {import('@pins/express/types/express.js').Request & {specificDecisionType?: string}} Request
+ * @typedef {{ key: { text: string; }; value?: { html: string; text?: undefined; } | { text: any; html?: undefined; }; actions: { items: { text: string; href: string; visuallyHiddenText: string; }[]; }; }} PageRow
  */
 
 /**
  *
  * @param {Appeal} appealDetails
  * @param {InspectorDecisionRequest} inspectorDecision
+ * @param {string|undefined} backUrl
+ * @param {import("@pins/express").ValidationErrors} [errors]
  * @returns {PageContent}
  */
-export function issueDecisionPage(appealDetails, inspectorDecision) {
+export function issueDecisionPage(appealDetails, inspectorDecision, backUrl, errors) {
+	/** @type {PageComponent} */
+	const summaryBlock = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				...(appealDetails.appellant
+					? [
+							{
+								key: {
+									text: 'Appellant'
+								},
+								value: {
+									text: `${appealDetails.appellant.firstName} ${appealDetails.appellant.lastName}`
+								}
+							}
+					  ]
+					: []),
+				...(appealDetails.appealSite
+					? [
+							{
+								key: {
+									text: 'Site address'
+								},
+								value: {
+									html: appealDetails.appealSite
+										? addressToMultilineStringHtml(
+												/** @type {import('@pins/appeals').Address} */ (appealDetails.appealSite)
+										  )
+										: null
+								}
+							}
+					  ]
+					: []),
+				{
+					key: {
+						text: 'Appeal type'
+					},
+					value: {
+						text: appealDetails.appealType
+					}
+				}
+			]
+		}
+	};
+
+	const fieldName = 'decision';
+
 	/** @type {PageComponent} */
 	const selectVisitTypeComponent = {
 		type: 'radios',
 		parameters: {
-			name: 'decision',
-			idPrefix: 'decision',
+			name: fieldName,
+			idPrefix: fieldName,
 			fieldset: {
 				legend: {
 					text: 'What is the decision?',
@@ -44,228 +118,528 @@ export function issueDecisionPage(appealDetails, inspectorDecision) {
 				{
 					value: 'Split',
 					text: 'Split Decision',
-					checked: inspectorDecision?.outcome === 'Split-decision'
+					checked: inspectorDecision?.outcome === 'Split'
 				},
 				{
 					value: 'Invalid',
 					text: 'Invalid',
-					checked: inspectorDecision?.outcome === 'Invalid'
+					checked: inspectorDecision?.outcome === 'Invalid',
+					conditional: {
+						html: renderPageComponentsToHtml([
+							{
+								type: 'textarea',
+								parameters: {
+									name: 'invalidReason',
+									id: 'invalid-reason',
+									value: inspectorDecision?.invalidReason ?? '',
+									label: {
+										text: 'Reason',
+										classes: 'govuk-label--s'
+									},
+									hint: { text: 'We will share the reason with the relevant parties' },
+									errorMessage: errors?.invalidReason
+										? {
+												text: errors?.invalidReason.msg
+										  }
+										: null
+								}
+							}
+						])
+					}
 				}
-			]
+			],
+			errorMessage: getErrorByFieldname(errors, fieldName)
 		}
 	};
+
+	const pageComponents = [summaryBlock, selectVisitTypeComponent];
+
+	preRenderPageComponents(pageComponents);
 
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `What is the decision? - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		preHeading: `Appeal ${shortAppealReference}`,
-		pageComponents: [selectVisitTypeComponent]
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		preHeading: `Appeal ${shortAppealReference} - issue decision`,
+		heading: 'Decision',
+		pageComponents
 	};
 
 	return pageContent;
 }
 
 /**
- * @returns {PageComponent[]}
+ *
+ * @param {Appeal} appealDetails
+ * @param {AppellantCostsDecisionRequest} appellantCostsDecision
+ * @param {string|undefined} backLinkUrl
+ * @param {any} errors
+ * @returns {PageContent}
  */
-export function decisionLetterUploadPageBodyComponents() {
-	const checklistHtml = `<ul class="govuk-list govuk-list--bullet">
-	<li>added the correct appeal reference</li>
-	<li>added the decision date and visit date</li>
-	<li>added the correct site address</li>
-	<li>added the decision to the top and bottom of the letter</li>
-	<li>signed the letter</li>
-</ul>`;
-
-	return [
-		{
-			type: 'warning-text',
-			parameters: {
-				text: 'Before uploading, check that you have:'
-			}
-		},
-		{
-			type: 'html',
-			parameters: {
-				html: checklistHtml
-			}
+export function appellantCostsDecisionPage(
+	appealDetails,
+	appellantCostsDecision,
+	backLinkUrl,
+	errors
+) {
+	/** @type {PageComponent} */
+	const selectAppellantCostsDecisionComponent = {
+		type: 'radios',
+		parameters: {
+			name: 'appellantCostsDecision',
+			idPrefix: 'appellant-costs-decision',
+			fieldset: {
+				legend: {
+					text: "Do you want to issue the appellant's costs decision?",
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
+				}
+			},
+			items: [
+				{
+					value: true,
+					text: 'Yes',
+					checked: appellantCostsDecision?.outcome === 'true'
+				},
+				{
+					value: false,
+					text: 'No',
+					checked: appellantCostsDecision?.outcome === 'false'
+				}
+			],
+			errorMessage: getErrorByFieldname(errors, 'appellantCostsDecision')
 		}
-	];
+	};
+
+	const pageComponents = [selectAppellantCostsDecisionComponent];
+
+	preRenderPageComponents(pageComponents);
+
+	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: `What is the appellant cost decision? - ${shortAppealReference}`,
+		backLinkUrl,
+		preHeading: `Appeal ${shortAppealReference} - issue decision`,
+		pageComponents
+	};
+
+	return pageContent;
 }
 
 /**
  *
- * @param {Appeal} appealData
- * @param {string} decisionLetterDay
- * @param {string} decisionLetterMonth
- * @param {string} decisionLetterYear
+ * @param {Appeal} appealDetails
+ * @param {LpaCostsDecisionRequest} lpaCostsDecision
+ * @param {string|undefined} backLinkUrl
+ * @param {any} errors
  * @returns {PageContent}
  */
-export function dateDecisionLetterPage(
-	appealData,
-	decisionLetterDay,
-	decisionLetterMonth,
-	decisionLetterYear
-) {
-	const title = 'Enter date of decision letter';
-
+export function lpaCostsDecisionPage(appealDetails, lpaCostsDecision, backLinkUrl, errors) {
 	/** @type {PageComponent} */
-	const selectDateComponent = {
-		type: 'date-input',
+	const selectLpaCostsDecisionComponent = {
+		type: 'radios',
 		parameters: {
-			id: 'decision-letter-date',
-			namePrefix: 'decision-letter-date',
+			name: 'lpaCostsDecision',
+			idPrefix: 'lpa-costs-decision',
 			fieldset: {
 				legend: {
-					text: '',
-					classes: 'govuk-fieldset__legend--m'
+					text: "Do you want to issue the LPA's costs decision?",
+					isPageHeading: true,
+					classes: 'govuk-fieldset__legend--l'
 				}
-			},
-			hint: {
-				text: 'For example, 27 3 2023'
 			},
 			items: [
 				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'day',
-					value: decisionLetterDay || ''
+					value: true,
+					text: 'Yes',
+					checked: lpaCostsDecision?.outcome === 'true'
 				},
 				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-2',
-					name: 'month',
-					value: decisionLetterMonth || ''
-				},
-				{
-					classes: 'govuk-input govuk-date-input__input govuk-input--width-4',
-					name: 'year',
-					value: decisionLetterYear || ''
+					value: false,
+					text: 'No',
+					checked: lpaCostsDecision?.outcome === 'false'
 				}
-			]
+			],
+			errorMessage: getErrorByFieldname(errors, 'lpaCostsDecision')
 		}
 	};
 
-	return {
-		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-upload`,
-		backLinkText: 'Back',
-		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
-		heading: title,
-		pageComponents: [selectDateComponent]
+	const pageComponents = [selectLpaCostsDecisionComponent];
+
+	preRenderPageComponents(pageComponents);
+
+	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: `What is the  LPA cost decision? - ${shortAppealReference}`,
+		backLinkUrl,
+		preHeading: `Appeal ${shortAppealReference} - issue decision`,
+		pageComponents
 	};
+
+	return pageContent;
 }
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
+ *
+ * @param {Appeal} appealData *
+ * @param {Request} request
+ * @returns {PageRow}[]
+ */
+function checkAndConfirmPageRows(appealData, request) {
+	const { session, specificDecisionType } = request;
+	const { inspectorDecision, appellantCostsDecision, lpaCostsDecision } = session;
+	const baseRoute = baseUrl(appealData);
+
+	const rows = [];
+
+	if (inspectorDecision) {
+		const decisionOutcome = mapDecisionOutcome(inspectorDecision.outcome);
+
+		if (decisionOutcome) {
+			let invalidReasonHtml = inspectorDecision.invalidReason ? `Reason: ` : '';
+			if (invalidReasonHtml) {
+				invalidReasonHtml = renderPageComponentsToHtml([
+					{
+						type: 'show-more',
+						parameters: {
+							text: `${invalidReasonHtml}${inspectorDecision.invalidReason}`,
+							maximumBeforeHiding: invalidReasonHtml.length + LENGTH_300, // 300 being the maximum length of the invalid reason before hiding
+							toggleTextCollapsed: 'Show more',
+							toggleTextExpanded: 'Show less'
+						}
+					}
+				]);
+			}
+			rows.push({
+				key: 'Decision',
+				html: `${decisionOutcome}${invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''}`,
+				actions: [
+					{
+						text: 'Change',
+						href: addBackLinkQueryToUrl(request, `${baseRoute}/decision`),
+						visuallyHiddenText: 'decision'
+					}
+				]
+			});
+		}
+
+		const file = inspectorDecision?.files?.[0];
+		if (file) {
+			rows.push({
+				key: 'Decision letter',
+				value: file.name,
+				href: mapUncommittedDocumentDownloadUrl(appealData.appealReference, file.GUID, file.name),
+				actions: [
+					{
+						text: 'Change',
+						href: addBackLinkQueryToUrl(request, `${baseRoute}/decision-letter-upload`),
+						visuallyHiddenText: 'decision letter'
+					}
+				]
+			});
+		}
+	}
+
+	const appellantCostsDecisionOutcome = appellantCostsDecision?.outcome;
+	if (appellantCostsDecisionOutcome && !specificDecisionType) {
+		rows.push({
+			key: "Do you want to issue the appellant's costs decision?",
+			value: appellantCostsDecisionOutcome === 'true' ? 'Yes' : 'No',
+			href: '',
+			actions: [
+				{
+					text: 'Change',
+					href: addBackLinkQueryToUrl(request, `${baseRoute}/appellant-costs-decision`),
+					visuallyHiddenText: 'appellant cost decision'
+				}
+			]
+		});
+	}
+
+	if (
+		appellantCostsDecisionOutcome === 'true' ||
+		specificDecisionType === DECISION_TYPE_APPELLANT_COSTS
+	) {
+		const file = appellantCostsDecision?.files?.[0];
+		if (file) {
+			rows.push({
+				key: 'Appellant costs decision letter',
+				value: file.name,
+				href: mapUncommittedDocumentDownloadUrl(appealData.appealReference, file.GUID, file.name),
+				actions: [
+					{
+						text: 'Change',
+						href: addBackLinkQueryToUrl(
+							request,
+							specificDecisionType
+								? `${baseRoute}/issue-appellant-costs-decision-letter-upload`
+								: `${baseRoute}/appellant-costs-decision-letter-upload`
+						),
+						visuallyHiddenText: 'appellant cost decision letter'
+					}
+				]
+			});
+		}
+	}
+
+	const lpaCostsDecisionOutcome = lpaCostsDecision?.outcome;
+	if (lpaCostsDecisionOutcome && !specificDecisionType) {
+		rows.push({
+			key: "Do you want to issue the LPA's costs decision?",
+			value: lpaCostsDecisionOutcome === 'true' ? 'Yes' : 'No',
+			href: '',
+			actions: [
+				{
+					text: 'Change',
+					href: addBackLinkQueryToUrl(request, `${baseRoute}/lpa-costs-decision`),
+					visuallyHiddenText: 'lpa cost decision'
+				}
+			]
+		});
+	}
+
+	if (lpaCostsDecisionOutcome === 'true' || specificDecisionType === DECISION_TYPE_LPA_COSTS) {
+		const file = lpaCostsDecision?.files?.[0];
+		{
+			rows.push({
+				key: 'LPA costs decision letter',
+				value: file.name,
+				href: mapUncommittedDocumentDownloadUrl(appealData.appealReference, file.GUID, file.name),
+				actions: [
+					{
+						text: 'Change',
+						href: addBackLinkQueryToUrl(
+							request,
+							specificDecisionType
+								? `${baseRoute}/issue-lpa-costs-decision-letter-upload`
+								: `${baseRoute}/lpa-costs-decision-letter-upload`
+						),
+						visuallyHiddenText: 'lpa costs decision letter'
+					}
+				]
+			});
+		}
+	}
+
+	// @ts-ignore
+	return rows.map(({ key, value, html, href, actions }) => {
+		return {
+			key: { text: key },
+			value: html
+				? { html }
+				: href
+				? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
+				: { text: value },
+			actions: {
+				items: actions
+			}
+		};
+	});
+}
+
+/**
  * @param {Appeal} appealData
- * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {Request} request
  * @returns {PageContent}
  */
-export function checkAndConfirmPage(request, appealData, session) {
-	const decisionOutcome = mapDecisionOutcome(session.inspectorDecision?.outcome);
-	const decisionLetter = session.fileUploadInfo?.files[0]?.name;
-	const letterDate = session.inspectorDecision?.letterDate;
+export function checkAndConfirmPage(appealData, request) {
+	const { currentAppeal, specificDecisionType } = request;
+
+	const {
+		appellantHasAppliedForCosts,
+		lpaHasAppliedForCosts,
+		appellantDecisionHasAlreadyBeenIssued,
+		lpaDecisionHasAlreadyBeenIssued
+	} = buildLogicData(appealData);
+
+	if (!appellantHasAppliedForCosts || appellantDecisionHasAlreadyBeenIssued) {
+		request.session.appellantCostsDecision = {};
+	}
+
+	if (!lpaHasAppliedForCosts || lpaDecisionHasAlreadyBeenIssued) {
+		request.session.lpaCostsDecision = {};
+	}
 
 	/** @type {PageComponent} */
 	const summaryListComponent = {
 		type: 'summary-list',
 		parameters: {
-			rows: [
-				{
-					key: {
-						text: 'Decision'
-					},
-					value: {
-						text: decisionOutcome
-					},
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
-								visuallyHiddenText: 'decision'
-							}
-						]
-					}
-				},
-				{
-					key: {
-						text: 'Decision letter'
-					},
-					value: {
-						text: decisionLetter
-					},
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-upload`,
-								visuallyHiddenText: 'decision letter'
-							}
-						]
-					}
-				},
-				{
-					key: {
-						text: 'Decision date'
-					},
-					value: {
-						text: dateISOStringToDisplayDate(letterDate)
-					},
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-date`,
-								visuallyHiddenText: 'decision date'
-							}
-						]
-					}
-				}
-			]
+			rows: checkAndConfirmPageRows(appealData, request)
 		}
 	};
 
-	/** @type {PageComponent} */
-	const warningTextComponent = {
-		type: 'warning-text',
-		parameters: {
-			text: 'You are about to send the decision to relevant parties and close the appeal. Make sure you have reviewed the decision information.'
-		}
-	};
+	const decisionTypeText = specificDecisionType
+		? specificDecisionType.replaceAll('-', ' ').replace('lpa', 'LPA')
+		: 'decision';
 
-	/** @type {PageComponent} */
-	const insetConfirmComponent = {
-		type: 'checkboxes',
-		parameters: {
-			name: 'ready-to-send',
-			idPrefix: 'ready-to-send',
-			items: [
-				{
-					text: 'This decision is ready to be sent to the relevant parties',
-					value: 'yes',
-					checked: false
-				}
-			]
-		}
-	};
+	const baseRoute = baseUrl(currentAppeal);
 
-	const title = 'Check your answers';
+	let backUrl = getBackLinkUrlFromQuery(request);
+	if (!backUrl) {
+		if (specificDecisionType) {
+			backUrl = `${addBackLinkQueryToUrl(
+				request,
+				`${baseRoute}/issue-${specificDecisionType}-letter-upload`
+			)}`;
+		} else {
+			backUrl = `${baseRoute}/decision`;
+		}
+	}
+
+	const title = `Check details and issue ${decisionTypeText}`;
 	const pageContent = {
 		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision-letter-date`,
-		backLinkText: 'Back',
+		backLinkUrl: backUrl,
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Send decision',
-		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
+		submitButtonText: `Issue ${decisionTypeText}`,
+		pageComponents: [summaryListComponent]
 	};
 
-	if (pageContent.pageComponents) {
-		preRenderPageComponents(pageContent.pageComponents);
+	return pageContent;
+}
+
+/**
+ * @param {Appeal} appealData
+ * @param {Request} request
+ * @returns {PageRow}[]
+ */
+export function viewDecisionPageRows(appealData, request) {
+	const { appealId, decision, costs } = appealData || {};
+	const appellantCostsDecision = costs.appellantDecisionFolder?.documents[0];
+	const lpaCostsDecision = costs.lpaDecisionFolder?.documents[0];
+
+	const rows = [];
+
+	if (decision) {
+		const { outcome, documentId, documentName, letterDate, invalidReason } = decision;
+		const decisionOutcome = mapDecisionOutcome(outcome);
+		let invalidReasonHtml = invalidReason ? `Reason: ` : '';
+		if (invalidReasonHtml) {
+			invalidReasonHtml = renderPageComponentsToHtml([
+				{
+					type: 'show-more',
+					parameters: {
+						text: `${invalidReasonHtml}${invalidReason}`,
+						maximumBeforeHiding: invalidReasonHtml.length + LENGTH_300, // 300 being the maximum length of the invalid reason before hiding
+						toggleTextCollapsed: 'Show more',
+						toggleTextExpanded: 'Show less'
+					}
+				}
+			]);
+		}
+		if (decisionOutcome) {
+			rows.push({
+				key: 'Decision',
+				html: `${decisionOutcome}${invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''}`
+			});
+		}
+		if (documentName) {
+			rows.push({
+				key: 'Decision letter',
+				value: decision.documentName,
+				href: mapDocumentDownloadUrl(appealId, documentId || '', documentName || ''),
+				actions: config.featureFlags.featureFlagReIssueDecision
+					? [
+							{
+								text: 'Change',
+								href: `${addBackLinkQueryToUrl(
+									request,
+									`/appeals-service/appeal-details/${appealId}/update-decision-letter/upload-decision-letter`
+								)}`,
+								visuallyHiddenText: 'decision letter'
+							}
+					  ]
+					: null
+			});
+		}
+		if (letterDate) {
+			rows.push({
+				key: 'Decision issue date',
+				value: dateISOStringToDisplayDate(letterDate)
+			});
+		}
 	}
+
+	if (appellantCostsDecision) {
+		const documentId = appellantCostsDecision.id;
+		const { fileName, dateReceived, version } = appellantCostsDecision?.latestDocumentVersion || {};
+		rows.push({
+			key: 'Appellant costs decision letter',
+			value: appellantCostsDecision.name,
+			href: mapDocumentDownloadUrl(appealId, documentId, fileName, version)
+		});
+		rows.push({
+			key: 'Appellant costs decision issue date',
+			value: dateISOStringToDisplayDate(dateReceived)
+		});
+	}
+
+	if (lpaCostsDecision) {
+		const documentId = lpaCostsDecision.id;
+		const { fileName, dateReceived, version } = lpaCostsDecision?.latestDocumentVersion || {};
+		rows.push({
+			key: 'LPA costs decision letter',
+			value: lpaCostsDecision.name,
+			href: mapDocumentDownloadUrl(appealId, documentId, fileName, version)
+		});
+		rows.push({
+			key: 'LPA costs decision issue date',
+			value: dateISOStringToDisplayDate(dateReceived)
+		});
+	}
+
+	// @ts-ignore
+	return rows.map(({ key, value, html, href, actions }) => {
+		return {
+			key: { text: key },
+			value: html
+				? { html }
+				: href
+				? { html: `<a class="govuk-link" download href="${href}" target="_blank">${value}</a>` }
+				: { text: value },
+			actions: {
+				items: actions
+			}
+		};
+	});
+}
+
+/**
+ * @param {Appeal} appealData
+ * @param {Request} request
+ * @returns {PageContent}
+ */
+export function viewDecisionPage(appealData, request) {
+	/** @type {PageComponent} */
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: viewDecisionPageRows(appealData, request)
+		}
+	};
+
+	const notificationBanners = mapNotificationBannersFromSession(
+		request.session,
+		'appealDecision',
+		appealData.appealId
+	);
+
+	const title = `Decision`;
+	const pageContent = {
+		title,
+		backLinkUrl:
+			getBackLinkUrlFromQuery(request) || `/appeals-service/appeal-details/${appealData.appealId}`,
+		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
+		heading: title,
+		pageComponents: [...notificationBanners, summaryListComponent]
+	};
 
 	return pageContent;
 }
@@ -295,7 +669,7 @@ export function invalidReasonPage(appealData, invalidReason) {
 	};
 	return {
 		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
+		backLinkUrl: `${baseUrl(appealData)}/decision`,
 		backLinkText: 'Back',
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
@@ -304,12 +678,11 @@ export function invalidReasonPage(appealData, invalidReason) {
 }
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
+ * @param {Request} request
  * @param {Appeal} appealData
- * @param  {import('./issue-decision.types.js').InspectorDecisionRequest} session
  * @returns {PageContent}
  */
-export function checkAndConfirmInvalidPage(request, appealData, session) {
+export function checkAndConfirmInvalidPage(request, appealData) {
 	const decisionOutcome = 'Invalid';
 
 	/** @type {PageComponent} */
@@ -328,7 +701,7 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/decision`,
+								href: `${baseUrl(appealData)}/decision`,
 								visuallyHiddenText: 'decision'
 							}
 						]
@@ -339,13 +712,13 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 						text: 'Reasons'
 					},
 					value: {
-						html: displayPageFormatter.formatFreeTextForDisplay(session.invalidReason)
+						html: displayPageFormatter.formatFreeTextForDisplay(request.session.invalidReason)
 					},
 					actions: {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/invalid-reason`,
+								href: `${baseUrl(appealData)}/invalid-reason`,
 								visuallyHiddenText: 'invalid reasons'
 							}
 						]
@@ -382,11 +755,11 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 	const title = 'Check your answers';
 	const pageContent = {
 		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/issue-decision/invalid-reason`,
+		backLinkUrl: `${baseUrl(appealData)}/invalid-reason`,
 		backLinkText: 'Back',
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Send decision',
+		submitButtonText: 'Issue decision',
 		pageComponents: [summaryListComponent, warningTextComponent, insetConfirmComponent]
 	};
 
@@ -395,44 +768,4 @@ export function checkAndConfirmInvalidPage(request, appealData, session) {
 	}
 
 	return pageContent;
-}
-
-/**
- * Checks if the given outcome is a valid InspectorDecisionRequest and returns the corresponding mapped value.
- * @param {string | undefined} outcome The outcome to check.
- * @returns {string} The mapped decision string, or a default value if the outcome is invalid or undefined.
- */
-export function mapDecisionOutcome(outcome) {
-	switch (outcome?.toLowerCase()) {
-		case 'allowed':
-			return 'Allowed';
-		case 'dismissed':
-			return 'Dismissed';
-		case 'split':
-		case 'split_decision':
-			return 'Split decision';
-		case 'invalid':
-			return 'Invalid';
-		default:
-			return '';
-	}
-}
-
-/**
- * @param {string|number} appealId
- * @returns {string}
- */
-export function generateIssueDecisionUrl(appealId) {
-	return `/appeals-service/appeal-details/${appealId}/issue-decision/decision`;
-}
-
-/**
- * @param {string|number} appealId
- * @param {string} [backUrl]
- * @returns {string}
- */
-export function generateStartTimetableUrl(appealId, backUrl) {
-	return `/appeals-service/appeal-details/${appealId}/start-case/add${
-		backUrl ? `?backUrl=${backUrl}` : ''
-	}`;
 }
