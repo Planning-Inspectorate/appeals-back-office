@@ -5,7 +5,6 @@ import {
 } from '../appellant-case.mapper.js';
 import * as appellantCaseService from '../appellant-case.service.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
@@ -13,6 +12,7 @@ import {
 	getTodaysISOString
 } from '#lib/dates.js';
 import { isAfter, parseISO } from 'date-fns';
+import { mapIncompleteReasonPage } from './outcome-incomplete.mapper.js';
 
 /**
  *
@@ -64,13 +64,15 @@ const renderIncompleteReason = async (request, response) => {
 				appellantCaseResponse.validation
 			);
 
-		return response.status(200).render('appeals/appeal/appellant-case-invalid-incomplete.njk', {
-			appeal: {
-				id: appealId,
-				shortReference: appealShortReference(appealReference)
-			},
-			notValidStatus: 'incomplete',
-			reasonOptions: mappedIncompleteReasonOptions,
+		const pageContent = mapIncompleteReasonPage(
+			appealId,
+			appealReference,
+			mappedIncompleteReasonOptions,
+			errors ? errors['incompleteReason']?.msg : undefined
+		);
+
+		return response.status(200).render('patterns/display-page.pattern.njk', {
+			pageContent,
 			errors
 		});
 	}

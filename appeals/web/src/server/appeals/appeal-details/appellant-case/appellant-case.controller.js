@@ -60,7 +60,8 @@ const renderAppellantCase = async (request, response) => {
 			currentAppeal,
 			stripQueryString(request.originalUrl),
 			getBackLinkUrlFromQuery(request),
-			request.session
+			request.session,
+			errors?.['reviewOutcome'].msg
 		);
 
 		return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -209,7 +210,7 @@ export const postCheckAndConfirm = async (request, response) => {
 				session: request.session,
 				bannerDefinitionKey: 'appellantCaseInvalidOrIncomplete',
 				appealId: currentAppeal.appealId,
-				text: `Appeal ${validationOutcome}`
+				text: `Appeal marked as ${validationOutcome}`
 			});
 
 			return response.redirect(`/appeals-service/appeal-details/${appealId}`);

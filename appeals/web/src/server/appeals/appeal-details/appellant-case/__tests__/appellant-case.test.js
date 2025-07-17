@@ -1380,7 +1380,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Please select an outcome</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Select the outcome of your review</a>');
 		});
 
 		it('should send a patch request to the appellant-cases API endpoint and redirect to the confirmation page if selected review outcome value is "valid"', async () => {
@@ -1483,9 +1483,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Please select one or more reasons why the appeal is invalid</a>'
-			);
+			expect(unprettifiedErrorSummaryHtml).toContain('Select why the appeal is invalid</a>');
 		});
 
 		it('should re-render the invalid reason page with the expected error message if a single invalid reason with text was provided but the matching text property is an empty string', async () => {
@@ -1730,9 +1728,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'Please select one or more reasons why the appeal is incomplete</a>'
-			);
+			expect(unprettifiedErrorSummaryHtml).toContain('Select why the appeal is incomplete</a>');
 		});
 
 		it('should re-render the incomplete reason page with the expected error message if a single incomplete reason with text was provided but the matching text property is an empty string', async () => {
@@ -2136,7 +2132,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Enter the date');
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter the appeal due date');
 		});
 
 		it('should re-render the update date page with the expected error message if provided date is not in the future', async () => {
@@ -2172,7 +2168,9 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('The date must be in the future</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain(
+				'The appeal due date must be in the future</a>'
+			);
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid day was provided', async () => {
@@ -2207,7 +2205,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Date day must be between 1 and 31</a>');
+			expect(element.innerHTML).toContain('Appeal due date day must be between 1 and 31</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -2230,7 +2228,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Date day must be between 1 and 31</a>');
+			expect(element.innerHTML).toContain('Appeal due date day must be between 1 and 31</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -2257,7 +2255,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date day must be a number</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date day must be a number</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid month was provided', async () => {
@@ -2292,7 +2290,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Date month must be between 1 and 12</a>');
+			expect(element.innerHTML).toContain('Appeal due date month must be between 1 and 12</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -2315,7 +2313,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Date month must be between 1 and 12</a>');
+			expect(element.innerHTML).toContain('Appeal due date month must be between 1 and 12</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -2342,7 +2340,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date month must be a number</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date month must be a number</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid year was provided', async () => {
@@ -2377,7 +2375,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Date year must be 4 digits</a>');
+			expect(element.innerHTML).toContain('Appeal due date year must be 4 digits</a>');
 
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
@@ -2400,14 +2398,14 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Date year must be a number</a>');
+			expect(element.innerHTML).toContain('Appeal due date year must be a number</a>');
 
 			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be a number</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date year must be a number</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid date was provided', async () => {
@@ -2446,7 +2444,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date must be a real date</a>');
 		});
 
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {
@@ -2725,7 +2723,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Enter the date');
+			expect(unprettifiedErrorSummaryHtml).toContain('Enter the valid date');
 		});
 
 		it('should re-render the valid date page with the expected error message if provided date is not in the past', async () => {
@@ -2750,7 +2748,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be today or in the past</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Valid date must be today or in the past</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid day was provided', async () => {
@@ -2767,7 +2765,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Date day must be between 1 and 31</a>');
+			expect(element.innerHTML).toContain('Valid date day must be between 1 and 31</a>');
 
 			response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
@@ -2782,7 +2780,7 @@ describe('appellant-case', () => {
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('class="govuk-error-summary"');
 			expect(element.innerHTML).toContain('There is a problem</h2>');
-			expect(element.innerHTML).toContain('Date day must be between 1 and 31</a>');
+			expect(element.innerHTML).toContain('Valid date day must be between 1 and 31</a>');
 
 			response = await request
 				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
@@ -2805,7 +2803,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date day must be a number</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Valid date day must be a number</a>');
 		});
 
 		describe('should re-render the update date page with the expected error message if an invalid month was provided', () => {
@@ -2815,21 +2813,21 @@ describe('appellant-case', () => {
 					month: '0',
 					year: '3000',
 					description: 'month "0"',
-					expectedErrorMessageHtml: 'Date month must be between 1 and 12</a>'
+					expectedErrorMessageHtml: 'Valid date month must be between 1 and 12</a>'
 				},
 				{
 					day: '1',
 					month: '13',
 					year: '3000',
 					description: 'month "13"',
-					expectedErrorMessageHtml: 'Date month must be between 1 and 12</a>'
+					expectedErrorMessageHtml: 'Valid date month must be between 1 and 12</a>'
 				},
 				{
 					day: '1',
 					month: 'dec',
 					year: '3000',
 					description: 'month "dec"',
-					expectedErrorMessageHtml: 'Date month must be a number</a>'
+					expectedErrorMessageHtml: 'Valid date month must be a number</a>'
 				}
 			];
 			testCases.forEach(({ day, month, year, description, expectedErrorMessageHtml }) => {
@@ -2879,7 +2877,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be 4 digits</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Valid date year must be 4 digits</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid year "abc" was provided', async () => {
@@ -2904,7 +2902,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date year must be a number</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Valid date year must be a number</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid date was provided', async () => {
@@ -2929,7 +2927,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Date must be a real date</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Valid date must be a real date</a>');
 		});
 
 		it('should re-render the valid date page with the expected error message if date was in past but prior to the date the case was received', async () => {

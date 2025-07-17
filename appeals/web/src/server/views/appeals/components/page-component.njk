@@ -34,6 +34,7 @@
 {%- from "./show-more.njk" import showMore -%}
 {%- from "../../app/components/time-input.njk" import govukTimeInput -%}
 {%- from "./case-notes.njk" import caseNotes -%}
+{%- from "./add-another-reason.njk" import addAnotherReason -%}
 
 {%- if component.wrapperHtml -%}{{ component.wrapperHtml.opening | safe }}{%- endif -%}
 {%- if component.type === 'accordion' -%}
@@ -110,5 +111,7 @@
 {{ govukWarningText(component.parameters) }}
 {%- elif component.type === 'case-notes' -%}
 {{ caseNotes(component.parameters) }}
+{%- elif component.type === 'add-another-reason' -%}
+{{ addAnotherReason(component.parameters) }}
 {%- endif -%}
 {%- if component.wrapperHtml -%}{{ component.wrapperHtml.closing | safe }}{%- endif -%}

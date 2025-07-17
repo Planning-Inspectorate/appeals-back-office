@@ -167,7 +167,8 @@ const renderSelectProcedure = async (request, response) => {
 	const mappedPageContent = selectProcedurePage(
 		appealReference,
 		request.query?.backUrl ? String(request.query?.backUrl) : '/',
-		session.startCaseAppealProcedure?.[appealId]
+		session.startCaseAppealProcedure?.[appealId],
+		errors ? errors['appealProcedure']?.msg : undefined
 	);
 
 	return response.render('patterns/change-page.pattern.njk', {

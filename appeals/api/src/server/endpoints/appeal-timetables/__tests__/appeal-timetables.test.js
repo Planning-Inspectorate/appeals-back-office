@@ -722,7 +722,7 @@ describe('appeal timetables routes', () => {
 
 					const auditDetails =
 						appealType === 'fullPlanning'
-							? ['The case timeline was created', 'Case started\nAppeal procedure: hearing']
+							? ['The case timeline was created', 'Appeal started\nAppeal procedure: hearing']
 							: ['The case timeline was created'];
 
 					auditDetails.forEach((details) => {
@@ -832,7 +832,7 @@ describe('appeal timetables routes', () => {
 
 					const auditDetails =
 						appealType === 'fullPlanning'
-							? ['The case timeline was created', 'Case started\nAppeal procedure: hearing']
+							? ['The case timeline was created', 'Appeal started\nAppeal procedure: hearing']
 							: ['The case timeline was created'];
 
 					auditDetails.forEach((details) => {

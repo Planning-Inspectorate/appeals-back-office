@@ -5,8 +5,8 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 export const validateAppealProcedure = createValidator(
 	body('appealProcedure')
 		.exists()
-		.withMessage('Select an appeal procedure')
+		.withMessage('Select the appeal procedure')
 		.bail()
 		.isIn(Object.values(APPEAL_CASE_PROCEDURE))
-		.withMessage('Select an appeal procedure')
+		.withMessage('Select the appeal procedure')
 );

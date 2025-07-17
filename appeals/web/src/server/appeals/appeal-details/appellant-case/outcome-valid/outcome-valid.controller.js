@@ -6,6 +6,7 @@ import {
 import logger from '#lib/logger.js';
 import { updateValidDatePage } from './outcome-valid.mapper.js';
 import * as outcomeValidService from './outcome-valid.service.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getValidDate = async (request, response) => {
@@ -14,7 +15,7 @@ export const getValidDate = async (request, response) => {
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
 export const postValidDate = async (request, response) => {
-	const { errors, body, currentAppeal } = request;
+	const { errors, body, currentAppeal, session } = request;
 
 	if (errors) {
 		return renderValidDatePage(request, response);
@@ -83,6 +84,12 @@ export const postValidDate = async (request, response) => {
 				year: updatedValidDateYear
 			})
 		);
+
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'appealValidated',
+			appealId
+		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
