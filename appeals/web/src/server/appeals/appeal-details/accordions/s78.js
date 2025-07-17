@@ -11,6 +11,7 @@ import { getCaseHearing } from './s78/case-hearing.js';
 import { getCaseInquiry } from './s78/case-inquiry.js';
 import { removeAccordionComponentsActions } from './utils/index.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /**
  *
@@ -64,11 +65,15 @@ export function generateAccordion(appealDetails, mappedData, session) {
 			rows: [
 				mappedData.appeal.appellantCase.display.tableItem,
 				mappedData.appeal.lpaQuestionnaire.display.tableItem,
-				mappedData.appeal.lpaStatement.display.tableItem,
-				mappedData.appeal.ipComments.display.tableItem,
-				mappedData.appeal.appellantFinalComments.display.tableItem,
-				mappedData.appeal.lpaFinalComments.display.tableItem,
-				mappedData.appeal.environmentalAssessment.display.tableItem
+				...(!isChildAppeal(appealDetails)
+					? [
+							mappedData.appeal.lpaStatement.display.tableItem,
+							mappedData.appeal.ipComments.display.tableItem,
+							mappedData.appeal.appellantFinalComments.display.tableItem,
+							mappedData.appeal.lpaFinalComments.display.tableItem,
+							mappedData.appeal.environmentalAssessment.display.tableItem
+					  ]
+					: [])
 			].filter(isDefined),
 			firstCellIsHeader: true
 		}

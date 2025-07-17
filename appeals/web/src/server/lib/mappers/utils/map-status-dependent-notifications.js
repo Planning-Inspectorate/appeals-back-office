@@ -6,6 +6,7 @@ import { getRequiredActionsForAppeal } from './required-actions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { generateIssueDecisionUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import config from '../../../../../environment/config.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /** @typedef {import('./required-actions.js').AppealRequiredAction} AppealRequiredAction */
 /** @typedef {import('../components/index.js').NotificationBannerDefinitionKey} NotificationBannerDefinitionKey */
@@ -58,11 +59,7 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		'setupHearing'
 	];
 
-	if (
-		config.featureFlags.featureFlagLinkedAppeals &&
-		appealDetails.isChildAppeal &&
-		!ALLOWED_CHILD_APPEAL_BANNERS.includes(bannerDefinitionKey)
-	) {
+	if (isChildAppeal(appealDetails) && !ALLOWED_CHILD_APPEAL_BANNERS.includes(bannerDefinitionKey)) {
 		// Do not display the banner
 		return;
 	}

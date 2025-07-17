@@ -66,7 +66,13 @@ export const notifySend = async (options) => {
 	const renderedSubject = generateNotifyPreview(`Subject: ${subject}`, true);
 	try {
 		if (config.useNotifyEmulator) {
-			emulateSendEmail(templateName, recipientEmail, subject, content);
+			emulateSendEmail(
+				personalisation.appeal_reference_number?.toString() || 'UNKNOWN REF',
+				templateName,
+				recipientEmail,
+				subject,
+				content
+			);
 		} else {
 			await notifyClient.sendEmail(genericTemplate, recipientEmail, { subject, content });
 		}
