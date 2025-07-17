@@ -246,58 +246,56 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 	);
 
 	try {
-		if (hasLpaStatement || hasIpComments) {
-			let whatHappensNextAppellant;
-			let whatHappensNextLpa;
-			let lpaSubject;
-			let appellantSubject;
-			if (String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.HEARING) {
-				lpaSubject = `We've received all statements and comments`;
-				appellantSubject = `We have received the local planning authority's questionnaire, all statements and comments from interested parties`;
-				if (appeal.hearing?.hearingStartTime) {
-					whatHappensNextAppellant = `Your hearing is on ${formatDate(
-						appeal.hearing?.hearingStartTime,
-						false
-					)}.\n\nWe will contact you if we need any more information.`;
-					whatHappensNextLpa = `The hearing is on ${formatDate(
-						appeal.hearing?.hearingStartTime,
-						false
-					)}.`;
-				} else {
-					whatHappensNextAppellant = `We will contact you if we need any more information.`;
-					whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
-				}
+		let whatHappensNextAppellant;
+		let whatHappensNextLpa;
+		let lpaSubject;
+		let appellantSubject;
+		if (String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.HEARING) {
+			lpaSubject = `We've received all statements and comments`;
+			appellantSubject = `We have received the local planning authority's questionnaire, all statements and comments from interested parties`;
+			if (appeal.hearing?.hearingStartTime) {
+				whatHappensNextAppellant = `Your hearing is on ${formatDate(
+					appeal.hearing?.hearingStartTime,
+					false
+				)}.\n\nWe will contact you if we need any more information.`;
+				whatHappensNextLpa = `The hearing is on ${formatDate(
+					appeal.hearing?.hearingStartTime,
+					false
+				)}.`;
 			} else {
-				lpaSubject = 'Submit your final comments';
-				appellantSubject = 'Submit your final comments';
-				whatHappensNextAppellant = `You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
-				whatHappensNextLpa = `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
+				whatHappensNextAppellant = `We will contact you if we need any more information.`;
+				whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
 			}
-
-			await notifyPublished({
-				appeal,
-				notifyClient,
-				hasLpaStatement,
-				hasIpComments,
-				templateName: 'received-statement-and-ip-comments-lpa',
-				recipientEmail: appeal.lpa?.email,
-				finalCommentsDueDate,
-				whatHappensNext: whatHappensNextLpa,
-				subject: lpaSubject
-			});
-
-			await notifyPublished({
-				appeal,
-				notifyClient,
-				hasLpaStatement,
-				hasIpComments,
-				templateName: 'received-statement-and-ip-comments-appellant',
-				recipientEmail: appeal.agent?.email || appeal.appellant?.email,
-				finalCommentsDueDate,
-				whatHappensNext: whatHappensNextAppellant,
-				subject: appellantSubject
-			});
+		} else {
+			lpaSubject = 'Submit your final comments';
+			appellantSubject = 'Submit your final comments';
+			whatHappensNextAppellant = `You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
+			whatHappensNextLpa = `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
 		}
+
+		await notifyPublished({
+			appeal,
+			notifyClient,
+			hasLpaStatement,
+			hasIpComments,
+			templateName: 'received-statement-and-ip-comments-lpa',
+			recipientEmail: appeal.lpa?.email,
+			finalCommentsDueDate,
+			whatHappensNext: whatHappensNextLpa,
+			subject: lpaSubject
+		});
+
+		await notifyPublished({
+			appeal,
+			notifyClient,
+			hasLpaStatement,
+			hasIpComments,
+			templateName: 'received-statement-and-ip-comments-appellant',
+			recipientEmail: appeal.agent?.email || appeal.appellant?.email,
+			finalCommentsDueDate,
+			whatHappensNext: whatHappensNextAppellant,
+			subject: appellantSubject
+		});
 	} catch (error) {
 		logger.error(error);
 	}
