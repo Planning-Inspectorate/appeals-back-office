@@ -1,4 +1,5 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
 
 /**
  *
@@ -36,3 +37,57 @@ export function decisionIncompleteConfirmationPage(appealId, appealReference) {
 
 	return pageContent;
 }
+
+/**
+ * @param {string} appealId
+ * @param {string} appealReference
+ * @param {import('#appeals/appeals.types.js').CheckboxItemParameter[]} mappedIncompleteReasonOptions
+ * @param {string | undefined} errorMessage
+ * @returns {PageContent}
+ */
+export const mapIncompleteReasonPage = (
+	appealId,
+	appealReference,
+	mappedIncompleteReasonOptions,
+	errorMessage = undefined
+) => {
+	const shortAppealReference = appealShortReference(appealReference);
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: `Why is the appeal incomplete?`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case`,
+		preHeading: `Appeal ${shortAppealReference}`,
+		pageComponents: [
+			{
+				type: 'checkboxes',
+				parameters: {
+					name: 'incompleteReason',
+					idPrefix: 'incomplete-reason',
+					fieldset: {
+						legend: {
+							text: 'Why is the appeal incomplete?',
+							isPageHeading: true,
+							classes: 'govuk-fieldset__legend--l'
+						}
+					},
+					items: mappedIncompleteReasonOptions,
+					errorMessage: errorMessage && { text: errorMessage }
+				}
+			}
+		]
+	};
+
+	mappedIncompleteReasonOptions
+		// @ts-ignore
+		.filter((option) => option.addAnother)
+		.forEach((option) =>
+			enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml(
+				option,
+				'incompleteReason-',
+				'incomplete-reason-',
+				'Which part is incorrect or incomplete?'
+			)
+		);
+	return pageContent;
+};

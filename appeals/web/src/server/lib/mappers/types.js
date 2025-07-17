@@ -319,7 +319,22 @@
  */
 
 /**
- * @typedef {SharedPageComponentProperties & (AccordionPageComponent | BackLinkPageComponent | BreadcrumbsPageComponent | ButtonPageComponent | CharacterCountPageComponent | CheckboxesPageComponent | CookieBannerPageComponent | DateInputPageComponent | DetailsPageComponent | ErrorMessagePageComponent | ErrorSummaryPageComponent | ExitThisPagePageComponent | FieldsetPageComponent | FileUploadPageComponent | HintPageComponent | InputPageComponent | InsetTextPageComponent | LabelPageComponent | NotificationBannerPageComponent | PaginationPageComponent | PanelPageComponent | PhaseBannerPageComponent | RadiosPageComponent | SelectPageComponent | SkipLinkPageComponent | SummaryListPageComponent | TablePageComponent | TabsPageComponent | TagPageComponent | TextareaPageComponent | WarningTextPageComponent | StatusTagPageComponent | TimeInputPageComponent | HtmlPageComponent | ShowMorePageComponent | CaseNotesPageComponent)} PageComponent
+ * @typedef AddAnotherReasonProperties
+ * @type {Object<string, any>}
+ * @property {string} labelText
+ * @property {string} inputName
+ * @property {string} inputId
+ * @property {string[]} [textItems]
+ */
+
+/**
+ * @typedef {Object} AddAnotherReasonPageComponent
+ * @property {'add-another-reason'} type
+ * @property {AddAnotherReasonProperties} parameters
+ */
+
+/**
+ * @typedef {SharedPageComponentProperties & (AccordionPageComponent | BackLinkPageComponent | BreadcrumbsPageComponent | ButtonPageComponent | CharacterCountPageComponent | CheckboxesPageComponent | CookieBannerPageComponent | DateInputPageComponent | DetailsPageComponent | ErrorMessagePageComponent | ErrorSummaryPageComponent | ExitThisPagePageComponent | FieldsetPageComponent | FileUploadPageComponent | HintPageComponent | InputPageComponent | InsetTextPageComponent | LabelPageComponent | NotificationBannerPageComponent | PaginationPageComponent | PanelPageComponent | PhaseBannerPageComponent | RadiosPageComponent | SelectPageComponent | SkipLinkPageComponent | SummaryListPageComponent | TablePageComponent | TabsPageComponent | TagPageComponent | TextareaPageComponent | WarningTextPageComponent | StatusTagPageComponent | TimeInputPageComponent | HtmlPageComponent | ShowMorePageComponent | CaseNotesPageComponent | AddAnotherReasonPageComponent)} PageComponent
  */
 
 /**

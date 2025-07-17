@@ -55,6 +55,7 @@ import { generateS20Components } from './page-components/s20.mapper.js';
  * @param {string} currentRoute
  * @param {string|undefined} backUrl
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {string|undefined} errorMessage
  * @returns {Promise<PageContent>}
  */
 export async function appellantCasePage(
@@ -62,7 +63,8 @@ export async function appellantCasePage(
 	appealDetails,
 	currentRoute,
 	backUrl,
-	session
+	session,
+	errorMessage = undefined
 ) {
 	const mappedAppellantCaseData = initialiseAndMapData(
 		appellantCaseData,
@@ -149,7 +151,10 @@ export async function appellantCasePage(
 	) {
 		reviewOutcomeComponents.push({
 			type: 'radios',
-			parameters: reviewOutcomeRadiosInputInstruction.properties
+			parameters: {
+				...reviewOutcomeRadiosInputInstruction.properties,
+				errorMessage: errorMessage ? { text: errorMessage } : undefined
+			}
 		});
 		reviewOutcomeComponents.push(documentsWarningComponent);
 	}

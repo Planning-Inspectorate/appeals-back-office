@@ -32,7 +32,7 @@ describe('Start case', () => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startS78Case(caseRef, 'written');
-			caseDetailsPage.validateBannerMessage('Success', 'Case started');
+			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			cy.loadAppealDetails(caseRef).then((appealDetails) => {
 				const startedAt = appealDetails?.startedAt;
 				expect(startedAt).to.not.be.null;
@@ -47,7 +47,7 @@ describe('Start case', () => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
-			caseDetailsPage.validateBannerMessage('Success', 'Case started');
+			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.verifyAppealType('Planning listed building and conservation area appeal');
 			cy.loadAppealDetails(caseRef).then((appealDetails) => {

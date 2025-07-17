@@ -133,7 +133,7 @@ export function yesNoInput({
  * @param {string|null} [params.value]
  * @param {string} [params.legendText]
  * @param {boolean} [params.legendIsPageHeading]
- * @param {string} [params.errorMessage]
+ * @param {string|undefined} [params.errorMessage]
  * @returns {PageComponent}
  */
 export function radiosInput({
