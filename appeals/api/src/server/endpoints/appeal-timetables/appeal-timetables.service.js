@@ -150,7 +150,8 @@ const startCase = async (
 				comment_deadline: formatDate(new Date(timetable.commentDeadline || ''), false),
 				lpa_statement_deadline: formatDate(new Date(timetable.lpaStatementDueDate || ''), false),
 				ip_comments_deadline: formatDate(new Date(timetable.ipCommentsDueDate || ''), false),
-				final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false)
+				final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false),
+				child_appeals: appeal.childAppeals?.map((appeal) => appeal.childRef) || []
 			};
 
 			if (appellantEmail) {
