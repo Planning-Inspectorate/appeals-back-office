@@ -26,7 +26,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { isFeatureActive } from '#common/feature-flags.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { permissionNames } from '#environment/permissions.js';
 
 /**

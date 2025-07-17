@@ -1,5 +1,5 @@
 import { textSummaryListItem } from '#lib/mappers/components/index.js';
-import { APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
+import { APPEAL_KNOWS_OTHER_OWNERS } from '@planning-inspectorate/data-model';
 
 /**
  * @param {typeof APPEAL_KNOWS_OTHER_OWNERS.YES | typeof APPEAL_KNOWS_OTHER_OWNERS.NO | typeof APPEAL_KNOWS_OTHER_OWNERS.SOME | null} knowsOtherLandowners

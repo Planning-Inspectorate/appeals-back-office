@@ -4,7 +4,7 @@ import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal, fullPlanningAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { ERROR_CANNOT_BE_EMPTY_STRING } from '@pins/appeals/constants/support.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');

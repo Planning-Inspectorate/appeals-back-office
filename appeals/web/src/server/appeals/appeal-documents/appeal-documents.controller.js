@@ -31,7 +31,7 @@ import config from '@pins/appeals.web/environment/config.js';
 import { isFileUploadInfoItemArray } from '#lib/ts-utilities.js';
 import { getTodaysISOString } from '#lib/dates.js';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
-import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';

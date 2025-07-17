@@ -1,6 +1,6 @@
 import { getSkipValue } from '#utils/database-pagination.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { uniq } from 'lodash-es';
 

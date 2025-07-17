@@ -11,7 +11,7 @@ import {
 	APPEAL_DEVELOPMENT_TYPE,
 	APPEAL_CASE_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
-} from 'pins-data-model';
+} from '@planning-inspectorate/data-model';
 import { randomBool, randomEnumValue, randomArrayValue } from './data-utilities.js';
 
 /**

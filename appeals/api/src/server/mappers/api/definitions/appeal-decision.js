@@ -1,5 +1,8 @@
 import { Folder } from './folders-documents.js';
-import { APPEAL_CASE_DECISION_OUTCOME, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import {
+	APPEAL_CASE_DECISION_OUTCOME,
+	APPEAL_VIRUS_CHECK_STATUS
+} from '@planning-inspectorate/data-model';
 
 const appealDecision = {
 	type: 'object',

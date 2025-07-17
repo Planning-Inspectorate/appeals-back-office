@@ -1,6 +1,6 @@
 import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} WebAppeal */
 

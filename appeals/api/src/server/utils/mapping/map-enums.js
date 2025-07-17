@@ -10,11 +10,11 @@ import {
 	APPEAL_SOURCE,
 	APPEAL_VIRUS_CHECK_STATUS,
 	APPEAL_DEVELOPMENT_TYPE
-} from 'pins-data-model';
+} from '@planning-inspectorate/data-model';
 
-/** @typedef {import('pins-data-model/src/schemas.js').AppealS78Case} AppealS78Case */
-/** @typedef {import('pins-data-model/src/schemas.js').AppealDocument} AppealDocument */
-/** @typedef {import('pins-data-model/src/schemas.js').AppealRepresentation} AppealRepresentation */
+/** @typedef {import('@planning-inspectorate/data-model/src/schemas.js').AppealS78Case} AppealS78Case */
+/** @typedef {import('@planning-inspectorate/data-model/src/schemas.js').AppealDocument} AppealDocument */
+/** @typedef {import('@planning-inspectorate/data-model/src/schemas.js').AppealRepresentation} AppealRepresentation */
 
 /**
  *

@@ -4,7 +4,7 @@ import {
 	APPEAL_REDACTED_STATUS,
 	APPEAL_KNOWS_OTHER_OWNERS,
 	APPEAL_EVENT_TYPE
-} from 'pins-data-model';
+} from '@planning-inspectorate/data-model';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { importListedBuildingsDataset } from './seed-listed-buildings.js';

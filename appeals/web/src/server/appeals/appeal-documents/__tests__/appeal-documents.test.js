@@ -7,7 +7,7 @@ import {
 	documentFileVersionsInfo
 } from '#testing/app/fixtures/referencedata.js';
 import { mapDocumentDownloadUrl, mapRedactionStatusKeyToName } from '../appeal-documents.mapper.js';
-import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

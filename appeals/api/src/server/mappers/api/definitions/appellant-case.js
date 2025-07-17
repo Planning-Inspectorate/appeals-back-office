@@ -1,7 +1,10 @@
 import { InvalidIncompleteReason } from './invalid-incomplete.js';
 import { Folder } from './folders-documents.js';
 import { AppealSummary } from './appeal-summary.js';
-import { APPEAL_DEVELOPMENT_TYPE, APPEAL_TYPE_OF_PLANNING_APPLICATION } from 'pins-data-model';
+import {
+	APPEAL_DEVELOPMENT_TYPE,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
+} from '@planning-inspectorate/data-model';
 
 const updateableFields = {
 	applicationDate: {

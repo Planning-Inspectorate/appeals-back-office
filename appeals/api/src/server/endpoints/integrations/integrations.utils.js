@@ -1,9 +1,9 @@
 import Path from 'node:path';
-import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
-import { APPEAL_CASE_STAGE } from 'pins-data-model';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 
-/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand['documents'][number]} AppellantSubmissionDocument */
-/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand['documents'][number]} LPAQuestionnaireCommandDocument */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppellantSubmissionCommand['documents'][number]} AppellantSubmissionDocument */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand['documents'][number]} LPAQuestionnaireCommandDocument */
 
 /**
  *

@@ -1,6 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/index.js';
-import { APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE } from 'pins-data-model';
+import { APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE } from '@planning-inspectorate/data-model';
 import { snakeCaseToSpaceSeparated, capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /**

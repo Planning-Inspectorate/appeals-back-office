@@ -1,4 +1,4 @@
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { documentationFolderTableItem, textSummaryListItem } from '#lib/mappers/index.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';

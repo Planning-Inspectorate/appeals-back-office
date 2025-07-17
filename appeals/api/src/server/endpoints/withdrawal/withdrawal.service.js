@@ -1,7 +1,7 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { notifySend } from '#notify/notify-send.js';
 

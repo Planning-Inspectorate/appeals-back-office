@@ -15,7 +15,7 @@ import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { notifySend } from '#notify/notify-send.js';
 import { EventType } from '@pins/event-client';

@@ -17,7 +17,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { EventType } from '@pins/event-client';
 import { notifySend } from '#notify/notify-send.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import logger from '#utils/logger.js';
 import { isCurrentStatus } from '#utils/current-status.js';
 

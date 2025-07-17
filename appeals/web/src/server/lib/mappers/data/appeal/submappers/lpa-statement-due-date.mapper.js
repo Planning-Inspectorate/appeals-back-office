@@ -2,7 +2,7 @@ import { isStatePassed } from '#lib/appeal-status.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLpaStatementDueDate = ({

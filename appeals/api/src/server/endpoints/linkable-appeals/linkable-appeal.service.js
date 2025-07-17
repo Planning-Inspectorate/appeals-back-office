@@ -3,7 +3,7 @@ import appealRepository from '#repositories/appeal.repository.js';
 import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
 import { formatLinkableAppealSummary } from './linkable-appeal.formatter.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { currentStatus } from '#utils/current-status.js';
 
 const linkableCaseStatuses = [

@@ -15,7 +15,7 @@ import { calculateTimetable } from '@pins/appeals/utils/business-days.js';
 
 import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
 import { createAppealReference } from '#utils/appeal-reference.js';
-import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { ODW_SYSTEM_ID, APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {

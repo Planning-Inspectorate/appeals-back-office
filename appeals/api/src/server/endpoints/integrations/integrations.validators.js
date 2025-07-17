@@ -1,6 +1,6 @@
 import Ajv from 'ajv';
 import addFormats from 'ajv-formats';
-import { loadAllSchemas } from 'pins-data-model';
+import { loadAllSchemas } from '@planning-inspectorate/data-model';
 import BackOfficeAppError from '#utils/app-error.js';
 import { setCache, getCache } from '@pins/appeals/utils/cache-data.js';
 

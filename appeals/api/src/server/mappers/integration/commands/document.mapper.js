@@ -1,14 +1,14 @@
 import config from '#config/config.js';
 import { randomUUID } from 'node:crypto';
-import { APPEAL_CASE_STAGE } from 'pins-data-model';
+import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus */
-/** @typedef {import('pins-data-model').Schemas.AppealDocument} AppealDocument */
-/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand['documents'][number]} AppellantSubmissionDocument */
-/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand['documents'][number]} LPAQuestionnaireCommandDocument */
-/** @typedef {import('pins-data-model').Schemas.AppealRepresentationSubmission['documents'][number]} RepAttachment */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealDocument} AppealDocument */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppellantSubmissionCommand['documents'][number]} AppellantSubmissionDocument */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand['documents'][number]} LPAQuestionnaireCommandDocument */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentationSubmission['documents'][number]} RepAttachment */
 
 /**
  *

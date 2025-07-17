@@ -4,7 +4,7 @@ import appealListRepository from '#repositories/appeal-lists.repository.js';
 import { formatAppeal } from '#endpoints/appeals/appeals.formatter.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	fetchBankHolidaysForDivision,
 	getNumberOfBankHolidaysBetweenDates

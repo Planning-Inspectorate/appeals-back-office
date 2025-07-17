@@ -1,4 +1,4 @@
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { permissionNames } from '#environment/permissions.js';

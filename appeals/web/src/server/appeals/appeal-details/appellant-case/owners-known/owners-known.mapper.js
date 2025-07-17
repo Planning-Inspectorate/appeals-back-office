@@ -2,7 +2,7 @@
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { APPEAL_KNOWS_OTHER_OWNERS } from 'pins-data-model';
+import { APPEAL_KNOWS_OTHER_OWNERS } from '@planning-inspectorate/data-model';
 
 /**
  * @param {Appeal} appealData

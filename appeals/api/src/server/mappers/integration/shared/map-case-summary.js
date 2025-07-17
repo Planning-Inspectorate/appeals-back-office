@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
-/** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealHASCase} AppealHASCase */
 /**
  *
  * @param {MappingRequest} data

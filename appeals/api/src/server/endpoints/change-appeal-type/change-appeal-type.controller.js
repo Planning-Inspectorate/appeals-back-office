@@ -3,7 +3,7 @@ import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { changeAppealType } from './change-appeal-type.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

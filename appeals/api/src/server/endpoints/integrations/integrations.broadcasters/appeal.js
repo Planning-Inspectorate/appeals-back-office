@@ -12,7 +12,7 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /**
  *

@@ -8,7 +8,7 @@ import {
 } from './lpa-questionnaire.mapper.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
 	renderDocumentUpload,
 	renderDocumentDetails,

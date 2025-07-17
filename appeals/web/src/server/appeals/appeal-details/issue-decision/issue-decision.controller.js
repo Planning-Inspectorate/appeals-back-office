@@ -12,7 +12,11 @@ import {
 } from '../../appeal-documents/appeal-documents.controller.js';
 
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE
+} from '@planning-inspectorate/data-model';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';

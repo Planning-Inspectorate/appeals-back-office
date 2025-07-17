@@ -35,7 +35,7 @@ import {
 import createManyToManyRelationData from '#utils/create-many-to-many-relation-data.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { ERROR_MAX_LENGTH_CHARACTERS } from '@pins/appeals/constants/support.js';
 
 describe('lpa questionnaires routes', () => {

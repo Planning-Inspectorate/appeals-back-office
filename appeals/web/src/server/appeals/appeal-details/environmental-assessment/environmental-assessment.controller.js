@@ -14,7 +14,7 @@ import {
 	renderUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import { APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';

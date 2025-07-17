@@ -11,12 +11,15 @@ import {
 	COMMENT_STATUS
 } from '@pins/appeals/constants/common.js';
 
-import { APPEAL_REPRESENTATION_TYPE, APPEAL_REPRESENTATION_STATUS } from 'pins-data-model';
+import {
+	APPEAL_REPRESENTATION_TYPE,
+	APPEAL_REPRESENTATION_STATUS
+} from '@planning-inspectorate/data-model';
 import { serviceUserIdStartRange } from './map-service-user-entity.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation & { appeal?: Appeal }} RepresentationWithAppeal */
-/** @typedef {import('pins-data-model').Schemas.AppealRepresentation} AppealRepresentation */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentation} AppealRepresentation */
 /** @typedef {'Contains links to web pages'|'Duplicated or repeated comment'|'Includes inflammatory content'|'Includes personal or medical information'|'No list of suggested conditions'|'Not relevant to this appeal'|'Received after deadline'|'other_reason'} RejectionReason*/
 
 /**

@@ -20,7 +20,7 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import { formatDocument } from './documents.formatter.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
-import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { AUDIT_TRAIL_DECISION_LETTER_UPDATED } from '@pins/appeals/constants/support.js';
 import { sendNewDecisionLetter } from '#endpoints/decision/decision.service.js';
 

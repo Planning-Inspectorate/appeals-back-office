@@ -26,7 +26,7 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
-import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 

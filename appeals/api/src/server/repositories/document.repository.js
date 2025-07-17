@@ -1,5 +1,8 @@
 import { databaseConnector } from '#utils/database-connector.js';
-import { APPEAL_VIRUS_CHECK_STATUS, APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import {
+	APPEAL_VIRUS_CHECK_STATUS,
+	APPEAL_REDACTED_STATUS
+} from '@planning-inspectorate/data-model';
 import documentRedactionStatusRepository from '#repositories/document-redaction-status.repository.js';
 
 /**

@@ -6,7 +6,7 @@ import {
 import { schemas } from '../integrations.validators.js';
 import { validateFromSchema } from '../integrations.validators.js';
 
-/** @typedef {import('pins-data-model').Schemas.AppealRepresentation} AppealRepresentation */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentation} AppealRepresentation */
 
 const mockRepresentation = {
 	appeal: {

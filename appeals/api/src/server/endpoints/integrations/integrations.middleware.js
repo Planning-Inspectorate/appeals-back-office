@@ -9,7 +9,7 @@ import {
 	ERROR_INVALID_APPEAL_TYPE_REP
 } from '@pins/appeals/constants/support.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
-import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /**
  * @type {import("express").RequestHandler}

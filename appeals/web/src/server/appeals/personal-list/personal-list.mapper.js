@@ -9,7 +9,7 @@ import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { mapStatusText, mapStatusFilterLabel } from '#lib/appeal-status.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals').AppealSummary} AppealSummary */
 /** @typedef {import('@pins/appeals').AppealList} AppealList */

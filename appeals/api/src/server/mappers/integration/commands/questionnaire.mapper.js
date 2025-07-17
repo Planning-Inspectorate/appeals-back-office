@@ -1,4 +1,4 @@
-/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@pins/appeals.api').Schema.DesignatedSite} DesignatedSite */
 
 import { createSharedS20S78Fields } from '#mappers/integration/shared/s20s78/questionnaire-fields.js';
@@ -72,7 +72,7 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 
 /**
  *
- * @param {import('pins-data-model').Schemas.LPAQS78SubmissionProperties} casedata
+ * @param {import('@planning-inspectorate/data-model').Schemas.LPAQS78SubmissionProperties} casedata
  * @param {boolean} isS78
  * @returns {{listEntry: string, affectsListedBuilding: boolean }[] | null}
  */

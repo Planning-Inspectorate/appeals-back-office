@@ -14,7 +14,10 @@ import {
 	completeLPAQuestionnaireOutcome,
 	incompleteLPAQuestionnaireOutcome
 } from '#tests/shared/mocks.js';
-import { APPEAL_CASE_STATUS, APPEAL_TYPE_OF_PLANNING_APPLICATION } from 'pins-data-model';
+import {
+	APPEAL_CASE_STATUS,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION
+} from '@planning-inspectorate/data-model';
 
 export const auditTrails = [
 	{

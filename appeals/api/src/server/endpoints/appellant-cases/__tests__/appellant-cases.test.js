@@ -32,7 +32,7 @@ import {
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 describe('appellant cases routes', () => {
 	beforeEach(() => {

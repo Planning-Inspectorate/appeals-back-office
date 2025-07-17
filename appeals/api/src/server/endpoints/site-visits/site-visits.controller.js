@@ -1,4 +1,4 @@
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	VALIDATION_OUTCOME_COMPLETE

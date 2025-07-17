@@ -3,7 +3,7 @@ import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS,
 	APPEAL_VIRUS_CHECK_STATUS
-} from 'pins-data-model';
+} from '@planning-inspectorate/data-model';
 
 const documentLog = {
 	type: 'object',

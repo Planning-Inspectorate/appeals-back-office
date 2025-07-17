@@ -34,12 +34,12 @@
 	},
 	"dependencies": {
 		"@badeball/cypress-cucumber-preprocessor": "22.0.1",
+		"@planning-inspectorate/data-model": "^1.11.0",
 		"cypress": "13.6.4",
 		"got": "^12.5.2",
 		"joi": "^17.7.0",
 		"node-cache": "^5.1.2",
-		"nodemon": "3.0.3",
-		"pins-data-model": "github:Planning-Inspectorate/data-model#1.10.3"
+		"nodemon": "3.0.3"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "17.0.1",

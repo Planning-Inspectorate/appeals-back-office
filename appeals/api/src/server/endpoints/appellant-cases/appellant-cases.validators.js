@@ -17,7 +17,10 @@ import {
 import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
 import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
 import validateEnumParameter from '#common/validators/enum-parameter.js';
-import { APPEAL_KNOWS_OTHER_OWNERS, APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import {
+	APPEAL_KNOWS_OTHER_OWNERS,
+	APPEAL_CASE_PROCEDURE
+} from '@planning-inspectorate/data-model';
 import validateNumberRangeParameter from '#common/validators/number-range-parameter.js';
 import { validateNumberParameter } from '#common/validators/number-parameter.js';
 

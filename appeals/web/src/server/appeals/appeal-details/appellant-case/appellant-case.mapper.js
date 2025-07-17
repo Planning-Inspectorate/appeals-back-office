@@ -24,7 +24,7 @@ import {
 	APPEAL_CASE_STATUS,
 	APPEAL_VIRUS_CHECK_STATUS,
 	APPEAL_DOCUMENT_TYPE
-} from 'pins-data-model';
+} from '@planning-inspectorate/data-model';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';

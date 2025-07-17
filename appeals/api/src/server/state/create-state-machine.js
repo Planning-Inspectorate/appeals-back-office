@@ -1,5 +1,5 @@
 import { createMachine } from 'xstate';
-import { APPEAL_CASE_STATUS, APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import {
 	APPEAL_TYPE_SHORTHAND_HAS,
 	APPEAL_TYPE_SHORTHAND_FPA,
@@ -12,8 +12,8 @@ import {
 import { VALIDATION_OUTCOME_CANCEL } from '@pins/appeals/constants/support.js';
 
 /**
- * @typedef {import('pins-data-model').APPEAL_CASE_TYPE} AppealType
- * @typedef {import('pins-data-model').APPEAL_CASE_PROCEDURE} ProcedureType
+ * @typedef {import('@planning-inspectorate/data-model').APPEAL_CASE_TYPE} AppealType
+ * @typedef {import('@planning-inspectorate/data-model').APPEAL_CASE_PROCEDURE} ProcedureType
  * */
 
 /**

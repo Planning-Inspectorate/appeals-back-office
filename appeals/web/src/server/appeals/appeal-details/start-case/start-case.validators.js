@@ -1,6 +1,6 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 export const validateAppealProcedure = createValidator(
 	body('appealProcedure')

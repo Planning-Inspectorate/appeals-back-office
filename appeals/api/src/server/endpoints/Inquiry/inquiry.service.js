@@ -14,7 +14,7 @@ import {
 import { PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
 import transitionState from '#state/transition-state.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */

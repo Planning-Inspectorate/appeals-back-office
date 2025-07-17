@@ -4,7 +4,7 @@ import { formatHearing } from './hearing.formatter.js';
 import { createHearing, deleteHearing, updateHearing } from './hearing.service.js';
 import hearingRepository from '#repositories/hearing.repository.js';
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import transitionState from '#state/transition-state.js';
 import {
 	VALIDATION_OUTCOME_COMPLETE,

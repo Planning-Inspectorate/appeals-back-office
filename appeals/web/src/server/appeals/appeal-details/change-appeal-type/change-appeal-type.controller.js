@@ -16,7 +16,7 @@ import {
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

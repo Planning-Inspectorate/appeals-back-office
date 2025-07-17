@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 
 describe('documents and folders', () => {

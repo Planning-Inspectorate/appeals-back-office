@@ -1,7 +1,7 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.SiteVisit & {appeal: Appeal}} SiteVisitWithAppeal */
 /** @typedef {import('@pins/appeals.api').Schema.Hearing & {appeal: Appeal}} HearingWithAppeal */
-/** @typedef {import('pins-data-model').Schemas.AppealEvent} AppealEvent */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealEvent} AppealEvent */
 /** @typedef {import('@pins/appeals.api').Schema.Address} Address */
 import { EventType } from '@pins/event-client';
 

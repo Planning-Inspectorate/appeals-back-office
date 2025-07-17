@@ -42,7 +42,7 @@ import {
 	APPEAL_CASE_STAGE,
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
-} from 'pins-data-model';
+} from '@planning-inspectorate/data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

@@ -23,7 +23,7 @@ import {
 	APPEAL_CASE_STAGE,
 	APPEAL_VIRUS_CHECK_STATUS,
 	APPEAL_DOCUMENT_TYPE
-} from 'pins-data-model';
+} from '@planning-inspectorate/data-model';
 import { validateBlobContents } from '#utils/blob-validation.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */

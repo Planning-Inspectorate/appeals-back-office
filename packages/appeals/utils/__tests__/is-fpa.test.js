@@ -1,5 +1,5 @@
 import isFPA from '../is-fpa';
-import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 describe('isFPA', () => {
 	it('returns false for HAS appealType', () => {

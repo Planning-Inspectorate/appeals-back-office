@@ -10,7 +10,7 @@ import {
 } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
 import { cloneDeep } from 'lodash-es';
-import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 

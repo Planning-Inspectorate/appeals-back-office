@@ -7,7 +7,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { ODW_SYSTEM_ID, EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import { mapHearingEstimateEntity } from '#mappers/integration/map-event-estimates-entity.js';
 import { EventType } from '@pins/event-client';
-/** @typedef {import('pins-data-model').Schemas.AppealEventEstimate} AppealEventEstimate */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealEventEstimate} AppealEventEstimate */
 /** @typedef {import('@pins/appeals.api').Schema.HearingEstimate} HearingEstimate */
 
 /**

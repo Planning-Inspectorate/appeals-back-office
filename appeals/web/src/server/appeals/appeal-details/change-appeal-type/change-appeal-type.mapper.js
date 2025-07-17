@@ -5,7 +5,7 @@ import { nameToString } from '#lib/person-name-formatter.js';
 import { getAppealTypesFromId } from './change-appeal-type.service.js';
 import { dateInput } from '#lib/mappers/index.js';
 import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal

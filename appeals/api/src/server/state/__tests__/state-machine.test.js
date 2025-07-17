@@ -7,7 +7,7 @@ import {
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { interpret } from 'xstate';
 import createStateMachine from '../create-state-machine';
 

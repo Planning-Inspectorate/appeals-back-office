@@ -1,6 +1,6 @@
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { getFolderIdFromDocumentType } from '../integrations.utils.js';
-import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 
 describe('document type mapping', () => {
 	describe('map folder ID for importing docs', () => {

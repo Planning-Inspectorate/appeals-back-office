@@ -4,7 +4,7 @@ import {
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
-} from 'pins-data-model';
+} from '@planning-inspectorate/data-model';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import {
 	DOCUMENT_STATUS_RECEIVED,
