@@ -1,6 +1,7 @@
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapHearingDate = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
@@ -27,7 +28,10 @@ export const mapHearingDate = ({ appealDetails, currentRoute, userHasUpdateCaseP
 		value,
 		link: hearing ? `${currentRoute}/hearing/change/date` : `${currentRoute}/hearing/setup`,
 		actionText: hearing ? 'Change' : 'Set up',
-		editable: userHasUpdateCasePermission && Boolean(appealDetails.startedAt),
+		editable:
+			!isChildAppeal(appealDetails) &&
+			userHasUpdateCasePermission &&
+			Boolean(appealDetails.startedAt),
 		classes: 'appeal-hearing-date'
 	});
 };

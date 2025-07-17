@@ -10,6 +10,7 @@ import { mapStatusText, mapStatusFilterLabel } from '#lib/appeal-status.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /** @typedef {import('@pins/appeals').AppealSummary} AppealSummary */
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
@@ -24,11 +25,8 @@ const ALLOWED_CHILD_APPEAL_ACTION_STATUSES = [APPEAL_CASE_STATUS.LPA_QUESTIONNAI
  * @return {boolean}
  */
 function canDisplayAction(appeal) {
-	if (!config.featureFlags.featureFlagLinkedAppeals) {
-		return true;
-	}
 	return (
-		!appeal.isChildAppeal || ALLOWED_CHILD_APPEAL_ACTION_STATUSES.includes(appeal.appealStatus)
+		!isChildAppeal(appeal) || ALLOWED_CHILD_APPEAL_ACTION_STATUSES.includes(appeal.appealStatus)
 	);
 }
 
@@ -438,7 +436,7 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 		'summary'
 	);
 
-	const { appealId, lpaQuestionnaireId, isChildAppeal = false } = appeal;
+	const { appealId, lpaQuestionnaireId } = appeal;
 
 	if (appealId === undefined) {
 		return '';
@@ -449,7 +447,7 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 			return mapRequiredActionToPersonalListActionHtml(
 				action,
 				isCaseOfficer,
-				isChildAppeal && config.featureFlags.featureFlagLinkedAppeals,
+				isChildAppeal(appeal),
 				appealId,
 				lpaQuestionnaireId,
 				request

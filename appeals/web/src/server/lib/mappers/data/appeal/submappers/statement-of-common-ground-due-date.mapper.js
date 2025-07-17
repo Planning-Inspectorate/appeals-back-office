@@ -1,6 +1,7 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapStatementOfCommonGroundDueDate = ({
@@ -24,7 +25,10 @@ export const mapStatementOfCommonGroundDueDate = ({
 			appealDetails.appealTimetable?.statementOfCommonGroundDueDate
 		),
 		link: `${currentRoute}/timetable/edit`,
-		editable: userHasUpdateCasePermission && Boolean(appealDetails.startedAt),
+		editable:
+			!isChildAppeal(appealDetails) &&
+			userHasUpdateCasePermission &&
+			Boolean(appealDetails.startedAt),
 		classes: 'appeal-statement-of-common-ground-due-date'
 	});
 };

@@ -3,6 +3,7 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapFinalCommentDueDate = ({
@@ -31,6 +32,7 @@ export const mapFinalCommentDueDate = ({
 			? `${currentRoute}/timetable/edit`
 			: `${currentRoute}/appeal-timetables/final-comments`,
 		editable:
+			!isChildAppeal(appealDetails) &&
 			userHasUpdateCasePermission &&
 			!isStatePassed(appealDetails, APPEAL_CASE_STATUS.FINAL_COMMENTS),
 		classes: 'appeal-final-comments-due-date'

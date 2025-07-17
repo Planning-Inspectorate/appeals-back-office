@@ -2519,6 +2519,25 @@ describe('appeal-details', () => {
 						expect(unprettifiedHTML).not.toContain(`${testCase.rowLabel}</th>`);
 					});
 
+					it(`should not render an "${testCase.rowLabel}" row, if the appeal is a child linked appeal`, async () => {
+						nock('http://test/')
+							.get(`/appeals/${appealId}`)
+							.reply(200, {
+								...appealDataFullPlanning,
+								isChildAppeal: true,
+								appealId
+							});
+
+						const response = await request.get(`${baseUrl}/${appealId}`);
+
+						expect(response.statusCode).toBe(200);
+
+						const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+						expect(unprettifiedHTML).toContain('Documentation</th>');
+						expect(unprettifiedHTML).not.toContain(`${testCase.rowLabel}</th>`);
+					});
+
 					it(`should render an "${testCase.rowLabel}" row with a status of "Not received" and nothing in the "Received" column, and no action link, if the appeal type is "planning appeal", and the appeal does not have ${testCase.name} final comments awaiting review`, async () => {
 						nock('http://test/')
 							.get(`/appeals/${appealId}`)
@@ -3782,6 +3801,52 @@ describe('appeal-details', () => {
 					expect(
 						timetableRows[8].querySelector('dd.govuk-summary-list__value').textContent.trim()
 					).toBe('10:00am on 1 February 2025');
+				});
+			});
+
+			describe('for a child appeal', () => {
+				beforeEach(() => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
+						.reply(200, { items: [] });
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
+						.reply(200, { items: [] });
+				});
+
+				it('should not contain any change action links', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							isChildAppeal: true,
+							validAt: '2025-01-01T00:00:00.000Z',
+							startedAt: '2025-01-01T00:00:00.000Z',
+							appealTimetable: {
+								validAt: '2025-01-01T00:00:00.000Z',
+								startedAt: '2025-01-01T00:00:00.000Z',
+								lpaQuestionnaireDueDate: '2025-01-02T00:00:00.000Z',
+								lpaStatementDueDate: '2025-01-03T00:00:00.000Z',
+								ipCommentsDueDate: '2025-01-04T00:00:00.000Z',
+								finalCommentsDueDate: '2025-01-05T00:00:00.000Z',
+								statementOfCommonGroundDueDate: '2025-01-06T00:00:00.000Z',
+								proofOfEvidenceAndWitnessesDueDate: '2025-01-07T00:00:00.000Z'
+							},
+							hearing: null
+						});
+					nock('http://test/')
+						.get(`/appeals/${appealId}/appellant-cases/${appealDataFullPlanning.appellantCaseId}`)
+						.reply(200, {});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					const element = parseHtml(response.text, { rootElement: '.appeal-case-timetable' });
+
+					expect(element.innerHTML).not.toContain('>Change<span');
+
+					expect(element.innerHTML).toMatchSnapshot();
+					expect(response.statusCode).toBe(200);
 				});
 			});
 		});

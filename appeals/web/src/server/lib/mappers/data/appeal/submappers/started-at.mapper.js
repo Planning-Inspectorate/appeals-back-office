@@ -1,6 +1,6 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import config from '#environment/config.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
@@ -9,8 +9,6 @@ export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePer
 		return { id, display: {} };
 	}
 
-	const isChildAppeal = appealDetails.isChildAppeal && config.featureFlags.featureFlagLinkedAppeals;
-
 	return textSummaryListItem({
 		id,
 		text: 'Start date',
@@ -18,7 +16,7 @@ export const mapStartedAt = ({ appealDetails, currentRoute, userHasUpdateCasePer
 		link: appealDetails.startedAt
 			? `${currentRoute}/start-case/change`
 			: `${currentRoute}/start-case/add?backUrl=${currentRoute}`,
-		editable: !isChildAppeal && Boolean(userHasUpdateCasePermission),
+		editable: !isChildAppeal(appealDetails) && Boolean(userHasUpdateCasePermission),
 		classes: 'appeal-start-date',
 		actionText:
 			appealDetails.documentationSummary.lpaQuestionnaire?.status !== 'not_received'

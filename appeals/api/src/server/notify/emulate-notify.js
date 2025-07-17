@@ -7,13 +7,14 @@ import { formatSortableDateTime } from '@pins/appeals/utils/date-formatter.js';
  * This generates an approximate view of what a completed email will look like sent via notify.
  * The location of the generated email can be found in \api\temp
  *
+ * @param {string} appealRef
  * @param {string} templateName
  * @param {string} recipientEmail
  * @param {string} subject
  * @param {string} content
  * @returns {string}
  */
-export function emulateSendEmail(templateName, recipientEmail, subject, content) {
+export function emulateSendEmail(appealRef, templateName, recipientEmail, subject, content) {
 	let blockEnd = 0;
 	const contentLines = content.split('\n').map((line, index, lines) => {
 		line = line.trim();

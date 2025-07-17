@@ -3,6 +3,7 @@ import { textSummaryListItem } from '#lib/mappers/index.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /**
  * @param {string} date
@@ -40,7 +41,8 @@ export const mapSiteVisitTimetable = ({ appealDetails, currentRoute, session, re
 			`${currentRoute}/site-visit/${hasVisit ? 'manage' : 'schedule'}-visit`
 		),
 		actionText: hasVisit ? 'Change' : 'Arrange',
-		editable: userHasPermission(permissionNames.setEvents, session),
+		editable:
+			!isChildAppeal(appealDetails) && userHasPermission(permissionNames.setEvents, session),
 		classes: 'appeal-site-visit'
 	});
 };
