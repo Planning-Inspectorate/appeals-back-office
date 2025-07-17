@@ -1,4 +1,4 @@
-import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import createStateMachine from './create-state-machine.js';
 import logger from '#utils/logger.js';
 import {

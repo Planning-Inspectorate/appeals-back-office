@@ -11,7 +11,7 @@ import {
 	APPEAL_TYPE_SHORTHAND_FPA,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import isFPA from '@pins/appeals/utils/is-fpa.js';
 import { currentStatus } from '#utils/current-status.js';
 

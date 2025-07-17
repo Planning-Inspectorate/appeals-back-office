@@ -19,7 +19,7 @@ import {
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_LPA_COSTS
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	recalculateDateIfNotBusinessDay,
 	setTimeInTimeZone

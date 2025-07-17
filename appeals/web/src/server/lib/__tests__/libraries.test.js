@@ -48,7 +48,7 @@ import {
 	mapAppealProcedureTypeToEventName,
 	mapStatusFilterLabel
 } from '#lib/appeal-status.js';
-import { APPEAL_CASE_STATUS, APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 describe('Libraries', () => {

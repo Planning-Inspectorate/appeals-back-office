@@ -2,7 +2,7 @@ import {
 	mapDocumentDownloadUrl,
 	mapVirusCheckStatus
 } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal

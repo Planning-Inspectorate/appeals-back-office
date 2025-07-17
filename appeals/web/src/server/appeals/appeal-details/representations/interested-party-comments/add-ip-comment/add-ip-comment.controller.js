@@ -25,7 +25,7 @@ import {
 	uploadPage
 } from './add-ip-comment.mapper.js';
 import { postRepresentationComment } from './add-ip-comment.service.js';
-import { APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import { dateSubmitted } from './add-ip-comment.mapper.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';

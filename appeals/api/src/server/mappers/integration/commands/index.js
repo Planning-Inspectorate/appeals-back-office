@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { mapAddressIn, mapNeighbouringAddressIn } from './address.mapper.js';
 import { mapDocumentIn } from './document.mapper.js';
@@ -16,12 +16,12 @@ import { renameDuplicateDocuments } from '#endpoints/integrations/integrations.u
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.SiteVisit} SiteVisit */
 /** @typedef {import('@pins/appeals.api').Schema.DesignatedSite} DesignatedSite */
-/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
-/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
-/** @typedef {import('pins-data-model').Schemas.AppealRepresentationSubmission} AppealRepresentationSubmission */
-/** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
-/** @typedef {import('pins-data-model').Schemas.AppealDocument} AppealDocument */
-/** @typedef {import('pins-data-model').Schemas.AppealEvent} AppealEvent */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentationSubmission} AppealRepresentationSubmission */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealHASCase} AppealHASCase */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealDocument} AppealDocument */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealEvent} AppealEvent */
 /** @typedef {import('#db-client').Prisma.ServiceUserCreateInput} ServiceUserCreateInput */
 /** @typedef {import('#db-client').Prisma.ServiceUserCreateNestedOneWithoutRepresentationsInput} ServiceUserConnectInput */
 /** @typedef {import('#db-client').Prisma.RepresentationCreateInput & {represented: ServiceUserCreateInput|ServiceUserConnectInput}} RepresentationCreateInput */

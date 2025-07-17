@@ -8,7 +8,7 @@ import {
 	getFileVersionsInfo,
 	getAllCaseFolders
 } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { APPEAL_CASE_STAGE, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STAGE, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import { generateAllPdfs } from '#app/components/download-all-generated-pdfs.component.js';
 
 /** @typedef {import('../auth/auth-session.service').SessionWithAuth} SessionWithAuth */

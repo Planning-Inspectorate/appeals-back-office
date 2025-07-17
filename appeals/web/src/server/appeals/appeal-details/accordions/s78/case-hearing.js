@@ -1,7 +1,7 @@
 import { dateIsInTheFuture, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { wrapComponents } from '#lib/mappers/index.js';
 import { startOfDay } from 'date-fns';
-import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
  * @param {{appeal: MappedInstructions}} mappedData

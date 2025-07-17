@@ -1,7 +1,7 @@
 import { mapDate } from '#utils/mapping/map-dates.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
-/** @typedef {import('pins-data-model').Schemas.AppealS78Case} AppealS78Case */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealS78Case} AppealS78Case */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
 /**

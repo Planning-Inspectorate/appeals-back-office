@@ -1,5 +1,5 @@
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapAppealWithdrawal = ({

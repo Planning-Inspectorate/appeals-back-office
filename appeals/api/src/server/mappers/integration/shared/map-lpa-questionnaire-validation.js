@@ -1,6 +1,6 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.NeighbouringSite} NeighbouringSite */
-/** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealHASCase} AppealHASCase */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
 import formatValidationOutcomeResponse from '#utils/format-validation-outcome-response.js';

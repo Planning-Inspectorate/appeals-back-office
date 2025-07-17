@@ -1,6 +1,6 @@
 import { publishInvalidDecision } from './invalid-appeal-decision.service.js';
 import { ERROR_INVALID_APPEAL_STATE } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { isCurrentStatus } from '#utils/current-status.js';
 
 /** @typedef {import('express').Request} Request */

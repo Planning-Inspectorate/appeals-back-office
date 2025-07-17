@@ -17,7 +17,7 @@ import validateIncompleteInvalidReasonParameter from '#common/validators/incompl
 import validateEnumParameter from '#common/validators/enum-parameter.js';
 import validateNumberParameter from '#common/validators/number-parameter.js';
 import validateNumberRangeParameter from '#common/validators/number-range-parameter.js';
-import { APPEAL_CASE_PROCEDURE } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { LENGTH_8000 } from '@pins/appeals/constants/support.js';
 
 const getLPAQuestionnaireValidator = composeMiddleware(

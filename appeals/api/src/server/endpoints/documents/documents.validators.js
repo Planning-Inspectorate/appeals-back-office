@@ -15,7 +15,7 @@ import {
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
 import { getDocumentRedactionStatusIds } from './documents.service.js';
-import { APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import { validateFileNameParameter } from '#common/validators/filename-parameter.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */

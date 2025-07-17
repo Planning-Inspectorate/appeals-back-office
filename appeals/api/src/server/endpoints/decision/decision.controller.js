@@ -8,7 +8,7 @@ import {
 	ERROR_INVALID_APPEAL_STATE
 } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { isCurrentStatus } from '#utils/current-status.js';
 

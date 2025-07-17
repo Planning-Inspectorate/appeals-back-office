@@ -1,4 +1,4 @@
-import { APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 
 /**
  * @param {string} folderPath

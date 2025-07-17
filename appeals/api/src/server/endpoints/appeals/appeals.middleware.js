@@ -2,7 +2,7 @@ import {
 	ERROR_MUST_BE_BOOLEAN,
 	ERROR_MUST_BE_VALID_APPEAL_STATE
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

@@ -5,7 +5,7 @@ import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_ORIGIN,
 	APPEAL_REDACTED_STATUS
-} from 'pins-data-model';
+} from '@planning-inspectorate/data-model';
 import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import { isValidAppealType, isValidVirusCheckStatus } from '#utils/mapping/map-enums.js';
@@ -15,9 +15,9 @@ import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pin
 /** @typedef {import('@pins/appeals.api').Schema.Document & {appeal:Appeal}} DocumentWithAppeal */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus */
-/** @typedef {import('pins-data-model').Schemas.AppealDocument} AppealDocument */
-/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand['documents'][number]} AppellantSubmissionDocument */
-/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand['documents'][number]} LPAQuestionnaireCommandDocument */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealDocument} AppealDocument */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppellantSubmissionCommand['documents'][number]} AppellantSubmissionDocument */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand['documents'][number]} LPAQuestionnaireCommandDocument */
 
 /**
  *

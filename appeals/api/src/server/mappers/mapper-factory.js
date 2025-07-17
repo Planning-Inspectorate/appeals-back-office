@@ -1,7 +1,11 @@
 import { apiMappers } from './api/index.js';
 import { integrationMappers } from './integration/index.js';
 import { contextEnum } from './context-enum.js';
-import { APPEAL_CASE_STAGE, APPEAL_CASE_TYPE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_TYPE,
+	APPEAL_DOCUMENT_TYPE
+} from '@planning-inspectorate/data-model';
 import mergeMaps from '#utils/merge-maps.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -9,8 +13,8 @@ import mergeMaps from '#utils/merge-maps.js';
 /** @typedef {import('@pins/appeals.api').Api.Appeal} AppealDTO */
 /** @typedef {import('@pins/appeals.api').Api.AppellantCase} AppellantCaseDto */
 /** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaire} LpaQuestionnaireDTO */
-/** @typedef {import('pins-data-model').Schemas.AppealHASCase} AppealHASCase */
-/** @typedef {import('pins-data-model').Schemas.AppealS78Case} AppealS78Case */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealHASCase} AppealHASCase */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealS78Case} AppealS78Case */
 /** @typedef {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|AppealHASCase|AppealS78Case} MapResult */
 /** @typedef {import('@pins/appeals.api').Api.Folder} Folder */
 /** @typedef {{ appeal: Appeal, appealTypes?: AppealType[]|undefined, context: keyof contextEnum|undefined }} MappingRequest */

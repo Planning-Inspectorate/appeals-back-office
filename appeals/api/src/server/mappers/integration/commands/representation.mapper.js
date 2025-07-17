@@ -1,11 +1,14 @@
-/** @typedef {import('pins-data-model').Schemas.AppealRepresentationSubmission} AppealRepresentationSubmission */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentationSubmission} AppealRepresentationSubmission */
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('#db-client').Prisma.ServiceUserCreateOrConnectWithoutAppealsInput} ServiceUserConnectInput */
 /** @typedef {Omit<import('#db-client').Prisma.RepresentationCreateInput, 'appeal'> & {represented?: ServiceUserConnectInput|undefined}} RepresentationCreateInput */
 /** @typedef {import('#db-client').Prisma.DocumentVersionCreateInput} DocumentVersionCreateInput */
 
-import { APPEAL_REPRESENTATION_STATUS, APPEAL_REPRESENTATION_TYPE } from 'pins-data-model';
+import {
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
+} from '@planning-inspectorate/data-model';
 import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { mapDocumentIn } from './document.mapper.js';
 import { mapServiceUserIn } from './service-user.mapper.js';

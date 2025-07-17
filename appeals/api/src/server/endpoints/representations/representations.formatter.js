@@ -1,4 +1,4 @@
-import { APPEAL_ORIGIN } from 'pins-data-model';
+import { APPEAL_ORIGIN } from '@planning-inspectorate/data-model';
 import formatAddress from '#utils/format-address.js';
 import { formatName } from '#utils/format-name.js';
 
@@ -6,7 +6,7 @@ import { formatName } from '#utils/format-name.js';
 /** @typedef {import('./representations.service.js').UpdatedDBRepresentation} UpdatedRepresentation */
 /** @typedef {NonNullable<Representation>['attachments'][0]} RepresentationAttachment */
 /** @typedef {import('@pins/appeals.api').Api.RepResponse} FormattedRep */
-/** @typedef {import('pins-data-model').Schemas.AppealRepresentationSubmission['documents'][number]} RepAttachment */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentationSubmission['documents'][number]} RepAttachment */
 
 /**
  * @param {Object} rep

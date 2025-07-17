@@ -1,9 +1,9 @@
-/** @typedef {import('pins-data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.LPAQuestionnaireCommand} LPAQuestionnaireCommand */
 /** @typedef {import('@pins/appeals.api').Schema.DesignatedSite} DesignatedSite */
 
 /**
  *
- * @param {import('pins-data-model').Schemas.LPAQS78SubmissionProperties} casedata
+ * @param {import('@planning-inspectorate/data-model').Schemas.LPAQS78SubmissionProperties} casedata
  * @param {DesignatedSite[]} designatedSites
  * @returns {*|undefined}
  */

@@ -15,7 +15,11 @@ import {
 	appealIngestionInputS78,
 	docIngestionInput
 } from '#tests/integrations/mocks.js';
-import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE, APPEAL_REDACTED_STATUS } from 'pins-data-model';
+import {
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE,
+	APPEAL_REDACTED_STATUS
+} from '@planning-inspectorate/data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');

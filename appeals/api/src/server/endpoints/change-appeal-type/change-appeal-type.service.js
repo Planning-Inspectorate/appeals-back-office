@@ -3,7 +3,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 import transitionState from '#state/transition-state.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import timetableRepository from '#repositories/appeal-timetable.repository.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { setTimeInTimeZone } from '@pins/appeals/utils/business-days.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { notifySend } from '#notify/notify-send.js';

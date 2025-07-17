@@ -4,7 +4,7 @@ import {
 	APPEAL_CASE_DECISION_OUTCOME,
 	APPEAL_CASE_STAGE,
 	APPEAL_DOCUMENT_TYPE
-} from 'pins-data-model';
+} from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.AppealDecision} AppealDecision */

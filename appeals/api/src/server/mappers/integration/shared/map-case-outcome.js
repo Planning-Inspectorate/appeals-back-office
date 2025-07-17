@@ -4,7 +4,7 @@ import {
 	CASE_OUTCOME_INVALID,
 	CASE_OUTCOME_SPLIT_DECISION
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_DECISION_OUTCOME } from 'pins-data-model';
+import { APPEAL_CASE_DECISION_OUTCOME } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 

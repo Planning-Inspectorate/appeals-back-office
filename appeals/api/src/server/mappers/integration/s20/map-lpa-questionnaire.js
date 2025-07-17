@@ -1,7 +1,7 @@
 import { mapLpaQuestionnaireSharedFields } from '#mappers/integration/shared/s20s78/map-lpa-questionnaire.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
-/** @typedef {import('pins-data-model').Schemas.AppealS78Case} AppealS78Case */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealS78Case} AppealS78Case */
 /** @typedef {import('#mappers/mapper-factory.js').MappingRequest} MappingRequest */
 
 /**

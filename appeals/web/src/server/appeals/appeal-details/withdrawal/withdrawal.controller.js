@@ -1,7 +1,7 @@
 import { postWithdrawalRequest } from './withdrawal.service.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
 	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm,
@@ -16,7 +16,7 @@ import {
 	manageWithdrawalRequestFolderPage,
 	withdrawalDocumentRedactionStatusPage
 } from './withdrawal.mapper.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	dayMonthYearHourMinuteToISOString,
 	dateISOStringToDayMonthYearHourMinute

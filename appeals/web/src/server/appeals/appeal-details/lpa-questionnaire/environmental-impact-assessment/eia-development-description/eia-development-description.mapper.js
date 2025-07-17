@@ -1,6 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/index.js';
-import { APPEAL_EIA_DEVELOPMENT_DESCRIPTION } from 'pins-data-model';
+import { APPEAL_EIA_DEVELOPMENT_DESCRIPTION } from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {import('../../../appeal-details.types.js').WebAppeal} Appeal

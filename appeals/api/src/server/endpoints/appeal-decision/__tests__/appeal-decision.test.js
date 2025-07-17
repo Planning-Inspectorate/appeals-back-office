@@ -12,7 +12,7 @@ import {
 	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
 	ERROR_INVALID_APPEAL_STATE
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	recalculateDateIfNotBusinessDay,
 	setTimeInTimeZone

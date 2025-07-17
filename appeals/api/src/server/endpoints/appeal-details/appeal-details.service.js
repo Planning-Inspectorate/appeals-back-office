@@ -6,7 +6,7 @@ import userRepository from '#repositories/user.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import transitionState from '#state/transition-state.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import { getCache, setCache } from '@pins/appeals/utils/cache-data.js';
 import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';

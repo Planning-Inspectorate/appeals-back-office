@@ -9,7 +9,7 @@ import { getCaseTeam } from './common/case-team.js';
 import { getSiteDetails } from './common/site-details.js';
 import { getCaseHearing } from './s78/case-hearing.js';
 import { removeAccordionComponentsActions } from './utils/index.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  *

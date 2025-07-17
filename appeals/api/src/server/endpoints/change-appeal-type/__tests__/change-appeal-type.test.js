@@ -10,7 +10,7 @@ import {
 	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_MUST_BE_STRING
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const appealTypes = [

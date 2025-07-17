@@ -5,7 +5,7 @@ import {
 	AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { SERVICE_USER_TYPE } from 'pins-data-model';
+import { SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { capitalizeFirstLetter } from '#utils/string-utils.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';

@@ -4,7 +4,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { mapStatusText, mapStatusFilterLabel } from '#lib/appeal-status.js';
-import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 

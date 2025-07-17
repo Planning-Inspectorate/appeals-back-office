@@ -1,4 +1,4 @@
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { mapDate, findStatusDate } from '#utils/mapping/map-dates.js';
 import { isCaseInvalid } from '#utils/case-invalid.js';
 

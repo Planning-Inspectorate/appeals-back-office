@@ -1,4 +1,4 @@
-import { APPEAL_APPLICATION_DECISION } from 'pins-data-model';
+import { APPEAL_APPLICATION_DECISION } from '@planning-inspectorate/data-model';
 
 /**
  *

@@ -1,9 +1,9 @@
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
-import { SERVICE_USER_TYPE } from 'pins-data-model';
+import { SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('#endpoints/integrations/integrations.broadcasters/service-users.js').GetServiceUser} ServiceUser */
 /** @typedef {import('@pins/appeals.api').Schema.Address} Address */
-/** @typedef {import('pins-data-model').Schemas.ServiceUser} AppealServiceUser */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.ServiceUser} AppealServiceUser */
 
 // Start range for serviceUserIDs in network messages
 export const serviceUserIdStartRange = 200000000;

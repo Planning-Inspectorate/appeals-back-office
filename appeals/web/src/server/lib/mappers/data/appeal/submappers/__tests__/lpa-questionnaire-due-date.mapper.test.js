@@ -5,7 +5,7 @@ import {
 	DOCUMENT_STATUS_NOT_RECEIVED
 	// @ts-ignore
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common';
 
 describe.each([APPEAL_TYPE.S78, APPEAL_TYPE.PLANNED_LISTED_BUILDING])(

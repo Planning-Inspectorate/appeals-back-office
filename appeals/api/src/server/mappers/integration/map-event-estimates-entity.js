@@ -1,6 +1,6 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.HearingEstimate & {appeal: Appeal}} HearingEstimateWithAppeal */
-/** @typedef {import('pins-data-model').Schemas.AppealEventEstimate} AppealEventEstimate */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealEventEstimate} AppealEventEstimate */
 
 /**
  *

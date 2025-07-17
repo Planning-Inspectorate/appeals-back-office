@@ -1,5 +1,5 @@
 import { textSummaryListItem } from '#lib/mappers/components/index.js';
-import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from 'pins-data-model';
+import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from '@planning-inspectorate/data-model';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 
 /**

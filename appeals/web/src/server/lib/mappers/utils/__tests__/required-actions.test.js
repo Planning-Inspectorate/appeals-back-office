@@ -1,6 +1,6 @@
 // @ts-nocheck
 /* eslint-disable jest/expect-expect */
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from 'pins-data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { appealData } from '#testing/app/fixtures/referencedata.js';
 import { getRequiredActionsForAppeal } from '../required-actions.js';
 

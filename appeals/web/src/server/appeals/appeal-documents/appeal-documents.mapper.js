@@ -17,7 +17,10 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { redactionStatusIdToName } from '#lib/redaction-statuses.js';
-import { APPEAL_REDACTED_STATUS, APPEAL_VIRUS_CHECK_STATUS } from 'pins-data-model';
+import {
+	APPEAL_REDACTED_STATUS,
+	APPEAL_VIRUS_CHECK_STATUS
+} from '@planning-inspectorate/data-model';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
 
 /**

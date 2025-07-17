@@ -1,7 +1,7 @@
-/** @typedef {import('pins-data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
+/** @typedef {import('@planning-inspectorate/data-model').Schemas.AppellantSubmissionCommand} AppellantSubmissionCommand */
 /** @typedef {import('@pins/appeals.api').Schema.AppellantCase} AppellantCase */
 
-import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { createSharedS20S78Fields } from '#mappers/integration/shared/s20s78/appellant-case-fields.js';
 
 /**

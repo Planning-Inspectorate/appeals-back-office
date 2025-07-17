@@ -2,7 +2,7 @@ import {
 	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_TYPE } from 'pins-data-model';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 /**
  * @typedef {typeof APPEAL_TYPE_SHORTHAND_HAS | typeof APPEAL_TYPE_SHORTHAND_FPA} BaseAppealType
  * @typedef {Record<string, BaseAppealType>} BaseCaseType
