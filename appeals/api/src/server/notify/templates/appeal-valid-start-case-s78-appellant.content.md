@@ -8,6 +8,17 @@ Your appeal procedure is {{procedure_type}}.
 
 # Timetable
 
+{%- if child_appeals.length === 1 %}
+
+The timetable is the same for the child appeal {{child_appeals[0]}}.
+{%- elseif child_appeals.length > 1 %}
+
+The timetable is the same for the following child appeals:
+{%- for child_appeal in child_appeals %}
+- {{ child_appeal }}
+{%- endfor %}
+{%- endif %}
+
 ## Local planning authority questionnaire
 
 Due by {{questionnaire_due_date}}.

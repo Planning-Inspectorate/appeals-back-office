@@ -9,12 +9,28 @@ import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { mapStatusText, mapStatusFilterLabel } from '#lib/appeal-status.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { APPEAL_CASE_STATUS } from 'pins-data-model';
 
 /** @typedef {import('@pins/appeals').AppealSummary} AppealSummary */
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
 /** @typedef {Partial<AppealSummary & { appealTimetable: Record<string,string> }>} PersonalListAppeal */
+
+const ALLOWED_CHILD_APPEAL_ACTION_STATUSES = [APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE];
+
+/**
+ * @param {AppealSummary} appeal
+ * @return {boolean}
+ */
+function canDisplayAction(appeal) {
+	if (!config.featureFlags.featureFlagLinkedAppeals) {
+		return true;
+	}
+	return !(
+		appeal.isChildAppeal && !ALLOWED_CHILD_APPEAL_ACTION_STATUSES.includes(appeal.appealStatus)
+	);
+}
 
 /**
  * @param {AppealList|void} appealsAssignedToCurrentUser
@@ -24,7 +40,6 @@ import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
  * @param {import('@pins/express/types/express.js').Request} request
  * @returns {PageContent}
  */
-
 export function personalListPage(
 	appealsAssignedToCurrentUser,
 	urlWithoutQuery,
@@ -168,12 +183,12 @@ export function personalListPage(
 					},
 					{
 						classes: 'action-required',
-						html: appeal.isChildAppeal
-							? ''
-							: mapActionLinksForAppeal(appeal, isCaseOfficer, request)
+						html: canDisplayAction(appeal)
+							? mapActionLinksForAppeal(appeal, isCaseOfficer, request)
+							: ''
 					},
 					{
-						text: appeal.isChildAppeal ? '' : dateISOStringToDisplayDate(appeal.dueDate) || ''
+						text: canDisplayAction(appeal) ? dateISOStringToDisplayDate(appeal.dueDate) || '' : ''
 					},
 					{
 						html: '',
