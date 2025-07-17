@@ -91,9 +91,15 @@ export function changeDatePage(appealId, appealReference, today) {
  * @param {string} appealReference
  * @param {string} backLinkUrl
  * @param {{appealProcedure: string}} [storedSessionData]
+ * @param {string|undefined} errorMessage
  * @returns {PageContent}
  */
-export function selectProcedurePage(appealReference, backLinkUrl, storedSessionData) {
+export function selectProcedurePage(
+	appealReference,
+	backLinkUrl,
+	storedSessionData,
+	errorMessage = undefined
+) {
 	const dataMappers = [
 		{
 			case: APPEAL_CASE_PROCEDURE.WRITTEN,
@@ -134,7 +140,8 @@ export function selectProcedurePage(appealReference, backLinkUrl, storedSessionD
 				idPrefix: 'appeal-procedure',
 				legendText: 'Appeal procedure',
 				legendIsPageHeading: true,
-				items: radioItems
+				items: radioItems,
+				errorMessage
 			})
 		]
 	};

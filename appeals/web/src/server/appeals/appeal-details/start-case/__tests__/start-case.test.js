@@ -400,7 +400,7 @@ describe('start-case', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Select an appeal procedure</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Select the appeal procedure</a>');
 		});
 
 		it('should redirect to the check and confirm page if a radio option was selected', async () => {
