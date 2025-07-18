@@ -29,13 +29,16 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 			}
 		});
 	}
-	if (mappedData.appeal.leadOrChild.display?.statusTag) {
-		statusTags.push({
-			type: 'status-tag',
-			parameters: {
-				...mappedData.appeal.leadOrChild.display.statusTag
-			}
-		});
+
+	if (config.featureFlags.featureFlagLinkedAppeals) {
+		if (mappedData.appeal.leadOrChild.display?.statusTag) {
+			statusTags.push({
+				type: 'status-tag',
+				parameters: {
+					...mappedData.appeal.leadOrChild.display.statusTag
+				}
+			});
+		}
 	}
 
 	const statusTagsComponentGroup = [];
