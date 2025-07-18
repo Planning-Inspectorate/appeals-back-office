@@ -7,6 +7,10 @@ parameters:
     displayName: Deploy Appeals Web
     type: boolean
     default: true
+  - name: deployAppealsPDF
+    displayName: Deploy Appeals PDF Generator
+    type: boolean
+    default: false
   - name: deployFunctionAppealsCasedataImport
     displayName: Deploy Function - Appeals Casedata Import
     type: boolean
@@ -144,6 +148,35 @@ extends:
                 displayName: Web Verify Version
                 failOnStderr: true
                 continueOnError: false
+
+
+          - name: Deploy Appeals PDF Generator
+            condition: eq(${{ parameters.deployAppealsPDF }}, true)
+            steps:
+              - checkout: self
+              - template: ../steps/azure_web_app_deploy_slot.yml
+                parameters:
+                  appName: pins-app-appeals-bo-pdf-$(ENVIRONMENT)
+                  appResourceGroup: $(resourceGroup)
+                  azurecrName: $(azurecrName)
+                  repository: back-office/back-office-appeals-pdf
+                  ${{ if eq(parameters.slotDeployment, true) }}:
+                      slot: staging
+                  ${{ else }}:
+                      slot: default
+              - script: |
+                  if [[ ${{ parameters.slotDeployment }} == "True" ]]; then
+                    echo "Verifying PDF Version on slot (using git hash $(resources.pipeline.build.sourceCommit))..."
+                    bash ./packages/scripts/verify_commit_hash.sh "PDF" "https://pins-app-appeals-bo-pdf-$(ENVIRONMENT)-staging.azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
+                  else
+                    echo "Verifying PDF Version (using git hash $(resources.pipeline.build.sourceCommit))..."
+                    bash ./packages/scripts/verify_commit_hash.sh "PDF" "https://pins-app-appeals-bo-pdf-$(ENVIRONMENT).azurewebsites.net/health" "$(resources.pipeline.build.sourceCommit)" 3
+                  fi
+                displayName: PDF Verify Version
+                failOnStderr: true
+                continueOnError: false
+
+
           - name: Deploy Function - Appeals Casedata Import
             condition: eq(${{ parameters.deployFunctionAppealsCasedataImport }}, 'true')
             steps:
