@@ -42,10 +42,9 @@ const approxStageCompletion = {
 
 /**
  * @param {DBAppeal} appeal
- * @param {AppealRelationship[]} linkedAppeals
  * @returns {AppealListResponse}}
  */
-const formatAppeal = (appeal, linkedAppeals) => ({
+const formatAppeal = (appeal) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
@@ -57,8 +56,6 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 	dueDate: null,
 	documentationSummary: formatDocumentationSummary(appeal),
 	appealTimetable: formatAppealTimetable(appeal),
-	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
-	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
 	planningApplicationReference: appeal.applicationReference,
 	isHearingSetup: !!appeal.hearing,
 	hasHearingAddress: !!appeal.hearing?.addressId

@@ -107,8 +107,6 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
@@ -161,8 +159,6 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							planningApplicationReference: fullPlanningAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
@@ -239,8 +235,6 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							planningApplicationReference: fullPlanningAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
@@ -350,8 +344,6 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
@@ -461,8 +453,6 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
@@ -572,8 +562,6 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
@@ -665,8 +653,6 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
@@ -760,8 +746,6 @@ describe('appeals list routes', () => {
 									isRedacted: false
 								}
 							},
-							isParentAppeal: false,
-							isChildAppeal: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
@@ -853,8 +837,6 @@ describe('appeals list routes', () => {
 								}
 							},
 							dueDate: null,
-							isParentAppeal: false,
-							isChildAppeal: false,
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
@@ -1088,8 +1070,6 @@ test('gets appeals when given a appealTypeId param', async () => {
 						isRedacted: false
 					}
 				},
-				isParentAppeal: false,
-				isChildAppeal: false,
 				planningApplicationReference: householdAppeal.applicationReference,
 				procedureType: 'Written',
 				hasHearingAddress: true,

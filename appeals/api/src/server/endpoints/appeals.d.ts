@@ -553,8 +553,8 @@ interface AppealListResponse {
 	lpaQuestionnaireId?: number | null;
 	appealTimetable?: AppealTimetable;
 	documentationSummary: DocumentationSummary;
-	isParentAppeal: boolean | null;
-	isChildAppeal: boolean | null;
+	isParentAppeal?: boolean | null;
+	isChildAppeal?: boolean | null;
 	planningApplicationReference: string | null;
 	isHearingSetup: boolean | null;
 	hasHearingAddress: boolean | null;

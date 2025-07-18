@@ -118,22 +118,14 @@ const mapCaseOfficers = async (appeals) => {
 	}, /** @type {{id: number, azureAdUserId: string | null}[]} */ ([]));
 };
 
+/** @typedef {import('#endpoints/appeals').AppealListResponse} AppealListResponse */
+
 /**
  *
  * @param {DBAppeals} appeals
- * @returns {Promise<Awaited<unknown>[]>}
+ * @returns {AppealListResponse[]}
  */
-const mapAppeals = (appeals) =>
-	Promise.all(
-		appeals.map(async (appeal) => {
-			const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
-
-			return formatAppeal(
-				appeal,
-				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked')
-			);
-		})
-	);
+const mapAppeals = (appeals) => appeals.map(formatAppeal);
 
 /**
  *
@@ -174,7 +166,7 @@ const retrieveAppealListData = async (
 
 	const start = (pageNumber - 1) * pageSize;
 	const end = start + pageSize;
-	const mappedAppeals = await mapAppeals(appeals.slice(start, end));
+	const mappedAppeals = mapAppeals(appeals.slice(start, end));
 	const mappedStatuses = mapAppealStatuses(appeals);
 	const mappedLPAs = mapAppealLPAs(appeals);
 	const mappedInspectors = await mapInspectors(appeals);
