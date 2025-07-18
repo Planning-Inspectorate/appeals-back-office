@@ -43,9 +43,14 @@ export const changeApplicationDecisionDatePage = (
 		year = String(formattedApplicationDecisionDate.year);
 	}
 
+	const title =
+		appellantCaseData.applicationDecision == 'not_received'
+			? 'What date was your decision due from the local planning authority?'
+			: 'What’s the date on the decision letter from the local planning authority?​';
+
 	/** @type {PageContent} */
 	const pageContent = {
-		title: 'What’s the date on the decision letter from the local planning authority?​',
+		title,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/appellant-case`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
@@ -58,7 +63,7 @@ export const changeApplicationDecisionDatePage = (
 					month: month,
 					year: year
 				},
-				legendText: 'What’s the date on the decision letter from the local planning authority?​',
+				legendText: title,
 				hint: 'For example, 27 3 2007',
 				errors: errors
 			})
