@@ -14,14 +14,6 @@ const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
 describe('add supporting documents', () => {
-	const userDetailsList = [
-		{
-			fillable: true,
-			firstName: 'Alice',
-			lastName: 'Walker',
-			email: 'alice.walker@example.com'
-		}
-	];
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
