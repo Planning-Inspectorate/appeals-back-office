@@ -52,3 +52,10 @@ module "app_pdf" {
     azurerm.tooling = azurerm.tooling
   }
 }
+
+## RBAC for secrets (staging slot)
+resource "azurerm_role_assignment" "app_pdf_staging_secrets_user" {
+  scope                = azurerm_key_vault.main.id
+  role_definition_name = "Key Vault Secrets User"
+  principal_id         = module.app_pdf.staging_principal_id
+}
