@@ -88,19 +88,20 @@ export function initNotifyEmulator() {
 }
 
 /**
- * @param {string} content
+ * @param {string} content,
+ * @param {boolean} [noBottomBorder]
  * @returns {string}
  */
-export const generateNotifyPreview = (content) => {
+export const generateNotifyPreview = (content, noBottomBorder) => {
 	let blockEnd = 0;
 	const contentLines = content.split('\n').map((line, index, lines) => {
 		line = line.trim();
 		// Handle headers
 		if (line.startsWith('#')) {
 			// @ts-ignore
-			let headerLevel = line.match(/^#+/)[0].length;
-			headerLevel = +2;
-			return `<h${headerLevel}>${line.slice(headerLevel)}</h${headerLevel}>`;
+			const headerLeveloriginal = line.match(/^#+/)[0].length;
+			const newHeaderLevel = headerLeveloriginal + 2;
+			return `<h${newHeaderLevel}>${line.slice(headerLeveloriginal)}</h${newHeaderLevel}>`;
 		}
 		// Handle bullet lists
 		if (line.startsWith('-')) {
@@ -121,17 +122,22 @@ export const generateNotifyPreview = (content) => {
 		if (blockEnd && blockEnd <= index) {
 			blockEnd = 0;
 
-			return line ? `</div>\n${line}<br>` : '</div>';
+			return line ? `</div>\n${line}` : '</div>';
 		}
-		return line && line !== '' ? (blockEnd == 0 ? `${line}<br><br>` : `${line}<br>`) : '';
+		return line && line !== ''
+			? blockEnd == 0 && lines.length !== 1
+				? `<p>${line}</p>`
+				: `${line}<br>`
+			: '';
 	});
 	// close blockquotes if require
 	if (blockEnd) {
 		contentLines.push('</div>');
 	}
 
-	const emailHtml =
-		'<div class="pins-notify-preview-border"> ' + contentLines.join('\n') + ' <div>';
+	const emailHtml = noBottomBorder
+		? '<div class="pins-notify-preview-border-no-bottom"> ' + contentLines.join('\n') + ' </div>'
+		: '<div class="pins-notify-preview-border"> ' + contentLines.join('\n') + ' </div>';
 	const processedHtml = processLinks(emailHtml);
 
 	return processedHtml;

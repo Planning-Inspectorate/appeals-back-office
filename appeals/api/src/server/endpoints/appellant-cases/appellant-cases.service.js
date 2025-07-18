@@ -106,6 +106,7 @@ export const updateAppellantCaseValidationOutcome = async (
 					: 'https://forms.office.com/r/9U4Sq9rEff'
 		};
 		await notifySend({
+			azureAdUserId,
 			templateName: 'appeal-confirmed',
 			notifyClient,
 			recipientEmail,
@@ -138,6 +139,7 @@ export const updateAppellantCaseValidationOutcome = async (
 				};
 
 				await notifySend({
+					azureAdUserId,
 					templateName: 'appeal-incomplete',
 					notifyClient,
 					recipientEmail,
@@ -162,6 +164,7 @@ export const updateAppellantCaseValidationOutcome = async (
 				reasons: invalidReasonsList
 			};
 			await notifySend({
+				azureAdUserId,
 				templateName: 'appeal-invalid',
 				notifyClient,
 				recipientEmail,

@@ -40,6 +40,7 @@ apps_config = {
     featureFlagCAS                    = false
     featureFlagIssueDecision          = false
     featureFlagReIssueDecision        = false
+    featureFlagNotifyCaseHistory      = false
     featureFlagSimplifyTeamAssignment = false
     featureFlagChangeAppealType       = false
     featureFlagPdfDownload            = false

@@ -850,15 +850,18 @@ model ListedBuilding {
 /// AppealNotification model
 /// Stores a log of sent notifications
 model AppealNotification {
-  id            Int      @id @default(autoincrement())
-  case          Appeal   @relation(fields: [caseReference], references: [reference])
-  caseReference String
-  template      String
-  subject       String
-  recipient     String
-  message       String   @db.NVarChar(Max)
-  success       Boolean  @default(true)
-  dateCreated   DateTime @default(now())
+  id              Int      @id @default(autoincrement())
+  case            Appeal   @relation(fields: [caseReference], references: [reference])
+  caseReference   String
+  template        String
+  subject         String
+  renderedSubject String?
+  recipient       String
+  message         String   @db.NVarChar(Max)
+  renderedMessage String?  @db.NVarChar(Max)
+  sender          String?
+  success         Boolean  @default(true)
+  dateCreated     DateTime @default(now())
 
   @@index([caseReference])
   @@index([template])
