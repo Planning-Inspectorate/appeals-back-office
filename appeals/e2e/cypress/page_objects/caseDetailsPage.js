@@ -478,6 +478,22 @@ export class CaseDetailsPage extends Page {
 		this.elements.setUpTimetableHearingDate().click();
 	}
 
+	clickIndividualLinkWhenMultiple(area, linkText) {
+		cy.contains(area)
+			.parents('.govuk-summary-card__title-wrapper')
+			.within(() => {
+				cy.contains('a', linkText).click();
+			});
+	}
+
+	clickIndividualLinkWhenMultipleTable(area, linkText) {
+		cy.contains('.govuk-table__header', area)
+			.closest('tr')
+			.within(() => {
+				cy.contains('a', linkText).click();
+			});
+	}
+
 	filterPersonalList(text) {
 		this.basePageElements.summaryDetails().click();
 		this.elements.personalListFilterDropdown().select(text);
@@ -755,32 +771,5 @@ export class CaseDetailsPage extends Page {
 	};
 	verifyAppealType(expectedAppealType) {
 		this.elements.appealType().should('contain', expectedAppealType);
-	}
-
-	clickIndividualLinkWhenMultiple(area, linkText) {
-		cy.contains(area)
-			.parents('.govuk-summary-card__title-wrapper')
-			.within(() => {
-				cy.contains('a', linkText).click();
-			});
-	}
-
-	clickIndividualLinkWhenMultipleTable(area, linkText) {
-		cy.contains('.govuk-table__header', area) // Finds the cell with "appellant"
-			.closest('tr') // Goes up to the <tr> that contains it
-			.within(() => {
-				// Limits scope to that row
-				cy.contains('a', linkText).click(); // Clicks the correct "view" link
-			});
-	}
-
-	fillUserDetails(userDetailsList) {
-		userDetailsList.forEach((user) => {
-			if (user.fillable) {
-				cy.get('input[name="firstName"]').clear().type(user.firstName);
-				cy.get('input[name="lastName"]').clear().type(user.lastName);
-				cy.get('input[name="emailAddress"]').clear().type(user.email);
-			}
-		});
 	}
 }
