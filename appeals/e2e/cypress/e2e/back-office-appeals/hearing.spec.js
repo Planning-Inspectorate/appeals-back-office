@@ -340,6 +340,7 @@ describe('Setup hearing and add hearing estimates', () => {
 
 				expect(hearing.hearingId).to.be.a('number');
 				expect(hearing.addressId).to.be.a('number');
+
 				expect(hearingSectionPage.getTimeUpToMinutes(hearing.hearingStartTime)).to.equal(
 					hearingSectionPage.getTimeUpToMinutes(date.toISOString())
 				);
