@@ -102,6 +102,21 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Status</th>');
 		});
 
+		it('should render correct appeal type dropdown in filters', async () => {
+			nock('http://test/').get('/appeals?pageNumber=1&pageSize=30').reply(200, appealsNationalList);
+
+			const response = await request.get(baseUrl);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Filters</span>');
+			expect(unprettifiedElement.innerHTML).toContain('Householder</option>');
+			expect(unprettifiedElement.innerHTML).toContain('Planning appeal</option>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Planning listed building and conservation area appeal</option>'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('CAS planning</option>');
+		});
+
 		it('should render national list - search term', async () => {
 			nock('http://test/')
 				.get('/appeals?pageNumber=1&pageSize=30&searchTerm=BS7%208LQ')
