@@ -27,8 +27,8 @@ function canDisplayAction(appeal) {
 	if (!config.featureFlags.featureFlagLinkedAppeals) {
 		return true;
 	}
-	return !(
-		appeal.isChildAppeal && !ALLOWED_CHILD_APPEAL_ACTION_STATUSES.includes(appeal.appealStatus)
+	return (
+		!appeal.isChildAppeal || ALLOWED_CHILD_APPEAL_ACTION_STATUSES.includes(appeal.appealStatus)
 	);
 }
 
@@ -170,9 +170,8 @@ export function personalListPage(
 					{
 						html: '',
 						pageComponents:
-							linkedAppealStatusText === ''
-								? []
-								: [
+							config.featureFlags.featureFlagLinkedAppeals && linkedAppealStatusText !== ''
+								? [
 										{
 											type: 'status-tag',
 											parameters: {
@@ -180,6 +179,7 @@ export function personalListPage(
 											}
 										}
 								  ]
+								: []
 					},
 					{
 						classes: 'action-required',
@@ -449,7 +449,7 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 			return mapRequiredActionToPersonalListActionHtml(
 				action,
 				isCaseOfficer,
-				isChildAppeal,
+				isChildAppeal && config.featureFlags.featureFlagLinkedAppeals,
 				appealId,
 				lpaQuestionnaireId,
 				request
