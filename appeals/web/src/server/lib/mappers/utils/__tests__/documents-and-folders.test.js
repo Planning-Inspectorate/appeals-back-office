@@ -83,7 +83,7 @@ describe('documents and folders', () => {
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.PLANNING_OFFICER_REPORT,
-				label: `Planning officer's report`
+				label: `Planning officer’s report`
 			},
 			{
 				documentType: APPEAL_DOCUMENT_TYPE.DEVELOPMENT_PLAN_POLICIES,
