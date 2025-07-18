@@ -478,6 +478,22 @@ export class CaseDetailsPage extends Page {
 		this.elements.setUpTimetableHearingDate().click();
 	}
 
+	clickIndividualLinkWhenMultiples(area, linkText) {
+		cy.contains(area)
+			.parents('.govuk-summary-card__title-wrapper')
+			.within(() => {
+				cy.contains('a', linkText).click();
+			});
+	}
+
+	clickIndividualLinkWhenMultipleTable(area, linkText) {
+		cy.contains('.govuk-table__header', area)
+			.closest('tr')
+			.within(() => {
+				cy.contains('a', linkText).click();
+			});
+	}
+
 	filterPersonalList(text) {
 		this.basePageElements.summaryDetails().click();
 		this.elements.personalListFilterDropdown().select(text);
