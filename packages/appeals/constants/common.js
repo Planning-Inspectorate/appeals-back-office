@@ -28,7 +28,8 @@ export const APPEAL_TYPE = Object.freeze({
 	CALL_IN_APPLICATION: 'Call-in application',
 	LAWFUL_DEVELOPMENT_CERTIFICATE: 'Lawful development certificate appeal',
 	PLANNED_LISTED_BUILDING: 'Planning listed building and conservation area appeal',
-	COMMERCIAL: 'Commercial (CAS) appeal'
+	CAS_PLANNING: 'CAS planning',
+	CAS_ADVERTISEMENT: 'CAS advert'
 });
 
 /** @type {Object<string, string>} */

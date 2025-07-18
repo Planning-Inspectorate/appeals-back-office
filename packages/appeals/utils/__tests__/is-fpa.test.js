@@ -7,7 +7,7 @@ describe('isFPA', () => {
 	});
 
 	it('returns false for CAS planning appealType', () => {
-		expect(isFPA(APPEAL_CASE_TYPE.Z)).toBe(false);
+		expect(isFPA(APPEAL_CASE_TYPE.ZP)).toBe(false);
 	});
 
 	it('returns false for empty string appealType', () => {

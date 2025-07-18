@@ -393,7 +393,7 @@ export const appellantCaseList = {
 		developmentType: randomEnumValue(APPEAL_DEVELOPMENT_TYPE),
 		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LISTED_BUILDING
 	},
-	[APPEAL_CASE_TYPE.Z]: {
+	[APPEAL_CASE_TYPE.ZP]: {
 		siteAreaSquareMetres: 30.9,
 		floorSpaceSquareMetres: 9.7,
 		ownsAllLand: true,

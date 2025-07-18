@@ -26,7 +26,7 @@ import { submaps as s20Submaps } from './s20.js';
 /** @type {Record<string, Record<string, SubMapper>>} */
 const submaps = {
 	[APPEAL_TYPE.HOUSEHOLDER]: hasSubmaps,
-	[APPEAL_TYPE.COMMERCIAL]: hasSubmaps,
+	[APPEAL_TYPE.CAS_PLANNING]: hasSubmaps,
 	[APPEAL_TYPE.S78]: s78Submaps,
 	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s20Submaps
 };
