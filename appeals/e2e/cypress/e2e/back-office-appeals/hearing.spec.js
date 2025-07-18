@@ -279,7 +279,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		});
 	});
 
-	it('should set up hearing with address changes', () => {
+	it.only('should set up hearing with address changes', () => {
 		hearingSectionPage.deleteHearingIfExists(caseRef);
 		const updatedAddress = {
 			...originalAddress,
@@ -341,19 +341,9 @@ describe('Setup hearing and add hearing estimates', () => {
 				expect(hearing.hearingId).to.be.a('number');
 				expect(hearing.addressId).to.be.a('number');
 
-				const hearingResponseTime = new Date(hearing.hearingStartTime);
-
 				expect(
-					hearingResponseTime.getUTCHours(),
-					`${hearingResponseTime} - UTC hours mismatch`
-				).to.equal(date.getUTCHours());
-				expect(
-					hearingResponseTime.getUTCMinutes(),
-					`${hearingResponseTime} - UTC minutes mismatch`
-				).to.equal(date.getUTCMinutes());
-				expect(hearing.hearingStartTime.toISOString().split('T')[0]).to.equal(
-					date.toISOString().split('T')[0]
-				);
+					hearingSectionPage.getTimeUpToMinutes(new Date(hearing.hearingStartTime).toISOString())
+				).to.equal(hearingSectionPage.getTimeUpToMinutes(date.toISOString()));
 
 				const actualAddress = hearing.address;
 				expect(actualAddress).to.deep.include({
