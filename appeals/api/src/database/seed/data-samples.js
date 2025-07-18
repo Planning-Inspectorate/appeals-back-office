@@ -279,6 +279,20 @@ export function createLPAQuestionnaireForAppealType(appealTypeShorthand) {
 				reasonForNeighbourVisits: randomArrayValue(['test reason for neighbour visits text', null]),
 				designatedSiteNameCustom: 'A custom value'
 			};
+		case APPEAL_CASE_TYPE.ZP:
+			return {
+				siteSafetyDetails: 'There may be no mobile reception at the site',
+				siteAccessDetails:
+					'There is a tall hedge around the site which obstructs the view of the site',
+				inConservationArea: true,
+				isCorrectAppealType: true,
+				lpaStatement: null,
+				newConditionDetails: null,
+				lpaCostsAppliedFor: false,
+				lpaqCreatedDate: new Date(2023, 4, 9),
+				lpaQuestionnaireSubmittedDate: new Date(2023, 4, 9),
+				isGreenBelt: randomBool()
+			};
 		default:
 			return;
 	}
@@ -393,7 +407,7 @@ export const appellantCaseList = {
 		developmentType: randomEnumValue(APPEAL_DEVELOPMENT_TYPE),
 		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.LISTED_BUILDING
 	},
-	[APPEAL_CASE_TYPE.Z]: {
+	[APPEAL_CASE_TYPE.ZP]: {
 		siteAreaSquareMetres: 30.9,
 		floorSpaceSquareMetres: 9.7,
 		ownsAllLand: true,

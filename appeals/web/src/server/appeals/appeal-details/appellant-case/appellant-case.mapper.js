@@ -732,7 +732,7 @@ function generateCaseTypeSpecificComponents(
 			} else {
 				throw new Error('Feature flag inactive for S20');
 			}
-		case APPEAL_TYPE.COMMERCIAL:
+		case APPEAL_TYPE.CAS_PLANNING:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
 				return generateCASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
 			} else {

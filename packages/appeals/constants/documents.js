@@ -103,7 +103,7 @@ export const DOCUMENT_FOLDER_DISPLAY_LABELS = Object.freeze({
 	[APPEAL_DOCUMENT_TYPE.CONSERVATION_MAP]: 'Conservation area map and guidance',
 	[APPEAL_DOCUMENT_TYPE.OTHER_PARTY_REPRESENTATIONS]:
 		'Representations from other parties documents',
-	[APPEAL_DOCUMENT_TYPE.PLANNING_OFFICER_REPORT]: `Planning officer's report`,
+	[APPEAL_DOCUMENT_TYPE.PLANNING_OFFICER_REPORT]: 'Planning officer’s report',
 	[APPEAL_DOCUMENT_TYPE.DEVELOPMENT_PLAN_POLICIES]:
 		'Relevant policies from statutory development plan',
 	[APPEAL_DOCUMENT_TYPE.TREE_PRESERVATION_PLAN]: 'Tree Preservation Order',

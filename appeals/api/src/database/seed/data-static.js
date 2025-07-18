@@ -44,7 +44,8 @@ export const appealTypes = [
 	{ key: APPEAL_CASE_TYPE.W, type: APPEAL_TYPE.S78, enabled: false },
 	{ key: APPEAL_CASE_TYPE.X, type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE, enabled: false },
 	{ key: APPEAL_CASE_TYPE.Y, type: APPEAL_TYPE.PLANNED_LISTED_BUILDING, enabled: false },
-	{ key: APPEAL_CASE_TYPE.Z, type: APPEAL_TYPE.COMMERCIAL, enabled: false }
+	{ key: APPEAL_CASE_TYPE.ZP, type: APPEAL_TYPE.CAS_PLANNING, enabled: false },
+	{ key: APPEAL_CASE_TYPE.ZA, type: APPEAL_TYPE.CAS_ADVERTISEMENT, enabled: false }
 ];
 
 /**

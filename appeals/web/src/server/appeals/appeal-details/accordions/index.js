@@ -15,7 +15,7 @@ export function generateAccordionItems(appealDetails, mappedData, session) {
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.HOUSEHOLDER:
 			return generateHasAccordion(appealDetails, mappedData, session);
-		case APPEAL_TYPE.COMMERCIAL:
+		case APPEAL_TYPE.CAS_PLANNING:
 			if (!isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
 				throw new Error('Feature flag inactive for CAS');
 			}

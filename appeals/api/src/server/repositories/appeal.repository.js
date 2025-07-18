@@ -130,7 +130,8 @@ const appealDetailsInclude = {
 		}
 	},
 	representations: true,
-	hearingEstimate: true
+	hearingEstimate: true,
+	inquiryEstimate: true
 };
 
 /**

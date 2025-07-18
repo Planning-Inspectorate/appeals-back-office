@@ -32,12 +32,16 @@ const validateDayOrHalfDayParameter = (paramName) =>
 		.withMessage(stringTokenReplacement(ERROR_NUMBER_INCREMENTS, ['0.5']));
 
 const createInquiryEstimateValidator = composeMiddleware(
-	validateDayOrHalfDayParameter('estimatedTime'),
+	validateDayOrHalfDayParameter('preparationTime'),
+	validateDayOrHalfDayParameter('sittingTime'),
+	validateDayOrHalfDayParameter('reportingTime'),
 	validationErrorHandler
 );
 
 const updateInquiryEstimateValidator = composeMiddleware(
-	validateDayOrHalfDayParameter('estimatedTime'),
+	validateDayOrHalfDayParameter('preparationTime'),
+	validateDayOrHalfDayParameter('sittingTime'),
+	validateDayOrHalfDayParameter('reportingTime'),
 	validationErrorHandler
 );
 

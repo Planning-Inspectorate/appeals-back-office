@@ -835,6 +835,7 @@ model Inquiry {
   addressId        Int?
   address          Address?  @relation(fields: [addressId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   appeal           Appeal    @relation(fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  estimatedDays    Int?
 }
 
 /// ListedBuilding model
@@ -878,8 +879,10 @@ model HearingEstimate {
 /// InquiryEstimate model
 /// Contains information on the inquiry estimates for an appeal
 model InquiryEstimate {
-  id            Int      @id @default(autoincrement())
-  appealId      Int      @unique
-  estimatedTime Decimal?
-  appeal        Appeal   @relation(fields: [appealId], references: [id])
+  id              Int      @id @default(autoincrement())
+  appealId        Int      @unique
+  preparationTime Decimal?
+  sittingTime     Decimal?
+  reportingTime   Decimal?
+  appeal          Appeal   @relation(fields: [appealId], references: [id])
 }
