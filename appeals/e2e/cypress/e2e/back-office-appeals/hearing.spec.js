@@ -341,8 +341,18 @@ describe('Setup hearing and add hearing estimates', () => {
 				expect(hearing.hearingId).to.be.a('number');
 				expect(hearing.addressId).to.be.a('number');
 
-				expect(hearingSectionPage.getTimeUpToMinutes(hearing.hearingStartTime)).to.equal(
-					hearingSectionPage.getTimeUpToMinutes(date.toISOString())
+				const hearingResponseTime = new Date(hearing.hearingStartTime);
+
+				expect(
+					hearingResponseTime.getUTCHours(),
+					`${hearingResponseTime} - UTC hours mismatch`
+				).to.equal(date.getUTCHours());
+				expect(
+					hearingResponseTime.getUTCMinutes(),
+					`${hearingResponseTime} - UTC minutes mismatch`
+				).to.equal(date.getUTCMinutes());
+				expect(hearing.hearingStartTime.toISOString().split('T')[0]).to.equal(
+					date.toISOString().split('T')[0]
 				);
 
 				const actualAddress = hearing.address;
@@ -356,6 +366,59 @@ describe('Setup hearing and add hearing estimates', () => {
 			});
 		});
 	});
+
+	// it.only('should set up hearing with address changes', () => {
+	// 	hearingSectionPage.deleteHearingIfExists(caseRef);
+	// 	const updatedAddress = {
+	// 		...originalAddress,
+	// 		line1: 'e2e Hearing Test Address - New Address',
+	// 		postcode: 'SW1A 2AA'
+	// 	};
+	//
+	// 	// Initialise Hearing
+	// 	cy.navigateToAppealDetailsPage(caseRef);
+	// 	caseDetailsPage.clickHearingButton();
+	//
+	// 	cy.getBusinessActualDate(currentDate, 2).then((date) => {
+	// 		date.setHours(currentDate.getHours(), currentDate.getMinutes());
+	// 		const expectedDateTime = formatDateAndTime(date);
+	// 		const expectedUTCTime = new Date(date).toISOString();
+	//
+	// 		// [All hearing setup steps remain unchanged...]
+	//
+	// 		// validate hearing object - with error handling
+	// 		cy.loadAppealDetails(caseRef).then((appealDetails) => {
+	// 			// 1. Verify hearing exists first
+	// 			// expect(appealDetails).to.have.property('hearing').that.is.not.null;
+	//
+	// 			const hearing = appealDetails.hearing;
+	//
+	// 			// 2. Verify required properties exist
+	// 			expect(hearing).to.include.all.keys('hearingId', 'addressId', 'hearingStartTime', 'address');
+	//
+	// 			// 3. Time validation with timezone awareness
+	// 			cy.log(`Validating hearing time (UTC): ${expectedUTCTime}`);
+	// 			const apiTime = new Date(hearing.hearingStartTime);
+	//
+	// 			// Option 1: Compare UTC components (recommended)
+	// 			expect(apiTime.getUTCHours(), 'UTC hours mismatch').to.equal(date.getUTCHours());
+	// 			expect(apiTime.getUTCMinutes(), 'UTC minutes mismatch').to.equal(date.getUTCMinutes());
+	//
+	// 			// Option 2: Compare ISO strings (strict)
+	// 			// expect(apiTime.toISOString()).to.equal(expectedUTCTime);
+	//
+	// 			// 4. Address validation
+	// 			const actualAddress = hearing.address;
+	// 			expect(actualAddress).to.include({
+	// 				addressLine1: updatedAddress.line1,
+	// 				postcode: updatedAddress.postcode
+	// 			});
+	//
+	// 			// 5. Log full hearing object for debugging
+	// 			cy.log('Hearing object:', hearing);
+	// 		});
+	// 	});
+	// });
 
 	it('should update existing hearing address and date from overview page', () => {
 		// First ensure a hearing exists with a known address
