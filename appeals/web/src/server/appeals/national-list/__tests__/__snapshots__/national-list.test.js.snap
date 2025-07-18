@@ -470,6 +470,7 @@ exports[`national-list GET / should render national list - appeal type filter ap
                                 <option value="1">Doe, Jane</option>
                                 <option value="2">Bloggs, Joe</option>
                                 <option value="3">Jenkins, Leeroy</option>
+                                <option value="4">McTest, George</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -481,6 +482,7 @@ exports[`national-list GET / should render national list - appeal type filter ap
                                 <option value="1">Doe, Jane</option>
                                 <option value="2">Bloggs, Joe</option>
                                 <option value="3">Jenkins, Leeroy</option>
+                                <option value="4">McTest, George</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -788,6 +790,7 @@ exports[`national-list GET / should render national list - no search term - filt
                                 <option value="1">Doe, Jane</option>
                                 <option value="2">Bloggs, Joe</option>
                                 <option value="3">Jenkins, Leeroy</option>
+                                <option value="4">McTest, George</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -799,6 +802,7 @@ exports[`national-list GET / should render national list - no search term - filt
                                 <option value="1">Doe, Jane</option>
                                 <option value="2">Bloggs, Joe</option>
                                 <option value="3">Jenkins, Leeroy</option>
+                                <option value="4">McTest, George</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -946,6 +950,7 @@ exports[`national-list GET / should render national list - search term - filter 
                                 <option value="1">Doe, Jane</option>
                                 <option value="2">Bloggs, Joe</option>
                                 <option value="3">Jenkins, Leeroy</option>
+                                <option value="4">McTest, George</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -957,6 +962,7 @@ exports[`national-list GET / should render national list - search term - filter 
                                 <option value="1">Doe, Jane</option>
                                 <option value="2">Bloggs, Joe</option>
                                 <option value="3">Jenkins, Leeroy</option>
+                                <option value="4">McTest, George</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1095,6 +1101,7 @@ exports[`national-list GET / should render national list - search term - no resu
                                 <option value="1">Doe, Jane</option>
                                 <option value="2">Bloggs, Joe</option>
                                 <option value="3">Jenkins, Leeroy</option>
+                                <option value="4">McTest, George</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1106,6 +1113,7 @@ exports[`national-list GET / should render national list - search term - no resu
                                 <option value="1">Doe, Jane</option>
                                 <option value="2">Bloggs, Joe</option>
                                 <option value="3">Jenkins, Leeroy</option>
+                                <option value="4">McTest, George</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">

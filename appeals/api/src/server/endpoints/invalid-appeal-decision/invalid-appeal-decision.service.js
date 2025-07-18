@@ -38,7 +38,7 @@ const hasCostsDocument = (appeal, appealDocumentType) => {
  *
  * @param {Appeal} appeal
  * @param {string} invalidDecisionReason
- * @param {string} azureUserId
+ * @param {string} azureAdUserId
  * @param { NotifyClient } notifyClient
  * @returns
  */
@@ -46,7 +46,7 @@ const hasCostsDocument = (appeal, appealDocumentType) => {
 export const publishInvalidDecision = async (
 	appeal,
 	invalidDecisionReason,
-	azureUserId,
+	azureAdUserId,
 	notifyClient
 ) => {
 	const outcome = CASE_OUTCOME_INVALID;
@@ -84,6 +84,7 @@ export const publishInvalidDecision = async (
 
 		await Promise.all([
 			await notifySend({
+				azureAdUserId,
 				templateName: 'decision-is-invalid-appellant',
 				notifyClient,
 				recipientEmail,
@@ -99,13 +100,13 @@ export const publishInvalidDecision = async (
 
 		await createAuditTrail({
 			appealId: appeal.id,
-			azureAdUserId: azureUserId,
+			azureAdUserId,
 			details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
 				outcome[0].toUpperCase() + outcome.slice(1)
 			])
 		});
 
-		await transitionState(appeal.id, azureUserId, APPEAL_CASE_STATUS.INVALID);
+		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.INVALID);
 		await broadcasters.broadcastAppeal(appeal.id);
 
 		return result;

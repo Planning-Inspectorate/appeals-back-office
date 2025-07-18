@@ -91,6 +91,7 @@ module "app_web" {
     FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT = var.apps_config.featureFlags.featureFlagSimplifyTeamAssignment
     FEATURE_FLAG_CHANGE_APPEAL_TYPE       = var.apps_config.featureFlags.featureFlagChangeAppealType
     FEATURE_FLAG_PDF_DOWNLOAD             = var.apps_config.featureFlags.featureFlagPdfDownload
+    FEATURE_FLAG_NOTIFY_CASE_HISTORY      = var.apps_config.featureFlags.featureFlagNotifyCaseHistory
 
     #change LPA
     USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA = var.apps_config.use_system_test_bc_for_change_lpa

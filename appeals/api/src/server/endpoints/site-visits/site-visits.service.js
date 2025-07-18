@@ -75,6 +75,7 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 		if (notifyTemplateIds.appellant && siteVisitData.appellantEmail) {
 			try {
 				await notifySend({
+					azureAdUserId,
 					templateName: notifyTemplateIds.appellant,
 					notifyClient,
 					recipientEmail: siteVisitData.appellantEmail,
@@ -88,6 +89,7 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 		if (notifyTemplateIds.lpa && siteVisitData.lpaEmail) {
 			try {
 				await notifySend({
+					azureAdUserId,
 					templateName: notifyTemplateIds.lpa,
 					notifyClient,
 					recipientEmail: siteVisitData.lpaEmail,
@@ -183,6 +185,7 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 		if (notifyTemplateIds.appellant && updateSiteVisitData.appellantEmail) {
 			try {
 				await notifySend({
+					azureAdUserId,
 					templateName: notifyTemplateIds.appellant,
 					notifyClient,
 					recipientEmail: updateSiteVisitData.appellantEmail,
@@ -196,6 +199,7 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 		if (notifyTemplateIds.lpa && updateSiteVisitData.lpaEmail) {
 			try {
 				await notifySend({
+					azureAdUserId,
 					templateName: notifyTemplateIds.lpa,
 					notifyClient,
 					recipientEmail: updateSiteVisitData.lpaEmail,

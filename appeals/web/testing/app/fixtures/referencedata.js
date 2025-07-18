@@ -83,6 +83,12 @@ export const activeDirectoryUsersData = [
 		id: '4',
 		name: 'Jenkins, Leeroy',
 		email: 'Leeroy.Jenkins@planninginspectorate.gov.uk'
+	},
+	{
+		'@odata.type': '#microsoft.graph.user',
+		id: 'abac693e-4332-4a02-bb21-af05b9fee854',
+		name: 'McTest, George',
+		email: 'George.McTest@planninginspectorate.gov.uk'
 	}
 ];
 
@@ -4035,6 +4041,79 @@ export const caseAuditLog = [
 		azureAdUserId: activeDirectoryUsersData[0].id,
 		details: 'The case has progressed to ready_to_start',
 		loggedDate: '2025-05-27T09:52:23.597Z'
+	}
+];
+
+export const caseNotificationAuditLog = [
+	{
+		recipient: 'test2@example.com',
+		subject: 'We have corrected the appeal decision letter: 6000071',
+		renderedContent:
+			'<div class="pins-notify-preview-border"> We have corrected the appeal decision letter.<br>\n\n<h2>Appeal details</h2>\n\n<div class="govuk-inset-text">\nAppeal reference number: 6000071 \nAddress: 44 Rivervale, Bridport, DT6 5RN\nPlanning application reference: 40845/APP/2/563702\n</div>\n<h2>Why we corrected the appeal decision letter</h2>\n\nadsfgbhgjhftrewq3wrtghyfgdscvfhgerdfv fbgdtrfv bvnhgftrfesdcvfcb gdrfvb bnvhgfgtv<br>\n\n<a href="http://localhost:9003/manage-appeals/6000071" class="govuk-link">Sign in to our service</a> to view the decision letter dated .<br>\n\n<h2>The Planning Inspectorate’s role</h2>\n\nThe Planning Inspectorate cannot change or revoke the decision. Only the High Court can change this decision.<br>\n\n<h2>Feedback</h2>\n\nWe welcome your feedback on our appeals service. Tell us on this short <a href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u" class="govuk-link">feedback form</a>.<br>\n\nThe Planning Inspectorate<br>\ncaseofficers@planninginspectorate.gov.uk<br> </div>',
+		renderedSubject:
+			'<div class="pins-notify-preview-border"> Subject: We have corrected the appeal decision letter: 6000071<br> </div>',
+		dateCreated: '2025-07-15T13:48:10.631Z',
+		sender: '923ac03b-9031-4cf4-8b17-348c274321f9'
+	},
+	{
+		recipient: 'George.McTest@planninginspectorate.gov.uk',
+		subject: 'We have corrected the appeal decision letter: 6000071',
+		renderedContent:
+			'<div class="pins-notify-preview-border"> We have corrected the appeal decision letter.<br>\n\n<h2>Appeal details</h2>\n\n<div class="govuk-inset-text">\nAppeal reference number: 6000071 \nAddress: 44 Rivervale, Bridport, DT6 5RN\nPlanning application reference: 40845/APP/2/563702\n</div>\n<h2>Why we corrected the appeal decision letter</h2>\n\nadsfgbhgjhftrewq3wrtghyfgdscvfhgerdfv fbgdtrfv bvnhgftrfesdcvfcb gdrfvb bnvhgfgtv<br>\n\n<a href="http://localhost:9003/manage-appeals/6000071" class="govuk-link">Sign in to our service</a> to view the decision letter dated .<br>\n\n<h2>The Planning Inspectorate’s role</h2>\n\nThe Planning Inspectorate cannot change or revoke the decision. Only the High Court can change this decision.<br>\n\n<h2>Feedback</h2>\n\nWe welcome your feedback on our appeals service. Tell us on this short <a href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u" class="govuk-link">feedback form</a>.<br>\n\nThe Planning Inspectorate<br>\ncaseofficers@planninginspectorate.gov.uk<br> </div>',
+		renderedSubject:
+			'<div class="pins-notify-preview-border"> Subject: We have corrected the appeal decision letter: 6000071<br> </div>',
+		dateCreated: '2025-07-15T13:48:10.631Z',
+		sender: '923ac03b-9031-4cf4-8b17-348c274321f9'
+	},
+	{
+		recipient: 'John.Smith@planninginspectorate.gov.uk',
+		subject: 'We have corrected the appeal decision letter: 6000071',
+		renderedContent:
+			'<div class="pins-notify-preview-border"> We have corrected the appeal decision letter.<br>\n\n<h2>Appeal details</h2>\n\n<div class="govuk-inset-text">\nAppeal reference number: 6000071 \nAddress: 44 Rivervale, Bridport, DT6 5RN\nPlanning application reference: 40845/APP/2/563702\n</div>\n<h2>Why we corrected the appeal decision letter</h2>\n\nadsfgbhgjhftrewq3wrtghyfgdscvfhgerdfv fbgdtrfv bvnhgftrfesdcvfcb gdrfvb bnvhgfgtv<br>\n\n<a href="http://localhost:9003/manage-appeals/6000071" class="govuk-link">Sign in to our service</a> to view the decision letter dated .<br>\n\n<h2>The Planning Inspectorate’s role</h2>\n\nThe Planning Inspectorate cannot change or revoke the decision. Only the High Court can change this decision.<br>\n\n<h2>Feedback</h2>\n\nWe welcome your feedback on our appeals service. Tell us on this short <a href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u" class="govuk-link">feedback form</a>.<br>\n\nThe Planning Inspectorate<br>\ncaseofficers@planninginspectorate.gov.uk<br> </div>',
+		renderedSubject:
+			'<div class="pins-notify-preview-border"> Subject: We have corrected the appeal decision letter: 6000071<br> </div>',
+		dateCreated: '2025-07-15T13:48:10.631Z',
+		sender: '923ac03b-9031-4cf4-8b17-348c274321f9'
+	},
+	{
+		recipient: 'test3@example.com',
+		subject: 'Appeal decision: 6000071',
+		renderedContent:
+			'<div class="pins-notify-preview-border"> <h2>Appeal details</h2>\n\n<div class="govuk-inset-text">\nAppeal reference number: 6000071 \nAddress: 44 Rivervale, Bridport, DT6 5RN\nPlanning application reference: 40845/APP/2/563702\n</div>\n<h2>Appeal decision</h2>\n\nA decision has been made on this appeal.<br>\n\n<a href="http://localhost:9003/manage-appeals/6000071" class="govuk-link">Sign in to our service</a> to view the decision letter dated 15 July 2025.<br>\n\nThe appellant has been informed of the decision.<br>\n\n<h2>The Planning Inspectorate’s role</h2>\n\nThe Planning Inspectorate cannot change or revoke the decision. Only the High Court can change this decision.<br>\n\n<h2>Feedback</h2>\n\nWe welcome your feedback on our appeals service. Tell us on this short <a href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u" class="govuk-link">feedback form</a>.<br>\n\nThe Planning Inspectorate<br>\nallcustomerteam@planninginspectorate.gov.uk<br> </div>',
+		renderedSubject:
+			'Subject: <div class="pins-notify-preview-border"> Appeal decision: 6000071<br> </div>',
+		dateCreated: '2025-07-15T13:45:23.980Z',
+		sender: '923ac03b-9031-4cf4-8b17-348c274321f9'
+	},
+	{
+		recipient: 'wilt@lpa-email.gov.uk',
+		subject: 'Appeal decision: 6000071',
+		renderedContent:
+			'<div class="pins-notify-preview-border"> <h2>Appeal details</h2>\n\n<div class="govuk-inset-text">\nAppeal reference number: 6000071 \nAddress: 44 Rivervale, Bridport, DT6 5RN\nPlanning application reference: 40845/APP/2/563702\n</div>\n<h2>Appeal decision</h2>\n\nWe have made a decision on your appeal.<br>\n\n<a href="http://localhost:9003/appeals/6000071" class="govuk-link">Sign in to our service</a> to view the decision letter dated 15 July 2025.<br>\n\nWe have also informed the local planning authority of the decision.<br>\n\n<h2>The Planning Inspectorate’s role</h2>\n\nThe Planning Inspectorate cannot change or revoke the decision. You can <a href="https://www.gov.uk/appeal-planning-decision/if-you-think-the-appeal-decision-is-legally-incorrect" class="govuk-link">challenge the decision in the High Court</a> if you think the Planning Inspectorate made a legal mistake.<br>\n\n<h2>Feedback</h2>\n\nWe welcome your feedback on our appeals service. Tell us on this short <a href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u" class="govuk-link">feedback form</a>.<br>\n\nThe Planning Inspectorate<br>\n<a href="https://contact-us.planninginspectorate.gov.uk/hc/en-gb/requests/new" class="govuk-link">Get help with your appeal decision</a><br> </div>',
+		renderedSubject:
+			'Subject: <div class="pins-notify-preview-border"> Appeal decision: 6000071<br> </div>',
+		dateCreated: '2025-07-15T13:45:23.977Z',
+		sender: '923ac03b-9031-4cf4-8b17-348c274321f9'
+	},
+	{
+		recipient: 'test1@email.com',
+		subject: 'Inspector visit to appeal site: 6000071',
+		renderedContent:
+			'<div class="pins-notify-preview-border"> <h2>Appeal details</h2>\n\n<div class="govuk-inset-text">\nAppeal reference number: 6000071 \nAddress: 44 Rivervale, Bridport, DT6 5RN\nPlanning application reference: 40845/APP/2/563702\n</div>\n<h2>Site visit scheduled</h2>\n\nWe have now arranged for our inspector (or their representative) to visit 44 Rivervale, Bridport, DT6 5RN.<br>\n\nYou are not required to attend the site visit.<br>\n\n<h2>About the visit</h2>\n\nIf you see the inspector, be aware that you cannot give them any documents or discuss the appeal with them.<br>\n\nThe inspector will carry out the inspection on their own.<br>\n\n<h2>Next steps</h2>\n\nWe will let you know our inspector’s decision when it is available.<br>\n\nIf you need to contact us, include our reference number in any communication.<br>\n\nThe Planning Inspectorate<br>\ncaseofficers@planninginspectorate.gov.uk<br> </div>',
+		renderedSubject:
+			'Subject: <div class="pins-notify-preview-border"> Inspector visit to appeal site: 6000071<br> </div>',
+		dateCreated: '2025-07-15T13:45:00.006Z',
+		sender: '923ac03b-9031-4cf4-8b17-348c274321f9'
+	},
+	{
+		recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk',
+		subject: 'We have received the appellant’s final comments: 6000071',
+		renderedContent:
+			'<div class="pins-notify-preview-border"> We have received the appellant’s final comments.<br>\n\n<h2>Appeal details</h2>\n\n<div class="govuk-inset-text">\nAppeal reference number: 6000071 \nAddress: 44 Rivervale, Bridport, DT6 5RN\nPlanning application reference: 40845/APP/2/563702\n</div>\n<h2>What happens next</h2>\n\nYou can <a href="http://localhost:9003/manage-appeals/6000071" class="govuk-link">view the appellant’s final comments</a>.<br>\n\nThe inspector will visit the site and we will contact you when we have made the decision.<br>\n\nThe Planning Inspectorate<br>\ncaseofficers@planninginspectorate.gov.uk<br> </div>',
+		renderedSubject:
+			'Subject: <div class="pins-notify-preview-border"> We have received the appellant’s final comments: 6000071<br> </div>',
+		dateCreated: '2025-07-15T13:44:50.254Z',
+		sender: '923ac03b-9031-4cf4-8b17-348c274321f9'
 	}
 ];
 

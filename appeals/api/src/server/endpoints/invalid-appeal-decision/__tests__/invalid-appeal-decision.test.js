@@ -118,6 +118,7 @@ describe('invalid appeal decision routes', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
 				personalisation: {
 					appeal_reference_number: correctAppealState.reference,

@@ -7,8 +7,16 @@
 	border-bottom: 1px solid #b1b4b6;
 }
 
+@mixin pins-notify-preview-border-base {
+	border: 1px solid colors.$govuk-border-colour;
+	padding: govuk-spacing(2);
+}
+
 .pins-notify-preview-border {
-	border: 5px solid colors.$govuk-border-colour;
-	padding: govuk-spacing(4);
-	margin-bottom: govuk-spacing(6);
+	@include pins-notify-preview-border-base;
+}
+
+.pins-notify-preview-border-no-bottom {
+	@include pins-notify-preview-border-base;
+	border-bottom: none;
 }
