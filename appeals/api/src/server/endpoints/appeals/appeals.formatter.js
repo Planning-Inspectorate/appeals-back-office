@@ -262,13 +262,10 @@ export const mapAppealToDueDate = async (appeal, appellantCaseStatus, appellantC
 			});
 		}
 		case APPEAL_CASE_STATUS.AWAITING_EVENT: {
-			if (appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN) {
-				return appeal.siteVisit ? new Date(appeal.siteVisit?.visitDate || 0) : undefined;
-			}
 			if (appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.HEARING) {
 				return appeal.hearing ? new Date(appeal.hearing?.hearingStartTime || 0) : undefined;
 			}
-			return undefined;
+			return appeal.siteVisit ? new Date(appeal.siteVisit?.visitDate || 0) : undefined;
 		}
 		case APPEAL_CASE_STATUS.EVENT: {
 			return new Date(

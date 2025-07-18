@@ -27,6 +27,24 @@ describe('application-decision-date', () => {
 				'What’s the date on the decision letter from the local planning authority?​'
 			);
 		});
+
+		it('should render the application decision date change page when decision not received', async () => {
+			const appellantCaseData = {
+				...appellantCaseDataNotValidated,
+				applicationDecision: 'not_received'
+			};
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appellantCaseId}`)
+				.reply(200, appellantCaseData);
+			const response = await request.get(`${baseUrl}/application-decision-date/change`);
+
+			const elementInnerHtml = parseHtml(response.text).innerHTML;
+
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain(
+				'What date was your decision due from the local planning authority?'
+			);
+		});
 	});
 
 	describe('POST /change', () => {
