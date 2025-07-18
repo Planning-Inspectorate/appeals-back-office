@@ -3,9 +3,9 @@ import * as inquiryEstimatesRepository from '#repositories/inquiry-estimates.rep
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import {
-	AUDIT_TRAIL_HEARING_ESTIMATES_ADDED,
-	AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED,
-	AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED
+	AUDIT_TRAIL_INQUIRY_ESTIMATES_ADDED,
+	AUDIT_TRAIL_INQUIRY_ESTIMATES_UPDATED,
+	AUDIT_TRAIL_INQUIRY_ESTIMATES_REMOVED
 } from '@pins/appeals/constants/support.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import { EventType } from '@pins/event-client';
@@ -33,13 +33,13 @@ export const addInquiryEstimate = async (req, res) => {
 		await createAuditTrail({
 			appealId: appeal.id,
 			azureAdUserId: req.get('azureAdUserId'),
-			details: AUDIT_TRAIL_HEARING_ESTIMATES_ADDED
+			details: AUDIT_TRAIL_INQUIRY_ESTIMATES_ADDED
 		});
 
 		await broadcasters.broadcastAppeal(appeal.id);
 		await broadcasters.broadcastEventEstimates(
 			result.id,
-			EVENT_TYPE.HEARING,
+			EVENT_TYPE.INQUIRY,
 			EventType.Create,
 			null
 		);
@@ -75,11 +75,11 @@ export const updateInquiryEstimate = async (req, res) => {
 	await createAuditTrail({
 		appealId: appeal.id,
 		azureAdUserId: req.get('azureAdUserId'),
-		details: AUDIT_TRAIL_HEARING_ESTIMATES_UPDATED
+		details: AUDIT_TRAIL_INQUIRY_ESTIMATES_UPDATED
 	});
 
 	await broadcasters.broadcastAppeal(appeal.id);
-	await broadcasters.broadcastEventEstimates(result.id, EVENT_TYPE.HEARING, EventType.Update, null);
+	await broadcasters.broadcastEventEstimates(result.id, EVENT_TYPE.INQUIRY, EventType.Update, null);
 	return res.send({
 		inquiryEstimateId: result.id
 	});
@@ -104,13 +104,13 @@ export const removeInquiryEstimate = async (req, res) => {
 	await createAuditTrail({
 		appealId: appeal.id,
 		azureAdUserId: req.get('azureAdUserId'),
-		details: AUDIT_TRAIL_HEARING_ESTIMATES_REMOVED
+		details: AUDIT_TRAIL_INQUIRY_ESTIMATES_REMOVED
 	});
 
 	await broadcasters.broadcastAppeal(appeal.id);
 	await broadcasters.broadcastEventEstimates(
 		existingEstimate.id,
-		EVENT_TYPE.HEARING,
+		EVENT_TYPE.INQUIRY,
 		EventType.Delete,
 		existingEstimate
 	);
