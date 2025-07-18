@@ -1505,17 +1505,30 @@ export const siteVisitData = {
 
 export const appealTypesData = [
 	{
+		id: 66,
+		type: 'Householder',
+		shorthand: 'HAS',
+		key: 'D',
+		enabled: true
+	},
+	{
 		id: 75,
 		type: 'Planning appeal',
 		shorthand: 'FPA',
-		key: 'D',
+		key: 'W',
 		enabled: false
 	},
 	{
-		id: 76,
-		type: 'Enforcement notice appeal',
-		shorthand: 'X1',
-		key: 'W',
+		id: 77,
+		type: 'Planning listed building and conservation area appeal',
+		shorthand: 'S20',
+		key: 'Y',
+		enabled: false
+	},
+	{
+		id: 78,
+		type: 'CAS planning',
+		key: 'ZP',
 		enabled: false
 	}
 ];

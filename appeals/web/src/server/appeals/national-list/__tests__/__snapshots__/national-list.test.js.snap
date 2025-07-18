@@ -43,8 +43,10 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                             <select class="govuk-select" id="appeal-type-filter"
                             name="appealTypeFilter" data-cy="filter-by-appeal">
                                 <option value="all">All</option>
+                                <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
-                                <option value="76">Enforcement notice appeal</option>
+                                <option value="77">Planning listed building and conservation area appeal</option>
+                                <option                                 value="78">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -244,8 +246,10 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                             <select class="govuk-select" id="appeal-type-filter"
                             name="appealTypeFilter" data-cy="filter-by-appeal">
                                 <option value="all">All</option>
+                                <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
-                                <option value="76">Enforcement notice appeal</option>
+                                <option value="77">Planning listed building and conservation area appeal</option>
+                                <option                                 value="78">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -428,8 +432,10 @@ exports[`national-list GET / should render national list - appeal type filter ap
                             <select class="govuk-select" id="appeal-type-filter"
                             name="appealTypeFilter" data-cy="filter-by-appeal">
                                 <option value="all">All</option>
+                                <option value="66">Householder</option>
                                 <option value="75" selected>Planning appeal</option>
-                                <option value="76">Enforcement notice appeal</option>
+                                <option value="77">Planning listed building and conservation area appeal</option>
+                                <option                                 value="78">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -570,8 +576,10 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                             <select class="govuk-select" id="appeal-type-filter"
                             name="appealTypeFilter" data-cy="filter-by-appeal">
                                 <option value="all">All</option>
+                                <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
-                                <option value="76">Enforcement notice appeal</option>
+                                <option value="77">Planning listed building and conservation area appeal</option>
+                                <option                                 value="78">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -733,8 +741,10 @@ exports[`national-list GET / should render national list - no search term - filt
                             <select class="govuk-select" id="appeal-type-filter"
                             name="appealTypeFilter" data-cy="filter-by-appeal">
                                 <option value="all">All</option>
+                                <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
-                                <option value="76">Enforcement notice appeal</option>
+                                <option value="77">Planning listed building and conservation area appeal</option>
+                                <option                                 value="78">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -889,8 +899,10 @@ exports[`national-list GET / should render national list - search term - filter 
                             <select class="govuk-select" id="appeal-type-filter"
                             name="appealTypeFilter" data-cy="filter-by-appeal">
                                 <option value="all">All</option>
+                                <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
-                                <option value="76">Enforcement notice appeal</option>
+                                <option value="77">Planning listed building and conservation area appeal</option>
+                                <option                                 value="78">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1045,8 +1057,10 @@ exports[`national-list GET / should render national list - search term - no resu
                             <select class="govuk-select" id="appeal-type-filter"
                             name="appealTypeFilter" data-cy="filter-by-appeal">
                                 <option value="all">All</option>
+                                <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
-                                <option value="76">Enforcement notice appeal</option>
+                                <option value="77">Planning listed building and conservation area appeal</option>
+                                <option                                 value="78">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1160,8 +1174,10 @@ exports[`national-list GET / should render national list - search term 1`] = `
                             <select class="govuk-select" id="appeal-type-filter"
                             name="appealTypeFilter" data-cy="filter-by-appeal">
                                 <option value="all">All</option>
+                                <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
-                                <option value="76">Enforcement notice appeal</option>
+                                <option value="77">Planning listed building and conservation area appeal</option>
+                                <option                                 value="78">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1320,8 +1336,10 @@ exports[`national-list GET / should render the header with navigation containing
                             <select class="govuk-select" id="appeal-type-filter"
                             name="appealTypeFilter" data-cy="filter-by-appeal">
                                 <option value="all">All</option>
+                                <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
-                                <option value="76">Enforcement notice appeal</option>
+                                <option value="77">Planning listed building and conservation area appeal</option>
+                                <option                                 value="78">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
