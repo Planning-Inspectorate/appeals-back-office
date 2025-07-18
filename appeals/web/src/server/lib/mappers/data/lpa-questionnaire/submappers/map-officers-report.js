@@ -4,7 +4,7 @@ import { documentInstruction } from '../common.js';
 export const mapOfficersReport = ({ lpaQuestionnaireData, session }) =>
 	documentInstruction({
 		id: 'officers-report',
-		text: `Planning officer's report`,
+		text: `Planning officer’s report`,
 		folderInfo: lpaQuestionnaireData.documents.planningOfficerReport,
 		lpaQuestionnaireData,
 		session
