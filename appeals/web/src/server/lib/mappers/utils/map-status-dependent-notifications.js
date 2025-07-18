@@ -35,6 +35,38 @@ export function mapStatusDependentNotifications(appealDetails, request) {
  * @returns {PageComponent|undefined}
  */
 function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, request) {
+	// ToDo banners will be removed from this list once the child appeals automatically do the action via the lead appeal
+	const ALLOWED_CHILD_APPEAL_BANNERS = [
+		'appealAwaitingTransfer',
+		'readyForSetUpSiteVisit',
+		'assignCaseOfficer',
+		'readyForDecision',
+		'progressFromFinalComments',
+		'progressFromStatements',
+		'progressHearingCaseWithNoRepsFromStatements',
+		'readyForValidation',
+		'appellantFinalCommentsAwaitingReview',
+		'lpaFinalCommentsAwaitingReview',
+		'interestedPartyCommentsAwaitingReview',
+		'readyForLpaQuestionnaireReview',
+		'lpaStatementAwaitingReview',
+		'shareFinalComments',
+		'shareCommentsAndLpaStatement',
+		// 'appealValidAndReadyToStart',
+		'updateLpaStatement',
+		'addHearingAddress',
+		'setupHearing'
+	];
+
+	if (
+		config.featureFlags.featureFlagLinkedAppeals &&
+		appealDetails.isChildAppeal &&
+		!ALLOWED_CHILD_APPEAL_BANNERS.includes(bannerDefinitionKey)
+	) {
+		// Do not display the banner
+		return;
+	}
+
 	switch (bannerDefinitionKey) {
 		case 'appealAwaitingTransfer':
 			return createNotificationBanner({
@@ -159,9 +191,6 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				)}" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`
 			});
 		case 'appealValidAndReadyToStart':
-			if (appealDetails.isChildAppeal) {
-				return;
-			}
 			return createNotificationBanner({
 				bannerDefinitionKey,
 				html: `<p class="govuk-notification-banner__heading">Appeal valid</p><p><a class="govuk-notification-banner__link" data-cy="ready-to-start" href="${addBackLinkQueryToUrl(
