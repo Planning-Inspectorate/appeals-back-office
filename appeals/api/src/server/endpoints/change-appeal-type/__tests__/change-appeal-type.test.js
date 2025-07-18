@@ -252,6 +252,7 @@ describe('appeal change type resubmit routes', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.anything(),
 				personalisation: {
 					existing_appeal_type: appeal.appealType.type,

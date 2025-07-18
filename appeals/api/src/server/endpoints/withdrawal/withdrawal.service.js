@@ -13,7 +13,7 @@ import { notifySend } from '#notify/notify-send.js';
  * @param {Date} withdrawalRequestDate
  * @param {import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @param {string} siteAddress
- * @param {string} azureUserId
+ * @param {string} azureAdUserId
  * @returns
  */
 export const publishWithdrawal = async (
@@ -21,7 +21,7 @@ export const publishWithdrawal = async (
 	withdrawalRequestDate,
 	notifyClient,
 	siteAddress,
-	azureUserId
+	azureAdUserId
 ) => {
 	const result = await appealRepository.setAppealWithdrawal(
 		appeal.id,
@@ -43,6 +43,7 @@ export const publishWithdrawal = async (
 
 	if (recipientEmail) {
 		await notifySend({
+			azureAdUserId,
 			templateName: 'appeal-withdrawn-appellant',
 			notifyClient,
 			recipientEmail,
@@ -50,6 +51,7 @@ export const publishWithdrawal = async (
 		});
 
 		await notifySend({
+			azureAdUserId,
 			templateName: 'appeal-withdrawn-lpa',
 			notifyClient,
 			recipientEmail: lpaEmail,
@@ -58,7 +60,7 @@ export const publishWithdrawal = async (
 	}
 
 	if (result) {
-		await transitionState(appeal.id, azureUserId, APPEAL_CASE_STATUS.WITHDRAWN);
+		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.WITHDRAWN);
 		await broadcasters.broadcastAppeal(appeal.id);
 
 		return result;

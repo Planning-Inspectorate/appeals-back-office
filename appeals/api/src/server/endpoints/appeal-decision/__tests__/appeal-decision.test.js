@@ -186,6 +186,7 @@ describe('appeal decision routes', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
 				personalisation: {
@@ -199,6 +200,7 @@ describe('appeal decision routes', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
 				personalisation: {
 					appeal_reference_number: appeal.reference,

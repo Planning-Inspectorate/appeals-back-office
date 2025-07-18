@@ -12198,3 +12198,12 @@ export type Notifications = {
 	dateCreated: string;
 	success: boolean;
 }[];
+
+export type AuditNotifications = {
+	recipient: string;
+	renderedContent: string;
+	renderedSubject: string;
+	subject?: string;
+	dateCreated: string;
+	sender?: string;
+}[];

@@ -45,6 +45,7 @@ const checkHearingExists = async (req, res, next) => {
  * @param {Appeal} appeal
  * @param {string | Date} hearingStartTime
  * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'>} address
+ * @param {string} azureAdUserId
  * @returns {Promise<void>}
  */
 const sendHearingDetailsNotifications = async (
@@ -52,7 +53,8 @@ const sendHearingDetailsNotifications = async (
 	templateName,
 	appeal,
 	hearingStartTime,
-	address
+	address,
+	azureAdUserId
 ) => {
 	const personalisation = {
 		hearing_date: dateISOStringToDisplayDate(
@@ -63,13 +65,20 @@ const sendHearingDetailsNotifications = async (
 		),
 		hearing_address: formatAddressSingleLine({ ...address, id: 0 })
 	};
-	await sendHearingNotifications(notifyClient, templateName, appeal, personalisation);
+	await sendHearingNotifications(
+		notifyClient,
+		templateName,
+		appeal,
+		azureAdUserId,
+		personalisation
+	);
 };
 
 /**
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} templateName
  * @param {Appeal} appeal
+ * @param {string} azureAdUserId
  * @param {Record<string, string>} [personalisation]
  * @returns {Promise<void>}
  */
@@ -77,6 +86,7 @@ const sendHearingNotifications = async (
 	notifyClient,
 	templateName,
 	appeal,
+	azureAdUserId,
 	personalisation = {}
 ) => {
 	const appellantEmail = appeal.appellant?.email ?? appeal.agent?.email;
@@ -87,6 +97,7 @@ const sendHearingNotifications = async (
 
 	[appellantEmail, lpaEmail].forEach(async (email) => {
 		await notifySend({
+			azureAdUserId,
 			notifyClient,
 			templateName,
 			personalisation: {
@@ -104,9 +115,10 @@ const sendHearingNotifications = async (
  * @param {CreateHearing} createHearingData
  * @param {Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
  * @returns {Promise<void>}
  */
-const createHearing = async (createHearingData, appeal, notifyClient) => {
+const createHearing = async (createHearingData, appeal, notifyClient, azureAdUserId) => {
 	try {
 		const appealId = createHearingData.appealId;
 		const hearingStartTime = createHearingData.hearingStartTime;
@@ -127,7 +139,8 @@ const createHearing = async (createHearingData, appeal, notifyClient) => {
 				'hearing-set-up',
 				appeal,
 				hearingStartTime,
-				address
+				address,
+				azureAdUserId
 			);
 		}
 	} catch (error) {
@@ -139,8 +152,9 @@ const createHearing = async (createHearingData, appeal, notifyClient) => {
  * @param {UpdateHearing} updateHearingData
  * @param {Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
  */
-const updateHearing = async (updateHearingData, appeal, notifyClient) => {
+const updateHearing = async (updateHearingData, appeal, notifyClient, azureAdUserId) => {
 	try {
 		const appealId = updateHearingData.appealId;
 		const hearingId = Number(updateHearingData.hearingId);
@@ -168,7 +182,8 @@ const updateHearing = async (updateHearingData, appeal, notifyClient) => {
 				'hearing-updated',
 				appeal,
 				hearingStartTime,
-				result.address
+				result.address,
+				azureAdUserId
 			);
 		}
 
@@ -182,8 +197,9 @@ const updateHearing = async (updateHearingData, appeal, notifyClient) => {
  * @param {CancelHearing} deleteHearingData
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {Appeal} appeal
+ * @param {string} azureAdUserId
  */
-const deleteHearing = async (deleteHearingData, notifyClient, appeal) => {
+const deleteHearing = async (deleteHearingData, notifyClient, appeal, azureAdUserId) => {
 	try {
 		const { hearingId } = deleteHearingData;
 
@@ -197,7 +213,7 @@ const deleteHearing = async (deleteHearingData, notifyClient, appeal) => {
 			EventType.Delete,
 			existingHearing
 		);
-		await sendHearingNotifications(notifyClient, 'hearing-cancelled', appeal);
+		await sendHearingNotifications(notifyClient, 'hearing-cancelled', appeal, azureAdUserId);
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
