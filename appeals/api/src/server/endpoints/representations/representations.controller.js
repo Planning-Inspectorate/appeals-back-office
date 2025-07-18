@@ -19,11 +19,11 @@ import { Prisma } from '#utils/db-client/index.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { camelToScreamingSnake } from '#utils/string-utils.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import { notifyOnStatusChange } from './notify/index.js';
 import { currentStatus } from '#utils/current-status.js';
+import { getRepStatusAuditLogDetails } from './representations.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -174,37 +174,11 @@ export async function updateRepresentation(request, response) {
 	);
 
 	if (status !== existingRep.status) {
-		const details = (() => {
-			if (status === APPEAL_REPRESENTATION_STATUS.VALID && redactedRepresentation) {
-				// @ts-ignore
-				return CONSTANTS[
-					`AUDIT_TRAIL_REP_${camelToScreamingSnake(
-						updatedRep.representationType
-					)}_REDACTED_AND_ACCEPTED`
-				];
-			} else if (
-				status === APPEAL_REPRESENTATION_STATUS.INVALID &&
-				(updatedRep.representationType === 'appellantFinalComment' ||
-					updatedRep.representationType === 'lpaFinalComment')
-			) {
-				// @ts-ignore
-				return CONSTANTS[
-					`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_INVALID`
-				];
-			} else if (status === APPEAL_REPRESENTATION_STATUS.VALID) {
-				return CONSTANTS[
-					`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_STATUS_VALID`
-				];
-			} else {
-				return stringTokenReplacement(
-					// @ts-ignore
-					CONSTANTS[
-						`AUDIT_TRAIL_REP_${camelToScreamingSnake(updatedRep.representationType)}_STATUS_UPDATED`
-					],
-					[status]
-				);
-			}
-		})();
+		const details = getRepStatusAuditLogDetails(
+			status,
+			updatedRep.representationType,
+			!!redactedRepresentation
+		);
 
 		await createAuditTrail({
 			appealId: parseInt(appealId),
