@@ -1,26 +1,33 @@
 import { request } from '#tests/../app-test.js';
+import {
+	appealIngestionInput,
+	appealIngestionInputS20,
+	appealIngestionInputS78,
+	docIngestionInput,
+	validAppellantCase,
+	validAppellantCaseS20,
+	validAppellantCaseS78,
+	validLpaQuestionnaire,
+	validLpaQuestionnaireIngestion,
+	validLpaQuestionnaireIngestionS20,
+	validLpaQuestionnaireIngestionS78,
+	validLpaQuestionnaireS20,
+	validLpaQuestionnaireS78,
+	validRepresentationAppellantFinalComment,
+	validRepresentationIp,
+	validRepresentationLpaStatement
+} from '#tests/integrations/mocks.js';
 import { jest } from '@jest/globals';
+import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import {
 	ERROR_INVALID_APPEAL_TYPE_REP,
 	ERROR_INVALID_APPELLANT_CASE_DATA
 } from '@pins/appeals/constants/support.js';
 import {
-	validAppellantCase,
-	validAppellantCaseS78,
-	validLpaQuestionnaire,
-	validRepresentationIp,
-	validRepresentationAppellantFinalComment,
-	validRepresentationLpaStatement,
-	appealIngestionInput,
-	appealIngestionInputS78,
-	docIngestionInput
-} from '#tests/integrations/mocks.js';
-import {
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE,
 	APPEAL_REDACTED_STATUS
 } from '@planning-inspectorate/data-model';
-import { FOLDERS } from '@pins/appeals/constants/documents.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -93,73 +100,46 @@ describe('/appeals/case-submission', () => {
 	});
 
 	describe('POST successful appeal gets ingested', () => {
-		test('POST valid appellant case payload and create appeal', async () => {
-			const result = createIntegrationMocks(appealIngestionInput);
-			const payload = validAppellantCase;
-			const response = await request.post('/appeals/case-submission').send(payload);
+		test.each([
+			['HAS', appealIngestionInput, validAppellantCase],
+			['S78', appealIngestionInputS78, validAppellantCaseS78],
+			['S20', appealIngestionInputS20, validAppellantCaseS20]
+		])(
+			'POST valid %s appellant case payload and create appeal',
+			async (_, appealIngestionInput, validAppellantCase) => {
+				const result = createIntegrationMocks(appealIngestionInput);
+				const payload = validAppellantCase;
+				const response = await request.post('/appeals/case-submission').send(payload);
 
-			expect(databaseConnector.appeal.create).toHaveBeenCalledWith({
-				data: {
-					reference: expect.any(String),
-					submissionId: expect.any(String),
-					...appealIngestionInput
-				}
-			});
-			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
-				where: { id: 100 },
-				data: {
-					reference: expect.any(String),
-					appealStatus: {
-						create: {
-							status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
-							createdAt: expect.any(String)
+				expect(databaseConnector.appeal.create).toHaveBeenCalledWith({
+					data: {
+						reference: expect.any(String),
+						submissionId: expect.any(String),
+						...appealIngestionInput
+					}
+				});
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					where: { id: 100 },
+					data: {
+						reference: expect.any(String),
+						appealStatus: {
+							create: {
+								status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+								createdAt: expect.any(String)
+							}
 						}
 					}
-				}
-			});
+				});
 
-			expect(databaseConnector.document.createMany).toHaveBeenCalled();
-			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
-			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
+				expect(databaseConnector.document.createMany).toHaveBeenCalled();
+				expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
+				expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
 
-			expect(databaseConnector.appeal.findUnique).toHaveBeenCalled();
-			expect(response.status).toEqual(201);
-			expect(response.body).toEqual(result);
-		});
-
-		test('POST valid s78 appellant case payload and create appeal', async () => {
-			const result = createIntegrationMocks(appealIngestionInputS78);
-			const payload = validAppellantCaseS78;
-			const response = await request.post('/appeals/case-submission').send(payload);
-
-			expect(databaseConnector.appeal.create).toHaveBeenCalledWith({
-				data: {
-					reference: expect.any(String),
-					submissionId: expect.any(String),
-					...appealIngestionInputS78
-				}
-			});
-			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
-				where: { id: 100 },
-				data: {
-					reference: expect.any(String),
-					appealStatus: {
-						create: {
-							status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
-							createdAt: expect.any(String)
-						}
-					}
-				}
-			});
-
-			expect(databaseConnector.document.createMany).toHaveBeenCalled();
-			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
-			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
-
-			expect(databaseConnector.appeal.findUnique).toHaveBeenCalled();
-			expect(response.status).toEqual(201);
-			expect(response.body).toEqual(result);
-		});
+				expect(databaseConnector.appeal.findUnique).toHaveBeenCalled();
+				expect(response.status).toEqual(201);
+				expect(response.body).toEqual(result);
+			}
+		);
 	});
 });
 
@@ -206,6 +186,153 @@ describe('/appeals/lpaq-submission', () => {
 			expect(isGreenBelt).not.toBeUndefined();
 			expect(response.status).toEqual(400);
 		});
+	});
+	describe('POST valid LPA submission', () => {
+		test.each([
+			['HAS', validLpaQuestionnaireIngestion, validLpaQuestionnaire],
+			['S78', validLpaQuestionnaireIngestionS78, validLpaQuestionnaireS78],
+			['S20', validLpaQuestionnaireIngestionS20, validLpaQuestionnaireS20]
+		])(
+			'POST valid %s lpaq payload and create lpaq submission',
+			async (_, ingestion, questionnaire) => {
+				//Overwrites appeal update mock in createInteg
+				// @ts-ignore-next-line
+				databaseConnector.appeal.update.mockResolvedValue(ingestion);
+				// @ts-ignore-next-line
+
+				createIntegrationMocks({
+					folders: {
+						create: FOLDERS.map((/** @type {{ path: string; }} */ f) => {
+							return { path: f };
+						})
+					}
+				});
+
+				const payload = questionnaire;
+				const response = await request.post('/appeals/lpaq-submission').send(payload);
+
+				expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({
+					where: { reference: '6000000' }
+				});
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith(ingestion);
+
+				//setDocumentVersions
+				expect(databaseConnector.folder.findMany).toHaveBeenCalledWith({
+					where: {
+						caseId: 100
+					}
+				});
+				expect(databaseConnector.document.createMany).toHaveBeenCalledWith({
+					data: [
+						{
+							caseId: 100,
+							folderId: 42,
+							guid: expect.any(String),
+							name: 'oimg.jpg'
+						},
+						{
+							caseId: 100,
+							folderId: 41,
+							guid: expect.any(String),
+							name: 'oimg.jpg'
+						}
+					]
+				});
+				expect(databaseConnector.documentVersion.createMany).toHaveBeenCalledWith({
+					data: [
+						{
+							blobStorageContainer: 'document-service-uploads',
+							blobStoragePath: expect.any(String),
+							dateCreated: '2024-03-01T13:48:35.847Z',
+							dateReceived: expect.any(String),
+							description: 'Document img2.jpg (001) imported',
+							documentGuid: expect.any(String),
+							documentType: 'lpaCostsWithdrawal',
+							documentURI: expect.any(String),
+							draft: false,
+							fileName: 'oimg.jpg',
+							lastModified: expect.any(String),
+							mime: 'image/jpeg',
+							originalFilename: 'oimg.jpg',
+							size: 10293,
+							stage: 'lpa-questionnaire',
+							version: 1
+						},
+						{
+							blobStorageContainer: 'document-service-uploads',
+							blobStoragePath: expect.any(String),
+							dateCreated: '2024-03-01T13:48:35.847Z',
+							dateReceived: expect.any(String),
+							description: 'Document img3.jpg (001) imported',
+							documentGuid: expect.any(String),
+							documentType: 'lpaCostsApplication',
+							documentURI: expect.any(String),
+							draft: false,
+							fileName: 'oimg.jpg',
+							mime: 'image/jpeg',
+							lastModified: expect.any(String),
+							originalFilename: 'oimg.jpg',
+							size: 10293,
+							stage: 'lpa-questionnaire',
+							version: 1
+						}
+					]
+				});
+				expect(databaseConnector.document.update).toHaveBeenCalledTimes(2);
+				expect(databaseConnector.document.update).toHaveBeenNthCalledWith(1, {
+					data: {
+						latestVersionId: 1
+					},
+					where: {
+						guid: expect.any(String)
+					}
+				});
+				expect(databaseConnector.document.update).toHaveBeenNthCalledWith(2, {
+					data: {
+						latestVersionId: 1
+					},
+					where: {
+						guid: expect.any(String)
+					}
+				});
+
+				expect(databaseConnector.documentVersion.findMany).toHaveBeenCalledWith({
+					where: {
+						documentGuid: {
+							in: [expect.any(String), expect.any(String)]
+						}
+					}
+				});
+
+				//setAppealRelationships
+				expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith({
+					where: { reference: { in: ['1000000'] } }
+				});
+				expect(databaseConnector.appealRelationship.findMany).toHaveBeenCalledWith({
+					where: { parentId: 100 }
+				});
+				expect(databaseConnector.appealRelationship.createMany).toHaveBeenCalledWith({
+					data: [
+						{
+							childId: null,
+							childRef: '1000000',
+							externalAppealType: null,
+							externalSource: true,
+							parentId: 100,
+							parentRef: '6000100',
+							type: 'related'
+						}
+					]
+				});
+
+				expect(databaseConnector.appeal.findUnique).toHaveBeenCalledWith({
+					where: { reference: '6000000' }
+				});
+
+				expect(response.status).toEqual(201);
+				expect(response.body).toEqual({ id: 100, reference: '6000100' });
+			}
+		);
 	});
 });
 
@@ -425,7 +552,10 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 	// @ts-ignore
 	databaseConnector.appeal.findUnique.mockResolvedValue(appealCreatedResult);
 	// @ts-ignore
-	databaseConnector.document.createMany.mockResolvedValue([docIngestionInput]);
+	databaseConnector.document.createMany.mockResolvedValue([
+		docIngestionInput,
+		...validLpaQuestionnaire.documents
+	]);
 	// @ts-ignore
 	databaseConnector.documentVersion.findMany.mockResolvedValue([
 		{
@@ -446,6 +576,17 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 			return { ...o, id: ix + 1 };
 		})
 	);
+	// @ts-ignore
+	databaseConnector.designatedSite.findMany.mockResolvedValue([
+		{
+			name: 'SSSI (site of special scientific interest)',
+			key: 'SSSI'
+		},
+		{
+			name: 'cSAC (candidate special area of conservation)',
+			key: 'cSAC'
+		}
+	]);
 
 	// @ts-ignore
 	databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([

@@ -68,5 +68,16 @@ export const createSharedS20S78Fields = (command, designatedSites) => ({
 	infrastructureLevyExpectedDate: command.casedata.infrastructureLevyExpectedDate,
 	lpaProcedurePreference: command.casedata.lpaProcedurePreference,
 	lpaProcedurePreferenceDetails: command.casedata.lpaProcedurePreferenceDetails,
-	lpaProcedurePreferenceDuration: command.casedata.lpaProcedurePreferenceDuration
+	lpaProcedurePreferenceDuration: command.casedata.lpaProcedurePreferenceDuration,
+	dateCostsReportDespatched: command.casedata.dateCostsReportDespatched,
+	dateNotRecoveredOrDerecovered: command.casedata.dateNotRecoveredOrDerecovered,
+	dateRecovered: command.casedata.dateRecovered,
+	importantInformation: command.casedata.importantInformation,
+	lpaAddedWitnesses: command.casedata.lpaAddedWitnesses,
+	lpaFinalCommentDetails: command.casedata.lpaFinalCommentDetails,
+	originalCaseDecisionDate: command.casedata.originalCaseDecisionDate,
+	redeterminedIndicator: command.casedata.redeterminedIndicator,
+	siteNoticesSentDate: command.casedata.siteNoticesSentDate,
+	siteWithinSSSI: command.casedata.siteWithinSSSI,
+	targetDate: command.casedata.targetDate
 });
