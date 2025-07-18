@@ -22,6 +22,8 @@ import { EventType } from '@pins/event-client';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { isCurrentStatus } from '#utils/current-status.js';
 import config from '#config/config.js';
+import * as CONSTANTS from '@pins/appeals/constants/support.js';
+import { camelToScreamingSnake } from '#utils/string-utils.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -65,6 +67,34 @@ export const getRepresentationCounts = async (appealId, options = {}) => {
  * @param {number} id
  */
 export const getRepresentation = representationRepository.getById;
+
+/**
+ *
+ * @param {string} status
+ * @param {string} repType
+ * @param {Boolean} redactedRep
+ * @returns String
+ */
+export const getRepStatusAuditLogDetails = (status, repType, redactedRep) => {
+	let auditText;
+	const auditTitle = 'AUDIT_TRAIL_REP_';
+	const valid = '_STATUS_VALID';
+	const invalid = '_STATUS_INVALID';
+	const incomplete = '_STATUS_INCOMPLETE';
+	const redactedAccepted = '_STATUS_REDACTED_AND_ACCEPTED';
+
+	if (status === APPEAL_REPRESENTATION_STATUS.VALID && redactedRep === true) {
+		auditText = auditTitle + camelToScreamingSnake(repType) + redactedAccepted;
+	} else if (status === APPEAL_REPRESENTATION_STATUS.VALID) {
+		auditText = auditTitle + camelToScreamingSnake(repType) + valid;
+	} else if (status === APPEAL_REPRESENTATION_STATUS.INVALID) {
+		auditText = auditTitle + camelToScreamingSnake(repType) + invalid;
+	} else if (status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE) {
+		auditText = auditTitle + camelToScreamingSnake(repType) + incomplete;
+	}
+	// @ts-ignore
+	return CONSTANTS[auditText];
+};
 
 /** @typedef {Awaited<ReturnType<getRepresentation>>} DBRepresentation */
 
