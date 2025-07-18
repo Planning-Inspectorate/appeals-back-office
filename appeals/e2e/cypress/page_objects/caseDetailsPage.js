@@ -24,6 +24,7 @@ export class CaseDetailsPage extends Page {
 		arrangeScheduleVisit: 'arrange-schedule-visit',
 		readyToStart: 'ready-to-start',
 		issueDetermination: 'issue-determination',
+		linkedAppeal: 'linked-appeal-',
 		addLinkedAppeal: 'add-linked-appeal',
 		manageLinkedAppeals: 'manage-linked-appeals',
 		addRelatedAppeals: 'add-related-appeals',
@@ -56,7 +57,8 @@ export class CaseDetailsPage extends Page {
 		changeApplicationReference: 'change-application-reference',
 		viewCaseHistory: 'view-case-history',
 		uploadFile: 'upload-file-button',
-		setUpTimetableHearingDate: 'set up-timetable-hearing-date'
+		setUpTimetableHearingDate: 'set up-timetable-hearing-date',
+		pageHeading: 'h1'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -94,7 +96,7 @@ export class CaseDetailsPage extends Page {
 			cy.getByData(this._cyDataSelectors.addMainPartyCorrespondence),
 		manageLinkedAppeals: () => cy.getByData(this._cyDataSelectors.manageLinkedAppeals),
 		manageNotifyingParties: () => cy.getByData(this._cyDataSelectors.manageNotifyingParties),
-		clickLinkedAppeal: () => cy.getByData(this._cyDataSelectors.clickLinkedAppeal),
+		linkedAppeal: () => cy.get(`[data-cy^=${this._cyDataSelectors.linkedAppeal}]`),
 		manageRelatedAppeals: () => cy.getByData(this._cyDataSelectors.manageRelatedAppeals),
 		uploadFile: () => cy.getByData(this._cyDataSelectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
@@ -175,7 +177,8 @@ export class CaseDetailsPage extends Page {
 		setUpTimetableHearingDate: () => cy.getByData(this._cyDataSelectors.setUpTimetableHearingDate),
 		timeTableRows: () => cy.get('.appeal-case-timetable dt'),
 		personalListFilterDropdown: () => cy.get('.govuk-select'),
-		caseDetailsSections: () => cy.get('.govuk-accordion__section-heading-text-focus')
+		caseDetailsSections: () => cy.get('.govuk-accordion__section-heading-text-focus'),
+		pageHeading: () => cy.get(this._cyDataSelectors.pageHeading)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -756,4 +759,8 @@ export class CaseDetailsPage extends Page {
 	verifyAppealType(expectedAppealType) {
 		this.elements.appealType().should('contain', expectedAppealType);
 	}
+
+	checkHeading = (expectedText) => {
+		this.elements.pageHeading().should('have.text', expectedText);
+	};
 }

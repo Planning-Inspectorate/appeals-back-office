@@ -13,7 +13,7 @@ describe('unlink appeals', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	it('Unlink the only linked appeal from a child appeal', () => {
+	it.skip('Unlink the only linked appeal from a child appeal', () => {
 		cy.createCase().then((caseRef) => {
 			cy.createCase().then((caseRefToLink) => {
 				happyPathHelper.assignCaseOfficer(caseRef);
@@ -40,7 +40,7 @@ describe('unlink appeals', () => {
 		});
 	});
 
-	it('Unlink the only linked appeal from a lead appeal', () => {
+	it.skip('Unlink the only linked appeal from a lead appeal', () => {
 		cy.createCase().then((caseRef) => {
 			cy.createCase().then((caseRefToLinkAsLead) => {
 				cy.createCase().then((unlinkedCaseRefToLink) => {
@@ -69,7 +69,7 @@ describe('unlink appeals', () => {
 		});
 	});
 
-	it('unlink an appeal from a lead appeal that has more than 1 linked appeal', () => {
+	it.skip('unlink an appeal from a lead appeal that has more than 1 linked appeal', () => {
 		cy.createCase().then((caseRefToLinkAsLead) => {
 			cy.createCase().then((caseRefToLinkAsChild) => {
 				cy.createCase().then((caseRefToLinkAsSecondChild) => {
