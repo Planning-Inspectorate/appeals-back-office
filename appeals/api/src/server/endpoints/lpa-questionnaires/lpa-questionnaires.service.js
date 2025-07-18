@@ -104,8 +104,8 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			);
 		}
 
-		await sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress);
-		await sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress);
+		await sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress, azureAdUserId);
+		await sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azureAdUserId);
 	}
 
 	const updatedAppeal = await appealRepository.getAppealById(Number(appealId));
@@ -131,6 +131,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			};
 
 			await notifySend({
+				azureAdUserId,
 				templateName: 'lpaq-incomplete',
 				notifyClient,
 				recipientEmail,
@@ -146,15 +147,17 @@ const updateLPAQuestionnaireValidationOutcome = async (
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {Appeal} appeal
  * @param {string} siteAddress
+ * @param {string} azureAdUserId
  * */
-function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress) {
+function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress, azureAdUserId) {
 	const email = appeal.lpa?.email;
 	return sendLpaqCompleteEmail(
 		notifyClient,
 		appeal,
 		{ site_address: siteAddress },
 		'lpaq-complete-lpa',
-		email
+		email,
+		azureAdUserId
 	);
 }
 
@@ -162,8 +165,9 @@ function sendLpaqCompleteEmailToLPA(notifyClient, appeal, siteAddress) {
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {Appeal} appeal
  * @param {string} siteAddress
+ * @param {string} azureAdUserId
  * */
-function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress) {
+function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azureAdUserId) {
 	const email = appeal.appellant?.email ?? appeal.agent?.email;
 	const whatHappensNext =
 		'We will send you another email when the local planning authority submits their statement ' +
@@ -179,7 +183,8 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress) {
 				appeal,
 				fields,
 				'lpaq-complete-has-appellant',
-				email
+				email,
+				azureAdUserId
 			);
 		case APPEAL_TYPE.S78:
 			if (String(appeal.procedureType) === APPEAL_CASE_PROCEDURE.HEARING) {
@@ -194,12 +199,27 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress) {
 						what_happens_next: 'We will contact you if we need any more information.'
 					},
 					s78Template,
-					email
+					email,
+					azureAdUserId
 				);
 			}
-			return sendLpaqCompleteEmail(notifyClient, appeal, s78Fields, s78Template, email);
+			return sendLpaqCompleteEmail(
+				notifyClient,
+				appeal,
+				s78Fields,
+				s78Template,
+				email,
+				azureAdUserId
+			);
 		default:
-			return sendLpaqCompleteEmail(notifyClient, appeal, s78Fields, s78Template, email);
+			return sendLpaqCompleteEmail(
+				notifyClient,
+				appeal,
+				s78Fields,
+				s78Template,
+				email,
+				azureAdUserId
+			);
 	}
 }
 
@@ -210,8 +230,16 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress) {
  * @param {Record<string, string | undefined>} fields
  * @param {string} templateName
  * @param {string | null | undefined} recipientEmail
+ * @param {string | undefined} azureAdUserId
  */
-async function sendLpaqCompleteEmail(notifyClient, appeal, fields, templateName, recipientEmail) {
+async function sendLpaqCompleteEmail(
+	notifyClient,
+	appeal,
+	fields,
+	templateName,
+	recipientEmail,
+	azureAdUserId
+) {
 	const personalisation = {
 		...fields,
 		appeal_reference_number: appeal.reference,
@@ -219,6 +247,7 @@ async function sendLpaqCompleteEmail(notifyClient, appeal, fields, templateName,
 	};
 
 	await notifySend({
+		azureAdUserId,
 		templateName,
 		notifyClient,
 		recipientEmail,

@@ -325,6 +325,7 @@ describe('lpa questionnaires routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							lpa_reference: test.appeal.applicationReference,
@@ -336,6 +337,7 @@ describe('lpa questionnaires routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: test.personalisation,
 						recipientEmail: test.appeal.appellant.email,
@@ -990,6 +992,7 @@ describe('lpa questionnaires routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							lpa_reference: appeal.applicationReference,

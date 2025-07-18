@@ -575,6 +575,7 @@ describe('appellant cases routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
@@ -846,6 +847,7 @@ describe('appellant cases routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
@@ -930,6 +932,7 @@ describe('appellant cases routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,

@@ -160,6 +160,7 @@ const startCase = async (
 
 			if (appellantEmail) {
 				await notifySend({
+					azureAdUserId,
 					templateName: appellantTemplate,
 					notifyClient,
 					recipientEmail: appellantEmail,
@@ -174,6 +175,7 @@ const startCase = async (
 
 			if (lpaEmail) {
 				await notifySend({
+					azureAdUserId,
 					templateName: lpaTemplate,
 					notifyClient,
 					recipientEmail: lpaEmail,
@@ -251,7 +253,7 @@ const updateAppealTimetable = async (appeal, body, notifyClient, azureAdUserId) 
 		});
 
 		if (shouldSendNotify(appeal.appealType?.key, appeal.procedureType?.key)) {
-			await sendTimetableUpdateNotify(appeal, processedBody, notifyClient);
+			await sendTimetableUpdateNotify(appeal, processedBody, notifyClient, azureAdUserId);
 		}
 		await broadcasters.broadcastAppeal(appeal.id);
 	}
@@ -270,9 +272,10 @@ const dueDateToAppealTimetableTextMapper = {
  * @param {Appeal} appeal
  * @param {object} processedBody
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
  * @returns {Promise<void>}
  */
-const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient) => {
+const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, azureAdUserId) => {
 	const siteAddress = appeal.address
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
@@ -324,6 +327,7 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient) =>
 
 	if (recipientEmail) {
 		await notifySend({
+			azureAdUserId,
 			templateName,
 			notifyClient,
 			recipientEmail,
@@ -333,6 +337,7 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient) =>
 
 	if (lpaEmail) {
 		await notifySend({
+			azureAdUserId,
 			templateName,
 			notifyClient,
 			recipientEmail: lpaEmail,

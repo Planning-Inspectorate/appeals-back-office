@@ -239,6 +239,7 @@ describe('decision routes', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
 				personalisation: {
@@ -252,6 +253,7 @@ describe('decision routes', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
 				personalisation: {
 					appeal_reference_number: appeal.reference,
@@ -371,6 +373,7 @@ describe('decision routes', () => {
 
 			expectedRecipients.forEach((recipient) => {
 				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.any(Object),
 					templateName: 'correction-notice-decision',
 					recipientEmail: recipient.email,
@@ -426,6 +429,7 @@ describe('decision routes', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
 				templateName: 'correction-notice-decision',
 				recipientEmail: appealWithMissingEmails.lpa.email,

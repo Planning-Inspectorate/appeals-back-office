@@ -74,7 +74,8 @@ export const postHearing = async (req, res) => {
 				})
 			},
 			appeal,
-			req.notifyClient
+			req.notifyClient,
+			azureAdUserId
 		);
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) && address) {
@@ -134,7 +135,8 @@ export const rearrangeHearing = async (req, res) => {
 				})
 			},
 			appeal,
-			req.notifyClient
+			req.notifyClient,
+			azureAdUserId
 		);
 
 		if (
@@ -186,7 +188,12 @@ export const cancelHearing = async (req, res) => {
 	} = req;
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	try {
-		await deleteHearing({ hearingId: Number(hearingId) }, req.notifyClient, req.appeal);
+		await deleteHearing(
+			{ hearingId: Number(hearingId) },
+			req.notifyClient,
+			req.appeal,
+			azureAdUserId
+		);
 		await transitionState(Number(appealId), azureAdUserId, VALIDATION_OUTCOME_CANCEL);
 		await createAuditTrail({
 			appealId: Number(appealId),

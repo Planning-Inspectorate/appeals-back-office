@@ -331,6 +331,7 @@ describe('site visit routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-schedule-unaccompanied-appellant',
 						personalisation: {
@@ -385,6 +386,7 @@ describe('site visit routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-schedule-accompanied-appellant',
 						personalisation: {
@@ -400,6 +402,7 @@ describe('site visit routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-schedule-accompanied-lpa',
 						personalisation: {
@@ -457,6 +460,7 @@ describe('site visit routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-schedule-access-required-appellant',
 						personalisation: {
@@ -1261,6 +1265,7 @@ describe('site visit routes', () => {
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.any(Object),
 					templateName: 'site-visit-change-unaccompanied-to-access-required-appellant',
 					personalisation: {
@@ -1338,6 +1343,7 @@ describe('site visit routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-to-unaccompanied-appellant',
 						personalisation: {
@@ -1353,6 +1359,7 @@ describe('site visit routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-to-unaccompanied-lpa',
 						personalisation: {
@@ -1432,6 +1439,7 @@ describe('site visit routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-access-required-date-change-appellant',
 						personalisation: {
@@ -1510,6 +1518,7 @@ describe('site visit routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-date-change-appellant',
 						personalisation: {
@@ -1525,6 +1534,7 @@ describe('site visit routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-date-change-lpa',
 						personalisation: {
@@ -1603,6 +1613,7 @@ describe('site visit routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-to-unaccompanied-appellant',
 						personalisation: {
@@ -1618,6 +1629,7 @@ describe('site visit routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-to-unaccompanied-lpa',
 						personalisation: {
@@ -1696,6 +1708,7 @@ describe('site visit routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-unaccompanied-to-accompanied-appellant',
 						personalisation: {
@@ -1711,6 +1724,7 @@ describe('site visit routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-unaccompanied-to-accompanied-lpa',
 						personalisation: {
@@ -1790,6 +1804,7 @@ describe('site visit routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-access-required-to-accompanied-appellant',
 						personalisation: {
@@ -1805,6 +1820,7 @@ describe('site visit routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-access-required-to-accompanied-lpa',
 						personalisation: {
@@ -1883,6 +1899,7 @@ describe('site visit routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-to-access-required-appellant',
 						personalisation: {
@@ -1898,6 +1915,7 @@ describe('site visit routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-accompanied-to-access-required-lpa',
 						personalisation: {
@@ -1976,6 +1994,7 @@ describe('site visit routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-access-required-to-unaccompanied-appellant',
 						personalisation: {
@@ -2055,6 +2074,7 @@ describe('site visit routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						templateName: 'site-visit-change-unaccompanied-to-access-required-appellant',
 						personalisation: {

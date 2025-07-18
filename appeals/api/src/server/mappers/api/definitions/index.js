@@ -22,6 +22,7 @@ import { InvalidIncompleteReason } from './invalid-incomplete.js';
 import { ListedBuilding } from './listed-building.js';
 import { DesignatedSiteName } from './designated-site-name.js';
 import { Notifications } from './notification.js';
+import { AuditNotifications } from './audit-notification.js';
 
 const partials = {
 	Address,
@@ -56,5 +57,6 @@ export const ApiDefinitions = {
 	Appeal,
 	AppellantCaseUpdateRequest,
 	LpaQuestionnaireUpdateRequest,
-	Notifications
+	Notifications,
+	AuditNotifications
 };

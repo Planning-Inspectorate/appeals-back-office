@@ -16,6 +16,7 @@ import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js'
  * @property {Appeal} appeal
  * @property {Representation} representation
  * @property {boolean} allowResubmit
+ * @property {string|undefined} azureAdUserId
  * */
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -27,7 +28,8 @@ export const ipCommentRejection = async ({
 	notifyClient,
 	appeal,
 	representation,
-	allowResubmit
+	allowResubmit,
+	azureAdUserId
 }) => {
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
@@ -51,6 +53,7 @@ export const ipCommentRejection = async ({
 		};
 
 		await notifySend({
+			azureAdUserId,
 			templateName,
 			notifyClient,
 			recipientEmail,
@@ -60,7 +63,12 @@ export const ipCommentRejection = async ({
 };
 
 /** @type {Service} */
-export const appellantFinalCommentRejection = async ({ notifyClient, appeal, representation }) => {
+export const appellantFinalCommentRejection = async ({
+	notifyClient,
+	appeal,
+	representation,
+	azureAdUserId
+}) => {
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
 
@@ -70,6 +78,7 @@ export const appellantFinalCommentRejection = async ({ notifyClient, appeal, rep
 	}
 
 	await notifySend({
+		azureAdUserId,
 		templateName: 'final-comment-rejected-appellant',
 		notifyClient,
 		recipientEmail,
@@ -83,7 +92,12 @@ export const appellantFinalCommentRejection = async ({ notifyClient, appeal, rep
 };
 
 /** @type {Service} */
-export const lpaFinalCommentRejection = async ({ notifyClient, appeal, representation }) => {
+export const lpaFinalCommentRejection = async ({
+	notifyClient,
+	appeal,
+	representation,
+	azureAdUserId
+}) => {
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
 
@@ -93,6 +107,7 @@ export const lpaFinalCommentRejection = async ({ notifyClient, appeal, represent
 	}
 
 	await notifySend({
+		azureAdUserId,
 		templateName: 'final-comment-rejected-lpa',
 		notifyClient,
 		recipientEmail,
@@ -110,7 +125,8 @@ export const lpaStatementIncomplete = async ({
 	notifyClient,
 	appeal,
 	representation,
-	allowResubmit
+	allowResubmit,
+	azureAdUserId
 }) => {
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
@@ -123,6 +139,7 @@ export const lpaStatementIncomplete = async ({
 	}
 
 	await notifySend({
+		azureAdUserId,
 		templateName: 'lpa-statement-incomplete',
 		notifyClient,
 		recipientEmail,

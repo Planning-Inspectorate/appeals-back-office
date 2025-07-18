@@ -218,7 +218,8 @@ export async function updateRepresentation(request, response) {
 			notifyClient: request.notifyClient,
 			appeal: request.appeal,
 			representation: { ...updatedRep, status: existingRep.status },
-			allowResubmit
+			allowResubmit,
+			azureAdUserId: request.get('azureAdUserId')
 		});
 	}
 
