@@ -376,6 +376,7 @@ export class Page {
 			.contains(caseRef)
 			.parents('tr')
 			.find('.govuk-tag')
+			.last()
 			.should('have.text', expectedTagText);
 	}
 

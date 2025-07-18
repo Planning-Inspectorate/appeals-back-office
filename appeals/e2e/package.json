@@ -8,7 +8,7 @@
 		"cy:run": "npx cypress run",
 		"cy:open-smoke": "npx cypress open --browser chrome --e2e --env grepTags='smoke'",
 		"cy:run-smoke": "npx cypress run --env grepTags='smoke'",
-		"cy:ci": "npx cypress run --env isCI=true"
+		"cy:ci": "npx cypress run --env isCI=true  --spec 'cypress/e2e/back-office-appeals/hearing.spec.js'"
 	},
 	"author": "",
 	"license": "ISC",
