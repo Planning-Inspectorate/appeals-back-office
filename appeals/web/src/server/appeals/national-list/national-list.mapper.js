@@ -113,7 +113,7 @@ export function nationalListPage(
 	}
 
 	if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
-		enabledAppealTypes.push(APPEAL_CASE_TYPE.Z);
+		enabledAppealTypes.push(APPEAL_CASE_TYPE.ZP);
 	}
 	const appealTypeFilterItemsArray = [
 		{

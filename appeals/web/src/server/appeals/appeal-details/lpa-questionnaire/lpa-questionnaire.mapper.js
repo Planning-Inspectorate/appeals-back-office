@@ -733,8 +733,8 @@ function generateCaseTypeSpecificComponents(appealDetails, mappedAppealDetails, 
 	switch (appealDetails.appealType) {
 		case APPEAL_TYPE.HOUSEHOLDER:
 			return generateHASLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
-		case APPEAL_TYPE.COMMERCIAL:
-			if (isFeatureActive(FEATURE_FLAG_NAMES.COMMERCIAL_APPEAL)) {
+		case APPEAL_TYPE.CAS_PLANNING:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
 				return generateHASLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
 			} else {
 				throw new Error('Feature flag inactive for CAS');

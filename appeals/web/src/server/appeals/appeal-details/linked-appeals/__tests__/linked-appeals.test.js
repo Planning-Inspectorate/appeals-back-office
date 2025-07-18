@@ -38,7 +38,7 @@ const leadAppealDataWithLinkedAppeals = {
 			appealType: 'Unknown',
 			relationshipId: 1,
 			externalSource: true,
-			externalAppealType: 'Commercial'
+			externalAppealType: 'CAS planning'
 		}
 	]
 };

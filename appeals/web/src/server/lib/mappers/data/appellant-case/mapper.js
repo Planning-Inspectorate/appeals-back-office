@@ -23,7 +23,7 @@ const submaps = {
 	[APPEAL_TYPE.HOUSEHOLDER]: hasSubmaps,
 	[APPEAL_TYPE.S78]: s78Submaps,
 	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s20Submaps,
-	[APPEAL_TYPE.COMMERCIAL]: casSubmaps
+	[APPEAL_TYPE.CAS_PLANNING]: casSubmaps
 };
 
 /**
