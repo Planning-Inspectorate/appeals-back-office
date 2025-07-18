@@ -420,7 +420,7 @@ export const appealDataListedBuilding = {
 
 export const appealDataCasPlanning = {
 	...appealData,
-	appealType: 'Commercial (CAS) appeal'
+	appealType: 'CAS planning'
 };
 
 export const appellantCaseDataNotValidated = {

@@ -100,7 +100,7 @@ const appealTypes = [
 	},
 	{
 		id: 13,
-		type: 'Commercial (CAS) appeal',
+		type: 'CAS planning',
 		key: 'Z',
 		processCode: null,
 		enabled: false

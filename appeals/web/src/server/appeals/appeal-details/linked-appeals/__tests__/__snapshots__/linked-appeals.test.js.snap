@@ -241,7 +241,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
                 <td class="govuk-table__cell"><a class="govuk-link" href="https://test-horizon-url.gov.uk?appealId=3"
                     data-cy="76215416">76215416</a>
                 </td>
-                <td class="govuk-table__cell">Commercial</td>
+                <td class="govuk-table__cell">CAS planning</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/1/2">Unlink<span class="govuk-visually-hidden"> appeal 7 6 2 1 5 4 1 6</span></a>
                 </td>
             </tr>
@@ -281,7 +281,7 @@ exports[`linked-appeals GET /linked-appeals/manage should render the manage link
                 <td class="govuk-table__cell"><a class="govuk-link" href="https://test-horizon-url.gov.uk?appealId=3"
                     data-cy="76215416">76215416</a>
                 </td>
-                <td class="govuk-table__cell">Commercial</td>
+                <td class="govuk-table__cell">CAS planning</td>
                 <td class="govuk-table__cell govuk-!-text-align-right"><a class="govuk-link" data-cy="unlink-appeal-APP/Q9999/D/21/351062" href="/appeals-service/appeal-details/1/linked-appeals/unlink-appeal/3/1/1">Unlink<span class="govuk-visually-hidden"> appeal 7 6 2 1 5 4 1 6</span></a>
                 </td>
             </tr>
