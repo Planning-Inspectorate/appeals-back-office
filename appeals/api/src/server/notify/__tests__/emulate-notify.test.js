@@ -61,7 +61,13 @@ describe('emulate-notify.test', () => {
 			'The Planning Inspectorate<br>'
 		].join('\n');
 
-		const fileName = emulateSendEmail('test-template', 'test@136s7.com', subject, content);
+		const fileName = emulateSendEmail(
+			'1234567',
+			'test-template',
+			'test@136s7.com',
+			subject,
+			content
+		);
 		const emailText = fs.readFileSync(fileName, { encoding: 'utf8' }).trim();
 
 		expect(emailText).toBe(expectedEmailText);
