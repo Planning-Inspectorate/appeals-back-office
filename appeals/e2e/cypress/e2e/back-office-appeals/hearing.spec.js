@@ -568,7 +568,7 @@ describe('Setup hearing and add hearing estimates', () => {
 			hearingSectionPage.verifyIssueDecision(caseRef);
 
 			hearingSectionPage.verifyCaseHistory([
-				'Case started',
+				'Appeal started',
 				'Appeal procedure: hearing',
 				'The case has progressed to Hearing ready to set up',
 				`Hearing set up on ${formatDateAndTime(hearingDate).date}`,
