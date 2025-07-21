@@ -10,7 +10,7 @@ parameters:
   - name: deployAppealsPDF
     displayName: Deploy Appeals PDF Generator
     type: boolean
-    default: false
+    default: true
   - name: deployFunctionAppealsCasedataImport
     displayName: Deploy Function - Appeals Casedata Import
     type: boolean
@@ -238,6 +238,18 @@ extends:
               - template: ../steps/azure_web_app_slot_swap.yml
                 parameters:
                   appName: pins-app-appeals-bo-web-$(ENVIRONMENT)
+                  appResourceGroup: $(resourceGroup)
+                  appStagingSlotName: staging
+                  appTargetSlotName: production
+          - name: Release Appeals PDF
+            displayName: Slot swap on PDF Release
+            condition: and(succeeded(), eq(${{ parameters.slotDeployment }}, true), eq(${{ parameters.deployAppealsPDF }}, true))
+            dependsOn:
+              - Deploy Appeals PDF Generator
+            steps:
+              - template: ../steps/azure_web_app_slot_swap.yml
+                parameters:
+                  appName: pins-app-appeals-bo-pdf-$(ENVIRONMENT)
                   appResourceGroup: $(resourceGroup)
                   appStagingSlotName: staging
                   appTargetSlotName: production
