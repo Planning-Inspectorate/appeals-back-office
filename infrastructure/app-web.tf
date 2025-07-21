@@ -45,7 +45,7 @@ module "app_web" {
     APP_HOSTNAME = var.web_app_domain
 
     # PDF generator host
-    PDF_SERVICE_URL               = module.app_pdf.default_site_hostname
+    PDF_SERVICE_HOST              = "https://${module.app_pdf.default_site_hostname}"
   
     # auth
     APPEALS_CASE_OFFICER_GROUP_ID = var.apps_config.auth.group_ids.case_officer
@@ -94,6 +94,9 @@ module "app_web" {
     FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT = var.apps_config.featureFlags.featureFlagSimplifyTeamAssignment
     FEATURE_FLAG_CHANGE_APPEAL_TYPE       = var.apps_config.featureFlags.featureFlagChangeAppealType
     FEATURE_FLAG_PDF_DOWNLOAD             = var.apps_config.featureFlags.featureFlagPdfDownload
+
+    # PDF service host
+    PDF_SERVICE_HOST             = var.apps_config.pdf_service_host
 
     #change LPA
     USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA = var.apps_config.use_system_test_bc_for_change_lpa
