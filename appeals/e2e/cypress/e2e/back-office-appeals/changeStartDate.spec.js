@@ -19,7 +19,7 @@ describe('Change start date', () => {
 			happyPathHelper.startCase(caseRef);
 			happyPathHelper.changeStartDate(caseRef);
 			cy.getBusinessActualDate(new Date(), 0).then((newDate) => {
-				caseDetailsPage.verifyDateChanges('start-date', new Date(newDate.toUTCString()));
+				caseDetailsPage.verifyDateChanges('start-date', new Date(newDate.toISOString()));
 			});
 		});
 	});
@@ -33,7 +33,7 @@ describe('Change start date', () => {
 			happyPathHelper.startS78Case(caseRef, 'hearing');
 			happyPathHelper.changeStartDate(caseRef);
 			cy.getBusinessActualDate(new Date(), 0).then((newDate) => {
-				caseDetailsPage.verifyDateChanges('start-date', new Date(newDate.toUTCString()));
+				caseDetailsPage.verifyDateChanges('start-date', new Date(newDate.toISOString()));
 			});
 
 			//Notify
