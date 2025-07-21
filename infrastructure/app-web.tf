@@ -96,9 +96,6 @@ module "app_web" {
     FEATURE_FLAG_PDF_DOWNLOAD             = var.apps_config.featureFlags.featureFlagPdfDownload
     FEATURE_FLAG_NOTIFY_CASE_HISTORY      = var.apps_config.featureFlags.featureFlagNotifyCaseHistory
 
-    # PDF service host
-    PDF_SERVICE_HOST             = var.apps_config.pdf_service_host
-
     #change LPA
     USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA = var.apps_config.use_system_test_bc_for_change_lpa
 
