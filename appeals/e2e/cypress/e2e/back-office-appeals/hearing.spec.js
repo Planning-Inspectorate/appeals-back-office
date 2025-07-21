@@ -338,11 +338,16 @@ describe('Setup hearing and add hearing estimates', () => {
 			cy.loadAppealDetails(caseRef).then((appealDetails) => {
 				const hearing = appealDetails?.hearing;
 
+				cy.log(`This is toUTCString - API: ${new Date(hearing.hearingStartTime).toUTCString()}`);
+				cy.log(`This is toISOString - API: ${new Date(hearing.hearingStartTime).toISOString()}`);
+				cy.log(`This is toUTCString - Date Set: ${date.toUTCString()}`);
+				cy.log(`This is toISOString - Date Set: ${date.toISOString()}`);
+
 				expect(hearing.hearingId).to.be.a('number');
 				expect(hearing.addressId).to.be.a('number');
 
 				expect(
-					hearingSectionPage.getTimeUpToMinutes(new Date(hearing.hearingStartTime).toISOString())
+					hearingSectionPage.getTimeUpToMinutes(new Date(hearing.hearingStartTime).toUTCString())
 				).to.equal(hearingSectionPage.getTimeUpToMinutes(date.toISOString()));
 
 				const actualAddress = hearing.address;
