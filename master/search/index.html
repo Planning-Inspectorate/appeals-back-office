@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search results | Appeal service</title>
+    <link href="https://cdn.jsdelivr.net/npm/bulma@1.0.3/css/bulma.min.css" rel="stylesheet">
+    <link href="../../style.css" rel="stylesheet">
+    <link href="./../style-branding.css" rel="stylesheet">
+    <script type="text/javascript" src="../../modal.js"></script>
+    <script type="text/javascript" src="../../svg-modal.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript" src="../../header.js"></script>
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand has-site-branding"><a href="../" class="navbar-item"><span class="has-text-weight-semibold has-site-branding">Appeal service</span></a></div>
+      <div class="navbar-menu has-site-branding">
+        <div class="navbar-end">
+          <div class="navbar-item"><input class="input is-small is-rounded" id="search" type="search" size="30" maxlength="50" placeholder="Search..." onkeyup="redirect(event, value, './')"></div>
+          <div class="navbar-item has-dropdown is-hoverable"><a class="navbar-link has-site-branding">master</a>
+            <div class="navbar-dropdown is-right"><a href="../../master/" class="navbar-item">master</a>
+              <hr class="navbar-divider">
+              <div class="navbar-item has-text-grey-light"><span>v</span><span>0.0.0</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="site-layout" id="site">
+      <aside class="menu p-3">
+        <p class="menu-label">General</p>
+        <ul class="menu-list has-site-branding">
+          <li><a href="../" class="">Home</a><a href="../software-systems/" class="">Software Systems</a></li>
+        </ul>
+        <p class="menu-label">Software systems</p>
+        <ul class="menu-list has-site-branding">
+          <li><a href="../appeals-back-office/" class="">Appeals Back-Office</a><a href="../appeals-front-office/" class="">Appeals Front-Office</a><a href="../gov-notify/" class="">GOV Notify</a><a href="../integration-layer/" class="">Integration Layer</a></li>
+        </ul>
+      </aside>
+      <div class="container is-fluid">
+        <div class="content p-3">
+          <h2>Search results</h2>
+          <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script>
+          <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lunr-languages@1.14.0/min/lunr.stemmer.support.min.js"></script>
+          <script type="text/javascript">const documents = [{"href":"../","type":"Home","title":"Appeals Architecture","text":"Appeals Architecture This document describes the architecture of the Appeals software system including:"},{"href":"../appeals-front-office/","type":"Software System Info","title":"Appeals Front-Office | Info","text":"systemappsfo"},{"href":"../appeals-front-office/context/","type":"Context views","title":"Appeals Front-Office | Context views","text":"Appeals Front-Office Public dashboards for appellants and LPAs"},{"href":"../appeals-front-office/container/","type":"Container views","title":"Appeals Front-Office | Container views","text":"Blob storage for documents Stores all files uploaded in the Front-Office Node.js, Azure Web App, Azure Function App"},{"href":"../appeals-front-office/dependencies/","type":"Dependencies","title":"Appeals Front-Office | Dependencies","text":"Integration Layer Records appellant submissions Service Bus Topic Service Bus Records appellant submissions Service Bus Topic Service Bus Appeal submission topic Records appellant submissions Service Bus Topic Service Bus LPA submission topic Records LPA submissions Service Bus Topic Appeals Back-Office Copies documents to import Integration Layer Informs subscribers of changes to appeals Service Bus Topic"},{"href":"../appeals-back-office/","type":"Software System Info","title":"Appeals Back-Office | Info","text":"systemappsbo"},{"href":"../appeals-back-office/context/","type":"Context views","title":"Appeals Back-Office | Context views","text":"Appeals Back-Office Internal service to manage planning appeals in England"},{"href":"../appeals-back-office/container/","type":"Container views","title":"Appeals Back-Office | Container views","text":"Appeal Back-Office API API Node.js, Azure Web App Appeal Back-Office Web Web UI Node.js, Azure Web App Azure SQL Database Data store for appeals Azure SQL Casedata import Consumes appellant and LPA submissions from Service Bus Function App, JavaScript Document processing Copies blobs from Front-Office, processes virus scanning Function App, JavaScript Entra ID Authentication, RBAC Redis Distributed session storage Storage Account Document storage"},{"href":"../appeals-back-office/dependencies/","type":"Dependencies","title":"Appeals Back-Office | Dependencies","text":"Appeals Front-Office Copies documents to import Blob storage for documents Copies documents to import GOV Notify Sends emails Email GOV Notify Sends emails Email Integration Layer Records changes to appeals Service Bus Topic Service Bus Records changes to appeals Service Bus Topic Service Bus Appeal topic Records changes to appeals Service Bus Topic Service Bus Document topic Records changes to documents Service Bus Service Bus Event topic Records changes to site visits and other events Service Bus Topic Service Bus Service User topic Records changes to user information Service Bus Topic Integration Layer Requests the creation of appeals Service Bus Topic"},{"href":"../integration-layer/","type":"Software System Info","title":"Integration Layer | Info","text":"systemintegration"},{"href":"../integration-layer/context/","type":"Context views","title":"Integration Layer | Context views","text":"Integration Layer Distributed messaging platform to exchange data between applications"},{"href":"../integration-layer/container/","type":"Container views","title":"Integration Layer | Container views","text":"Azure Event Grid , Reports virus scan results for uploaded blobs Operational Data Warehouse (ODW) Holds all Planning Inspectorate data so that it can be used for internal purposes Service Bus Messaging platform for data exchange Azure Service Bus Namespace"},{"href":"../integration-layer/component/","type":"Component views","title":"Integration Layer | Component views","text":"Service Bus Appeal submission topic Appeal submission command Service Bus Appeal topic Appeal messages Service Bus Document topic Appeal document messages Service Bus Event topic Event message Service Bus LPA submission topic LPA submission command Service Bus Service User topic Service user messages"},{"href":"../integration-layer/dependencies/","type":"Dependencies","title":"Integration Layer | Dependencies","text":"Appeals Back-Office Requests the creation of appeals Service Bus Topic Appeals Front-Office Informs subscribers of changes to appeals Service Bus Topic Casedata import Requests the creation of appeals Service Bus Topic Document processing Reports virus scan results Event Grid Topic Appeals Back-Office Records changes to appeals Service Bus Topic Appeals Front-Office Records appellant submissions Service Bus Topic"},{"href":"../gov-notify/","type":"Software System Info","title":"GOV Notify | Info","text":"systemgovuk"},{"href":"../gov-notify/context/","type":"Context views","title":"GOV Notify | Context views","text":"GOV Notify UK government messaging platform for sending emails, text and letters to users"},{"href":"../gov-notify/container/","type":"Container views","title":"GOV Notify | Container views","text":"GOV Notify UK government messaging platform for sending emails, text and letters to users"},{"href":"../gov-notify/dependencies/","type":"Dependencies","title":"GOV Notify | Dependencies","text":"Appellant Notifies the appellant Email LPA Notifies the LPA Email Appeals Back-Office Sends emails Email"}];const idx = lunr(function () {
+                        this.ref('href')
+                        this.field('text')
+
+                        documents.forEach(function (doc) {
+                          this.add(doc)
+                        }, this)
+                      });
+                    </script>
+          <script type="text/javascript" src="../../search.js"></script>
+          <div id="search-results"></div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="../../reformat-mermaid.js"></script>
+    <script type="module">import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs';</script>
+  </body>
+</html>

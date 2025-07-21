@@ -1,0 +1,37 @@
+@startuml
+set separator none
+title System Landscape
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+
+AddBoundaryTag("Planning Inspectorate: Appeal Service", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="dashed")
+Boundary(group_1, "Planning Inspectorate: Appeal Service", $tags="Planning Inspectorate: Appeal Service") {
+  System(IntegrationLayer, "Integration Layer", $descr="Distributed messaging platform to exchange data between applications", $tags="", $link="")
+  Person(Caseofficer, "Case officer", $descr="Validates and manages case data, documents and general appeal processing", $tags="", $link="")
+  Person(Inspector, "Inspector", $descr="Inspects the appeal site and issues appeal decisions", $tags="", $link="")
+  System(AppealsFrontOffice, "Appeals Front-Office", $descr="Public dashboards for appellants and LPAs", $tags="", $link="")
+  System(AppealsBackOffice, "Appeals Back-Office", $descr="Internal service to manage planning appeals in England", $tags="", $link="")
+}
+
+Person(LPA, "LPA", $descr="A local planning authority, issuing decisions on planning applications", $tags="", $link="")
+Person(Appellant, "Appellant", $descr="A member of the public, or a representative, appealing against a planning decision", $tags="", $link="")
+System(GOVNotify, "GOV Notify", $descr="UK government messaging platform for sending emails, text and letters to users", $tags="", $link="")
+
+Rel(Caseofficer, AppealsBackOffice, "Manages cases", $techn="HTML/HTTPS", $tags="", $link="")
+Rel(Inspector, AppealsBackOffice, "Decides cases", $techn="HTML/HTTPS", $tags="", $link="")
+Rel(Appellant, AppealsFrontOffice, "Registers appeals", $techn="HTML/HTTPS", $tags="", $link="")
+Rel(LPA, AppealsFrontOffice, "Responds to appeals", $techn="HTML/HTTPS", $tags="", $link="")
+Rel(GOVNotify, LPA, "Notifies the LPA", $techn="Email", $tags="", $link="")
+Rel(GOVNotify, Appellant, "Notifies the appellant", $techn="Email", $tags="", $link="")
+Rel(AppealsFrontOffice, IntegrationLayer, "Records appellant submissions", $techn="Service Bus Topic", $tags="", $link="")
+Rel(AppealsBackOffice, IntegrationLayer, "Records changes to appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer, AppealsBackOffice, "Requests the creation of appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer, AppealsFrontOffice, "Informs subscribers of changes to appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(AppealsBackOffice, GOVNotify, "Sends emails", $techn="Email", $tags="", $link="")
+Rel(AppealsBackOffice, AppealsFrontOffice, "Copies documents to import", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml

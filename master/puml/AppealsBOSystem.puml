@@ -1,0 +1,54 @@
+@startuml
+set separator none
+title Appeals Back-Office System
+
+left to right direction
+
+!include <C4/C4>
+!include <C4/C4_Context>
+!include <C4/C4_Container>
+
+System(AppealsFrontOffice, "Appeals Front-Office", $descr="Public dashboards for appellants and LPAs", $tags="", $link="")
+System(IntegrationLayer, "Integration Layer", $descr="Distributed messaging platform to exchange data between applications", $tags="", $link="")
+System(GOVNotify, "GOV Notify", $descr="UK government messaging platform for sending emails, text and letters to users", $tags="", $link="")
+
+System_Boundary("AppealsBackOffice_boundary", "Appeals Back-Office", $tags="") {
+  AddBoundaryTag("Appeal Back-Office API", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="dashed")
+  Boundary(group_1, "Appeal Back-Office API", $tags="Appeal Back-Office API") {
+    Container(AppealsBackOffice.AppealBackOfficeAPI, "Appeal Back-Office API", $techn="Node.js, Azure Web App", $descr="API", $tags="", $link="")
+    ContainerDb(AppealsBackOffice.AzureSQLDatabase, "Azure SQL Database", $techn="Azure SQL", $descr="Data store for appeals", $tags="", $link="")
+  }
+
+  AddBoundaryTag("Appeal Back-Office Web", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="dashed")
+  Boundary(group_2, "Appeal Back-Office Web", $tags="Appeal Back-Office Web") {
+    Container(AppealsBackOffice.EntraID, "Entra ID", $techn="", $descr="Authentication, RBAC", $tags="", $link="")
+    Container(AppealsBackOffice.StorageAccount, "Storage Account", $techn="", $descr="Document storage", $tags="", $link="")
+    Container(AppealsBackOffice.AppealBackOfficeWeb, "Appeal Back-Office Web", $techn="Node.js, Azure Web App", $descr="Web UI", $tags="", $link="")
+    Container(AppealsBackOffice.Redis, "Redis", $techn="", $descr="Distributed session storage", $tags="", $link="")
+  }
+
+  AddBoundaryTag("Azure functions", $borderColor="#cccccc", $fontColor="#cccccc", $borderStyle="dashed")
+  Boundary(group_3, "Azure functions", $tags="Azure functions") {
+    Container(AppealsBackOffice.Casedataimport, "Casedata import", $techn="Function App, JavaScript", $descr="Consumes appellant and LPA submissions from Service Bus", $tags="", $link="")
+    Container(AppealsBackOffice.Documentprocessing, "Document processing", $techn="Function App, JavaScript", $descr="Copies blobs from Front-Office, processes virus scanning", $tags="", $link="")
+  }
+
+}
+
+Rel(AppealsFrontOffice, IntegrationLayer, "Records appellant submissions", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer, AppealsBackOffice.Casedataimport, "Requests the creation of appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(IntegrationLayer, AppealsFrontOffice, "Informs subscribers of changes to appeals", $techn="Service Bus Topic", $tags="", $link="")
+Rel(AppealsBackOffice.AppealBackOfficeWeb, AppealsBackOffice.Redis, "Reads and writes cache and session data", $techn="", $tags="", $link="")
+Rel(AppealsBackOffice.AppealBackOfficeWeb, AppealsBackOffice.AppealBackOfficeAPI, "Invokes functionality", $techn="", $tags="", $link="")
+Rel(AppealsBackOffice.AppealBackOfficeWeb, AppealsBackOffice.EntraID, "Handle logins and permissions", $techn="", $tags="", $link="")
+Rel(AppealsBackOffice.AppealBackOfficeWeb, AppealsBackOffice.StorageAccount, "Reads and writes files to blob storage", $techn="", $tags="", $link="")
+Rel(AppealsBackOffice.AppealBackOfficeAPI, AppealsBackOffice.AzureSQLDatabase, "Reads and writes data to database", $techn="", $tags="", $link="")
+Rel(AppealsBackOffice.AppealBackOfficeAPI, GOVNotify, "Sends emails", $techn="Email", $tags="", $link="")
+Rel(AppealsBackOffice.Casedataimport, AppealsBackOffice.AppealBackOfficeAPI, "Imports case data from Front-Office", $techn="", $tags="", $link="")
+Rel(IntegrationLayer, AppealsBackOffice.Documentprocessing, "Reports virus scan results", $techn="Event Grid Topic", $tags="", $link="")
+Rel(AppealsBackOffice.Documentprocessing, AppealsBackOffice.AppealBackOfficeAPI, "Forwards virus scan results", $techn="", $tags="", $link="")
+Rel(AppealsBackOffice.Documentprocessing, AppealsFrontOffice, "Copies documents to import", $techn="", $tags="", $link="")
+Rel(AppealsBackOffice.Documentprocessing, AppealsBackOffice.StorageAccount, "Stores imported documents", $techn="", $tags="", $link="")
+
+SHOW_LEGEND(true)
+@enduml

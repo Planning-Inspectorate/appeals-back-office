@@ -1,0 +1,1187 @@
+{
+  "configuration" : { },
+  "description" : "Description",
+  "documentation" : {
+    "sections" : [ {
+      "content" : "# Appeals Architecture\n\nThis document describes the architecture of the Appeals software system including:\n\n- [Front-Office Appeals](https://planning-inspectorate.github.io/appeals-back-office/master/appeals-front-office/context/)\n- [Back-Office Appeals](https://planning-inspectorate.github.io/appeals-back-office/master/appeals-back-office/context/)\n- [Integration Layer](https://planning-inspectorate.github.io/appeals-back-office/master/integration-layer/context/)\n",
+      "filename" : "index.md",
+      "format" : "Markdown",
+      "order" : 1,
+      "title" : ""
+    } ]
+  },
+  "id" : 0,
+  "model" : {
+    "people" : [ {
+      "description" : "A local planning authority, issuing decisions on planning applications",
+      "id" : "1",
+      "location" : "Unspecified",
+      "name" : "LPA",
+      "properties" : {
+        "structurizr.dsl.identifier" : "userlocalplanningauthority"
+      },
+      "relationships" : [ {
+        "description" : "Responds to appeals",
+        "destinationId" : "5",
+        "id" : "31",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "HTML/HTTPS"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "A member of the public, or a representative, appealing against a planning decision",
+      "id" : "2",
+      "location" : "Unspecified",
+      "name" : "Appellant",
+      "properties" : {
+        "structurizr.dsl.identifier" : "userappellant"
+      },
+      "relationships" : [ {
+        "description" : "Registers appeals",
+        "destinationId" : "5",
+        "id" : "30",
+        "sourceId" : "2",
+        "tags" : "Relationship",
+        "technology" : "HTML/HTTPS"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Validates and manages case data, documents and general appeal processing",
+      "group" : "Planning Inspectorate: Appeal Service",
+      "id" : "3",
+      "location" : "Unspecified",
+      "name" : "Case officer",
+      "properties" : {
+        "structurizr.dsl.identifier" : "usercaseofficer"
+      },
+      "relationships" : [ {
+        "description" : "Manages cases",
+        "destinationId" : "7",
+        "id" : "28",
+        "sourceId" : "3",
+        "tags" : "Relationship",
+        "technology" : "HTML/HTTPS"
+      } ],
+      "tags" : "Element,Person"
+    }, {
+      "description" : "Inspects the appeal site and issues appeal decisions",
+      "group" : "Planning Inspectorate: Appeal Service",
+      "id" : "4",
+      "location" : "Unspecified",
+      "name" : "Inspector",
+      "properties" : {
+        "structurizr.dsl.identifier" : "userinspector"
+      },
+      "relationships" : [ {
+        "description" : "Decides cases",
+        "destinationId" : "7",
+        "id" : "29",
+        "sourceId" : "4",
+        "tags" : "Relationship",
+        "technology" : "HTML/HTTPS"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "properties" : {
+      "structurizr.groupSeparator" : "/"
+    },
+    "softwareSystems" : [ {
+      "containers" : [ {
+        "description" : "Stores all files uploaded in the Front-Office",
+        "documentation" : { },
+        "id" : "6",
+        "name" : "Blob storage for documents",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containerfofilestorage"
+        },
+        "tags" : "Element,Container",
+        "technology" : "Node.js, Azure Web App, Azure Function App"
+      } ],
+      "description" : "Public dashboards for appellants and LPAs",
+      "documentation" : { },
+      "group" : "Planning Inspectorate: Appeal Service",
+      "id" : "5",
+      "location" : "Unspecified",
+      "name" : "Appeals Front-Office",
+      "properties" : {
+        "structurizr.dsl.identifier" : "systemappsfo"
+      },
+      "relationships" : [ {
+        "description" : "Records appellant submissions",
+        "destinationId" : "18",
+        "id" : "36",
+        "sourceId" : "5",
+        "tags" : "Relationship,ServiceBus",
+        "technology" : "Service Bus Topic"
+      }, {
+        "description" : "Records appellant submissions",
+        "destinationId" : "17",
+        "id" : "37",
+        "linkedRelationshipId" : "36",
+        "sourceId" : "5",
+        "technology" : "Service Bus Topic"
+      }, {
+        "description" : "Records appellant submissions",
+        "destinationId" : "16",
+        "id" : "38",
+        "linkedRelationshipId" : "36",
+        "sourceId" : "5",
+        "technology" : "Service Bus Topic"
+      }, {
+        "description" : "Records LPA submissions",
+        "destinationId" : "19",
+        "id" : "39",
+        "sourceId" : "5",
+        "tags" : "Relationship,ServiceBus",
+        "technology" : "Service Bus Topic"
+      } ],
+      "tags" : "Element,Software System,Node.js,Azure Web App,Azure Function App,InternalCollaborationSystem"
+    }, {
+      "containers" : [ {
+        "description" : "Web UI",
+        "documentation" : { },
+        "group" : "Appeal Back-Office Web",
+        "id" : "8",
+        "name" : "Appeal Back-Office Web",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containerboweb"
+        },
+        "relationships" : [ {
+          "description" : "Reads and writes cache and session data",
+          "destinationId" : "9",
+          "id" : "65",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Invokes functionality",
+          "destinationId" : "12",
+          "id" : "66",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Handle logins and permissions",
+          "destinationId" : "10",
+          "id" : "67",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Reads and writes files to blob storage",
+          "destinationId" : "11",
+          "id" : "68",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,Microsoft Azure - App Services",
+        "technology" : "Node.js, Azure Web App"
+      }, {
+        "description" : "Distributed session storage",
+        "documentation" : { },
+        "group" : "Appeal Back-Office Web",
+        "id" : "9",
+        "name" : "Redis",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containerboredis"
+        },
+        "tags" : "Element,Container,Microsoft Azure - Cache Redis"
+      }, {
+        "description" : "Authentication, RBAC",
+        "documentation" : { },
+        "group" : "Appeal Back-Office Web",
+        "id" : "10",
+        "name" : "Entra ID",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containerboazureactivedirectory"
+        },
+        "tags" : "Element,Container,Microsoft Azure - Azure Active Directory"
+      }, {
+        "description" : "Document storage",
+        "documentation" : { },
+        "group" : "Appeal Back-Office Web",
+        "id" : "11",
+        "name" : "Storage Account",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containerbofilestorage"
+        },
+        "tags" : "Element,Container,Microsoft Azure - Storage Accounts"
+      }, {
+        "description" : "API",
+        "documentation" : { },
+        "group" : "Appeal Back-Office API",
+        "id" : "12",
+        "name" : "Appeal Back-Office API",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containerboapi"
+        },
+        "relationships" : [ {
+          "description" : "Reads and writes data to database",
+          "destinationId" : "13",
+          "id" : "69",
+          "sourceId" : "12",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Sends emails",
+          "destinationId" : "27",
+          "id" : "70",
+          "sourceId" : "12",
+          "tags" : "Relationship",
+          "technology" : "Email"
+        }, {
+          "description" : "Sends emails",
+          "destinationId" : "26",
+          "id" : "71",
+          "linkedRelationshipId" : "70",
+          "sourceId" : "12",
+          "technology" : "Email"
+        } ],
+        "tags" : "Element,Container,Microsoft Azure - App Services",
+        "technology" : "Node.js, Azure Web App"
+      }, {
+        "description" : "Data store for appeals",
+        "documentation" : { },
+        "group" : "Appeal Back-Office API",
+        "id" : "13",
+        "name" : "Azure SQL Database",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containerboazuresql"
+        },
+        "tags" : "Element,Container,Microsoft Azure - SQL Database,Database",
+        "technology" : "Azure SQL"
+      }, {
+        "description" : "Consumes appellant and LPA submissions from Service Bus",
+        "documentation" : { },
+        "group" : "Azure functions",
+        "id" : "14",
+        "name" : "Casedata import",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containerfunctionappcasedata"
+        },
+        "relationships" : [ {
+          "description" : "Imports case data from Front-Office",
+          "destinationId" : "12",
+          "id" : "74",
+          "sourceId" : "14",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,Microsoft Azure - Function Apps,FunctionApp",
+        "technology" : "Function App, JavaScript"
+      }, {
+        "description" : "Copies blobs from Front-Office, processes virus scanning",
+        "documentation" : { },
+        "group" : "Azure functions",
+        "id" : "15",
+        "name" : "Document processing",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containerfunctionappdocs"
+        },
+        "relationships" : [ {
+          "description" : "Forwards virus scan results",
+          "destinationId" : "12",
+          "id" : "78",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Copies documents to import",
+          "destinationId" : "6",
+          "id" : "79",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Copies documents to import",
+          "destinationId" : "5",
+          "id" : "80",
+          "linkedRelationshipId" : "79",
+          "sourceId" : "15"
+        }, {
+          "description" : "Stores imported documents",
+          "destinationId" : "11",
+          "id" : "83",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container,Microsoft Azure - Function Apps,FunctionApp",
+        "technology" : "Function App, JavaScript"
+      } ],
+      "description" : "Internal service to manage planning appeals in England",
+      "documentation" : { },
+      "group" : "Planning Inspectorate: Appeal Service",
+      "id" : "7",
+      "location" : "Unspecified",
+      "name" : "Appeals Back-Office",
+      "properties" : {
+        "structurizr.dsl.identifier" : "systemappsbo"
+      },
+      "relationships" : [ {
+        "description" : "Records changes to appeals",
+        "destinationId" : "20",
+        "id" : "40",
+        "sourceId" : "7",
+        "tags" : "Relationship,ServiceBus",
+        "technology" : "Service Bus Topic"
+      }, {
+        "description" : "Records changes to appeals",
+        "destinationId" : "17",
+        "id" : "41",
+        "linkedRelationshipId" : "40",
+        "sourceId" : "7",
+        "technology" : "Service Bus Topic"
+      }, {
+        "description" : "Records changes to appeals",
+        "destinationId" : "16",
+        "id" : "42",
+        "linkedRelationshipId" : "40",
+        "sourceId" : "7",
+        "technology" : "Service Bus Topic"
+      }, {
+        "description" : "Records changes to documents",
+        "destinationId" : "21",
+        "id" : "43",
+        "sourceId" : "7",
+        "tags" : "Relationship,ServiceBus",
+        "technology" : "Service Bus"
+      }, {
+        "description" : "Records changes to user information",
+        "destinationId" : "22",
+        "id" : "44",
+        "sourceId" : "7",
+        "tags" : "Relationship,ServiceBus",
+        "technology" : "Service Bus Topic"
+      }, {
+        "description" : "Records changes to site visits and other events",
+        "destinationId" : "23",
+        "id" : "45",
+        "sourceId" : "7",
+        "tags" : "Relationship,ServiceBus",
+        "technology" : "Service Bus Topic"
+      }, {
+        "description" : "Sends emails",
+        "destinationId" : "27",
+        "id" : "72",
+        "linkedRelationshipId" : "70",
+        "sourceId" : "7",
+        "technology" : "Email"
+      }, {
+        "description" : "Sends emails",
+        "destinationId" : "26",
+        "id" : "73",
+        "linkedRelationshipId" : "70",
+        "sourceId" : "7",
+        "technology" : "Email"
+      }, {
+        "description" : "Copies documents to import",
+        "destinationId" : "6",
+        "id" : "81",
+        "linkedRelationshipId" : "79",
+        "sourceId" : "7"
+      }, {
+        "description" : "Copies documents to import",
+        "destinationId" : "5",
+        "id" : "82",
+        "linkedRelationshipId" : "79",
+        "sourceId" : "7"
+      } ],
+      "tags" : "Element,Software System"
+    }, {
+      "containers" : [ {
+        "components" : [ {
+          "description" : "Appeal submission command",
+          "documentation" : { },
+          "group" : "Commands",
+          "id" : "18",
+          "name" : "Service Bus Appeal submission topic",
+          "properties" : {
+            "structurizr.dsl.identifier" : "componentcasecmdtopic"
+          },
+          "relationships" : [ {
+            "description" : "Requests the creation of appeals",
+            "destinationId" : "14",
+            "id" : "46",
+            "sourceId" : "18",
+            "tags" : "Relationship,ServiceBus",
+            "technology" : "Service Bus Topic"
+          }, {
+            "description" : "Requests the creation of appeals",
+            "destinationId" : "7",
+            "id" : "47",
+            "linkedRelationshipId" : "46",
+            "sourceId" : "18",
+            "technology" : "Service Bus Topic"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "LPA submission command",
+          "documentation" : { },
+          "group" : "Commands",
+          "id" : "19",
+          "name" : "Service Bus LPA submission topic",
+          "properties" : {
+            "structurizr.dsl.identifier" : "componentlpaqcmdtopic"
+          },
+          "relationships" : [ {
+            "description" : "Requests the addition of LPA responses to appeals",
+            "destinationId" : "14",
+            "id" : "52",
+            "sourceId" : "19",
+            "tags" : "Relationship,ServiceBus",
+            "technology" : "Service Bus Topic"
+          }, {
+            "description" : "Requests the addition of LPA responses to appeals",
+            "destinationId" : "7",
+            "id" : "53",
+            "linkedRelationshipId" : "52",
+            "sourceId" : "19",
+            "technology" : "Service Bus Topic"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Appeal messages",
+          "documentation" : { },
+          "group" : "Events",
+          "id" : "20",
+          "name" : "Service Bus Appeal topic",
+          "properties" : {
+            "structurizr.dsl.identifier" : "componentcasemessagetopic"
+          },
+          "relationships" : [ {
+            "description" : "Informs subscribers of changes to appeals",
+            "destinationId" : "24",
+            "id" : "54",
+            "sourceId" : "20",
+            "tags" : "Relationship,ServiceBus",
+            "technology" : "Service Bus Topic"
+          }, {
+            "description" : "Informs subscribers of changes to appeals",
+            "destinationId" : "5",
+            "id" : "59",
+            "sourceId" : "20",
+            "tags" : "Relationship,ServiceBus",
+            "technology" : "Service Bus Topic"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Appeal document messages",
+          "documentation" : { },
+          "group" : "Events",
+          "id" : "21",
+          "name" : "Service Bus Document topic",
+          "properties" : {
+            "structurizr.dsl.identifier" : "componentdocumentmessagetopic"
+          },
+          "relationships" : [ {
+            "description" : "Informs subscribers of changes to documents",
+            "destinationId" : "24",
+            "id" : "56",
+            "sourceId" : "21",
+            "tags" : "Relationship,ServiceBus",
+            "technology" : "Service Bus Topic"
+          }, {
+            "description" : "Informs subscribers of changes to documents",
+            "destinationId" : "5",
+            "id" : "62",
+            "sourceId" : "21",
+            "tags" : "Relationship,ServiceBus",
+            "technology" : "Service Bus Topic"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Service user messages",
+          "documentation" : { },
+          "group" : "Events",
+          "id" : "22",
+          "name" : "Service Bus Service User topic",
+          "properties" : {
+            "structurizr.dsl.identifier" : "componentserviceusermessagetopic"
+          },
+          "relationships" : [ {
+            "description" : "Informs subscribers of changes to service users information",
+            "destinationId" : "24",
+            "id" : "57",
+            "sourceId" : "22",
+            "tags" : "Relationship,ServiceBus",
+            "technology" : "Service Bus Topic"
+          }, {
+            "description" : "Informs subscribers of changes to service users information",
+            "destinationId" : "5",
+            "id" : "63",
+            "sourceId" : "22",
+            "tags" : "Relationship,ServiceBus",
+            "technology" : "Service Bus Topic"
+          } ],
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Event message",
+          "documentation" : { },
+          "group" : "Events",
+          "id" : "23",
+          "name" : "Service Bus Event topic",
+          "properties" : {
+            "structurizr.dsl.identifier" : "componenteventmessagetopic"
+          },
+          "relationships" : [ {
+            "description" : "Informs subscribers of changes to site visits and other events",
+            "destinationId" : "24",
+            "id" : "58",
+            "sourceId" : "23",
+            "tags" : "Relationship,ServiceBus",
+            "technology" : "Service Bus Topic"
+          }, {
+            "description" : "Informs subscribers of changes to site visits and other events",
+            "destinationId" : "5",
+            "id" : "64",
+            "sourceId" : "23",
+            "tags" : "Relationship,ServiceBus",
+            "technology" : "Service Bus Topic"
+          } ],
+          "tags" : "Element,Component"
+        } ],
+        "description" : "Messaging platform for data exchange",
+        "documentation" : { },
+        "id" : "17",
+        "name" : "Service Bus",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containerboservicebus"
+        },
+        "relationships" : [ {
+          "description" : "Requests the creation of appeals",
+          "destinationId" : "14",
+          "id" : "48",
+          "linkedRelationshipId" : "46",
+          "sourceId" : "17",
+          "technology" : "Service Bus Topic"
+        }, {
+          "description" : "Requests the creation of appeals",
+          "destinationId" : "7",
+          "id" : "49",
+          "linkedRelationshipId" : "46",
+          "sourceId" : "17",
+          "technology" : "Service Bus Topic"
+        }, {
+          "description" : "Informs subscribers of changes to appeals",
+          "destinationId" : "24",
+          "id" : "55",
+          "linkedRelationshipId" : "54",
+          "sourceId" : "17",
+          "technology" : "Service Bus Topic"
+        }, {
+          "description" : "Informs subscribers of changes to appeals",
+          "destinationId" : "5",
+          "id" : "60",
+          "linkedRelationshipId" : "59",
+          "sourceId" : "17",
+          "technology" : "Service Bus Topic"
+        } ],
+        "tags" : "Element,Container,Microsoft Azure - Azure Service Bus,InternalCollaborationSystem",
+        "technology" : "Azure Service Bus Namespace"
+      }, {
+        "description" : "Holds all Planning Inspectorate data so that it can be used for internal purposes",
+        "documentation" : { },
+        "id" : "24",
+        "name" : "Operational Data Warehouse (ODW)",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containerodw"
+        },
+        "tags" : "Element,Container,Microsoft Azure - Azure Synapse Analytics,InternalCollaborationSystem"
+      }, {
+        "description" : ",",
+        "documentation" : { },
+        "id" : "25",
+        "name" : "Azure Event Grid",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containereventgrid"
+        },
+        "relationships" : [ {
+          "description" : "Reports virus scan results",
+          "destinationId" : "15",
+          "id" : "75",
+          "sourceId" : "25",
+          "tags" : "Relationship",
+          "technology" : "Event Grid Topic"
+        }, {
+          "description" : "Reports virus scan results",
+          "destinationId" : "7",
+          "id" : "76",
+          "linkedRelationshipId" : "75",
+          "sourceId" : "25",
+          "technology" : "Event Grid Topic"
+        } ],
+        "tags" : "Element,Container,Microsoft Azure - Event Grid Topics,InternalCollaborationSystem",
+        "technology" : "Reports virus scan results for uploaded blobs"
+      } ],
+      "description" : "Distributed messaging platform to exchange data between applications",
+      "documentation" : { },
+      "group" : "Planning Inspectorate: Appeal Service",
+      "id" : "16",
+      "location" : "Unspecified",
+      "name" : "Integration Layer",
+      "properties" : {
+        "structurizr.dsl.identifier" : "systemintegration"
+      },
+      "relationships" : [ {
+        "description" : "Requests the creation of appeals",
+        "destinationId" : "14",
+        "id" : "50",
+        "linkedRelationshipId" : "46",
+        "sourceId" : "16",
+        "technology" : "Service Bus Topic"
+      }, {
+        "description" : "Requests the creation of appeals",
+        "destinationId" : "7",
+        "id" : "51",
+        "linkedRelationshipId" : "46",
+        "sourceId" : "16",
+        "technology" : "Service Bus Topic"
+      }, {
+        "description" : "Informs subscribers of changes to appeals",
+        "destinationId" : "5",
+        "id" : "61",
+        "linkedRelationshipId" : "59",
+        "sourceId" : "16",
+        "technology" : "Service Bus Topic"
+      }, {
+        "description" : "Reports virus scan results",
+        "destinationId" : "15",
+        "id" : "77",
+        "linkedRelationshipId" : "75",
+        "sourceId" : "16",
+        "technology" : "Event Grid Topic"
+      } ],
+      "tags" : "Element,Software System,InternalCollaborationSystem"
+    }, {
+      "containers" : [ {
+        "description" : "UK government messaging platform for sending emails, text and letters to users",
+        "documentation" : { },
+        "id" : "27",
+        "name" : "GOV Notify",
+        "properties" : {
+          "structurizr.dsl.identifier" : "containergovnotify"
+        },
+        "relationships" : [ {
+          "description" : "Notifies the LPA",
+          "destinationId" : "1",
+          "id" : "32",
+          "sourceId" : "27",
+          "tags" : "Relationship",
+          "technology" : "Email"
+        }, {
+          "description" : "Notifies the appellant",
+          "destinationId" : "2",
+          "id" : "34",
+          "sourceId" : "27",
+          "tags" : "Relationship",
+          "technology" : "Email"
+        } ],
+        "tags" : "Element,Container"
+      } ],
+      "description" : "UK government messaging platform for sending emails, text and letters to users",
+      "documentation" : { },
+      "id" : "26",
+      "location" : "Unspecified",
+      "name" : "GOV Notify",
+      "properties" : {
+        "structurizr.dsl.identifier" : "systemgovuk"
+      },
+      "relationships" : [ {
+        "description" : "Notifies the LPA",
+        "destinationId" : "1",
+        "id" : "33",
+        "linkedRelationshipId" : "32",
+        "sourceId" : "26",
+        "technology" : "Email"
+      }, {
+        "description" : "Notifies the appellant",
+        "destinationId" : "2",
+        "id" : "35",
+        "linkedRelationshipId" : "34",
+        "sourceId" : "26",
+        "technology" : "Email"
+      } ],
+      "tags" : "Element,Software System,=,ExternalSystem"
+    } ]
+  },
+  "name" : "Appeal service",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlICJBcHBlYWwgc2VydmljZSIgewoJIWRvY3MgZG9jcy9hcmNoaXRlY3R1cmUKCgltb2RlbCB7CgkJcHJvcGVydGllcyB7CgkJCSJzdHJ1Y3R1cml6ci5ncm91cFNlcGFyYXRvciIgIi8iCgkJfQoKCQl1c2VyTG9jYWxQbGFubmluZ0F1dGhvcml0eSA9IHBlcnNvbiAiTFBBIiAiQSBsb2NhbCBwbGFubmluZyBhdXRob3JpdHksIGlzc3VpbmcgZGVjaXNpb25zIG9uIHBsYW5uaW5nIGFwcGxpY2F0aW9ucyIKCQl1c2VyQXBwZWxsYW50ID0gcGVyc29uICJBcHBlbGxhbnQiICJBIG1lbWJlciBvZiB0aGUgcHVibGljLCBvciBhIHJlcHJlc2VudGF0aXZlLCBhcHBlYWxpbmcgYWdhaW5zdCBhIHBsYW5uaW5nIGRlY2lzaW9uIgoKCQlncm91cCAiUGxhbm5pbmcgSW5zcGVjdG9yYXRlOiBBcHBlYWwgU2VydmljZSIgewoJCQl1c2VyQ2FzZU9mZmljZXIgPSBwZXJzb24gIkNhc2Ugb2ZmaWNlciIgIlZhbGlkYXRlcyBhbmQgbWFuYWdlcyBjYXNlIGRhdGEsIGRvY3VtZW50cyBhbmQgZ2VuZXJhbCBhcHBlYWwgcHJvY2Vzc2luZyIKCQkJdXNlckluc3BlY3RvciA9IHBlcnNvbiAiSW5zcGVjdG9yIiAiSW5zcGVjdHMgdGhlIGFwcGVhbCBzaXRlIGFuZCBpc3N1ZXMgYXBwZWFsIGRlY2lzaW9ucyIKCgkJCXN5c3RlbUFwcHNGbyA9IHNvZnR3YXJlU3lzdGVtICJBcHBlYWxzIEZyb250LU9mZmljZSIgIlB1YmxpYyBkYXNoYm9hcmRzIGZvciBhcHBlbGxhbnRzIGFuZCBMUEFzIiAiTm9kZS5qcywgQXp1cmUgV2ViIEFwcCwgQXp1cmUgRnVuY3Rpb24gQXBwIiB7CgkJCQl0YWdzICJJbnRlcm5hbENvbGxhYm9yYXRpb25TeXN0ZW0iCgoJCQkJY29udGFpbmVyRm9GaWxlU3RvcmFnZSA9IGNvbnRhaW5lciAiQmxvYiBzdG9yYWdlIGZvciBkb2N1bWVudHMiICJTdG9yZXMgYWxsIGZpbGVzIHVwbG9hZGVkIGluIHRoZSBGcm9udC1PZmZpY2UiICJOb2RlLmpzLCBBenVyZSBXZWIgQXBwLCBBenVyZSBGdW5jdGlvbiBBcHAiCgkJCX0KCgkJCXN5c3RlbUFwcHNCbyA9IHNvZnR3YXJlU3lzdGVtICJBcHBlYWxzIEJhY2stT2ZmaWNlIiAiSW50ZXJuYWwgc2VydmljZSB0byBtYW5hZ2UgcGxhbm5pbmcgYXBwZWFscyBpbiBFbmdsYW5kIiAgewoKCQkJCWdyb3VwICJBcHBlYWwgQmFjay1PZmZpY2UgV2ViIiB7CiAgICAJCQkJY29udGFpbmVyQm9XZWIgPSBjb250YWluZXIgIkFwcGVhbCBCYWNrLU9mZmljZSBXZWIiICJXZWIgVUkiICJOb2RlLmpzLCBBenVyZSBXZWIgQXBwIiB7CiAgICAJCQkJCXRhZ3MgIk1pY3Jvc29mdCBBenVyZSAtIEFwcCBTZXJ2aWNlcyIKICAgIAkJCQl9CiAgICAJCQkJY29udGFpbmVyQm9SZWRpcyA9IGNvbnRhaW5lciAiUmVkaXMiICJEaXN0cmlidXRlZCBzZXNzaW9uIHN0b3JhZ2UiIHsKCQkJCQkJCXRhZ3MgIk1pY3Jvc29mdCBBenVyZSAtIENhY2hlIFJlZGlzIgoJCQkJCQl9CiAgICAJCQkJY29udGFpbmVyQm9BenVyZUFjdGl2ZURpcmVjdG9yeSA9IGNvbnRhaW5lciAiRW50cmEgSUQiICJBdXRoZW50aWNhdGlvbiwgUkJBQyIgewoJCQkJCQkJdGFncyAiTWljcm9zb2Z0IEF6dXJlIC0gQXp1cmUgQWN0aXZlIERpcmVjdG9yeSIKCQkJCQkJfQogICAgCQkJCWNvbnRhaW5lckJvRmlsZVN0b3JhZ2UgPSBjb250YWluZXIgIlN0b3JhZ2UgQWNjb3VudCIgIkRvY3VtZW50IHN0b3JhZ2UiIHsKCQkJCQkJCXRhZ3MgIk1pY3Jvc29mdCBBenVyZSAtIFN0b3JhZ2UgQWNjb3VudHMiCgkJCQkJCX0KCQkJCX0KCgkJCQlncm91cCAiQXBwZWFsIEJhY2stT2ZmaWNlIEFQSSIgewogICAgCQkJCWNvbnRhaW5lckJvQXBpID0gY29udGFpbmVyICJBcHBlYWwgQmFjay1PZmZpY2UgQVBJIiAiQVBJIiAiTm9kZS5qcywgQXp1cmUgV2ViIEFwcCIgewogICAgCQkJCQl0YWdzICJNaWNyb3NvZnQgQXp1cmUgLSBBcHAgU2VydmljZXMiCiAgICAJCQkJfQoKICAgIAkJCQljb250YWluZXJCb0F6dXJlU3FsID0gY29udGFpbmVyICJBenVyZSBTUUwgRGF0YWJhc2UiICJEYXRhIHN0b3JlIGZvciBhcHBlYWxzIiAiQXp1cmUgU1FMIiB7CgkJCQkJCQl0YWdzICJNaWNyb3NvZnQgQXp1cmUgLSBTUUwgRGF0YWJhc2UiICJEYXRhYmFzZSIKCQkJCQkJfQoJCQkJfQoKCQkJCWdyb3VwICJBenVyZSBmdW5jdGlvbnMiIHsKCQkJCSAgICBjb250YWluZXJGdW5jdGlvbkFwcENhc2VkYXRhID0gY29udGFpbmVyICJDYXNlZGF0YSBpbXBvcnQiICJDb25zdW1lcyBhcHBlbGxhbnQgYW5kIExQQSBzdWJtaXNzaW9ucyBmcm9tIFNlcnZpY2UgQnVzIiAiRnVuY3Rpb24gQXBwLCBKYXZhU2NyaXB0InsKCQkJCQkJdGFncyAiTWljcm9zb2Z0IEF6dXJlIC0gRnVuY3Rpb24gQXBwcyIsICJGdW5jdGlvbkFwcCIKCQkJCQl9CgkJCQkJY29udGFpbmVyRnVuY3Rpb25BcHBEb2NzID0gY29udGFpbmVyICJEb2N1bWVudCBwcm9jZXNzaW5nIiAiQ29waWVzIGJsb2JzIGZyb20gRnJvbnQtT2ZmaWNlLCBwcm9jZXNzZXMgdmlydXMgc2Nhbm5pbmciICJGdW5jdGlvbiBBcHAsIEphdmFTY3JpcHQiewoJCQkJCQl0YWdzICJNaWNyb3NvZnQgQXp1cmUgLSBGdW5jdGlvbiBBcHBzIiwgIkZ1bmN0aW9uQXBwIgoJCQkJCX0KCQkJCX0KCQkJfQoKCQkJc3lzdGVtSW50ZWdyYXRpb24gPSBzb2Z0d2FyZVN5c3RlbSAiSW50ZWdyYXRpb24gTGF5ZXIiICJEaXN0cmlidXRlZCBtZXNzYWdpbmcgcGxhdGZvcm0gdG8gZXhjaGFuZ2UgZGF0YSBiZXR3ZWVuIGFwcGxpY2F0aW9ucyIgewoJCQkJdGFncyAiSW50ZXJuYWxDb2xsYWJvcmF0aW9uU3lzdGVtIgoKCQkJCWNvbnRhaW5lckJvU2VydmljZUJ1cyA9IGNvbnRhaW5lciAiU2VydmljZSBCdXMiICJNZXNzYWdpbmcgcGxhdGZvcm0gZm9yIGRhdGEgZXhjaGFuZ2UiICJBenVyZSBTZXJ2aWNlIEJ1cyBOYW1lc3BhY2UiIHsKCQkJCQl0YWdzICJNaWNyb3NvZnQgQXp1cmUgLSBBenVyZSBTZXJ2aWNlIEJ1cyIgIkludGVybmFsQ29sbGFib3JhdGlvblN5c3RlbSIKCgkJCQkJZ3JvdXAgIkNvbW1hbmRzIiB7CgkJCQkJCWNvbXBvbmVudENhc2VDbWRUb3BpYyA9IGNvbXBvbmVudCAiU2VydmljZSBCdXMgQXBwZWFsIHN1Ym1pc3Npb24gdG9waWMiICJBcHBlYWwgc3VibWlzc2lvbiBjb21tYW5kIgoJCQkJCQljb21wb25lbnRMcGFxQ21kVG9waWMgPSBjb21wb25lbnQgIlNlcnZpY2UgQnVzIExQQSBzdWJtaXNzaW9uIHRvcGljIiAiTFBBIHN1Ym1pc3Npb24gY29tbWFuZCIKCQkJCQl9CgkJCQkJZ3JvdXAgIkV2ZW50cyIgewoJCQkJCQljb21wb25lbnRDYXNlTWVzc2FnZVRvcGljID0gY29tcG9uZW50ICJTZXJ2aWNlIEJ1cyBBcHBlYWwgdG9waWMiICJBcHBlYWwgbWVzc2FnZXMiCgkJCQkJCWNvbXBvbmVudERvY3VtZW50TWVzc2FnZVRvcGljID0gY29tcG9uZW50ICJTZXJ2aWNlIEJ1cyBEb2N1bWVudCB0b3BpYyIgIkFwcGVhbCBkb2N1bWVudCBtZXNzYWdlcyIKCQkJCQkJY29tcG9uZW50U2VydmljZVVzZXJNZXNzYWdlVG9waWMgPSBjb21wb25lbnQgIlNlcnZpY2UgQnVzIFNlcnZpY2UgVXNlciB0b3BpYyIgIlNlcnZpY2UgdXNlciBtZXNzYWdlcyIKCQkJCQkJY29tcG9uZW50RXZlbnRNZXNzYWdlVG9waWMgPSBjb21wb25lbnQgIlNlcnZpY2UgQnVzIEV2ZW50IHRvcGljIiAiRXZlbnQgbWVzc2FnZSIKCQkJCQl9CgkJCQl9CgoJCQkJY29udGFpbmVyT0RXID0gY29udGFpbmVyICJPcGVyYXRpb25hbCBEYXRhIFdhcmVob3VzZSAoT0RXKSIgIkhvbGRzIGFsbCBQbGFubmluZyBJbnNwZWN0b3JhdGUgZGF0YSBzbyB0aGF0IGl0IGNhbiBiZSB1c2VkIGZvciBpbnRlcm5hbCBwdXJwb3NlcyIgewoJCQkJICB0YWdzICJNaWNyb3NvZnQgQXp1cmUgLSBBenVyZSBTeW5hcHNlIEFuYWx5dGljcyIgIkludGVybmFsQ29sbGFib3JhdGlvblN5c3RlbSIKCQkJCX0KCgkJCQljb250YWluZXJFdmVudEdyaWQgPSBjb250YWluZXIgIkF6dXJlIEV2ZW50IEdyaWQiLCAiUmVwb3J0cyB2aXJ1cyBzY2FuIHJlc3VsdHMgZm9yIHVwbG9hZGVkIGJsb2JzIiB7CgkJCQkJdGFncyAiTWljcm9zb2Z0IEF6dXJlIC0gRXZlbnQgR3JpZCBUb3BpY3MiICJJbnRlcm5hbENvbGxhYm9yYXRpb25TeXN0ZW0iCgkJCQl9CgkJCX0KCgkJfQoKCQlzeXN0ZW1Hb3ZVayA9IHNvZnR3YXJlU3lzdGVtICJHT1YgTm90aWZ5IiAiVUsgZ292ZXJubWVudCBtZXNzYWdpbmcgcGxhdGZvcm0gZm9yIHNlbmRpbmcgZW1haWxzLCB0ZXh0IGFuZCBsZXR0ZXJzIHRvIHVzZXJzIiB7CgkJCXRhZ3MgPSAiRXh0ZXJuYWxTeXN0ZW0iCgkJCWNvbnRhaW5lckdvdk5vdGlmeSA9IGNvbnRhaW5lciAiR09WIE5vdGlmeSIgIlVLIGdvdmVybm1lbnQgbWVzc2FnaW5nIHBsYXRmb3JtIGZvciBzZW5kaW5nIGVtYWlscywgdGV4dCBhbmQgbGV0dGVycyB0byB1c2VycyIKCQl9CgoJCSMgUmVsYXRpb25zaGlwcwoKCQl1c2VyQ2FzZU9mZmljZXIgLT4gc3lzdGVtQXBwc0JvICJNYW5hZ2VzIGNhc2VzIiAiSFRNTC9IVFRQUyIKCQl1c2VySW5zcGVjdG9yIC0+IHN5c3RlbUFwcHNCbyAiRGVjaWRlcyBjYXNlcyIgIkhUTUwvSFRUUFMiCgkJdXNlckFwcGVsbGFudCAtPiAgc3lzdGVtQXBwc0ZvICJSZWdpc3RlcnMgYXBwZWFscyIgIkhUTUwvSFRUUFMiCgkJdXNlckxvY2FsUGxhbm5pbmdBdXRob3JpdHkgLT4gIHN5c3RlbUFwcHNGbyAiUmVzcG9uZHMgdG8gYXBwZWFscyIgIkhUTUwvSFRUUFMiCgkJY29udGFpbmVyR292Tm90aWZ5IC0+IHVzZXJMb2NhbFBsYW5uaW5nQXV0aG9yaXR5ICJOb3RpZmllcyB0aGUgTFBBIiAiRW1haWwiCgkJY29udGFpbmVyR292Tm90aWZ5IC0+IHVzZXJBcHBlbGxhbnQgIk5vdGlmaWVzIHRoZSBhcHBlbGxhbnQiICJFbWFpbCIKCgkJc3lzdGVtQXBwc0ZvIC0+IGNvbXBvbmVudENhc2VDbWRUb3BpYyAiUmVjb3JkcyBhcHBlbGxhbnQgc3VibWlzc2lvbnMiICJTZXJ2aWNlIEJ1cyBUb3BpYyIgIlNlcnZpY2VCdXMiCgkJc3lzdGVtQXBwc0ZvIC0+IGNvbXBvbmVudExwYXFDbWRUb3BpYyAiUmVjb3JkcyBMUEEgc3VibWlzc2lvbnMiICJTZXJ2aWNlIEJ1cyBUb3BpYyIgIlNlcnZpY2VCdXMiCgkJc3lzdGVtQXBwc0JvIC0+IGNvbXBvbmVudENhc2VNZXNzYWdlVG9waWMgIlJlY29yZHMgY2hhbmdlcyB0byBhcHBlYWxzIiAiU2VydmljZSBCdXMgVG9waWMiICJTZXJ2aWNlQnVzIgoJCXN5c3RlbUFwcHNCbyAtPiBjb21wb25lbnREb2N1bWVudE1lc3NhZ2VUb3BpYyAiUmVjb3JkcyBjaGFuZ2VzIHRvIGRvY3VtZW50cyIgIlNlcnZpY2UgQnVzIiAiU2VydmljZUJ1cyIKCQlzeXN0ZW1BcHBzQm8gLT4gY29tcG9uZW50U2VydmljZVVzZXJNZXNzYWdlVG9waWMgIlJlY29yZHMgY2hhbmdlcyB0byB1c2VyIGluZm9ybWF0aW9uIiAiU2VydmljZSBCdXMgVG9waWMiICJTZXJ2aWNlQnVzIgoJCXN5c3RlbUFwcHNCbyAtPiBjb21wb25lbnRFdmVudE1lc3NhZ2VUb3BpYyAiUmVjb3JkcyBjaGFuZ2VzIHRvIHNpdGUgdmlzaXRzIGFuZCBvdGhlciBldmVudHMiICJTZXJ2aWNlIEJ1cyBUb3BpYyIgIlNlcnZpY2VCdXMiCgoJCWNvbXBvbmVudENhc2VDbWRUb3BpYyAtPiBjb250YWluZXJGdW5jdGlvbkFwcENhc2VkYXRhICJSZXF1ZXN0cyB0aGUgY3JlYXRpb24gb2YgYXBwZWFscyIgIlNlcnZpY2UgQnVzIFRvcGljIiAiU2VydmljZUJ1cyIKCQljb21wb25lbnRMcGFxQ21kVG9waWMgLT4gY29udGFpbmVyRnVuY3Rpb25BcHBDYXNlZGF0YSAiUmVxdWVzdHMgdGhlIGFkZGl0aW9uIG9mIExQQSByZXNwb25zZXMgdG8gYXBwZWFscyIgIlNlcnZpY2UgQnVzIFRvcGljIiAiU2VydmljZUJ1cyIKCgkJY29tcG9uZW50Q2FzZU1lc3NhZ2VUb3BpYyAtPiBjb250YWluZXJPRFcgIkluZm9ybXMgc3Vic2NyaWJlcnMgb2YgY2hhbmdlcyB0byBhcHBlYWxzIiAiU2VydmljZSBCdXMgVG9waWMiICJTZXJ2aWNlQnVzIgoJCWNvbXBvbmVudERvY3VtZW50TWVzc2FnZVRvcGljIC0+IGNvbnRhaW5lck9EVyAiSW5mb3JtcyBzdWJzY3JpYmVycyBvZiBjaGFuZ2VzIHRvIGRvY3VtZW50cyIgIlNlcnZpY2UgQnVzIFRvcGljIiAiU2VydmljZUJ1cyIKCQljb21wb25lbnRTZXJ2aWNlVXNlck1lc3NhZ2VUb3BpYyAtPiBjb250YWluZXJPRFcgIkluZm9ybXMgc3Vic2NyaWJlcnMgb2YgY2hhbmdlcyB0byBzZXJ2aWNlIHVzZXJzIGluZm9ybWF0aW9uIiAiU2VydmljZSBCdXMgVG9waWMiICJTZXJ2aWNlQnVzIgoJCWNvbXBvbmVudEV2ZW50TWVzc2FnZVRvcGljIC0+IGNvbnRhaW5lck9EVyAiSW5mb3JtcyBzdWJzY3JpYmVycyBvZiBjaGFuZ2VzIHRvIHNpdGUgdmlzaXRzIGFuZCBvdGhlciBldmVudHMiICJTZXJ2aWNlIEJ1cyBUb3BpYyIgIlNlcnZpY2VCdXMiCgoJCWNvbXBvbmVudENhc2VNZXNzYWdlVG9waWMgLT4gc3lzdGVtQXBwc0ZvICJJbmZvcm1zIHN1YnNjcmliZXJzIG9mIGNoYW5nZXMgdG8gYXBwZWFscyIgIlNlcnZpY2UgQnVzIFRvcGljIiAiU2VydmljZUJ1cyIKCQljb21wb25lbnREb2N1bWVudE1lc3NhZ2VUb3BpYyAtPiBzeXN0ZW1BcHBzRm8gIkluZm9ybXMgc3Vic2NyaWJlcnMgb2YgY2hhbmdlcyB0byBkb2N1bWVudHMiICJTZXJ2aWNlIEJ1cyBUb3BpYyIgIlNlcnZpY2VCdXMiCgkJY29tcG9uZW50U2VydmljZVVzZXJNZXNzYWdlVG9waWMgLT4gc3lzdGVtQXBwc0ZvICJJbmZvcm1zIHN1YnNjcmliZXJzIG9mIGNoYW5nZXMgdG8gc2VydmljZSB1c2VycyBpbmZvcm1hdGlvbiIgIlNlcnZpY2UgQnVzIFRvcGljIiAiU2VydmljZUJ1cyIKCQljb21wb25lbnRFdmVudE1lc3NhZ2VUb3BpYyAtPiBzeXN0ZW1BcHBzRm8gIkluZm9ybXMgc3Vic2NyaWJlcnMgb2YgY2hhbmdlcyB0byBzaXRlIHZpc2l0cyBhbmQgb3RoZXIgZXZlbnRzIiAiU2VydmljZSBCdXMgVG9waWMiICJTZXJ2aWNlQnVzIgoKCQljb250YWluZXJCb1dlYiAtPiBjb250YWluZXJCb1JlZGlzICJSZWFkcyBhbmQgd3JpdGVzIGNhY2hlIGFuZCBzZXNzaW9uIGRhdGEiCgkJY29udGFpbmVyQm9XZWIgLT4gY29udGFpbmVyQm9BcGkgIkludm9rZXMgZnVuY3Rpb25hbGl0eSIKCQljb250YWluZXJCb1dlYiAtPiBjb250YWluZXJCb0F6dXJlQWN0aXZlRGlyZWN0b3J5ICJIYW5kbGUgbG9naW5zIGFuZCBwZXJtaXNzaW9ucyIKCQljb250YWluZXJCb1dlYiAtPiBjb250YWluZXJCb0ZpbGVTdG9yYWdlICJSZWFkcyBhbmQgd3JpdGVzIGZpbGVzIHRvIGJsb2Igc3RvcmFnZSIKCQljb250YWluZXJCb0FwaSAtPiBjb250YWluZXJCb0F6dXJlU3FsICJSZWFkcyBhbmQgd3JpdGVzIGRhdGEgdG8gZGF0YWJhc2UiCgkJY29udGFpbmVyQm9BcGkgLT4gY29udGFpbmVyR292Tm90aWZ5ICJTZW5kcyBlbWFpbHMiICJFbWFpbCIKCgkJY29udGFpbmVyRnVuY3Rpb25BcHBDYXNlZGF0YSAtPiBjb250YWluZXJCb0FwaSAiSW1wb3J0cyBjYXNlIGRhdGEgZnJvbSBGcm9udC1PZmZpY2UiCgkJY29udGFpbmVyRXZlbnRHcmlkIC0+IGNvbnRhaW5lckZ1bmN0aW9uQXBwRG9jcyAiUmVwb3J0cyB2aXJ1cyBzY2FuIHJlc3VsdHMiICJFdmVudCBHcmlkIFRvcGljIgoJCWNvbnRhaW5lckZ1bmN0aW9uQXBwRG9jcyAtPiBjb250YWluZXJCb0FwaSAiRm9yd2FyZHMgdmlydXMgc2NhbiByZXN1bHRzIgoJCWNvbnRhaW5lckZ1bmN0aW9uQXBwRG9jcyAtPiBjb250YWluZXJGb0ZpbGVTdG9yYWdlICJDb3BpZXMgZG9jdW1lbnRzIHRvIGltcG9ydCIKCQljb250YWluZXJGdW5jdGlvbkFwcERvY3MgLT4gY29udGFpbmVyQm9GaWxlU3RvcmFnZSAiU3RvcmVzIGltcG9ydGVkIGRvY3VtZW50cyIKCX0KCgl2aWV3cyB7CgkJcHJvcGVydGllcyB7CgkJCSJzdHJ1Y3R1cml6ci5zb3J0IiAiY3JlYXRlZCIKCQl9CgoJCXN5c3RlbUxhbmRzY2FwZSAiU3lzdGVtTGFuZHNjYXBlIiB7CgkJCWluY2x1ZGUgKgoJCQlhdXRvTGF5b3V0IGxyCgkJCXRpdGxlICJTeXN0ZW0gTGFuZHNjYXBlIgoJCX0KCgkJc3lzdGVtQ29udGV4dCBzeXN0ZW1BcHBzRm8gIkFwcGVhbHNGT0NvbnRleHQiIHsKCQkJaW5jbHVkZSAqCgkJCWF1dG9MYXlvdXQgbHIKCQkJdGl0bGUgIkFwcGVhbHMgRnJvbnQtT2ZmaWNlIENvbnRleHQiCgkJfQoKCQlzeXN0ZW1Db250ZXh0IHN5c3RlbUFwcHNCbyAiQXBwZWFsc0JPQ29udGV4dCIgewoJCQlpbmNsdWRlICoKCQkJYXV0b0xheW91dCBscgoJCQl0aXRsZSAiQXBwZWFscyBCYWNrLU9mZmljZSBDb250ZXh0IgoJCX0KCgkJY29udGFpbmVyIHN5c3RlbUFwcHNCbyAiQXBwZWFsc0JPU3lzdGVtIiB7CgkJCWluY2x1ZGUgKgoJCQlhdXRvTGF5b3V0IGxyCgkJCXRpdGxlICJBcHBlYWxzIEJhY2stT2ZmaWNlIFN5c3RlbSIKCQl9CgoJCXN5c3RlbUNvbnRleHQgc3lzdGVtSW50ZWdyYXRpb24gIkludGVncmF0aW9uQ29udGV4dCIgewoJCQlpbmNsdWRlICoKCQkJYXV0b0xheW91dCBscgoJCQl0aXRsZSAiSW50ZWdyYXRpb24gQ29udGV4dCIKCQl9CgoJCWNvbnRhaW5lciBzeXN0ZW1JbnRlZ3JhdGlvbiAiSW50ZWdyYXRpb25TeXN0ZW0iIHsKCQkJaW5jbHVkZSAqCgkJCWF1dG9MYXlvdXQgbHIKCQkJdGl0bGUgIkludGVncmF0aW9uIFN5c3RlbSIKCQl9CgoJCWNvbXBvbmVudCBjb250YWluZXJCb1NlcnZpY2VCdXMgIkludGVncmF0aW9uQ29tcG9uZW50cyIgewoJCQlpbmNsdWRlICoKCQkJYXV0b0xheW91dCBscgoJCQl0aXRsZSAiSW50ZWdyYXRpb24gQ29tcG9uZW50cyIKCQl9CgoJCSMgQXp1cmUgaWNvbnMgb25seQoJCXRoZW1lIGRlZmF1bHQKCQl0aGVtZSBodHRwczovL3N0YXRpYy5zdHJ1Y3R1cml6ci5jb20vdGhlbWVzL21pY3Jvc29mdC1henVyZS0yMDIzLjAxLjI0L2ljb25zLmpzb24KCgkJc3R5bGVzIHsKCgkJCWVsZW1lbnQgRGF0YWJhc2UgewoJCQkJc2hhcGUgQ3lsaW5kZXIKCQkJfQoKCQkJZWxlbWVudCAiUGVyc29uIiB7CgkJCQlzaGFwZSBQZXJzb24KCQkJfQoKCQkJZWxlbWVudCBFeHRlcm5hbFN5c3RlbSB7CgkJCQliYWNrZ3JvdW5kICNBQUFBQUEKCQkJfQoKCQkJZWxlbWVudCBMZWdhY3lTeXN0ZW0gewoJCQkJYmFja2dyb3VuZCAjQ0NDQ0NDCgkJCX0KCgkJCWVsZW1lbnQgSW50ZXJuYWxDb2xsYWJvcmF0aW9uU3lzdGVtIHsKCQkJCWJhY2tncm91bmQgIzg4ODg4OAoJCQl9CgoJCQlyZWxhdGlvbnNoaXAgU2VydmljZUJ1cyB7CgkJCQkJc3R5bGUgZG90dGVkCgkJCX0KCQl9Cgl9Cn0="
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "containerId" : "17",
+      "elements" : [ {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "18",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "19",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "20",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "21",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "22",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "23",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "IntegrationComponents",
+      "order" : 7,
+      "relationships" : [ {
+        "id" : "36"
+      }, {
+        "id" : "39"
+      }, {
+        "id" : "40"
+      }, {
+        "id" : "43"
+      }, {
+        "id" : "44"
+      }, {
+        "id" : "45"
+      }, {
+        "id" : "47"
+      }, {
+        "id" : "53"
+      }, {
+        "id" : "54"
+      }, {
+        "id" : "56"
+      }, {
+        "id" : "57"
+      }, {
+        "id" : "58"
+      }, {
+        "id" : "59"
+      }, {
+        "id" : "62"
+      }, {
+        "id" : "63"
+      }, {
+        "id" : "64"
+      }, {
+        "id" : "82"
+      } ],
+      "title" : "Integration Components"
+    } ],
+    "configuration" : {
+      "branding" : { },
+      "properties" : {
+        "structurizr.sort" : "created"
+      },
+      "styles" : {
+        "elements" : [ {
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        }, {
+          "shape" : "Person",
+          "tag" : "Person"
+        }, {
+          "background" : "#aaaaaa",
+          "tag" : "ExternalSystem"
+        }, {
+          "background" : "#cccccc",
+          "tag" : "LegacySystem"
+        }, {
+          "background" : "#888888",
+          "tag" : "InternalCollaborationSystem"
+        } ],
+        "relationships" : [ {
+          "style" : "Dotted",
+          "tag" : "ServiceBus"
+        } ]
+      },
+      "terminology" : { },
+      "themes" : [ "https://static.structurizr.com/themes/default/theme.json", "https://static.structurizr.com/themes/microsoft-azure-2023.01.24/icons.json" ]
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "26",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "AppealsBOSystem",
+      "order" : 4,
+      "relationships" : [ {
+        "id" : "38"
+      }, {
+        "id" : "50"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "65"
+      }, {
+        "id" : "66"
+      }, {
+        "id" : "67"
+      }, {
+        "id" : "68"
+      }, {
+        "id" : "69"
+      }, {
+        "id" : "71"
+      }, {
+        "id" : "74"
+      }, {
+        "id" : "77"
+      }, {
+        "id" : "78"
+      }, {
+        "id" : "80"
+      }, {
+        "id" : "83"
+      } ],
+      "softwareSystemId" : "7",
+      "title" : "Appeals Back-Office System"
+    }, {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "25",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "IntegrationSystem",
+      "order" : 6,
+      "relationships" : [ {
+        "id" : "37"
+      }, {
+        "id" : "41"
+      }, {
+        "id" : "49"
+      }, {
+        "id" : "55"
+      }, {
+        "id" : "60"
+      }, {
+        "id" : "76"
+      }, {
+        "id" : "82"
+      } ],
+      "softwareSystemId" : "16",
+      "title" : "Integration System"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "AppealsFOContext",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "30"
+      }, {
+        "id" : "31"
+      }, {
+        "id" : "38"
+      }, {
+        "id" : "42"
+      }, {
+        "id" : "51"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "82"
+      } ],
+      "softwareSystemId" : "5",
+      "title" : "Appeals Front-Office Context"
+    }, {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "26",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "AppealsBOContext",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "28"
+      }, {
+        "id" : "29"
+      }, {
+        "id" : "38"
+      }, {
+        "id" : "42"
+      }, {
+        "id" : "51"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "73"
+      }, {
+        "id" : "82"
+      } ],
+      "softwareSystemId" : "7",
+      "title" : "Appeals Back-Office Context"
+    }, {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "IntegrationContext",
+      "order" : 5,
+      "relationships" : [ {
+        "id" : "38"
+      }, {
+        "id" : "42"
+      }, {
+        "id" : "51"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "82"
+      } ],
+      "softwareSystemId" : "16",
+      "title" : "Integration Context"
+    } ],
+    "systemLandscapeViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "26",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "SystemLandscape",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "28"
+      }, {
+        "id" : "29"
+      }, {
+        "id" : "30"
+      }, {
+        "id" : "31"
+      }, {
+        "id" : "33"
+      }, {
+        "id" : "35"
+      }, {
+        "id" : "38"
+      }, {
+        "id" : "42"
+      }, {
+        "id" : "51"
+      }, {
+        "id" : "61"
+      }, {
+        "id" : "73"
+      }, {
+        "id" : "82"
+      } ],
+      "title" : "System Landscape"
+    } ]
+  }
+}
