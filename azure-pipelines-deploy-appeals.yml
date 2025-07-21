@@ -30,7 +30,7 @@ parameters:
   - name: slotDeployment
     displayName: Deploy apps to slot
     type: boolean
-    default: false
+    default: true
 
 pr: none
 trigger: none
