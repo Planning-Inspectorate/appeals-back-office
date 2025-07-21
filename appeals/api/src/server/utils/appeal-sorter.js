@@ -38,8 +38,8 @@ const sortLinkedAppeals = (appeals) => {
 	const sortKeys = buildSortKeys(appeals);
 
 	return appeals.sort((a, b) => {
-		const aKey = sortKeys.get(a.appealId) ?? DEFAULT_SORT_VALUE;
-		const bKey = sortKeys.get(b.appealId) ?? DEFAULT_SORT_VALUE;
+		const aKey = sortKeys.get(a.appealReference) ?? DEFAULT_SORT_VALUE;
+		const bKey = sortKeys.get(b.appealReference) ?? DEFAULT_SORT_VALUE;
 		if (aKey === bKey) return 0;
 		return aKey < bKey ? -1 : 1;
 	});
@@ -48,18 +48,20 @@ const sortLinkedAppeals = (appeals) => {
 /**
  *
  * @param {AppealListResponse[]} appeals
- * @returns {Map<Number, string>}
+ * @returns {Map<string, string>}
  */
 const buildSortKeys = (appeals) => {
 	const sortKeys = new Map();
-	let group = { leadId: 0, dueDate: DEFAULT_SORT_VALUE, children: [] };
+	let group = { leadReference: '', dueDate: DEFAULT_SORT_VALUE, children: [] };
 
 	const finalizeGroup = () => {
-		if (group.leadId && group.dueDate) {
-			sortKeys.set(group.leadId, group.dueDate + 'A');
-			group.children.forEach((id, i) => sortKeys.set(id, group.dueDate + 'B' + i));
+		if (group.leadReference && group.dueDate) {
+			sortKeys.set(group.leadReference, group.dueDate + '-' + group.leadReference + '-A-0');
+			group.children.forEach((reference, i) =>
+				sortKeys.set(reference, group.dueDate + '-' + group.leadReference + '-B-' + i)
+			);
 		}
-		group = { leadId: 0, dueDate: DEFAULT_SORT_VALUE, children: [] };
+		group = { leadReference: '', dueDate: DEFAULT_SORT_VALUE, children: [] };
 	};
 
 	appeals.forEach((appeal) => {
@@ -67,14 +69,14 @@ const buildSortKeys = (appeals) => {
 
 		if (appeal.isParentAppeal) {
 			finalizeGroup();
-			group.leadId = appeal.appealId;
+			group.leadReference = appeal.appealReference;
 			group.dueDate = dueDate + '';
 		} else if (appeal.isChildAppeal) {
 			// @ts-ignore
-			group.children.push(appeal.appealId);
+			group.children.push(appeal.appealReference);
 		} else {
 			finalizeGroup();
-			sortKeys.set(appeal.appealId, dueDate + 'C');
+			sortKeys.set(appeal.appealReference, dueDate + '-' + appeal.appealReference + '-C-0');
 		}
 	});
 
