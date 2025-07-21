@@ -348,7 +348,7 @@ describe('Setup hearing and add hearing estimates', () => {
 				expect(hearing.addressId).to.be.a('number');
 
 				expect(hearingSectionPage.getTimeUpToMinutes(new Date(hearing.hearingStartTime))).to.equal(
-					hearingSectionPage.getTimeUpToMinutes(date.toUTCString())
+					hearingSectionPage.getTimeUpToMinutes(date)
 				);
 
 				const actualAddress = hearing.address;
