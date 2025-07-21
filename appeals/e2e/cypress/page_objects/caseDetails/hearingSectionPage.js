@@ -184,6 +184,6 @@ export class HearingSectionPage extends CaseDetailsPage {
 	}
 
 	getTimeUpToMinutes(date) {
-		return new Date(date).toISOString().slice(0, 16);
+		return new Date(date).toUTCString().slice(0, 16);
 	}
 }
