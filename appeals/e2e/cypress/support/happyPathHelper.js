@@ -46,8 +46,8 @@ export const happyPathHelper = {
 	reviewS78Lpaq(caseRef) {
 		let dueDate = new Date();
 
-		//cy.visit(urlPaths.appealsList);
-		//listCasesPage.clickAppealByRef(caseRef);
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue('Complete');
 		caseDetailsPage.clickButtonByText('Confirm');
