@@ -16,7 +16,11 @@ import {
 import transitionState from '#state/transition-state.js';
 import formatDate, { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { PROCEDURE_TYPE_MAP, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
+import {
+	PROCEDURE_TYPE_MAP,
+	PROCEDURE_TYPE_ID_MAP,
+	FEATURE_FLAG_NAMES
+} from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
@@ -28,11 +32,13 @@ import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { APPEAL_TYPE_SHORTHAND_HAS } from '@pins/appeals/constants/support.js';
 import { AUDIT_TRAIL_CASE_STARTED } from '@pins/appeals/constants/support.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('express').NextFunction} NextFunction */
+/** @typedef {import('@pins/appeals.api').Appeals.TimetableDeadlineDate} TimetableDeadlineDate */
 
 /**
  * @param {Request} req
@@ -61,18 +67,119 @@ const checkAppealTimetableExists = async (req, res, next) => {
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} siteAddress
  * @param {string} azureAdUserId
+ * @param {TimetableDeadlineDate} timetable
  * @param {string} [procedureType]
  * @returns
  */
-const startCase = async (
+const sendStartCaseNotifies = async (
 	appeal,
 	startDate,
 	notifyClient,
 	siteAddress,
 	azureAdUserId,
+	timetable,
 	procedureType
 ) => {
+	/** @type {Record<string, string>} */
+	const appealTypeMap = {
+		D: '-',
+		W: '-s78-',
+		Y: '-s78-'
+	};
+
+	const { type = '', key: appealTypeKey = 'D' } = appeal.appealType || {};
+	const appealType = type?.endsWith(' appeal') ? type.replace(' appeal', '') : type;
+
+	const appellantTemplate = appeal.caseStartedDate
+		? 'appeal-start-date-change-appellant'
+		: `appeal-valid-start-case${[appealTypeMap[appealTypeKey]]}appellant`;
+
+	const lpaTemplate = appeal.caseStartedDate
+		? 'appeal-start-date-change-lpa'
+		: `appeal-valid-start-case${[appealTypeMap[appealTypeKey]]}lpa`;
+
+	const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
+	const lpaEmail = appeal.lpa?.email || '';
+
+	const weWillEmailWhen =
+		procedureType === APPEAL_CASE_PROCEDURE.HEARING
+			? [
+					'to let you know when you can view information from other parties in the appeals service',
+					'when we set up your hearing'
+			  ]
+			: 'when you can view information from other parties in the appeals service.';
+
+	// Note that those properties not used within the specified template will be ignored
+	const commonEmailVariables = {
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress,
+		start_date: formatDate(new Date(startDate || ''), false),
+		appellant_email_address: appellantEmail || '',
+		appeal_type: appealType || '',
+		procedure_type: PROCEDURE_TYPE_MAP[procedureType || 'written'],
+		questionnaire_due_date: formatDate(new Date(timetable.lpaQuestionnaireDueDate || ''), false),
+		local_planning_authority: appeal.lpa?.name || '',
+		due_date: formatDate(new Date(timetable.lpaQuestionnaireDueDate || ''), false),
+		comment_deadline: formatDate(new Date(timetable.commentDeadline || ''), false),
+		lpa_statement_deadline: formatDate(new Date(timetable.lpaStatementDueDate || ''), false),
+		ip_comments_deadline: formatDate(new Date(timetable.ipCommentsDueDate || ''), false),
+		final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false),
+		child_appeals: appeal.childAppeals?.map((appeal) => appeal.childRef) || []
+	};
+
+	if (appellantEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: appellantTemplate,
+			notifyClient,
+			recipientEmail: appellantEmail,
+			personalisation: {
+				...commonEmailVariables,
+				we_will_email_when: weWillEmailWhen,
+				site_visit: appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN,
+				costs_info: appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN
+			}
+		});
+	}
+
+	if (lpaEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: lpaTemplate,
+			notifyClient,
+			recipientEmail: lpaEmail,
+			personalisation: {
+				...commonEmailVariables,
+				...(appeal.appealType?.key === APPEAL_CASE_TYPE.W && {
+					statement_of_common_ground_deadline: formatDate(
+						new Date(timetable.statementOfCommonGroundDueDate || ''),
+						false
+					),
+					planning_obligation_deadline: formatDate(
+						new Date(timetable.planningObligationDueDate || ''),
+						false
+					)
+				})
+			}
+		});
+	}
+};
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {string} startDate
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
+ * @param {string} [procedureType]
+ * @returns
+ */
+const startCase = async (appeal, startDate, notifyClient, azureAdUserId, procedureType) => {
 	try {
+		const isChildAppeal =
+			isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && Boolean(appeal?.parentAppeals?.length);
+
 		const appealType = appeal.appealType || null;
 		if (!appealType) {
 			throw new Error('Appeal type is required to start a case.');
@@ -81,21 +188,6 @@ const startCase = async (
 		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
 		const timetable = await calculateTimetable(appealType.key, startedAt, procedureType);
 		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
-
-		/** @type {Record<string, string>} */
-		const appealTypeMap = {
-			D: '-',
-			W: '-s78-',
-			Y: '-s78-'
-		};
-
-		const appellantTemplate = appeal.caseStartedDate
-			? 'appeal-start-date-change-appellant'
-			: `appeal-valid-start-case${[appealTypeMap[appealType.key]]}appellant`;
-
-		const lpaTemplate = appeal.caseStartedDate
-			? 'appeal-start-date-change-lpa'
-			: `appeal-valid-start-case${[appealTypeMap[appealType.key]]}lpa`;
 
 		const procedureTypeId = procedureType && PROCEDURE_TYPE_ID_MAP[procedureType];
 
@@ -121,74 +213,20 @@ const startCase = async (
 				details: stringTokenReplacement(AUDIT_TRAIL_CASE_STARTED, [procedureType || 'written'])
 			});
 
-			const appellantEmail = appeal.appellant?.email || appeal.agent?.email;
-			const lpaEmail = appeal.lpa?.email || '';
-			const { type } = appeal.appealType || {};
-			const appealType = type?.endsWith(' appeal') ? type.replace(' appeal', '') : type;
+			if (!isChildAppeal) {
+				const siteAddress = appeal.address
+					? formatAddressSingleLine(appeal.address)
+					: 'Address not available';
 
-			const weWillEmailWhen =
-				procedureType === APPEAL_CASE_PROCEDURE.HEARING
-					? [
-							'to let you know when you can view information from other parties in the appeals service',
-							'when we set up your hearing'
-					  ]
-					: 'when you can view information from other parties in the appeals service.';
-
-			// Note that those properties not used within the specified template will be ignored
-			const commonEmailVariables = {
-				appeal_reference_number: appeal.reference,
-				lpa_reference: appeal.applicationReference || '',
-				site_address: siteAddress,
-				start_date: formatDate(new Date(startDate || ''), false),
-				appellant_email_address: appellantEmail || '',
-				appeal_type: appealType || '',
-				procedure_type: PROCEDURE_TYPE_MAP[procedureType || 'written'],
-				questionnaire_due_date: formatDate(
-					new Date(timetable.lpaQuestionnaireDueDate || ''),
-					false
-				),
-				local_planning_authority: appeal.lpa?.name || '',
-				due_date: formatDate(new Date(timetable.lpaQuestionnaireDueDate || ''), false),
-				comment_deadline: formatDate(new Date(timetable.commentDeadline || ''), false),
-				lpa_statement_deadline: formatDate(new Date(timetable.lpaStatementDueDate || ''), false),
-				ip_comments_deadline: formatDate(new Date(timetable.ipCommentsDueDate || ''), false),
-				final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false),
-				child_appeals: appeal.childAppeals?.map((appeal) => appeal.childRef) || []
-			};
-
-			if (appellantEmail) {
-				await notifySend({
-					templateName: appellantTemplate,
+				await sendStartCaseNotifies(
+					appeal,
+					startDate,
 					notifyClient,
-					recipientEmail: appellantEmail,
-					personalisation: {
-						...commonEmailVariables,
-						we_will_email_when: weWillEmailWhen,
-						site_visit: appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN,
-						costs_info: appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN
-					}
-				});
-			}
-
-			if (lpaEmail) {
-				await notifySend({
-					templateName: lpaTemplate,
-					notifyClient,
-					recipientEmail: lpaEmail,
-					personalisation: {
-						...commonEmailVariables,
-						...(appeal.appealType?.key === APPEAL_CASE_TYPE.W && {
-							statement_of_common_ground_deadline: formatDate(
-								new Date(timetable.statementOfCommonGroundDueDate || ''),
-								false
-							),
-							planning_obligation_deadline: formatDate(
-								new Date(timetable.planningObligationDueDate || ''),
-								false
-							)
-						})
-					}
-				});
+					siteAddress,
+					azureAdUserId,
+					timetable,
+					procedureType
+				);
 			}
 
 			await transitionState(
@@ -249,7 +287,7 @@ const updateAppealTimetable = async (appeal, body, notifyClient, azureAdUserId) 
 		});
 
 		if (shouldSendNotify(appeal.appealType?.key, appeal.procedureType?.key)) {
-			await sendTimetableUpdateNotify(appeal, processedBody, notifyClient);
+			await sendTimetableUpdateNotify(appeal, processedBody, notifyClient, azureAdUserId);
 		}
 		await broadcasters.broadcastAppeal(appeal.id);
 	}
@@ -268,9 +306,10 @@ const dueDateToAppealTimetableTextMapper = {
  * @param {Appeal} appeal
  * @param {object} processedBody
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
  * @returns {Promise<void>}
  */
-const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient) => {
+const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, azureAdUserId) => {
 	const siteAddress = appeal.address
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
@@ -322,6 +361,7 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient) =>
 
 	if (recipientEmail) {
 		await notifySend({
+			azureAdUserId,
 			templateName,
 			notifyClient,
 			recipientEmail,
@@ -331,6 +371,7 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient) =>
 
 	if (lpaEmail) {
 		await notifySend({
+			azureAdUserId,
 			templateName,
 			notifyClient,
 			recipientEmail: lpaEmail,

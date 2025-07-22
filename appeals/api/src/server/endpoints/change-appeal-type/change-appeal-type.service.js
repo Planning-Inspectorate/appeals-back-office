@@ -59,6 +59,7 @@ const changeAppealType = async (
 
 	if (recipientEmail) {
 		await notifySend({
+			azureAdUserId,
 			templateName: 'appeal-type-change-non-has',
 			notifyClient,
 			recipientEmail,

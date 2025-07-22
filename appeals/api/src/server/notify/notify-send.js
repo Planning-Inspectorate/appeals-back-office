@@ -8,10 +8,11 @@ import {
 	ERROR_NOTIFICATION_PERSONALISATION
 } from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { emulateSendEmail } from '#notify/emulate-notify.js';
+import { emulateSendEmail, generateNotifyPreview } from '#notify/emulate-notify.js';
 import logger from '#utils/logger.js';
 import nunjucks from 'nunjucks';
 import { EOL } from 'node:os';
+import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
@@ -21,8 +22,8 @@ export const templatesDir = path.join(__dirname, 'templates');
 export const nunjucksEnv = nunjucks.configure(templatesDir, {
 	throwOnUndefined: true
 });
-
 /**
+ * @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal
  * @typedef {Record<string, string | string[] | boolean | number>} Personalisation
  */
 
@@ -32,6 +33,8 @@ export const nunjucksEnv = nunjucks.configure(templatesDir, {
  * @property {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @property {string | null | undefined} recipientEmail
  * @property {Personalisation} personalisation
+ * @property {string|undefined} [azureAdUserId]
+
  */
 
 /**
@@ -39,7 +42,7 @@ export const nunjucksEnv = nunjucks.configure(templatesDir, {
  * @returns {Promise<void>}
  */
 export const notifySend = async (options) => {
-	const { templateName, notifyClient, recipientEmail, personalisation } = options;
+	const { templateName, notifyClient, recipientEmail, personalisation, azureAdUserId } = options;
 	if (!templateName) {
 		throw new Error(
 			stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
@@ -59,9 +62,17 @@ export const notifySend = async (options) => {
 	const genericTemplate = config.govNotify.template.generic;
 	const content = renderTemplate(`${templateName}.content.md`, personalisation);
 	const subject = renderTemplate(`${templateName}.subject.md`, personalisation);
+	const renderedMessage = generateNotifyPreview(content);
+	const renderedSubject = generateNotifyPreview(`Subject: ${subject}`, true);
 	try {
 		if (config.useNotifyEmulator) {
-			emulateSendEmail(templateName, recipientEmail, subject, content);
+			emulateSendEmail(
+				personalisation.appeal_reference_number?.toString() || 'UNKNOWN REF',
+				templateName,
+				recipientEmail,
+				subject,
+				content
+			);
 		} else {
 			await notifyClient.sendEmail(genericTemplate, recipientEmail, { subject, content });
 		}
@@ -74,8 +85,11 @@ export const notifySend = async (options) => {
 						caseReference: String(personalisation.appeal_reference_number),
 						template: templateName,
 						subject,
+						renderedSubject,
 						recipient: recipientEmail,
-						message: content
+						message: content,
+						renderedMessage,
+						sender: azureAdUserId || AUDIT_TRAIL_SYSTEM_UUID
 					}
 				]
 			});

@@ -314,7 +314,8 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 				recipientEmail: appeal.lpa?.email,
 				finalCommentsDueDate,
 				whatHappensNext: whatHappensNextLpa,
-				subject: lpaSubject
+				subject: lpaSubject,
+				azureAdUserId
 			});
 
 			await notifyPublished({
@@ -324,7 +325,8 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 				recipientEmail: appeal.agent?.email || appeal.appellant?.email,
 				finalCommentsDueDate,
 				whatHappensNext: whatHappensNextAppellant,
-				subject: appellantSubject
+				subject: appellantSubject,
+				azureAdUserId
 			});
 		}
 	} catch (error) {
@@ -366,14 +368,14 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 		if (
 			result.some((rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT)
 		) {
-			notifyLpaFinalCommentsPublished(appeal, notifyClient);
+			notifyLpaFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
 		}
 		if (
 			result.some(
 				(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
 			)
 		) {
-			notifyAppellantFinalCommentsPublished(appeal, notifyClient);
+			notifyAppellantFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
 		}
 	} catch (error) {
 		logger.error(error);
@@ -393,6 +395,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
  * @property {boolean} [hasLpaStatement]
  * @property {boolean} [hasIpComments]
  * @property {string} [subject]
+ * @property {string} azureAdUserId
  */
 
 /**
@@ -408,7 +411,8 @@ async function notifyPublished({
 	whatHappensNext = '',
 	hasLpaStatement = false,
 	hasIpComments = false,
-	subject = ''
+	subject = '',
+	azureAdUserId
 }) {
 	const lpaReference = appeal.applicationReference;
 	if (!lpaReference) {
@@ -427,6 +431,7 @@ async function notifyPublished({
 		: 'Address not available';
 
 	await notifySend({
+		azureAdUserId,
 		notifyClient,
 		templateName,
 		recipientEmail,
@@ -446,8 +451,9 @@ async function notifyPublished({
 /**
  * @param {Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
  * */
-function notifyLpaFinalCommentsPublished(appeal, notifyClient) {
+function notifyLpaFinalCommentsPublished(appeal, notifyClient, azureAdUserId) {
 	const recipientEmail = appeal.lpa?.email;
 	if (!recipientEmail) {
 		throw new Error(`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no LPA email address in appeal`);
@@ -457,15 +463,17 @@ function notifyLpaFinalCommentsPublished(appeal, notifyClient) {
 		appeal,
 		notifyClient,
 		templateName: 'final-comments-done-lpa',
-		recipientEmail
+		recipientEmail,
+		azureAdUserId
 	});
 }
 
 /**
  * @param {Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
  * */
-function notifyAppellantFinalCommentsPublished(appeal, notifyClient) {
+function notifyAppellantFinalCommentsPublished(appeal, notifyClient, azureAdUserId) {
 	const recipientEmail = appeal.appellant?.email;
 	if (!recipientEmail) {
 		throw new Error(
@@ -477,6 +485,7 @@ function notifyAppellantFinalCommentsPublished(appeal, notifyClient) {
 		appeal,
 		notifyClient,
 		templateName: 'final-comments-done-appellant',
-		recipientEmail
+		recipientEmail,
+		azureAdUserId
 	});
 }

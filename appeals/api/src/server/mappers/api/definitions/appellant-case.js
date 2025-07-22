@@ -115,6 +115,10 @@ const appellantCase = {
 		appellantCaseId: {
 			type: 'number'
 		},
+		numberOfResidencesNetChange: {
+			type: 'number',
+			nullable: true
+		},
 		...AppealSummary.properties,
 		...updateableFields,
 		validation: {
@@ -329,6 +333,10 @@ export const AppellantCaseUpdateRequest = {
 		},
 		changedDevelopmentDescription: {
 			type: 'string',
+			nullable: true
+		},
+		numberOfResidencesNetChange: {
+			type: 'number',
 			nullable: true
 		}
 	}

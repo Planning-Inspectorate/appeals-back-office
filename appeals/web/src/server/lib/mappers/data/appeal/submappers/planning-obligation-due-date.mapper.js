@@ -1,6 +1,7 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapPlanningObligationDueDate = ({
@@ -30,7 +31,10 @@ export const mapPlanningObligationDueDate = ({
 			? dateISOStringToDisplayDate(planningObligationDueDate)
 			: 'Not provided',
 		link: `${currentRoute}/timetable/edit`,
-		editable: userHasUpdateCasePermission && Boolean(appealDetails.startedAt),
+		editable:
+			!isChildAppeal(appealDetails) &&
+			userHasUpdateCasePermission &&
+			Boolean(appealDetails.startedAt),
 		classes: 'appeal-planning-obligation-due-date'
 	});
 };

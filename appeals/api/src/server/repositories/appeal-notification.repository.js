@@ -10,3 +10,13 @@ export const getAppealNotifications = async (caseReference) =>
 		where: { caseReference },
 		orderBy: { dateCreated: 'desc' }
 	});
+/**
+ *
+ * @param {string} caseReference
+ * @returns {Promise<import('@pins/appeals.api').Schema.AppealNotification[]>}
+ */
+export const getAppealAuditNotifications = async (caseReference) =>
+	databaseConnector.appealNotification.findMany({
+		where: { caseReference, renderedMessage: { not: null } },
+		orderBy: { dateCreated: 'desc' }
+	});

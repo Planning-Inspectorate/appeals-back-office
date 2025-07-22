@@ -956,6 +956,32 @@ exports[`appeal-details GET /:appealId Timetable Valid date should render a "Tim
 </dl>"
 `;
 
+exports[`appeal-details GET /:appealId Timetable for a child appeal should not contain any change action links 1`] = `
+"<dl class="govuk-summary-list appeal-case-timetable">
+    <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
+        <dd class="govuk-summary-list__value">1 January 2025</dd>
+        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/valid/date"
+            data-cy="-valid-date"><span class="govuk-visually-hidden"> Valid date</span></a>
+        </dd>
+    </div>
+    <div class="govuk-summary-list__row appeal-start-date"><dt class="govuk-summary-list__key"> Start date</dt>
+        <dd class="govuk-summary-list__value">1 January 2025</dd>
+    </div>
+    <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
+        <dd class="govuk-summary-list__value">2 January 2025</dd>
+    </div>
+    <div class="govuk-summary-list__row appeal-lpa-statement-due-date"><dt class="govuk-summary-list__key"> LPA statement due</dt>
+        <dd class="govuk-summary-list__value">3 January 2025</dd>
+    </div>
+    <div class="govuk-summary-list__row appeal-ip-comments-due-date"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
+        <dd         class="govuk-summary-list__value">4 January 2025</dd>
+    </div>
+    <div class="govuk-summary-list__row appeal-final-comments-due-date"><dt class="govuk-summary-list__key"> Final comments due</dt>
+        <dd class="govuk-summary-list__value">5 January 2025</dd>
+    </div>
+</dl>"
+`;
+
 exports[`appeal-details GET /:appealId should not render a "Appeal valid" notification banner when status is "READY_TO_START" and appeal is a linked child appeal 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -1164,9 +1190,6 @@ exports[`appeal-details GET /:appealId should not render a "Appeal valid" notifi
                                         <li>9 October 2023</li>
                                         <li>9:38am - 10:00am</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                                    data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -2523,9 +2546,6 @@ exports[`appeal-details GET /:appealId should render a child tag next to the app
                                         <li>9 October 2023</li>
                                         <li>9:38am - 10:00am</li>
                                     </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/manage-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                                    data-cy="change-schedule-visit">Change<span class="govuk-visually-hidden"> Site visit</span></a>
                                 </dd>
                             </div>
                         </dl>
