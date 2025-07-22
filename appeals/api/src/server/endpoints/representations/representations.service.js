@@ -268,41 +268,33 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 		false
 	);
 
-	const [hasLpaStatement, hasLpaComment, hasIpComments] = [
-		'LPA_STATEMENT',
-		'COMMENT',
-		'APPELLANT_FINAL_COMMENT'
-	].map((type) =>
-		result.some((rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE[type])
+	const hasLpaStatement = result.some(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+	);
+	const hasIpComments = result.some(
+		(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.COMMENT
 	);
 
 	try {
-		if (hasLpaStatement || hasLpaComment) {
-			let whatHappensNextAppellant;
-			let whatHappensNextLpa;
-			let lpaSubject;
-			let appellantSubject;
-			if (String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.HEARING) {
-				lpaSubject = `We've received all statements and comments`;
-				appellantSubject = `We have received the local planning authority's questionnaire, all statements and comments from interested parties`;
-				if (appeal.hearing?.hearingStartTime) {
-					whatHappensNextAppellant = `Your hearing is on ${formatDate(
-						appeal.hearing?.hearingStartTime,
-						false
-					)}.\n\nWe will contact you if we need any more information.`;
-					whatHappensNextLpa = `The hearing is on ${formatDate(
-						appeal.hearing?.hearingStartTime,
-						false
-					)}.`;
-				} else {
-					whatHappensNextAppellant = `We will contact you if we need any more information.`;
-					whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
-				}
+		let whatHappensNextAppellant;
+		let whatHappensNextLpa;
+		let lpaSubject;
+		let appellantSubject;
+		if (String(appeal.procedureType?.key) === APPEAL_CASE_PROCEDURE.HEARING) {
+			lpaSubject = `We've received all statements and comments`;
+			appellantSubject = `We have received the local planning authority's questionnaire, all statements and comments from interested parties`;
+			if (appeal.hearing?.hearingStartTime) {
+				whatHappensNextAppellant = `Your hearing is on ${formatDate(
+					appeal.hearing?.hearingStartTime,
+					false
+				)}.\n\nWe will contact you if we need any more information.`;
+				whatHappensNextLpa = `The hearing is on ${formatDate(
+					appeal.hearing?.hearingStartTime,
+					false
+				)}.`;
 			} else {
-				lpaSubject = 'Submit your final comments';
-				appellantSubject = 'Submit your final comments';
-				whatHappensNextAppellant = `You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
-				whatHappensNextLpa = `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
+				whatHappensNextAppellant = `We will contact you if we need any more information.`;
+				whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
 			}
 
 			await notifyPublished({
@@ -328,7 +320,38 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 				subject: appellantSubject,
 				azureAdUserId
 			});
+		} else {
+			lpaSubject = 'Submit your final comments';
+			appellantSubject = 'Submit your final comments';
+			whatHappensNextAppellant = `You need to [submit your final comments](${config.frontOffice.url}/appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
+			whatHappensNextLpa = `You need to [submit your final comments](${config.frontOffice.url}/manage-appeals/${appeal.reference}) by ${finalCommentsDueDate}.`;
 		}
+
+		await notifyPublished({
+			appeal,
+			notifyClient,
+			hasLpaStatement,
+			hasIpComments,
+			templateName: 'received-statement-and-ip-comments-lpa',
+			recipientEmail: appeal.lpa?.email,
+			finalCommentsDueDate,
+			whatHappensNext: whatHappensNextLpa,
+			subject: lpaSubject,
+			azureAdUserId
+		});
+
+		await notifyPublished({
+			appeal,
+			notifyClient,
+			hasLpaStatement,
+			hasIpComments,
+			templateName: 'received-statement-and-ip-comments-appellant',
+			recipientEmail: appeal.agent?.email || appeal.appellant?.email,
+			finalCommentsDueDate,
+			whatHappensNext: whatHappensNextAppellant,
+			subject: appellantSubject,
+			azureAdUserId
+		});
 	} catch (error) {
 		logger.error(error);
 	}
