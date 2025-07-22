@@ -66,6 +66,7 @@ const checkAppealTimetableExists = async (req, res, next) => {
  * @param {string} startDate
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} siteAddress
+ * @param {string} azureAdUserId
  * @param {TimetableDeadlineDate} timetable
  * @param {string} [procedureType]
  * @returns
@@ -75,6 +76,7 @@ const sendStartCaseNotifies = async (
 	startDate,
 	notifyClient,
 	siteAddress,
+	azureAdUserId,
 	timetable,
 	procedureType
 ) => {
@@ -128,7 +130,8 @@ const sendStartCaseNotifies = async (
 
 	if (appellantEmail) {
 		await notifySend({
-			azureAdUserId,templateName: appellantTemplate,
+			azureAdUserId,
+			templateName: appellantTemplate,
 			notifyClient,
 			recipientEmail: appellantEmail,
 			personalisation: {
@@ -142,7 +145,8 @@ const sendStartCaseNotifies = async (
 
 	if (lpaEmail) {
 		await notifySend({
-			azureAdUserId,templateName: lpaTemplate,
+			azureAdUserId,
+			templateName: lpaTemplate,
 			notifyClient,
 			recipientEmail: lpaEmail,
 			personalisation: {
@@ -219,6 +223,7 @@ const startCase = async (appeal, startDate, notifyClient, azureAdUserId, procedu
 					startDate,
 					notifyClient,
 					siteAddress,
+					azureAdUserId,
 					timetable,
 					procedureType
 				);
