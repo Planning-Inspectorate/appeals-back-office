@@ -8766,6 +8766,10 @@
 								"example": false
 							}
 						}
+					},
+					"numberOfResidencesNetChange": {
+						"type": "number",
+						"example": 0
 					}
 				},
 				"xml": {
@@ -10019,6 +10023,10 @@
 					"appellantProcedurePreferenceWitnessCount": {
 						"type": "number",
 						"example": 2
+					},
+					"numberOfResidencesNetChange": {
+						"type": "number",
+						"example": 0
 					}
 				},
 				"xml": {
@@ -13574,6 +13582,10 @@
 				"properties": {
 					"appellantCaseId": {
 						"type": "number"
+					},
+					"numberOfResidencesNetChange": {
+						"type": "number",
+						"nullable": true
 					},
 					"appealId": {
 						"type": "number"
@@ -33086,6 +33098,10 @@
 					},
 					"changedDevelopmentDescription": {
 						"type": "string",
+						"nullable": true
+					},
+					"numberOfResidencesNetChange": {
+						"type": "number",
 						"nullable": true
 					}
 				}
