@@ -204,22 +204,30 @@ Cypress.Commands.add('deleteHearing', (reference) => {
 	});
 });
 
-Cypress.Commands.add('checkNotifySent', (reference, templates) => {
-	const expectedTemplates = [].concat(templates);
+Cypress.Commands.add('checkNotifySent', (reference, expectedNotifies) => {
+	// ensure input is always an array
+	const expected = [].concat(expectedNotifies);
 
 	return cy.wrap(null).then(async () => {
-		// returns an array of email objects sent for the given reference
-		const emails = await appealsApiClient.getNotifyEmails(reference);
+		// returns an array of email objects sent for the given appeal
+		const sentNotifies = await appealsApiClient.getNotifyEmails(reference);
 
-		// creates an array of unique sent email templates that match expected
-		const foundTemplateNames = [...new Set(emails.map((email) => email.template))];
-
-		// creates a list of expected templates that were not found
-		const missingTemplates = expectedTemplates.filter(
-			(expected) => !foundTemplateNames.includes(expected)
+		// filter for expected notifies that were NOT found in the sent notfies array
+		const missingNotifies = expected.filter(
+			(expectedNotify) =>
+				!sentNotifies.some(
+					(sentNotifies) =>
+						sentNotifies.template === expectedNotify.template &&
+						sentNotifies.recipient === expectedNotify.recipient
+				)
 		);
 
-		expect(missingTemplates, `Expected, but not found:${missingTemplates}`).to.be.empty;
+		// error message detail
+		const missingDetails = missingNotifies
+			.map((notify) => `(Template: ${notify.template}, Recipient: ${notify.recipient})`)
+			.join('; ');
+
+		expect(missingNotifies, `Missing notifies: ${missingDetails}`).to.be.empty;
 	});
 });
 

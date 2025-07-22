@@ -67,7 +67,16 @@ describe('Issue Decision', () => {
 			caseDetailsPage.viewDecisionLetter('View decision');
 
 			//Notify
-			const expectedNotifies = ['decision-is-invalid-lpa', 'decision-is-invalid-appellant'];
+			const expectedNotifies = [
+				{
+					template: 'decision-is-invalid-lpa',
+					recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+				},
+				{
+					template: 'decision-is-invalid-appellant',
+					recipient: 'agent@test.com'
+				}
+			];
 
 			cy.checkNotifySent(caseRef, expectedNotifies);
 		});

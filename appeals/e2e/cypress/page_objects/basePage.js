@@ -376,14 +376,16 @@ export class Page {
 			.contains(caseRef)
 			.parents('tr')
 			.find('.govuk-tag')
+			.last()
 			.should('have.text', expectedTagText);
 	}
 
-	verifyTagOnAllCasesPage(caseRef, expectedTagText) {
+	verifyTagOnAllCasesPage(caseRef, expectedTagText, index = 0) {
 		cy.getByData(caseRef)
 			.parent('td')
 			.siblings('.govuk-table__cell')
 			.find('.govuk-tag')
+			.eq(index)
 			.should('have.text', expectedTagText);
 	}
 }

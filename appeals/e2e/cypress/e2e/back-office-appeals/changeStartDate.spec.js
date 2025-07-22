@@ -38,8 +38,14 @@ describe('Change start date', () => {
 
 			//Notify
 			const expectedNotifies = [
-				'appeal-start-date-change-appellant',
-				'appeal-start-date-change-lpa'
+				{
+					template: 'appeal-start-date-change-appellant',
+					recipient: 'appellant@test.com'
+				},
+				{
+					template: 'appeal-start-date-change-lpa',
+					recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+				}
 			];
 
 			cy.checkNotifySent(caseRef, expectedNotifies);

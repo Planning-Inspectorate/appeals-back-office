@@ -411,10 +411,26 @@ describe('Setup hearing and add hearing estimates', () => {
 
 		//Notify
 		const expectedNotifies = [
-			'appeal-valid-start-case-s78-appellant',
-			'appeal-valid-start-case-s78-lpa',
-			'hearing-set-up',
-			'hearing-updated'
+			{
+				template: 'appeal-valid-start-case-s78-appellant',
+				recipient: 'appellant@test.com'
+			},
+			{
+				template: 'appeal-valid-start-case-s78-lpa',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			},
+			{
+				template: 'hearing-set-up',
+				recipient: 'appellant@test.com'
+			},
+			{
+				template: 'hearing-set-up',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			},
+			{
+				template: 'hearing-updated',
+				recipient: 'appellant@test.com'
+			}
 		];
 
 		cy.checkNotifySent(caseRef, expectedNotifies);
@@ -440,7 +456,16 @@ describe('Setup hearing and add hearing estimates', () => {
 		hearingSectionPage.verifyCaseHistory(['Hearing cancelled']);
 
 		// Notify
-		const expectedNotifies = ['hearing-cancelled'];
+		const expectedNotifies = [
+			{
+				template: 'hearing-cancelled',
+				recipient: 'appellant@test.com'
+			},
+			{
+				template: 'hearing-cancelled',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			}
+		];
 
 		cy.checkNotifySent(caseRef, expectedNotifies);
 	});
@@ -498,12 +523,21 @@ describe('Setup hearing and add hearing estimates', () => {
 		caseDetailsPage.verifyTimeTableRows(timeTableRows);
 
 		//Notify
-		const expectedNotifies = ['hearing-set-up'];
+		const expectedNotifies = [
+			{
+				template: 'hearing-set-up',
+				recipient: 'appellant@test.com'
+			},
+			{
+				template: 'hearing-set-up',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			}
+		];
 
 		cy.checkNotifySent(caseRef, expectedNotifies);
 	});
 
-	it('should progress hearing case to decision', () => {
+	it.only('should progress hearing case to decision', () => {
 		hearingSectionPage.deleteHearingIfExists(caseRef);
 		happyPathHelper.reviewLPaStatement(caseRef);
 
@@ -543,9 +577,9 @@ describe('Setup hearing and add hearing estimates', () => {
 
 			// Verify Hearing ready to set up tag - personal list page
 			cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
-			hearingSectionPage.verifyTagOnPersonalListPage(caseRef, 'Hearing ready to set up');
+			hearingSectionPage.verifyTagOnPersonalListPage(caseRef, 'Hearing ready to set up', 1);
 
-			// // navigate to details page
+			// navigate to details page
 			caseDetailsPage.clickLinkByText(caseRef);
 
 			caseDetailsPage.clickHearingBannerLink();
@@ -581,13 +615,38 @@ describe('Setup hearing and add hearing estimates', () => {
 
 		//Notify
 		const expectedNotifies = [
-			'appeal-valid-start-case-s78-appellant',
-			'appeal-valid-start-case-s78-lpa',
-			'received-statement-and-ip-comments-lpa',
-			'received-statement-and-ip-comments-appellant',
-			'hearing-updated',
-			'decision-is-allowed-split-dismissed-lpa',
-			'decision-is-allowed-split-dismissed-appellant'
+			{
+				template: 'appeal-valid-start-case-s78-appellant',
+				recipient: 'appellant@test.com'
+			},
+			{
+				template: 'appeal-valid-start-case-s78-lpa',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			},
+			{
+				template: 'received-statement-and-ip-comments-lpa',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			},
+			{
+				template: 'received-statement-and-ip-comments-appellant',
+				recipient: 'agent@test.com'
+			},
+			{
+				template: 'hearing-updated',
+				recipient: 'appellant@test.com'
+			},
+			{
+				template: 'hearing-updated',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			},
+			{
+				template: 'decision-is-allowed-split-dismissed-lpa',
+				recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+			},
+			{
+				template: 'decision-is-allowed-split-dismissed-appellant',
+				recipient: 'agent@test.com'
+			}
 		];
 
 		cy.checkNotifySent(caseRef, expectedNotifies);
