@@ -7,14 +7,150 @@ import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { tag } from '../../support/tag';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { LpaqPage } from '../../page_objects/caseDetails/lpaqPgae.js';
+import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
+const lpaqPage = new LpaqPage();
+
+const { casedata } = appealsApiRequests.lpaqSubmission;
+const [address] = appealsApiRequests.lpaqSubmission.casedata.neighbouringSiteAddresses;
 
 describe('Review LPAQ', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
+	});
+
+	it('Validate fields and answers in LPAQfor householder appeal', { tags: tag.smoke }, () => {
+		cy.createCase().then((caseRef) => {
+			cy.addLpaqSubmissionToCase(caseRef);
+			happyPathHelper.assignCaseOfficer(caseRef);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.startCase(caseRef);
+			caseDetailsPage.clickReviewLpaq();
+			// Section 1 – Constraints
+			lpaqPage.assertCorrectAppealType(casedata.isCorrectAppealType ? 'Yes' : 'No');
+			lpaqPage.assertAffectsListedBuilding(casedata.affectedListedBuildingNumbers[0]);
+			lpaqPage.assertConservationAreaMapLabel('No documents');
+			lpaqPage.assertGreenBelt(casedata.isGreenBelt ? 'Yes' : 'No');
+
+			// Section 2 – Notifications
+			lpaqPage.assertNotifiedWho('No documents');
+			lpaqPage.assertNotifiedHow(casedata.notificationMethod[0]);
+			lpaqPage.assertSiteNoticeLabel('No documents');
+			lpaqPage.assertEmailNotificationLabel('No documents');
+			lpaqPage.assertPressAdvertLabel('No documents');
+			lpaqPage.assertNotificationLetterLabel('No documents');
+
+			// // Section 3 – Representations
+			lpaqPage.assertRepresentationsLabel('No documents');
+
+			// // Section 4 – Officer Reports & Plans
+			lpaqPage.assertPlanningOfficerReportLabel('No documents');
+			lpaqPage.assertPlansDrawingsLabel('No documents');
+			lpaqPage.assertStatutoryPoliciesLabel('No documents');
+			lpaqPage.assertSupplementaryDocsLabel('No documents');
+			lpaqPage.assertEmergingPlanLabel('No documents');
+
+			// // Section 5 – Site Access
+			lpaqPage.assertInspectorAccess(casedata.siteAccessDetails[0]);
+			lpaqPage.assertNeighbourSiteAddress({
+				line1: address.neighbouringSiteAddressLine1,
+				line2: address.neighbouringSiteAddressLine2,
+				town: address.neighbouringSiteAddressTown,
+				county: address.neighbouringSiteAddressCounty,
+				postcode: address.neighbouringSiteAddressPostcode
+			});
+			lpaqPage.assertSafetyRisks(casedata.siteSafetyDetails[0]); // Example from API
+
+			// Section 6 – Appeal Process
+			lpaqPage.assertOngoingAppeals(casedata.nearbyCaseReferences);
+
+			// Final section
+			lpaqPage.assertAdditionalDocumentsLabel('None');
+		});
+	});
+
+	it.only('Validate fields and answers in LPAQ for s78 appeal', { tags: tag.smoke }, () => {
+		cy.createCase({ caseType: 'W' }).then((caseRef) => {
+			cy.addLpaqSubmissionToCase(caseRef);
+			happyPathHelper.assignCaseOfficer(caseRef);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.startS78Case(caseRef, 'written');
+			caseDetailsPage.clickReviewLpaq();
+			const address = casedata.neighbouringSiteAddresses[0];
+
+			// Section 1 – Constraints
+			lpaqPage.assertPlanningAppealType(casedata.isCorrectAppealType ? 'Yes' : 'No');
+			lpaqPage.assertAffectsListedBuilding(casedata.affectedListedBuildingNumbers[0]);
+			// lpaqPage.assertScheduledMonument('No'); //awaiting bug fix
+			lpaqPage.assertConservationAreaMapLabel('No documents');
+			// lpaqPage.assertProtectedSpecies('No'); //awaiting bug fix
+			lpaqPage.assertGreenBelt(casedata.isGreenBelt ? 'Yes' : 'No');
+			// lpaqPage.assertAONB('No'); //awaiting bug fix
+			lpaqPage.assertDesignatedSites('No');
+			lpaqPage.assertTreePreservationOrder('No documents');
+			// lpaqPage.assertGypsyTraveller('No');
+			lpaqPage.assertDefinitiveMapLabel('No documents');
+
+			// Section 2 – Environmental Impact Assessment
+			lpaqPage.assertDevelopmentCategory('Other');
+			// lpaqPage.assertThresholdMet('No');
+			// lpaqPage.assertEIAStatementRequired('No');
+			lpaqPage.assertEnvironmentalStatementLabel('No documents');
+			lpaqPage.assertScreeningOpinionDocsLabel('No documents');
+			lpaqPage.assertScreeningDirectionDocsLabel('No documents');
+			lpaqPage.assertScopingOpinionDocsLabel('No documents');
+			// lpaqPage.assertEIADevelopmentDescription('No');
+			lpaqPage.assertSensitiveArea('No');
+
+			// Section 3 – Notifying relevant parties
+			lpaqPage.assertNotifiedWho('No documents');
+			lpaqPage.assertNotifiedHow(casedata.notificationMethod[0]);
+			lpaqPage.assertSiteNoticeLabel('No documents');
+			lpaqPage.assertEmailNotificationLabel('No documents');
+			lpaqPage.assertPressAdvertLabel('No documents');
+			lpaqPage.assertNotificationLetterLabel('No documents');
+
+			// Section 4 – Representations
+			lpaqPage.assertRepresentationsLabel('No documents');
+			// lpaqPage.assertConsultationResponsesLabel('No documents');
+			lpaqPage.assertStatutoryPoliciesLabel('No');
+
+			// Section 5 – Officer Reports and Plans
+			lpaqPage.assertPlanningOfficerReportLabel('No documents');
+			lpaqPage.assertStatutoryPoliciesLabel('No documents');
+			lpaqPage.assertSupplementaryDocsLabel('No documents');
+			lpaqPage.assertEmergingPlanLabel('No documents');
+			// lpaqPage.assertOtherRelevantPoliciesLabel('No documents');
+			// lpaqPage.assertCommunityInfrastructureLevy('No');
+			// lpaqPage.assertCILAdopted('Not applicable');
+			lpaqPage.assertCILAdoptedDate('Not applicable');
+			lpaqPage.assertCILExpectedDate('Not applicable');
+
+			// Section 6 – Site Access
+			lpaqPage.assertInspectorAccess(casedata.siteAccessDetails[0]);
+			// lpaqPage.assertNeighbourLandAccess('No');
+			lpaqPage.assertNeighbourSiteAddress({
+				line1: address.neighbouringSiteAddressLine1,
+				line2: address.neighbouringSiteAddressLine2,
+				town: address.neighbouringSiteAddressTown,
+				county: address.neighbouringSiteAddressCounty,
+				postcode: address.neighbouringSiteAddressPostcode
+			});
+			lpaqPage.assertSafetyRisks(casedata.siteSafetyDetails[0]);
+
+			// Section 7 – Appeal Process
+			// lpaqPage.assertLpaProcedurePreference('Not applicable');
+			// lpaqPage.assertLpaProcedureReason('Not applicable');
+			// lpaqPage.assertInquiryDuration('Not applicable');
+			lpaqPage.assertOngoingAppeals(casedata.nearbyCaseReferences);
+
+			// Final section
+			lpaqPage.assertAdditionalDocumentsLabel('None');
+		});
 	});
 
 	it('Complete LPAQ', { tags: tag.smoke }, () => {
