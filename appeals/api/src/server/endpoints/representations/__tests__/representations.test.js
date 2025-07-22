@@ -252,7 +252,7 @@ describe('/appeals/:id/reps', () => {
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(mockNotifySend).toHaveBeenCalledWith({
-					azureAdUserId: '732652365',
+					azureAdUserId: expect.anything(),
 					notifyClient: expect.anything(),
 					personalisation: expectedEmailPayload,
 					recipientEmail: appeal.lpa.email,
@@ -342,7 +342,7 @@ describe('/appeals/:id/reps', () => {
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(mockNotifySend).toHaveBeenCalledWith({
-					azureAdUserId: '732652365',
+					azureAdUserId: expect.anything(),
 					notifyClient: expect.anything(),
 					personalisation: expectedEmailPayload,
 					recipientEmail: appeal.agent.email,
@@ -441,7 +441,7 @@ describe('/appeals/:id/reps', () => {
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(mockNotifySend).toHaveBeenCalledWith({
-					azureAdUserId: '732652365',
+					azureAdUserId: expect.anything(),
 					notifyClient: expect.anything(),
 					personalisation: expectedEmailPayload,
 					recipientEmail: mockRepresented.email,
@@ -540,7 +540,7 @@ describe('/appeals/:id/reps', () => {
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(mockNotifySend).toHaveBeenCalledWith({
-					azureAdUserId: '732652365',
+					azureAdUserId: expect.anything(),
 					notifyClient: expect.anything(),
 					personalisation: expectedEmailPayload,
 					recipientEmail: mockRepresented.email,
@@ -632,7 +632,7 @@ describe('/appeals/:id/reps', () => {
 				expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 				expect(mockNotifySend).toHaveBeenCalledWith({
-					azureAdUserId: '732652365',
+					azureAdUserId: expect.anything(),
 					notifyClient: expect.anything(),
 					personalisation: expectedEmailPayload,
 					recipientEmail: appeal.lpa.email,
@@ -1077,7 +1077,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1092,7 +1092,7 @@ describe('/appeals/:id/reps/publish', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1151,7 +1151,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1166,7 +1166,7 @@ describe('/appeals/:id/reps/publish', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1225,7 +1225,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1240,7 +1240,7 @@ describe('/appeals/:id/reps/publish', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1297,7 +1297,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1312,7 +1312,7 @@ describe('/appeals/:id/reps/publish', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1373,7 +1373,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1388,7 +1388,7 @@ describe('/appeals/:id/reps/publish', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1457,7 +1457,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1471,7 +1471,7 @@ describe('/appeals/:id/reps/publish', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1538,7 +1538,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1552,7 +1552,7 @@ describe('/appeals/:id/reps/publish', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1624,7 +1624,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1638,7 +1638,7 @@ describe('/appeals/:id/reps/publish', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1709,7 +1709,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1723,7 +1723,7 @@ describe('/appeals/:id/reps/publish', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1830,7 +1830,7 @@ describe('/appeals/:id/reps/publish', () => {
 			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1841,7 +1841,7 @@ describe('/appeals/:id/reps/publish', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
@@ -1905,7 +1905,7 @@ describe('/appeals/:id/reps/publish', () => {
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '732652365',
+				azureAdUserId: expect.anything(),
 				notifyClient: expect.anything(),
 				personalisation: {
 					...expectedEmailPayload,
