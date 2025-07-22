@@ -60,7 +60,8 @@ export const mapAppellantCase = (data) => {
 				isChanged: appellantCase?.changedDevelopmentDescription === true
 			},
 			// @ts-ignore
-			typeOfPlanningApplication: appellantCase?.typeOfPlanningApplication || null
+			typeOfPlanningApplication: appellantCase?.typeOfPlanningApplication || null,
+			numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange
 		};
 	}
 };

@@ -40,9 +40,11 @@ apps_config = {
     featureFlagCAS                    = false
     featureFlagIssueDecision          = false
     featureFlagReIssueDecision        = false
+    featureFlagNotifyCaseHistory      = false
     featureFlagSimplifyTeamAssignment = false
     featureFlagChangeAppealType       = false
     featureFlagPdfDownload            = false
+    featureFlagNetResidence           = false
   }
 
   use_system_test_bc_for_change_lpa = false

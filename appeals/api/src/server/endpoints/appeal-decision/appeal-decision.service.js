@@ -52,6 +52,7 @@ export const publishDecision = async (
 
 		if (recipientEmail) {
 			await notifySend({
+				azureAdUserId: azureUserId,
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
 				notifyClient,
 				recipientEmail,
@@ -61,6 +62,7 @@ export const publishDecision = async (
 
 		if (lpaEmail) {
 			await notifySend({
+				azureAdUserId: azureUserId,
 				templateName: 'decision-is-allowed-split-dismissed-lpa',
 				notifyClient,
 				recipientEmail: lpaEmail,

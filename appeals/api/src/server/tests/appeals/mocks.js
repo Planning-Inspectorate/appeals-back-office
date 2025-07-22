@@ -177,7 +177,8 @@ export const householdAppeal = {
 		appellantProcedurePreferenceDetails: 'Reason for preference',
 		appellantProcedurePreferenceDuration: 5,
 		appellantProcedurePreferenceWitnessCount: 1,
-		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.HOUSEHOLDER_PLANNING,
+		numberOfResidencesNetChange: 5
 	},
 	caseOfficer: {
 		id: 1,

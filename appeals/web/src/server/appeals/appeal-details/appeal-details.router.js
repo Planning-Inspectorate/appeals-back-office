@@ -43,6 +43,7 @@ import timetableRouter from './timetable/timetable.router.js';
 import updateDecisionLetterRouter from './update-decision-letter/update-decision-letter.router.js';
 import inquiryRouter from './inquiry/inquiry.router.js';
 import assignUserRouter from './assign-user/assign-user.router.js';
+import netResidenceRouter from './net-residence/net-residence.router.js';
 import changeAppealTypeMiddleware from './change-appeal-type.middleware.js';
 const router = createRouter();
 
@@ -227,6 +228,14 @@ router.use(
 	assertUserHasPermission(permissionNames.updateCase),
 	assignUserRouter
 );
+if (config.featureFlags.featureFlagNetResidence) {
+	router.use(
+		'/:appealId/residential-units',
+		validateAppeal,
+		assertUserHasPermission(permissionNames.updateCase),
+		netResidenceRouter
+	);
+}
 
 router.use('/:appealId', validateAppeal, representationsRouter);
 

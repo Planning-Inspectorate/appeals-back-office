@@ -62,7 +62,8 @@ const updateAppellantCaseById = async (req, res) => {
 			appellantProcedurePreferenceDetails,
 			appellantProcedurePreferenceDuration,
 			appellantProcedurePreferenceWitnessCount,
-			developmentType
+			developmentType,
+			numberOfResidencesNetChange
 		},
 		params,
 		validationOutcome
@@ -131,7 +132,8 @@ const updateAppellantCaseById = async (req, res) => {
 					appellantProcedurePreferenceDetails,
 					appellantProcedurePreferenceDuration,
 					appellantProcedurePreferenceWitnessCount,
-					developmentType
+					developmentType,
+					numberOfResidencesNetChange
 			  });
 
 		const auditTrailDetail = renderAuditTrailDetail(body);

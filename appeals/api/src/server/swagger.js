@@ -504,7 +504,8 @@ export const spec = {
 			visibility: {
 				details: 'The site is behind a tall hedge',
 				isVisible: false
-			}
+			},
+			numberOfResidencesNetChange: 0
 		},
 		UpdateCaseTeamRequest: {
 			caseOfficer: '13de469c-8de6-4908-97cd-330ea73df618',
@@ -657,7 +658,8 @@ export const spec = {
 			appellantProcedurePreference: 'Hearing',
 			appellantProcedurePreferenceDetails: 'Reason for preference',
 			appellantProcedurePreferenceDuration: 3,
-			appellantProcedurePreferenceWitnessCount: 2
+			appellantProcedurePreferenceWitnessCount: 2,
+			numberOfResidencesNetChange: 0
 		},
 		UpdateAppellantCaseResponse: {},
 		UpdateLPAQuestionnaireRequest: {

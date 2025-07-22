@@ -170,6 +170,7 @@ describe('appeal timetables routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						personalisation: {
 							appeal_reference_number: appealWithTimetable.reference,
@@ -189,6 +190,7 @@ describe('appeal timetables routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.any(Object),
 						personalisation: {
 							appeal_reference_number: appealWithTimetable.reference,
@@ -540,6 +542,7 @@ describe('appeal timetables routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
@@ -573,6 +576,7 @@ describe('appeal timetables routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
@@ -625,6 +629,7 @@ describe('appeal timetables routes', () => {
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: {
 						appeal_reference_number: '1345264',
@@ -652,6 +657,7 @@ describe('appeal timetables routes', () => {
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: {
 						appeal_reference_number: '1345264',
@@ -739,6 +745,7 @@ describe('appeal timetables routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
@@ -768,6 +775,7 @@ describe('appeal timetables routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
@@ -849,6 +857,7 @@ describe('appeal timetables routes', () => {
 					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,
@@ -878,6 +887,7 @@ describe('appeal timetables routes', () => {
 					});
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 						notifyClient: expect.anything(),
 						personalisation: {
 							appeal_reference_number: appeal.reference,

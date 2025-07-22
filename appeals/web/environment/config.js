@@ -60,9 +60,11 @@ export function loadConfig() {
 		FEATURE_FLAG_CAS,
 		FEATURE_FLAG_ISSUE_DECISION,
 		FEATURE_FLAG_RE_ISSUE_DECISION,
+		FEATURE_FLAG_NOTIFY_CASE_HISTORY,
 		FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT,
 		FEATURE_FLAG_CHANGE_APPEAL_TYPE,
 		FEATURE_FLAG_PDF_DOWNLOAD,
+		FEATURE_FLAG_NET_RESIDENCE,
 		HORIZON_APPEAL_BASE_URL,
 		HTTP_PORT = 8080,
 		HTTPS_ENABLED,
@@ -140,9 +142,11 @@ export function loadConfig() {
 			featureFlagCAS: FEATURE_FLAG_CAS === 'true',
 			featureFlagIssueDecision: FEATURE_FLAG_ISSUE_DECISION === 'true',
 			featureFlagReIssueDecision: FEATURE_FLAG_RE_ISSUE_DECISION === 'true',
+			featureFlagNotifyCaseHistory: FEATURE_FLAG_NOTIFY_CASE_HISTORY === 'true',
 			featureFlagSimplifyTeamAssignment: FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT === 'true',
 			featureFlagChangeAppealType: FEATURE_FLAG_CHANGE_APPEAL_TYPE === 'true',
-			featureFlagPdfDownload: FEATURE_FLAG_PDF_DOWNLOAD === 'true'
+			featureFlagPdfDownload: FEATURE_FLAG_PDF_DOWNLOAD === 'true',
+			featureFlagNetResidence: FEATURE_FLAG_NET_RESIDENCE === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST

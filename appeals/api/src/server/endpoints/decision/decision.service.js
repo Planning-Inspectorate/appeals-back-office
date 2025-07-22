@@ -29,7 +29,7 @@ const environment = loadEnvironment(process.env.NODE_ENV);
  * @param {string} documentGuid
  * @param {import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @param {string} siteAddress
- * @param {string} azureUserId
+ * @param {string} azureAdUserId
  * @returns
  */
 export const publishDecision = async (
@@ -39,7 +39,7 @@ export const publishDecision = async (
 	documentGuid,
 	notifyClient,
 	siteAddress,
-	azureUserId
+	azureAdUserId
 ) => {
 	const result = await appealRepository.setAppealDecision(appeal.id, {
 		documentDate,
@@ -61,6 +61,7 @@ export const publishDecision = async (
 
 		if (recipientEmail) {
 			await notifySend({
+				azureAdUserId,
 				templateName: 'decision-is-allowed-split-dismissed-appellant',
 				notifyClient,
 				recipientEmail,
@@ -70,6 +71,7 @@ export const publishDecision = async (
 
 		if (lpaEmail) {
 			await notifySend({
+				azureAdUserId,
 				templateName: 'decision-is-allowed-split-dismissed-lpa',
 				notifyClient,
 				recipientEmail: lpaEmail,
@@ -79,13 +81,13 @@ export const publishDecision = async (
 
 		await createAuditTrail({
 			appealId: appeal.id,
-			azureAdUserId: azureUserId,
+			azureAdUserId: azureAdUserId,
 			details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
 				outcome[0].toUpperCase() + outcome.slice(1)
 			])
 		});
 
-		await transitionState(appeal.id, azureUserId, APPEAL_CASE_STATUS.COMPLETE);
+		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.COMPLETE);
 		await broadcasters.broadcastAppeal(appeal.id);
 
 		return result;
@@ -98,7 +100,7 @@ export const publishDecision = async (
  *
  * @param {Appeal} appeal
  * @param {string} correctionNotice
- * @param {string} azureUserId
+ * @param {string} azureAdUserId
  * @param {Date} decisionDate
  * @param { import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @returns
@@ -106,7 +108,7 @@ export const publishDecision = async (
 export const sendNewDecisionLetter = async (
 	appeal,
 	correctionNotice,
-	azureUserId,
+	azureAdUserId,
 	notifyClient,
 	decisionDate
 ) => {
@@ -137,6 +139,7 @@ export const sendNewDecisionLetter = async (
 	await Promise.all(
 		uniqueEmails.map(async (email) => {
 			await notifySend({
+				azureAdUserId,
 				templateName: 'correction-notice-decision',
 				notifyClient,
 				recipientEmail: email,
@@ -147,7 +150,7 @@ export const sendNewDecisionLetter = async (
 
 	await createAuditTrail({
 		appealId: appeal.id,
-		azureAdUserId: azureUserId,
+		azureAdUserId,
 		details: stringTokenReplacement(AUDIT_TRAIL_CORRECTION_NOTICE_ADDED, [correctionNotice])
 	});
 

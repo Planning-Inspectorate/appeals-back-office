@@ -4906,6 +4906,54 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/audit-notifications": {
+			"get": {
+				"tags": ["Notifications"],
+				"description": "Retrieves a log of the emails sent for a single appeal and sends the renvered version for the case history",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Returns the notification list",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuditNotifications"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/AuditNotifications"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/hearing/{hearingId}": {
 			"get": {
 				"tags": ["Hearing Details"],
@@ -8718,6 +8766,10 @@
 								"example": false
 							}
 						}
+					},
+					"numberOfResidencesNetChange": {
+						"type": "number",
+						"example": 0
 					}
 				},
 				"xml": {
@@ -9971,6 +10023,10 @@
 					"appellantProcedurePreferenceWitnessCount": {
 						"type": "number",
 						"example": 2
+					},
+					"numberOfResidencesNetChange": {
+						"type": "number",
+						"example": 0
 					}
 				},
 				"xml": {
@@ -13526,6 +13582,10 @@
 				"properties": {
 					"appellantCaseId": {
 						"type": "number"
+					},
+					"numberOfResidencesNetChange": {
+						"type": "number",
+						"nullable": true
 					},
 					"appealId": {
 						"type": "number"
@@ -33039,6 +33099,10 @@
 					"changedDevelopmentDescription": {
 						"type": "string",
 						"nullable": true
+					},
+					"numberOfResidencesNetChange": {
+						"type": "number",
+						"nullable": true
 					}
 				}
 			},
@@ -33278,6 +33342,33 @@
 						},
 						"success": {
 							"type": "boolean"
+						}
+					}
+				}
+			},
+			"AuditNotifications": {
+				"type": "array",
+				"items": {
+					"type": "object",
+					"required": ["recipient", "renderedContent", "renderedSubject", "dateCreated"],
+					"properties": {
+						"recipient": {
+							"type": "string"
+						},
+						"renderedContent": {
+							"type": "string"
+						},
+						"renderedSubject": {
+							"type": "string"
+						},
+						"subject": {
+							"type": "string"
+						},
+						"dateCreated": {
+							"type": "string"
+						},
+						"sender": {
+							"type": "string"
 						}
 					}
 				}

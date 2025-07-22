@@ -69,6 +69,7 @@ export async function sendMyEmail(appeal, notifyClient) {
 	};
 	const recipientEmail = 'mytestemail@test.com';
 	await notifySend({
+		azureAdUserId,
 		templateName: 'test-my-email',
 		notifyClient,
 		recipientEmail: 'test@136s7.com',
