@@ -67,8 +67,14 @@ describe('Issue Decision', () => {
 
 				//Notify
 				const expectedNotifies = [
-					'decision-is-allowed-split-dismissed-lpa',
-					'decision-is-allowed-split-dismissed-appellant'
+					{
+						template: 'decision-is-allowed-split-dismissed-lpa',
+						recipient: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+					},
+					{
+						template: 'decision-is-allowed-split-dismissed-appellant',
+						recipient: 'agent@test.com'
+					}
 				];
 
 				cy.checkNotifySent(caseRef, expectedNotifies);
