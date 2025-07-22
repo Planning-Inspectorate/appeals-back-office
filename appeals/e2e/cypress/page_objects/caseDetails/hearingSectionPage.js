@@ -183,8 +183,7 @@ export class HearingSectionPage extends CaseDetailsPage {
 		caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
 	}
 
-	getTimeUpToMinutes(isoString) {
-		const date = new Date(isoString);
-		return new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+	getTimeUpToMinutes(date) {
+		return new Date(date).toUTCString().slice(0, 16);
 	}
 }
