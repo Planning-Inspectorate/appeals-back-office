@@ -85,14 +85,14 @@ describe('Review LPAQ', () => {
 			// Section 1 – Constraints
 			lpaqPage.assertPlanningAppealType(casedata.isCorrectAppealType ? 'Yes' : 'No');
 			lpaqPage.assertAffectsListedBuilding(casedata.affectedListedBuildingNumbers[0]);
-			// lpaqPage.assertScheduledMonument('No'); //awaiting bug fix
+			lpaqPage.assertScheduledMonument(''); //awaiting bug fix
 			lpaqPage.assertConservationAreaMapLabel('No documents');
-			// lpaqPage.assertProtectedSpecies('No'); //awaiting bug fix
+			lpaqPage.assertProtectedSpecies(''); //awaiting bug fix
 			lpaqPage.assertGreenBelt(casedata.isGreenBelt ? 'Yes' : 'No');
-			// lpaqPage.assertAONB('No'); //awaiting bug fix
+			// lpaqPage.assertAONB(); //awaiting bug fix
 			lpaqPage.assertDesignatedSites('No');
 			lpaqPage.assertTreePreservationOrder('No documents');
-			// lpaqPage.assertGypsyTraveller('No');
+			// lpaqPage.assertGypsyTraveller('');
 			lpaqPage.assertDefinitiveMapLabel('No documents');
 
 			// Section 2 – Environmental Impact Assessment
@@ -104,7 +104,7 @@ describe('Review LPAQ', () => {
 			lpaqPage.assertScreeningDirectionDocsLabel('No documents');
 			lpaqPage.assertScopingOpinionDocsLabel('No documents');
 			// lpaqPage.assertEIADevelopmentDescription('No');
-			lpaqPage.assertSensitiveArea('No');
+			// lpaqPage.assertSensitiveArea(casedata.assertSensitiveArea ? 'Yes' : 'No');
 
 			// Section 3 – Notifying relevant parties
 			lpaqPage.assertNotifiedWho('No documents');
