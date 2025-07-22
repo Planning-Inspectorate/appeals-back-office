@@ -296,30 +296,6 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 				whatHappensNextAppellant = `We will contact you if we need any more information.`;
 				whatHappensNextLpa = `We will contact you when the hearing has been set up.`;
 			}
-
-			await notifyPublished({
-				appeal,
-				notifyClient,
-				hasLpaStatement,
-				hasIpComments,
-				templateName: 'received-statement-and-ip-comments-lpa',
-				recipientEmail: appeal.lpa?.email,
-				finalCommentsDueDate,
-				whatHappensNext: whatHappensNextLpa,
-				subject: lpaSubject,
-				azureAdUserId
-			});
-
-			await notifyPublished({
-				appeal,
-				notifyClient,
-				templateName: 'received-statement-and-ip-comments-appellant',
-				recipientEmail: appeal.agent?.email || appeal.appellant?.email,
-				finalCommentsDueDate,
-				whatHappensNext: whatHappensNextAppellant,
-				subject: appellantSubject,
-				azureAdUserId
-			});
 		} else {
 			lpaSubject = 'Submit your final comments';
 			appellantSubject = 'Submit your final comments';
