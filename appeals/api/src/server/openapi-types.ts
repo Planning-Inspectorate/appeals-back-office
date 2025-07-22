@@ -1345,6 +1345,8 @@ export interface SingleAppellantCaseResponse {
 		/** @example false */
 		isVisible?: boolean;
 	};
+	/** @example 0 */
+	numberOfResidencesNetChange?: number;
 }
 
 export interface UpdateCaseTeamRequest {
@@ -1891,6 +1893,8 @@ export interface UpdateAppellantCaseRequest {
 	appellantProcedurePreferenceDuration?: number;
 	/** @example 2 */
 	appellantProcedurePreferenceWitnessCount?: number;
+	/** @example 0 */
+	numberOfResidencesNetChange?: number;
 }
 
 export type UpdateAppellantCaseResponse = object;
@@ -3722,6 +3726,7 @@ export interface SiteAccess {
 
 export type AppellantCase = {
 	appellantCaseId?: number;
+	numberOfResidencesNetChange?: number | null;
 	appealId?: number;
 	appealReference?: string;
 	appealSite?: {
@@ -12125,6 +12130,7 @@ export interface AppellantCaseUpdateRequest {
 	knowsOtherOwners?: string | null;
 	originalDevelopmentDescription?: string | null;
 	changedDevelopmentDescription?: string | null;
+	numberOfResidencesNetChange?: number | null;
 }
 
 export interface LpaQuestionnaireUpdateRequest {

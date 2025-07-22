@@ -44,6 +44,7 @@ apps_config = {
     featureFlagSimplifyTeamAssignment = true
     featureFlagChangeAppealType       = true
     featureFlagPdfDownload            = true
+    featureFlagNetResidence           = true
   }
 
   use_system_test_bc_for_change_lpa = true

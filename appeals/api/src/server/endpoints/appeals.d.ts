@@ -223,6 +223,7 @@ interface SingleAppellantCaseResponse {
 	appellantProcedurePreferenceWitnessCount?: number | null;
 	developmentType?: string | null;
 	typeOfPlanningApplication?: string | null;
+	numberOfResidencesNetChange?: number | null;
 }
 
 interface UpdateAppellantCaseRequest {
