@@ -478,7 +478,7 @@ export class CaseDetailsPage extends Page {
 		this.elements.setUpTimetableHearingDate().click();
 	}
 
-	clickIndividualLinkWhenMultiples(area, linkText) {
+	clickIndividualLinkWhenMultiple(area, linkText) {
 		cy.contains(area)
 			.parents('.govuk-summary-card__title-wrapper')
 			.within(() => {
