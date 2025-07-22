@@ -91,21 +91,21 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	});
 
 	// tests are flaky error only caused with automation
-	// it('should move case status to statements and update available due dates', () => {
-	// 	cy.clearAllSessionStorage();
-	// 	cy.createCase({
-	// 		caseType: 'W'
-	// 	}).then((caseRef) => {
-	// 		happyPathHelper.assignCaseOfficer(caseRef);
-	// 		happyPathHelper.reviewAppellantCase(caseRef);
-	// 		happyPathHelper.startS78Case(caseRef, 'written');
-	// 		cy.addLpaqSubmissionToCase(caseRef);
-	// 		happyPathHelper.reviewS78Lpaq(caseRef);
-	// 		caseDetailsPage.clickAccordionByButton('Timetable');
-	// 		timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
-	// 		verifyDateChanges(1);
-	// 	});
-	// });
+	it.skip('should move case status to statements and update available due dates', () => {
+		cy.clearAllSessionStorage();
+		cy.createCase({
+			caseType: 'W'
+		}).then((caseRef) => {
+			happyPathHelper.assignCaseOfficer(caseRef);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.startS78Case(caseRef, 'written');
+			cy.addLpaqSubmissionToCase(caseRef);
+			happyPathHelper.reviewS78Lpaq(caseRef);
+			caseDetailsPage.clickAccordionByButton('Timetable');
+			timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
+			verifyDateChanges(1);
+		});
+	});
 
 	it('should not accept current date when case status is statements', () => {
 		cy.createCase({
@@ -148,37 +148,37 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 	});
 
 	// tests are flaky error only caused with automation
-	// it('should move case status to final_comments and update available due dates', () => {
-	// 	cy.clearAllSessionStorage();
-	// 	cy.createCase({
-	// 		caseType: 'W'
-	// 	}).then((caseRef) => {
-	// 		cy.addLpaqSubmissionToCase(caseRef);
-	// 		happyPathHelper.assignCaseOfficer(caseRef);
-	// 		happyPathHelper.reviewAppellantCase(caseRef);
-	// 		happyPathHelper.startS78Case(caseRef, 'written');
-	// 		happyPathHelper.reviewS78Lpaq(caseRef);
-	// 		caseDetailsPage.navigateToAppealsService();
-	// 		listCasesPage.clickAppealByRef(caseRef);
-	// 		happyPathHelper.addThirdPartyComment(caseRef, true);
-	// 		caseDetailsPage.clickBackLink();
-	// 		happyPathHelper.addThirdPartyComment(caseRef, false);
-	// 		caseDetailsPage.clickBackLink();
+	it.skip('should move case status to final_comments and update available due dates', () => {
+		cy.clearAllSessionStorage();
+		cy.createCase({
+			caseType: 'W'
+		}).then((caseRef) => {
+			cy.addLpaqSubmissionToCase(caseRef);
+			happyPathHelper.assignCaseOfficer(caseRef);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.startS78Case(caseRef, 'written');
+			happyPathHelper.reviewS78Lpaq(caseRef);
+			caseDetailsPage.navigateToAppealsService();
+			listCasesPage.clickAppealByRef(caseRef);
+			happyPathHelper.addThirdPartyComment(caseRef, true);
+			caseDetailsPage.clickBackLink();
+			happyPathHelper.addThirdPartyComment(caseRef, false);
+			caseDetailsPage.clickBackLink();
 
-	// 		happyPathHelper.addLpaStatement(caseRef);
-	// 		cy.simulateStatementsDeadlineElapsed(caseRef);
-	// 		cy.reload();
+			happyPathHelper.addLpaStatement(caseRef);
+			cy.simulateStatementsDeadlineElapsed(caseRef);
+			cy.reload();
 
-	// 		caseDetailsPage.basePageElements.bannerLink().click();
-	// 		caseDetailsPage.clickButtonByText('Confirm');
-	// 		caseDetailsPage.checkStatusOfCase('Final comments', 0);
-	// 		caseDetailsPage.clickAccordionByButton('Timetable');
-	// 		timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
-	// 		timetableItems[1].editable = false; // statement due is not editbale
-	// 		timetableItems[2].editable = false; //
-	// 		verifyDateChanges(7);
-	// 	});
-	// });
+			caseDetailsPage.basePageElements.bannerLink().click();
+			caseDetailsPage.clickButtonByText('Confirm');
+			caseDetailsPage.checkStatusOfCase('Final comments', 0);
+			caseDetailsPage.clickAccordionByButton('Timetable');
+			timetableItems[0].editable = false; // lpa questionare date is not editable in statements status
+			timetableItems[1].editable = false; // statement due is not editbale
+			timetableItems[2].editable = false; //
+			verifyDateChanges(7);
+		});
+	});
 
 	const getNextBusinessDay = (startDate, addedDays = 1) => {
 		const date = new Date(startDate);
