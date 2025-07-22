@@ -156,7 +156,10 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.validateConfirmationPanelMessage('Success', 'Document updated');
+		caseDetailsPage.validateConfirmationPanelMessage(
+			'Success',
+			'Who was notified about the application updated'
+		);
 	},
 
 	removeDocLpaq(caseRef) {
@@ -165,7 +168,10 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Remove current version');
 		caseDetailsPage.selectRadioButtonByValue('Yes');
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.validateBannerMessage('Success', 'Document removed');
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'Who was notified about the application removed'
+		);
 	},
 
 	addThirdPartyComment(caseRef, state) {

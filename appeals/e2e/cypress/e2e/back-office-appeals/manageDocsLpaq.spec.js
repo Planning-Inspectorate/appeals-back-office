@@ -27,7 +27,7 @@ describe('Remove doc from upload page', () => {
 			caseDetailsPage.clickRemoveFileUpload(sampleFiles.document);
 			caseDetailsPage.checkFileNameRemoved(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.checkErrorMessageDisplays('Select a file');
+			caseDetailsPage.checkErrorMessageDisplays('Select the file');
 		});
 	});
 
@@ -47,7 +47,10 @@ describe('Remove doc from upload page', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Document updated');
+			caseDetailsPage.validateConfirmationPanelMessage(
+				'Success',
+				'Who was notified about the application updated'
+			);
 			happyPathHelper.removeDocLpaq();
 		});
 	});
