@@ -50,11 +50,6 @@ export const localPlanningDepartmentList = [
 		email: 'richmondplanningappeals@richmondandwandsworth.gov.uk'
 	},
 	{
-		lpaCode: 'V3310',
-		name: 'Sedgemoor',
-		email: 'development.control@sedgemoor.gov.uk'
-	},
-	{
 		lpaCode: 'F0114',
 		name: 'Bath and North East Somerset Council',
 		email: 'Planning_appeals@bathnes.gov.uk'
