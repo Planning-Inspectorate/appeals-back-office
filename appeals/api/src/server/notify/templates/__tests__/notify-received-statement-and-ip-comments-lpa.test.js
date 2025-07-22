@@ -67,6 +67,7 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 		};
 
 		const expectedContent = [
+			'We did not receive any comments from interested parties.',
 			'# Appeal details',
 			'',
 			'^Appeal reference number: ABC45678',
@@ -147,6 +148,7 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 		};
 
 		const expectedContent = [
+			'We did not receive any comments from interested parties.',
 			'# Appeal details',
 			'',
 			'^Appeal reference number: ABC45678',
