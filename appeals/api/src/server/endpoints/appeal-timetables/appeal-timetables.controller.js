@@ -1,9 +1,9 @@
 import logger from '#utils/logger.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { startCase, updateAppealTimetable } from './appeal-timetables.service.js';
-import appealRepository from '#repositories/appeal.repository.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -25,20 +25,10 @@ const startAppeal = async (req, res) => {
 		const notifyClient = req.notifyClient;
 
 		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
-			const childAppeals = (
-				await appealRepository.getAppealsByIds(
-					// @ts-ignore
-					appeal.childAppeals?.map((childAppeal) => childAppeal.childId)
-				)
-			).map((childAppeal) => ({
-				...childAppeal,
-				parentAppeals: appeal.childAppeals?.filter((child) => child.childId === childAppeal.id)
-			}));
-
-			const appeals = [appeal, ...childAppeals];
+			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
 
 			const results = await Promise.all(
-				appeals.map(async (appeal) =>
+				linkedAppeals.map(async (appeal) =>
 					startCase(
 						appeal,
 						startDate,
@@ -56,7 +46,7 @@ const startAppeal = async (req, res) => {
 					.filter((result) => !result.success)
 					.forEach((result, index) => {
 						if (!result.success) {
-							logger.error(`Could not create timetable for case ${appeals[index].reference}`);
+							logger.error(`Could not create timetable for case ${linkedAppeals[index].reference}`);
 						}
 					});
 				return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
