@@ -2,8 +2,7 @@ import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import {
 	createDateInputFieldsValidator,
-	createDateInputDateValidityValidator,
-	createDateInputDateInFutureValidator
+	createDateInputDateValidityValidator
 } from '#lib/validators/date-input.validator.js';
 import {
 	createTimeInputValidator,
@@ -20,10 +19,6 @@ export const validateVisitDateFields = createDateInputFieldsValidator(
 	'Site visit date'
 );
 export const validateVisitDateValid = createDateInputDateValidityValidator(
-	siteVisitDateField,
-	'Site visit date'
-);
-export const validateVisitDateInFuture = createDateInputDateInFutureValidator(
 	siteVisitDateField,
 	'Site visit date'
 );
