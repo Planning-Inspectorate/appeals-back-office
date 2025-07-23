@@ -804,7 +804,7 @@ describe('appeal-details', () => {
 				expect(notificationBanner2ElementHTML).toContain('Document updated</p>');
 			});
 
-			it('should render a success notification banner when a service user was updated', async () => {
+			it('should render a success notification banner when a agent was updated', async () => {
 				nock('http://test/').get(`/appeals/1`).reply(200, appealData);
 				nock('http://test/').patch(`/appeals/1/service-user`).reply(200, {
 					serviceUserId: 1
@@ -813,7 +813,8 @@ describe('appeal-details', () => {
 				const validData = {
 					firstName: 'Jessica',
 					lastName: 'Jones',
-					emailAddress: ''
+					emailAddress: 'jessica.jones@email.com',
+					phoneNumber: '+44 7700084402'
 				};
 				await request.post(`${baseUrl}/1/service-user/change/agent`).send(validData);
 
@@ -824,7 +825,31 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('Agent details updated</p>');
+				expect(notificationBannerElementHTML).toContain('Agent contact details updated</p>');
+			});
+
+			it('should render a success notification banner when an appellant was updated', async () => {
+				nock('http://test/').get(`/appeals/1`).reply(200, appealData);
+				nock('http://test/').patch(`/appeals/1/service-user`).reply(200, {
+					serviceUserId: 1
+				});
+				nock('http://test/').get(`/appeals/1/case-notes`).reply(200, caseNotes);
+				const validData = {
+					firstName: 'Jessica',
+					lastName: 'Jones',
+					emailAddress: 'jessica.jones@email.com',
+					phoneNumber: '+44 7700084402'
+				};
+				await request.post(`${baseUrl}/1/service-user/change/appellant`).send(validData);
+
+				const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+				const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+					rootElement: notificationBannerElement
+				}).innerHTML;
+				expect(notificationBannerElementHTML).toMatchSnapshot();
+				expect(notificationBannerElementHTML).toContain('Success</h3>');
+				expect(notificationBannerElementHTML).toContain('Appellant contact details updated</p>');
 			});
 
 			it('should render a success notification banner when the lpa application reference was updated', async () => {

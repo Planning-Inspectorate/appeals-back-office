@@ -572,6 +572,19 @@ data-index="0">
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a agent was updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Agent contact details updated</p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a costs decision document was uploaded 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
@@ -650,19 +663,6 @@ data-index="0">
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a service user was updated 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
-data-index="0">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Agent details updated</p>
-    </div>
-</div>"
-`;
-
 exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when a user was successfully assigned as case officer 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
@@ -724,6 +724,19 @@ data-index="0">
     </div>
     <div class="govuk-notification-banner__content">
         <p class="govuk-notification-banner__heading">Appellant costs application added</p>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Notification banners should render a success notification banner when an appellant was updated 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Appellant contact details updated</p>
     </div>
 </div>"
 `;
