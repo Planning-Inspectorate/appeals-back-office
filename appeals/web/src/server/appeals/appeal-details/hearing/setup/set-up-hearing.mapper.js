@@ -6,7 +6,7 @@ import { dateInput } from '#lib/mappers/components/page-components/date.js';
 import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
 import { addressInputs } from '#lib/mappers/index.js';
-import { addQueryParamsToUrl } from '#lib/url-utilities.js';
+import { addQueryParamsToUrl, preserveQueryString } from '#lib/url-utilities.js';
 import { capitalize } from 'lodash-es';
 
 /**
@@ -60,12 +60,11 @@ export function hearingDatePage(appealData, values, backLinkUrl) {
 
 /**
  * @param {Appeal} appealData
- * @param {string} action
  * @param {string} backLinkUrl
- * @param {{ addressKnown: string }} [values]
+ * @param {Record<string, string>} [values]
  * @returns {PageContent}
  */
-export function addressKnownPage(appealData, action, backLinkUrl, values) {
+export function addressKnownPage(appealData, backLinkUrl, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	const addressKnownComponent = yesNoInput({
@@ -89,13 +88,12 @@ export function addressKnownPage(appealData, action, backLinkUrl, values) {
 
 /**
  * @param {Appeal} appealData
- * @param {import('@pins/appeals').Address} currentAddress
- * @param {'setup' | 'change'} action
+ * @param {Record<string, string>} values
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @param {string} backLinkUrl
  * @returns {PageContent}
  */
-export function addressDetailsPage(appealData, action, currentAddress, errors, backLinkUrl) {
+export function addressDetailsPage(appealData, values, errors, backLinkUrl) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -104,7 +102,7 @@ export function addressDetailsPage(appealData, action, currentAddress, errors, b
 		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Address',
-		pageComponents: addressInputs({ address: currentAddress, errors })
+		pageComponents: addressInputs({ address: values, errors })
 	};
 
 	return pageContent;
@@ -118,9 +116,10 @@ export function addressDetailsPage(appealData, action, currentAddress, errors, b
  * @param {Appeal} appealData
  * @param {{ hearingDateTime?: string, addressKnown?: string, address?: Address }} values
  * @param {string} action
+ * @param {import('@pins/express').Request} request
  * @returns {PageContent}
  */
-export function checkDetailsPage(appealData, values, action) {
+export function checkDetailsPage(appealData, values, action, request) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/**
@@ -129,7 +128,7 @@ export function checkDetailsPage(appealData, values, action) {
 	 */
 	const editLink = (slug) => {
 		const url = `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/${slug}`;
-		return addQueryParamsToUrl(url, { editEntrypoint: url });
+		return addQueryParamsToUrl(preserveQueryString(request, url), { editEntrypoint: url });
 	};
 
 	/** @type {SummaryListRowProperties[]} */
@@ -209,10 +208,12 @@ export function checkDetailsPage(appealData, values, action) {
 		parameters: { rows }
 	};
 
-	const backLinkUrl =
+	const backLinkUrl = preserveQueryString(
+		request,
 		values.addressKnown === 'yes'
 			? `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/address-details`
-			: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/address`;
+			: `/appeals-service/appeal-details/${appealData.appealId}/hearing/${action}/address`
+	);
 
 	/** @type {PageContent} */
 	const pageContent = {

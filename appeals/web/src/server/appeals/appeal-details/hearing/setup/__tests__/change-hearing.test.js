@@ -39,15 +39,18 @@ describe('change hearing', () => {
 	afterEach(teardown);
 
 	describe('GET /hearing/change', () => {
-		// eslint-disable-next-line jest/expect-expect
-		it('should redirect to /hearing/change/date', () => {
-			return new Promise((resolve) => {
-				request
-					.get(`${baseUrl}/2/hearing/change`)
-					.expect(302)
-					.expect('Location', `${baseUrl}/2/hearing/change/date`)
-					.end(resolve);
-			});
+		it('should redirect to /hearing/change/date', async () => {
+			nock('http://test/')
+				.get(`/appeals/2`)
+				.reply(200, { ...appealData, appealId: 2 });
+
+			const response = await request.get(
+				`${baseUrl}/2/hearing/change?backUrl=%2Fappeals-service%2Fappeal-details%2F2`
+			);
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(
+				`${baseUrl}/2/hearing/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F2`
+			);
 		});
 	});
 
@@ -86,6 +89,19 @@ describe('change hearing', () => {
 			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
 				`${baseUrl}/${appealId}`
 			);
+		});
+
+		it('should have a back link to the original page if specified', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/hearing/change/date?backUrl=/my-cases`
+			);
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe('/my-cases');
 		});
 
 		it('should have a back link to the CYA page if editing', async () => {
@@ -150,6 +166,40 @@ describe('change hearing', () => {
 				'3025'
 			);
 			expect(pageHtml.querySelector('input#hearing-time-hour').getAttribute('value')).toEqual('12');
+			expect(pageHtml.querySelector('input#hearing-time-minute').getAttribute('value')).toEqual(
+				'00'
+			);
+		});
+
+		it('should render an edited response', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.twice()
+				.reply(200, { ...appealData, appealId });
+
+			const editUrl = `${baseUrl}/${appealId}/hearing/change/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Fdate`;
+
+			//set session data with post request
+			await request.post(editUrl).send({
+				'hearing-date-day': '08',
+				'hearing-date-month': '09',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '13',
+				'hearing-time-minute': '00'
+			});
+
+			const response = await request.get(editUrl);
+
+			pageHtml = parseHtml(response.text);
+
+			expect(pageHtml.querySelector('input#hearing-date-day').getAttribute('value')).toEqual('08');
+			expect(pageHtml.querySelector('input#hearing-date-month').getAttribute('value')).toEqual(
+				'09'
+			);
+			expect(pageHtml.querySelector('input#hearing-date-year').getAttribute('value')).toEqual(
+				'3025'
+			);
+			expect(pageHtml.querySelector('input#hearing-time-hour').getAttribute('value')).toEqual('13');
 			expect(pageHtml.querySelector('input#hearing-time-minute').getAttribute('value')).toEqual(
 				'00'
 			);
@@ -407,6 +457,35 @@ describe('change hearing', () => {
 				html.querySelector('input[name="addressKnown"][value="no"]')?.getAttribute('checked')
 			).toBeDefined();
 		});
+
+		it('should check the edited value if editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.times(4)
+				.reply(200, { ...appealData, appealId });
+
+			const editUrl = `${baseUrl}/${appealId}/hearing/change/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Faddress`;
+
+			// set session data with post requests
+			await request.post(`${baseUrl}/${appealId}/hearing/change/date`).send({
+				'hearing-date-day': '01',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/change/address`)
+				.send({ addressKnown: 'no' });
+			await request.post(editUrl).send({ addressKnown: 'yes' });
+
+			const response = await request.get(editUrl);
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(
+				html.querySelector('input[name="addressKnown"][value="yes"]')?.getAttribute('checked')
+			).toBeDefined();
+		});
 	});
 
 	describe('POST /hearing/change/address', () => {
@@ -584,6 +663,55 @@ describe('change hearing', () => {
 			expect(html.querySelector('input[name="county"]').getAttribute('value')).toEqual('Tuscany');
 			expect(html.querySelector('input[name="postCode"]').getAttribute('value')).toEqual('T12 3YZ');
 		});
+
+		it('should render the edited values if editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.times(5)
+				.reply(200, { ...appealData, appealId });
+
+			const editUrl = `${baseUrl}/${appealId}/hearing/change/address-details?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Fhearing%2Fchange%2Faddress-details`;
+
+			// set session data with post requests to previous pages
+			await request.post(`${baseUrl}/${appealId}/hearing/change/date`).send({
+				'hearing-date-day': '01',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+			await request
+				.post(`${baseUrl}/${appealId}/hearing/change/address`)
+				.send({ addressKnown: 'yes' });
+			await request.post(`${baseUrl}/${appealId}/hearing/change/address-details`).send({
+				addressLine1: 'Flat 8',
+				addressLine2: '29 Hamster Road',
+				town: 'Bristleton',
+				county: 'Tuscany',
+				postCode: 'T12 3YZ'
+			});
+			await request.post(editUrl).send({
+				addressLine1: 'Apartment 1B',
+				addressLine2: '20 Jellybean Lane',
+				town: 'Jellytown',
+				county: 'Outer Space',
+				postCode: 'J25 3YZ'
+			});
+
+			const response = await request.get(editUrl);
+
+			const html = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(html.querySelector('input[name="addressLine1"]').getAttribute('value')).toBe(
+				'Apartment 1B'
+			);
+			expect(html.querySelector('input[name="addressLine2"]').getAttribute('value')).toBe(
+				'20 Jellybean Lane'
+			);
+			expect(html.querySelector('input[name="town"]').getAttribute('value')).toBe('Jellytown');
+			expect(html.querySelector('input[name="county"]').getAttribute('value')).toBe('Outer Space');
+			expect(html.querySelector('input[name="postCode"]').getAttribute('value')).toBe('J25 3YZ');
+		});
 	});
 
 	describe('POST /hearing/change/address-details', () => {
@@ -648,7 +776,9 @@ describe('change hearing', () => {
 					.post(`${baseUrl}/${appealId}/hearing/change/address-details`)
 					.send(addressValues);
 
-				const response = await request.get(`${baseUrl}/${appealId}/hearing/change/check-details`);
+				const response = await request.get(
+					`${baseUrl}/${appealId}/hearing/change/check-details?backUrl=%2Fappeals-service%2Fappeal-details%2F2`
+				);
 				pageHtml = parseHtml(response.text, { rootElement: 'body' });
 			});
 
@@ -695,7 +825,7 @@ describe('change hearing', () => {
 
 			it('should have a back link to the address details page', () => {
 				expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-					`${baseUrl}/${appealId}/hearing/change/address-details`
+					`${baseUrl}/${appealId}/hearing/change/address-details?backUrl=%2Fappeals-service%2Fappeal-details%2F2`
 				);
 			});
 
@@ -711,12 +841,14 @@ describe('change hearing', () => {
 					.post(`${baseUrl}/${appealId}/hearing/change/address`)
 					.send({ addressKnown: 'no' });
 
-				const response = await request.get(`${baseUrl}/${appealId}/hearing/change/check-details`);
+				const response = await request.get(
+					`${baseUrl}/${appealId}/hearing/change/check-details?backUrl=%2Fappeals-service%2Fappeal-details%2F2`
+				);
 
 				const html = parseHtml(response.text, { rootElement: 'body' });
 
 				expect(html.querySelector('.govuk-back-link').getAttribute('href')).toBe(
-					`${baseUrl}/${appealId}/hearing/change/address`
+					`${baseUrl}/${appealId}/hearing/change/address?backUrl=%2Fappeals-service%2Fappeal-details%2F2`
 				);
 			});
 		});

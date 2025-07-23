@@ -3971,18 +3971,23 @@ describe('appeal-details', () => {
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
-				}).innerHTML;
+				});
 
-				expect(hearingSectionHtml).toMatchSnapshot();
+				expect(hearingSectionHtml.innerHTML).toMatchSnapshot();
+
+				const button = hearingSectionHtml.querySelector(
+					'a.govuk-button:contains("Set up hearing")'
+				);
+
+				expect(button?.attributes?.href).toEqual(
+					`${baseUrl}/${appealId}/hearing/setup?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}`
+				);
 
 				const unprettifiedHearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section',
 					skipPrettyPrint: true
 				}).innerHTML;
 
-				expect(unprettifiedHearingSectionHtml).toContain(
-					`href="/appeals-service/appeal-details/${appealId}/hearing/setup" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>`
-				);
 				expect(unprettifiedHearingSectionHtml).toContain('Hearing estimates</h3>');
 				expect(unprettifiedHearingSectionHtml).toContain(
 					`href="/appeals-service/appeal-details/${appealId}/hearing/estimates/add">Add hearing estimates</a>`
@@ -4053,19 +4058,27 @@ describe('appeal-details', () => {
 				).toEqual(['123 Main St', 'Apt 1', 'Anytown', 'Anycounty', 'AA1 1AA']);
 				expect(
 					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-date"]')?.attributes?.href
-				).toEqual(`${baseUrl}/${appealId}/hearing/change/date`);
+				).toEqual(
+					`${baseUrl}/${appealId}/hearing/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}`
+				);
 				expect(
 					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-time"]')?.attributes?.href
-				).toEqual(`${baseUrl}/${appealId}/hearing/change/date`);
+				).toEqual(
+					`${baseUrl}/${appealId}/hearing/change/date?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}`
+				);
 				expect(
 					unprettifiedHearingSectionHtml.querySelector(
 						'a[data-cy="change-whether-the-address-is-known-or-not"]'
 					)?.attributes?.href
-				).toEqual(`${baseUrl}/${appealId}/hearing/change/address`);
+				).toEqual(
+					`${baseUrl}/${appealId}/hearing/change/address?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}`
+				);
 				expect(
 					unprettifiedHearingSectionHtml.querySelector('a[data-cy="change-address"]')?.attributes
 						?.href
-				).toEqual(`${baseUrl}/${appealId}/hearing/change/address-details`);
+				).toEqual(
+					`${baseUrl}/${appealId}/hearing/change/address-details?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}`
+				);
 			});
 
 			it('should render the hearing details summary list when hearing is present with no address', async () => {
@@ -4197,9 +4210,6 @@ describe('appeal-details', () => {
 					skipPrettyPrint: true
 				}).innerHTML;
 
-				expect(unprettifiedHearingSectionHtml).toContain(
-					`href="/appeals-service/appeal-details/${appealId}/hearing/setup" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>`
-				);
 				expect(unprettifiedHearingSectionHtml).toContain('Hearing estimates</h3>');
 				expect(unprettifiedHearingSectionHtml).toContain(
 					'<dd class="govuk-summary-list__value"> 1 day</dd>'

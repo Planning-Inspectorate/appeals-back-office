@@ -217,7 +217,7 @@ exports[`set up hearing GET /hearing/setup/check-details should match the snapsh
                     <span                     class="govuk-phase-banner__text">This is a new service. Help us improve it and <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u"
                         class="govuk-link" target="_blank" rel="noopener noreferrer">give your feedback (opens in a new tab)</a>.</span>
                 </p>
-            </div><a href="/appeals-service/appeal-details/1/hearing/setup/address-details"
+            </div><a href="/appeals-service/appeal-details/1/hearing/setup/address-details?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
             class="govuk-back-link">Back</a>
             <main class="govuk-main-wrapper" id="main-content">
                 <div class="govuk-grid-row">
@@ -233,19 +233,19 @@ exports[`set up hearing GET /hearing/setup/check-details should match the snapsh
                                     <dl class="govuk-summary-list">
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
                                             <dd class="govuk-summary-list__value">1 February 3025</dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/setup/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fhearing%2Fsetup%2Fdate"
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/setup/date?backUrl=%2Fappeals-service%2Fappeal-details%2F2&amp;editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fhearing%2Fsetup%2Fdate"
                                                 data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                                             </dd>
                                         </div>
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
                                             <dd class="govuk-summary-list__value">12:00pm</dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/setup/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fhearing%2Fsetup%2Fdate"
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/setup/date?backUrl=%2Fappeals-service%2Fappeal-details%2F2&amp;editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fhearing%2Fsetup%2Fdate"
                                                 data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                                             </dd>
                                         </div>
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
                                             <dd                                             class="govuk-summary-list__value">Yes</dd>
-                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/setup/address?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fhearing%2Fsetup%2Faddress"
+                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/setup/address?backUrl=%2Fappeals-service%2Fappeal-details%2F2&amp;editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fhearing%2Fsetup%2Faddress"
                                                     data-cy="change-address-known">Change<span class="govuk-visually-hidden"> Whether the address is known or not</span></a>
                                                 </dd>
                                         </div>
@@ -255,7 +255,7 @@ exports[`set up hearing GET /hearing/setup/check-details should match the snapsh
                                                 <br>Blarberton
                                                 <br>Slabshire
                                                 <br>X25 3YZ</dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/setup/address-details?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fhearing%2Fsetup%2Faddress-details"
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/setup/address-details?backUrl=%2Fappeals-service%2Fappeal-details%2F2&amp;editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fhearing%2Fsetup%2Faddress-details"
                                                 data-cy="change-address-details">Change<span class="govuk-visually-hidden"> Address</span></a>
                                             </dd>
                                         </div>
