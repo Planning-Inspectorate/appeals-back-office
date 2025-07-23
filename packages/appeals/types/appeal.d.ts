@@ -24,6 +24,7 @@ export interface AppealSummary {
 	isParentAppeal: boolean;
 	isChildAppeal: boolean;
 	planningApplicationReference: string | null;
+	numberOfResidencesNetChange?: number | null;
 }
 
 export interface AppealList {
