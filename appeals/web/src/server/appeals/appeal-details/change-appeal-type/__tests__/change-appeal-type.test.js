@@ -30,7 +30,7 @@ describe('change-appeal-type', () => {
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/').get('/appeals/1').reply(200, appealData);
-		nock('http://test/').get('/appeals/1/appeal-types').reply(200, appealTypesData);
+		nock('http://test/').get('/appeals/appeal-types').reply(200, appealTypesData);
 	});
 	afterEach(teardown);
 

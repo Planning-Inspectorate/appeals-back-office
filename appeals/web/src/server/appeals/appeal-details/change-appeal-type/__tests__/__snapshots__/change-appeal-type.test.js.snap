@@ -45,23 +45,19 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type" name="appealType"
-                                        type="radio" value="66">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type">(D) Householder</label>
+                                        type="radio" value="66" checked>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
                                         type="radio" value="75">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type-2">(W) Planning appeal</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-3" name="appealType"
                                         type="radio" value="77">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type-3">(Y) Planning listed building and conservation area appeal</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
                                         type="radio" value="78">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">(ZP) CAS planning</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -95,23 +91,19 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type" name="appealType"
-                                        type="radio" value="66">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type">(D) Householder</label>
+                                        type="radio" value="66" checked>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
                                         type="radio" value="75">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type-2">(W) Planning appeal</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-3" name="appealType"
                                         type="radio" value="77">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type-3">(Y) Planning listed building and conservation area appeal</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
                                         type="radio" value="78">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">(ZP) CAS planning</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -653,23 +645,19 @@ exports[`change-appeal-type POST /change-appeal-type/appeal-type should re-rende
                                 <div                                 class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type" name="appealType"
-                                        type="radio" value="66">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type">(D) Householder</label>
+                                        type="radio" value="66" checked>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
                                         type="radio" value="75">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type-2">(W) Planning appeal</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-3" name="appealType"
                                         type="radio" value="77">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type-3">(Y) Planning listed building and conservation area appeal</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
                                         type="radio" value="78">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">(ZP) CAS planning</label>
                                     </div>
                         </div>
                         </fieldset>

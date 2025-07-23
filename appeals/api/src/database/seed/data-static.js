@@ -5,7 +5,7 @@ import {
 	APPEAL_KNOWS_OTHER_OWNERS,
 	APPEAL_EVENT_TYPE
 } from '@planning-inspectorate/data-model';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, APPEAL_TYPE_CHANGE_APPEALS } from '@pins/appeals/constants/common.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
 import { importListedBuildingsDataset } from './seed-listed-buildings.js';
 /**
@@ -32,20 +32,91 @@ import { importListedBuildingsDataset } from './seed-listed-buildings.js';
  *
  */
 export const appealTypes = [
-	{ key: APPEAL_CASE_TYPE.D, type: APPEAL_TYPE.HOUSEHOLDER, processCode: 'HAS', enabled: true },
-	{ key: APPEAL_CASE_TYPE.C, type: APPEAL_TYPE.ENFORCEMENT_NOTICE, enabled: false },
-	{ key: APPEAL_CASE_TYPE.F, type: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING, enabled: false },
-	{ key: APPEAL_CASE_TYPE.G, type: APPEAL_TYPE.DISCONTINUANCE_NOTICE, enabled: false },
-	{ key: APPEAL_CASE_TYPE.H, type: APPEAL_TYPE.ADVERTISEMENT, enabled: false },
-	{ key: APPEAL_CASE_TYPE.L, type: APPEAL_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY, enabled: false },
-	{ key: APPEAL_CASE_TYPE.Q, type: APPEAL_TYPE.PLANNING_OBLIGATION, enabled: false },
-	{ key: APPEAL_CASE_TYPE.S, type: APPEAL_TYPE.AFFORDABLE_HOUSING_OBLIGATION, enabled: false },
-	{ key: APPEAL_CASE_TYPE.V, type: APPEAL_TYPE.CALL_IN_APPLICATION, enabled: false },
-	{ key: APPEAL_CASE_TYPE.W, type: APPEAL_TYPE.S78, enabled: false },
-	{ key: APPEAL_CASE_TYPE.X, type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE, enabled: false },
-	{ key: APPEAL_CASE_TYPE.Y, type: APPEAL_TYPE.PLANNED_LISTED_BUILDING, enabled: false },
-	{ key: APPEAL_CASE_TYPE.ZP, type: APPEAL_TYPE.CAS_PLANNING, enabled: false },
-	{ key: APPEAL_CASE_TYPE.ZA, type: APPEAL_TYPE.CAS_ADVERTISEMENT, enabled: false }
+	{
+		key: APPEAL_CASE_TYPE.D,
+		type: APPEAL_TYPE.HOUSEHOLDER,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.HOUSEHOLDER,
+		processCode: 'HAS',
+		enabled: true
+	},
+	{
+		key: APPEAL_CASE_TYPE.C,
+		type: APPEAL_TYPE.ENFORCEMENT_NOTICE,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.ENFORCEMENT_NOTICE,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.F,
+		type: APPEAL_TYPE.ENFORCEMENT_LISTED_BUILDING,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.ENFORCEMENT_LISTED_BUILDING,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.G,
+		type: APPEAL_TYPE.DISCONTINUANCE_NOTICE,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.DISCONTINUANCE_NOTICE,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.H,
+		type: APPEAL_TYPE.ADVERTISEMENT,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.ADVERTISEMENT,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.L,
+		type: APPEAL_TYPE.COMMUNITY_INFRASTRUCTURE_LEVY,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.COMMUNITY_INFRASTRUCTURE_LEVY,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.Q,
+		type: APPEAL_TYPE.PLANNING_OBLIGATION,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.PLANNING_OBLIGATION,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.S,
+		type: APPEAL_TYPE.AFFORDABLE_HOUSING_OBLIGATION,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.AFFORDABLE_HOUSING_OBLIGATION,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.V,
+		type: APPEAL_TYPE.CALL_IN_APPLICATION,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CALL_IN_APPLICATION,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.W,
+		type: APPEAL_TYPE.S78,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.S78,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.X,
+		type: APPEAL_TYPE.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.LAWFUL_DEVELOPMENT_CERTIFICATE,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.Y,
+		type: APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.PLANNED_LISTED_BUILDING,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.ZP,
+		type: APPEAL_TYPE.CAS_PLANNING,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CAS_PLANNING,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.ZA,
+		type: APPEAL_TYPE.CAS_ADVERTISEMENT,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CAS_ADVERTISEMENT,
+		enabled: false
+	}
 ];
 
 /**

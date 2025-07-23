@@ -38,7 +38,11 @@ export function appealTypePage(appealDetails, appealTypes, changeAppeal, errorMe
 				}
 			},
 			errorMessage: errorMessage && { text: errorMessage },
-			items: mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal)
+			items: mapAppealTypesToSelectItemParameters(
+				appealTypes,
+				changeAppeal,
+				appealDetails.appealType
+			)
 		}
 	};
 
@@ -101,15 +105,18 @@ export function invalidChangeAppealType(appealDetails) {
  *
  * @param { AppealType[] } appealTypes
  * @param { ChangeAppealTypeRequest } changeAppeal
+ * @param { string | null | undefined } currentAppealType
  * @returns { SelectItemParameter[]}
  */
-export function mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal) {
+function mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal, currentAppealType) {
 	return appealTypes
 		.sort((a, b) => a.key.localeCompare(b.key))
 		.map((appealType) => ({
 			value: appealType.id.toString(),
-			text: mapAppealTypeToDisplayText(appealType),
-			checked: changeAppeal && changeAppeal.appealTypeId === appealType.id
+			text: appealType.changeAppealType,
+			checked:
+				(changeAppeal && changeAppeal.appealTypeId === appealType.id) ||
+				(!changeAppeal && currentAppealType && currentAppealType === appealType.type)
 		}));
 }
 
