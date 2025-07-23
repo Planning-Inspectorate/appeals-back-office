@@ -297,7 +297,7 @@ describe('site-visit', () => {
 			expect(errorSummaryHtml).toContain('Site visit date must be a real date</a>');
 		});
 
-		it('should re-render the schedule visit page with the expected error message if provided date is not in the future', async () => {
+		it('should re-direct to the appeal-details page when site visit date is in the past and other data is valid', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
 				'visit-type': 'unaccompanied',
 				'visit-date-day': '29',
@@ -309,18 +309,8 @@ describe('site-visit', () => {
 				'visit-end-time-minute': '30'
 			});
 
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Schedule site visit</h1>');
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('The site visit date must be in the future</a>');
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit start time hour is invalid', async () => {
@@ -881,7 +871,7 @@ describe('site-visit', () => {
 			expect(errorSummaryHtml).toContain('Site visit date must be a real date</a>');
 		});
 
-		it('should re-render the manage visit page with the expected error message if provided date is not in the future', async () => {
+		it('should redirect to the appead details page when the site visit date is in the past', async () => {
 			const response = await request.post(`${baseUrl}/1${siteVisitPath}/manage-visit`).send({
 				'visit-type': 'unaccompanied',
 				'visit-date-day': '29',
@@ -893,18 +883,8 @@ describe('site-visit', () => {
 				'visit-end-time-minute': '30'
 			});
 
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Manage site visit</h1>');
-
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('The site visit date must be in the future</a>');
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 
 		it('should re-render the manage visit page with the expected error message if visit start time hour is invalid', async () => {
