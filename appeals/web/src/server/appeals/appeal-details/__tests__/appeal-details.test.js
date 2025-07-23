@@ -2024,10 +2024,10 @@ describe('appeal-details', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Linked appeals</dt><dd class="govuk-summary-list__value"><ul class="govuk-list govuk-list--bullet"><li><a href="/appeals-service/appeal-details/1" class="govuk-link" data-cy="linked-appeal-725284" aria-label="Appeal 7 2 5 2 8 4">725284</a></li></ul>'
+				'Linked appeals</dt><dd class="govuk-summary-list__value"><a href="/appeals-service/appeal-details/1" class="govuk-link" data-cy="linked-appeal-725284" aria-label="Appeal 7 2 5 2 8 4">725284</a>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Related appeals</dt><dd class="govuk-summary-list__value"><ul class="govuk-list govuk-list--bullet"><li><a href="/appeals-service/appeal-details/3" class="govuk-link" data-cy="related-appeal-765413" aria-label="Appeal 7 6 5 4 1 3">765413</a></li></ul>'
+				'Related appeals</dt><dd class="govuk-summary-list__value"><ul class="govuk-list govuk-list--bullet"><li><a href="/appeals-service/appeal-details/3" class="govuk-link" data-cy="related-appeal-765413" aria-label="Appeal 7 6 5 4 1 3">765413</a>'
 			);
 		});
 
@@ -2299,17 +2299,18 @@ describe('appeal-details', () => {
 				skipPrettyPrint: true
 			});
 
-			expect(linkedAppealsRowElement.innerHTML).toContain(
+			expect(linkedAppealsRowElement.innerHTML).not.toContain(
 				'href="/appeals-service/appeal-details/1/linked-appeals/manage" data-cy="manage-linked-appeals">Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
 		});
 
-		it('should render an action link to the add linked appeals page, if the appeal is in a state before STATEMENTS', async () => {
+		it('should render an action link to the add linked appeals page, if the appeal is a lead appeal in a state before STATEMENTS', async () => {
 			nock.cleanAll();
 			nock('http://test/')
 				.get(`/appeals/${appealData.appealId}`)
 				.reply(200, {
 					...appealData,
+					isParentAppeal: true,
 					appealStatus: 'lpa_questionnaire',
 					linkedAppeals
 				});
@@ -2334,7 +2335,7 @@ describe('appeal-details', () => {
 				skipPrettyPrint: true
 			});
 
-			expect(linkedAppealsRowElement.innerHTML).toContain(
+			expect(linkedAppealsRowElement.innerHTML).not.toContain(
 				'href="/appeals-service/appeal-details/1/linked-appeals/add" data-cy="add-linked-appeal">Add<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
 		});
@@ -2345,6 +2346,7 @@ describe('appeal-details', () => {
 				.get(`/appeals/${appealData.appealId}`)
 				.reply(200, {
 					...appealData,
+					isParentAppeal: false,
 					linkedAppeals: linkedAppealsWithExternalLead
 				});
 			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);

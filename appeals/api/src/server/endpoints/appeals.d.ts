@@ -102,6 +102,7 @@ interface SingleAppealDetailsResponse {
 	};
 	isParentAppeal?: boolean | null;
 	isChildAppeal?: boolean | null;
+	awaitingLinkedAppeal?: boolean | null;
 	linkedAppeals: LinkedAppeal[];
 	otherAppeals: RelatedAppeal[];
 	localPlanningDepartment: string;
@@ -568,6 +569,7 @@ interface AppealListResponse {
 	planningApplicationReference: string | null;
 	isHearingSetup: boolean | null;
 	hasHearingAddress: boolean | null;
+	awaitingLinkedAppeal: boolean | null;
 	numberOfResidencesNetChange: number | null;
 }
 interface DocumentationSummary {

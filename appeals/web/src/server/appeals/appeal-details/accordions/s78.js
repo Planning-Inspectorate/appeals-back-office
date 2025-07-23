@@ -70,10 +70,10 @@ export function generateAccordion(appealDetails, mappedData, session) {
 							mappedData.appeal.lpaStatement.display.tableItem,
 							mappedData.appeal.ipComments.display.tableItem,
 							mappedData.appeal.appellantFinalComments.display.tableItem,
-							mappedData.appeal.lpaFinalComments.display.tableItem,
-							mappedData.appeal.environmentalAssessment.display.tableItem
+							mappedData.appeal.lpaFinalComments.display.tableItem
 					  ]
-					: [])
+					: []),
+				mappedData.appeal.environmentalAssessment.display.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true
 		}

@@ -59,6 +59,7 @@ const householdAppealDto = {
 		lpaQuestionnaireDueDate: householdAppeal.appealTimetable.lpaQuestionnaireDueDate.toISOString()
 	},
 	appellantCaseId: householdAppeal.appellantCase.id,
+	awaitingLinkedAppeal: false,
 	caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
 	costs: {},
 	internalCorrespondence: {},
@@ -153,6 +154,7 @@ const s78AppealDto = {
 	},
 	appealType: fullPlanningAppeal.appealType.type,
 	appellantCaseId: fullPlanningAppeal.appellantCase.id,
+	awaitingLinkedAppeal: false,
 	caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
 	costs: {},
 	decision: {
