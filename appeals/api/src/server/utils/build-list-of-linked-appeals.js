@@ -22,7 +22,9 @@ function augmentChildAppealWithParentAppealRelationshipData(parentAppeal, childA
  * @returns {Promise<(Appeal|(Appeal&{parentAppeals: Appeal}))[]>}
  */
 export async function buildListOfLinkedAppeals(parentAppeal) {
-	const childAppealIds = parentAppeal.childAppeals?.map((childAppeal) => childAppeal.childId);
+	const childAppealIds = parentAppeal.childAppeals
+		?.filter((childAppeal) => childAppeal.type === 'linked')
+		.map((childAppeal) => childAppeal.childId);
 
 	// @ts-ignore
 	const childAppeals = await appealRepository.getAppealsByIds(childAppealIds);
