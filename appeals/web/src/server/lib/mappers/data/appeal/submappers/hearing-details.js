@@ -1,8 +1,14 @@
 import { addressToString } from '#lib/address-formatter.js';
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
-export const mapHearingDetails = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
+export const mapHearingDetails = ({
+	appealDetails,
+	currentRoute,
+	request,
+	userHasUpdateCasePermission
+}) => {
 	const id = 'hearing-details';
 
 	/**
@@ -19,7 +25,7 @@ export const mapHearingDetails = ({ appealDetails, currentRoute, userHasUpdateCa
 			actions: {
 				items: [
 					{
-						href: `${currentRoute}/hearing/change/${pageSlug}`,
+						href: addBackLinkQueryToUrl(request, `${currentRoute}/hearing/change/${pageSlug}`),
 						text: 'Change',
 						visuallyHiddenText: fieldName,
 						attributes: { 'data-cy': `change-${fieldName.toLowerCase().replaceAll(' ', '-')}` }

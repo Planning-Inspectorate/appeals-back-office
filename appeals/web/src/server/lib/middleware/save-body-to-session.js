@@ -1,24 +1,27 @@
 /**
- * @param {string} key
+ * @param {string} sessionKey
  * @param {{ scopeToAppeal?: boolean }} [options]
  * @returns {import('@pins/express').RequestHandler<{}>}
  */
-export const saveBodyToSession = (key, options) => (request, _, next) => {
-	const { appealId } = request.params;
+export const saveBodyToSession = (sessionKey, options) => (request, _, next) => {
+	const { body, params, query, session } = request;
+	const { appealId } = params;
+	const editEntrypoint = query.editEntrypoint;
+	const key = editEntrypoint ? `${sessionKey}/edit` : sessionKey;
 
-	if (!request.session[key]) {
-		request.session[key] = {};
+	if (!session[key]) {
+		session[key] = {};
 	}
 
 	if (options?.scopeToAppeal) {
-		request.session[key][appealId] = {
-			...request.session[key][appealId],
-			...request.body
+		session[key][appealId] = {
+			...session[key][appealId],
+			...body
 		};
 	} else {
-		request.session[key] = {
-			...request.session[key],
-			...request.body
+		session[key] = {
+			...session[key],
+			...body
 		};
 	}
 

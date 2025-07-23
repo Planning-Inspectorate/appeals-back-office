@@ -22,14 +22,14 @@ import { preserveQueryString, stripQueryString } from '#lib/url-utilities.js';
 export const redirectAndClearSession = (path, sessionKey) => (request, response) => {
 	delete request.session[sessionKey];
 
-	response.redirect(`${request.baseUrl}${path}`);
+	response.redirect(preserveQueryString(request, `${request.baseUrl}${path}`));
 };
 
 /**
- * @param {{'hearing-date-day': string, 'hearing-date-month': string, 'hearing-date-year': string, 'hearing-time-hour': string, 'hearing-time-minute': string}} sessionValues
+ * @param {Record<string, string>} sessionValues
  * @returns {{day: string, month: string, year: string, hour: string, minute: string}}
  */
-const sessionValuesToDateTime = (sessionValues) => {
+const sessionValuesToDateTime = (sessionValues = {}) => {
 	return {
 		day: sessionValues['hearing-date-day'] || '',
 		month: sessionValues['hearing-date-month'] || '',
@@ -40,17 +40,68 @@ const sessionValuesToDateTime = (sessionValues) => {
 };
 
 /**
- * Returns the previous page in the journey, or the CYA page if we are at the point where we started editing
+ * Returns the previous page in the journey, or the backUrl query param if present,
+ * or the CYA page if we are at the point where we started editing
  * @param {import('@pins/express/types/express.js').Request} request
- * @param {string} prevPageUrl
+ * @param {string | null} prevPageUrl
  * @param {string} cyaUrl
  * @returns {string}
  */
 const getBackLinkUrl = (request, prevPageUrl, cyaUrl) => {
 	const editEntrypoint = String(request.query.editEntrypoint);
+	const flowEntrypoint = String(
+		request.query.backUrl || `/appeals-service/appeal-details/${request.currentAppeal.appealId}`
+	);
+
 	return stripQueryString(editEntrypoint) === stripQueryString(request.originalUrl)
 		? preserveQueryString(request, cyaUrl, { exclude: ['editEntrypoint'] })
-		: preserveQueryString(request, prevPageUrl);
+		: prevPageUrl
+		? preserveQueryString(request, prevPageUrl)
+		: flowEntrypoint;
+};
+
+/**
+ * Returns the session values for the given key, or the /edit key if editing.
+ * Also sets the /edit values if they do not yet exist when editing.
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} sessionKey
+ * @returns {Record<string, string>}
+ */
+const getSessionValues = (request, sessionKey) => {
+	const { query, session } = request;
+	const editEntrypoint = query.editEntrypoint;
+	if (editEntrypoint) {
+		const editKey = `${sessionKey}/edit`;
+		if (!session[editKey]) {
+			session[editKey] = session[sessionKey];
+		}
+		return session[editKey] || {};
+	}
+	return session[sessionKey] || {};
+};
+
+/**
+ * Saves any edited values to the main session key and deletes the /edit key.
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} sessionKey
+ */
+const applyEdits = (request, sessionKey) => {
+	const { session } = request;
+	const editKey = `${sessionKey}/edit`;
+	if (session[editKey]) {
+		session[sessionKey] = session[editKey];
+		delete session[editKey];
+	}
+};
+
+/**
+ * Deletes the /edit session key without copying anything.
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} sessionKey
+ */
+const clearEdits = (request, sessionKey) => {
+	const editKey = `${sessionKey}/edit`;
+	delete request.session[editKey];
 };
 
 /**
@@ -58,7 +109,7 @@ const getBackLinkUrl = (request, prevPageUrl, cyaUrl) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getHearingDate = async (request, response) => {
-	const sessionValues = request.session['setUpHearing'] || {};
+	const sessionValues = getSessionValues(request, 'setUpHearing');
 
 	return renderHearingDate(request, response, sessionValuesToDateTime(sessionValues), 'setup');
 };
@@ -68,7 +119,7 @@ export const getHearingDate = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getChangeHearingDate = async (request, response) => {
-	const sessionValues = request.session['changeHearing'] || {};
+	const sessionValues = getSessionValues(request, 'changeHearing');
 	const dateTimeKeys = [
 		'hearing-date-day',
 		'hearing-date-month',
@@ -97,7 +148,7 @@ export const renderHearingDate = async (request, response, values, action) => {
 	const { appealId } = appealDetails;
 	const backLinkUrl = getBackLinkUrl(
 		request,
-		`/appeals-service/appeal-details/${appealId}`,
+		null,
 		`/appeals-service/appeal-details/${appealId}/hearing/${action}/check-details`
 	);
 
@@ -118,7 +169,7 @@ export const postHearingDate = async (request, response) => {
 		return renderHearingDate(
 			request,
 			response,
-			sessionValuesToDateTime(request.session['setUpHearing'] || {}),
+			sessionValuesToDateTime(getSessionValues(request, 'setUpHearing')),
 			'setup'
 		);
 	}
@@ -139,7 +190,7 @@ export const postHearingDate = async (request, response) => {
  */
 export const postChangeHearingDate = async (request, response) => {
 	if (request.errors) {
-		const sessionValues = request.session['changeHearing'];
+		const sessionValues = getSessionValues(request, 'changeHearing');
 		const values = sessionValues
 			? sessionValuesToDateTime(sessionValues)
 			: request.currentAppeal.hearing;
@@ -161,7 +212,12 @@ export const postChangeHearingDate = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getHearingAddress = async (request, response) => {
-	return renderHearingAddress(request, response, 'setup', request.session.setUpHearing || {});
+	return renderHearingAddress(
+		request,
+		response,
+		'setup',
+		getSessionValues(request, 'setUpHearing')
+	);
 };
 
 /**
@@ -170,7 +226,7 @@ export const getHearingAddress = async (request, response) => {
  */
 export const getChangeHearingAddress = async (request, response) => {
 	const appealDetails = request.currentAppeal;
-	const sessionValues = request.session.changeHearing || {};
+	const sessionValues = getSessionValues(request, 'changeHearing');
 
 	const values = has(sessionValues, 'addressKnown')
 		? sessionValues
@@ -182,7 +238,7 @@ export const getChangeHearingAddress = async (request, response) => {
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {{addressKnown: string}} [values]
+ * @param {Record<string, string>} [values]
  * @param {'change' | 'setup'} action
  */
 export const renderHearingAddress = (request, response, action, values) => {
@@ -196,7 +252,7 @@ export const renderHearingAddress = (request, response, action, values) => {
 		`/appeals-service/appeal-details/${appealId}/hearing/${action}/check-details`
 	);
 
-	const mappedPageContent = addressKnownPage(appealDetails, action, backLinkUrl, values);
+	const mappedPageContent = addressKnownPage(appealDetails, backLinkUrl, values);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -216,12 +272,17 @@ export const postHearingAddress = async (request, response) => {
 	const { appealId } = request.currentAppeal;
 
 	const baseUrl = `/appeals-service/appeal-details/${appealId}/hearing/setup`;
-	const nextStepUrl =
-		request.body.addressKnown === 'yes'
-			? preserveQueryString(request, `${baseUrl}/address-details`)
-			: preserveQueryString(request, `${baseUrl}/check-details`, { exclude: ['editEntrypoint'] });
 
-	return response.redirect(nextStepUrl);
+	if (request.body.addressKnown === 'yes') {
+		// Answer was yes so we progress to the next page
+		return response.redirect(preserveQueryString(request, `${baseUrl}/address-details`));
+	}
+
+	// Answer was no so we apply any edits and proceed to CYA page
+	applyEdits(request, 'setUpHearing');
+	return response.redirect(
+		preserveQueryString(request, `${baseUrl}/check-details`, { exclude: ['editEntrypoint'] })
+	);
 };
 
 /**
@@ -236,12 +297,17 @@ export const postChangeHearingAddress = async (request, response) => {
 	const { appealId } = request.currentAppeal;
 
 	const baseUrl = `/appeals-service/appeal-details/${appealId}/hearing/change`;
-	const nextStepUrl =
-		request.body.addressKnown === 'yes'
-			? preserveQueryString(request, `${baseUrl}/address-details`)
-			: preserveQueryString(request, `${baseUrl}/check-details`, { exclude: ['editEntrypoint'] });
 
-	return response.redirect(nextStepUrl);
+	if (request.body.addressKnown === 'yes') {
+		// Answer was yes so we progress to the next page
+		return response.redirect(preserveQueryString(request, `${baseUrl}/address-details`));
+	}
+
+	// Answer was no so we apply any edits and proceed to CYA page
+	applyEdits(request, 'changeHearing');
+	return response.redirect(
+		preserveQueryString(request, `${baseUrl}/check-details`, { exclude: ['editEntrypoint'] })
+	);
 };
 
 /**
@@ -249,7 +315,7 @@ export const postChangeHearingAddress = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getHearingAddressDetails = async (request, response) => {
-	const values = request.session['setUpHearing'] || {};
+	const values = getSessionValues(request, 'setUpHearing');
 
 	return renderHearingAddressDetails(request, response, values, 'setup');
 };
@@ -260,7 +326,7 @@ export const getHearingAddressDetails = async (request, response) => {
  */
 export const getChangeHearingAddressDetails = async (request, response) => {
 	const existingAddress = request.currentAppeal.hearing.address;
-	const sessionValues = pick(request.session['changeHearing'], [
+	const sessionValues = pick(getSessionValues(request, 'changeHearing'), [
 		'addressLine1',
 		'addressLine2',
 		'town',
@@ -277,7 +343,7 @@ export const getChangeHearingAddressDetails = async (request, response) => {
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {import('@pins/appeals').Address} values
+ * @param {Record<string, string>} values
  * @param {'setup' | 'change'} action
  */
 export const renderHearingAddressDetails = (request, response, values, action) => {
@@ -289,7 +355,7 @@ export const renderHearingAddressDetails = (request, response, values, action) =
 		`/appeals-service/appeal-details/${appealId}/hearing/${action}/check-details`
 	);
 
-	const mappedPageContent = addressDetailsPage(currentAppeal, action, values, errors, backLinkUrl);
+	const mappedPageContent = addressDetailsPage(currentAppeal, values, errors, backLinkUrl);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -303,11 +369,13 @@ export const renderHearingAddressDetails = (request, response, values, action) =
  */
 export const postHearingAddressDetails = async (request, response) => {
 	if (request.errors) {
-		const values = request.session['setUpHearing'] || {};
+		const values = getSessionValues(request, 'setUpHearing');
 		return renderHearingAddressDetails(request, response, values, 'setup');
 	}
 
 	const { appealId } = request.currentAppeal;
+
+	applyEdits(request, 'setUpHearing');
 
 	return response.redirect(
 		preserveQueryString(
@@ -324,11 +392,13 @@ export const postHearingAddressDetails = async (request, response) => {
  */
 export const postChangeHearingAddressDetails = async (request, response) => {
 	if (request.errors) {
-		const values = request.session['changeHearing'] || {};
+		const values = getSessionValues(request, 'changeHearing');
 		return renderHearingAddressDetails(request, response, values, 'change');
 	}
 
 	const { appealId } = request.currentAppeal;
+
+	applyEdits(request, 'changeHearing');
 
 	return response.redirect(
 		preserveQueryString(
@@ -362,6 +432,8 @@ export const getHearingCheckDetails = async (request, response) => {
 		return renderAlreadySubmittedError(request, response);
 	}
 
+	clearEdits(request, 'setUpHearing');
+
 	const values = request.session.setUpHearing;
 
 	const mappedPageContent = await checkDetailsPage(
@@ -377,7 +449,8 @@ export const getHearingCheckDetails = async (request, response) => {
 			addressKnown: values.addressKnown,
 			address: pick(values, ['addressLine1', 'addressLine2', 'town', 'county', 'postCode'])
 		},
-		'setup'
+		'setup',
+		request
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -420,6 +493,8 @@ export const getChangeHearingCheckDetails = async (request, response) => {
 		return renderAlreadySubmittedError(request, response);
 	}
 
+	clearEdits(request, 'changeHearing');
+
 	const values = request.session.changeHearing;
 
 	const mappedPageContent = await checkDetailsPage(
@@ -432,7 +507,8 @@ export const getChangeHearingCheckDetails = async (request, response) => {
 			addressKnown: values.addressKnown ?? 'yes', // if unset then we went straight to the address details page which implies 'yes'
 			address: pick(values, ['addressLine1', 'addressLine2', 'town', 'county', 'postCode'])
 		},
-		'change'
+		'change',
+		request
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
