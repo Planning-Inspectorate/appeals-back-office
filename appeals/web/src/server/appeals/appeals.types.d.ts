@@ -41,6 +41,7 @@ export interface AppealType {
 	type: string;
 	shorthand: string;
 	key: string;
+	changeAppealType: string;
 }
 
 declare global {

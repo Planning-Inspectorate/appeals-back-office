@@ -99,12 +99,13 @@ model AppealRelationship {
 /// AppealType model
 /// Lookup table for types of appeals processes, and appeal types such as D (Householder) and W (S78).
 model AppealType {
-  id          Int      @id @default(autoincrement())
-  type        String   @unique
-  key         String   @unique
-  processCode String?
-  enabled     Boolean?
-  Appeal      Appeal[]
+  id               Int      @id @default(autoincrement())
+  type             String   @unique
+  changeAppealType String   @unique
+  key              String   @unique
+  processCode      String?
+  enabled          Boolean?
+  Appeal           Appeal[]
 }
 
 /// AppealTimetable model

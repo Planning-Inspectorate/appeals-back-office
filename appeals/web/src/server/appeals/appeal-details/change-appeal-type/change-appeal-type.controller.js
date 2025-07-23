@@ -1,6 +1,6 @@
 import logger from '#lib/logger.js';
 import {
-	getAppealTypesFromId,
+	getAppealTypes,
 	postAppealChangeRequest,
 	postAppealTransferRequest,
 	postAppealTransferConfirmation
@@ -65,7 +65,7 @@ const renderAppealType = async (request, response) => {
 	const { errors } = request;
 	const appealId = request.params.appealId;
 	const appealData = request.currentAppeal;
-	const appealTypes = await getAppealTypesFromId(request.apiClient, appealId);
+	const appealTypes = await getAppealTypes(request.apiClient);
 
 	if (!appealTypes) {
 		throw new Error('error retrieving Appeal Types');

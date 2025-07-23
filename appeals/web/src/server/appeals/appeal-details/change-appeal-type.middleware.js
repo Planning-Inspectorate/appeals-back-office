@@ -14,7 +14,7 @@ const changeAppealTypeMiddleware = (req, res, next) => {
 	if (overrideFeatureFlagForTests) {
 		appealTypeChangeOldRouter(req, res, next);
 	} else {
-		config.featureFlags.featureFlagIssueDecision
+		config.featureFlags.featureFlagChangeAppealType
 			? appealTypeChangeRouter(req, res, next)
 			: appealTypeChangeOldRouter(req, res, next);
 	}

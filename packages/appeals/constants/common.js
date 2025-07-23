@@ -32,6 +32,23 @@ export const APPEAL_TYPE = Object.freeze({
 	CAS_ADVERTISEMENT: 'CAS advert'
 });
 
+export const APPEAL_TYPE_CHANGE_APPEALS = Object.freeze({
+	HOUSEHOLDER: 'Householder',
+	S78: 'Planning',
+	ENFORCEMENT_NOTICE: 'Enforcement notice',
+	ENFORCEMENT_LISTED_BUILDING: 'Enforcement listed building and conservation area',
+	DISCONTINUANCE_NOTICE: 'Discontinuance notice',
+	ADVERTISEMENT: 'Advertisement',
+	COMMUNITY_INFRASTRUCTURE_LEVY: 'Community infrastructure levy',
+	PLANNING_OBLIGATION: 'Planning obligation',
+	AFFORDABLE_HOUSING_OBLIGATION: 'Affordable housing obligation',
+	CALL_IN_APPLICATION: 'Call-in application',
+	LAWFUL_DEVELOPMENT_CERTIFICATE: 'Lawful development certificate',
+	PLANNED_LISTED_BUILDING: 'Planning listed building and conservation area',
+	CAS_PLANNING: 'Commercial planning (CAS)',
+	CAS_ADVERTISEMENT: 'Commercial advertisement (CAS)'
+});
+
 /** @type {Object<string, string>} */
 export const PROCEDURE_TYPE_MAP = Object.freeze({
 	written: 'written representations',

@@ -1,6 +1,15 @@
 /**
  *
  * @param {import('got').Got} apiClient
+ * @returns {Promise<import('#appeals/appeals.types.js').AppealType[]>}
+ */
+export function getAppealTypes(apiClient) {
+	return apiClient.get(`appeals/appeal-types`).json();
+}
+
+/**
+ *
+ * @param {import('got').Got} apiClient
  * @param {number|string} appealId
  * @returns {Promise<import('#appeals/appeals.types.js').AppealType[]>}
  */
