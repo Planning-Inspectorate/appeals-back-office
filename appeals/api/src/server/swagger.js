@@ -367,6 +367,7 @@ export const spec = {
 					externalSource: false
 				}
 			],
+			awaitingLinkedAppeal: true,
 			isParentAppeal: false,
 			isChildAppeal: true,
 			localPlanningDepartment: 'Some Borough Council',

@@ -9,8 +9,9 @@ import {
 } from '@pins/appeals/constants/support.js';
 import config from '#environment/config.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
-/** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'issueDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'} AppealRequiredAction */
 
 /**
  * This logic is documented in `docs/reference/appeal-action-required-logic.md`. Please ensure this document is kept updated to reflect any changes made in this function.
@@ -90,6 +91,11 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			break;
 		}
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE: {
+			// @ts-ignore
+			if (appealDetails.awaitingLinkedAppeal && config.featureFlags.featureFlagLinkedAppeals) {
+				actions.push('awaitingLinkedAppeal');
+				break;
+			}
 			const lpaQuestionnaireStatus = appealDetails.documentationSummary.lpaQuestionnaire?.status;
 
 			if (lpaQuestionnaireStatus && lpaQuestionnaireStatus === DOCUMENT_STATUS_NOT_RECEIVED) {
@@ -238,7 +244,8 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 	if (
 		config.featureFlags.featureFlagNetResidence &&
 		appealDetails.appealType === APPEAL_TYPE.S78 &&
-		appealDetails.numberOfResidencesNetChange === null
+		appealDetails.numberOfResidencesNetChange === null &&
+		!isChildAppeal(appealDetails)
 	) {
 		actions.push('addResidencesNetChange');
 	}

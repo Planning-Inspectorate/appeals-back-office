@@ -15,6 +15,8 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.service.js';
 import { currentStatus } from '#utils/current-status.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,
@@ -62,17 +64,24 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 	planningApplicationReference: appeal.applicationReference,
 	isHearingSetup: !!appeal.hearing,
 	hasHearingAddress: !!appeal.hearing?.addressId,
+	awaitingLinkedAppeal: null,
 	numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange || null
 });
 
 /**
  * @param {Object} options
  * @param {DBUserAppeal} options.appeal
- * @param {Boolean} options.isParentAppeal
- * @param {Boolean} options.isChildAppeal
+ * @param {Boolean} [options.isParentAppeal]
+ * @param {Boolean} [options.isChildAppeal]
+ * @param {Boolean} [options.awaitingLinkedAppeal]
  * @returns {Promise<AppealListResponse>}
  */
-const formatMyAppeal = async ({ appeal, isParentAppeal = false, isChildAppeal = false }) => ({
+const formatMyAppeal = async ({
+	appeal,
+	isParentAppeal = false,
+	isChildAppeal = false,
+	awaitingLinkedAppeal = false
+}) => ({
 	appealId: appeal.id,
 	appealReference: appeal.reference,
 	appealSite: formatAddress(appeal.address),
@@ -94,6 +103,7 @@ const formatMyAppeal = async ({ appeal, isParentAppeal = false, isChildAppeal = 
 	planningApplicationReference: appeal.applicationReference,
 	isHearingSetup: !!appeal.hearing,
 	hasHearingAddress: !!appeal.hearing?.addressId,
+	awaitingLinkedAppeal,
 	numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange ?? null
 });
 
@@ -312,4 +322,54 @@ const getIdsOfReferencedAppeals = (otherAppeals, currentAppealRef) => {
 	return relevantIds;
 };
 
-export { formatAppeal, formatMyAppeal, getIdsOfReferencedAppeals };
+/**
+ *
+ * @param {DBUserAppeal} appeal
+ * @param {AppealRelationship[]} linkedAppeals
+ * @param {boolean} isParentAppeal
+ * @param {boolean} isChildAppeal
+ * @returns {Promise<*[]|[{appeal, isParentAppeal, isChildAppeal, awaitingLinkedAppeal}]>}
+ */
+const formatLinkedAppealData = async function (
+	appeal,
+	linkedAppeals,
+	isParentAppeal,
+	isChildAppeal
+) {
+	// Do not add child appeals here as they will be grouped with their parent appeals below
+	const myAppealData = isChildAppeal
+		? []
+		: [{ appeal, isParentAppeal, isChildAppeal, awaitingLinkedAppeal: false }];
+	if (isParentAppeal) {
+		const childAppeals = isChildAppeal
+			? []
+			: await Promise.all(
+					linkedAppeals.map(async (linkedAppeal) => {
+						if (linkedAppeal.childId) {
+							const childAppeal = await appealRepository.getAppealById(
+								Number(linkedAppeal.childId)
+							);
+							return {
+								// @ts-ignore
+								appeal: childAppeal,
+								isParentAppeal: false,
+								// @ts-ignore
+								isChildAppeal: true
+							};
+						}
+					})
+			  );
+		if (childAppeals?.length) {
+			// @ts-ignore
+			myAppealData.push(...childAppeals);
+		}
+	}
+	return myAppealData
+		.filter((appealData) => appealData)
+		.map((appealData) => ({
+			...appealData,
+			awaitingLinkedAppeal: isAwaitingLinkedAppeal(appealData.appeal, myAppealData)
+		}));
+};
+
+export { formatAppeal, formatMyAppeal, getIdsOfReferencedAppeals, formatLinkedAppealData };

@@ -38,6 +38,7 @@ export function mapStatusDependentNotifications(appealDetails, request) {
 function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, request) {
 	// ToDo banners will be removed from this list once the child appeals automatically do the action via the lead appeal
 	const ALLOWED_CHILD_APPEAL_BANNERS = [
+		'awaitingLinkedAppeal',
 		'appealAwaitingTransfer',
 		'readyForSetUpSiteVisit',
 		'assignCaseOfficer',
@@ -53,7 +54,6 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		'lpaStatementAwaitingReview',
 		'shareFinalComments',
 		'shareCommentsAndLpaStatement',
-		// 'appealValidAndReadyToStart',
 		'updateLpaStatement',
 		'addHearingAddress',
 		'setupHearing',
@@ -66,6 +66,11 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 	}
 
 	switch (bannerDefinitionKey) {
+		case 'awaitingLinkedAppeal':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<p class="govuk-notification-banner__heading">Awaiting linked appeal</p>`
+			});
 		case 'appealAwaitingTransfer':
 			return createNotificationBanner({
 				bannerDefinitionKey,

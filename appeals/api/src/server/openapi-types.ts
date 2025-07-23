@@ -1131,6 +1131,8 @@ export interface SingleAppealResponse {
 		/** @example false */
 		externalSource?: boolean;
 	}[];
+	/** @example true */
+	awaitingLinkedAppeal?: boolean;
 	/** @example false */
 	isParentAppeal?: boolean;
 	/** @example true */

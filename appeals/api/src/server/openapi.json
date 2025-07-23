@@ -8369,6 +8369,10 @@
 							}
 						}
 					},
+					"awaitingLinkedAppeal": {
+						"type": "boolean",
+						"example": true
+					},
 					"isParentAppeal": {
 						"type": "boolean",
 						"example": false

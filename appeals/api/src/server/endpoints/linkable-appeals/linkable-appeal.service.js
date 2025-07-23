@@ -7,6 +7,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { currentStatus } from '#utils/current-status.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 
 const linkableCaseStatuses = [
 	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
@@ -31,7 +32,7 @@ export const getLinkableAppealSummaryByCaseReference = async (appealReference, l
 		return formatHorizonGetCaseData(horizonAppeal);
 	} else if (
 		isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
-		linkableType === 'linked' &&
+		linkableType === CASE_RELATIONSHIP_LINKED &&
 		!linkableCaseStatuses.includes(currentStatus(appeal))
 	) {
 		throw 432;

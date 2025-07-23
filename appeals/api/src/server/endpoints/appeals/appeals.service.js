@@ -1,5 +1,8 @@
 import appealRepository from '#repositories/appeal.repository.js';
-import { VALIDATION_OUTCOME_COMPLETE } from '@pins/appeals/constants/support.js';
+import {
+	CASE_RELATIONSHIP_LINKED,
+	VALIDATION_OUTCOME_COMPLETE
+} from '@pins/appeals/constants/support.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
 import { formatAppeal } from '#endpoints/appeals/appeals.formatter.js';
 import transitionState from '#state/transition-state.js';
@@ -105,12 +108,12 @@ const mapUsers = async (appeals) => {
 const mapAppeals = (appeals) =>
 	Promise.all(
 		appeals.map(async (appeal) => {
-			const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
-
-			return formatAppeal(
-				appeal,
-				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked')
+			const linkedAppeals = await appealRepository.getLinkedAppeals(
+				appeal.reference,
+				CASE_RELATIONSHIP_LINKED
 			);
+
+			return formatAppeal(appeal, linkedAppeals);
 		})
 	);
 
