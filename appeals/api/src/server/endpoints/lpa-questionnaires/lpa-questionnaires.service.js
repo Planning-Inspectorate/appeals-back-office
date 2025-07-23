@@ -5,8 +5,8 @@ import { isOutcomeComplete, isOutcomeIncomplete } from '#utils/check-validation-
 import transitionState from '#state/transition-state.js';
 import {
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
-	ERROR_NOT_FOUND,
-	ERROR_NO_RECIPIENT_EMAIL
+	ERROR_NO_RECIPIENT_EMAIL,
+	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -20,6 +20,9 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import logger from '#utils/logger.js';
 import { isCurrentStatus } from '#utils/current-status.js';
+import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
+import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
+import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -85,7 +88,21 @@ const updateLPAQuestionnaireValidationOutcome = async (
 	});
 
 	if (!isOutcomeIncomplete(validationOutcome.name)) {
-		await transitionState(appealId, azureAdUserId, validationOutcome.name);
+		if (!isLinkedAppeal(appeal)) {
+			await transitionState(appealId, azureAdUserId, validationOutcome.name);
+		} else {
+			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
+			if (allLpaQuestionnaireOutcomesAreComplete(linkedAppeals)) {
+				await Promise.all(
+					linkedAppeals.map((appeal) => {
+						const validationOutcome = appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome;
+						if (validationOutcome) {
+							return transitionState(appeal.id, azureAdUserId, validationOutcome?.name);
+						}
+					})
+				);
+			}
+		}
 	} else {
 		createAuditTrail({
 			appealId,

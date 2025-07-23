@@ -56,27 +56,30 @@ export const formatListOfNotificationMethodsToHtml = (notificationMethods) => {
  * @returns {string}
  */
 export const formatListOfLinkedAppeals = (listOfAppeals) => {
-	if (!listOfAppeals || listOfAppeals.length === 0) {
+	if (!listOfAppeals?.length) {
 		return '<span>No linked appeals</span>';
 	}
 
-	let formattedLinks = '';
-
-	for (let i = 0; i < listOfAppeals.length; i++) {
-		const shortAppealReference = appealShortReference(listOfAppeals[i].appealReference);
-		const linkUrl = listOfAppeals[i].externalSource
-			? generateHorizonAppealUrl(listOfAppeals[i].appealId)
-			: `/appeals-service/appeal-details/${listOfAppeals[i].appealId}`;
+	const formattedLinkedAppeals = listOfAppeals.map((linkedAppeal) => {
+		const { appealId, appealReference, isParentAppeal, externalSource } = linkedAppeal;
+		const shortAppealReference = appealShortReference(appealReference);
+		const linkUrl = externalSource
+			? generateHorizonAppealUrl(appealId)
+			: `/appeals-service/appeal-details/${appealId}`;
 		const linkAriaLabel = `Appeal ${numberToAccessibleDigitLabel(shortAppealReference || '')}`;
-		const relationshipText = listOfAppeals[i].isParentAppeal ? ' (lead)' : '';
+		const relationshipText = isParentAppeal ? ' (lead)' : '';
+		return linkUrl.length > 0
+			? `<a href="${linkUrl}" class="govuk-link" data-cy="linked-appeal-${shortAppealReference}" aria-label="${linkAriaLabel}">${shortAppealReference}</a>${relationshipText}`
+			: `<span class="govuk-body">${shortAppealReference}</span> ${relationshipText}`;
+	});
 
-		formattedLinks +=
-			linkUrl.length > 0
-				? `<li><a href="${linkUrl}" class="govuk-link" data-cy="linked-appeal-${shortAppealReference}" aria-label="${linkAriaLabel}">${shortAppealReference}</a> ${relationshipText}</li>`
-				: `<li><span class="govuk-body">${shortAppealReference}</span> ${relationshipText}</li>`;
+	if (formattedLinkedAppeals.length === 1) {
+		return formattedLinkedAppeals[0];
+	} else {
+		return `<ul class="govuk-list govuk-list--bullet"><li>${formattedLinkedAppeals.join(
+			'</li><li>'
+		)}</li></ul>`;
 	}
-
-	return `<ul class="govuk-list govuk-list--bullet">${formattedLinks}</ul>`;
 };
 
 /**

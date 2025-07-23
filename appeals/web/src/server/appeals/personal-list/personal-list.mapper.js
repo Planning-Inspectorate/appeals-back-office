@@ -291,6 +291,9 @@ function mapRequiredActionToPersonalListActionHtml(
 		case 'awaitingFinalComments': {
 			return 'Awaiting final comments';
 		}
+		case 'awaitingLinkedAppeal': {
+			return 'Awaiting linked appeal';
+		}
 		case 'awaitingIpComments': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
