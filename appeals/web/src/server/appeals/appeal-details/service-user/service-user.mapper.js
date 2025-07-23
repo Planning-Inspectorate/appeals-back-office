@@ -3,13 +3,7 @@
  */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import {
-	errorEmailAllowEmpty,
-	errorFirstName,
-	errorLastName,
-	errorOrganisationNameAllowEmpty,
-	errorPhoneNumberAllowEmpty
-} from '#lib/error-handlers/change-screen-error-handlers.js';
+import { errorOrganisationNameAllowEmpty } from '#lib/error-handlers/change-screen-error-handlers.js';
 import { capitalize } from 'lodash-es';
 
 /**
@@ -56,7 +50,11 @@ export const changeServiceUserPage = (
 						text: `First name`
 					},
 					value: serviceUserDetails?.firstName ?? '',
-					errorMessage: errorFirstName(errors)
+					errorMessage: errors?.firstName
+						? {
+								text: errors.firstName.msg
+						  }
+						: undefined
 				}
 			},
 			{
@@ -69,7 +67,11 @@ export const changeServiceUserPage = (
 						text: `Last name`
 					},
 					value: serviceUserDetails?.lastName ?? '',
-					errorMessage: errorLastName(errors)
+					errorMessage: errors?.lastName
+						? {
+								text: errors.lastName.msg
+						  }
+						: undefined
 				}
 			},
 			{
@@ -95,7 +97,11 @@ export const changeServiceUserPage = (
 						text: `Email address`
 					},
 					value: serviceUserDetails?.email ?? '',
-					errorMessage: errorEmailAllowEmpty(errors)
+					errorMessage: errors?.emailAddress
+						? {
+								text: errors.emailAddress.msg
+						  }
+						: undefined
 				}
 			},
 			{
@@ -108,7 +114,11 @@ export const changeServiceUserPage = (
 						text: `Phone number`
 					},
 					value: serviceUserDetails?.phoneNumber ?? '',
-					errorMessage: errorPhoneNumberAllowEmpty(errors)
+					errorMessage: errors?.phoneNumber
+						? {
+								text: errors.phoneNumber.msg
+						  }
+						: undefined
 				}
 			}
 		]

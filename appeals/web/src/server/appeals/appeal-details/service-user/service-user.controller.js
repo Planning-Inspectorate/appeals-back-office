@@ -116,7 +116,7 @@ export const postChangeServiceUser = async (request, response) => {
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: `${capitalize(userType)} details ${isUpdate ? 'updated' : 'added'}`
+			text: `${capitalize(userType)} contact details ${isUpdate ? 'updated' : 'added'}`
 		});
 
 		delete request.session.updatedServiceUser;

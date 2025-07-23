@@ -1,6 +1,8 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 
+import stringTokenReplacement from '@pins/appeals/utils/string-token-replacement.js';
+
 const TEXT_INPUT_MAX_CHARACTERS = 300;
 
 export const createTextInputValidator = (
@@ -13,8 +15,18 @@ export const createTextInputValidator = (
 		body(fieldName)
 			.trim()
 			.isLength({ min: 1 })
-			.withMessage(emptyErrorMessage)
+			.withMessage((value, { req }) => {
+				if (req.params && req.params.userType) {
+					return stringTokenReplacement(emptyErrorMessage, [req.params.userType]);
+				} else {
+					return emptyErrorMessage;
+				}
+			})
 			.bail()
+			.matches(/^[A-Za-z0-9 .,'!&-]+$/)
+			.withMessage(
+				'Organisation name must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes'
+			)
 			.isLength({ max: maxCharactersAllowed })
 			.withMessage(maxCharactersErrorMessage)
 	);
@@ -28,6 +40,11 @@ export const createTextInputOptionalValidator = (
 		body(fieldName)
 			.trim()
 			.bail()
+			.optional({ nullable: true, checkFalsy: true })
+			.matches(/^[A-Za-z0-9 .,'!&-]+$/)
+			.withMessage(
+				'Organisation name must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes'
+			)
 			.isLength({ max: maxCharactersAllowed })
 			.withMessage(maxCharactersErrorMessage)
 	);

@@ -1,3 +1,4 @@
+import stringTokenReplacement from '@pins/appeals/utils/string-token-replacement.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 
@@ -14,7 +15,13 @@ export const createEmailInputValidator = (
 		body(fieldName)
 			.trim()
 			.notEmpty()
-			.withMessage(emptyErrorMessage)
+			.withMessage((value, { req }) => {
+				if (req.params && req.params.userType) {
+					return stringTokenReplacement(emptyErrorMessage, [req.params.userType]);
+				} else {
+					return emptyErrorMessage;
+				}
+			})
 			.bail()
 			.isEmail()
 			.withMessage(INVALID_EMAIL_MESSAGE)

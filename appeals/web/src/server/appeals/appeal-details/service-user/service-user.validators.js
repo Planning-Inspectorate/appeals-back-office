@@ -4,19 +4,20 @@ import {
 	createTextInputOptionalValidator,
 	createTextInputValidator
 } from '#lib/validators/text-input-validator.js';
-import { createEmailInputOptionalValidator } from '#lib/validators/email-input.validator.js';
+import { createEmailInputValidator } from '#lib/validators/email-input.validator.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import stringTokenReplacement from '@pins/appeals/utils/string-token-replacement.js';
 
 export const validateChangeServiceUser = createValidator(
 	createTextInputValidator(
 		'firstName',
-		'Enter the first name',
+		`Enter the {replacement0}'s first name`,
 		textInputCharacterLimits.defaultInputLength,
 		`First name must be ${textInputCharacterLimits.defaultInputLength} characters or less`
 	),
 	createTextInputValidator(
 		'lastName',
-		'Enter the last name',
+		`Enter the {replacement0}'s last name`,
 		textInputCharacterLimits.defaultInputLength,
 		`Last name must be ${textInputCharacterLimits.defaultInputLength} characters or less`
 	),
@@ -25,12 +26,29 @@ export const validateChangeServiceUser = createValidator(
 		textInputCharacterLimits.defaultInputLength,
 		`Organisation name must be ${textInputCharacterLimits.defaultInputLength} characters or less`
 	),
-	createEmailInputOptionalValidator('emailAddress'),
+	createEmailInputValidator('emailAddress', `Enter the {replacement0}'s email address`),
 	body('phoneNumber')
 		.trim()
-		.optional({ checkFalsy: true })
+		.isLength({ min: 1 })
+		.withMessage((value, { req }) => {
+			if (req.params && req.params.userType) {
+				return stringTokenReplacement(`Enter the {replacement0}'s phone number`, [
+					req.params.userType
+				]);
+			} else {
+				return `Enter the phone number`;
+			}
+		})
 		.bail()
-		.isString()
-		.isLength({ min: 10, max: 15 })
-		.withMessage('Enter a valid phone number or clear the phone number field')
+		.customSanitizer((value) => {
+			const sanitizedPhoneNumber = value.replace(/[\s-()]/g, '');
+			if (sanitizedPhoneNumber.startsWith('+44')) {
+				return `0${sanitizedPhoneNumber.substring(3)}`;
+			}
+			return sanitizedPhoneNumber;
+		})
+		.matches(/^0\d{10}$/)
+		.withMessage(
+			'Enter a valid UK phone number, like 01632 960 001, 07700 900 982 or +44 808 157 0192'
+		)
 );
