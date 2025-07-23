@@ -101,7 +101,7 @@ model AppealRelationship {
 model AppealType {
   id               Int      @id @default(autoincrement())
   type             String   @unique
-  changeAppealType String   @unique
+  changeAppealType String?  @unique
   key              String   @unique
   processCode      String?
   enabled          Boolean?
