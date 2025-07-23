@@ -16,10 +16,13 @@ import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { notifySend } from '#notify/notify-send.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import logger from '#utils/logger.js';
 import { isCurrentStatus } from '#utils/current-status.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
+import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeals.js';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateLPAQuestionnaireValidationOutcomeParams} UpdateLPAQuestionnaireValidationOutcomeParams */
@@ -42,6 +45,18 @@ const checkLPAQuestionnaireExists = (req, res, next) => {
 	}
 
 	next();
+};
+
+/**
+ *
+ * @param {*} appeal
+ * @returns {boolean}
+ */
+const isLinkedAppeal = (appeal) => {
+	if (!isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+		return false;
+	}
+	return Boolean(appeal.parentAppeals?.length || appeal.childAppeals?.length);
 };
 
 /**
@@ -85,7 +100,21 @@ const updateLPAQuestionnaireValidationOutcome = async (
 	});
 
 	if (!isOutcomeIncomplete(validationOutcome.name)) {
-		await transitionState(appealId, azureAdUserId, validationOutcome.name);
+		if (!isLinkedAppeal(appeal)) {
+			await transitionState(appealId, azureAdUserId, validationOutcome.name);
+		} else {
+			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
+			if (allLpaQuestionnaireOutcomesAreComplete(linkedAppeals)) {
+				await Promise.all(
+					linkedAppeals.map((appeal) => {
+						const validationOutcome = appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome;
+						if (validationOutcome) {
+							return transitionState(appeal.id, azureAdUserId, validationOutcome?.name);
+						}
+					})
+				);
+			}
+		}
 	} else {
 		createAuditTrail({
 			appealId,

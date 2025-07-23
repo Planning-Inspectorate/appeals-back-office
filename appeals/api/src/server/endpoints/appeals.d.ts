@@ -102,6 +102,7 @@ interface SingleAppealDetailsResponse {
 	};
 	isParentAppeal?: boolean | null;
 	isChildAppeal?: boolean | null;
+	awaitingLinkedAppeals?: boolean | null;
 	linkedAppeals: LinkedAppeal[];
 	otherAppeals: RelatedAppeal[];
 	localPlanningDepartment: string;
@@ -440,6 +441,8 @@ interface LinkedAppeal {
 	appealId: number | null;
 	appealReference: string;
 	isParentAppeal: boolean;
+	currentStatus: string;
+	completedStateList: string[];
 	linkingDate: Date;
 	appealType?: string | null;
 	relationshipId: number;

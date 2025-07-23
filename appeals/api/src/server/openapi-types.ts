@@ -1130,7 +1130,13 @@ export interface SingleAppealResponse {
 		relationshipId?: number;
 		/** @example false */
 		externalSource?: boolean;
+		/** @example "lpa_questionnaire" */
+		currentStatus?: string;
+		/** @example ["ready_to_start"] */
+		completedStateList?: string[];
 	}[];
+	/** @example true */
+	awaitingLinkedAppeals?: boolean;
 	/** @example false */
 	isParentAppeal?: boolean;
 	/** @example true */

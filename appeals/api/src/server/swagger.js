@@ -364,9 +364,12 @@ export const spec = {
 					linkingDate: '2024-06-26T11:57:40.270Z',
 					appealType: '(D) Householder',
 					relationshipId: 24,
-					externalSource: false
+					externalSource: false,
+					currentStatus: 'lpa_questionnaire',
+					completedStateList: ['ready_to_start']
 				}
 			],
+			awaitingLinkedAppeals: true,
 			isParentAppeal: false,
 			isChildAppeal: true,
 			localPlanningDepartment: 'Some Borough Council',

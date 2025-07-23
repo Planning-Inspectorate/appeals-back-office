@@ -90,13 +90,15 @@ const getMyAppeals = async (req, res) => {
 
 	const formattedAppeals = await Promise.all(
 		appeals.map(async (appeal) => {
+			if (!isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+				return formatMyAppeal({ appeal });
+			}
 			const linkedAppeals = await appealRepository.getLinkedAppeals(appeal.reference);
-			const isChildAppeal =
-				isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
-				linkedAppeals.some((link) => link.childRef === appeal.reference);
-			const isParentAppeal =
-				isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
-				linkedAppeals.some((link) => link.parentRef === appeal.reference);
+			const isChildAppeal = linkedAppeals.some((link) => link.childRef === appeal.reference);
+			const isParentAppeal = linkedAppeals.some((link) => link.parentRef === appeal.reference);
+			if (!isChildAppeal && !isParentAppeal) {
+				return formatMyAppeal({ appeal });
+			}
 			// Do not add child appeals here as they will be grouped with their parent appeals below
 			const myAppealData = isChildAppeal ? [] : [{ appeal, isParentAppeal, isChildAppeal }];
 			if (isParentAppeal) {
@@ -120,6 +122,10 @@ const getMyAppeals = async (req, res) => {
 					})
 				);
 			}
+			myAppealData.forEach((appealData) => {
+				// @ts-ignore
+				appealData.awaitingLinkedAppeals = true; // isAwaitingLinkedAppeals(appeal, myAppealData);
+			});
 			return Promise.all(myAppealData.map(formatMyAppeal));
 		})
 	);

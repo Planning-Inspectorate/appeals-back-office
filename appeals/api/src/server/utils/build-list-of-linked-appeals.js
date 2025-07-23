@@ -1,4 +1,5 @@
 import appealRepository from '#repositories/appeal.repository.js';
+import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
@@ -22,19 +23,24 @@ function augmentChildAppealWithParentAppealRelationshipData(parentAppeal, childA
  * @returns {Promise<(Appeal|(Appeal&{parentAppeals: Appeal}))[]>}
  */
 export async function buildListOfLinkedAppeals(parentAppeal) {
-	const childAppealIds = parentAppeal.childAppeals
-		?.filter((childAppeal) => childAppeal.type === 'linked')
-		.map((childAppeal) => childAppeal.childId);
+	if (parentAppeal.parentAppeals?.length && parentAppeal.parentAppeals[0].parent) {
+		parentAppeal = parentAppeal.parentAppeals[0].parent;
+	}
+	const linkedChildAppeals = await appealRepository.getLinkedAppeals(parentAppeal.reference);
 
 	// @ts-ignore
-	const childAppeals = await appealRepository.getAppealsByIds(childAppealIds);
+	const childAppeals = linkedChildAppeals
+		.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+		.map(({ child }) => child);
 
 	// As the function appealRepository.getAppealsByIds does not return the parentAppeals array property (list of child appeal, parent appeal relationships), we need to add this to each child appeal.
 	// As the parentAppeal contains the array of childAppeals (list of child appeal, parent appeal relationships), it's possible to add the parentAppeals property with the correct entry taken from the parentAppeal's childAppeals list.
 
-	const childAppealsAugmentedWithParentAppealRelationshipData = childAppeals.map((childAppeal) =>
-		augmentChildAppealWithParentAppealRelationshipData(parentAppeal, childAppeal)
+	const childAppealsAugmentedWithParentAppealRelationshipData = childAppeals.map(
+		(childAppeal) =>
+			childAppeal && augmentChildAppealWithParentAppealRelationshipData(parentAppeal, childAppeal)
 	);
 
+	// @ts-ignore
 	return [parentAppeal, ...childAppealsAugmentedWithParentAppealRelationshipData];
 }

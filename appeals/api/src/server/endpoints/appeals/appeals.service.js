@@ -1,5 +1,8 @@
 import appealRepository from '#repositories/appeal.repository.js';
-import { VALIDATION_OUTCOME_COMPLETE } from '@pins/appeals/constants/support.js';
+import {
+	CASE_RELATIONSHIP_LINKED,
+	VALIDATION_OUTCOME_COMPLETE
+} from '@pins/appeals/constants/support.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
 import { formatAppeal } from '#endpoints/appeals/appeals.formatter.js';
 import transitionState from '#state/transition-state.js';
@@ -130,7 +133,7 @@ const mapAppeals = (appeals) =>
 
 			return formatAppeal(
 				appeal,
-				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === 'linked')
+				linkedAppeals.filter((linkedAppeal) => linkedAppeal.type === CASE_RELATIONSHIP_LINKED)
 			);
 		})
 	);

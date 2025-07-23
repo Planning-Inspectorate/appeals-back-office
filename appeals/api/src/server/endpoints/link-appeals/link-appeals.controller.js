@@ -38,12 +38,12 @@ export const linkAppeal = async (req, res) => {
 
 	const canLinkCurrentAppeal = canLinkAppeals(
 		currentAppeal,
-		'linked',
+		CASE_RELATIONSHIP_LINKED,
 		isCurrentAppealParent ? 'lead' : 'child'
 	);
 	const canLinkLinkedAppeal = canLinkAppeals(
 		linkedAppeal,
-		'linked',
+		CASE_RELATIONSHIP_LINKED,
 		isCurrentAppealParent ? 'child' : 'lead'
 	);
 
@@ -132,7 +132,7 @@ export const linkExternalAppeal = async (req, res) => {
 	const { isCurrentAppealParent, linkedAppealReference } = req.body;
 	const currentAppeal = req.appeal;
 	const currentAppealType = isCurrentAppealParent ? 'lead' : 'child';
-	if (!canLinkAppeals(currentAppeal, 'linked', currentAppealType)) {
+	if (!canLinkAppeals(currentAppeal, CASE_RELATIONSHIP_LINKED, currentAppealType)) {
 		return res.status(409).send({
 			errors: {
 				body: ERROR_LINKING_APPEALS

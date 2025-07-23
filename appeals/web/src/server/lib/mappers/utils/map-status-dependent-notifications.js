@@ -17,12 +17,17 @@ import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
  * @returns {PageComponent[]}
  */
 export function mapStatusDependentNotifications(appealDetails, request) {
-	const requiredActions = getRequiredActionsForAppeal(appealDetails, 'detail');
-
-	/** @type {import('../components/index.js').NotificationBannerDefinitionKey[]} */
-	const bannerKeys = requiredActions
-		.map(mapRequiredActionToNotificationBannerKey)
-		.filter(/** @returns {item is NotificationBannerDefinitionKey} */ (item) => item !== undefined);
+	/** @type {import('../components/index.js').NotificationBannerDefinitionKey[]} */ let bannerKeys;
+	if (appealDetails.awaitingLinkedAppeals && config.featureFlags.featureFlagLinkedAppeals) {
+		bannerKeys = ['awaitingLinkedAppeals'];
+	} else {
+		const requiredActions = getRequiredActionsForAppeal(appealDetails, 'detail');
+		bannerKeys = requiredActions
+			.map(mapRequiredActionToNotificationBannerKey)
+			.filter(
+				/** @returns {item is NotificationBannerDefinitionKey} */ (item) => item !== undefined
+			);
+	}
 
 	return bannerKeys
 		.map((bannerKey) => mapBannerKeysToNotificationBanners(bannerKey, appealDetails, request))
@@ -38,6 +43,7 @@ export function mapStatusDependentNotifications(appealDetails, request) {
 function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, request) {
 	// ToDo banners will be removed from this list once the child appeals automatically do the action via the lead appeal
 	const ALLOWED_CHILD_APPEAL_BANNERS = [
+		'awaitingLinkedAppeals',
 		'appealAwaitingTransfer',
 		'readyForSetUpSiteVisit',
 		'assignCaseOfficer',
@@ -65,6 +71,11 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 	}
 
 	switch (bannerDefinitionKey) {
+		case 'awaitingLinkedAppeals':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<p class="govuk-notification-banner__heading">Awaiting linked appeal</p>`
+			});
 		case 'appealAwaitingTransfer':
 			return createNotificationBanner({
 				bannerDefinitionKey,

@@ -8289,9 +8289,24 @@
 								"externalSource": {
 									"type": "boolean",
 									"example": false
+								},
+								"currentStatus": {
+									"type": "string",
+									"example": "lpa_questionnaire"
+								},
+								"completedStateList": {
+									"type": "array",
+									"example": ["ready_to_start"],
+									"items": {
+										"type": "string"
+									}
 								}
 							}
 						}
+					},
+					"awaitingLinkedAppeals": {
+						"type": "boolean",
+						"example": true
 					},
 					"isParentAppeal": {
 						"type": "boolean",

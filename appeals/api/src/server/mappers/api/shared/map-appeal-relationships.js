@@ -6,11 +6,14 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
 } from '@pins/appeals/constants/support.js';
+import { isAwaitingLinkedAppeals } from '#utils/is-awaiting-linked-appeals.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
  *
  * @param {MappingRequest} data
- * @returns {{ linkedAppeals: AppealRelationship[], otherAppeals: AppealRelationship[], isParentAppeal: boolean, isChildAppeal: boolean }}
+ * @returns {{awaitingLinkedAppeals: boolean, linkedAppeals: AppealRelationship[], otherAppeals: AppealRelationship[], isParentAppeal: boolean, isChildAppeal: boolean }}
  */
 export const mapAppealRelationships = (data) => {
 	const { appeal } = data;
@@ -23,6 +26,16 @@ export const mapAppealRelationships = (data) => {
 				.map((relationship) => {
 					const appealType = `${relationship.parent?.appealType?.type} (${relationship.parent?.appealType?.key})`;
 
+					const currentStatus =
+						relationship.parent?.appealStatus
+							.filter(({ valid }) => valid)
+							.map(({ status }) => status) || [];
+
+					const completedStateList =
+						relationship.parent?.appealStatus
+							.filter(({ valid }) => !valid)
+							.map(({ status }) => status) || [];
+
 					return {
 						appealId: relationship.parentId,
 						appealReference: relationship.parentRef,
@@ -32,7 +45,9 @@ export const mapAppealRelationships = (data) => {
 						externalAppealType: relationship.externalAppealType,
 						relationshipId: relationship.id,
 						externalId: relationship.externalId,
-						isParentAppeal: true
+						isParentAppeal: true,
+						currentStatus: currentStatus.length ? currentStatus[0] : undefined,
+						completedStateList
 					};
 				})
 		: [];
@@ -43,6 +58,16 @@ export const mapAppealRelationships = (data) => {
 				.map((relationship) => {
 					const appealType = `${relationship.child?.appealType?.type} (${relationship.child?.appealType?.key})`;
 
+					const currentStatus =
+						relationship.child?.appealStatus
+							.filter(({ valid }) => valid)
+							.map(({ status }) => status) || [];
+
+					const completedStateList =
+						relationship.child?.appealStatus
+							.filter(({ valid }) => !valid)
+							.map(({ status }) => status) || [];
+
 					return {
 						appealId: relationship.childId,
 						appealReference: relationship.childRef,
@@ -52,10 +77,18 @@ export const mapAppealRelationships = (data) => {
 						externalAppealType: relationship.externalAppealType,
 						relationshipId: relationship.id,
 						externalId: relationship.externalId,
-						isParentAppeal: false
+						isParentAppeal: false,
+						currentStatus: currentStatus.length ? currentStatus[0] : undefined,
+						completedStateList
 					};
 				})
 		: [];
+
+	const linkedAppeals = [...parentAppeals, ...childAppeals];
+
+	const awaitingLinkedAppeals =
+		isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
+		isAwaitingLinkedAppeals(appeal, linkedAppeals);
 
 	const otherAppeals = appealRelationships.length
 		? appealRelationships
@@ -81,7 +114,8 @@ export const mapAppealRelationships = (data) => {
 		: [];
 
 	return {
-		linkedAppeals: [...parentAppeals, ...childAppeals],
+		awaitingLinkedAppeals,
+		linkedAppeals,
 		otherAppeals,
 		isChildAppeal: parentAppeals.length > 0,
 		isParentAppeal: childAppeals.length > 0

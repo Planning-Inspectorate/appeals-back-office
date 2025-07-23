@@ -1,6 +1,8 @@
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { databaseConnector } from '#utils/database-connector.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} InspectorDecision */
@@ -16,24 +18,30 @@ import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
  * @template T
  */
 
+const linkedAppealsInclude = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)
+	? {
+			appealType: true,
+			appealStatus: true,
+			lpaQuestionnaire: { include: { lpaQuestionnaireValidationOutcome: true } }
+	  }
+	: {
+			appealType: true
+	  };
+
 const appealDetailsInclude = {
 	address: true,
 	procedureType: true,
 	parentAppeals: {
 		include: {
 			parent: {
-				include: {
-					appealType: true
-				}
+				include: linkedAppealsInclude
 			}
 		}
 	},
 	childAppeals: {
 		include: {
 			child: {
-				include: {
-					appealType: true
-				}
+				include: linkedAppealsInclude
 			}
 		}
 	},
@@ -306,6 +314,8 @@ const setInvalidAppealDecision = (id, { invalidDecisionReason, outcome }) => {
  * @returns {Promise<AppealRelationship[]>}
  */
 const getLinkedAppeals = async (appealReference) => {
+	// ToDo Fix this typescript type
+	// @ts-ignore
 	return await databaseConnector.appealRelationship.findMany({
 		where: {
 			OR: [
@@ -320,6 +330,14 @@ const getLinkedAppeals = async (appealReference) => {
 					}
 				}
 			]
+		},
+		include: {
+			child: {
+				include: linkedAppealsInclude
+			},
+			parent: {
+				include: linkedAppealsInclude
+			}
 		}
 	});
 };

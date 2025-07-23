@@ -59,6 +59,7 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 	appealTimetable: formatAppealTimetable(appeal),
 	isParentAppeal: linkedAppeals.filter((link) => link.parentRef === appeal.reference).length > 0,
 	isChildAppeal: linkedAppeals.filter((link) => link.childRef === appeal.reference).length > 0,
+	// linkedAppeals,
 	planningApplicationReference: appeal.applicationReference,
 	isHearingSetup: !!appeal.hearing,
 	hasHearingAddress: !!appeal.hearing?.addressId
@@ -67,8 +68,8 @@ const formatAppeal = (appeal, linkedAppeals) => ({
 /**
  * @param {Object} options
  * @param {DBUserAppeal} options.appeal
- * @param {Boolean} options.isParentAppeal
- * @param {Boolean} options.isChildAppeal
+ * @param {Boolean} [options.isParentAppeal]
+ * @param {Boolean} [options.isChildAppeal]
  * @returns {Promise<AppealListResponse>}
  */
 const formatMyAppeal = async ({ appeal, isParentAppeal = false, isChildAppeal = false }) => ({
@@ -92,7 +93,9 @@ const formatMyAppeal = async ({ appeal, isParentAppeal = false, isChildAppeal = 
 	isChildAppeal,
 	planningApplicationReference: appeal.applicationReference,
 	isHearingSetup: !!appeal.hearing,
-	hasHearingAddress: !!appeal.hearing?.addressId
+	hasHearingAddress: !!appeal.hearing?.addressId,
+	// @ts-ignore
+	awaitingLinkedAppeals: appeal.awaitingLinkedAppeals
 });
 
 /**

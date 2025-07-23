@@ -428,6 +428,11 @@ function mapRequiredActionToPersonalListActionHtml(
  * @returns {string}
  */
 export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
+	// @ts-ignore
+	if (appeal.awaitingLinkedAppeals && config.featureFlags.featureFlagLinkedAppeals) {
+		return 'Awaiting linked appeal';
+	}
+
 	const requiredActions = getRequiredActionsForAppeal(
 		{
 			...appeal,
