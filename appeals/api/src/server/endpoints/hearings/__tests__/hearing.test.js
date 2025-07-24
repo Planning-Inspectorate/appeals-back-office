@@ -373,7 +373,19 @@ describe('hearing routes', () => {
 				const { hearing } = fullPlanningAppeal;
 
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...fullPlanningAppeal,
+					appealStatus: [
+						{
+							status: APPEAL_CASE_STATUS.EVENT,
+							valid: false
+						},
+						{
+							status: APPEAL_CASE_STATUS.AWAITING_EVENT,
+							valid: true
+						}
+					]
+				});
 				databaseConnector.hearing.update.mockResolvedValue({ ...hearing, address: null });
 
 				const response = await request
@@ -399,6 +411,15 @@ describe('hearing routes', () => {
 					},
 					include: {
 						address: true
+					}
+				});
+
+				expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
+					data: {
+						appealId: fullPlanningAppeal.id,
+						createdAt: expect.any(Date),
+						status: 'event',
+						valid: true
 					}
 				});
 

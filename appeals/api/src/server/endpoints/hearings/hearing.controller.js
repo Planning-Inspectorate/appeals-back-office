@@ -24,6 +24,7 @@ import {
 	formatAddressForDb,
 	formatAddressSingleLine
 } from '#endpoints/addresses/addresses.formatter.js';
+import { VALIDATION_OUTCOME_INCOMPLETE } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -139,12 +140,12 @@ export const rearrangeHearing = async (req, res) => {
 			azureAdUserId
 		);
 
-		if (
-			arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) &&
-			address &&
-			!currentHearing?.addressId
-		) {
-			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
+			if (address && !currentHearing?.addressId) {
+				await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+			} else if (!address && currentHearing?.addressId) {
+				await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
+			}
 		}
 
 		const existingHearing = req.appeal.hearing;
