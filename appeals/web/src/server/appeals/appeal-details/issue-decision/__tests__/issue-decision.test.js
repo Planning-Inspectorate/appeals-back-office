@@ -8,7 +8,8 @@ import {
 	documentFileInfo,
 	inspectorDecisionData,
 	documentRedactionStatuses,
-	fileUploadInfo
+	fileUploadInfo,
+	documentFileVersionInfo
 } from '#testing/appeals/appeals.js';
 import { cloneDeep } from 'lodash-es';
 import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
@@ -1192,6 +1193,34 @@ describe('issue-decision', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain('LPA costs decision letter</dt>');
 			expect(unprettifiedElement.innerHTML).toContain('lpa-costs-decision-letter.pdf</a>');
+			expect(unprettifiedElement.innerHTML).toContain('25 December 2023');
+		});
+
+		it('should render the view decision page with re issued decision', async () => {
+			nock('http://test/')
+				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.reply(200, documentFileVersionInfo);
+			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${viewDecisionPath}`);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision</h1>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Allowed</dd>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('decision-letter.pdf</a>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant costs decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('appellant-costs-decision-letter.pdf</a>');
+
+			expect(unprettifiedElement.innerHTML).toContain('LPA costs decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('lpa-costs-decision-letter.pdf</a>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'4 August 2023 (reissued on 11 October 2023)'
+			);
 		});
 	});
 });

@@ -22,7 +22,9 @@ import {
 	finalCommentsForReview,
 	appellantFinalCommentsAwaitingReview,
 	lpaFinalCommentsAwaitingReview,
-	folderInfoMainPartyCorrespondence
+	folderInfoMainPartyCorrespondence,
+	documentFileVersionInfo,
+	documentFileInfo
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
@@ -1917,6 +1919,9 @@ describe('appeal-details', () => {
 					completedStateList: ['awaiting_event']
 				});
 			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.reply(200, documentFileVersionInfo);
 			const response = await request.get(`${baseUrl}/${appealId}`);
 			const element = parseHtml(response.text);
 
@@ -1927,7 +1932,39 @@ describe('appeal-details', () => {
 				rootElement: '.govuk-inset-text'
 			}).innerHTML;
 			expect(insetTextElementHTML).toContain('<li>Decision: Dismissed</li>');
-			expect(insetTextElementHTML).toContain('<li>Decision issued on 25 December 2023</li>');
+			expect(insetTextElementHTML).toContain(
+				'<li>Decision issued on 4 August 2023 (updated on 11 October 2023)</li>'
+			);
+			expect(insetTextElementHTML).toContain(
+				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a></li>'
+			);
+		});
+
+		it('should render a Decision inset panel when the appealStatus is complete and only one version exists', async () => {
+			const appealId = '2';
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealData,
+					appealStatus: 'complete',
+					completedStateList: ['awaiting_event']
+				});
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.reply(200, documentFileInfo);
+			const response = await request.get(`${baseUrl}/${appealId}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const insetTextElementHTML = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '.govuk-inset-text'
+			}).innerHTML;
+			expect(insetTextElementHTML).toContain('<li>Decision: Dismissed</li>');
+			expect(insetTextElementHTML).toContain('<li>Decision issued on 11 October 2023</li>');
 			expect(insetTextElementHTML).toContain(
 				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a></li>'
 			);
