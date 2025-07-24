@@ -98,7 +98,7 @@ export class LpaqPage {
 	}
 
 	assertPlanningOfficerReportLabel(value) {
-		this.assertFieldLabelAndValue("Planning officer's report", value);
+		this.assertFieldLabelAndValue('Planning officer’s report', value);
 	}
 
 	assertPlansDrawingsLabel(value) {
@@ -292,5 +292,24 @@ export class LpaqPage {
 			'When do you expect to formally adopt the community infrastructure levy?',
 			value
 		);
+	}
+
+	//s20 specific assertions
+	assertListedBuildingAppealType(value) {
+		this.assertFieldLabelAndValue(
+			'Is planning listed building and conservation area appeal the correct type of appeal?',
+			value
+		);
+	}
+
+	assertGrantOrLoanLabel(value) {
+		this.assertFieldLabelAndValue(
+			'Was a grant or loan made to preserve the listed building at the appeal site?',
+			value
+		);
+	}
+
+	assertHistoricEnglandLabel(value) {
+		this.assertFieldLabelAndValue('Historic England consultation', value);
 	}
 }
