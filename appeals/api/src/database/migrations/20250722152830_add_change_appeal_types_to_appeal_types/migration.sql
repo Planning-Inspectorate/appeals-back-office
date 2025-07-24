@@ -12,9 +12,6 @@ BEGIN TRAN;
 -- AlterTable
 ALTER TABLE [dbo].[AppealType] ADD [changeAppealType] NVARCHAR(1000);
 
--- CreateIndex
-ALTER TABLE [dbo].[AppealType] ADD CONSTRAINT [AppealType_changeAppealType_key] UNIQUE NONCLUSTERED ([changeAppealType]);
-
 COMMIT TRAN;
 
 END TRY
