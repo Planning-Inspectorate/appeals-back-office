@@ -5,7 +5,7 @@ import { ListCasesPage } from '../listCasesPage';
 const caseDetailsPage = new CaseDetailsPage();
 const listCasesPage = new ListCasesPage();
 
-export class LpaqPage {
+export class LpaqPage extends Page {
 	/********************************************************
 	 ************************ Locators ***********************
 	 *********************************************************/

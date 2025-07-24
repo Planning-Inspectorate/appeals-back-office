@@ -6,7 +6,7 @@ import { ListCasesPage } from '../listCasesPage';
 const caseDetailsPage = new CaseDetailsPage();
 const listCasesPage = new ListCasesPage();
 
-export class AppellantCasePage {
+export class AppellantCasePage extends Page {
 	/********************************************************
 	 ************************ Locators ***********************
 	 *********************************************************/
