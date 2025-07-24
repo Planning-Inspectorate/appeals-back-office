@@ -7,7 +7,7 @@ import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { tag } from '../../support/tag';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { LpaqPage } from '../../page_objects/caseDetails/lpaqPgae.js';
+import { LpaqPage } from '../../page_objects/caseDetails/lpaqPage.js';
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 
 const listCasesPage = new ListCasesPage();
