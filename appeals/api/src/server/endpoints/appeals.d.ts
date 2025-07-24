@@ -567,6 +567,7 @@ interface AppealListResponse {
 	planningApplicationReference: string | null;
 	isHearingSetup: boolean | null;
 	hasHearingAddress: boolean | null;
+	numberOfResidencesNetChange: number | null;
 }
 interface DocumentationSummary {
 	appellantCase?: DocumentationSummaryEntry;

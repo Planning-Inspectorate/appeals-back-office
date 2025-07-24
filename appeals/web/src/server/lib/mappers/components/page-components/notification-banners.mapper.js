@@ -501,7 +501,7 @@ export const notificationBannerDefinitions = {
 	netResidenceAdded: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Number of residentail units added'
+		text: 'Number of residential units added'
 	},
 	addResidencesNetChange: {
 		type: 'important',

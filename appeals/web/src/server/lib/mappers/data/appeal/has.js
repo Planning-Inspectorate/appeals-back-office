@@ -48,6 +48,8 @@ import { mapVisitType } from './submappers/visit-type.mapper.js';
 import { mapLpaHealthAndSafety } from './submappers/lpa-health-and-safety.mapper.js';
 import { mapAppellantHealthAndSafety } from './submappers/appellant-health-and-safety.mapper.js';
 import { mapLpaNeighbouringSites } from './submappers/lpa-neighbouring-sites.mapper.js';
+import { mapNetResidenceChange } from './submappers/net-residence-change.mapper.js';
+import { mapNetResidenceGainOrLoss } from './submappers/net-residence-gain-or-less.mapper.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -98,5 +100,7 @@ export const submaps = {
 	downloadCaseFiles: mapDownloadCaseFiles,
 	lpaHealthAndSafety: mapLpaHealthAndSafety,
 	appellantHealthAndSafety: mapAppellantHealthAndSafety,
-	lpaNeighbouringSites: mapLpaNeighbouringSites
+	lpaNeighbouringSites: mapLpaNeighbouringSites,
+	netResidenceChange: mapNetResidenceChange,
+	netResidenceGainOrLoss: mapNetResidenceGainOrLoss
 };
