@@ -13,7 +13,10 @@ export const getLinkableAppealById = async (req, res) => {
 	const { appealReference, linkableType } = req.params;
 
 	try {
-		const linkableAppeal = await getLinkableAppealSummaryByCaseReference(appealReference);
+		const linkableAppeal = await getLinkableAppealSummaryByCaseReference(
+			appealReference,
+			linkableType
+		);
 
 		if (linkableAppeal.source === 'horizon') {
 			return res.send(linkableAppeal);
