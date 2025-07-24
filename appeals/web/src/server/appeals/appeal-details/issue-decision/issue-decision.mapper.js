@@ -540,6 +540,12 @@ export function viewDecisionPageRows(appealData, request) {
 				html: `${decisionOutcome}${invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''}`
 			});
 		}
+		if (letterDate) {
+			rows.push({
+				key: 'Decision issue date',
+				value: dateISOStringToDisplayDate(letterDate)
+			});
+		}
 		if (documentName) {
 			rows.push({
 				key: 'Decision letter',
@@ -557,12 +563,6 @@ export function viewDecisionPageRows(appealData, request) {
 							}
 					  ]
 					: null
-			});
-		}
-		if (letterDate) {
-			rows.push({
-				key: 'Decision issue date',
-				value: dateISOStringToDisplayDate(letterDate)
 			});
 		}
 	}
