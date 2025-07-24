@@ -61,20 +61,21 @@ export const mapAppealRelationships = (data) => {
 		? appealRelationships
 				.filter((relationship) => relationship.type === CASE_RELATIONSHIP_RELATED)
 				.map((relationship) => {
-					const appealType = relationship.child
+					const isChild = relationship.child !== undefined;
+					const appealType = isChild
 						? `${relationship.child?.appealType?.type} (${relationship.child?.appealType?.key})`
 						: `${relationship.parent?.appealType?.type} (${relationship.parent?.appealType?.key})`;
 
 					return {
-						appealId: relationship.childId,
-						appealReference: relationship.childRef,
+						appealId: isChild ? relationship.childId : relationship.parentId,
+						appealReference: isChild ? relationship.childRef : relationship.parentRef,
 						externalSource: relationship.externalSource === true,
 						linkingDate: relationship.linkingDate.toISOString(),
 						appealType,
 						externalAppealType: relationship.externalAppealType,
 						relationshipId: relationship.id,
 						externalId: relationship.externalId,
-						isParentAppeal: false
+						isParentAppeal: isChild ? false : true
 					};
 				})
 		: [];
