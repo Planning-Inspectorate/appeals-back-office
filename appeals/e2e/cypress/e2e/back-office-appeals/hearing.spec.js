@@ -669,6 +669,80 @@ describe('Setup hearing and add hearing estimates', () => {
 		caseDetailsPage.verifyCaseDetailsSection(expectedSections);
 	});
 
+	it('should display the correct status tags when removing hearing address', () => {
+		cy.createCase({ caseType: 'W' }).then((ref) => {
+			// Set up a new case
+			caseRef = ref;
+			cy.addLpaqSubmissionToCase(caseRef);
+			happyPathHelper.assignCaseOfficer(caseRef);
+			caseDetailsPage.checkStatusOfCase('Validation', 0);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+			happyPathHelper.startS78Case(caseRef, 'hearing');
+			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
+			caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
+			happyPathHelper.reviewLPaStatement(caseRef);
+
+			// Verify Hearing ready to set up tag - all cases page
+			cy.visit(urlPaths.allCases);
+			hearingSectionPage.verifyTagOnAllCasesPage(caseRef, 'Hearing ready to set up');
+
+			// Verify Hearing ready to set up tag - personal list page
+			cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
+			hearingSectionPage.verifyTagOnPersonalListPage(caseRef, 'Hearing ready to set up');
+
+			// navigate to details page
+			caseDetailsPage.clickLinkByText(caseRef);
+
+			// add hearing via banner
+			caseDetailsPage.clickHearingBannerLink();
+
+			cy.getBusinessActualDate(currentDate, 2).then((hearingDate) => {
+				hearingDate.setHours(currentDate.getHours(), currentDate.getMinutes());
+				hearingSectionPage.setUpHearing(
+					hearingDate,
+					hearingDate.getHours(),
+					hearingDate.getMinutes()
+				);
+
+				// Add address
+				hearingSectionPage.selectRadioButtonByValue('Yes');
+				caseDetailsPage.clickButtonByText('Continue');
+				hearingSectionPage.addHearingLocationAddress(originalAddress);
+				hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
+				caseDetailsPage.clickButtonByText('Set up hearing');
+				caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
+
+				// Verify Awaiting hearing tag - all cases page
+				cy.visit(urlPaths.allCases);
+				hearingSectionPage.verifyTagOnAllCasesPage(caseRef, 'Awaiting hearing');
+
+				// Verify Awaiting hearing tag - personal list page
+				cy.visit(urlPaths.personalListFilteredAwaitingEvent);
+				hearingSectionPage.verifyTagOnPersonalListPage(caseRef, 'Awaiting hearing');
+
+				// navigate to details page
+				caseDetailsPage.clickLinkByText(caseRef);
+
+				caseDetailsPage.clickAccordionByButton('Hearing');
+				caseDetailsPage.clickRowChangeLink('whether-the-address-is-known-or-not');
+				hearingSectionPage.selectRadioButtonByValue('No');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.clickButtonByText('Update hearing');
+				caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
+				caseDetailsPage.validateBannerMessage('Important', 'Add hearing address');
+
+				// Verify Awaiting hearing tag - all cases page
+				cy.visit(urlPaths.allCases);
+				hearingSectionPage.verifyTagOnAllCasesPage(caseRef, 'Hearing ready to set up');
+
+				// Verify Awaiting hearing tag - personal list page
+				cy.visit(urlPaths.personalListFilteredEventReadyToSetup);
+				hearingSectionPage.verifyTagOnPersonalListPage(caseRef, 'Hearing ready to set up');
+			});
+		});
+	});
+
 	const setupTestCase = () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.createCase({ caseType: 'W' }).then((ref) => {
