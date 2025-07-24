@@ -5,6 +5,8 @@ import { formatLinkableAppealSummary } from './linkable-appeal.formatter.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
 import { APPEAL_CASE_STATUS } from 'pins-data-model';
 import { currentStatus } from '#utils/current-status.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 const linkableCaseStatuses = [
 	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
@@ -16,9 +18,10 @@ const linkableCaseStatuses = [
 /**
  *
  * @param {string} appealReference
+ * @param {string} linkableType
  * @returns {Promise<import('@pins/appeals.api').Appeals.LinkableAppealSummary>}
  */
-export const getLinkableAppealSummaryByCaseReference = async (appealReference) => {
+export const getLinkableAppealSummaryByCaseReference = async (appealReference, linkableType) => {
 	let appeal = await appealRepository.getAppealByAppealReference(appealReference);
 	if (!appeal) {
 		logger.debug('Case not found in BO, now trying to query Horizon');
@@ -26,7 +29,11 @@ export const getLinkableAppealSummaryByCaseReference = async (appealReference) =
 			throw error;
 		});
 		return formatHorizonGetCaseData(horizonAppeal);
-	} else if (!linkableCaseStatuses.includes(currentStatus(appeal))) {
+	} else if (
+		isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
+		linkableType === 'linked' &&
+		!linkableCaseStatuses.includes(currentStatus(appeal))
+	) {
 		throw 432;
 	} else {
 		return formatLinkableAppealSummary(appeal);
