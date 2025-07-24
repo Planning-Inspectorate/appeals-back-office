@@ -2,7 +2,12 @@
 import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal, fullPlanningAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
+import {
+	householdAppeal,
+	casPlanningAppeal,
+	fullPlanningAppeal,
+	listedBuildingAppeal
+} from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { ERROR_CANNOT_BE_EMPTY_STRING } from '@pins/appeals/constants/support.js';
@@ -83,6 +88,7 @@ describe('invalid appeal decision routes', () => {
 
 		test.each([
 			['householdAppeal', householdAppeal],
+			['casPlanningAppeal', casPlanningAppeal],
 			['fullPlanningAppeal', fullPlanningAppeal],
 			['listedBuildingAppeal', listedBuildingAppeal]
 		])('returns 200 and send 2 notify emails when all good, appeal type: %s', async (_, appeal) => {

@@ -269,6 +269,21 @@ export const householdAppeal = {
 	}
 };
 
+export const casPlanningAppeal = {
+	...householdAppeal,
+	id: 7,
+	appealType: {
+		id: 13,
+		type: 'CAS planning',
+		key: 'ZP'
+	},
+	appellantCase: {
+		...householdAppeal.appellantCase,
+		hasDesignAndAccessStatement: true,
+		hasNewPlansOrDrawings: true
+	}
+};
+
 export const fullPlanningAppeal = {
 	...householdAppeal,
 	id: 2,
