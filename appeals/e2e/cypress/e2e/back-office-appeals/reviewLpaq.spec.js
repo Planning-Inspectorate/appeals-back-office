@@ -73,7 +73,7 @@ describe('Review LPAQ', () => {
 		});
 	});
 
-	it.only('Validate fields and answers in LPAQ for s78 appeal', { tags: tag.smoke }, () => {
+	it('Validate fields and answers in LPAQ for s78 appeal', { tags: tag.smoke }, () => {
 		cy.createCase({ caseType: 'W' }).then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
 			happyPathHelper.assignCaseOfficer(caseRef);
@@ -92,19 +92,19 @@ describe('Review LPAQ', () => {
 			// lpaqPage.assertAONB(); //awaiting bug fix
 			lpaqPage.assertDesignatedSites('No');
 			lpaqPage.assertTreePreservationOrder('No documents');
-			// lpaqPage.assertGypsyTraveller('');
+			// lpaqPage.assertGypsyTraveller(''); //awaiting bug fix
 			lpaqPage.assertDefinitiveMapLabel('No documents');
 
 			// Section 2 – Environmental Impact Assessment
 			lpaqPage.assertDevelopmentCategory('Other');
-			// lpaqPage.assertThresholdMet('No');
-			// lpaqPage.assertEIAStatementRequired('No');
+			// lpaqPage.assertThresholdMet('No');//awaiting bug fix
+			// lpaqPage.assertEIAStatementRequired('No');//awaiting bug fix
 			lpaqPage.assertEnvironmentalStatementLabel('No documents');
 			lpaqPage.assertScreeningOpinionDocsLabel('No documents');
 			lpaqPage.assertScreeningDirectionDocsLabel('No documents');
 			lpaqPage.assertScopingOpinionDocsLabel('No documents');
-			// lpaqPage.assertEIADevelopmentDescription('No');
-			// lpaqPage.assertSensitiveArea(casedata.assertSensitiveArea ? 'Yes' : 'No');
+			// lpaqPage.assertEIADevelopmentDescription('No');//awaiting bug fix
+			// lpaqPage.assertSensitiveArea(casedata.assertSensitiveArea ? 'Yes' : 'No');//awaiting bug fix
 
 			// Section 3 – Notifying relevant parties
 			lpaqPage.assertNotifiedWho('No documents');
@@ -116,7 +116,7 @@ describe('Review LPAQ', () => {
 
 			// Section 4 – Representations
 			lpaqPage.assertRepresentationsLabel('No documents');
-			// lpaqPage.assertConsultationResponsesLabel('No documents');
+			// lpaqPage.assertConsultationResponsesLabel('No documents');//awaiting bug fix
 			lpaqPage.assertStatutoryPoliciesLabel('No');
 
 			// Section 5 – Officer Reports and Plans
@@ -124,15 +124,15 @@ describe('Review LPAQ', () => {
 			lpaqPage.assertStatutoryPoliciesLabel('No documents');
 			lpaqPage.assertSupplementaryDocsLabel('No documents');
 			lpaqPage.assertEmergingPlanLabel('No documents');
-			// lpaqPage.assertOtherRelevantPoliciesLabel('No documents');
-			// lpaqPage.assertCommunityInfrastructureLevy('No');
+			// lpaqPage.assertOtherRelevantPoliciesLabel('No documents');//awaiting bug fix
+			// lpaqPage.assertCommunityInfrastructureLevy('No');//awaiting bug fix
 			// lpaqPage.assertCILAdopted('Not applicable');
 			lpaqPage.assertCILAdoptedDate('Not applicable');
 			lpaqPage.assertCILExpectedDate('Not applicable');
 
 			// Section 6 – Site Access
 			lpaqPage.assertInspectorAccess(casedata.siteAccessDetails[0]);
-			// lpaqPage.assertNeighbourLandAccess('No');
+			// lpaqPage.assertNeighbourLandAccess('No');//awaiting bug fix
 			lpaqPage.assertNeighbourSiteAddress({
 				line1: address.neighbouringSiteAddressLine1,
 				line2: address.neighbouringSiteAddressLine2,
@@ -143,9 +143,9 @@ describe('Review LPAQ', () => {
 			lpaqPage.assertSafetyRisks(casedata.siteSafetyDetails[0]);
 
 			// Section 7 – Appeal Process
-			// lpaqPage.assertLpaProcedurePreference('Not applicable');
-			// lpaqPage.assertLpaProcedureReason('Not applicable');
-			// lpaqPage.assertInquiryDuration('Not applicable');
+			// lpaqPage.assertLpaProcedurePreference('Not applicable');//awaiting bug fix
+			// lpaqPage.assertLpaProcedureReason('Not applicable');//awaiting bug fix
+			// lpaqPage.assertInquiryDuration('Not applicable');//awaiting bug fix
 			lpaqPage.assertOngoingAppeals(casedata.nearbyCaseReferences);
 
 			// Final section
