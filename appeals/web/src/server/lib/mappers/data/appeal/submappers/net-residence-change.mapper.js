@@ -1,4 +1,6 @@
+import config from '#environment/config.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapNetResidenceChange = ({
@@ -7,6 +9,14 @@ export const mapNetResidenceChange = ({
 	userHasUpdateCasePermission
 }) => {
 	const netChange = appellantCase?.numberOfResidencesNetChange;
+	const id = 'net-residence-change';
+
+	if (
+		!config.featureFlags.featureFlagNetResidence ||
+		appealDetails.appealType !== APPEAL_TYPE.S78
+	) {
+		return { id, display: {} };
+	}
 
 	let value;
 	if (netChange == null) {
@@ -20,7 +30,7 @@ export const mapNetResidenceChange = ({
 	}
 
 	return textSummaryListItem({
-		id: 'net-residence-change',
+		id,
 		text: 'Is there a net gain or loss of residential units?',
 		value,
 		link: `/appeals-service/appeal-details/${appealDetails.appealId}/residential-units/new`,

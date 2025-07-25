@@ -7,6 +7,8 @@ import {
 	VALIDATION_OUTCOME_INCOMPLETE
 	// @ts-ignore
 } from '@pins/appeals/constants/support.js';
+import config from '#environment/config.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'issueDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'} AppealRequiredAction */
 
@@ -244,7 +246,11 @@ export function getRequiredActionsForAppeal(appealDetails, view, residencesNetCh
 		residencesNetChange = appealDetails.numberOfResidencesNetChange;
 	}
 
-	if (!residencesNetChange) {
+	if (
+		config.featureFlags.featureFlagNetResidence &&
+		appealDetails.appealType === APPEAL_TYPE.S78 &&
+		!residencesNetChange
+	) {
 		actions.push('addResidencesNetChange');
 	}
 
