@@ -69,12 +69,13 @@ const createInquiryById = (data) => {
  *  appealId: number;
  * 	inquiryStartTime: Date | string;
  * 	inquiryEndTime?: Date | string;
- *  address?: Omit<Address, 'id'> | null
- *  addressId?: number
+ *  estimatedDays?: number;
+ *  address?: Omit<Address, 'id'> | undefined | null
+ *  addressId?: number | undefined
  * }} data
  */
 const updateInquiryById = (id, data) => {
-	const { appealId, inquiryStartTime, inquiryEndTime, address, addressId } = data;
+	const { appealId, inquiryStartTime, inquiryEndTime, address, addressId, estimatedDays } = data;
 
 	let addressStatement = {};
 
@@ -105,6 +106,7 @@ const updateInquiryById = (id, data) => {
 		}),
 		inquiryStartTime,
 		inquiryEndTime,
+		estimatedDays: estimatedDays ? Number(estimatedDays) : null,
 		...addressStatement
 	};
 

@@ -15,6 +15,7 @@ import { textSummaryListItem } from '#lib/mappers/index.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { capitalize, pick } from 'lodash-es';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal
@@ -23,9 +24,10 @@ import { capitalize, pick } from 'lodash-es';
 /**
  * @param {Appeal} appealData
  * @param {{ day?: string | number, month?: string | number, year?: string | number, hour?: string | number, minute?: string | number }} values
+ * @param {'setup' | 'change'} action
  * @returns {PageContent}
  */
-export function inquiryDatePage(appealData, values) {
+export function inquiryDatePage(appealData, values, action) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const date = { day: values.day || '', month: values.month || '', year: values.year || '' };
 	const time =
@@ -55,7 +57,10 @@ export function inquiryDatePage(appealData, values) {
 	/** @type {PageContent} */
 	return {
 		title: `Date and time - set up inquiry - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/start-case/select-procedure`,
+		backLinkUrl:
+			action === 'setup'
+				? `/appeals-service/appeal-details/${appealData.appealId}/start-case/select-procedure`
+				: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/change/check-details`,
 		preHeading: `Appeal ${shortAppealReference} - start case`,
 		heading: 'Inquiry date and time',
 		pageComponents: [dateComponent, timeComponent]
@@ -65,9 +70,10 @@ export function inquiryDatePage(appealData, values) {
 /**
  * @param {Appeal} appealData
  * @param {string} action
+ * @param {{inquiryEstimationYesNo: string, inquiryEstimationDays: number}} [values]
  * @returns {{backLinkUrl: string, title: string, pageComponents: {type: string, parameters: {name: string, fieldset: {legend: {classes: string, text: string, isPageHeading: boolean}}, idPrefix: string, items: [{conditional: {html: string}, text: string, value: string},{text: string, value: string}]}}[], preHeading: string}}
  */
-export function inquiryEstimationPage(appealData, action) {
+export function inquiryEstimationPage(appealData, action, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const inquiryEstimationComponent = {
 		type: 'radios',
@@ -85,6 +91,7 @@ export function inquiryEstimationPage(appealData, action) {
 				{
 					value: 'yes',
 					text: 'Yes',
+					checked: values?.inquiryEstimationYesNo === 'yes',
 					conditional: {
 						html: renderPageComponentsToHtml([
 							{
@@ -92,6 +99,7 @@ export function inquiryEstimationPage(appealData, action) {
 								parameters: {
 									id: 'inquiry-estimation-days',
 									name: 'inquiryEstimationDays',
+									value: values?.inquiryEstimationDays,
 									label: {
 										text: 'Expected number of days to carry out the inquiry',
 										classes: 'govuk-label--s'
@@ -107,7 +115,8 @@ export function inquiryEstimationPage(appealData, action) {
 				},
 				{
 					value: 'no',
-					text: 'No'
+					text: 'No',
+					checked: values?.inquiryEstimationYesNo === 'no'
 				}
 			]
 		}
@@ -115,9 +124,11 @@ export function inquiryEstimationPage(appealData, action) {
 
 	/** @type {PageContent} */
 	return {
-		title: `Appeal - ${shortAppealReference} start case`,
+		title: `Appeal - ${shortAppealReference} ${action === 'setup' ? 'start' : 'update'} case`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/${action}/date`,
-		preHeading: `Appeal ${shortAppealReference} - set up inquiry`,
+		preHeading: `Appeal ${shortAppealReference} - ${
+			action === 'setup' ? 'set up' : 'change'
+		} inquiry`,
 		// @ts-ignore
 		pageComponents: [inquiryEstimationComponent]
 	};
@@ -143,7 +154,7 @@ export function addressKnownPage(appealData, action, values) {
 	/** @type {PageContent} */
 	return {
 		title: `Address - start case - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/${action}/date`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/inquiry/${action}/estimation`,
 		preHeading: `Appeal ${shortAppealReference} - start case`,
 		pageComponents: [addressKnownComponent]
 	};
@@ -172,14 +183,14 @@ export function addressDetailsPage(appealData, action, currentAddress, errors) {
 /**
  * @param {Appeal} appealDetails
  * @param {any} sessionValues
- * @param {import('@pins/appeals').Address} values
+ * @param {'change' | 'setup'} action
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns Promise<PageContent>
  */
 export const inquiryDueDatesPage = async (
 	appealDetails,
 	sessionValues,
-	values,
+	action,
 	errors = undefined
 ) => {
 	/**
@@ -188,9 +199,9 @@ export const inquiryDueDatesPage = async (
 	let pageContent = {
 		title: `Timetable due dates`,
 		backLinkUrl:
-			values.addressLine1 || values.addressLine2
-				? `/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/setup/address-details`
-				: `/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/setup/address`,
+			sessionValues?.addressKnown === 'yes'
+				? `/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/${action}/address-details`
+				: `/appeals-service/appeal-details/${appealDetails.appealId}/inquiry/${action}/address`,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 		heading: `Timetable due dates`,
 		pageComponents: []
@@ -280,12 +291,12 @@ export const getDueDateFieldNameAndID = (dateField) => {
 /**
  * @param {string|number} appealId
  * @param {string} appealReference
- * @param {string} action
+ * @param {'setup'|'change'} action
  * @param {import('@pins/express').Session} session
  * @returns {PageContent}
  */
 export function confirmInquiryPage(appealId, appealReference, action, session) {
-	const procedureType = session.startCaseAppealProcedure?.[appealId]?.appealProcedure;
+	const procedureType = APPEAL_CASE_PROCEDURE.INQUIRY;
 	/**@type {PageComponent[]} */
 	const pageComponents = [
 		{
@@ -304,8 +315,8 @@ export function confirmInquiryPage(appealId, appealReference, action, session) {
 		}
 	];
 
-	pageComponents.push(...mapInquiryDetails(appealId, action, session));
-	pageComponents.push(...mapInquiryTimetableDue(appealId, action, session));
+	pageComponents.push(...mapInquiryDetails(appealId, action, session.setUpInquiry));
+	pageComponents.push(...mapInquiryTimetableDue(appealId, action, session.setUpInquiry));
 
 	// Add page footer
 	pageComponents.push(
@@ -314,13 +325,13 @@ export function confirmInquiryPage(appealId, appealReference, action, session) {
 			{
 				class: 'govuk-body'
 			},
-			`We’ll start the timetable now and send emails to the relevant parties.`
+			`We'll start the timetable now and send emails to the relevant parties.`
 		)
 	);
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Check details and start case',
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/start-case/select-procedure`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/timetable-due-dates`,
 		preHeading: `Appeal ${appealShortReference(appealReference)}`,
 		heading: 'Check details and start case',
 		pageComponents,
@@ -332,12 +343,47 @@ export function confirmInquiryPage(appealId, appealReference, action, session) {
 
 /**
  * @param {string|number} appealId
- * @param {string} action
+ * @param {string} appealReference
+ * @param {'setup'|'change'} action
  * @param {import('@pins/express').Session} session
+ * @returns {PageContent}
+ */
+export function confirmChangeInquiryPage(appealId, appealReference, action, session) {
+	/**@type {PageComponent[]} */
+	const pageComponents = [
+		...mapInquiryDetails(appealId, action, session.changeInquiry),
+		simpleHtmlComponent(
+			'p',
+			{
+				class: 'govuk-body'
+			},
+			`We'll send an email to the appellant and LPA to tell them about the inquiry.`
+		)
+	];
+	const inquiry = action === 'setup' ? session.setUpInquiry : session.changeInquiry;
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Check details and update inquiry',
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/${
+			inquiry.addressKnown === 'no' ? 'address' : 'address-details'
+		}`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		heading: 'Check details and update inquiry',
+		pageComponents,
+		submitButtonText: 'Update inquiry'
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {string|number} appealId
+ * @param {string} action
+ * @param {any} values
  * @returns {PageComponent[]}
  */
-export function mapInquiryDetails(appealId, action, session) {
-	const values = session.setUpInquiry;
+export function mapInquiryDetails(appealId, action, values) {
 	const dateTime = dayMonthYearHourMinuteToISOString({
 		day: values['inquiry-date-day'],
 		month: values['inquiry-date-month'],
@@ -439,7 +485,7 @@ export function mapInquiryDetails(appealId, action, session) {
 			parameters: {
 				rows: [
 					textSummaryListItem({
-						id: 'inquiey-address',
+						id: 'inquiry-address',
 						text: 'Address of where the inquiry will take place',
 						value: { html: addressToString(address, '<br>') },
 						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/address-details`,
@@ -455,11 +501,10 @@ export function mapInquiryDetails(appealId, action, session) {
 /**
  * @param {string|number} appealId
  * @param {string} action
- * @param {import('@pins/express').Session} session
+ * @param {any} values
  * @returns {PageComponent[]}
  */
-export function mapInquiryTimetableDue(appealId, action, session) {
-	const values = session.setUpInquiry;
+export function mapInquiryTimetableDue(appealId, action, values) {
 	/**@type {PageComponent[]} */
 	const pageComponents = [
 		simpleHtmlComponent(

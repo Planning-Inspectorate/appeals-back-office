@@ -1,6 +1,6 @@
 import logger from '#utils/logger.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
-import { createInquiry } from './inquiry.service.js';
+import { createInquiry, updateInquiry } from './inquiry.service.js';
 import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import transitionState from '#state/transition-state.js';
@@ -12,6 +12,7 @@ import {
 	AUDIT_TRAIL_INQUIRY_ADDRESS_ADDED,
 	AUDIT_TRAIL_INQUIRY_SET_UP
 } from '@pins/appeals/constants/support.js';
+import { formatAddressForDb } from '#endpoints/addresses/addresses.formatter.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -96,4 +97,46 @@ export const postInquiry = async (req, res) => {
 	}
 
 	return res.status(201).send({ appealId, inquiryStartTime, inquiryEndTime });
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const patchInquiry = async (req, res) => {
+	const {
+		body: { inquiryStartTime, address, estimatedDays, addressId },
+		params,
+		appeal
+	} = req;
+
+	const appealId = Number(params.appealId);
+	const inquiryId = Number(params.inquiryId);
+	const azureAdUserId = String(req.get('azureAdUserId'));
+	try {
+		await updateInquiry(
+			{
+				appealId,
+				inquiryId,
+				inquiryStartTime,
+				inquiryEndTime: undefined,
+				estimatedDays,
+				addressId,
+				...{
+					address: address === null ? null : formatAddressForDb(address)
+				}
+			},
+			appeal
+		);
+
+		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT) && address) {
+			await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+		}
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+	}
+
+	return res.status(201).send({ appealId, inquiryStartTime });
 };

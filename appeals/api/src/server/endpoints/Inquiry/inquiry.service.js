@@ -15,10 +15,13 @@ import { PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
 import transitionState from '#state/transition-state.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
+import inquiryRepository from '#repositories/inquiry.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateInquiry} CreateInquiry */
+/** @typedef {import('@pins/appeals.api').Appeals.UpdateInquiry} UpdateInquiry */
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('express').NextFunction} NextFunction */
@@ -48,6 +51,27 @@ const sendInquiryDetailsNotifications = async (
 		inquiry_address: formatAddressSingleLine({ ...address, id: 0 })
 	};
 	await sendInquiryNotifications(notifyClient, templateName, appeal, personalisation);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Promise<Response | void>}
+ */
+const checkInquiryExists = async (req, res, next) => {
+	const {
+		appeal,
+		params: { inquiryId }
+	} = req;
+
+	const hasInquiry = appeal.inquiry?.id === Number(inquiryId);
+
+	if (!hasInquiry) {
+		return res.status(404).send({ errors: { hearingId: ERROR_NOT_FOUND } });
+	}
+
+	next();
 };
 
 /**
@@ -187,4 +211,40 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 	}
 };
 
-export { createInquiry };
+/**
+ * @param {UpdateInquiry} updateInquiryData
+ * @param {Appeal} appeal
+ * @returns {Promise<void>}
+ */
+const updateInquiry = async (updateInquiryData, appeal) => {
+	try {
+		const appealId = updateInquiryData.appealId;
+		const inquiryId = updateInquiryData.inquiryId;
+		const inquiryStartTime = updateInquiryData.inquiryStartTime;
+		const inquiryEndTime = updateInquiryData.inquiryEndTime;
+		const address = updateInquiryData.address;
+		const addressId = updateInquiryData.addressId;
+		const estimatedDays = updateInquiryData.estimatedDays;
+
+		const appealType = appeal.appealType || null;
+		if (!appealType) {
+			throw new Error('Appeal type is required to start a case.');
+		}
+
+		const updateData = {
+			appealId,
+			inquiryId,
+			inquiryStartTime,
+			inquiryEndTime,
+			addressId,
+			address,
+			estimatedDays
+		};
+
+		await inquiryRepository.updateInquiryById(inquiryId, updateData);
+	} catch (error) {
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	}
+};
+
+export { createInquiry, checkInquiryExists, updateInquiry };
