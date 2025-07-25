@@ -18,6 +18,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 
 import { householdAppeal as householdAppealData } from '#tests/appeals/mocks.js';
+import { casPlanningAppeal as casPlanningAppealData } from '#tests/appeals/mocks.js';
 import { fullPlanningAppeal as fullPlanningAppealData } from '#tests/appeals/mocks.js';
 import { listedBuildingAppeal as listedBuildingAppealData } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
@@ -294,13 +295,13 @@ describe('site visit routes', () => {
 				expect(response.status).toEqual(201);
 			});
 
-			test.each([
+			describe.each([
 				['householdAppeal', householdAppealData],
+				['casPlanningAppeal', casPlanningAppealData],
 				['fullPlanningAppeal', fullPlanningAppealData],
 				['listedBuildingAppeal', listedBuildingAppealData]
-			])(
-				'creates an Unaccompanied site visit and sends notify email to appellant/agent, appeal type: %s',
-				async (_, appeal) => {
+			])('create site visit for appeal type %s', (_, appeal) => {
+				test('creates an Unaccompanied site visit and sends notify email to appellant/agent', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 
 					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
@@ -347,16 +348,9 @@ describe('site visit routes', () => {
 					});
 
 					expect(response.status).toEqual(201);
-				}
-			);
+				});
 
-			test.each([
-				['householdAppeal', householdAppealData],
-				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
-			])(
-				'creates an Accompanied site visit and sends GMT date and time notify email to appellant/agent and lpa, appeal type: %s',
-				async (_, appeal) => {
+				test('creates an Accompanied site visit and sends GMT date and time notify email to appellant/agent and lpa', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 
 					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
@@ -418,16 +412,9 @@ describe('site visit routes', () => {
 					});
 
 					expect(response.status).toEqual(201);
-				}
-			);
+				});
 
-			test.each([
-				['householdAppeal', householdAppealData],
-				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
-			])(
-				'creates an Access Required site visit and sends notify email to appellant/agent, appeal type: %s',
-				async (_, appeal) => {
+				test('creates an Access Required site visit and sends notify email to appellant/agent', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 
 					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
@@ -476,8 +463,8 @@ describe('site visit routes', () => {
 					});
 
 					expect(response.status).toEqual(201);
-				}
-			);
+				});
+			});
 
 			test('returns an error if appealId is not numeric', async () => {
 				const response = await request
@@ -1208,86 +1195,86 @@ describe('site visit routes', () => {
 				expect(mockNotifySend).not.toHaveBeenCalled();
 			});
 
-			test('updates a site visit from Unaccompanied to Access Required with visit-type change', async () => {
-				const { siteVisit } = householdAppeal;
+			describe.each([
+				['householdAppeal', householdAppealData],
+				['casPlanningAppeal', casPlanningAppealData],
+				['fullPlanningAppeal', fullPlanningAppealData],
+				['listedBuildingAppeal', listedBuildingAppealData]
+			])('site visit updates for appeal type: %s', (_, appeal) => {
+				test('updates a site visit from Unaccompanied to Access Required with visit-type change, sends notify emails', async () => {
+					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 
-				siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
+					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
 
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				// @ts-ignore
-				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+					// @ts-ignore
+					databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
 
-				const response = await request
-					.patch(`/appeals/${householdAppeal.id}/site-visits/${siteVisit.id}`)
-					.send({
+					const response = await request
+						.patch(`/appeals/${appeal.id}/site-visits/${siteVisit.id}`)
+						.send({
+							visitDate: siteVisit.visitDate,
+							visitEndTime: siteVisit.visitEndTime,
+							visitStartTime: siteVisit.visitStartTime,
+							visitType: siteVisit.siteVisitType.name,
+							previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
+							siteVisitChangeType: 'visit-type'
+						})
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
+						where: { id: siteVisit.id },
+						data: {
+							visitDate: new Date(siteVisit.visitDate),
+							visitEndTime: new Date(siteVisit.visitEndTime),
+							visitStartTime: new Date(siteVisit.visitStartTime),
+							siteVisitTypeId: siteVisit.siteVisitType.id
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appeal.id,
+							details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+							loggedAt: expect.any(Date),
+							userId: appeal.caseOfficer.id
+						}
+					});
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual({
 						visitDate: siteVisit.visitDate,
 						visitEndTime: siteVisit.visitEndTime,
 						visitStartTime: siteVisit.visitStartTime,
 						visitType: siteVisit.siteVisitType.name,
 						previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
 						siteVisitChangeType: 'visit-type'
-					})
-					.set('azureAdUserId', azureAdUserId);
+					});
 
-				expect(databaseConnector.siteVisit.update).toHaveBeenCalledWith({
-					where: { id: siteVisit.id },
-					data: {
-						visitDate: new Date(siteVisit.visitDate),
-						visitEndTime: new Date(siteVisit.visitEndTime),
-						visitStartTime: new Date(siteVisit.visitStartTime),
-						siteVisitTypeId: siteVisit.siteVisitType.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({
-					visitDate: siteVisit.visitDate,
-					visitEndTime: siteVisit.visitEndTime,
-					visitStartTime: siteVisit.visitStartTime,
-					visitType: siteVisit.siteVisitType.name,
-					previousVisitType: SITE_VISIT_TYPE_UNACCOMPANIED,
-					siteVisitChangeType: 'visit-type'
+					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+					expect(mockNotifySend).toHaveBeenCalledWith({
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.any(Object),
+						templateName: 'site-visit-change-unaccompanied-to-access-required-appellant',
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_time: formatTime(siteVisit.visitStartTime),
+							end_time: formatTime(siteVisit.visitEndTime),
+							inspector_name: '',
+							lpa_reference: appeal.applicationReference,
+							visit_date: dateISOStringToDisplayDate(siteVisit.visitDate)
+						},
+						recipientEmail: appeal.agent.email
+					});
 				});
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
-
-				expect(mockNotifySend).toHaveBeenCalledWith({
-					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-					notifyClient: expect.any(Object),
-					templateName: 'site-visit-change-unaccompanied-to-access-required-appellant',
-					personalisation: {
-						appeal_reference_number: '1345264',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						start_time: '02:00',
-						end_time: '04:00',
-						inspector_name: '',
-						lpa_reference: '48269/APP/2021/1482',
-						visit_date: '31 March 2022'
-					},
-					recipientEmail: householdAppeal.agent.email
-				});
-			});
-
-			test.each([
-				['householdAppeal', householdAppealData],
-				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
-			])(
-				'updates an Accompanied site visit to Unaccompanied and changing time and date, sends notify emails, appeal type: %s',
-				async (_, appeal) => {
+				test('updates an Accompanied site visit to Unaccompanied and changing time and date, sends notify emails', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
 
@@ -1373,16 +1360,9 @@ describe('site visit routes', () => {
 						},
 						recipientEmail: appeal.lpa.email
 					});
-				}
-			);
+				});
 
-			test.each([
-				['householdAppeal', householdAppealData],
-				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
-			])(
-				'updates an Access required site visit to changing time and date, sends notify emails to Appellant, appeal type: %s',
-				async (_, appeal) => {
+				test('updates an Access required site visit to changing time and date, sends notify emails to Appellant', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
 
@@ -1453,16 +1433,9 @@ describe('site visit routes', () => {
 						},
 						recipientEmail: appeal.agent.email
 					});
-				}
-			);
+				});
 
-			test.each([
-				['householdAppeal', householdAppealData],
-				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
-			])(
-				'updates an Accompanied site visit to changing time and date, sends notify emails to Appellant & LPA, appeal type: %s',
-				async (_, appeal) => {
+				test('updates an Accompanied site visit to changing time and date, sends notify emails to Appellant & LPA', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
 
@@ -1548,16 +1521,9 @@ describe('site visit routes', () => {
 						},
 						recipientEmail: appeal.lpa.email
 					});
-				}
-			);
+				});
 
-			test.each([
-				['householdAppeal', householdAppealData],
-				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
-			])(
-				'updates an Accompanied site visit to Unaccompanied, sends notify emails to Appellant & LPA, appeal type: %s',
-				async (_, appeal) => {
+				test('updates an Accompanied site visit to Unaccompanied, sends notify emails to Appellant & LPA', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
 
@@ -1643,16 +1609,9 @@ describe('site visit routes', () => {
 						},
 						recipientEmail: appeal.lpa.email
 					});
-				}
-			);
+				});
 
-			test.each([
-				['householdAppeal', householdAppealData],
-				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
-			])(
-				'updates an Unaccompanied site visit to Accompanied, sends notify emails to Appellant & LPA, appeal type: %s',
-				async (_, appeal) => {
+				test('updates an Unaccompanied site visit to Accompanied, sends notify emails to Appellant & LPA', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
 
@@ -1738,16 +1697,9 @@ describe('site visit routes', () => {
 						},
 						recipientEmail: appeal.lpa.email
 					});
-				}
-			);
+				});
 
-			test.each([
-				['householdAppeal', householdAppealData],
-				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
-			])(
-				'updates an Access required site visit to Accompanied, sends notify emails to Appellant & LPA, appeal type: %s',
-				async (_, appeal) => {
+				test('updates an Access required site visit to Accompanied, sends notify emails to Appellant & LPA', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCOMPANIED;
 
@@ -1834,16 +1786,9 @@ describe('site visit routes', () => {
 						},
 						recipientEmail: appeal.lpa.email
 					});
-				}
-			);
+				});
 
-			test.each([
-				['householdAppeal', householdAppealData],
-				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
-			])(
-				'updates an Accompanied site visit to Access Required, sends notify emails to Appellant & LPA, appeal type: %s',
-				async (_, appeal) => {
+				test('updates an Accompanied site visit to Access Required, sends notify emails to Appellant & LPA', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
 
@@ -1929,16 +1874,9 @@ describe('site visit routes', () => {
 						},
 						recipientEmail: appeal.lpa.email
 					});
-				}
-			);
+				});
 
-			test.each([
-				['householdAppeal', householdAppealData],
-				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
-			])(
-				'updates an Access Required site visit to Unaccompanied, sends notify emails to Appellant, appeal type: %s',
-				async (_, appeal) => {
+				test('updates an Access Required site visit to Unaccompanied, sends notify emails to Appellant', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_UNACCOMPANIED;
 
@@ -2008,16 +1946,9 @@ describe('site visit routes', () => {
 						},
 						recipientEmail: appeal.agent.email
 					});
-				}
-			);
+				});
 
-			test.each([
-				['householdAppeal', householdAppealData],
-				['fullPlanningAppeal', fullPlanningAppealData],
-				['listedBuildingAppeal', listedBuildingAppealData]
-			])(
-				'updates an Unaccompanied site visit to Access Required, sends notify emails to Appellant, appeal type: %s',
-				async (_, appeal) => {
+				test('updates an Unaccompanied site visit to Access Required, sends notify emails to Appellant', async () => {
 					const { siteVisit } = JSON.parse(JSON.stringify(appeal));
 					siteVisit.siteVisitType.name = SITE_VISIT_TYPE_ACCESS_REQUIRED;
 
@@ -2088,8 +2019,8 @@ describe('site visit routes', () => {
 						},
 						recipientEmail: appeal.agent.email
 					});
-				}
-			);
+				});
+			});
 
 			test('returns an error if appealId is not numeric', async () => {
 				const response = await request
