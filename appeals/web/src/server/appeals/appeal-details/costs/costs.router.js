@@ -66,6 +66,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		documentsValidators.createDateInputDateBusinessDayValidator,
 		assertUserHasPermission(permissionNames.updateCase),
 		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postAddDocumentDetails)
@@ -175,6 +176,7 @@ router
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
 		documentsValidators.validateDocumentDetailsReceivedDateIsNotFutureDate,
 		documentsValidators.validateDocumentDetailsRedactionStatuses,
+		documentsValidators.createDateInputDateBusinessDayValidator,
 		extractAndProcessDocumentDateErrors(),
 		asyncHandler(controller.postChangeDocumentVersionDetails)
 	);

@@ -745,7 +745,7 @@ describe('internal correspondence', () => {
 				expect(errorSummaryElement.innerHTML).toContain(
 					`${capitalize(
 						documentNameFromCategory(correspondenceCategory)
-					)} received date must be a valid date`
+					)} received date must be a real date`
 				);
 			});
 
@@ -1189,7 +1189,7 @@ describe('internal correspondence', () => {
 				expect(errorSummaryElement.innerHTML).toContain(
 					`${capitalize(
 						documentNameFromCategory(correspondenceCategory)
-					)} received date must be a valid date`
+					)} received date must be a real date`
 				);
 			});
 
@@ -2168,7 +2168,7 @@ describe('internal correspondence', () => {
 				expect(errorSummaryElement.innerHTML).toContain(
 					`${capitalize(
 						documentNameFromCategory(correspondenceCategory)
-					)} received date must be a valid date`
+					)} received date must be a real date`
 				);
 			});
 
