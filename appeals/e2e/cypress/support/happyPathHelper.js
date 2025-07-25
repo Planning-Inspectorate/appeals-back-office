@@ -132,7 +132,10 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.validateBannerMessage('Success', 'Document updated');
+		caseDetailsPage.validateBannerMessage(
+			'Success',
+			'Agreement to change description evidence updated'
+		);
 	},
 
 	uploadDocsLpaq(bannerMessage = 'Document added') {
