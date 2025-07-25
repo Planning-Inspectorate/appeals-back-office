@@ -18,9 +18,8 @@ describe('Change start date', () => {
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
 			happyPathHelper.changeStartDate(caseRef);
-			cy.getBusinessActualDate(new Date(), 0).then((newDate) => {
-				caseDetailsPage.verifyDateChanges('start-date', newDate);
-			});
+			let dueDate = new Date();
+			caseDetailsPage.verifyDateChanges('start-date', dueDate);
 		});
 	});
 
@@ -32,9 +31,8 @@ describe('Change start date', () => {
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 			happyPathHelper.startS78Case(caseRef, 'hearing');
 			happyPathHelper.changeStartDate(caseRef);
-			cy.getBusinessActualDate(new Date(), 0).then((newDate) => {
-				caseDetailsPage.verifyDateChanges('start-date', newDate);
-			});
+			let dueDate = new Date();
+			caseDetailsPage.verifyDateChanges('start-date', dueDate);
 
 			//Notify
 			const expectedNotifies = [
