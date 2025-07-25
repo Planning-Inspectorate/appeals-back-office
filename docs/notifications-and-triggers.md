@@ -92,7 +92,7 @@ The following notifications are sent from the back-office using these [Notify Te
 
 ### Lpaq complete householder appellant
 
-- **Appeal type:** householder
+- **Appeal type:** householder, CAS planning
 - **Notify Template:** [lpaq-complete-has-appellant](../appeals/api/src/server/notify/templates/lpaq-complete-has-appellant.content.md)
 - **Trigger:** Review a Lpaq and mark it as complete by selecting "Complete" and continue
 

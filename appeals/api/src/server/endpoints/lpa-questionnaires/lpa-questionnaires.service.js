@@ -178,6 +178,7 @@ function sendLpaqCompleteEmailToAppellant(notifyClient, appeal, siteAddress, azu
 
 	switch (appeal.appealType?.type) {
 		case APPEAL_TYPE.HOUSEHOLDER:
+		case APPEAL_TYPE.CAS_PLANNING:
 			return sendLpaqCompleteEmail(
 				notifyClient,
 				appeal,

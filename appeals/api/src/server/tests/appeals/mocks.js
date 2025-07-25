@@ -462,6 +462,21 @@ export const householdAppealLPAQuestionnaireIncomplete = {
 	id: 3
 };
 
+export const casPlanningAppealLPAQuestionnaireIncomplete = {
+	...casPlanningAppeal,
+	appealStatus: [
+		{
+			status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+			valid: true
+		}
+	],
+	lpaQuestionnaire: {
+		...casPlanningAppeal.lpaQuestionnaire,
+		...incompleteLPAQuestionnaireOutcome
+	},
+	id: 4
+};
+
 export const fullPlanningAppealAppellantCaseIncomplete = {
 	...fullPlanningAppeal,
 	appellantCase: {
