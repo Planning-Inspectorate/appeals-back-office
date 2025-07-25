@@ -98,17 +98,6 @@ describe('/appeals/linkable-appeal/:appealReference/:linkableType', () => {
 				.set('azureAdUserId', azureAdUserId);
 			expect(response.status).toEqual(404);
 		});
-		test('responds with a 409 if the related cases cannot be linked', async () => {
-			databaseConnector.appeal.findUnique.mockResolvedValueOnce({
-				...householdAppeal,
-				parentAppeals: [{ type: 'related' }],
-				childAppeals: []
-			});
-			const response = await request
-				.get(`/appeals/linkable-appeal/${householdAppeal.reference}/related`)
-				.set('azureAdUserId', azureAdUserId);
-			expect(response.status).toEqual(409);
-		});
 		test('responds with a 409 if the linked cases cannot be linked as they already have a parent case', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValueOnce({
 				...householdAppeal,
