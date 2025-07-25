@@ -103,7 +103,7 @@ function getAddAnotherTextItemsFromBody(
 			addAnotherTextItemsFromBody = [addAnotherTextItemsFromBody];
 		}
 
-		return addAnotherTextItemsFromBody.filter((textItem) => textItem.length);
+		return addAnotherTextItemsFromBody;
 	}
 }
 

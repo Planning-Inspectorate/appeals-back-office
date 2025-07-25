@@ -4745,7 +4745,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#incomplete-reason-1-1">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -4922,7 +4922,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a reason</a>
+                            <li><a href="#incomplete-reason-1">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -5099,7 +5099,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a reason</a>
+                            <li><a href="#incomplete-reason-1-1">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -5276,7 +5276,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a reason</a>
+                            <li><a href="#incomplete-reason-1">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -5452,7 +5452,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a reason</a>
+                            <li><a href="#incomplete-reason-2-1">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -5628,7 +5628,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#incomplete-reason-2-1">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>

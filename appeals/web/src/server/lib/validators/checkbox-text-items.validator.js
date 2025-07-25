@@ -1,69 +1,67 @@
-import { createValidator } from '@pins/express';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import { body } from 'express-validator';
-import { textInputCharacterLimits } from '../../appeals/appeal.constants.js';
+import { createValidator } from '@pins/express';
 
 /**
- *
- * @param {string} checkboxIdsBodyKey
- * @returns
+ * Creates a validator middleware for checkbox text items.
+ * @param {string} checkboxIdsBodyKey - The key in req.body containing checkbox IDs.
+ * @returns {(req: import('express').Request, res: import('express').Response, next: import('express').NextFunction) => void}
  */
-export const createCheckboxTextItemsValidator = (checkboxIdsBodyKey) =>
-	createValidator(
-		body()
-			.custom((bodyFields) => {
-				let checkboxIds = bodyFields[checkboxIdsBodyKey];
-
-				if (!Array.isArray(checkboxIds)) {
-					checkboxIds = [checkboxIds];
+export const createCheckboxTextItemsValidator = (checkboxIdsBodyKey) => {
+	return (req, res, next) => {
+		const bodyFields = req.body;
+		let checkboxIds = bodyFields[checkboxIdsBodyKey];
+		if (!Array.isArray(checkboxIds)) {
+			checkboxIds = [checkboxIds];
+		}
+		const validators = [];
+		for (const checkboxId of checkboxIds || []) {
+			let textItemsForId = bodyFields?.[`${checkboxIdsBodyKey}-${checkboxId}`];
+			if (typeof textItemsForId === 'undefined') {
+				continue;
+			}
+			if (Array.isArray(textItemsForId)) {
+				if (textItemsForId.length === 0) {
+					validators.push(
+						body(`${checkboxIdsBodyKey}-${checkboxId}`).custom(() => {
+							throw new Error('Enter a reason');
+						})
+					);
+					continue;
 				}
+				textItemsForId.forEach((textItem, textItemIndex) => {
+					validators.push(
+						body(`${checkboxIdsBodyKey}-${checkboxId}-${textItemIndex + 1}`).custom(() =>
+							textItemCustomValidator(textItem)
+						)
+					);
+				});
+			} else if (typeof textItemsForId === 'string') {
+				validators.push(
+					body(`${checkboxIdsBodyKey}-${checkboxId}-1`).custom(() =>
+						textItemCustomValidator(textItemsForId)
+					)
+				);
+			}
+		}
+		return createValidator(validators)(req, res, next);
+	};
+};
 
-				for (const checkboxId of checkboxIds || []) {
-					let textItemsForId = bodyFields?.[`${checkboxIdsBodyKey}-${checkboxId}`];
-
-					if (typeof textItemsForId === 'undefined') {
-						continue;
-					}
-
-					if (
-						textItemsForId.length === 0 ||
-						(Array.isArray(textItemsForId) &&
-							textItemsForId.filter((textItem) => textItem.length > 0).length === 0)
-					) {
-						return false;
-					}
-				}
-
-				return true;
-			})
-			.withMessage('Enter a reason')
-			.bail()
-			.custom((bodyFields) => {
-				const characterLimit = textInputCharacterLimits.checkboxTextItemsLength;
-				let checkboxIds = bodyFields[checkboxIdsBodyKey];
-
-				if (!Array.isArray(checkboxIds)) {
-					checkboxIds = [checkboxIds];
-				}
-
-				for (const checkboxId of checkboxIds || []) {
-					let textItemsForId = bodyFields?.[`${checkboxIdsBodyKey}-${checkboxId}`];
-
-					if (typeof textItemsForId === 'undefined') {
-						continue;
-					}
-
-					if (
-						(typeof textItemsForId === 'string' && textItemsForId.length > characterLimit) ||
-						(Array.isArray(textItemsForId) &&
-							textItemsForId.filter((textItem) => textItem.length > characterLimit).length > 0)
-					) {
-						return false;
-					}
-				}
-
-				return true;
-			})
-			.withMessage(
-				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters`
-			)
-	);
+/**
+ * Custom validator for text item.
+ * @param {string} textItem
+ * @returns {boolean}
+ * @throws {Error} If textItem is empty.
+ */
+const textItemCustomValidator = (textItem) => {
+	if (typeof textItem !== 'string' || textItem.trim().length === 0) {
+		throw new Error('Enter a reason');
+	}
+	if (textItem.length > textInputCharacterLimits.checkboxTextItemsLength) {
+		throw new Error(
+			`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters`
+		);
+	}
+	return true;
+};

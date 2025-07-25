@@ -24,7 +24,10 @@ const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
 };
 
-/** @type {import('express').Handler} */
+/** @type {import('express').Handler}
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ **/
 export async function renderReasons(request, response) {
 	const { params, currentAppeal, currentRepresentation, apiClient, session, errors } = request;
 
@@ -38,9 +41,7 @@ export async function renderReasons(request, response) {
 		rejectionReasons,
 		session,
 		['lpaStatement', params.appealId],
-		errors?.['']
-			? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
-			: undefined
+		errors
 	);
 
 	const pageContent = rejectLpaStatementPage(currentAppeal);

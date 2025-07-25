@@ -15,7 +15,7 @@ import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
  * @param {RepresentationRejectionReason[]} rejectionReasonOptions
  * @param {import('@pins/express').Session} session
  * @param {string} sessionKey
- * @param {{ optionId: number, message: string }} [error]
+ * @param {import('@pins/express/types/express.js').ValidationErrors | undefined} error
  * @returns {import('#appeals/appeals.types.js').CheckboxItemParameter[]}
  */
 export function mapRejectionReasonOptionsToCheckboxItemParameters(
@@ -53,12 +53,16 @@ export function mapRejectionReasonOptionsToCheckboxItemParameters(
 			return ensureArray(value);
 		})();
 
+		const errors = (selectedTextItems || ['']).map((reason, index) => {
+			const key = `rejectionReason-${id}-${index + 1}`;
+			return error?.[key]?.msg;
+		});
+
 		return {
 			value: id,
 			text: reason.name,
-			checked:
-				error?.optionId === reason.id || Boolean(selectedReason) || selectedReasons.includes(id),
-			error: error?.message,
+			checked: Boolean(selectedReason) || selectedReasons.includes(id),
+			error: errors,
 			hasText: reason.hasText,
 			textItems: selectedReason?.text || selectedTextItems || ['']
 		};
