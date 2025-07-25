@@ -69,6 +69,7 @@ describe('costs', () => {
 			.reply(200, costsFolderInfoDecision)
 			.persist();
 		nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+		nock('http://test/').post('/appeals/validate-business-date').reply(200, true).persist();
 	});
 	afterEach(teardown);
 
@@ -611,7 +612,7 @@ describe('costs', () => {
 						expect(errorSummaryElement.innerHTML).toContain(
 							`${
 								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-							} costs ${costsDocumentType} received date must be a valid date`
+							} costs ${costsDocumentType} received date must be a real date`
 						);
 					});
 
@@ -1006,7 +1007,7 @@ describe('costs', () => {
 						expect(errorSummaryElement.innerHTML).toContain(
 							`${
 								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-							} costs ${costsDocumentType} received date must be a valid date`
+							} costs ${costsDocumentType} received date must be a real date`
 						);
 					});
 
@@ -2113,7 +2114,7 @@ describe('costs', () => {
 					rootElement: '.govuk-error-summary'
 				});
 
-				expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
+				expect(errorSummaryElement.innerHTML).toContain('Received date must be a real date');
 			});
 
 			it(`should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, if complete and valid document details were provided`, async () => {
@@ -2403,7 +2404,7 @@ describe('costs', () => {
 					rootElement: '.govuk-error-summary'
 				});
 
-				expect(errorSummaryElement.innerHTML).toContain('Received date must be a valid date');
+				expect(errorSummaryElement.innerHTML).toContain('Received date must be a real date');
 			});
 
 			it(`should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, if complete and valid document details were provided`, async () => {
@@ -2416,7 +2417,7 @@ describe('costs', () => {
 							{
 								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
 								receivedDate: {
-									day: '1',
+									day: '3',
 									month: '2',
 									year: '2023'
 								},

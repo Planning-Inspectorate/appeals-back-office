@@ -36,7 +36,7 @@ export const postValidDate = async (request, response) => {
 						location: 'body',
 						param: 'all-fields',
 						value: '',
-						msg: 'The valid date must be a valid date.'
+						msg: 'The valid date must be a real date.'
 					}
 				};
 

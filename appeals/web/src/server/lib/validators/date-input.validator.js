@@ -122,7 +122,7 @@ export const createDateInputDateValidityValidator = (
  * @param {string} value
  * @returns {Promise<boolean>}
  */
-const dateIsABusinessDay = async (apiClient, value) => {
+export const dateIsABusinessDay = async (apiClient, value) => {
 	try {
 		const result = await apiClient
 			.post(`appeals/validate-business-date`, {

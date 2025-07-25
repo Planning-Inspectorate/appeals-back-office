@@ -1,10 +1,15 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 
-import { dateIsValid, dateIsTodayOrInThePast } from '#lib/dates.js';
+import {
+	dateIsValid,
+	dateIsTodayOrInThePast,
+	dayMonthYearHourMinuteToISOString
+} from '#lib/dates.js';
 import { folderPathToFolderNameText } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { lowerCase } from 'lodash-es';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { dateIsABusinessDay } from '#lib/validators/date-input.validator.js';
 
 export const validateDocumentNameBodyFormat = createValidator(
 	body()
@@ -151,7 +156,7 @@ export const validateDocumentDetailsReceivedDateValid = createValidator(
 		if (!day || !month || !year) {
 			return false;
 		}
-		const errorMessage = `all-fields-day::${documentName} date must be a valid date`;
+		const errorMessage = `all-fields-day::${documentName} date must be a real date`;
 
 		const dayNumber = Number.parseInt(day, 10);
 		const monthNumber = Number.parseInt(month, 10);
@@ -217,3 +222,29 @@ export const getDocumentName = (
 		return `${folderDisplayLabel} received`;
 	}
 };
+
+export const createDateInputDateBusinessDayValidator = createValidator(
+	body('items.*.receivedDate').custom(async (value, { req }) => {
+		const day = value.day;
+		const month = value.month;
+		const year = value.year;
+
+		if (!day || !month || !year) {
+			return false;
+		}
+
+		const dateToValidate = dayMonthYearHourMinuteToISOString({
+			day,
+			month,
+			year
+		});
+
+		const result = await dateIsABusinessDay(req.apiClient, dateToValidate);
+		if (result === false) {
+			const errorMessage = `all-fields::${getDocumentName(req)} must be a business day`;
+
+			throw new Error(errorMessage);
+		}
+		return true;
+	})
+);
