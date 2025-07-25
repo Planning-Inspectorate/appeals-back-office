@@ -74,28 +74,103 @@ const createInquiryById = (data) => {
  *  addressId?: number | undefined
  * }} data
  */
-const updateInquiryById = (id, data) => {
+const updateInquiryById = async (id, data) => {
 	const { appealId, inquiryStartTime, inquiryEndTime, address, addressId, estimatedDays } = data;
 
 	let addressStatement = {};
+	const existingInquiry = await databaseConnector.inquiry.findUnique({
+		where: { id },
+		include: { address: true }
+	});
 
 	if (addressId) {
+		// If an addressId is provided, connect to that address
 		addressStatement = { address: { connect: { id: addressId } } };
-	} else if (address) {
-		addressStatement = {
-			address: {
-				create: {
-					addressLine1: address.addressLine1 ?? null,
-					addressLine2: address.addressLine2 ?? null,
-					addressTown: address.addressTown ?? null,
-					addressCounty: address.addressCounty ?? null,
-					postcode: address.postcode ?? null,
-					addressCountry: address.addressCountry ?? null
+
+		// OPTIONAL: If you also want to update this address with provided address data:
+		if (address) {
+			addressStatement = {
+				address: {
+					update: {
+						where: { id: addressId },
+						data: {
+							addressLine1: address.addressLine1 ?? null,
+							addressLine2: address.addressLine2 ?? null,
+							addressTown: address.addressTown ?? null,
+							addressCounty: address.addressCounty ?? null,
+							postcode: address.postcode ?? null,
+							addressCountry: address.addressCountry ?? null
+						}
+					}
 				}
-			}
-		};
+			};
+		}
 	} else if (address === null) {
+		// If address is null, disconnect it
 		addressStatement = { address: { disconnect: true } };
+	} else if (address) {
+		// If address object is provided (without addressId)
+		if (existingInquiry?.address) {
+			// Update existing linked address
+			addressStatement = {
+				address: {
+					update: {
+						addressLine1: address.addressLine1 ?? null,
+						addressLine2: address.addressLine2 ?? null,
+						addressTown: address.addressTown ?? null,
+						addressCounty: address.addressCounty ?? null,
+						postcode: address.postcode ?? null,
+						addressCountry: address.addressCountry ?? null
+					}
+				}
+			};
+		} else {
+			// Create new address if none exists
+			addressStatement = {
+				address: {
+					create: {
+						addressLine1: address.addressLine1 ?? null,
+						addressLine2: address.addressLine2 ?? null,
+						addressTown: address.addressTown ?? null,
+						addressCounty: address.addressCounty ?? null,
+						postcode: address.postcode ?? null,
+						addressCountry: address.addressCountry ?? null
+					}
+				}
+			};
+		}
+	}
+
+	if (address) {
+		if (addressId) {
+			// Update existing address
+			addressStatement = {
+				address: {
+					update: {
+						addressLine1: address.addressLine1 ?? null,
+						addressLine2: address.addressLine2 ?? null,
+						addressTown: address.addressTown ?? null,
+						addressCounty: address.addressCounty ?? null,
+						postcode: address.postcode ?? null,
+						addressCountry: address.addressCountry ?? null
+					}
+				}
+			};
+		} else {
+			// Create new address if none exists
+			addressStatement = {
+				address: {
+					create: {
+						addressLine1: address.addressLine1 ?? null,
+						addressLine2: address.addressLine2 ?? null,
+						addressTown: address.addressTown ?? null,
+						addressCounty: address.addressCounty ?? null,
+						postcode: address.postcode ?? null,
+						addressCountry: address.addressCountry ?? null
+					}
+				}
+			};
+		}
 	}
 
 	const inquiryData = {
