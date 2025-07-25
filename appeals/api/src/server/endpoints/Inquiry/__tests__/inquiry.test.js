@@ -895,9 +895,15 @@ describe('inquiry routes', () => {
 						},
 						inquiryStartTime: '2999-01-01T12:00:00.000Z',
 						estimatedDays: 6,
+						inquiryEndTime: undefined,
 						address: {
-							connect: {
-								id: 42
+							update: {
+								addressCountry: 'United Kingdom',
+								addressCounty: 'Test County',
+								addressLine1: 'Court 2',
+								addressLine2: '24 Court Street',
+								addressTown: 'Test Town',
+								postcode: 'AB12 3CD'
 							}
 						}
 					},

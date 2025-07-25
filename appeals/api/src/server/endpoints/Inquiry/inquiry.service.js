@@ -133,10 +133,13 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 		const procedureTypeId = PROCEDURE_TYPE_ID_MAP['inquiry'];
 
 		const result = await databaseConnector.$transaction(async (tx) => {
-			// Add address
-			const addr = await tx.address.create({
-				data: address
-			});
+			let addr;
+			if (address) {
+				// Add address
+				addr = await tx.address.create({
+					data: address
+				});
+			}
 
 			// Add inquiry
 			const inquiry = await tx.inquiry.create({
@@ -144,7 +147,7 @@ const createInquiry = async (createInquiryData, appeal, notifyClient, azureAdUse
 					inquiryStartTime,
 					inquiryEndTime,
 					appealId,
-					addressId: addr.id,
+					addressId: addr?.id,
 					estimatedDays: createInquiryData.estimatedDays
 						? Number(createInquiryData.estimatedDays)
 						: undefined
