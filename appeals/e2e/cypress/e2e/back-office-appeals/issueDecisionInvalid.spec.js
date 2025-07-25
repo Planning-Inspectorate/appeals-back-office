@@ -58,7 +58,7 @@ describe('Issue Decision', () => {
 			caseDetailsPage.clickButtonByText('Issue decision');
 
 			//Case details inset text
-			caseDetailsPage.validateBannerMessage('Success', 'Appeal invalid');
+			caseDetailsPage.validateBannerMessage('Success', 'Appeal marked as invalid');
 			caseDetailsPage.checkStatusOfCase('Invalid', 0);
 			caseDetailsPage.checkDecisionOutcome('Decision: Invalid');
 			caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
