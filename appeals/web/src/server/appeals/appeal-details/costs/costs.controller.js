@@ -45,6 +45,7 @@ export const getDocumentUpload = async (request, response) => {
 	switch (costsCategory) {
 		case 'lpa':
 			uploadPageHeadingText = `Upload LPA costs ${costsDocumentType} document`;
+			documentTitle = `LPA costs ${costsDocumentType}`;
 			break;
 		case 'decision':
 			uploadPageHeadingText = `Upload costs decision`;
