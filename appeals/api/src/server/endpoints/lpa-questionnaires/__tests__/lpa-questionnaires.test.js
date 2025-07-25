@@ -29,6 +29,8 @@ import {
 	householdAppeal,
 	householdAppealLPAQuestionnaireComplete,
 	householdAppealLPAQuestionnaireIncomplete,
+	casPlanningAppeal,
+	casPlanningAppealLPAQuestionnaireIncomplete,
 	listedBuildingAppeal,
 	listedBuildingAppealLPAQuestionnaireIncomplete
 } from '#tests/appeals/mocks.js';
@@ -244,40 +246,61 @@ describe('lpa questionnaires routes', () => {
 			});
 
 			test.each([
-				{
-					appeal: householdAppeal,
-					templateName: 'lpaq-complete-has-appellant',
-					personalisation: {
-						lpa_reference: householdAppeal.applicationReference,
-						appeal_reference_number: householdAppeal.reference,
-						site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`
+				[
+					'householdAppeal',
+					{
+						appeal: householdAppeal,
+						templateName: 'lpaq-complete-has-appellant',
+						personalisation: {
+							lpa_reference: householdAppeal.applicationReference,
+							appeal_reference_number: householdAppeal.reference,
+							site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`
+						}
 					}
-				},
-				{
-					appeal: fullPlanningAppeal,
-					templateName: 'lpaq-complete-appellant',
-					personalisation: {
-						lpa_reference: fullPlanningAppeal.applicationReference,
-						appeal_reference_number: fullPlanningAppeal.reference,
-						site_address: `${fullPlanningAppeal.address.addressLine1}, ${fullPlanningAppeal.address.addressLine2}, ${fullPlanningAppeal.address.addressTown}, ${fullPlanningAppeal.address.addressCounty}, ${fullPlanningAppeal.address.postcode}, ${fullPlanningAppeal.address.addressCountry}`,
-						what_happens_next:
-							'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
+				],
+				[
+					'casPlanningAppeal',
+					{
+						appeal: casPlanningAppeal,
+						templateName: 'lpaq-complete-has-appellant',
+						personalisation: {
+							lpa_reference: casPlanningAppeal.applicationReference,
+							appeal_reference_number: casPlanningAppeal.reference,
+							site_address: `${casPlanningAppeal.address.addressLine1}, ${casPlanningAppeal.address.addressLine2}, ${casPlanningAppeal.address.addressTown}, ${casPlanningAppeal.address.addressCounty}, ${casPlanningAppeal.address.postcode}, ${casPlanningAppeal.address.addressCountry}`
+						}
 					}
-				},
-				{
-					appeal: listedBuildingAppeal,
-					templateName: 'lpaq-complete-appellant',
-					personalisation: {
-						lpa_reference: listedBuildingAppeal.applicationReference,
-						appeal_reference_number: listedBuildingAppeal.reference,
-						site_address: `${listedBuildingAppeal.address.addressLine1}, ${listedBuildingAppeal.address.addressLine2}, ${listedBuildingAppeal.address.addressTown}, ${listedBuildingAppeal.address.addressCounty}, ${listedBuildingAppeal.address.postcode}, ${listedBuildingAppeal.address.addressCountry}`,
-						what_happens_next:
-							'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
+				],
+				[
+					'fullPlanningAppeal',
+					{
+						appeal: fullPlanningAppeal,
+						templateName: 'lpaq-complete-appellant',
+						personalisation: {
+							lpa_reference: fullPlanningAppeal.applicationReference,
+							appeal_reference_number: fullPlanningAppeal.reference,
+							site_address: `${fullPlanningAppeal.address.addressLine1}, ${fullPlanningAppeal.address.addressLine2}, ${fullPlanningAppeal.address.addressTown}, ${fullPlanningAppeal.address.addressCounty}, ${fullPlanningAppeal.address.postcode}, ${fullPlanningAppeal.address.addressCountry}`,
+							what_happens_next:
+								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
+						}
 					}
-				}
+				],
+				[
+					'listedBuildingAppeal',
+					{
+						appeal: listedBuildingAppeal,
+						templateName: 'lpaq-complete-appellant',
+						personalisation: {
+							lpa_reference: listedBuildingAppeal.applicationReference,
+							appeal_reference_number: listedBuildingAppeal.reference,
+							site_address: `${listedBuildingAppeal.address.addressLine1}, ${listedBuildingAppeal.address.addressLine2}, ${listedBuildingAppeal.address.addressTown}, ${listedBuildingAppeal.address.addressCounty}, ${listedBuildingAppeal.address.postcode}, ${listedBuildingAppeal.address.addressCountry}`,
+							what_happens_next:
+								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
+						}
+					}
+				]
 			])(
 				'sends a correctly formatted notify email when the outcome is complete for an appeal of type %s',
-				async (test) => {
+				async (_, test) => {
 					// @ts-ignore
 					databaseConnector.appeal.findUnique
 						.mockResolvedValueOnce({
@@ -969,6 +992,7 @@ describe('lpa questionnaires routes', () => {
 
 			test.each([
 				['household', householdAppealLPAQuestionnaireIncomplete],
+				['cas planning', casPlanningAppealLPAQuestionnaireIncomplete],
 				['full planning', fullPlanningAppealLPAQuestionnaireIncomplete],
 				['listed building', listedBuildingAppealLPAQuestionnaireIncomplete]
 			])(
