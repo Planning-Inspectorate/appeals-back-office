@@ -1,0 +1,735 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`change inquiry GET /inquiry/change/address should match the snapshot 1`] = `
+"<body class="govuk-template__body">
+    <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
+        document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    <header     class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header"
+    role="banner" data-module="govuk-header">
+        <div class="govuk-width-container">
+            <div class="pins-row">
+                <div class="pins-column--left">
+                    <div class="pins-header__logo"><i class="pins-header__logo-crown"></i>
+                    </div><span>Planning Inspectorate</span>
+                </div>
+                <div class="pins-column--central">
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
+                    <nav class="govuk-header__navigation pins-header-navigation"
+                    aria-label="Menu">
+                        <ul class="govuk-header__navigation-list">
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        </header>
+        <div class="govuk-width-container govuk-width-container">
+            <div class="govuk-phase-banner">
+                <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag"> Beta</strong>
+                    <span                     class="govuk-phase-banner__text">This is a new service. Help us improve it and <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u"
+                        class="govuk-link" target="_blank" rel="noopener noreferrer">give your feedback (opens in a new tab)</a>.</span>
+                </p>
+            </div><a href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+            class="govuk-back-link">Back</a>
+            <main class="govuk-main-wrapper" id="main-content">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - start case</span>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <fieldset class="govuk-fieldset">
+                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                                                <h1 class="govuk-fieldset__heading"> Do you know the address of where the inquiry will take place?</h1>
+                                            </legend>
+                                            <div class="govuk-radios" data-module="govuk-radios">
+                                                <div class="govuk-radios__item">
+                                                    <input class="govuk-radios__input" id="address-known" name="addressKnown"
+                                                    type="radio" value="yes" checked>
+                                                    <label class="govuk-label govuk-radios__label" for="address-known">Yes</label>
+                                                </div>
+                                                <div class="govuk-radios__item">
+                                                    <input class="govuk-radios__input" id="address-known-2" name="addressKnown"
+                                                    type="radio" value="no">
+                                                    <label class="govuk-label govuk-radios__label" for="address-known-2">No</label>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <footer class="govuk-footer" role="contentinfo">
+            <div class="govuk-width-container ">
+                <div class="govuk-footer__meta">
+                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+                </div>
+            </div>
+        </footer>
+</body>"
+`;
+
+exports[`change inquiry GET /inquiry/change/address-details should match the snapshot 1`] = `
+"<body class="govuk-template__body">
+    <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
+        document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    <header     class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header"
+    role="banner" data-module="govuk-header">
+        <div class="govuk-width-container">
+            <div class="pins-row">
+                <div class="pins-column--left">
+                    <div class="pins-header__logo"><i class="pins-header__logo-crown"></i>
+                    </div><span>Planning Inspectorate</span>
+                </div>
+                <div class="pins-column--central">
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
+                    <nav class="govuk-header__navigation pins-header-navigation"
+                    aria-label="Menu">
+                        <ul class="govuk-header__navigation-list">
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        </header>
+        <div class="govuk-width-container govuk-width-container">
+            <div class="govuk-phase-banner">
+                <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag"> Beta</strong>
+                    <span                     class="govuk-phase-banner__text">This is a new service. Help us improve it and <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u"
+                        class="govuk-link" target="_blank" rel="noopener noreferrer">give your feedback (opens in a new tab)</a>.</span>
+                </p>
+            </div><a href="/appeals-service/appeal-details/2/inquiry/change/address" class="govuk-back-link">Back</a>
+            <main             class="govuk-main-wrapper" id="main-content">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-l">Inquiry address</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-1">Address line 1</label>
+                                        <input class="govuk-input" id="address-line-1" name="addressLine1"
+                                        type="text" value="Flat 9">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                                        <input class="govuk-input" id="address-line-2"
+                                        name="addressLine2" type="text" value="123 Gerbil Drive">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="town">Town or city</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="town" name="town" type="text" value="Blarberton">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="county">County (optional)</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-20"
+                                        id="county" name="county" type="text" value="Slabshire">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="post-code">Postcode</label>
+                                        <input class="govuk-input govuk-input govuk-input--width-10"
+                                        id="post-code" name="postCode" type="text" value="X25 3YZ">
+                                    </div>
+                                    <div class="govuk-form-group">
+                                        <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                                        value="">
+                                    </div>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </main>
+        </div>
+        <footer class="govuk-footer" role="contentinfo">
+            <div class="govuk-width-container ">
+                <div class="govuk-footer__meta">
+                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+                </div>
+            </div>
+        </footer>
+</body>"
+`;
+
+exports[`change inquiry GET /inquiry/change/check-details when all pages have been submitted should match the snapshot 1`] = `
+"<body class="govuk-template__body">
+    <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
+        document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    <header     class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header"
+    role="banner" data-module="govuk-header">
+        <div class="govuk-width-container">
+            <div class="pins-row">
+                <div class="pins-column--left">
+                    <div class="pins-header__logo"><i class="pins-header__logo-crown"></i>
+                    </div><span>Planning Inspectorate</span>
+                </div>
+                <div class="pins-column--central">
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
+                    <nav class="govuk-header__navigation pins-header-navigation"
+                    aria-label="Menu">
+                        <ul class="govuk-header__navigation-list">
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        </header>
+        <div class="govuk-width-container govuk-width-container">
+            <div class="govuk-phase-banner">
+                <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag"> Beta</strong>
+                    <span                     class="govuk-phase-banner__text">This is a new service. Help us improve it and <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u"
+                        class="govuk-link" target="_blank" rel="noopener noreferrer">give your feedback (opens in a new tab)</a>.</span>
+                </p>
+            </div><a href="/appeals-service/appeal-details/2/inquiry/change/address-details"
+            class="govuk-back-link">Back</a>
+            <main class="govuk-main-wrapper" id="main-content">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                        <h1 class="govuk-heading-l">Check details and update inquiry</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <h3 class="govuk-heading-m">Inquiry details</h3>
+                                    <dl class="govuk-summary-list">
+                                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry Date</dt>
+                                            <dd class="govuk-summary-list__value">1 February 3025</dd>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                                data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry Date</span></a>
+                                            </dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="govuk-summary-list">
+                                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
+                                            <dd class="govuk-summary-list__value">12:00pm</dd>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                                data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
+                                            </dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="govuk-summary-list">
+                                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
+                                            <dd                                             class="govuk-summary-list__value">Yes</dd>
+                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                                    data-cy="change-inquiry-expected-number-of-days">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
+                                                </dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="govuk-summary-list">
+                                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of days to carry out the inquiry</dt>
+                                            <dd                                             class="govuk-summary-list__value">6 days</dd>
+                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                                    data-cy="change-expected-number-of-days">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
+                                                </dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="govuk-summary-list">
+                                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
+                                            <dd                                             class="govuk-summary-list__value">Yes</dd>
+                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address"
+                                                    data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
+                                                </dd>
+                                        </div>
+                                    </dl>
+                                    <dl class="govuk-summary-list">
+                                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address of where the inquiry will take place</dt>
+                                            <dd                                             class="govuk-summary-list__value">Flat 8
+                                                <br>29 Hamster Road
+                                                <br>Bristleton
+                                                <br>Tuscany
+                                                <br>T12 3YZ</dd>
+                                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address-details"
+                                                    data-cy="change-inquiry-address">Change<span class="govuk-visually-hidden"> Address of where the inquiry will take place</span></a>
+                                                </dd>
+                                        </div>
+                                    </dl>
+                                    <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the inquiry.</p>
+                                    <button                                     type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Update inquiry</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <footer class="govuk-footer" role="contentinfo">
+            <div class="govuk-width-container ">
+                <div class="govuk-footer__meta">
+                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+                </div>
+            </div>
+        </footer>
+</body>"
+`;
+
+exports[`change inquiry GET /inquiry/change/check-details when only address details have been submitted should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and update inquiry</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <h3 class="govuk-heading-m">Inquiry details</h3>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry Date</dt>
+                                <dd class="govuk-summary-list__value">2 March 3024</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                    data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry Date</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
+                                <dd class="govuk-summary-list__value">8:54am</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                    data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
+                                <dd                                 class="govuk-summary-list__value">Yes</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                        data-cy="change-inquiry-expected-number-of-days">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of days to carry out the inquiry</dt>
+                                <dd                                 class="govuk-summary-list__value">6 days</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                        data-cy="change-expected-number-of-days">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
+                                <dd                                 class="govuk-summary-list__value">Yes</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address"
+                                        data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address of where the inquiry will take place</dt>
+                                <dd                                 class="govuk-summary-list__value">Flat 8
+                                    <br>29 Hamster Road
+                                    <br>Bristleton
+                                    <br>Tuscany
+                                    <br>T12 3YZ</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address-details"
+                                        data-cy="change-inquiry-address">Change<span class="govuk-visually-hidden"> Address of where the inquiry will take place</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the inquiry.</p>
+                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Update inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`change inquiry GET /inquiry/change/check-details when only address not known has been submitted should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and update inquiry</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <h3 class="govuk-heading-m">Inquiry details</h3>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry Date</dt>
+                                <dd class="govuk-summary-list__value">2 March 3024</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                    data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry Date</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
+                                <dd class="govuk-summary-list__value">8:54am</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                    data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
+                                <dd                                 class="govuk-summary-list__value">Yes</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                        data-cy="change-inquiry-expected-number-of-days">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of days to carry out the inquiry</dt>
+                                <dd                                 class="govuk-summary-list__value">6 days</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                        data-cy="change-expected-number-of-days">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
+                                <dd                                 class="govuk-summary-list__value">No</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address"
+                                        data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the inquiry.</p>
+                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Update inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`change inquiry GET /inquiry/change/check-details when only yes and address details have been submitted should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and update inquiry</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <h3 class="govuk-heading-m">Inquiry details</h3>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry Date</dt>
+                                <dd class="govuk-summary-list__value">2 March 3024</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                    data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry Date</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
+                                <dd class="govuk-summary-list__value">8:54am</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/date"
+                                    data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
+                                </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
+                                <dd                                 class="govuk-summary-list__value">Yes</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                        data-cy="change-inquiry-expected-number-of-days">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of days to carry out the inquiry</dt>
+                                <dd                                 class="govuk-summary-list__value">6 days</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/estimation"
+                                        data-cy="change-expected-number-of-days">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
+                                <dd                                 class="govuk-summary-list__value">Yes</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address"
+                                        data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address of where the inquiry will take place</dt>
+                                <dd                                 class="govuk-summary-list__value">Flat 8
+                                    <br>29 Hamster Road
+                                    <br>Bristleton
+                                    <br>Tuscany
+                                    <br>T12 3YZ</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/inquiry/change/address-details"
+                                        data-cy="change-inquiry-address">Change<span class="govuk-visually-hidden"> Address of where the inquiry will take place</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <p class="govuk-body">We'll send an email to the appellant and LPA to tell them about the inquiry.</p>
+                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Update inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`change inquiry GET /inquiry/change/date should match the snapshot 1`] = `
+"<body class="govuk-template__body">
+    <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
+        document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
+    </script><a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
+    <header     class="govuk-header govuk-!-margin-bottom-0" id="pins-applications-header"
+    role="banner" data-module="govuk-header">
+        <div class="govuk-width-container">
+            <div class="pins-row">
+                <div class="pins-column--left">
+                    <div class="pins-header__logo"><i class="pins-header__logo-crown"></i>
+                    </div><span>Planning Inspectorate</span>
+                </div>
+                <div class="pins-column--central">
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
+                    <nav class="govuk-header__navigation pins-header-navigation"
+                    aria-label="Menu">
+                        <ul class="govuk-header__navigation-list">
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/personal-list">Assigned to me</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/appeals-service/all-cases">All cases</a>
+                            </li>
+                            <li class="govuk-header__navigation-item"><a class="govuk-header__link" href="/auth/signout">Sign out</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        </header>
+        <div class="govuk-width-container govuk-width-container">
+            <div class="govuk-phase-banner">
+                <p class="govuk-phase-banner__content"><strong class="govuk-tag govuk-phase-banner__content__tag"> Beta</strong>
+                    <span                     class="govuk-phase-banner__text">This is a new service. Help us improve it and <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzNVQjdaV0U0TDdTOE1LNktBT0w5NEQ1Vy4u"
+                        class="govuk-link" target="_blank" rel="noopener noreferrer">give your feedback (opens in a new tab)</a>.</span>
+                </p>
+            </div><a href="/appeals-service/appeal-details/2/inquiry/change/check-details"
+            class="govuk-back-link">Back</a>
+            <main class="govuk-main-wrapper" id="main-content">
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - start case</span>
+                        <h1 class="govuk-heading-l">Inquiry date and time</h1>
+                    </div>
+                </div>
+                <div class="govuk-grid-row">
+                    <div class="govuk-grid-column-two-thirds">
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <form method="POST" novalidate="novalidate">
+                                    <div class="govuk-form-group">
+                                        <fieldset class="govuk-fieldset" role="group" aria-describedby="inquiry-date-hint">
+                                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Date</legend>
+                                            <div id="inquiry-date-hint" class="govuk-hint">For example, 31 3 2025</div>
+                                            <div class="govuk-date-input" id="inquiry-date">
+                                                <div class="govuk-date-input__item">
+                                                    <div class="govuk-form-group">
+                                                        <label class="govuk-label govuk-date-input__label" for="inquiry-date-day">Day</label>
+                                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                                        id="inquiry-date-day" name="inquiry-date-day" type="text" value="2" inputmode="numeric">
+                                                    </div>
+                                                </div>
+                                                <div class="govuk-date-input__item">
+                                                    <div class="govuk-form-group">
+                                                        <label class="govuk-label govuk-date-input__label" for="inquiry-date-month">Month</label>
+                                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                                        id="inquiry-date-month" name="inquiry-date-month" type="text" value="3"
+                                                        inputmode="numeric">
+                                                    </div>
+                                                </div>
+                                                <div class="govuk-date-input__item">
+                                                    <div class="govuk-form-group">
+                                                        <label class="govuk-label govuk-date-input__label" for="inquiry-date-year">Year</label>
+                                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                                        id="inquiry-date-year" name="inquiry-date-year" type="text" value="3024"
+                                                        inputmode="numeric">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                    <fieldset class="govuk-fieldset">
+                                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Time</legend>
+                                        <div id="hearing-date-hint" class="govuk-hint">For example, 9:00 or 13:15</div>
+                                        <div class="govuk-date-input">
+                                            <div class="govuk-date-input__item govuk-!-margin-right-1">
+                                                <div class="govuk-form-group">
+                                                    <label class="govuk-label" for="inquiry-time-hour">Hour</label>
+                                                    <input class="govuk-input govuk-input--width-2" id="inquiry-time-hour"
+                                                    name="inquiry-time-hour" type="text" value="8">
+                                                </div>
+                                            </div>
+                                            <div class="govuk-date-input__item govuk-!-font-size-19 govuk-!-padding-0 govuk-!-margin-right-1">:</div>
+                                            <div class="govuk-date-input__item">
+                                                <div class="govuk-form-group">
+                                                    <label class="govuk-label" for="inquiry-time-minute">Minute</label>
+                                                    <input class="govuk-input govuk-input--width-2" id="inquiry-time-minute"
+                                                    name="inquiry-time-minute" type="text" value="54">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                                    data-module="govuk-button">Continue</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <footer class="govuk-footer" role="contentinfo">
+            <div class="govuk-width-container ">
+                <div class="govuk-footer__meta">
+                    <div class="govuk-footer__meta-item govuk-footer__meta-item"></div>
+                </div>
+            </div>
+        </footer>
+</body>"
+`;
+
+exports[`change inquiry POST /inquiry/change/address-details should re-render the page if addressLine1 is an empty string 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#address-line-1">Enter address line 1</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`change inquiry POST /inquiry/change/address-details should re-render the page if addressLine1 is null 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#address-line-1">Enter address line 1</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`change inquiry POST /inquiry/change/address-details should re-render the page if the postcode is an empty string 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#post-code">Enter postcode</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`change inquiry POST /inquiry/change/address-details should re-render the page if the postcode is invalid 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#post-code">Enter a full UK postcode</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`change inquiry POST /inquiry/change/address-details should re-render the page if the postcode is null 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#post-code">Enter postcode</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`change inquiry POST /inquiry/change/address-details should re-render the page if town is an empty string 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#town">Enter town or city</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`change inquiry POST /inquiry/change/address-details should re-render the page if town is null 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#town">Enter town or city</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;

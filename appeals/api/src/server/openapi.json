@@ -5725,6 +5725,82 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/inquiry/{inquiryId}": {
+			"patch": {
+				"tags": ["Inquiry Details"],
+				"description": "Updates inquiry values for a single appeal by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "inquiryId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates a single inquiry by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateInquiry"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateInquiry"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Inquiry details to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateInquiryRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateInquiryRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/inquiry-estimates": {
 			"post": {
 				"tags": ["Inquiry Estimates"],
@@ -11639,6 +11715,60 @@
 					}
 				}
 			},
+			"UpdateInquiryRequest": {
+				"type": "object",
+				"properties": {
+					"inquiryStartTime": {
+						"type": "string",
+						"description": "Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"inquiryEndTime": {
+						"type": "string",
+						"description": "Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM",
+						"example": "2026-11-10T00:00:00.000Z"
+					},
+					"addressId": {
+						"type": "number",
+						"description": "Address ID of the inquiry",
+						"example": 1
+					},
+					"address": {
+						"type": "object",
+						"properties": {
+							"addressLine1": {
+								"type": "string",
+								"example": "1 Grove Cottage"
+							},
+							"addressLine2": {
+								"type": "string",
+								"example": "Shotesham Road"
+							},
+							"country": {
+								"type": "string",
+								"example": "United Kingdom"
+							},
+							"county": {
+								"type": "string",
+								"example": "Devon"
+							},
+							"postcode": {
+								"type": "string",
+								"example": "NR35 2ND"
+							},
+							"town": {
+								"type": "string",
+								"example": "Woodton"
+							}
+						}
+					},
+					"estimatedDays": {
+						"type": "number",
+						"description": "Number of estimated days for the inquiry",
+						"example": 1
+					}
+				}
+			},
 			"InquiryResponse": {
 				"type": "object",
 				"properties": {
@@ -11705,17 +11835,14 @@
 				"properties": {
 					"preparationTime": {
 						"type": "number",
-						"description": "Inquiry estimated preparation time in days",
 						"example": 1.5
 					},
 					"sittingTime": {
 						"type": "number",
-						"description": "Inquiry estimated sitting time in days",
 						"example": 0.5
 					},
 					"reportingTime": {
 						"type": "number",
-						"description": "Inquiry estimated reporting time in days",
 						"example": 2
 					}
 				}
@@ -11725,17 +11852,14 @@
 				"properties": {
 					"preparationTime": {
 						"type": "number",
-						"description": "Inquiry estimated preparation time in days",
 						"example": 1.5
 					},
 					"sittingTime": {
 						"type": "number",
-						"description": "Inquiry estimated sitting time in days",
 						"example": 0.5
 					},
 					"reportingTime": {
 						"type": "number",
-						"description": "Inquiry estimated reporting time in days",
 						"example": 2
 					}
 				}
@@ -11745,17 +11869,14 @@
 				"properties": {
 					"preparationTime": {
 						"type": "number",
-						"description": "Inquiry estimated preparation time in days",
 						"example": 1.5
 					},
 					"sittingTime": {
 						"type": "number",
-						"description": "Inquiry estimated sitting time in days",
 						"example": 0.5
 					},
 					"reportingTime": {
 						"type": "number",
-						"description": "Inquiry estimated reporting time in days",
 						"example": 2
 					}
 				}

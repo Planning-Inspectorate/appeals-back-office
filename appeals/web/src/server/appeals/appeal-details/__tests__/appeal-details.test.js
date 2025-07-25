@@ -5155,11 +5155,11 @@ describe('appeal-details', () => {
 					unprettifiedInquirySectionHtml.querySelector(
 						'a[data-cy="change-whether-the-estimated-number-of-days-is-known-or-not"]'
 					)?.attributes?.href
-				).toEqual(`${baseUrl}/${appealId}/inquiry/change/estimatedDays`);
+				).toEqual(`${baseUrl}/${appealId}/inquiry/change/estimation`);
 				expect(
 					unprettifiedInquirySectionHtml.querySelector('a[data-cy="change-estimated-days"]')
 						?.attributes?.href
-				).toEqual(`${baseUrl}/${appealId}/inquiry/change/estimated-days`);
+				).toEqual(`${baseUrl}/${appealId}/inquiry/change/estimation`);
 				expect(
 					unprettifiedInquirySectionHtml.querySelector(
 						'a[data-cy="change-whether-the-address-is-known-or-not"]'
