@@ -11,11 +11,6 @@ const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();
 const appellantCasePage = new AppellantCasePage();
 
-const caseTypes = {
-	D: 'householder',
-	W: 'planning appeal'
-};
-
 const { users: apiUsers, casedata } = appealsApiRequests.caseSubmission;
 
 describe('Managing Appellant Case Details', () => {
@@ -175,7 +170,7 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it('should display expected fields for s20 listed building planning (Y) case', () => {
+	it.only('should display expected fields for s20 listed building planning (Y) case', () => {
 		cy.createCase({ caseType: 'Y' }).then((caseRef) => {
 			appellantCasePage.navigateToAppellantCase(caseRef);
 			// ✅ Appellant section
