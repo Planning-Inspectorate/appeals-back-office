@@ -36,9 +36,7 @@ export const renderSelectReason = async (request, response) => {
 			rejectionReasons,
 			session,
 			'rejectFinalComments',
-			errors?.['']
-				? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
-				: undefined
+			errors
 		);
 
 		const pageContent = rejectFinalCommentsPage(currentAppeal, finalCommentsType);

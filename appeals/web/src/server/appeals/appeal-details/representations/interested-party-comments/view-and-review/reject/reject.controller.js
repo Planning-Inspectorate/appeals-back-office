@@ -26,9 +26,7 @@ export async function renderSelectReason(request, response) {
 		rejectionReasons,
 		session,
 		'rejectIpComment',
-		errors?.['']
-			? { optionId: parseInt(errors[''].value.rejectionReason), message: errors[''].msg }
-			: undefined
+		errors
 	);
 
 	const pageContent = rejectInterestedPartyCommentPage(currentAppeal, currentRepresentation);

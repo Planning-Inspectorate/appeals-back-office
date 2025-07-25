@@ -5330,7 +5330,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#incomplete-reason-2026-1">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -5508,7 +5508,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a reason</a>
+                            <li><a href="#incomplete-reason-2026">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -5686,7 +5686,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a reason</a>
+                            <li><a href="#incomplete-reason-2026-1">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -5864,7 +5864,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a reason</a>
+                            <li><a href="#incomplete-reason-2026">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -6041,7 +6041,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a reason</a>
+                            <li><a href="#incomplete-reason-2026-1">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -6218,7 +6218,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#incomplete-reason-2026-1">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -7264,7 +7264,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#invalid-reason-22-1">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>
@@ -7369,7 +7369,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a reason</a>
+                            <li><a href="#invalid-reason-22">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -7474,7 +7474,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a reason</a>
+                            <li><a href="#invalid-reason-22-1">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -7579,7 +7579,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a reason</a>
+                            <li><a href="#invalid-reason-22">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -7683,7 +7683,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a reason</a>
+                            <li><a href="#invalid-reason-22-1">Enter a reason</a>
                             </li>
                         </ul>
                     </div>
@@ -7787,7 +7787,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#invalid-reason-22-1">Text in text fields cannot exceed 1000 characters</a>
                             </li>
                         </ul>
                     </div>

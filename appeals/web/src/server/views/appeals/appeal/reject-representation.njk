@@ -23,8 +23,8 @@
 				textItems: option.textItems,
 				inputName: 'rejectionReason-' + option.value,
 				inputId: 'rejection-reason-' + option.value,
-        labelText: 'Enter a reason',
-        error: option.error
+        		labelText: 'Enter a reason',
+        		error: option.error
 			}) -%}
 			{%- set _ = option | addConditionalHtml(addAnotherReasonHtml) -%}
 		{%- endif -%}
