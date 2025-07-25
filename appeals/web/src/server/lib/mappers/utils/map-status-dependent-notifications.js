@@ -14,19 +14,10 @@ import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 /**
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
  * @param {import('@pins/express/types/express.js').Request} request
- * @param  {number | null | undefined} numberOfResidencesNetChange
  * @returns {PageComponent[]}
  */
-export function mapStatusDependentNotifications(
-	appealDetails,
-	request,
-	numberOfResidencesNetChange
-) {
-	const requiredActions = getRequiredActionsForAppeal(
-		appealDetails,
-		'detail',
-		numberOfResidencesNetChange
-	);
+export function mapStatusDependentNotifications(appealDetails, request) {
+	const requiredActions = getRequiredActionsForAppeal(appealDetails, 'detail');
 
 	/** @type {import('../components/index.js').NotificationBannerDefinitionKey[]} */
 	const bannerKeys = requiredActions

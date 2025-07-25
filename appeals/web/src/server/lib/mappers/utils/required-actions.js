@@ -16,10 +16,9 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
  * This logic is documented in `docs/reference/appeal-action-required-logic.md`. Please ensure this document is kept updated to reflect any changes made in this function.
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal|import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} appealDetails
  * @param { 'summary'|'detail' } view
- * @param  {number | null | undefined} residencesNetChange
  * @returns {AppealRequiredAction[]}
  */
-export function getRequiredActionsForAppeal(appealDetails, view, residencesNetChange = null) {
+export function getRequiredActionsForAppeal(appealDetails, view) {
 	/** @type {AppealRequiredAction[]} */
 	const actions = [];
 
@@ -241,13 +240,10 @@ export function getRequiredActionsForAppeal(appealDetails, view, residencesNetCh
 			break;
 	}
 
-	const effectiveResidencesNetChange =
-		residencesNetChange ?? appealDetails.numberOfResidencesNetChange;
-
 	if (
 		config.featureFlags.featureFlagNetResidence &&
 		appealDetails.appealType === APPEAL_TYPE.S78 &&
-		!effectiveResidencesNetChange
+		appealDetails.numberOfResidencesNetChange === null
 	) {
 		actions.push('addResidencesNetChange');
 	}
