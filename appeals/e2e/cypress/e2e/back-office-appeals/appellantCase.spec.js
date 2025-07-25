@@ -170,7 +170,7 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it.only('should display expected fields for s20 listed building planning (Y) case', () => {
+	it('should display expected fields for s20 listed building planning (Y) case', () => {
 		cy.createCase({ caseType: 'Y' }).then((caseRef) => {
 			appellantCasePage.navigateToAppellantCase(caseRef);
 			// ✅ Appellant section
