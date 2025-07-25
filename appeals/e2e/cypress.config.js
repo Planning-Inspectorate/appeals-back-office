@@ -19,6 +19,9 @@ const app = process.env.APP;
 module.exports = defineConfig({
 	e2e: {
 		async setupNodeEvents(on, config) {
+			// Set timezone explicitly for CI consistency
+			process.env.TZ = 'Europe/London';
+
 			on('task', { AzureSignIn: azureSignIn });
 			on('task', { ClearAllCookies: clearAllCookies });
 			on('task', { CookiesFileExists: cookiesFileExists });
