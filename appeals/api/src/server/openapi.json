@@ -11705,17 +11705,14 @@
 				"properties": {
 					"preparationTime": {
 						"type": "number",
-						"description": "Inquiry estimated preparation time in days",
 						"example": 1.5
 					},
 					"sittingTime": {
 						"type": "number",
-						"description": "Inquiry estimated sitting time in days",
 						"example": 0.5
 					},
 					"reportingTime": {
 						"type": "number",
-						"description": "Inquiry estimated reporting time in days",
 						"example": 2
 					}
 				}
@@ -11725,17 +11722,14 @@
 				"properties": {
 					"preparationTime": {
 						"type": "number",
-						"description": "Inquiry estimated preparation time in days",
 						"example": 1.5
 					},
 					"sittingTime": {
 						"type": "number",
-						"description": "Inquiry estimated sitting time in days",
 						"example": 0.5
 					},
 					"reportingTime": {
 						"type": "number",
-						"description": "Inquiry estimated reporting time in days",
 						"example": 2
 					}
 				}
@@ -11745,17 +11739,14 @@
 				"properties": {
 					"preparationTime": {
 						"type": "number",
-						"description": "Inquiry estimated preparation time in days",
 						"example": 1.5
 					},
 					"sittingTime": {
 						"type": "number",
-						"description": "Inquiry estimated sitting time in days",
 						"example": 0.5
 					},
 					"reportingTime": {
 						"type": "number",
-						"description": "Inquiry estimated reporting time in days",
 						"example": 2
 					}
 				}
