@@ -31,11 +31,14 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.validateBannerMessage('Success', 'Document updated');
+			caseDetailsPage.validateBannerMessage(
+				'Success',
+				'Agreement to change description evidence updated'
+			);
 		});
 	});
 
-	it('add an additional doc and then remove on file upload page', () => {
+	it('check correct error response for file upload', () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
 			caseDetailsPage.clickAddAdditionalDocs();
@@ -44,7 +47,7 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickRemoveFileUpload(sampleFiles.document);
 			caseDetailsPage.checkFileNameRemoved(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.checkErrorMessageDisplays('Select a file');
+			caseDetailsPage.checkErrorMessageDisplays('Select the file');
 		});
 	});
 
