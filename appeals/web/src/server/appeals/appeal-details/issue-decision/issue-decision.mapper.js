@@ -508,9 +508,10 @@ export function checkAndConfirmPage(appealData, request) {
 /**
  * @param {Appeal} appealData
  * @param {Request} request
+ * @param {string|undefined} latestDecsionDocumentText
  * @returns {PageRow}[]
  */
-export function viewDecisionPageRows(appealData, request) {
+export function viewDecisionPageRows(appealData, request, latestDecsionDocumentText) {
 	const { appealId, decision, costs } = appealData || {};
 	const appellantCostsDecision = costs.appellantDecisionFolder?.documents[0];
 	const lpaCostsDecision = costs.lpaDecisionFolder?.documents[0];
@@ -565,6 +566,12 @@ export function viewDecisionPageRows(appealData, request) {
 					: null
 			});
 		}
+		if (letterDate) {
+			rows.push({
+				key: 'Decision issue date',
+				value: latestDecsionDocumentText || dateISOStringToDisplayDate(letterDate)
+			});
+		}
 	}
 
 	if (appellantCostsDecision) {
@@ -614,14 +621,15 @@ export function viewDecisionPageRows(appealData, request) {
 /**
  * @param {Appeal} appealData
  * @param {Request} request
+ * @param {string|undefined} latestDecsionDocumentText
  * @returns {PageContent}
  */
-export function viewDecisionPage(appealData, request) {
+export function viewDecisionPage(appealData, request, latestDecsionDocumentText) {
 	/** @type {PageComponent} */
 	const summaryListComponent = {
 		type: 'summary-list',
 		parameters: {
-			rows: viewDecisionPageRows(appealData, request)
+			rows: viewDecisionPageRows(appealData, request, latestDecsionDocumentText)
 		}
 	};
 

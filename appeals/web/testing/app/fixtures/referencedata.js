@@ -48,6 +48,44 @@ export const documentFileInfo = {
 	}
 };
 
+export const documentFileVersionInfo = {
+	guid: 'd51f408c-7c6f-4f49-bcc0-abbb5bea3be6',
+	name: 'ph0-documentFileInfo.jpeg',
+	folderId: 1269,
+	createdAt: '2023-10-11T13:57:41.592Z',
+	isDeleted: false,
+	caseId: '1',
+	allVersions: [
+		{ dateReceived: '2023-08-04T13:57:41.592Z' },
+		{ dateReceived: '2023-08-11T13:57:41.592Z' }
+	],
+	latestDocumentVersion: {
+		documentId: 'd51f408c-7c6f-4f49-bcc0-abbb5bea3be6',
+		version: 2,
+		documentType: 'conservationAreaMap',
+		originalFilename: 'ph0-documentFileInfo.jpeg',
+		fileName: 'ph0-documentFileInfo.jpeg',
+		mime: 'image/jpeg',
+		horizonDataID: null,
+		fileMD5: null,
+		path: null,
+		virusCheckStatus: APPEAL_VIRUS_CHECK_STATUS.SCANNED,
+		size: 58861,
+		stage: 'lpa_questionnaire',
+		blobStorageContainer: 'document-service-uploads',
+		blobStoragePath:
+			'appeal/APP-Q9999-D-21-655112/d51f408c-7c6f-4f49-bcc0-abbb5bea3be6/v1/ph0.jpeg',
+		dateCreated: '2023-10-11T13:57:41.592Z',
+		datePublished: null,
+		isDeleted: false,
+		isLateEntry: false,
+		redactionStatus: 'No redaction required',
+		documentURI:
+			'https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/APP-Q9999-D-21-655112/d51f408c-7c6f-4f49-bcc0-abbb5bea3be6/v1/ph0.jpeg',
+		dateReceived: '2023-10-11T13:57:41.592Z'
+	}
+};
+
 export const localPlanningDepartments = [
 	'Maidstone Borough Council',
 	'Barnsley Metropolitan Borough Council',
