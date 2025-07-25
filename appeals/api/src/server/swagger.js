@@ -1531,6 +1531,60 @@ export const spec = {
 				}
 			}
 		},
+		UpdateInquiryRequest: {
+			type: 'object',
+			properties: {
+				inquiryStartTime: {
+					type: 'string',
+					description: 'Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				inquiryEndTime: {
+					type: 'string',
+					description: 'Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM',
+					example: '2026-11-10T00:00:00.000Z'
+				},
+				addressId: {
+					type: 'number',
+					description: 'Address ID of the inquiry',
+					example: 1
+				},
+				address: {
+					type: 'object',
+					properties: {
+						addressLine1: {
+							type: 'string',
+							example: '1 Grove Cottage'
+						},
+						addressLine2: {
+							type: 'string',
+							example: 'Shotesham Road'
+						},
+						country: {
+							type: 'string',
+							example: 'United Kingdom'
+						},
+						county: {
+							type: 'string',
+							example: 'Devon'
+						},
+						postcode: {
+							type: 'string',
+							example: 'NR35 2ND'
+						},
+						town: {
+							type: 'string',
+							example: 'Woodton'
+						}
+					}
+				},
+				estimatedDays: {
+					type: 'number',
+					description: 'Number of estimated days for the inquiry',
+					example: 1
+				}
+			}
+		},
 		InquiryResponse: {
 			type: 'object',
 			properties: {

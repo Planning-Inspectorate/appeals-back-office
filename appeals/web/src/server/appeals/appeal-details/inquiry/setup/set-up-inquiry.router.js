@@ -5,6 +5,8 @@ import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import * as validators from './set-up-inquiry-validators.js';
 import { runDueDateDaysValidator } from './set-up-inquiry-validators.js';
 import { createNotEmptyBodyValidator } from '#lib/validators/generic.validator.js';
+import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
+import { dateFieledName } from './inquiry.constants.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -15,6 +17,9 @@ router
 	.get(asyncHandler(controller.getInquiryDate))
 	.post(
 		validators.validateInquiryDateTime,
+		extractAndProcessDateErrors({
+			fieldNamePrefix: dateFieledName
+		}),
 		saveBodyToSession('setUpInquiry'),
 		asyncHandler(controller.postInquiryDate)
 	);

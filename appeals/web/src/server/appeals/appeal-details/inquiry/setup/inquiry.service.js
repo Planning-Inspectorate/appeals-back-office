@@ -12,3 +12,17 @@ export const createInquiry = async (request, inquiryDetails) => {
 		})
 		.json();
 };
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {{estimatedDays?: string, addressId?: number, inquiryStartTime: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string} | null}} inquiryDetails
+ * @returns {Promise<{inquiryId: number}>}
+ */
+export const updateInquiry = async (request, inquiryDetails) => {
+	const { appealId, inquiry } = request.currentAppeal;
+	return await request.apiClient
+		.patch(`appeals/${appealId}/inquiry/${inquiry.inquiryId}`, {
+			json: inquiryDetails
+		})
+		.json();
+};

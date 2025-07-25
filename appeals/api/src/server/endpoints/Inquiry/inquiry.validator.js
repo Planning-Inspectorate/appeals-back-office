@@ -47,3 +47,22 @@ export const postInquiryValidator = composeMiddleware(
 	),
 	validationErrorHandler
 );
+
+export const patchInquiryValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	validateIdParameter('inquiryId'),
+	validateDateParameter({ parameterName: 'inquiryStartTime', isRequired: true }),
+	body('address').optional(),
+	body('addressId').optional(),
+	body('estimatedDays').optional(),
+	validateRequiredStringParameter('address.addressLine1', LENGTH_250, 'address'),
+	validateStringParameterAllowingEmpty('address.addressLine2', LENGTH_250),
+	validateRequiredStringParameter('address.town', LENGTH_250, 'address'),
+	validateStringParameter('address.country', LENGTH_250),
+	validateStringParameterAllowingEmpty('address.county', LENGTH_250),
+	validateRequiredStringParameter('address.postcode', LENGTH_8, 'address'),
+	validateRegex('address.postcode', UK_POSTCODE_REGEX, 'address').withMessage(
+		ERROR_INVALID_POSTCODE
+	),
+	validationErrorHandler
+);

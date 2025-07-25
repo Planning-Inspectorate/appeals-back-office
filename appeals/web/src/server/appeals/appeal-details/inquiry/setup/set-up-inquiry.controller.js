@@ -4,13 +4,20 @@ import {
 	addressDetailsPage,
 	addressKnownPage,
 	inquiryDueDatesPage,
-	confirmInquiryPage
+	confirmInquiryPage,
+	confirmChangeInquiryPage
 } from './set-up-inquiry.mapper.js';
 import { inquiryEstimationPage } from './set-up-inquiry.mapper.js';
-import { isEmpty, has, pick } from 'lodash-es';
-import { dayMonthYearHourMinuteToISOString, getTodaysISOString } from '#lib/dates.js';
+import { isEmpty, isEqual, pick } from 'lodash-es';
+import {
+	dateISOStringToDayMonthYearHourMinute,
+	dayMonthYearHourMinuteToISOString,
+	getTodaysISOString
+} from '#lib/dates.js';
 import logger from '#lib/logger.js';
-import { createInquiry } from './inquiry.service.js';
+import { createInquiry, updateInquiry } from './inquiry.service.js';
+
+/** @typedef {import('express').NextFunction} NextFunction */
 
 /**
  * @param {string} path
@@ -21,6 +28,69 @@ export const redirectAndClearSession = (path, sessionKey) => (request, response)
 	delete request.session[sessionKey];
 
 	response.redirect(`${request.baseUrl}${path}`);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {NextFunction} next
+ */
+export const updateInquirySession = (request, response, next) => {
+	const sessionValues = request.session.changeInquiry || {};
+	const appealDetails = request.currentAppeal;
+
+	const inquiryDate = dateISOStringToDayMonthYearHourMinute(
+		request.currentAppeal.inquiry.inquiryStartTime
+	);
+	sessionValues['inquiry-date-day'] = sessionValues['inquiry-date-day'] ?? inquiryDate.day;
+	sessionValues['inquiry-date-month'] = sessionValues['inquiry-date-month'] ?? inquiryDate.month;
+	sessionValues['inquiry-date-year'] = sessionValues['inquiry-date-year'] ?? inquiryDate.year;
+	sessionValues['inquiry-time-hour'] = sessionValues['inquiry-time-hour'] ?? inquiryDate.hour;
+	sessionValues['inquiry-time-minute'] = sessionValues['inquiry-time-minute'] ?? inquiryDate.minute;
+
+	sessionValues['inquiryEstimationYesNo'] =
+		sessionValues['inquiryEstimationYesNo'] === undefined
+			? request.currentAppeal.inquiry.estimatedDays
+				? 'yes'
+				: 'no'
+			: sessionValues['inquiryEstimationYesNo'];
+
+	sessionValues['inquiryEstimationDays'] =
+		sessionValues['inquiryEstimationYesNo'] === 'yes'
+			? sessionValues['inquiryEstimationDays'] ?? request.currentAppeal.inquiry.estimatedDays
+			: undefined;
+
+	sessionValues['addressKnown'] =
+		sessionValues['addressKnown'] === undefined
+			? appealDetails.inquiry?.address
+				? 'yes'
+				: 'no'
+			: sessionValues['addressKnown'];
+	const existingAddressValues = pick(sessionValues, [
+		'addressLine1',
+		'addressLine2',
+		'town',
+		'county',
+		'postCode'
+	]);
+	const addressValues =
+		sessionValues['addressKnown'] === 'no'
+			? pick([], ['addressLine1', 'addressLine2', 'town', 'county', 'postCode'])
+			: isEmpty(existingAddressValues)
+			? {
+					...pick(appealDetails.inquiry.address, [
+						'addressLine1',
+						'addressLine2',
+						'town',
+						'county'
+					]),
+					postCode: appealDetails.inquiry.address ? appealDetails.inquiry.address['postcode'] : null
+			  }
+			: existingAddressValues;
+
+	request.session.changeInquiry = { ...sessionValues, ...addressValues };
+
+	next();
 };
 
 /**
@@ -44,20 +114,30 @@ const sessionValuesToDateTime = (sessionValues) => {
 export const getInquiryDate = async (request, response) => {
 	const sessionValues = request.session['setUpInquiry'] || {};
 
-	return renderInquiryDate(request, response, sessionValuesToDateTime(sessionValues));
+	return renderInquiryDate(request, response, 'setup', sessionValuesToDateTime(sessionValues));
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getChangeInquiryDate = async (request, response) => {
+	const sessionValues = request.session['changeInquiry'] || {};
+	return renderInquiryDate(request, response, 'change', sessionValuesToDateTime(sessionValues));
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {'change' | 'setup'} action
  * @param {{day?: string | number, month?: string | number, year?: string | number, hour?: string | number, minute?: string | number}} values
  */
-export const renderInquiryDate = async (request, response, values) => {
+export const renderInquiryDate = async (request, response, action, values) => {
 	const { errors } = request;
 
 	const appealDetails = request.currentAppeal;
 
-	const mappedPageContent = await inquiryDatePage(appealDetails, values);
+	const mappedPageContent = await inquiryDatePage(appealDetails, values, action);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -74,6 +154,7 @@ export const postInquiryDate = async (request, response) => {
 		return renderInquiryDate(
 			request,
 			response,
+			'setup',
 			sessionValuesToDateTime(request.session['setUpInquiry'] || {})
 		);
 	}
@@ -87,6 +168,25 @@ export const postInquiryDate = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
+export const postChangeInquiryDate = async (request, response) => {
+	if (request.errors) {
+		return renderInquiryDate(
+			request,
+			response,
+			'change',
+			sessionValuesToDateTime(request.session['changeInquiry'] || {})
+		);
+	}
+
+	const { appealId } = request.currentAppeal;
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/change/estimation`);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export const getInquiryEstimation = async (request, response) => {
 	return renderInquiryEstimation(request, response, 'setup');
 };
@@ -94,14 +194,24 @@ export const getInquiryEstimation = async (request, response) => {
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {'change' | 'setup'} action
  */
-export const renderInquiryEstimation = async (request, response, action) => {
+export const getChangeInquiryEstimation = async (request, response) => {
+	const sessionValues = request.session.changeInquiry || {};
+	return renderInquiryEstimation(request, response, 'change', sessionValues);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {'change' | 'setup'} action
+ * @param {{inquiryEstimationYesNo: string, inquiryEstimationDays: number}} [values]
+ */
+export const renderInquiryEstimation = async (request, response, action, values) => {
 	const { errors } = request;
 
 	const appealDetails = request.currentAppeal;
 
-	const mappedPageContent = await inquiryEstimationPage(appealDetails, action);
+	const mappedPageContent = await inquiryEstimationPage(appealDetails, action, values);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -121,6 +231,20 @@ export const postInquiryEstimation = async (request, response) => {
 	const { appealId } = request.currentAppeal;
 
 	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/setup/address`);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postChangeInquiryEstimation = async (request, response) => {
+	if (request.errors) {
+		return renderInquiryEstimation(request, response, 'change');
+	}
+
+	const { appealId } = request.currentAppeal;
+
+	return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/change/address`);
 };
 
 /**
@@ -223,18 +347,27 @@ export const postInquiryAddressDetails = async (request, response) => {
 export const getInquiryDueDates = async (request, response) => {
 	const values = request.session['setUpInquiry'] || {};
 
-	return renderInquiryDueDates(request, response, values);
+	return renderInquiryDueDates(request, response, 'setup', values);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
- * @param {import('@pins/appeals').Address} values
  */
-export const renderInquiryDueDates = async (request, response, values) => {
+export const getChangeInquiryDueDates = async (request, response) => {
+	const values = request.session['changeInquiry'] || {};
+	return renderInquiryDueDates(request, response, 'change', values);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {any} [values]
+ * @param {'change' | 'setup'} action
+ */
+export const renderInquiryDueDates = async (request, response, action, values) => {
 	const { currentAppeal, errors } = request;
-	const sessionValues = request.session['setUpInquiry'] || {};
-	const mappedPageContent = await inquiryDueDatesPage(currentAppeal, sessionValues, values, errors);
+	const mappedPageContent = await inquiryDueDatesPage(currentAppeal, values, action, errors);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -249,7 +382,7 @@ export const renderInquiryDueDates = async (request, response, values) => {
 export const postInquiryDueDates = async (request, response) => {
 	if (request.errors) {
 		const values = request.session['setUpInquiry'] || {};
-		return renderInquiryDueDates(request, response, values);
+		return renderInquiryDueDates(request, response, 'setup', values);
 	}
 
 	const { appealId } = request.currentAppeal;
@@ -263,15 +396,26 @@ export const postInquiryDueDates = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
+export const postChangeInquiryDueDates = async (request, response) => {
+	if (request.errors) {
+		const values = request.session['changeInquiry'] || {};
+		return renderInquiryDueDates(request, response, 'change', values);
+	}
+
+	const { appealId } = request.currentAppeal;
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${appealId}/inquiry/change/check-details`
+	);
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export const getChangeInquiryAddress = async (request, response) => {
-	const appealDetails = request.currentAppeal;
 	const sessionValues = request.session.changeInquiry || {};
-
-	const values = has(sessionValues, 'addressKnown')
-		? sessionValues
-		: { addressKnown: appealDetails.inquiry?.address ? 'yes' : 'no' };
-
-	return renderInquiryAddress(request, response, 'change', values);
+	return renderInquiryAddress(request, response, 'change', sessionValues);
 };
 
 /**
@@ -292,7 +436,7 @@ export const postChangeInquiryAddress = async (request, response) => {
 	}
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/inquiry/change/address-details`
+		`/appeals-service/appeal-details/${appealId}/inquiry/change/check-details`
 	);
 };
 
@@ -301,19 +445,12 @@ export const postChangeInquiryAddress = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getChangeInquiryAddressDetails = async (request, response) => {
-	const existingAddress = request.currentAppeal.inquiry.address;
-	const sessionValues = pick(request.session['changeInquiry'], [
-		'addressLine1',
-		'addressLine2',
-		'town',
-		'county',
-		'postCode'
-	]);
-	const values = isEmpty(sessionValues)
-		? { ...existingAddress, postCode: existingAddress?.postcode }
-		: sessionValues;
+	const inquiry = request.session['changeInquiry'] || {};
 
-	return renderInquiryAddressDetails(request, response, values, 'change');
+	const address = {
+		...pick(inquiry, ['addressLine1', 'addressLine2', 'town', 'county', 'postCode'])
+	};
+	return renderInquiryAddressDetails(request, response, address, 'change');
 };
 
 /**
@@ -329,7 +466,7 @@ export const postChangeInquiryAddressDetails = async (request, response) => {
 	const { appealId } = request.currentAppeal;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/inquiry/change/timetable-due-dates`
+		`/appeals-service/appeal-details/${appealId}/inquiry/change/check-details`
 	);
 };
 
@@ -362,6 +499,30 @@ export const getInquiryCheckDetails = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
+export const getChangeInquiryCheckDetails = async (request, response) => {
+	const {
+		currentAppeal: { appealId, appealReference },
+		session,
+		errors
+	} = request;
+
+	if (!request.session.changeInquiry) {
+		return renderAlreadySubmittedError(request, response);
+	}
+
+	const mappedPageContent = confirmChangeInquiryPage(appealId, appealReference, 'change', session);
+
+	return response.render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export const postInquiryCheckDetails = async (request, response) => {
 	try {
 		const {
@@ -379,57 +540,10 @@ export const postInquiryCheckDetails = async (request, response) => {
 			return response.status(500).render('app/500.njk');
 		}
 
-		const submittedAddress = {
-			address: {
-				...pick(inquiry, ['addressLine1', 'addressLine2', 'town', 'county']),
-				postcode: inquiry['postCode']
-			}
-		};
-
 		// Create Inquiry
 		await createInquiry(request, {
-			startDate: getTodaysISOString(),
-			inquiryStartTime: dayMonthYearHourMinuteToISOString({
-				day: inquiry['inquiry-date-day'],
-				month: inquiry['inquiry-date-month'],
-				year: inquiry['inquiry-date-year'],
-				hour: inquiry['inquiry-time-hour'],
-				minute: inquiry['inquiry-time-minute']
-			}),
-			...(inquiry.addressKnown === 'yes' && submittedAddress),
-			...(inquiry.inquiryEstimationYesNo === 'yes' && {
-				estimatedDays: session.setUpInquiry.inquiryEstimationDays
-			}),
-			lpaQuestionnaireDueDate: dayMonthYearHourMinuteToISOString({
-				day: inquiry['lpa-questionnaire-due-date-day'],
-				month: inquiry['lpa-questionnaire-due-date-month'],
-				year: inquiry['lpa-questionnaire-due-date-year']
-			}),
-			statementDueDate: dayMonthYearHourMinuteToISOString({
-				day: inquiry['statement-due-date-day'],
-				month: inquiry['statement-due-date-month'],
-				year: inquiry['statement-due-date-year']
-			}),
-			ipCommentsDueDate: dayMonthYearHourMinuteToISOString({
-				day: inquiry['ip-comments-due-date-day'],
-				month: inquiry['ip-comments-due-date-month'],
-				year: inquiry['ip-comments-due-date-year']
-			}),
-			statementOfCommonGroundDueDate: dayMonthYearHourMinuteToISOString({
-				day: inquiry['statement-of-common-ground-due-date-day'],
-				month: inquiry['statement-of-common-ground-due-date-month'],
-				year: inquiry['statement-of-common-ground-due-date-year']
-			}),
-			proofOfEvidenceAndWitnessesDueDate: dayMonthYearHourMinuteToISOString({
-				day: inquiry['inquiry-date-day'],
-				month: inquiry['inquiry-date-month'],
-				year: inquiry['inquiry-date-year']
-			}),
-			planningObligationDueDate: dayMonthYearHourMinuteToISOString({
-				day: inquiry['planning-obligation-due-date-day'],
-				month: inquiry['planning-obligation-due-date-month'],
-				year: inquiry['planning-obligation-due-date-year']
-			})
+			...buildInquiryRequest(inquiry),
+			startDate: getTodaysISOString()
 		});
 
 		addNotificationBannerToSession({
@@ -444,6 +558,7 @@ export const postInquiryCheckDetails = async (request, response) => {
 			appealId
 		});
 
+		delete request.session.setUpInquiry;
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(
@@ -455,6 +570,138 @@ export const postInquiryCheckDetails = async (request, response) => {
 
 		return response.status(500).render('app/500.njk');
 	}
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postChangeInquiryCheckDetails = async (request, response) => {
+	try {
+		const {
+			currentAppeal: { appealId }
+		} = request;
+
+		const { session } = request;
+		const inquiry = session.changeInquiry;
+
+		if (!inquiry) {
+			return renderAlreadySubmittedError(request, response);
+		}
+
+		// Update Inquiry
+		await updateInquiry(request, buildChangeInquiryRequest(inquiry, request.currentAppeal));
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'inquiryUpdated',
+			appealId
+		});
+
+		delete request.session.changeInquiry;
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when posting the check details and start case page'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {any} inquiry
+ *
+ * @returns {{estimatedDays?: string, inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string, planningObligationDueDate: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}}
+ */
+const buildInquiryRequest = (inquiry) => {
+	const submittedAddress = {
+		address: {
+			...pick(inquiry, ['addressLine1', 'addressLine2', 'town', 'county']),
+			postcode: inquiry['postCode']
+		}
+	};
+
+	return {
+		inquiryStartTime: dayMonthYearHourMinuteToISOString({
+			day: inquiry['inquiry-date-day'],
+			month: inquiry['inquiry-date-month'],
+			year: inquiry['inquiry-date-year'],
+			hour: inquiry['inquiry-time-hour'],
+			minute: inquiry['inquiry-time-minute']
+		}),
+		...(inquiry.addressKnown === 'yes' && submittedAddress),
+		...(inquiry.inquiryEstimationYesNo === 'yes' && {
+			estimatedDays: inquiry.inquiryEstimationDays
+		}),
+		lpaQuestionnaireDueDate: dayMonthYearHourMinuteToISOString({
+			day: inquiry['lpa-questionnaire-due-date-day'],
+			month: inquiry['lpa-questionnaire-due-date-month'],
+			year: inquiry['lpa-questionnaire-due-date-year']
+		}),
+		statementDueDate: dayMonthYearHourMinuteToISOString({
+			day: inquiry['statement-due-date-day'],
+			month: inquiry['statement-due-date-month'],
+			year: inquiry['statement-due-date-year']
+		}),
+		ipCommentsDueDate: dayMonthYearHourMinuteToISOString({
+			day: inquiry['ip-comments-due-date-day'],
+			month: inquiry['ip-comments-due-date-month'],
+			year: inquiry['ip-comments-due-date-year']
+		}),
+		statementOfCommonGroundDueDate: dayMonthYearHourMinuteToISOString({
+			day: inquiry['statement-of-common-ground-due-date-day'],
+			month: inquiry['statement-of-common-ground-due-date-month'],
+			year: inquiry['statement-of-common-ground-due-date-year']
+		}),
+		proofOfEvidenceAndWitnessesDueDate: dayMonthYearHourMinuteToISOString({
+			day: inquiry['inquiry-date-day'],
+			month: inquiry['inquiry-date-month'],
+			year: inquiry['inquiry-date-year']
+		}),
+		planningObligationDueDate: dayMonthYearHourMinuteToISOString({
+			day: inquiry['planning-obligation-due-date-day'],
+			month: inquiry['planning-obligation-due-date-month'],
+			year: inquiry['planning-obligation-due-date-year']
+		})
+	};
+};
+
+/**
+ * @param {any} inquiry
+ * @param {any} currentAppeal
+ * @returns {{estimatedDays?: string, addressId?: number, inquiryStartTime: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}  | null}}
+ */
+const buildChangeInquiryRequest = (inquiry, currentAppeal) => {
+	const submittedAddress = {
+		...pick(inquiry, ['addressLine1', 'addressLine2', 'town', 'county']),
+		postcode: inquiry['postCode']
+	};
+	let address;
+	if (inquiry.addressKnown === 'no') {
+		address = null;
+	} else if (!isEqual(submittedAddress, currentAppeal.inquiry.address)) {
+		address = submittedAddress;
+	}
+
+	return {
+		inquiryStartTime: dayMonthYearHourMinuteToISOString({
+			day: inquiry['inquiry-date-day'],
+			month: inquiry['inquiry-date-month'],
+			year: inquiry['inquiry-date-year'],
+			hour: inquiry['inquiry-time-hour'],
+			minute: inquiry['inquiry-time-minute']
+		}),
+		...(inquiry.addressKnown === 'yes' && { addressId: currentAppeal?.inquiry.addressId }),
+		address,
+		...(inquiry.inquiryEstimationYesNo === 'yes' && {
+			estimatedDays: inquiry.inquiryEstimationDays
+		})
+	};
 };
 
 /**
