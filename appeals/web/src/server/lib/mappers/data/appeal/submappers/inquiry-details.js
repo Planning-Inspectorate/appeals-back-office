@@ -46,14 +46,14 @@ export const mapInquiryDetails = ({ appealDetails, currentRoute, userHasUpdateCa
 		{
 			key: { text: 'Do you know the estimated number of days needed to carry out the inquiry?' },
 			value: { text: estimatedDays ? 'Yes' : 'No' },
-			...actions('Whether the estimated number of days is known or not', 'estimatedDays')
+			...actions('Whether the estimated number of days is known or not', 'estimation')
 		},
 		...(estimatedDays
 			? [
 					{
-						key: { text: 'Esitmated number of days needed to carry out inquiry' },
+						key: { text: 'Estimated number of days needed to carry out inquiry' },
 						value: { text: `${estimatedDays} Days` },
-						...actions('Estimated Days', 'estimated-days')
+						...actions('Estimated Days', 'estimation')
 					}
 			  ]
 			: []),

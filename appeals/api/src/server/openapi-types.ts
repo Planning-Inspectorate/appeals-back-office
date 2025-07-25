@@ -2709,6 +2709,43 @@ export interface CreateInquiryRequest {
 	};
 }
 
+export interface UpdateInquiryRequest {
+	/**
+	 * Date string of the inquiry start time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	inquiryStartTime?: string;
+	/**
+	 * Date string of the inquiry end time: YYYY-MM-DDTHH:MM:SS+HH:MM
+	 * @example "2026-11-10T00:00:00.000Z"
+	 */
+	inquiryEndTime?: string;
+	/**
+	 * Address ID of the inquiry
+	 * @example 1
+	 */
+	addressId?: number;
+	address?: {
+		/** @example "1 Grove Cottage" */
+		addressLine1?: string;
+		/** @example "Shotesham Road" */
+		addressLine2?: string;
+		/** @example "United Kingdom" */
+		country?: string;
+		/** @example "Devon" */
+		county?: string;
+		/** @example "NR35 2ND" */
+		postcode?: string;
+		/** @example "Woodton" */
+		town?: string;
+	};
+	/**
+	 * Number of estimated days for the inquiry
+	 * @example 1
+	 */
+	estimatedDays?: number;
+}
+
 export interface InquiryResponse {
 	/** @example 1 */
 	appealId?: number;

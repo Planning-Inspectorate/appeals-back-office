@@ -221,6 +221,7 @@ export const householdAppeal = {
 		appealId: 1,
 		inquiryStartTime: new Date('2022-03-31T01:00:00.000Z'),
 		inquiryEndTime: new Date('2022-03-31T03:00:00.000Z'),
+		estimatedDays: 6,
 		addressId: 1,
 		address: {
 			id: 1,

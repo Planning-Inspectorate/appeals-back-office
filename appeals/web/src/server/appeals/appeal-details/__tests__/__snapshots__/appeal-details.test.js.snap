@@ -249,7 +249,7 @@ exports[`appeal-details GET /:appealId Inquiry should render the Inquiry accordi
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the inquiry?</dt>
             <dd             class="govuk-summary-list__value">No</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimatedDays"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation"
                     data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
                 </dd>
         </div>
@@ -285,7 +285,7 @@ exports[`appeal-details GET /:appealId Inquiry should render the Inquiry estimat
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the inquiry?</dt>
             <dd             class="govuk-summary-list__value">No</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimatedDays"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation"
                     data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
                 </dd>
         </div>
@@ -337,13 +337,13 @@ exports[`appeal-details GET /:appealId Inquiry should render the inquiry details
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the inquiry?</dt>
             <dd             class="govuk-summary-list__value">Yes</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimatedDays"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation"
                     data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
                 </dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Esitmated number of days needed to carry out inquiry</dt>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Estimated number of days needed to carry out inquiry</dt>
             <dd             class="govuk-summary-list__value">6 Days</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimated-days"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation"
                     data-cy="change-estimated-days">Change<span class="govuk-visually-hidden"> Estimated Days</span></a>
                 </dd>
         </div>
@@ -389,13 +389,13 @@ exports[`appeal-details GET /:appealId Inquiry should render the inquiry details
         </div>
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the estimated number of days needed to carry out the inquiry?</dt>
             <dd             class="govuk-summary-list__value">Yes</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimatedDays"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation"
                     data-cy="change-whether-the-estimated-number-of-days-is-known-or-not">Change<span class="govuk-visually-hidden"> Whether the estimated number of days is known or not</span></a>
                 </dd>
         </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Esitmated number of days needed to carry out inquiry</dt>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Estimated number of days needed to carry out inquiry</dt>
             <dd             class="govuk-summary-list__value">6 Days</dd>
-                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimated-days"
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/inquiry/change/estimation"
                     data-cy="change-estimated-days">Change<span class="govuk-visually-hidden"> Estimated Days</span></a>
                 </dd>
         </div>

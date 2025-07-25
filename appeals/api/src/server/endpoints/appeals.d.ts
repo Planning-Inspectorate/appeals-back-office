@@ -924,6 +924,16 @@ type CreateInquiry = {
 	planningObligationDueDate: Date | string;
 };
 
+type UpdateInquiry = {
+	appealId: number;
+	inquiryId: number;
+	inquiryStartTime: Date | string;
+	inquiryEndTime: Date | string | undefined;
+	address: Omit<Schema.Address, 'id'> | null | undefined;
+	estimatedDays: number | undefined;
+	addressId?: number;
+};
+
 type UpdateHearing = {
 	appealId: number;
 	hearingId: number;
@@ -1047,5 +1057,6 @@ export {
 	InquiryResponse,
 	CreateInquiry,
 	InquiryAddress,
-	UpdateAppealDecisionRequest
+	UpdateAppealDecisionRequest,
+	UpdateInquiry
 };
