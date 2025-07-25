@@ -1946,7 +1946,8 @@ export const assignedAppealsPage1 = {
 				issueDeterminationDate: null
 			},
 			isParentAppeal: true,
-			isChildAppeal: false
+			isChildAppeal: false,
+			numberOfResidencesNetChange: 5
 		},
 		{
 			appealId: 28524,
@@ -2018,7 +2019,8 @@ export const assignedAppealsPage1 = {
 				issueDeterminationDate: null
 			},
 			isParentAppeal: false,
-			isChildAppeal: true
+			isChildAppeal: true,
+			numberOfResidencesNetChange: 5
 		},
 		{
 			appealId: 28526,
@@ -2090,7 +2092,8 @@ export const assignedAppealsPage1 = {
 				issueDeterminationDate: null
 			},
 			isParentAppeal: false,
-			isChildAppeal: false
+			isChildAppeal: false,
+			numberOfResidencesNetChange: 5
 		},
 		{
 			appealId: 28512,
@@ -2150,7 +2153,8 @@ export const assignedAppealsPage1 = {
 			},
 			dueDate: '2025-03-09T14:30:30.083Z',
 			isParentAppeal: false,
-			isChildAppeal: false
+			isChildAppeal: false,
+			numberOfResidencesNetChange: 5
 		},
 		{
 			appealId: 28515,
@@ -2209,7 +2213,8 @@ export const assignedAppealsPage1 = {
 				}
 			},
 			isParentAppeal: false,
-			isChildAppeal: false
+			isChildAppeal: false,
+			numberOfResidencesNetChange: 5
 		}
 	],
 	statuses: ['final_comments', 'lpa_questionnaire', 'statements', 'ready_to_start', 'validation'],
@@ -2277,7 +2282,8 @@ export const assignedAppealsPage2 = {
 				}
 			},
 			isParentAppeal: false,
-			isChildAppeal: false
+			isChildAppeal: false,
+			numberOfResidencesNetChange: 5
 		},
 		{
 			appealId: 28510,
@@ -2343,7 +2349,8 @@ export const assignedAppealsPage2 = {
 				caseResubmissionDueDate: null
 			},
 			isParentAppeal: false,
-			isChildAppeal: false
+			isChildAppeal: false,
+			numberOfResidencesNetChange: 5
 		},
 		{
 			appealId: 28525,
@@ -2416,7 +2423,8 @@ export const assignedAppealsPage2 = {
 				issueDeterminationDate: null
 			},
 			isParentAppeal: false,
-			isChildAppeal: false
+			isChildAppeal: false,
+			numberOfResidencesNetChange: 5
 		},
 		{
 			appealId: 28531,
@@ -2489,7 +2497,8 @@ export const assignedAppealsPage2 = {
 				issueDeterminationDate: null
 			},
 			isParentAppeal: false,
-			isChildAppeal: false
+			isChildAppeal: false,
+			numberOfResidencesNetChange: 5
 		},
 		{
 			appealId: 28533,
@@ -2561,7 +2570,8 @@ export const assignedAppealsPage2 = {
 				issueDeterminationDate: null
 			},
 			isParentAppeal: false,
-			isChildAppeal: false
+			isChildAppeal: false,
+			numberOfResidencesNetChange: 5
 		}
 	],
 	statuses: ['awaiting_transfer', 'event', 'lpa_questionnaire', 'final_comments'],

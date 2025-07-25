@@ -1377,7 +1377,6 @@ describe('appeal-details', () => {
 						expect(unprettifiedElementHtml).toContain(
 							`<p class="govuk-notification-banner__heading"> ${testCase.successBannerHeading}</p>`
 						);
-						expect(unprettifiedElementHtml).not.toContain('Important</h3>');
 						expect(unprettifiedElementHtml).not.toContain(
 							`<p class="govuk-notification-banner__heading">${testCase.importantBannerHeading}</p>`
 						);

@@ -241,15 +241,14 @@ export function getRequiredActionsForAppeal(appealDetails, view, residencesNetCh
 			break;
 	}
 
-	if (residencesNetChange == null) {
-		// @ts-ignore
-		residencesNetChange = appealDetails.numberOfResidencesNetChange;
-	}
+	// @ts-ignore
+	const effectiveResidencesNetChange =
+		residencesNetChange ?? appealDetails.numberOfResidencesNetChange;
 
 	if (
 		config.featureFlags.featureFlagNetResidence &&
 		appealDetails.appealType === APPEAL_TYPE.S78 &&
-		!residencesNetChange
+		!effectiveResidencesNetChange
 	) {
 		actions.push('addResidencesNetChange');
 	}
