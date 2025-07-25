@@ -20,6 +20,8 @@ import { mapInquiryDate } from './submappers/inquiry-date.mapper.js';
 import { mapAddInquiryEstimates } from './submappers/inquiry-add-inquiry-estimates.js';
 import { mapInquiryEstimates } from './submappers/inquiry-inquiry-estimates.js';
 import { mapInquiryDetails } from './submappers/inquiry-details.js';
+import { mapNetResidenceChange } from './submappers/net-residence-change.mapper.js';
+import { mapNetResidenceGainOrLoss } from './submappers/net-residence-gain-or-less.mapper.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -44,5 +46,7 @@ export const submaps = {
 	hearingEstimates: mapHearingEstimates,
 	cancelHearing: mapCancelHearing,
 	hearingDate: mapHearingDate,
-	inquiryDate: mapInquiryDate
+	inquiryDate: mapInquiryDate,
+	netResidenceChange: mapNetResidenceChange,
+	netResidenceGainOrLoss: mapNetResidenceGainOrLoss
 };

@@ -14,9 +14,10 @@ import {
  * This logic is documented in `docs/reference/appeal-action-required-logic.md`. Please ensure this document is kept updated to reflect any changes made in this function.
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal|import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} appealDetails
  * @param { 'summary'|'detail' } view
+ * @param  {number | null | undefined} residencesNetChange
  * @returns {AppealRequiredAction[]}
  */
-export function getRequiredActionsForAppeal(appealDetails, view) {
+export function getRequiredActionsForAppeal(appealDetails, view, residencesNetChange = null) {
 	/** @type {AppealRequiredAction[]} */
 	const actions = [];
 
@@ -238,8 +239,12 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			break;
 	}
 
-	// @ts-ignore
-	if (!appealDetails.numberOfResidencesNetChange) {
+	if (residencesNetChange == null) {
+		// @ts-ignore
+		residencesNetChange = appealDetails.numberOfResidencesNetChange;
+	}
+
+	if (!residencesNetChange) {
 		actions.push('addResidencesNetChange');
 	}
 

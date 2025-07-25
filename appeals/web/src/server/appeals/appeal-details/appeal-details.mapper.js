@@ -82,7 +82,11 @@ export async function appealDetailsPage(
 
 	const accordion = generateAccordionItems(appealDetails, mappedData, session);
 
-	const statusDependentNotifications = mapStatusDependentNotifications(appealDetails, request);
+	const statusDependentNotifications = mapStatusDependentNotifications(
+		appealDetails,
+		request,
+		appellantCase?.numberOfResidencesNetChange
+	);
 	const notificationBanners = sortNotificationBanners([
 		...statusDependentNotifications,
 		...mapNotificationBannersFromSession(session, 'appealDetails', appealDetails.appealId)

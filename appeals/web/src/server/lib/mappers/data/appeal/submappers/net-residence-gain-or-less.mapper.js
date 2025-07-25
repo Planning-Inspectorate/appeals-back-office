@@ -7,22 +7,25 @@ export const mapNetResidenceGainOrLoss = ({
 	userHasUpdateCasePermission
 }) => {
 	const netChange = appellantCase?.numberOfResidencesNetChange;
+	const id = 'net-residence-gain-or-loss';
+
+	if (netChange == null || netChange === 0) {
+		return { id, display: {} };
+	}
 
 	let text;
-	if (netChange == null) {
-		text = 'Not provided';
-	} else if (netChange > 0) {
+	if (netChange > 0) {
 		text = 'Net gain';
 	} else {
 		text = 'Net loss';
 	}
 
 	return textSummaryListItem({
-		id: 'net-residence-gain-or-loss',
+		id,
 		text,
-		value: netChange == null ? 'Not provided' : netChange.toString(),
+		value: netChange == null ? 'Not provided' : Math.abs(netChange).toString(),
 		link: `/appeals-service/appeal-details/${appealDetails.appealId}/residential-units/new`,
 		editable: userHasUpdateCasePermission,
-		actionText: netChange != null ? 'Change' : 'Add'
+		actionText: 'Change'
 	});
 };

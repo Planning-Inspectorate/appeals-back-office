@@ -11,6 +11,8 @@ export const mapNetResidenceChange = ({
 	let value;
 	if (netChange == null) {
 		value = 'Not provided';
+	} else if (netChange === 0) {
+		value = 'No change to number of residential units';
 	} else if (netChange > 0) {
 		value = 'Net gain';
 	} else {
