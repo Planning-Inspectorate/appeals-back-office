@@ -128,6 +128,110 @@ The following notifications are sent from the back-office using these [Notify Te
 - **Notify Template:** [ip-comment-rejected-deadline-extended](../appeals/api/src/server/notify/templates/ip-comment-rejected-deadline-extended.content.md)
 - **Trigger:** Update and extend the ip comment due date and then review an ip comment and mark it as rejected by selecting "Reject" and continue
 
+## Site visit
+
+### Site visit access required date change appellant
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-access-required-date-change-appellant](../appeals/api/src/server/notify/templates/site-visit-change-access-required-date-change-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the date/time. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit access required to accompanied appellant
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-access-required-to-accompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-change-access-required-to-accompanied-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from access required to accompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit access required to accompanied lpa
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-access-required-to-accompanied-lpa](../appeals/api/src/server/notify/templates/site-visit-change-access-required-to-accompanied-lpa.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from access required to accompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit access required to unaccompanied appellant
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-access-required-to-unaccompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-change-access-required-to-unaccompanied-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from access required to unaccompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit accompanied date change appellant
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-accompanied-date-change-appellant](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-date-change-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the date/time. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit accompanied date change lpa
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-accompanied-date-change-lpa](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-date-change-lpa.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the date/time. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit accompanied to access required appellant
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-accompanied-to-access-required-appellant](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-to-access-required-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from accompanied to access required. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit accompanied to access required lpa
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-accompanied-to-access-required-lpa](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-to-access-required-lpa.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from accompanied to access required. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit accompanied to unaccompanied appellant
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-accompanied-to-unaccompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-to-unaccompanied-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from accompanied to unaccompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit accompanied to unaccompanied lpa
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-accompanied-to-unaccompanied-lpa](../appeals/api/src/server/notify/templates/site-visit-change-accompanied-to-unaccompanied-lpa.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from accompanied to unaccompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit unaccompanied to access required appellant
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-unaccompanied-to-access-required-appellant](../appeals/api/src/server/notify/templates/site-visit-change-unaccompanied-to-access-required-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from unaccompanied to access required. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit unaccompanied to accompanied appellant
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-unaccompanied-to-accompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-change-unaccompanied-to-accompanied-appellant.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from unaccompanied to accompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit unaccompanied to accompanied lpa
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-change-unaccompanied-to-accompanied-lpa](../appeals/api/src/server/notify/templates/site-visit-change-unaccompanied-to-accompanied-lpa.content.md)
+- **Trigger:** A site visit is already set up and the CO edits the site visit to update the site visit type from unaccompanied to accompanied. Confirming the change from the ‘Check details and update site visit’ page triggers this email.
+
+### Site visit access required appellant
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-schedule-access-required-appellant](../appeals/api/src/server/notify/templates/site-visit-schedule-access-required-appellant.content.md)
+- **Trigger:** A site visit is not set up and the CO sets up an access required site visit. Confirming the change from the ‘Check details and set up site visit’ page triggers this email.
+
+### Site visit accompanied appellant
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-schedule-accompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-schedule-accompanied-appellant.content.md)
+- **Trigger:** A site visit is not set up and the CO sets up an accompanied site visit. Confirming the change from the ‘Check details and set up site visit’ page triggers this email.
+
+### Site visit accompanied lpa
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-schedule-accompanied-lpa](../appeals/api/src/server/notify/templates/site-visit-schedule-accompanied-lpa.content.md)
+- **Trigger:** A site visit is not set up and the CO sets up an accompanied site visit. Confirming the change from the ‘Check details and set up site visit’ page triggers this email.
+
+### Site visit unaccompanied appellant
+
+- **Appeal type:** all
+- **Notify Template:** [site-visit-schedule-unaccompanied-appellant](../appeals/api/src/server/notify/templates/site-visit-schedule-unaccompanied-appellant.content.md)
+- **Trigger:** A site visit is not set up and the CO sets up an unaccompanied site visit. Confirming the change from the ‘Check details and set up site visit’ page triggers this email.
+
 ## Final comments
 
 ### Final comments done appellant
