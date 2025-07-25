@@ -129,6 +129,7 @@ interface SingleAppealDetailsResponse {
 	hearing?: Hearing | null;
 	inquiry?: Inquiry | null;
 	inquiryEstimate?: InquiryEstimate | null;
+	numberOfResidencesNetChange?: number | null;
 }
 
 interface UpdateAppealRequest {

@@ -241,7 +241,6 @@ export function getRequiredActionsForAppeal(appealDetails, view, residencesNetCh
 			break;
 	}
 
-	// @ts-ignore
 	const effectiveResidencesNetChange =
 		residencesNetChange ?? appealDetails.numberOfResidencesNetChange;
 
