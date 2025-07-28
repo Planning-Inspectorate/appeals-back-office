@@ -11,7 +11,12 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal, fullPlanningAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
+import {
+	householdAppeal,
+	casPlanningAppeal,
+	fullPlanningAppeal,
+	listedBuildingAppeal
+} from '#tests/appeals/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { add } from 'date-fns';
 import {
@@ -35,6 +40,18 @@ const responseDateSet = setTimeInTimeZone(utcDate, DEADLINE_HOUR, DEADLINE_MINUT
 
 const houseAppealWithTimetable = {
 	...householdAppeal,
+	caseStartedDate: new Date(2022, 4, 18),
+	caseValidationDate: new Date(2022, 4, 20),
+	caseValidDate: new Date(2022, 4, 20),
+	appealTimetable: {
+		appealId: 1,
+		id: 101,
+		lpaQuestionnaireDueDate: new Date('2023-05-16T01:00:00.000Z')
+	}
+};
+
+const casPlanningAppealWithTimetable = {
+	...casPlanningAppeal,
 	caseStartedDate: new Date(2022, 4, 18),
 	caseValidationDate: new Date(2022, 4, 20),
 	caseValidDate: new Date(2022, 4, 20),
@@ -487,6 +504,12 @@ describe('appeal timetables routes', () => {
 				[
 					'householdAppeal',
 					houseAppealWithTimetable,
+					{ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' },
+					{}
+				],
+				[
+					'casPlanningAppeal',
+					casPlanningAppealWithTimetable,
 					{ lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z' },
 					{}
 				],

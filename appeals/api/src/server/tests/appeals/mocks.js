@@ -462,6 +462,34 @@ export const householdAppealLPAQuestionnaireIncomplete = {
 	id: 3
 };
 
+export const casPlanningAppealAppellantCaseValid = {
+	...casPlanningAppeal,
+	appellantCase: {
+		...casPlanningAppeal.appellantCase,
+		...validAppellantCaseOutcome
+	},
+	id: 4
+};
+
+export const casPlanningAppealAppellantCaseIncomplete = {
+	...casPlanningAppeal,
+	appellantCase: {
+		...casPlanningAppeal.appellantCase,
+		...incompleteAppellantCaseOutcome
+	},
+	id: 4,
+	caseExtensionDate: new Date(2099, 6, 14)
+};
+
+export const casPlanningAppealAppellantCaseInvalid = {
+	...casPlanningAppeal,
+	appellantCase: {
+		...casPlanningAppeal.appellantCase,
+		...invalidAppellantCaseOutcome
+	},
+	id: 4
+};
+
 export const casPlanningAppealLPAQuestionnaireIncomplete = {
 	...casPlanningAppeal,
 	appealStatus: [
@@ -534,7 +562,7 @@ export const linkedAppeals = [
 		childRef: '76215416',
 		child: {
 			appealType: {
-				key: 'Z',
+				key: 'ZP',
 				type: 'Another appeal type'
 			}
 		},
