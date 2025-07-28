@@ -73,18 +73,20 @@ export const validateDocumentDetailsBodyFormat = createValidator(
 
 export const validateDocumentDetailsReceivedDatesFields = createValidator(
 	body('items.*.receivedDate').custom((value, { req }) => {
-		const documentName = getDocumentName(req);
+		const documentName = `${
+			getDocumentName(req) ? getDocumentName(req) + ' received' : 'Received'
+		}`;
 		const day = value.day;
 		const month = value.month;
 		const year = value.year;
 
 		if (!day && !month && !year) {
 			throw new Error(
-				`all-fields-day::Enter the ${
-					documentName === 'Received' || !documentName.includes('LPA')
+				`all-fields-day::Enter the date you received the ${
+					documentName === 'document' || !documentName.includes('LPA')
 						? lowerCase(documentName)
 						: documentName
-				} date`
+				}`
 			);
 		}
 
@@ -148,7 +150,9 @@ export const validateDocumentDetailsReceivedDatesFields = createValidator(
 
 export const validateDocumentDetailsReceivedDateValid = createValidator(
 	body('items.*.receivedDate').custom((value, { req }) => {
-		const documentName = getDocumentName(req);
+		const documentName = `${
+			getDocumentName(req) ? getDocumentName(req) + ' received' : 'Received'
+		}`;
 		const day = value.day;
 		const month = value.month;
 		const year = value.year;
@@ -172,7 +176,9 @@ export const validateDocumentDetailsReceivedDateValid = createValidator(
 
 export const validateDocumentDetailsReceivedDateIsNotFutureDate = createValidator(
 	body('items.*.receivedDate').custom((value, { req }) => {
-		const documentName = getDocumentName(req);
+		const documentName = `${
+			getDocumentName(req) ? getDocumentName(req) + ' received' : 'Received'
+		}`;
 		const day = value.day;
 		const month = value.month;
 		const year = value.year;
@@ -180,7 +186,7 @@ export const validateDocumentDetailsReceivedDateIsNotFutureDate = createValidato
 		if (!day || !month || !year) {
 			return false;
 		}
-		const errorMessage = `all-fields-day::${documentName} date cannot be a future date`;
+		const errorMessage = `all-fields-day::${documentName} date must be in the past`;
 
 		if (!dateIsTodayOrInThePast({ day, month, year })) {
 			throw new Error(errorMessage);
@@ -217,9 +223,9 @@ export const getDocumentName = (
 	const folderDisplayLabel = mapFolderNameToDisplayLabel(currentFolder?.path);
 
 	if (folderDisplayLabel == null || String(folderDisplayLabel).trim() === '') {
-		return 'Received';
+		return '';
 	} else {
-		return `${folderDisplayLabel} received`;
+		return `${folderDisplayLabel}`;
 	}
 };
 
@@ -241,7 +247,10 @@ export const createDateInputDateBusinessDayValidator = createValidator(
 
 		const result = await dateIsABusinessDay(req.apiClient, dateToValidate);
 		if (result === false) {
-			const errorMessage = `all-fields::${getDocumentName(req)} must be a business day`;
+			const errorMessage = `all-fields::${
+				getDocumentName(req) ? getDocumentName(req) + ' received' : 'Received'
+			}
+ 				received date must be a business day`;
 
 			throw new Error(errorMessage);
 		}
