@@ -2,7 +2,6 @@ import { getSkipValue } from '#utils/database-pagination.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
-import { uniq } from 'lodash-es';
 
 /**
  * @typedef {Awaited<ReturnType<getAllAppeals>>} DBAppeals
@@ -21,6 +20,8 @@ import { uniq } from 'lodash-es';
  * @param {number} caseOfficerId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
+ * @param {number} [pageNumber]
+ * @param {number} [pageSize]
  */
 const getAllAppeals = async (
 	searchTerm,
@@ -30,9 +31,124 @@ const getAllAppeals = async (
 	inspectorId,
 	caseOfficerId,
 	isGreenBelt,
+	appealTypeId,
+	pageNumber,
+	pageSize
+) => {
+	/** @type {{ skip?: number, take?: number }} */
+	const pagination =
+		pageNumber && pageSize
+			? {
+					skip: getSkipValue(pageNumber, pageSize),
+					take: pageSize
+			  }
+			: {};
+
+	const where = buildAllAppealsWhereClause(
+		searchTerm,
+		status,
+		hasInspector,
+		lpaCode,
+		inspectorId,
+		caseOfficerId,
+		isGreenBelt,
+		appealTypeId
+	);
+
+	const appeals = await databaseConnector.appeal.findMany({
+		where,
+		include: {
+			address: true,
+			appealStatus: {
+				where: {
+					valid: true
+				}
+			},
+			appealType: true,
+			procedureType: true,
+			lpa: true,
+			appellantCase: {
+				include: {
+					appellantCaseValidationOutcome: true
+				}
+			},
+			inspector: true,
+			caseOfficer: true,
+			appealTimetable: true,
+			representations: true,
+			lpaQuestionnaire: {
+				include: {
+					lpaQuestionnaireValidationOutcome: true
+				}
+			},
+			siteVisit: true,
+			hearing: true,
+			inquiry: true
+		},
+		orderBy: { caseUpdatedDate: 'desc' },
+		...pagination
+	});
+
+	return appeals;
+};
+
+/**
+ * @param {string} searchTerm
+ * @param {string} status
+ * @param {string} hasInspector
+ * @param {string} lpaCode
+ * @param {number} inspectorId
+ * @param {number} caseOfficerId
+ * @param {boolean} isGreenBelt
+ * @param {number} appealTypeId
+ */
+const getAllAppealsCount = async (
+	searchTerm,
+	status,
+	hasInspector,
+	lpaCode,
+	inspectorId,
+	caseOfficerId,
+	isGreenBelt,
 	appealTypeId
 ) => {
-	const where = {
+	const where = buildAllAppealsWhereClause(
+		searchTerm,
+		status,
+		hasInspector,
+		lpaCode,
+		inspectorId,
+		caseOfficerId,
+		isGreenBelt,
+		appealTypeId
+	);
+
+	const count = await databaseConnector.appeal.count({ where });
+
+	return count;
+};
+
+/**
+ * @param {string} searchTerm
+ * @param {string} status
+ * @param {string} hasInspector
+ * @param {string} lpaCode
+ * @param {number} inspectorId
+ * @param {number} caseOfficerId
+ * @param {boolean} isGreenBelt
+ * @param {number} appealTypeId
+ */
+const buildAllAppealsWhereClause = (
+	searchTerm,
+	status,
+	hasInspector,
+	lpaCode,
+	inspectorId,
+	caseOfficerId,
+	isGreenBelt,
+	appealTypeId
+) => {
+	return {
 		appealStatus: {
 			some: {
 				valid: true,
@@ -91,41 +207,6 @@ const getAllAppeals = async (
 			appealTypeId
 		})
 	};
-
-	const appeals = await databaseConnector.appeal.findMany({
-		where,
-		include: {
-			address: true,
-			appealStatus: {
-				where: {
-					valid: true
-				}
-			},
-			appealType: true,
-			procedureType: true,
-			lpa: true,
-			appellantCase: {
-				include: {
-					appellantCaseValidationOutcome: true
-				}
-			},
-			inspector: true,
-			caseOfficer: true,
-			appealTimetable: true,
-			representations: true,
-			lpaQuestionnaire: {
-				include: {
-					lpaQuestionnaireValidationOutcome: true
-				}
-			},
-			siteVisit: true,
-			hearing: true,
-			inquiry: true
-		},
-		orderBy: { caseUpdatedDate: 'desc' }
-	});
-
-	return appeals;
 };
 
 /**
@@ -278,39 +359,19 @@ const getAppealsStatusesInPersonalList = (userId) => {
  * @returns {Promise<string[]>} a duplicate-free list of all appeal statuses in the national list
  */
 const getAppealsStatusesInNationalList = async () => {
-	const where = {
-		AND: {
-			appealStatus: {
-				some: {
-					valid: true
-				}
-			}
-		}
-	};
-
-	const results = await databaseConnector.appeal.findMany({
-		where,
+	const results = await databaseConnector.appealStatus.findMany({
 		select: {
-			appealStatus: {
-				select: {
-					status: true
-				},
-				where: {
-					valid: true
-				}
-			}
-		}
+			status: true
+		},
+		distinct: ['status']
 	});
 
-	return uniq(
-		results.flatMap((result) =>
-			result.appealStatus.map((appealStatusEntry) => appealStatusEntry.status)
-		)
-	);
+	return results.map((result) => result.status);
 };
 
 export default {
 	getAllAppeals,
+	getAllAppealsCount,
 	getUserAppeals,
 	getAppealsStatusesInNationalList
 };

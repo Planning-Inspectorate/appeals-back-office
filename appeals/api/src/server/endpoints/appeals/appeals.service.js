@@ -169,17 +169,27 @@ const retrieveAppealListData = async (
 		inspectorId && Number(inspectorId),
 		caseOfficerId && Number(caseOfficerId),
 		isGreenBelt,
-		appealTypeId
+		appealTypeId,
+		pageNumber,
+		pageSize
 	);
 
-	const start = (pageNumber - 1) * pageSize;
-	const end = start + pageSize;
-	const mappedAppeals = await mapAppeals(appeals.slice(start, end));
+	const mappedAppeals = await mapAppeals(appeals);
 	const mappedStatuses = mapAppealStatuses(appeals);
 	const mappedLPAs = mapAppealLPAs(appeals);
 	const mappedInspectors = await mapInspectors(appeals);
 	const mappedCaseOfficers = await mapCaseOfficers(appeals);
 	const statusesInNationalList = await appealListRepository.getAppealsStatusesInNationalList();
+	const itemCount = await appealListRepository.getAllAppealsCount(
+		searchTerm,
+		status,
+		hasInspector,
+		lpaCode,
+		inspectorId,
+		caseOfficerId,
+		isGreenBelt,
+		appealTypeId
+	);
 
 	return {
 		mappedStatuses,
@@ -188,7 +198,7 @@ const retrieveAppealListData = async (
 		mappedInspectors,
 		mappedCaseOfficers,
 		mappedAppeals,
-		itemCount: appeals.length
+		itemCount
 	};
 };
 
