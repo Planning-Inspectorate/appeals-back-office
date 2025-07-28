@@ -4,6 +4,7 @@ import { add, isAfter, isBefore, isValid, parseISO } from 'date-fns';
 import { padNumberWithZero } from '#lib/string-utilities.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { getFileVersionsInfo } from '#appeals/appeal-documents/appeal.documents.service.js';
 
 /**
  * @typedef {import('../appeals/appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
@@ -336,4 +337,32 @@ export const getExampleDateHint = (daysFromToday = 45, inFuture = true) => {
 		date.getMonth() + 1, // Months are zero-based
 		date.getFullYear()
 	].join(' ');
+};
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {string} documentId
+ * @param {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} currentAppeal
+ * @returns
+ */
+export const getOriginalAndLatestLetterDatesObject = async (
+	apiClient,
+	appealId,
+	documentId,
+	currentAppeal
+) => {
+	const { latestDocumentVersion: latestFileVersion, allVersions = [] } =
+		(await getFileVersionsInfo(apiClient, appealId, documentId || '')) || {};
+	const originalLetterDate =
+		allVersions.length > 0
+			? dateISOStringToDisplayDate(allVersions[0]?.dateReceived)
+			: dateISOStringToDisplayDate(currentAppeal.decision.letterDate);
+
+	const latestLetterDate =
+		allVersions.length > 1
+			? dateISOStringToDisplayDate(latestFileVersion?.dateReceived)
+			: dateISOStringToDisplayDate(currentAppeal.decision.letterDate);
+	return { originalLetterDate, latestLetterDate, latestFileVersion };
 };
