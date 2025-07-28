@@ -19,6 +19,7 @@ const mockAppealFindUnique = jest.fn().mockResolvedValue({});
 const mockAppealCreate = jest.fn().mockResolvedValue({});
 const mocklPAQuestionnaireCreate = jest.fn().mockResolvedValue({});
 const mocklPAQuestionnaireUpdate = jest.fn().mockResolvedValue({});
+const mockAppealStatusFindMany = jest.fn().mockResolvedValue([]);
 const mockAppealStatusUpdateMany = jest.fn().mockResolvedValue({});
 const mockAppealStatusCreate = jest.fn().mockResolvedValue({});
 const mockAppealUpdate = jest.fn().mockResolvedValue({});
@@ -206,7 +207,8 @@ class MockPrismaClient {
 		return {
 			updateMany: mockAppealStatusUpdateMany,
 			create: mockAppealStatusCreate,
-			createMany: mockAppealStatusCreateMany
+			createMany: mockAppealStatusCreateMany,
+			findMany: mockAppealStatusFindMany
 		};
 	}
 
