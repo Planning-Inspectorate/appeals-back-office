@@ -77,7 +77,7 @@ describe('Schedule site visit', () => {
 	// start time only required for accompanied visits and access required
 	// end time only required for access required
 	// no times required for unnaccompanied visits
-	it('should show an error when a past date is entered for the site visit', () => {
+	it('should show a sucess banner when a past date is entered for the site visit', () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
@@ -93,8 +93,7 @@ describe('Schedule site visit', () => {
 
 			caseDetailsPage.clickButtonByText('Confirm');
 
-			caseDetailsPage.validateErrorMessage('The site visit date must be in the future');
-			caseDetailsPage.validateInLineErrorMessage('The site visit date must be in the future');
+			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
 		});
 	});
 
