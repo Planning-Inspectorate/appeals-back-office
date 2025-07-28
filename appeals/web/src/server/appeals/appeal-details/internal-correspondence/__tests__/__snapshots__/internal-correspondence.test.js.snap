@@ -2698,7 +2698,9 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
                     of a document will delete the document from the case</strong>
             </div>
             <form method="POST">
-                <div class="govuk-form-group">
+                <div class="govuk-form-group govuk-form-group--error">
+                    <p id="delete-file-answer-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select yes if you are
+                        sure you want to remove this version</p>
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer" name="delete-file-answer"
@@ -2757,7 +2759,9 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
                     of a document will delete the document from the case</strong>
             </div>
             <form method="POST">
-                <div class="govuk-form-group">
+                <div class="govuk-form-group govuk-form-group--error">
+                    <p id="delete-file-answer-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select yes if you are
+                        sure you want to remove this version</p>
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer" name="delete-file-answer"
@@ -2816,7 +2820,9 @@ exports[`internal correspondence POST /internal-correspondence/:correspondenceCa
                     of a document will delete the document from the case</strong>
             </div>
             <form method="POST">
-                <div class="govuk-form-group">
+                <div class="govuk-form-group govuk-form-group--error">
+                    <p id="delete-file-answer-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select yes if you are
+                        sure you want to remove this version</p>
                     <div class="govuk-radios" data-module="govuk-radios">
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="delete-file-answer" name="delete-file-answer"

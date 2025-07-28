@@ -1498,6 +1498,7 @@ export async function manageDocumentPage({
  * @param {DocumentInfo} document
  * @param {FolderInfo} folder - API type needs to be updated here (should be Folder, but there are worse problems with that type)
  * @param {string} versionId
+ * @param {import("@pins/express/types/express.js").ValidationErrors | undefined} errors
  * @returns {Promise<PageContent>}
  */
 export async function deleteDocumentPage(
@@ -1505,7 +1506,8 @@ export async function deleteDocumentPage(
 	redactionStatuses,
 	document,
 	folder,
-	versionId
+	versionId,
+	errors
 ) {
 	const totalDocumentVersions =
 		document.allVersions?.filter((documentVersion) => !documentVersion.isDeleted).length || 1;
@@ -1573,7 +1575,9 @@ export async function deleteDocumentPage(
 				parameters: {
 					name: 'delete-file-answer',
 					idPrefix: 'delete-file-answer',
-					items: radioEntries
+					items: radioEntries,
+					errorMessage: errors &&
+						errors['delete-file-answer'] && { text: errors['delete-file-answer'].msg }
 				}
 			},
 			{

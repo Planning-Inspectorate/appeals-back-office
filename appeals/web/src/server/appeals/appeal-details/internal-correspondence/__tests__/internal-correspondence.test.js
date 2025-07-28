@@ -528,25 +528,25 @@ describe('internal correspondence', () => {
 						value: '',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date must include a day`
+						)} date must include a day`
 					},
 					{
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date day must be a number`
+						)} date day must be a number`
 					},
 					{
 						value: '0',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date day must be between 1 and 31`
+						)} date day must be between 1 and 31`
 					},
 					{
 						value: '32',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date day must be between 1 and 31`
+						)} date day must be between 1 and 31`
 					}
 				];
 
@@ -593,25 +593,25 @@ describe('internal correspondence', () => {
 						value: '',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date must include a month`
+						)} date must include a month`
 					},
 					{
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date month must be a number`
+						)} date month must be a number`
 					},
 					{
 						value: '0',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date month must be between 1 and 12`
+						)} date month must be between 1 and 12`
 					},
 					{
 						value: '13',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date month must be between 1 and 12`
+						)} date month must be between 1 and 12`
 					}
 				];
 
@@ -658,19 +658,19 @@ describe('internal correspondence', () => {
 						value: '',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date must include a year`
+						)} date must include a year`
 					},
 					{
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date year must be a number`
+						)} date year must be a number`
 					},
 					{
 						value: '202',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date year must be 4 digits`
+						)} date year must be 4 digits`
 					}
 				];
 
@@ -743,9 +743,7 @@ describe('internal correspondence', () => {
 				});
 
 				expect(errorSummaryElement.innerHTML).toContain(
-					`${capitalize(
-						documentNameFromCategory(correspondenceCategory)
-					)} received date must be a real date`
+					`${capitalize(documentNameFromCategory(correspondenceCategory))} date must be a real date`
 				);
 			});
 
@@ -972,25 +970,25 @@ describe('internal correspondence', () => {
 						value: '',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date must include a day`
+						)} date must include a day`
 					},
 					{
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date day must be a number`
+						)} date day must be a number`
 					},
 					{
 						value: '0',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date day must be between 1 and 31`
+						)} date day must be between 1 and 31`
 					},
 					{
 						value: '32',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date day must be between 1 and 31`
+						)} date day must be between 1 and 31`
 					}
 				];
 
@@ -1037,25 +1035,25 @@ describe('internal correspondence', () => {
 						value: '',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date must include a month`
+						)} date must include a month`
 					},
 					{
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date month must be a number`
+						)} date month must be a number`
 					},
 					{
 						value: '0',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date month must be between 1 and 12`
+						)} date month must be between 1 and 12`
 					},
 					{
 						value: '13',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date month must be between 1 and 12`
+						)} date month must be between 1 and 12`
 					}
 				];
 
@@ -1102,19 +1100,19 @@ describe('internal correspondence', () => {
 						value: '',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date must include a year`
+						)} date must include a year`
 					},
 					{
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date year must be a number`
+						)} date year must be a number`
 					},
 					{
 						value: '202',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date year must be 4 digits`
+						)} date year must be 4 digits`
 					}
 				];
 
@@ -1187,9 +1185,7 @@ describe('internal correspondence', () => {
 				});
 
 				expect(errorSummaryElement.innerHTML).toContain(
-					`${capitalize(
-						documentNameFromCategory(correspondenceCategory)
-					)} received date must be a real date`
+					`${capitalize(documentNameFromCategory(correspondenceCategory))} date must be a real date`
 				);
 			});
 
@@ -1957,25 +1953,25 @@ describe('internal correspondence', () => {
 						value: '',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date must include a day`
+						)} date must include a day`
 					},
 					{
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date day must be a number`
+						)} date day must be a number`
 					},
 					{
 						value: '0',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date day must be between 1 and 31`
+						)} date day must be between 1 and 31`
 					},
 					{
 						value: '32',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date day must be between 1 and 31`
+						)} date day must be between 1 and 31`
 					}
 				];
 
@@ -2020,25 +2016,25 @@ describe('internal correspondence', () => {
 						value: '',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date must include a month`
+						)} date must include a month`
 					},
 					{
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date month must be a number`
+						)} date month must be a number`
 					},
 					{
 						value: '0',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date month must be between 1 and 12`
+						)} date month must be between 1 and 12`
 					},
 					{
 						value: '13',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date month must be between 1 and 12`
+						)} date month must be between 1 and 12`
 					}
 				];
 
@@ -2083,19 +2079,19 @@ describe('internal correspondence', () => {
 						value: '',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date must include a year`
+						)} date must include a year`
 					},
 					{
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date year must be a number`
+						)} date year must be a number`
 					},
 					{
 						value: '202',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} received date year must be 4 digits`
+						)} date year must be 4 digits`
 					}
 				];
 
@@ -2166,9 +2162,7 @@ describe('internal correspondence', () => {
 				});
 
 				expect(errorSummaryElement.innerHTML).toContain(
-					`${capitalize(
-						documentNameFromCategory(correspondenceCategory)
-					)} received date must be a real date`
+					`${capitalize(documentNameFromCategory(correspondenceCategory))} date must be a real date`
 				);
 			});
 

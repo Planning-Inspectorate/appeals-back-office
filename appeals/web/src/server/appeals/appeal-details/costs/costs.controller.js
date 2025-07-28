@@ -21,7 +21,7 @@ import {
 	getFileInfo,
 	getDocumentFileType
 } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { capitalize } from 'lodash-es';
+import { capitalize, upperCase } from 'lodash-es';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import logger from '#lib/logger.js';
@@ -45,7 +45,7 @@ export const getDocumentUpload = async (request, response) => {
 	switch (costsCategory) {
 		case 'lpa':
 			uploadPageHeadingText = `Upload LPA costs ${costsDocumentType} document`;
-			documentTitle = `LPA costs ${costsDocumentType}`;
+			documentTitle = `${upperCase(costsCategory)} costs ${costsDocumentType}`;
 			break;
 		case 'decision':
 			uploadPageHeadingText = `Upload costs decision`;
