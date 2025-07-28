@@ -151,7 +151,7 @@ export const localPlanningDepartmentList = [
 	},
 	{
 		lpaCode: 'L3245',
-		name: 'Shropshire County Council',
+		name: 'Shropshire Council',
 		email: 'appeals@shropshire.gov.uk'
 	},
 	{
