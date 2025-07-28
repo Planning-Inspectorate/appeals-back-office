@@ -2,7 +2,12 @@
 import { request } from '#tests/../app-test.js';
 import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { fullPlanningAppeal, householdAppeal, listedBuildingAppeal } from '#tests/appeals/mocks.js';
+import {
+	householdAppeal,
+	casPlanningAppeal,
+	fullPlanningAppeal,
+	listedBuildingAppeal
+} from '#tests/appeals/mocks.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import {
 	ERROR_NOT_FOUND,
@@ -101,7 +106,7 @@ const appealTypes = [
 	{
 		id: 13,
 		type: 'CAS planning',
-		key: 'Z',
+		key: 'ZP',
 		processCode: null,
 		enabled: false
 	}
@@ -207,6 +212,7 @@ describe('appeal change type resubmit routes', () => {
 		});
 		test.each([
 			['household', householdAppeal, 13],
+			['casPlanning', casPlanningAppeal, 1],
 			['fullPlanning', fullPlanningAppeal, 1],
 			['listedBuilding', listedBuildingAppeal, 1]
 		])('returns 200 when appeal status is correct: %s', async (_, appeal, newType) => {
