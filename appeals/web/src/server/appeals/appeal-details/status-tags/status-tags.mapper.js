@@ -1,12 +1,11 @@
 import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { dateISOStringToDisplayDate, getOriginalAndLatestLetterDatesObject } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { getFileVersionsInfo } from '#appeals/appeal-documents/appeal.documents.service.js';
 import config from '#environment/config.js';
 import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
 
@@ -66,24 +65,23 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 				appealDetails.costs.appellantDecisionFolder?.documents?.length ||
 				appealDetails.costs.lpaDecisionFolder?.documents?.length))
 	) {
-		const { latestDocumentVersion: latestFileVersion, allVersions = [] } =
-			(await getFileVersionsInfo(
-				request.apiClient,
-				appealDetails.appealId.toString(),
-				appealDetails.decision.documentId || ''
-			)) || {};
-		const originalLetterDate = dateISOStringToDisplayDate(allVersions[0]?.dateReceived);
-
-		const latestLetterDate = dateISOStringToDisplayDate(latestFileVersion?.dateReceived);
+		let letterDateObject = await getOriginalAndLatestLetterDatesObject(
+			request.apiClient,
+			appealDetails.appealId.toString(),
+			appealDetails.decision.documentId || '',
+			appealDetails
+		);
 
 		const insetTextRows = [];
 
 		if (appealDetails.decision?.outcome) {
 			insetTextRows.push(`Decision: ${mapDecisionOutcome(appealDetails.decision.outcome)}`);
 			insetTextRows.push(
-				latestFileVersion && latestFileVersion?.version > 1
-					? `Decision issued on ${originalLetterDate} (updated on ${latestLetterDate})`
-					: `Decision issued on ${latestLetterDate}`
+				letterDateObject.latestFileVersion &&
+					letterDateObject.latestFileVersion?.version > 1 &&
+					config.featureFlags.featureFlagReIssueDecision
+					? `Decision issued on ${letterDateObject.originalLetterDate} (updated on ${letterDateObject.latestLetterDate})`
+					: `Decision issued on ${letterDateObject.latestLetterDate}`
 			);
 		}
 

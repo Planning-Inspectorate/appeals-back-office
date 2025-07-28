@@ -23,7 +23,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { cloneDeep } from 'lodash-es';
 import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
 import { createNewDocument } from '#app/components/file-uploader.component.js';
-import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
+import { getOriginalAndLatestLetterDatesObject, getTodaysISOString } from '#lib/dates.js';
 import {
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_INSPECTOR
@@ -36,7 +36,6 @@ import {
 	mapDecisionOutcome
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { isStatePassed } from '#lib/appeal-status.js';
-import { getFileVersionsInfo } from '#appeals/appeal-documents/appeal.documents.service.js';
 
 /**
  * @typedef {import('../../../appeals/appeal-documents/appeal-documents.types.js').FileUploadInfoItem} FileUploadInfoItem
@@ -621,23 +620,20 @@ export const renderViewDecision = async (request, response) => {
 	if (!currentAppeal) {
 		return response.status(404).render('app/404.njk');
 	}
-	const { latestDocumentVersion: latestFileVersion, allVersions = [] } =
-		(await getFileVersionsInfo(
-			request.apiClient,
-			currentAppeal.appealId.toString(),
-			currentAppeal.decision.documentId || ''
-		)) || {};
-	const originalLetterDate = dateISOStringToDisplayDate(allVersions[0]?.dateReceived);
 
-	const latestLetterDate = dateISOStringToDisplayDate(latestFileVersion?.dateReceived);
-
+	let letterDateObject = await getOriginalAndLatestLetterDatesObject(
+		request.apiClient,
+		currentAppeal.appealId.toString(),
+		currentAppeal.decision.documentId || '',
+		currentAppeal
+	);
 	let latestDecsionDocumentText;
 
 	if (currentAppeal.decision?.outcome) {
 		latestDecsionDocumentText =
-			latestFileVersion && latestFileVersion?.version > 1
-				? `${originalLetterDate} (reissued on ${latestLetterDate})`
-				: `${latestLetterDate}`;
+			letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
+				? `${letterDateObject.originalLetterDate} (reissued on ${letterDateObject.latestLetterDate})`
+				: `${letterDateObject.originalLetterDate}`;
 	}
 
 	const mappedPageContent = viewDecisionPage(currentAppeal, request, latestDecsionDocumentText);

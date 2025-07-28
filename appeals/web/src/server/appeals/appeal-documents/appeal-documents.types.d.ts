@@ -115,3 +115,9 @@ export interface UploadRequest {
 	blobStoreUrl: string;
 	documents: BlobInfo[];
 }
+
+export interface DecisionDatesObject {
+	originalLetterDate: String;
+	latestLetterDate: String;
+	latestFileVersion: BlobInfo;
+}
