@@ -3158,7 +3158,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date cannot be a future date</a>'
+				'Agreement to change description evidence received date must be in the past</a>'
 			);
 		});
 
