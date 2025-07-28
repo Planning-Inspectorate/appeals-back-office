@@ -964,7 +964,8 @@ export const renderDeleteDocument = async ({ request, response, backButtonUrl })
 		redactionStatuses,
 		document,
 		currentFolder,
-		versionId
+		versionId,
+		errors
 	);
 
 	return response.status(200).render('appeals/documents/delete-document.njk', {

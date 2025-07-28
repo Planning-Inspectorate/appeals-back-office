@@ -3758,7 +3758,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date must include a day</a>'
+				'Agreement to change description evidence date must include a day</a>'
 			);
 		});
 
@@ -3789,7 +3789,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date day must be a number</a>'
+				'Agreement to change description evidence date day must be a number</a>'
 			);
 		});
 
@@ -3820,7 +3820,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -3851,7 +3851,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -3882,7 +3882,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date must include a month</a>'
+				'Agreement to change description evidence date must include a month</a>'
 			);
 		});
 
@@ -3913,7 +3913,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date month must be a number</a>'
+				'Agreement to change description evidence date month must be a number</a>'
 			);
 		});
 
@@ -3944,7 +3944,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -3975,7 +3975,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -4006,7 +4006,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date must include a year</a>'
+				'Agreement to change description evidence date must include a year</a>'
 			);
 		});
 
@@ -4037,7 +4037,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date year must be a number</a>'
+				'Agreement to change description evidence date year must be a number</a>'
 			);
 		});
 
@@ -4068,7 +4068,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date must be a real date</a>'
+				'Agreement to change description evidence date must be a real date</a>'
 			);
 		});
 
@@ -4402,7 +4402,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date must include a day</a>'
+				'Agreement to change description evidence date must include a day</a>'
 			);
 		});
 
@@ -4433,7 +4433,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date day must be a number</a>'
+				'Agreement to change description evidence date day must be a number</a>'
 			);
 		});
 
@@ -4464,7 +4464,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -4495,7 +4495,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date day must be between 1 and 31</a>'
+				'Agreement to change description evidence date day must be between 1 and 31</a>'
 			);
 		});
 
@@ -4526,7 +4526,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date must include a month</a>'
+				'Agreement to change description evidence date must include a month</a>'
 			);
 		});
 
@@ -4557,7 +4557,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date month must be a number</a>'
+				'Agreement to change description evidence date month must be a number</a>'
 			);
 		});
 
@@ -4588,7 +4588,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -4619,7 +4619,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date month must be between 1 and 12</a>'
+				'Agreement to change description evidence date month must be between 1 and 12</a>'
 			);
 		});
 
@@ -4650,7 +4650,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date must include a year</a>'
+				'Agreement to change description evidence date must include a year</a>'
 			);
 		});
 
@@ -4681,7 +4681,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date year must be a number</a>'
+				'Agreement to change description evidence date year must be a number</a>'
 			);
 		});
 
@@ -4712,7 +4712,7 @@ describe('appellant-case', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence received date must be a real date</a>'
+				'Agreement to change description evidence date must be a real date</a>'
 			);
 		});
 
