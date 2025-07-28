@@ -15,18 +15,22 @@ import {
 	azureAdUserId
 } from '#tests/shared/mocks.js';
 import {
-	fullPlanningAppeal,
-	fullPlanningAppealAppellantCaseIncomplete,
-	fullPlanningAppealAppellantCaseInvalid,
-	fullPlanningAppealCaseValid,
 	householdAppeal,
+	householdAppealAppellantCaseValid,
 	householdAppealAppellantCaseIncomplete,
 	householdAppealAppellantCaseInvalid,
+	casPlanningAppeal,
+	casPlanningAppealAppellantCaseValid,
+	casPlanningAppealAppellantCaseIncomplete,
+	casPlanningAppealAppellantCaseInvalid,
+	fullPlanningAppeal,
+	fullPlanningAppealCaseValid,
+	fullPlanningAppealAppellantCaseIncomplete,
+	fullPlanningAppealAppellantCaseInvalid,
 	listedBuildingAppeal,
 	listedBuildingAppealAppellantCaseValid,
 	listedBuildingAppealAppellantCaseIncomplete,
-	listedBuildingAppealAppellantCaseInvalid,
-	householdAppealAppellantCaseValid
+	listedBuildingAppealAppellantCaseInvalid
 } from '#tests/appeals/mocks.js';
 
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -46,80 +50,95 @@ describe('appellant cases routes', () => {
 
 	describe('/appeals/:appealId/appellant-cases/:appellantCaseId', () => {
 		describe('GET', () => {
-			test.each([
-				['householdAppeal', householdAppeal],
-				['fullPlanningAppeal', fullPlanningAppeal],
-				['listedBuildingAppeal', listedBuildingAppeal]
+			describe.each([
+				[
+					'householdAppeal',
+					householdAppeal,
+					householdAppealAppellantCaseValid,
+					householdAppealAppellantCaseIncomplete,
+					householdAppealAppellantCaseInvalid
+				],
+				[
+					'casPlanningAppeal',
+					casPlanningAppeal,
+					casPlanningAppealAppellantCaseValid,
+					casPlanningAppealAppellantCaseIncomplete,
+					casPlanningAppealAppellantCaseInvalid
+				],
+				[
+					'fullPlanningAppeal',
+					fullPlanningAppeal,
+					fullPlanningAppealCaseValid,
+					fullPlanningAppealAppellantCaseIncomplete,
+					fullPlanningAppealAppellantCaseInvalid
+				],
+				[
+					'listedBuildingAppeal',
+					listedBuildingAppeal,
+					listedBuildingAppealAppellantCaseValid,
+					listedBuildingAppealAppellantCaseIncomplete,
+					listedBuildingAppealAppellantCaseInvalid
+				]
 			])(
-				'gets a single appellant case for an appeal with no validation outcome',
-				async (_, appeal) => {
-					// @ts-ignore
-					databaseConnector.folder.findMany.mockResolvedValue([]);
-					databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+				'%s appellant case GET scenarios',
+				(_, appealNoValidation, appealValid, appealIncomplete, appealInvalid) => {
+					test('gets a single appellant case for an appeal with no validation outcome', async () => {
+						// @ts-ignore
+						databaseConnector.folder.findMany.mockResolvedValue([]);
+						databaseConnector.appeal.findUnique.mockResolvedValue(appealNoValidation);
 
-					const { appellantCase, id } = appeal;
-					const response = await request
-						.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
-						.set('azureAdUserId', azureAdUserId);
+						const { appellantCase, id } = appealNoValidation;
+						const response = await request
+							.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+							.set('azureAdUserId', azureAdUserId);
 
-					expect(response.status).toEqual(200);
-					expect(response.body).toMatchSnapshot();
+						expect(response.status).toEqual(200);
+						expect(response.body).toMatchSnapshot();
+					});
+
+					test('gets a single appellant case for a valid appeal', async () => {
+						// @ts-ignore
+						databaseConnector.folder.findMany.mockResolvedValue([]);
+						databaseConnector.appeal.findUnique.mockResolvedValue(appealValid);
+
+						const { appellantCase, id } = appealValid;
+						const response = await request
+							.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(200);
+						expect(response.body).toMatchSnapshot();
+					});
+
+					test('gets a single appellant case for an incomplete appeal', async () => {
+						// @ts-ignore
+						databaseConnector.folder.findMany.mockResolvedValue([]);
+						databaseConnector.appeal.findUnique.mockResolvedValue(appealIncomplete);
+
+						const { appellantCase, id } = appealIncomplete;
+						const response = await request
+							.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(200);
+						expect(response.body).toMatchSnapshot();
+					});
+
+					test('gets a single appellant case for an invalid appeal', async () => {
+						// @ts-ignore
+						databaseConnector.folder.findMany.mockResolvedValue([]);
+						databaseConnector.appeal.findUnique.mockResolvedValue(appealInvalid);
+
+						const { appellantCase, id } = appealInvalid;
+						const response = await request
+							.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
+							.set('azureAdUserId', azureAdUserId);
+
+						expect(response.status).toEqual(200);
+						expect(response.body).toMatchSnapshot();
+					});
 				}
 			);
-
-			test.each([
-				['householdAppeal', householdAppealAppellantCaseValid],
-				['fullPlanningAppeal', fullPlanningAppealCaseValid],
-				['listedBuildingAppeal', listedBuildingAppealAppellantCaseValid]
-			])('gets a single appellant case for a valid appeal: %s', async (_, appeal) => {
-				// @ts-ignore
-				databaseConnector.folder.findMany.mockResolvedValue([]);
-				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
-
-				const { appellantCase, id } = appeal;
-				const response = await request
-					.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(200);
-				expect(response.body).toMatchSnapshot();
-			});
-
-			test.each([
-				['householdAppeal', householdAppealAppellantCaseIncomplete],
-				['fullPlanningAppeal', fullPlanningAppealAppellantCaseIncomplete],
-				['listedBuildingAppeal', listedBuildingAppealAppellantCaseIncomplete]
-			])('gets a single appellant case for an incomplete appeal: %s', async (_, appeal) => {
-				// @ts-ignore
-				databaseConnector.folder.findMany.mockResolvedValue([]);
-				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
-
-				const { appellantCase, id } = appeal;
-				const response = await request
-					.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(200);
-				expect(response.body).toMatchSnapshot();
-			});
-
-			test.each([
-				['householdAppeal', householdAppealAppellantCaseInvalid],
-				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid],
-				['listedBuildingAppeal', listedBuildingAppealAppellantCaseInvalid]
-			])('gets a single appellant case for an invalid appeal: %s', async (_, appeal) => {
-				// @ts-ignore
-				databaseConnector.folder.findMany.mockResolvedValue([]);
-				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
-
-				const { appellantCase, id } = appeal;
-				const response = await request
-					.get(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
-					.set('azureAdUserId', azureAdUserId);
-
-				expect(response.status).toEqual(200);
-				expect(response.body).toMatchSnapshot();
-			});
 
 			test('returns an error if appealId is not numeric', async () => {
 				const { appellantCase } = householdAppeal;
@@ -540,6 +559,7 @@ describe('appellant cases routes', () => {
 
 			test.each([
 				['householdAppeal', householdAppealAppellantCaseIncomplete],
+				['casPlanningAppeal', casPlanningAppealAppellantCaseIncomplete],
 				['fullPlanningAppeal', fullPlanningAppealAppellantCaseIncomplete],
 				['listedBuildingAppeal', listedBuildingAppealAppellantCaseIncomplete]
 			])(
@@ -808,6 +828,7 @@ describe('appellant cases routes', () => {
 
 			test.each([
 				['householdAppeal', householdAppealAppellantCaseInvalid],
+				['casPlanningAppeal', casPlanningAppealAppellantCaseInvalid],
 				['fullPlanningAppeal', fullPlanningAppealAppellantCaseInvalid],
 				['listedBuildingAppeal', listedBuildingAppealAppellantCaseInvalid]
 			])(
@@ -868,6 +889,7 @@ describe('appellant cases routes', () => {
 
 			test.each([
 				['householdAppeal', householdAppeal],
+				['casPlanningAppeal', casPlanningAppeal],
 				['fullPlanningAppeal', fullPlanningAppeal],
 				['listedBuildingAppeal', listedBuildingAppeal]
 			])(
