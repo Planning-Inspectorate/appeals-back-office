@@ -2,7 +2,7 @@
 import { mapCaseProcedure } from '#lib/mappers/data/appeal/submappers/case-procedure.mapper.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
-describe('case-proceudre.mapper', () => {
+describe('case-procedure.mapper', () => {
 	let params;
 
 	beforeEach(() => {
@@ -26,9 +26,6 @@ describe('case-proceudre.mapper', () => {
 
 	it('Should display case procedure type if timetable exists', () => {
 		const result = mapCaseProcedure(params);
-		expect(result.id).toEqual('case-procedure');
-		expect(result.display.summaryListItem).not.toEqual(undefined);
-
 		expect(result).toEqual({
 			display: {
 				summaryListItem: {
