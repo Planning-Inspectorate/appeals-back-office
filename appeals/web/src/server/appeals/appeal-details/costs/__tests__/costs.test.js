@@ -407,25 +407,25 @@ describe('costs', () => {
 								value: '',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date must include a day`
+								} costs ${costsDocumentType} date must include a day`
 							},
 							{
 								value: 'a',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date day must be a number`
+								} costs ${costsDocumentType} date day must be a number`
 							},
 							{
 								value: '0',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date day must be between 1 and 31`
+								} costs ${costsDocumentType} date day must be between 1 and 31`
 							},
 							{
 								value: '32',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date day must be between 1 and 31`
+								} costs ${costsDocumentType} date day must be between 1 and 31`
 							}
 						];
 
@@ -469,25 +469,25 @@ describe('costs', () => {
 								value: '',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date must include a month`
+								} costs ${costsDocumentType} date must include a month`
 							},
 							{
 								value: 'a',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date month must be a number`
+								} costs ${costsDocumentType} date month must be a number`
 							},
 							{
 								value: '0',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date month must be between 1 and 12`
+								} costs ${costsDocumentType} date month must be between 1 and 12`
 							},
 							{
 								value: '13',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date month must be between 1 and 12`
+								} costs ${costsDocumentType} date month must be between 1 and 12`
 							}
 						];
 
@@ -531,19 +531,19 @@ describe('costs', () => {
 								value: '',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date must include a year`
+								} costs ${costsDocumentType} date must include a year`
 							},
 							{
 								value: 'a',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date year must be a number`
+								} costs ${costsDocumentType} date year must be a number`
 							},
 							{
 								value: '202',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date year must be 4 digits`
+								} costs ${costsDocumentType} date year must be 4 digits`
 							}
 						];
 
@@ -612,7 +612,155 @@ describe('costs', () => {
 						expect(errorSummaryElement.innerHTML).toContain(
 							`${
 								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-							} costs ${costsDocumentType} received date must be a real date`
+							} costs ${costsDocumentType} date must be a real date`
+						);
+					});
+
+					it(`should re-render the document details page with the expected error message if receivedDate is not a valid date (${costsCategory} ${costsDocumentType})`, async () => {
+						expect(addDocumentsResponse.statusCode).toBe(302);
+
+						const response = await request
+							.post(
+								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}`
+							)
+							.send({
+								items: [
+									{
+										documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+										receivedDate: {
+											day: '',
+											month: '',
+											year: ''
+										},
+										redactionStatus: 2
+									}
+								]
+							});
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
+
+						const errorSummaryElement = parseHtml(response.text, {
+							rootElement: '.govuk-error-summary'
+						});
+
+						expect(errorSummaryElement.innerHTML).toContain(
+							`Enter the date you received the ${
+								costsCategory === 'lpa' ? upperCase(costsCategory) : costsCategory
+							} costs ${costsDocumentType}`
+						);
+					});
+
+					it(`should re-render the document details page with the expected error message if receivedDate is not a valid date (${costsCategory} ${costsDocumentType})`, async () => {
+						expect(addDocumentsResponse.statusCode).toBe(302);
+
+						const response = await request
+							.post(
+								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}`
+							)
+							.send({
+								items: [
+									{
+										documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+										receivedDate: {
+											day: '2',
+											month: '',
+											year: ''
+										},
+										redactionStatus: 2
+									}
+								]
+							});
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
+
+						const errorSummaryElement = parseHtml(response.text, {
+							rootElement: '.govuk-error-summary'
+						});
+
+						expect(errorSummaryElement.innerHTML).toContain(
+							`${
+								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+							} costs ${costsDocumentType} date must include a month and a year`
+						);
+					});
+
+					it(`should re-render the document details page with the expected error message if receivedDate is not a valid date (${costsCategory} ${costsDocumentType})`, async () => {
+						expect(addDocumentsResponse.statusCode).toBe(302);
+
+						const response = await request
+							.post(
+								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}`
+							)
+							.send({
+								items: [
+									{
+										documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+										receivedDate: {
+											day: '',
+											month: '2',
+											year: ''
+										},
+										redactionStatus: 2
+									}
+								]
+							});
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
+
+						const errorSummaryElement = parseHtml(response.text, {
+							rootElement: '.govuk-error-summary'
+						});
+
+						expect(errorSummaryElement.innerHTML).toContain(
+							`${
+								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+							} costs ${costsDocumentType} date must include a day and a year`
+						);
+					});
+
+					it(`should re-render the document details page with the expected error message if receivedDate is not a valid date (${costsCategory} ${costsDocumentType})`, async () => {
+						expect(addDocumentsResponse.statusCode).toBe(302);
+
+						const response = await request
+							.post(
+								`${baseUrl}/1/costs/${costsCategory}/${costsDocumentType}/add-document-details/${costsFolder.folderId}`
+							)
+							.send({
+								items: [
+									{
+										documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+										receivedDate: {
+											day: '',
+											month: '',
+											year: '2025'
+										},
+										redactionStatus: 2
+									}
+								]
+							});
+
+						const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+						expect(unprettifiedElement.innerHTML).toContain('Add document details</span><h1');
+						expect(unprettifiedElement.innerHTML).toContain(`${expectedH1Text}</h1>`);
+
+						const errorSummaryElement = parseHtml(response.text, {
+							rootElement: '.govuk-error-summary'
+						});
+
+						expect(errorSummaryElement.innerHTML).toContain(
+							`${
+								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
+							} costs ${costsDocumentType} date must include a day and a month`
 						);
 					});
 
@@ -802,25 +950,25 @@ describe('costs', () => {
 								value: '',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date must include a day`
+								} costs ${costsDocumentType} date must include a day`
 							},
 							{
 								value: 'a',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date day must be a number`
+								} costs ${costsDocumentType} date day must be a number`
 							},
 							{
 								value: '0',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date day must be between 1 and 31`
+								} costs ${costsDocumentType} date day must be between 1 and 31`
 							},
 							{
 								value: '32',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date day must be between 1 and 31`
+								} costs ${costsDocumentType} date day must be between 1 and 31`
 							}
 						];
 
@@ -864,25 +1012,25 @@ describe('costs', () => {
 								value: '',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date must include a month`
+								} costs ${costsDocumentType} date must include a month`
 							},
 							{
 								value: 'a',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date month must be a number`
+								} costs ${costsDocumentType} date month must be a number`
 							},
 							{
 								value: '0',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date month must be between 1 and 12`
+								} costs ${costsDocumentType} date month must be between 1 and 12`
 							},
 							{
 								value: '13',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date month must be between 1 and 12`
+								} costs ${costsDocumentType} date month must be between 1 and 12`
 							}
 						];
 
@@ -926,19 +1074,19 @@ describe('costs', () => {
 								value: '',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date must include a year`
+								} costs ${costsDocumentType} date must include a year`
 							},
 							{
 								value: 'a',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date year must be a number`
+								} costs ${costsDocumentType} date year must be a number`
 							},
 							{
 								value: '202',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} received date year must be 4 digits`
+								} costs ${costsDocumentType} date year must be 4 digits`
 							}
 						];
 
@@ -1007,7 +1155,7 @@ describe('costs', () => {
 						expect(errorSummaryElement.innerHTML).toContain(
 							`${
 								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-							} costs ${costsDocumentType} received date must be a real date`
+							} costs ${costsDocumentType} date must be a real date`
 						);
 					});
 
@@ -2114,7 +2262,7 @@ describe('costs', () => {
 					rootElement: '.govuk-error-summary'
 				});
 
-				expect(errorSummaryElement.innerHTML).toContain('Received date must be a real date');
+				expect(errorSummaryElement.innerHTML).toContain('date must be a real date');
 			});
 
 			it(`should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, if complete and valid document details were provided`, async () => {
@@ -2404,7 +2552,7 @@ describe('costs', () => {
 					rootElement: '.govuk-error-summary'
 				});
 
-				expect(errorSummaryElement.innerHTML).toContain('Received date must be a real date');
+				expect(errorSummaryElement.innerHTML).toContain('date must be a real date');
 			});
 
 			it(`should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, if complete and valid document details were provided`, async () => {
