@@ -40,10 +40,23 @@ const caseOfficers = [
 	}
 ];
 
+const statusesInNationalList = [
+	'assign_case_officer',
+	'validation',
+	'ready_to_start',
+	'lpa_questionnaire',
+	'statements',
+	'final_comments',
+	'issue_determination'
+];
+
 describe('appeals list routes', () => {
 	beforeEach(() => {
 		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+		databaseConnector.appealStatus.findMany.mockResolvedValue(
+			statusesInNationalList.map((status) => ({ status }))
+		);
 	});
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -53,6 +66,7 @@ describe('appeals list routes', () => {
 			test('gets appeals when not given pagination params or a search term', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal, fullPlanningAppeal]);
+				databaseConnector.appeal.count.mockResolvedValue(2);
 
 				const response = await request.get('/appeals').set('azureAdUserId', azureAdUserId);
 
@@ -176,17 +190,50 @@ describe('appeals list routes', () => {
 					pageCount: 1,
 					pageSize: 30,
 					statuses: ['assign_case_officer'],
-					statusesInNationalList: ['assign_case_officer']
+					statusesInNationalList
 				});
 			});
 
 			test('gets appeals when given pagination params', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal, fullPlanningAppeal]);
+				const expectedQuery = {
+					where: {
+						appealStatus: { some: { valid: true } },
+						appealType: { key: { in: ['D', 'W', 'Y', 'ZP'] } }
+					},
+					include: {
+						address: true,
+						appealStatus: { where: { valid: true } },
+						appealType: true,
+						procedureType: true,
+						lpa: true,
+						appellantCase: { include: { appellantCaseValidationOutcome: true } },
+						inspector: true,
+						caseOfficer: true,
+						appealTimetable: true,
+						representations: true,
+						lpaQuestionnaire: { include: { lpaQuestionnaireValidationOutcome: true } },
+						siteVisit: true,
+						hearing: true,
+						inquiry: true
+					},
+					orderBy: { caseUpdatedDate: 'desc' },
+					skip: 1,
+					take: 1
+				};
+
+				databaseConnector.appeal.findMany.mockResolvedValueOnce([fullPlanningAppeal]);
+				databaseConnector.appeal.count.mockResolvedValue(2);
 
 				const response = await request
 					.get('/appeals?pageNumber=2&pageSize=1')
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.findMany).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.appeal.findMany).toHaveBeenNthCalledWith(1, expectedQuery);
+				expect(databaseConnector.appeal.count).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.appeal.count).toHaveBeenNthCalledWith(1, {
+					where: expectedQuery.where
+				});
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
@@ -254,13 +301,14 @@ describe('appeals list routes', () => {
 					pageCount: 2,
 					pageSize: 1,
 					statuses: ['assign_case_officer'],
-					statusesInNationalList: ['assign_case_officer']
+					statusesInNationalList
 				});
 			});
 
 			test('gets appeals when given an uppercase search term', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+				databaseConnector.appeal.count.mockResolvedValue(1);
 
 				const response = await request
 					.get('/appeals?searchTerm=MD21')
@@ -365,13 +413,14 @@ describe('appeals list routes', () => {
 					pageCount: 1,
 					pageSize: 30,
 					statuses: ['assign_case_officer'],
-					statusesInNationalList: ['assign_case_officer']
+					statusesInNationalList
 				});
 			});
 
 			test('gets appeals when given a lowercase search term', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+				databaseConnector.appeal.count.mockResolvedValue(1);
 
 				const response = await request
 					.get('/appeals?searchTerm=md21')
@@ -476,13 +525,14 @@ describe('appeals list routes', () => {
 					pageCount: 1,
 					pageSize: 30,
 					statuses: ['assign_case_officer'],
-					statusesInNationalList: ['assign_case_officer']
+					statusesInNationalList
 				});
 			});
 
 			test('gets appeals when given a search term with a space', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+				databaseConnector.appeal.count.mockResolvedValue(1);
 
 				const response = await request
 					.get('/appeals?searchTerm=MD21 5XY')
@@ -587,13 +637,14 @@ describe('appeals list routes', () => {
 					pageCount: 1,
 					pageSize: 30,
 					statuses: ['assign_case_officer'],
-					statusesInNationalList: ['assign_case_officer']
+					statusesInNationalList
 				});
 			});
 
 			test('gets appeals when given a valid status', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+				databaseConnector.appeal.count.mockResolvedValue(1);
 
 				const response = await request
 					.get('/appeals?status=assign_case_officer')
@@ -680,13 +731,14 @@ describe('appeals list routes', () => {
 					pageCount: 1,
 					pageSize: 30,
 					statuses: ['assign_case_officer'],
-					statusesInNationalList: ['assign_case_officer']
+					statusesInNationalList
 				});
 			});
 
 			test('gets appeals when given a true hasInspector param', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+				databaseConnector.appeal.count.mockResolvedValue(1);
 
 				const response = await request
 					.get('/appeals?hasInspector=true')
@@ -775,13 +827,14 @@ describe('appeals list routes', () => {
 					pageCount: 1,
 					pageSize: 30,
 					statuses: ['assign_case_officer'],
-					statusesInNationalList: ['assign_case_officer']
+					statusesInNationalList
 				});
 			});
 
 			test('gets appeals when given a false hasInspector param', async () => {
 				// @ts-ignore
 				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+				databaseConnector.appeal.count.mockResolvedValue(1);
 
 				const response = await request
 					.get('/appeals?hasInspector=false')
@@ -868,7 +921,7 @@ describe('appeals list routes', () => {
 					pageCount: 1,
 					pageSize: 30,
 					statuses: ['assign_case_officer'],
-					statusesInNationalList: ['assign_case_officer']
+					statusesInNationalList
 				});
 			});
 
@@ -1103,7 +1156,7 @@ test('gets appeals when given a appealTypeId param', async () => {
 		pageCount: 1,
 		pageSize: 30,
 		statuses: ['assign_case_officer'],
-		statusesInNationalList: ['assign_case_officer']
+		statusesInNationalList
 	});
 });
 
