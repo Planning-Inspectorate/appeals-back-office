@@ -45,7 +45,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.20.0
+      ref: refs/tags/release/3.24.0
   pipelines:
     - pipeline: build
       source: Build
@@ -63,6 +63,9 @@ extends:
       - name: Test
         dependsOn:
           - Dev
+      - name: Staging
+        dependsOn:
+          - Test
       - name: Training
         dependsOn:
           - Test
@@ -82,6 +85,9 @@ extends:
                     if [[ $ENVIRONMENT == "training" ]]; then
                       echo "Name: pins-kv-appeals-bo-train (env: $ENVIRONMENT)"
                       echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-train"
+                    elif [[ $ENVIRONMENT == "staging" ]]; then
+                      echo "Name: pins-kv-appeals-bo-stage (env: $ENVIRONMENT)"
+                      echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-stage"
                     else
                       echo "Name: pins-kv-appeals-bo-$ENVIRONMENT (env: $ENVIRONMENT)"
                       echo "##vso[task.setvariable variable=kvName;]pins-kv-appeals-bo-$ENVIRONMENT"

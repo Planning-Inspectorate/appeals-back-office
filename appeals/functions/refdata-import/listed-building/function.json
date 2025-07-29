@@ -4,8 +4,8 @@
 			"name": "registerSubscription",
 			"type": "serviceBusTrigger",
 			"direction": "in",
-			"topicName": "listed-building",
-			"subscriptionName": "listed-building-bo-sub",
+			"topicName": "%SB_TOPIC_NAME_LISTED_BUILDING%",
+			"subscriptionName": "%SB_SUBSCRIPTION_NAME_LISTED_BUILDING%",
 			"connection": "ServiceBusConnection"
 		}
 	]
