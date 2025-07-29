@@ -16,6 +16,7 @@ import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.format
 import { mapAppealStatuses } from '../appeals.service.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
+import { omit } from 'lodash-es';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -50,13 +51,20 @@ const statusesInNationalList = [
 	'issue_determination'
 ];
 
+const allAppeals = [householdAppeal, fullPlanningAppeal].map((appeal) => ({
+	...appeal,
+	inspectorUserId: inspectors[0].id,
+	caseOfficerUserId: caseOfficers[0].id
+}));
+
 describe('appeals list routes', () => {
 	beforeEach(() => {
-		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 		databaseConnector.appealStatus.findMany.mockResolvedValue(
 			statusesInNationalList.map((status) => ({ status }))
 		);
+		databaseConnector.lPA.findMany.mockResolvedValue(lpas);
+		databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
 	});
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -64,8 +72,9 @@ describe('appeals list routes', () => {
 	describe('/appeals', () => {
 		describe('GET', () => {
 			test('gets appeals when not given pagination params or a search term', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal, fullPlanningAppeal]);
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([householdAppeal, fullPlanningAppeal])
+					.mockResolvedValueOnce(allAppeals);
 				databaseConnector.appeal.count.mockResolvedValue(2);
 
 				const response = await request.get('/appeals').set('azureAdUserId', azureAdUserId);
@@ -223,15 +232,21 @@ describe('appeals list routes', () => {
 					take: 1
 				};
 
-				databaseConnector.appeal.findMany.mockResolvedValueOnce([fullPlanningAppeal]);
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([fullPlanningAppeal])
+					.mockResolvedValueOnce(allAppeals);
 				databaseConnector.appeal.count.mockResolvedValue(2);
 
 				const response = await request
 					.get('/appeals?pageNumber=2&pageSize=1')
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.appeal.findMany).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.appeal.findMany).toHaveBeenCalledTimes(2);
 				expect(databaseConnector.appeal.findMany).toHaveBeenNthCalledWith(1, expectedQuery);
+				expect(databaseConnector.appeal.findMany).toHaveBeenNthCalledWith(
+					2,
+					omit(expectedQuery, 'include', 'orderBy', 'skip', 'take')
+				);
 				expect(databaseConnector.appeal.count).toHaveBeenCalledTimes(1);
 				expect(databaseConnector.appeal.count).toHaveBeenNthCalledWith(1, {
 					where: expectedQuery.where
@@ -309,8 +324,9 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given an uppercase search term', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([householdAppeal])
+					.mockResolvedValueOnce(allAppeals);
 				databaseConnector.appeal.count.mockResolvedValue(1);
 
 				const response = await request
@@ -422,8 +438,9 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a lowercase search term', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([householdAppeal])
+					.mockResolvedValueOnce(allAppeals);
 				databaseConnector.appeal.count.mockResolvedValue(1);
 
 				const response = await request
@@ -535,8 +552,9 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a search term with a space', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([householdAppeal])
+					.mockResolvedValueOnce(allAppeals);
 				databaseConnector.appeal.count.mockResolvedValue(1);
 
 				const response = await request
@@ -648,8 +666,9 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a valid status', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([householdAppeal])
+					.mockResolvedValueOnce(allAppeals);
 				databaseConnector.appeal.count.mockResolvedValue(1);
 
 				const response = await request
@@ -743,8 +762,9 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a true hasInspector param', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([householdAppeal])
+					.mockResolvedValueOnce(allAppeals);
 				databaseConnector.appeal.count.mockResolvedValue(1);
 
 				const response = await request
@@ -840,8 +860,9 @@ describe('appeals list routes', () => {
 			});
 
 			test('gets appeals when given a false hasInspector param', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+				databaseConnector.appeal.findMany
+					.mockResolvedValueOnce([householdAppeal])
+					.mockResolvedValueOnce(allAppeals);
 				databaseConnector.appeal.count.mockResolvedValue(1);
 
 				const response = await request
@@ -1079,8 +1100,9 @@ describe('appeals list routes', () => {
 });
 
 test('gets appeals when given a appealTypeId param', async () => {
-	// @ts-ignore
-	databaseConnector.appeal.findMany.mockResolvedValue([householdAppeal]);
+	databaseConnector.appeal.findMany
+		.mockResolvedValueOnce([householdAppeal])
+		.mockResolvedValueOnce(allAppeals);
 
 	const response = await request.get('/appeals?appealTypeId=1').set('azureAdUserId', azureAdUserId);
 

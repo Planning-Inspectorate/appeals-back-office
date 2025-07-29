@@ -21,4 +21,15 @@ const findOrCreateUser = (azureAdUserId) =>
 		}
 	});
 
-export default { findOrCreateUser };
+/**
+ * Get users by IDs
+ * @param {number[]} ids
+ * @returns {PrismaPromise<User[]>}
+ */
+const getUsersByIds = (ids) => {
+	return databaseConnector.user.findMany({
+		where: { id: { in: ids } }
+	});
+};
+
+export default { findOrCreateUser, getUsersByIds };

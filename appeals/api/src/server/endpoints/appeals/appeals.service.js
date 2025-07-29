@@ -10,10 +10,14 @@ import {
 	getNumberOfBankHolidaysBetweenDates
 } from '@pins/appeals/utils/business-days.js';
 import { addBusinessDays } from 'date-fns';
+import lpaRepository from '#repositories/lpa.repository.js';
+import { compact, uniq, uniqBy } from 'lodash-es';
+import userRepository from '#repositories/user.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.User} User */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
 
 const allStatusesOrdered = [
@@ -71,51 +75,26 @@ async function calculateIssueDecisionDeadline(eventDate, businessDays) {
 
 /**
  *
- * @param {DBAppeals} appeals
- * @returns {{ name:string, lpaCode:string }[]}
+ * @param {{ lpaId: number }[]} appeals
+ * @returns {Promise<{ name:string, lpaCode:string }[]>}
  */
-const mapAppealLPAs = (appeals) => {
-	/** @type {{name: string, lpaCode: string}[]} */
-	const lpas = appeals.reduce((lpaList, { lpa }) => {
-		if (lpaList.some(({ lpaCode }) => lpaCode === lpa.lpaCode)) {
-			return lpaList;
-		}
-		const { name, lpaCode } = lpa;
-		return [...lpaList, { name, lpaCode }];
-	}, /** @type {{name: string, lpaCode: string}[]} */ ([]));
-	return Array.from(new Set(lpas)).sort((a, b) => a.name.localeCompare(b.name));
+const mapAppealLPAs = async (appeals) => {
+	const lpaIds = uniqBy(appeals, 'lpaId').map(({ lpaId }) => lpaId);
+	return lpaRepository.getLpasByIds(lpaIds);
 };
 
 /**
- * @param {DBAppeals} appeals
+ * @param {{ inspectorUserId: number | null, caseOfficerUserId: number | null }[]} appeals
+ * @returns {Promise<{ inspectors: User[], caseOfficers: User[] }>}
  * */
-const mapInspectors = async (appeals) => {
-	// TODO refactor this to a Set with a filter(Boolean)
-	return appeals.reduce((inspectorList, { inspector }) => {
-		if (!inspector) {
-			return inspectorList;
-		}
-		if (inspectorList.some(({ id }) => id === inspector.id)) {
-			return inspectorList;
-		}
-		return [...inspectorList, inspector];
-	}, /** @type {{id: number, azureAdUserId: string | null}[]} */ ([]));
-};
-
-/**
- * @param {DBAppeals} appeals
- * */
-const mapCaseOfficers = async (appeals) => {
-	// TODO refactor this to a Set with a filter(Boolean)
-	return appeals.reduce((caseOfficerList, { caseOfficer }) => {
-		if (!caseOfficer) {
-			return caseOfficerList;
-		}
-		if (caseOfficerList.some(({ id }) => id === caseOfficer.id)) {
-			return caseOfficerList;
-		}
-		return [...caseOfficerList, caseOfficer];
-	}, /** @type {{id: number, azureAdUserId: string | null}[]} */ ([]));
+const mapUsers = async (appeals) => {
+	const inspectorIds = compact(appeals.map(({ inspectorUserId }) => inspectorUserId));
+	const caseOfficerIds = compact(appeals.map(({ caseOfficerUserId }) => caseOfficerUserId));
+	const users = await userRepository.getUsersByIds(uniq([...inspectorIds, ...caseOfficerIds]));
+	return {
+		inspectors: users.filter((user) => inspectorIds.includes(user.id)),
+		caseOfficers: users.filter((user) => caseOfficerIds.includes(user.id))
+	};
 };
 
 /**
@@ -161,35 +140,27 @@ const retrieveAppealListData = async (
 	isGreenBelt,
 	appealTypeId
 ) => {
-	const appeals = await appealListRepository.getAllAppeals(
+	/** @type {[string, string, string, string, number, number, boolean, number]} */
+	const appealFilters = [
 		searchTerm,
 		status,
 		hasInspector,
 		lpaCode,
-		inspectorId && Number(inspectorId),
-		caseOfficerId && Number(caseOfficerId),
+		inspectorId ? Number(inspectorId) : 0,
+		caseOfficerId ? Number(caseOfficerId) : 0,
 		isGreenBelt,
-		appealTypeId,
-		pageNumber,
-		pageSize
-	);
-
+		appealTypeId || 0
+	];
+	const appeals = await appealListRepository.getAllAppeals(...appealFilters, pageNumber, pageSize);
+	const allAppeals = await appealListRepository.getAppealsWithoutIncludes(...appealFilters);
 	const mappedAppeals = await mapAppeals(appeals);
 	const mappedStatuses = mapAppealStatuses(appeals);
-	const mappedLPAs = mapAppealLPAs(appeals);
-	const mappedInspectors = await mapInspectors(appeals);
-	const mappedCaseOfficers = await mapCaseOfficers(appeals);
+	const mappedLPAs = await mapAppealLPAs(allAppeals);
+	const users = await mapUsers(allAppeals);
+	const mappedInspectors = users.inspectors;
+	const mappedCaseOfficers = users.caseOfficers;
 	const statusesInNationalList = await appealListRepository.getAppealsStatusesInNationalList();
-	const itemCount = await appealListRepository.getAllAppealsCount(
-		searchTerm,
-		status,
-		hasInspector,
-		lpaCode,
-		inspectorId,
-		caseOfficerId,
-		isGreenBelt,
-		appealTypeId
-	);
+	const itemCount = await appealListRepository.getAllAppealsCount(...appealFilters);
 
 	return {
 		mappedStatuses,

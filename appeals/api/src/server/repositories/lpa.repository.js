@@ -32,7 +32,20 @@ const updateLpaByAppealId = (appeal, newLpaId) => {
 	});
 };
 
+/**
+ * Get LPAs by IDs
+ * @param {number[]} ids
+ * @returns {PrismaPromise<LPA[]>}
+ */
+const getLpasByIds = (ids) => {
+	return databaseConnector.lPA.findMany({
+		where: { id: { in: ids } },
+		orderBy: { name: 'asc' }
+	});
+};
+
 export default {
 	getLpaById,
-	updateLpaByAppealId
+	updateLpaByAppealId,
+	getLpasByIds
 };
