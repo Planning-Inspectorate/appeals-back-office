@@ -15,7 +15,7 @@ resources:
       type: github
       endpoint: Planning-Inspectorate
       name: Planning-Inspectorate/common-pipeline-templates
-      ref: refs/tags/release/3.21.2
+      ref: refs/tags/release/3.24.0
 
 extends:
   template: pipelines/terraform_plan_apply.yml@templates
@@ -25,6 +25,9 @@ extends:
       - name: Test
         dependsOn:
           - Dev
+      - name: Staging
+        dependsOn:
+          - Test
       - name: Training
         dependsOn:
           - Test
