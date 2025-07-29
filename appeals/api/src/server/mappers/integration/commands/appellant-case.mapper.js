@@ -67,7 +67,8 @@ export const mapAppellantCaseIn = (command) => {
 			tenantAgriculturalHolding: casedata.tenantAgriculturalHolding,
 			otherTenantsAgriculturalHolding: casedata.otherTenantsAgriculturalHolding,
 			informedTenantsAgriculturalHolding: casedata.informedTenantsAgriculturalHolding
-		})
+		}),
+		numberOfResidencesNetChange: casedata.numberOfResidencesNetChange
 	};
 
 	// @ts-ignore

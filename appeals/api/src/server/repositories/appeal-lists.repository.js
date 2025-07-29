@@ -1,7 +1,8 @@
 import { getSkipValue } from '#utils/database-pagination.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
+import config from '#config/config.js';
 
 /**
  * @typedef {Awaited<ReturnType<getAllAppeals>>} DBAppeals
@@ -234,16 +235,46 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 						valid: true,
 						status: {
 							notIn: [
-								APPEAL_CASE_STATUS.COMPLETE,
 								APPEAL_CASE_STATUS.CLOSED,
 								APPEAL_CASE_STATUS.TRANSFERRED,
 								APPEAL_CASE_STATUS.INVALID,
-								APPEAL_CASE_STATUS.WITHDRAWN
+								APPEAL_CASE_STATUS.WITHDRAWN,
+								...(config.featureFlags.featureFlagNetResidence
+									? []
+									: [APPEAL_CASE_STATUS.COMPLETE])
 							]
 						}
 					}
 				}
-			}
+			},
+			config.featureFlags.featureFlagNetResidence
+				? {
+						OR: [
+							{
+								appealStatus: {
+									none: {
+										valid: true,
+										status: APPEAL_CASE_STATUS.COMPLETE
+									}
+								}
+							},
+							{
+								appealStatus: {
+									some: {
+										valid: true,
+										status: APPEAL_CASE_STATUS.COMPLETE
+									}
+								},
+								appellantCase: {
+									numberOfResidencesNetChange: null
+								},
+								appealType: {
+									key: APPEAL_CASE_TYPE.W
+								}
+							}
+						]
+				  }
+				: {}
 		],
 		OR: [
 			{ inspector: { azureAdUserId: { equals: userId } } },

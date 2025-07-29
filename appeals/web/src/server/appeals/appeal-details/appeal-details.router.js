@@ -228,14 +228,12 @@ router.use(
 	assertUserHasPermission(permissionNames.updateCase),
 	assignUserRouter
 );
-if (config.featureFlags.featureFlagNetResidence) {
-	router.use(
-		'/:appealId/residential-units',
-		validateAppeal,
-		assertUserHasPermission(permissionNames.updateCase),
-		netResidenceRouter
-	);
-}
+router.use(
+	'/:appealId/residential-units',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	netResidenceRouter
+);
 
 router.use('/:appealId', validateAppeal, representationsRouter);
 
