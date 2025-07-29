@@ -220,7 +220,7 @@ const startCase = async (appeal, startDate, notifyClient, azureAdUserId, procedu
 
 				await sendStartCaseNotifies(
 					appeal,
-					startDate,
+					startDateWithTimeCorrection,
 					notifyClient,
 					siteAddress,
 					azureAdUserId,
