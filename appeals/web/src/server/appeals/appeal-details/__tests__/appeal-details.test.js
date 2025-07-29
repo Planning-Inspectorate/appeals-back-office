@@ -827,7 +827,7 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('Agent contact details updated</p>');
+				expect(notificationBannerElementHTML).toContain('Agent&#39;s contact details updated</p>');
 			});
 
 			it('should render a success notification banner when an appellant was updated', async () => {
@@ -851,7 +851,9 @@ describe('appeal-details', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('Appellant contact details updated</p>');
+				expect(notificationBannerElementHTML).toContain(
+					'Appellant&#39;s contact details updated</p>'
+				);
 			});
 
 			it('should render a success notification banner when the lpa application reference was updated', async () => {
