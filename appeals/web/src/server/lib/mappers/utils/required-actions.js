@@ -31,40 +31,35 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			actions.push('addHorizonReference');
 			break;
 		case APPEAL_CASE_STATUS.EVENT:
-			// @ts-ignore
 			if (
-				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN.toLowerCase()
+				appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.HEARING.toLowerCase()
 			) {
 				actions.push('arrangeSiteVisit');
+				break;
+			}
+			// @ts-ignore
+			if (
+				// @ts-ignore
+				(view === 'detail' && !appealDetails.hearing) ||
+				// @ts-ignore
+				(view === 'summary' && !appealDetails.isHearingSetup)
+			) {
+				actions.push('setupHearing');
+				break;
 			}
 
 			if (
-				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.HEARING.toLowerCase()
-			) {
+				(view === 'detail' &&
+					// @ts-ignore
+					appealDetails.hearing &&
+					// @ts-ignore
+					!appealDetails.hearing?.addressId &&
+					// @ts-ignore
+					!appealDetails.hearing?.address) ||
 				// @ts-ignore
-				if (
-					// @ts-ignore
-					(view === 'detail' && !appealDetails.hearing) ||
-					// @ts-ignore
-					(view === 'summary' && !appealDetails.isHearingSetup)
-				) {
-					actions.push('setupHearing');
-					break;
-				}
-
-				if (
-					(view === 'detail' &&
-						// @ts-ignore
-						appealDetails.hearing &&
-						// @ts-ignore
-						!appealDetails.hearing?.addressId &&
-						// @ts-ignore
-						!appealDetails.hearing?.address) ||
-					// @ts-ignore
-					(view === 'summary' && !appealDetails.hasHearingAddress)
-				) {
-					actions.push('addHearingAddress');
-				}
+				(view === 'summary' && !appealDetails.hasHearingAddress)
+			) {
+				actions.push('addHearingAddress');
 			}
 			break;
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION:
