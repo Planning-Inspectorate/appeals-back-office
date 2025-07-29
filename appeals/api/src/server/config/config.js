@@ -42,7 +42,9 @@ const { value, error } = schema.validate({
 		featureFlagLinkedAppeals:
 			environment.FEATURE_FLAG_LINKED_APPEALS && environment.FEATURE_FLAG_LINKED_APPEALS === 'true',
 		featureFlagS20: environment.FEATURE_FLAG_S20 && environment.FEATURE_FLAG_S20 === 'true',
-		featureFlagCAS: environment.FEATURE_FLAG_CAS && environment.FEATURE_FLAG_CAS === 'true'
+		featureFlagCAS: environment.FEATURE_FLAG_CAS && environment.FEATURE_FLAG_CAS === 'true',
+		featureFlagNetResidence:
+			environment.FEATURE_FLAG_NET_RESIDENCE && environment.FEATURE_FLAG_NET_RESIDENCE === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:

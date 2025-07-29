@@ -126,7 +126,8 @@ describe('appeals list routes', () => {
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
-							isHearingSetup: true
+							isHearingSetup: true,
+							numberOfResidencesNetChange: 5
 						},
 						{
 							appealId: fullPlanningAppeal.id,
@@ -180,7 +181,8 @@ describe('appeals list routes', () => {
 							planningApplicationReference: fullPlanningAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
-							isHearingSetup: true
+							isHearingSetup: true,
+							numberOfResidencesNetChange: 5
 						}
 					],
 					lpas,
@@ -291,7 +293,8 @@ describe('appeals list routes', () => {
 							planningApplicationReference: fullPlanningAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
-							isHearingSetup: true
+							isHearingSetup: true,
+							numberOfResidencesNetChange: 5
 						}
 					],
 					lpas,
@@ -403,7 +406,8 @@ describe('appeals list routes', () => {
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
-							isHearingSetup: true
+							isHearingSetup: true,
+							numberOfResidencesNetChange: 5
 						}
 					],
 					lpas,
@@ -515,7 +519,8 @@ describe('appeals list routes', () => {
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
-							isHearingSetup: true
+							isHearingSetup: true,
+							numberOfResidencesNetChange: 5
 						}
 					],
 					lpas,
@@ -627,7 +632,8 @@ describe('appeals list routes', () => {
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
-							isHearingSetup: true
+							isHearingSetup: true,
+							numberOfResidencesNetChange: 5
 						}
 					],
 					lpas,
@@ -721,7 +727,8 @@ describe('appeals list routes', () => {
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
-							isHearingSetup: true
+							isHearingSetup: true,
+							numberOfResidencesNetChange: 5
 						}
 					],
 					lpas,
@@ -817,7 +824,8 @@ describe('appeals list routes', () => {
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
-							isHearingSetup: true
+							isHearingSetup: true,
+							numberOfResidencesNetChange: 5
 						}
 					],
 					lpas,
@@ -911,7 +919,8 @@ describe('appeals list routes', () => {
 							planningApplicationReference: householdAppeal.applicationReference,
 							procedureType: 'Written',
 							hasHearingAddress: true,
-							isHearingSetup: true
+							isHearingSetup: true,
+							numberOfResidencesNetChange: 5
 						}
 					],
 					lpas,
@@ -1146,7 +1155,8 @@ test('gets appeals when given a appealTypeId param', async () => {
 				planningApplicationReference: householdAppeal.applicationReference,
 				procedureType: 'Written',
 				hasHearingAddress: true,
-				isHearingSetup: true
+				isHearingSetup: true,
+				numberOfResidencesNetChange: 5
 			}
 		],
 		lpas,

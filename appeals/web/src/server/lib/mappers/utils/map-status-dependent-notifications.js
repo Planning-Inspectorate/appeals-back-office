@@ -56,7 +56,8 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		// 'appealValidAndReadyToStart',
 		'updateLpaStatement',
 		'addHearingAddress',
-		'setupHearing'
+		'setupHearing',
+		'addResidencesNetChange'
 	];
 
 	if (isChildAppeal(appealDetails) && !ALLOWED_CHILD_APPEAL_BANNERS.includes(bannerDefinitionKey)) {
@@ -219,6 +220,15 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/hearing/setup/date`
 				)}">Set up hearing</a>`
+			});
+		}
+		case 'addResidencesNetChange': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-link" data-cy="add-residences-net-change" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/residential-units/new`
+				)}">Add number of residential units</a>`
 			});
 		}
 	}

@@ -79,9 +79,8 @@ export async function appealDetailsPage(
 	const caseDownload = mappedData.appeal.downloadCaseFiles.display.htmlItem
 		? [mappedData.appeal.downloadCaseFiles.display.htmlItem]
 		: [];
-
+	appealDetails.numberOfResidencesNetChange = appellantCase?.numberOfResidencesNetChange ?? null;
 	const accordion = generateAccordionItems(appealDetails, mappedData, session);
-
 	const statusDependentNotifications = mapStatusDependentNotifications(appealDetails, request);
 	const notificationBanners = sortNotificationBanners([
 		...statusDependentNotifications,

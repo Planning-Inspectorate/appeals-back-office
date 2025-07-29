@@ -108,6 +108,11 @@ describe('mapStatusDependentNotifications', () => {
 			requiredAction: 'updateLpaStatement',
 			expectedContainedHtml:
 				'<p class="govuk-notification-banner__heading">LPA statement incomplete</p>'
+		},
+		{
+			bannerKey: 'addResidencesNetChange',
+			requiredAction: 'addResidencesNetChange',
+			expectedContainedHtml: `<a class="govuk-link" data-cy="add-residences-net-change" href="/appeals-service/appeal-details/${mockAppealData.appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}">Add number of residential units</a>`
 		}
 	];
 

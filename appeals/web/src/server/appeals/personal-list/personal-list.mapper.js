@@ -415,6 +415,12 @@ function mapRequiredActionToPersonalListActionHtml(
 				`/appeals-service/appeal-details/${appealId}/hearing/change/address-details`
 			)}">Add hearing address</a>`;
 		}
+		case 'addResidencesNetChange': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/residential-units/new`
+			)}">Add number of residential units<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+		}
 		default: {
 			return '';
 		}
