@@ -5,6 +5,7 @@ parameters:
       values:
           - 'dev'
           - 'test'
+          - 'staging'
 
 variables:
     - name: APP
@@ -50,7 +51,7 @@ jobs:
             inputs:
                 scriptPath: 'appeals/e2e/run-tests.sh'
             env:
-                TZ: 'Europe/London' 
+                TZ: 'Europe/London'
                 BASE_URL: $(APPEALS_BASE_URL)
                 CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
                 CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)

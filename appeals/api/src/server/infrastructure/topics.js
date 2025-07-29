@@ -1,12 +1,14 @@
+import config from '#config/config.js';
+
 export const producers = {
-	boCaseData: 'appeal-has',
-	boCaseDataS78: 'appeal-s78',
-	boDocument: 'appeal-document',
-	boServiceUser: 'appeal-service-user',
-	boEventData: 'appeal-event',
-	boEventEstimate: 'appeal-event-estimate',
-	boBlobMove: 'appeal-document-to-move',
-	boRepresentation: 'appeal-representation'
+	boCaseData: config.serviceBusOptions.topicAppealHas,
+	boCaseDataS78: config.serviceBusOptions.topicAppealS78,
+	boDocument: config.serviceBusOptions.topicAppealDocument,
+	boServiceUser: config.serviceBusOptions.topicAppealServiceUser,
+	boEventData: config.serviceBusOptions.topicAppealEvent,
+	boEventEstimate: config.serviceBusOptions.topicAppealEventEstimate,
+	boBlobMove: config.serviceBusOptions.topicDocumentMove,
+	boRepresentation: config.serviceBusOptions.topicAppealRepresentation
 };
 
 export const consumers = {

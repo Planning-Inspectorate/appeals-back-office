@@ -162,6 +162,22 @@ variable "service_bus_config" {
   })
 }
 
+variable "service_bus_shared" {
+  description = "Test service bus re-use for staging environment"
+  type = object({
+    name                = string
+    resource_group_name = string
+    use_sb_test         = optional(bool, false)
+    network_name        = string
+  })
+  default = {
+    name                = ""
+    resource_group_name = ""
+    use_sb_test         = false
+    network_name        = ""
+  }
+}
+
 variable "sb_ttl" {
   description = "Service bus TTL settings"
   type = object({
