@@ -99,6 +99,7 @@ const mockLPANotificationMethodsFindMany = jest.fn().mockResolvedValue({});
 const mockLPADesignatedSitesFindMany = jest.fn().mockResolvedValue({});
 const mockProcedureTypeFindMany = jest.fn().mockResolvedValue({});
 const mockAppellantUpdate = jest.fn().mockResolvedValue({});
+const mockUserFindMany = jest.fn().mockResolvedValue({});
 const mockUserUpsert = jest.fn().mockResolvedValue({});
 const mockAppellantCaseIncompleteReasonTextDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseIncompleteReasonTextCreateMany = jest.fn().mockResolvedValue({});
@@ -437,6 +438,7 @@ class MockPrismaClient {
 
 	get user() {
 		return {
+			findMany: mockUserFindMany,
 			upsert: mockUserUpsert
 		};
 	}
