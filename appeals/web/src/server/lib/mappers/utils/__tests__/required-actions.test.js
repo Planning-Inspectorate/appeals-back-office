@@ -1102,7 +1102,9 @@ describe('required actions', () => {
 					)
 				).toEqual(['reviewAppellantFinalComments', 'reviewLpaFinalComments']);
 			});
+		});
 
+		describe('when appeal status is "EVENT"', () => {
 			it('should return "setup hearing" if appeal status is "EVENT"', () => {
 				expect(
 					getRequiredActionsForAppeal(
@@ -1161,6 +1163,18 @@ describe('required actions', () => {
 						'summary'
 					)
 				).toEqual(['addHearingAddress']);
+			});
+
+			it('should return "arrange site visit" if appeal status is "EVENT" and procedure type is not hearing', () => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealData,
+							appealStatus: APPEAL_CASE_STATUS.EVENT
+						},
+						'detail'
+					)
+				).toEqual(['arrangeSiteVisit']);
 			});
 		});
 	});
