@@ -2,7 +2,7 @@ resource "azurerm_servicebus_namespace" "main" {
   #checkov:skip=CKV_AZURE_199: TODO: Ensure that Azure Service Bus uses double encryption
   #checkov:skip=CKV_AZURE_201: TODO: Ensure that Azure Service Bus uses a customer-managed key to encrypt data
   #checkov:skip=CKV_AZURE_204: public network access only enabled in dev
-  name                = "${local.org}-sb-${local.resource_suffix}"
+  name                = var.environment == "staging" ? "${local.org}-sb-${local.service_name}-test" : "${local.org}-sb-${local.resource_suffix}"
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
 

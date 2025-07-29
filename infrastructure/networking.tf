@@ -73,7 +73,7 @@ resource "azurerm_virtual_network_peering" "front_office_to_bo" {
   virtual_network_name      = var.front_office_infra_config.network.name
 }
 
-## peer to Horizon for linked case integration
+# peer to Horizon for linked case integration
 resource "azurerm_virtual_network_peering" "bo_to_horizon" {
   # only deploy if configured to connect to horizon
   count = var.horizon_infra_config.deploy_connections ? 1 : 0
