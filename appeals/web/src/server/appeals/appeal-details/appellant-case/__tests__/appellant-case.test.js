@@ -583,7 +583,7 @@ describe('appellant-case', () => {
 				}).innerHTML;
 				expect(notificationBannerElementHTML).toMatchSnapshot();
 				expect(notificationBannerElementHTML).toContain('Success</h3>');
-				expect(notificationBannerElementHTML).toContain('Agent contact details updated</p>');
+				expect(notificationBannerElementHTML).toContain('Agent&#39;s contact details updated</p>');
 			});
 
 			it('should render a "Site updated" notification when the site address has been updated', async () => {

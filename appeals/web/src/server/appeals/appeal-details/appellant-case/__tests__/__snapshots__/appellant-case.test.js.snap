@@ -944,7 +944,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                     <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <p class="govuk-notification-banner__heading">Agent contact details updated</p>
+                    <p class="govuk-notification-banner__heading">Agent&#39;s contact details updated</p>
                 </div>
             </div>
         </div>
@@ -1212,7 +1212,7 @@ data-index="0">
         <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
     </div>
     <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Agent contact details updated</p>
+        <p class="govuk-notification-banner__heading">Agent&#39;s contact details updated</p>
     </div>
 </div>"
 `;

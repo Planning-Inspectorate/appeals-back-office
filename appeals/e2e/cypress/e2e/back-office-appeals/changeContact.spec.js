@@ -31,7 +31,7 @@ describe('change contacts', () => {
 		caseDetailsPage.clickChangeAppellant();
 		caseDetailsPage.inputAppellantEmailAddress('appellant@test.com');
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.validateBannerMessage('Success', 'Appellant contact details updated');
+		caseDetailsPage.validateBannerMessage('Success', `Appellant's contact details updated`);
 		caseDetailsPage.verifyAppellantEmailAddress('Appellant', 'appellant@test.com');
 	});
 
@@ -39,7 +39,7 @@ describe('change contacts', () => {
 		caseDetailsPage.clickChangeAgent();
 		caseDetailsPage.inputAgentEmailAddress('agent@test.com');
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.validateBannerMessage('Success', 'Agent contact details updated');
+		caseDetailsPage.validateBannerMessage('Success', `Agent's contact details updated`);
 		caseDetailsPage.verifyAppellantEmailAddress('Agent', 'agent@test.com');
 	});
 });
