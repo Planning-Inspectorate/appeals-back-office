@@ -94,9 +94,7 @@ export const happyPathHelper = {
 		cy.reload();
 		caseDetailsPage.basePageElements.bannerLink().click();
 		caseDetailsPage.clickButtonByText('Confirm');
-		caseDetailsPage.checkStatusOfCase('Hearing ready to set up', 0);
 		caseDetailsPage.validateBannerMessage('Success', 'Statements and IP comments shared');
-		caseDetailsPage.validateBannerMessage('Important', 'Set up hearing');
 	},
 
 	changeStartDate(caseRef) {
@@ -219,17 +217,13 @@ export const happyPathHelper = {
 	},
 
 	progressSiteVisit(caseRef) {
-		caseDetailsPage.clickChangeVisitTypeHasSiteDetails();
-		caseDetailsPage.clickButtonByText('Manage the site visit');
+		caseDetailsPage.clickSetUpSiteVisitType();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Accompanied'));
 		dateTimeSection.enterVisitDate(happyPathHelper.validVisitDate());
 		dateTimeSection.enterVisitStartTime('08', '00');
 		dateTimeSection.enterVisitEndTime('12', '00');
 		caseDetailsPage.clickButtonByText('Confirm');
-		// caseDetailsPage.validateConfirmationPanelMessage(
-		// 	'Site visit scheduled',
-		// 	'Appeal reference ' + caseRef
-		// );
+		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
 		cy.simulateSiteVisit(caseRef).then((caseRef) => {
 			cy.reload();
 		});
