@@ -115,39 +115,96 @@ describe('appeal timetables routes', () => {
 				lpaStatementDueDate: responseDateSet
 			};
 
-			test('updates a household appeal timetable', async () => {
-				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(houseAppealWithTimetable);
-				// @ts-ignore
-				databaseConnector.user.upsert.mockResolvedValue({
-					id: 1,
-					azureAdUserId
-				});
-				databaseConnector.appealTimetable.update.mockResolvedValue(1);
+			test.each([
+				[
+					'householder',
+					houseAppealWithTimetable,
+					householdAppealRequestBody,
+					householdAppealResponseBody
+				],
+				[
+					'cas planning',
+					casPlanningAppealWithTimetable,
+					householdAppealRequestBody,
+					householdAppealResponseBody
+				]
+			])(
+				'updates a %s appeal timetable and sends notify',
+				async (_, appealWithTimetable, requestBody, responseBody) => {
+					// @ts-ignore
+					databaseConnector.appeal.findUnique.mockResolvedValue(appealWithTimetable);
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+					databaseConnector.appealTimetable.update.mockResolvedValue(1);
 
-				const { appealTimetable, id } = houseAppealWithTimetable;
-				const response = await request
-					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
-					.send(householdAppealRequestBody)
-					.set('azureAdUserId', azureAdUserId);
+					const { appealTimetable, id } = appealWithTimetable;
+					const response = await request
+						.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
+						.send(requestBody)
+						.set('azureAdUserId', azureAdUserId);
 
-				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
-					data: householdAppealResponseBody,
-					where: {
-						id: appealTimetable.id
-					}
-				});
-				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
-					data: {
-						appealId: householdAppeal.id,
-						details: 'Timetable updated:<br>• LPA questionnaire due date changed to 10 June 2024',
-						loggedAt: expect.any(Date),
-						userId: householdAppeal.caseOfficer.id
-					}
-				});
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual(householdAppealRequestBody);
-			});
+					expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
+						data: responseBody,
+						where: {
+							id: appealTimetable.id
+						}
+					});
+					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+						data: {
+							appealId: appealWithTimetable.id,
+							details: 'Timetable updated:<br>• LPA questionnaire due date changed to 10 June 2024',
+							loggedAt: expect.any(Date),
+							userId: appealWithTimetable.caseOfficer.id
+						}
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.any(Object),
+						personalisation: {
+							appeal_reference_number: appealWithTimetable.reference,
+							final_comments_due_date: dateISOStringToDisplayDate(
+								responseBody?.finalCommentsDueDate
+							),
+							ip_comments_due_date: dateISOStringToDisplayDate(responseBody?.ipCommentsDueDate),
+							lpa_questionnaire_due_date: dateISOStringToDisplayDate(
+								responseBody?.lpaQuestionnaireDueDate
+							),
+							lpa_reference: appealWithTimetable.applicationReference,
+							lpa_statement_due_date: dateISOStringToDisplayDate(responseBody?.lpaStatementDueDate),
+							site_address: `${appealWithTimetable.address.addressLine1}, ${appealWithTimetable.address.addressLine2}, ${appealWithTimetable.address.addressTown}, ${appealWithTimetable.address.addressCounty}, ${appealWithTimetable.address.postcode}, ${appealWithTimetable.address.addressCountry}`
+						},
+						recipientEmail: appealWithTimetable.agent.email,
+						templateName: 'has-appeal-timetable-updated'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.any(Object),
+						personalisation: {
+							appeal_reference_number: appealWithTimetable.reference,
+							final_comments_due_date: dateISOStringToDisplayDate(
+								responseBody?.finalCommentsDueDate
+							),
+							ip_comments_due_date: dateISOStringToDisplayDate(responseBody?.ipCommentsDueDate),
+							lpa_questionnaire_due_date: dateISOStringToDisplayDate(
+								responseBody?.lpaQuestionnaireDueDate
+							),
+							lpa_reference: appealWithTimetable.applicationReference,
+							lpa_statement_due_date: dateISOStringToDisplayDate(responseBody?.lpaStatementDueDate),
+							site_address: `${appealWithTimetable.address.addressLine1}, ${appealWithTimetable.address.addressLine2}, ${appealWithTimetable.address.addressTown}, ${appealWithTimetable.address.addressCounty}, ${appealWithTimetable.address.postcode}, ${appealWithTimetable.address.addressCountry}`
+						},
+						recipientEmail: appealWithTimetable.lpa.email,
+						templateName: 'has-appeal-timetable-updated'
+					});
+
+					expect(response.status).toEqual(200);
+					expect(response.body).toEqual(householdAppealRequestBody);
+				}
+			);
 
 			test.each([
 				[
@@ -762,16 +819,19 @@ describe('appeal timetables routes', () => {
 				}
 			);
 
-			test('start a household appeal timetable', async () => {
+			test.each([
+				['householdAppeal', householdAppeal],
+				['casPlanningAppeal', casPlanningAppeal]
+			])('start a %s timetable', async (_, appeal) => {
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
 					azureAdUserId
 				});
 
-				const { id } = householdAppeal;
+				const { id } = appeal;
 				const response = await request
 					.post(`/appeals/${id}/appeal-timetables/`)
 					.send()
@@ -787,26 +847,26 @@ describe('appeal timetables routes', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						appeal_reference_number: '1345264',
-						appeal_type: 'Householder',
-						appellant_email_address: householdAppeal.appellant.email,
+						appeal_type: appeal.appealType.type,
+						appellant_email_address: appeal.appellant.email,
 						child_appeals: [],
 						comment_deadline: '',
 						due_date: '12 June 2024',
 						final_comments_deadline: '',
 						ip_comments_deadline: '',
-						local_planning_authority: 'Maidstone Borough Council',
-						lpa_reference: '48269/APP/2021/1482',
+						local_planning_authority: appeal.lpa.name,
+						lpa_reference: appeal.applicationReference,
 						lpa_statement_deadline: '',
-						procedure_type: 'written representations',
+						procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
 						questionnaire_due_date: '12 June 2024',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 						start_date: '5 June 2024',
 						we_will_email_when:
 							'when you can view information from other parties in the appeals service.',
 						site_visit: true,
 						costs_info: true
 					},
-					recipientEmail: householdAppeal.appellant.email,
+					recipientEmail: appeal.appellant.email,
 					templateName: 'appeal-valid-start-case-appellant'
 				});
 
@@ -814,23 +874,23 @@ describe('appeal timetables routes', () => {
 					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 					notifyClient: expect.anything(),
 					personalisation: {
-						appeal_reference_number: '1345264',
-						appeal_type: 'Householder',
-						appellant_email_address: householdAppeal.appellant.email,
+						appeal_reference_number: appeal.reference,
+						appeal_type: appeal.appealType.type,
+						appellant_email_address: appeal.appellant.email,
 						child_appeals: [],
 						comment_deadline: '',
 						due_date: '12 June 2024',
 						final_comments_deadline: '',
 						ip_comments_deadline: '',
-						local_planning_authority: 'Maidstone Borough Council',
-						lpa_reference: '48269/APP/2021/1482',
+						local_planning_authority: appeal.lpa.name,
+						lpa_reference: appeal.applicationReference,
 						lpa_statement_deadline: '',
-						procedure_type: 'written representations',
+						procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
 						questionnaire_due_date: '12 June 2024',
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 						start_date: '5 June 2024'
 					},
-					recipientEmail: householdAppeal.lpa.email,
+					recipientEmail: appeal.lpa.email,
 					templateName: 'appeal-valid-start-case-lpa'
 				});
 			});

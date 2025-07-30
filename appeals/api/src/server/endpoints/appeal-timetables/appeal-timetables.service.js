@@ -84,7 +84,8 @@ const sendStartCaseNotifies = async (
 	const appealTypeMap = {
 		D: '-',
 		W: '-s78-',
-		Y: '-s78-'
+		Y: '-s78-',
+		ZP: '-'
 	};
 
 	const { type = '', key: appealTypeKey = 'D' } = appeal.appealType || {};
@@ -355,7 +356,7 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	const lpaEmail = appeal.lpa?.email || '';
 	const templateName =
-		appeal.appealType?.key === APPEAL_TYPE_SHORTHAND_HAS
+		appeal.appealType?.key === APPEAL_TYPE_SHORTHAND_HAS || appeal.appealType?.key === 'ZP'
 			? 'has-appeal-timetable-updated'
 			: 'appeal-timetable-updated';
 
@@ -388,6 +389,7 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 	return (
 		appealTypeShorthand === APPEAL_TYPE_SHORTHAND_HAS ||
+		appealTypeShorthand === 'ZP' ||
 		(appealTypeShorthand === 'W' && procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
 		(appealTypeShorthand === 'Y' && procedureType === APPEAL_CASE_PROCEDURE.WRITTEN) ||
 		procedureType === undefined
