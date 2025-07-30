@@ -22,7 +22,11 @@ const SELECTORS = {
 	submitButton: '.pins-file-upload__submit',
 	removeButton: '.pins-file-upload__remove'
 };
-const MAX_FILE_SIZE = 26214400; // 25MB
+const BYTES_IN_KB = 1024;
+const BYTES_IN_MB = BYTES_IN_KB * 1024;
+const BYTES_IN_GB = BYTES_IN_MB * 1024;
+const MAX_FILE_SIZE = 25 * BYTES_IN_MB; // 25MB
+const TOTAL_MAX_FILE_SIZE = 1 * BYTES_IN_GB; // 1GB
 
 /**
  * Actions on the client for the file upload process
@@ -284,6 +288,12 @@ const clientActions = (container) => {
 				: window.crypto.randomUUID()
 		}));
 
+		const isTotalFileSizeExceeded = validateTotalFileSize(addedFiles);
+		if (isTotalFileSizeExceeded) {
+			hideProgressMessage(container);
+			return;
+		}
+
 		for (const addedFile of addedFiles) {
 			const validationError = validateSelectedFile(addedFile.file);
 
@@ -403,6 +413,46 @@ const clientActions = (container) => {
 		}
 
 		return null;
+	}
+
+	/**
+	 * @param {{ file: File; guid: string; }[]} addedFiles
+	 * @returns {boolean}
+	 */
+	function validateTotalFileSize(addedFiles) {
+		const totalFileSizeAdded = addedFiles.reduce(
+			(total, addedFile) => total + addedFile.file.size,
+			0
+		);
+		const totalFileSizeStaged = stagedFiles.files.reduce(
+			(total, stagedFile) => total + stagedFile.size,
+			0
+		);
+
+		const totalFileSize = totalFileSizeAdded + totalFileSizeStaged;
+
+		if (totalFileSize > TOTAL_MAX_FILE_SIZE) {
+			const totalFileSizeGB = (totalFileSize / BYTES_IN_GB).toFixed(2);
+
+			const validationError = {
+				message: 'SIZE_EXCEEDED',
+				metadata: { totalFileSize: 'totalFileSizeGB' }
+			};
+
+			showErrors(
+				{
+					message: validationError.message,
+					formId: container.dataset?.formId || '',
+					metadata: {
+						totalFileSize: `${totalFileSizeGB}`
+					}
+				},
+				container
+			);
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
