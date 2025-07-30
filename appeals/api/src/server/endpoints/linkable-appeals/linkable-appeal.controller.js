@@ -1,4 +1,6 @@
 import { canLinkAppeals } from '#endpoints/link-appeals/link-appeals.service.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { getLinkableAppealSummaryByCaseReference } from './linkable-appeal.service.js';
 
 /** @typedef {import('express').Request} Request */
@@ -13,13 +15,20 @@ export const getLinkableAppealById = async (req, res) => {
 	const { appealReference, linkableType } = req.params;
 
 	try {
-		const linkableAppeal = await getLinkableAppealSummaryByCaseReference(appealReference);
+		const linkableAppeal = await getLinkableAppealSummaryByCaseReference(
+			appealReference,
+			linkableType
+		);
 
 		if (linkableAppeal.source === 'horizon') {
 			return res.send(linkableAppeal);
 		}
 
-		if (!canLinkAppeals(linkableAppeal, linkableType, 'lead')) {
+		if (
+			isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
+			linkableType === 'linked' &&
+			!canLinkAppeals(linkableAppeal, linkableType, 'lead')
+		) {
 			throw 409;
 		}
 
