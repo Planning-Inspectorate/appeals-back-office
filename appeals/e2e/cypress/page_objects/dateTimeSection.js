@@ -25,7 +25,6 @@ export class DateTimeSection extends Page {
 		changeAppealDate: '#change-appeal-final-date-',
 		withdrawalRequestDate: '#withdrawal-request-date-',
 		hearingDate: '#hearing-date-',
-		inquiryEstimationDays: '#inquiry-estimation-days',
 		lpaQuestionnaireDueDate: '#lpa-questionnaire-due-date-',
 		lpaStatementDueDate: '#lpa-statement-due-date-',
 		ipCommentsDueDate: '#ip-comments-due-date-',
@@ -87,10 +86,6 @@ export class DateTimeSection extends Page {
 		this.#setAllDateFields(`#${field}-`, date);
 	}
 
-	enterInquiryDate(date) {
-		this.#setAllDateFields(this.selectorPrefix.inquiryDate, date);
-	}
-
 	clearWithdrawalDate() {
 		cy.get('#withdrawal-request-date-day').clear();
 		cy.get('#withdrawal-request-date-month').clear();
@@ -113,6 +108,10 @@ export class DateTimeSection extends Page {
 
 	enterHearingDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.hearingDate, date);
+	}
+
+	enterInquiryDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.inquiryDate, date);
 	}
 
 	enterHearingTime(hour, minute) {
