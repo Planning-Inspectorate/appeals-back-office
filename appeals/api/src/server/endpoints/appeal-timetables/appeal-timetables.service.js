@@ -138,8 +138,8 @@ const sendStartCaseNotifies = async (
 			personalisation: {
 				...commonEmailVariables,
 				we_will_email_when: weWillEmailWhen,
-				site_visit: appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN,
-				costs_info: appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN
+				site_visit: procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined, //undefined procedure types are treated as written
+				costs_info: procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined
 			}
 		});
 	}
