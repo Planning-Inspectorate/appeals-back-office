@@ -27,8 +27,7 @@ export const errorMessage = (type, replaceValue, additionalValues = {}) => {
 	/** @type {Record<string,string>} */
 	const index = {
 		GENERIC: 'Something went wrong, please try again',
-		SIZE_EXCEEDED:
-			'The total of your uploaded files is {REPLACE_VALUE}, it must be smaller than 1 GB',
+		SIZE_EXCEEDED: `The total of your uploaded files is {totalFileSize} GB, it must be smaller than 1 GB`,
 		ADDITIONAL_DOCUMENTS_CONFIRMATION_REQUIRED:
 			'Please confirm that the document does not belong anywhere else',
 		TIMEOUT: 'There was a timeout and your files could not be uploaded',
