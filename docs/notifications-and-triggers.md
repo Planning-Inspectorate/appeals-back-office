@@ -60,13 +60,13 @@ The following notifications are sent from the back-office using these [Notify Te
 
 ### Appeal valid start case householder appellant
 
-- **Appeal type:** householder
+- **Appeal type:** householder, CAS planning
 - **Notify Template:** [appeal-valid-start-case-appellant](../appeals/api/src/server/notify/templates/appeal-valid-start-case-appellant.content.md)
 - **Trigger:** Start a householder case, select an appeal procedure, and confirm.
 
 ### Appeal valid start case householder lpa
 
-- **Appeal type:** householder
+- **Appeal type:** householder, CAS planning
 - **Notify Template:** [appeal-valid-start-case-lpa](../appeals/api/src/server/notify/templates/appeal-valid-start-case-lpa.content.md)
 - **Trigger:** Start a householder case, select an appeal procedure, and confirm.
 
