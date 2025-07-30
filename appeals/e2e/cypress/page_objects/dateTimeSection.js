@@ -25,10 +25,14 @@ export class DateTimeSection extends Page {
 		changeAppealDate: '#change-appeal-final-date-',
 		withdrawalRequestDate: '#withdrawal-request-date-',
 		hearingDate: '#hearing-date-',
+		inquiryEstimationDays: '#inquiry-estimation-days',
 		lpaQuestionnaireDueDate: '#lpa-questionnaire-due-date-',
 		lpaStatementDueDate: '#lpa-statement-due-date-',
 		ipCommentsDueDate: '#ip-comments-due-date-',
-		finalCommentsDueDate: '#final-comments-due-date-'
+		finalCommentsDueDate: '#final-comments-due-date-',
+		statementOfCommonGroundDueDate: '#statement-of-common-ground-due-date-',
+		proofOfEvidenceAndWitnessesDueDate: '#proof-of-evidence-and-witnesses-due-date-',
+		inquiryDate: '#inquiry-date-'
 	};
 
 	// E L E M E N T S
@@ -81,6 +85,10 @@ export class DateTimeSection extends Page {
 
 	enterTimeTableDueDate(field, date) {
 		this.#setAllDateFields(`#${field}-`, date);
+	}
+
+	enterInquiryDate(date) {
+		this.#setAllDateFields(this.selectorPrefix.inquiryDate, date);
 	}
 
 	clearWithdrawalDate() {

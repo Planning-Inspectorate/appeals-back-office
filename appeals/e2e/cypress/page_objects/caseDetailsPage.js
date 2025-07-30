@@ -181,7 +181,13 @@ export class CaseDetailsPage extends Page {
 		timeTableRows: () => cy.get('.appeal-case-timetable dt'),
 		personalListFilterDropdown: () => cy.get('.govuk-select'),
 		caseDetailsSections: () => cy.get('.govuk-accordion__section-heading-text-focus'),
-		pageHeading: () => cy.get(this._cyDataSelectors.pageHeading)
+		pageHeading: () => cy.get(this._cyDataSelectors.pageHeading),
+		inquiryEstimatedDaysInput: () => cy.get('.govuk-input govuk-input--width-3'),
+		line1: () => cy.get('#address-line-1'),
+		line2: () => cy.get('#address-line-2'),
+		town: () => cy.get('#town'),
+		county: () => cy.get('#county'),
+		postcode: () => cy.get('#post-code')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -408,6 +414,22 @@ export class CaseDetailsPage extends Page {
 	clickAddAnother() {
 		cy.get(this.selectors.button).filter(':visible').contains('Add another').click();
 	}
+	addHearingLocationAddress(address) {
+		this.hearingSectionElements.address.line1().clear().type(address.line1);
+		this.hearingSectionElements.address.line2().clear().type(address.line2);
+		this.hearingSectionElements.address.town().clear().type(address.town);
+		this.hearingSectionElements.address.county().clear().type(address.county);
+		this.hearingSectionElements.address.postcode().clear().type(address.postcode);
+		this.clickButtonByText('Continue');
+	}
+
+	addInquiryAddress(address) {
+		this.elements.line1().clear().type(address.line1);
+		this.elements.line2().clear().type(address.line2);
+		this.elements.town().clear().type(address.town);
+		this.elements.county().clear().type(address.county);
+		this.elements.postcode().clear().type(address.postcode);
+	}
 
 	clickAddAgreementToChangeDescriptionEvidence() {
 		this.elements.addAgreementToChangeDescriptionEvidence().click();
@@ -508,6 +530,10 @@ export class CaseDetailsPage extends Page {
 		this.basePageElements.summaryDetails().click();
 		this.elements.personalListFilterDropdown().select(text);
 		this.clickButtonByText('Apply');
+	}
+
+	inputEstimatedInquiryDays() {
+		this.elements.inquiryEstimatedDaysInput();
 	}
 
 	/***************************************************************

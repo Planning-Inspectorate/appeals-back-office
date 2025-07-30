@@ -70,6 +70,18 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Start case');
 	},
+
+	startS78InquiryCase(caseRef, procedureType) {
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickReadyToStartCase();
+		caseDetailsPage.selectRadioButtonByValue(procedureType);
+		caseDetailsPage.clickButtonByText('Continue');
+		//dateTimeSection.enterDueDate();
+		//caseDetailsPage.clickButtonByText('Continue');
+		//caseDetailsPage.selectRadioButtonByValue('Yes');
+		//caseDetailsPage.clickButtonByText('Continue');
+	},
 	reviewLPaStatement(caseRef) {
 		happyPathHelper.reviewS78Lpaq(caseRef);
 		caseDetailsPage.checkStatusOfCase('Statements', 0);
