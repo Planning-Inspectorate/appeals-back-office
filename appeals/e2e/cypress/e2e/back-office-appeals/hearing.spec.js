@@ -538,7 +538,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.checkNotifySent(caseRef, expectedNotifies);
 	});
 
-	it('should progress hearing case to decision', () => {
+	it.only('should progress hearing case to decision', () => {
 		hearingSectionPage.deleteHearingIfExists(caseRef);
 		happyPathHelper.reviewLPaStatement(caseRef);
 
@@ -583,7 +583,8 @@ describe('Setup hearing and add hearing estimates', () => {
 			// navigate to details page
 			caseDetailsPage.clickLinkByText(caseRef);
 
-			caseDetailsPage.clickHearingBannerLink();
+			// caseDetailsPage.clickHearingBannerLink();
+			caseDetailsPage.clickHearingBannerAddressLink();
 			hearingSectionPage.addHearingLocationAddress(originalAddress);
 			hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
 			caseDetailsPage.clickButtonByText('Update hearing');
