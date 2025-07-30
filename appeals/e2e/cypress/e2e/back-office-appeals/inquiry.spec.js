@@ -20,7 +20,7 @@ const inquiryAddress = {
 	postcode: 'BS20 1BS'
 };
 
-let inquiryDate = (new Date(), 28);
+// let inquiryDate = (new Date(), 28);
 
 const getRandomNum = () => Math.floor(Math.random() * 100);
 
@@ -64,12 +64,16 @@ const setupTestCase = () => {
 		happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
 	});
 };
+
 beforeEach(() => {
 	setupTestCase();
 });
 
 it('Start case as inquiry with address and estimated days', () => {
-	dateTimeSection.enterInquiryDate(inquiryDate);
+	cy.wait(1000);
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		dateTimeSection.enterInquiryDate(inquiryDate);
+	});
 	caseDetailsPage.clickButtonByText('Continue');
 	caseDetailsPage.selectRadioButtonByValue('Yes');
 	caseDetailsPage.inputEstimatedInquiryDays(getRandomNum);
@@ -78,5 +82,5 @@ it('Start case as inquiry with address and estimated days', () => {
 	caseDetailsPage.clickButtonByText('Continue');
 	caseDetailsPage.addInquiryAddress(inquiryAddress);
 	caseDetailsPage.clickButtonByText('Continue');
-	dateTimeSection.caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.clickButtonByText('Continue');
 });
