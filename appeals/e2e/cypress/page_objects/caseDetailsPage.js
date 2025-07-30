@@ -58,6 +58,8 @@ export class CaseDetailsPage extends Page {
 		viewCaseHistory: 'view-case-history',
 		uploadFile: 'upload-file-button',
 		setUpTimetableHearingDate: 'set up-timetable-hearing-date',
+		hearingBannerLink: 'setup-hearing',
+		hearingBannerAddressLink: 'add-hearing-address',
 		pageHeading: 'h1'
 	};
 
@@ -173,7 +175,8 @@ export class CaseDetailsPage extends Page {
 		planningApplicationReferenceField: () => cy.get('#planning-application-reference'),
 		viewCaseHistory: () => cy.getByData(this._cyDataSelectors.viewCaseHistory),
 		cancelHearing: () => cy.get('#cancelHearing'),
-		hearingBannerLink: () => cy.get('.govuk-notification-banner__content .govuk-link'),
+		hearingBannerLink: () => cy.getByData(this._cyDataSelectors.hearingBannerLink),
+		hearingBannerAddressLink: () => cy.getByData(this._cyDataSelectors.hearingBannerAddressLink),
 		setUpTimetableHearingDate: () => cy.getByData(this._cyDataSelectors.setUpTimetableHearingDate),
 		timeTableRows: () => cy.get('.appeal-case-timetable dt'),
 		personalListFilterDropdown: () => cy.get('.govuk-select'),
@@ -475,6 +478,10 @@ export class CaseDetailsPage extends Page {
 
 	clickHearingBannerLink() {
 		this.elements.hearingBannerLink().click();
+	}
+
+	clickHearingBannerAddressLink() {
+		this.elements.hearingBannerAddressLink().click();
 	}
 
 	clickSetUpTimetableHearingDate() {
