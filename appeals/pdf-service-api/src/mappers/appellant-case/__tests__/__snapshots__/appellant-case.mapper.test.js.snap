@@ -18,8 +18,12 @@ exports[`mapAppellantCaseData should map appellant case data 1`] = `
       "heading": "Appellant details",
       "items": [
         {
-          "html": "Sophie Skinner<br>test4@example.com",
+          "html": "Sophie Skinner<br />test4@example.com",
           "key": "Appellant details",
+        },
+        {
+          "html": "Lee Thornton<br />Lee Thornton Ltd<br />test1@example.com",
+          "key": "Agent details",
         },
       ],
     },
@@ -180,6 +184,15 @@ exports[`mapAppellantCaseData should map appellant case data 1`] = `
         {
           "html": "No documents",
           "key": "Other new supporting documents",
+        },
+      ],
+    },
+    {
+      "heading": "Additional documents",
+      "items": [
+        {
+          "html": "No documents",
+          "key": "",
         },
       ],
     },
