@@ -3,7 +3,7 @@ import { HTTPError } from 'got';
 import { addNetResidence } from './net-residence.mapper.js';
 import { changeNumberOfResidencesNetChange } from './net-residence.service.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-// import { getAppellantCaseFromAppealId } from '../appellant-case/appellant-case.service.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -27,8 +27,15 @@ const renderGetNetResidence = async (request, response) => {
 	} = request;
 
 	const appealsDetail = request.currentAppeal;
-
-	const mappedPageContents = addNetResidence(appealsDetail, errors, netResidence, netLoss, netGain);
+	const backUrl = getBackLinkUrlFromQuery(request) || request.originalUrl;
+	const mappedPageContents = addNetResidence(
+		appealsDetail,
+		errors,
+		netResidence,
+		netLoss,
+		netGain,
+		backUrl
+	);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,
