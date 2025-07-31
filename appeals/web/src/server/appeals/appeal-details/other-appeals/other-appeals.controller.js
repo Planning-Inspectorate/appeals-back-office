@@ -72,7 +72,7 @@ export const postAddOtherAppeals = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {string | undefined} appealReferenceInputValue
- * @param {object | undefined} errors
+ * @param {import('@pins/express/types/express.js').ValidationErrors | undefined} errors
  */
 const renderAddOtherAppeals = async (
 	request,
@@ -91,7 +91,10 @@ const renderAddOtherAppeals = async (
 	const mappedPageContent = await addOtherAppealsPage(
 		request.currentAppeal,
 		appealReferenceInputValue,
-		origin
+		origin,
+		errors?.addOtherAppealsReference?.msg
+			? { msg: errors?.addOtherAppealsReference?.msg }
+			: undefined
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
