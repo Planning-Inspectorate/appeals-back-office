@@ -73,9 +73,12 @@ export const VALID_MIME_TYPES = Object.freeze({
 		extensions: ['xlsx']
 	},
 	'application/vnd.ms-outlook': { hexSignature: 'D0CF11E0', extensions: ['msg'] },
-	'image/jpeg': { hexSignature: 'FFD8FFE0', extensions: ['jpg', 'jpeg'] },
+	'image/jpeg': {
+		hexSignature: 'FFD8FFE0, FFD8FFE1, FFD8FFE8, FFD8FFEE',
+		extensions: ['jpg', 'jpeg']
+	},
 	'video/mpeg': { hexSignature: '000001B3, 000001BA', extensions: ['mpeg'] },
-	'audio/mpeg': { hexSignature: 'FFFB, 494433', extensions: ['mp3'] },
+	'audio/mpeg': { hexSignature: 'FFFB, FFF2, FFF3, 494433', extensions: ['mp3'] },
 	'video/mp4': { hexSignature: '66747970', offset: 8, extensions: ['mp4'] },
 	'video/quicktime': { hexSignature: '0000001466747970', extensions: ['mov'] },
 	'image/png': { hexSignature: '89504E47', extensions: ['png'] },
