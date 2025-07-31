@@ -180,32 +180,19 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		});
 	});
 
-	const getNextBusinessDay = (startDate, addedDays = 1) => {
-		const date = new Date(startDate);
-		date.setDate(date.getDate() + addedDays);
-
-		while (
-			date.getDay() === 0 || // Sunday
-			date.getDay() === 6 || // Saturday
-			(date.getDate() === 1 && date.getMonth() === 0) // Jan 1
-		) {
-			date.setDate(date.getDate() + 1);
-		}
-
-		return date;
-	};
-
 	const verifyDateChanges = (addedDays) => {
+		const safeAddedDays = Math.max(addedDays, 1);
+
 		caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
 		caseDetailsPage.clickRowChangeLink(timetableItems[3].row);
 
-		const safeAddedDays = Math.max(addedDays, 1);
-		const startDate = getNextBusinessDay(new Date(), safeAddedDays + 2); // buffer to avoid today/weekend
+		// Get the future business date using Cypress task/helper
+		cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
+			caseDetailsPage.changeTimetableDates(timetableItems, startDate, 7);
+			caseDetailsPage.clickUpdateTimetableDueDates();
 
-		caseDetailsPage.changeTimetableDates(timetableItems, startDate, 7);
-		caseDetailsPage.clickUpdateTimetableDueDates();
-
-		caseDetailsPage.verifyDatesChanged(timetableItems, startDate, 7);
-		caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
+			caseDetailsPage.verifyDatesChanged(timetableItems, startDate, 7);
+			caseDetailsPage.validateBannerMessage('Success', 'Timetable due dates updated');
+		});
 	};
 });
