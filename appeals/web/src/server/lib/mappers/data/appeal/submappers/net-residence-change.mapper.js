@@ -1,12 +1,14 @@
 import config from '#environment/config.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapNetResidenceChange = ({
 	appealDetails,
 	appellantCase,
-	userHasUpdateCasePermission
+	userHasUpdateCasePermission,
+	request
 }) => {
 	const netChange = appellantCase?.numberOfResidencesNetChange;
 	const id = 'net-residence-change';
@@ -33,7 +35,10 @@ export const mapNetResidenceChange = ({
 		id,
 		text: 'Is there a net gain or loss of residential units?',
 		value,
-		link: `/appeals-service/appeal-details/${appealDetails.appealId}/residential-units/new`,
+		link: addBackLinkQueryToUrl(
+			request,
+			`/appeals-service/appeal-details/${appealDetails.appealId}/residential-units/new`
+		),
 		editable: userHasUpdateCasePermission,
 		actionText: netChange != null ? 'Change' : 'Add',
 		classes: 'appeal-net-residence-change'
