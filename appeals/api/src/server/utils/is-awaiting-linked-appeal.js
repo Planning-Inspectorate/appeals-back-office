@@ -30,7 +30,7 @@ export const isAwaitingLinkedAppeal = (appeal, linkedAppeals) => {
  */
 export const allLpaQuestionnaireOutcomesAreComplete = (linkedAppeals) => {
 	if (!linkedAppeals.length) {
-		return false;
+		return true;
 	}
 	// @ts-ignore
 	return linkedAppeals.every((appeal) => {

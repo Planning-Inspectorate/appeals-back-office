@@ -4744,12 +4744,18 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
                                         <li><a href="/appeals-service/appeal-details/5449" class="govuk-link" data-cy="linked-appeal-784706"
                                             aria-label="Appeal 7 8 4 7 0 6">784706</a>
                                         </li>
-                                        <li><span class="govuk-body">87326527</span>
-                                        </li>
-                                        <li><a href="/appeals-service/appeal-details/5464" class="govuk-link" data-cy="linked-appeal-140079"
-                                            aria-label="Appeal 1 4 0 0 7 9">140079</a> (lead)</li>
                                         <li><a href="/appeals-service/appeal-details/5451" class="govuk-link" data-cy="linked-appeal-721086"
                                             aria-label="Appeal 7 2 1 0 8 6">721086</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"
+                                            data-cy="manage-linked-appeals">Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"
+                                            data-cy="add-linked-appeal">Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -5077,7 +5083,7 @@ exports[`appeal-details GET /:appealId should render an action link to the add l
 </main>"
 `;
 
-exports[`appeal-details GET /:appealId should render an action link to the manage linked appeals page, if there are linked appeals 1`] = `
+exports[`appeal-details GET /:appealId should render an action link to the manage linked appeals page, if there are linked appeals, the status is not past LPA Questionnaire, all the linked appeals are children and internal 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
@@ -5085,7 +5091,7 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Received appeal</strong>
+        <div class="govuk-grid-column-full"><strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">LPA questionnaire</strong>
             <strong             class="govuk-tag govuk-tag--grey govuk-!-margin-left-1 govuk-!-margin-bottom-4"></strong>
         </div>
     </div>
@@ -5198,12 +5204,18 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
                                         <li><a href="/appeals-service/appeal-details/5449" class="govuk-link" data-cy="linked-appeal-784706"
                                             aria-label="Appeal 7 8 4 7 0 6">784706</a>
                                         </li>
-                                        <li><span class="govuk-body">87326527</span>
-                                        </li>
-                                        <li><a href="/appeals-service/appeal-details/5464" class="govuk-link" data-cy="linked-appeal-140079"
-                                            aria-label="Appeal 1 4 0 0 7 9">140079</a> (lead)</li>
                                         <li><a href="/appeals-service/appeal-details/5451" class="govuk-link" data-cy="linked-appeal-721086"
                                             aria-label="Appeal 7 2 1 0 8 6">721086</a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/manage"
+                                            data-cy="manage-linked-appeals">Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/linked-appeals/add"
+                                            data-cy="add-linked-appeal">Add<span class="govuk-visually-hidden"> Linked appeals</span></a>
                                         </li>
                                     </ul>
                                 </dd>
@@ -5291,6 +5303,9 @@ exports[`appeal-details GET /:appealId should render an action link to the manag
                             </div>
                             <div class="govuk-summary-list__row appeal-lpa-questionnaire-due-date"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
                                 <dd class="govuk-summary-list__value">11 October 2023</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/timetable/edit"
+                                    data-cy="change-lpa-questionnaire-due-date">Change<span class="govuk-visually-hidden"> LPA questionnaire due</span></a>
+                                </dd>
                             </div>
                             <div class="govuk-summary-list__row appeal-site-visit"><dt class="govuk-summary-list__key"> Site visit</dt>
                                 <dd class="govuk-summary-list__value">
