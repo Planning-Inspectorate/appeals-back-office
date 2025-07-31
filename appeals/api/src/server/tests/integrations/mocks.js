@@ -60,6 +60,13 @@ export const validAppellantCase = {
 		}
 	]
 };
+export const validAppellantCaseCASPlanning = {
+	...validAppellantCase,
+	casedata: {
+		...validAppellantCase.casedata,
+		caseType: 'ZP'
+	}
+};
 
 export const validAppellantCaseS78 = {
 	...validAppellantCase,
@@ -151,6 +158,14 @@ export const validLpaQuestionnaire = {
 			size: 10293
 		}
 	]
+};
+
+export const validLpaQuestionnaireCASPlanning = {
+	casedata: {
+		...validLpaQuestionnaire.casedata,
+		caseType: 'ZP'
+	},
+	documents: validLpaQuestionnaire.documents
 };
 
 export const validLpaQuestionnaireS78 = {
@@ -309,6 +324,83 @@ export const appealIngestionInput = {
 	appealType: {
 		connect: {
 			key: 'D'
+		}
+	},
+	appellant: {
+		create: {
+			organisationName: 'A company',
+			salutation: 'Mr',
+			firstName: 'Testy',
+			lastName: 'McTest',
+			email: 'test@test.com',
+			webAddress: undefined,
+			phoneNumber: '0123456789',
+			otherPhoneNumber: undefined,
+			faxNumber: undefined
+		}
+	},
+	agent: {
+		create: undefined
+	},
+	lpa: {
+		connect: {
+			lpaCode: 'Q9999'
+		}
+	},
+	applicationReference: '123',
+	address: {
+		create: {
+			addressLine1: 'Somewhere',
+			addressLine2: 'Somewhere St',
+			addressCounty: 'Somewhere',
+			postcode: 'SOM3 W3R',
+			addressTown: 'Somewhereville'
+		}
+	},
+	appellantCase: {
+		create: {
+			applicationDate: '2024-01-01T00:00:00.000Z',
+			applicationDecision: 'refused',
+			applicationDecisionDate: '2024-01-01T00:00:00.000Z',
+			caseSubmittedDate: '2024-03-25T23:59:59.999Z',
+			caseSubmissionDueDate: '2024-03-25T23:59:59.999Z',
+			siteAccessDetails: 'Come and see',
+			siteSafetyDetails: "It's dangerous",
+			siteAreaSquareMetres: 22,
+			floorSpaceSquareMetres: 22,
+			ownsAllLand: true,
+			ownsSomeLand: true,
+			hasAdvertisedAppeal: true,
+			appellantCostsAppliedFor: false,
+			originalDevelopmentDescription: 'A test description',
+			changedDevelopmentDescription: false,
+			ownersInformed: true,
+			knowsAllOwners: {
+				connect: {
+					key: 'Some'
+				}
+			},
+			knowsOtherOwners: {
+				connect: {
+					key: 'Some'
+				}
+			},
+			isGreenBelt: false
+		}
+	},
+	neighbouringSites: {
+		create: []
+	},
+	folders: {
+		create: FOLDERS.map((/** @type {{ path: string; }} */ f) => {
+			return { path: f };
+		})
+	}
+};
+export const appealIngestionInputCasPlanning = {
+	appealType: {
+		connect: {
+			key: 'ZP'
 		}
 	},
 	appellant: {
