@@ -7,9 +7,9 @@ export const validateAddOtherAppealsReference = createValidator(
 	body('addOtherAppealsReference')
 		.trim()
 		.notEmpty()
-		.withMessage('Enter an appeal reference')
+		.withMessage('Enter the appeal reference number')
 		.isLength({ min: 7, max: 7 })
-		.withMessage('Appeal reference must be 7 digits')
+		.withMessage('Appeal reference number must be 7 numbers')
 		.isNumeric()
 		.withMessage('Enter appeal reference number using numbers 0 to 9')
 		.bail()
@@ -37,7 +37,7 @@ export const validateAddOtherAppealsReference = createValidator(
 				throw new Error('error when attempting to validate linkable appeal reference');
 			}
 		})
-		.withMessage('Enter a valid appeal reference')
+		.withMessage('Enter a real appeal reference number')
 );
 
 export const validateRelateAppealAnswer = createValidator(
