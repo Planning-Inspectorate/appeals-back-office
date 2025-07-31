@@ -538,7 +538,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.checkNotifySent(caseRef, expectedNotifies);
 	});
 
-	it.only('should progress hearing case to decision', () => {
+	it('should progress hearing case to decision', () => {
 		hearingSectionPage.deleteHearingIfExists(caseRef);
 		happyPathHelper.reviewLPaStatement(caseRef);
 
