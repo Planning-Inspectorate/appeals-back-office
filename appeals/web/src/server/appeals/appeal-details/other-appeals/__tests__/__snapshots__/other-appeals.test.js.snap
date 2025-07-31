@@ -219,7 +219,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#add-other-appeals-reference">Enter a valid appeal reference</a>
+                            <li><a href="#add-other-appeals-reference">Enter a real appeal reference number</a>
                             </li>
                         </ul>
                     </div>
@@ -234,10 +234,13 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form method="POST">
-                <div class="govuk-form-group">
+                <div class="govuk-form-group govuk-form-group--error">
                     <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text" value="7654321">
+                    <p id="add-other-appeals-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a real appeal reference
+                        number</p>
+                    <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                    id="add-other-appeals-reference" name="addOtherAppealsReference" type="text"
+                    value="7654321" aria-describedby="add-other-appeals-reference-error">
                 </div>
                 <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
                 id="filters-submit">Continue</button>
@@ -256,7 +259,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#add-other-appeals-reference">Enter an appeal reference</a>
+                            <li><a href="#add-other-appeals-reference">Enter the appeal reference number</a>
                             </li>
                         </ul>
                     </div>
@@ -271,10 +274,13 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form method="POST">
-                <div class="govuk-form-group">
+                <div class="govuk-form-group govuk-form-group--error">
                     <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text" value="">
+                    <p id="add-other-appeals-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the appeal reference
+                        number</p>
+                    <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                    id="add-other-appeals-reference" name="addOtherAppealsReference" type="text"
+                    value="" aria-describedby="add-other-appeals-reference-error">
                 </div>
                 <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
                 id="filters-submit">Continue</button>
@@ -308,10 +314,13 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form method="POST">
-                <div class="govuk-form-group">
+                <div class="govuk-form-group govuk-form-group--error">
                     <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text" value="12345AB">
+                    <p id="add-other-appeals-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter appeal reference
+                        number using numbers 0 to 9</p>
+                    <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                    id="add-other-appeals-reference" name="addOtherAppealsReference" type="text"
+                    value="12345AB" aria-describedby="add-other-appeals-reference-error">
                 </div>
                 <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
                 id="filters-submit">Continue</button>
@@ -345,10 +354,13 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form method="POST">
-                <div class="govuk-form-group">
+                <div class="govuk-form-group govuk-form-group--error">
                     <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text" value="ABCDEFG">
+                    <p id="add-other-appeals-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter appeal reference
+                        number using numbers 0 to 9</p>
+                    <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                    id="add-other-appeals-reference" name="addOtherAppealsReference" type="text"
+                    value="ABCDEFG" aria-describedby="add-other-appeals-reference-error">
                 </div>
                 <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
                 id="filters-submit">Continue</button>
@@ -367,7 +379,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#add-other-appeals-reference">Appeal reference must be 7 digits</a>
+                            <li><a href="#add-other-appeals-reference">Appeal reference number must be 7 numbers</a>
                             </li>
                         </ul>
                     </div>
@@ -382,10 +394,13 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form method="POST">
-                <div class="govuk-form-group">
+                <div class="govuk-form-group govuk-form-group--error">
                     <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text" value="12345678">
+                    <p id="add-other-appeals-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Appeal reference number
+                        must be 7 numbers</p>
+                    <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                    id="add-other-appeals-reference" name="addOtherAppealsReference" type="text"
+                    value="12345678" aria-describedby="add-other-appeals-reference-error">
                 </div>
                 <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
                 id="filters-submit">Continue</button>
@@ -404,7 +419,7 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#add-other-appeals-reference">Appeal reference must be 7 digits</a>
+                            <li><a href="#add-other-appeals-reference">Appeal reference number must be 7 numbers</a>
                             </li>
                         </ul>
                     </div>
@@ -419,10 +434,13 @@ exports[`other-appeals POST /other-appeals/add should re-render the "Enter the a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <form method="POST">
-                <div class="govuk-form-group">
+                <div class="govuk-form-group govuk-form-group--error">
                     <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="add-other-appeals-reference"> Enter the appeal reference number</label></h1>
-                    <input class="govuk-input govuk-input--width-10" id="add-other-appeals-reference"
-                    name="addOtherAppealsReference" type="text" value="123456">
+                    <p id="add-other-appeals-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Appeal reference number
+                        must be 7 numbers</p>
+                    <input class="govuk-input govuk-input--width-10 govuk-input--error"
+                    id="add-other-appeals-reference" name="addOtherAppealsReference" type="text"
+                    value="123456" aria-describedby="add-other-appeals-reference-error">
                 </div>
                 <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
                 id="filters-submit">Continue</button>
