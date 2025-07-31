@@ -26,7 +26,7 @@ export class DateTimeSection extends Page {
 		withdrawalRequestDate: '#withdrawal-request-date-',
 		hearingDate: '#hearing-date-',
 		lpaQuestionnaireDueDate: '#lpa-questionnaire-due-date-',
-		lpaStatementDueDate: '#lpa-statement-due-date-',
+		lpaStatementDueDate: '#statement-due-date-',
 		ipCommentsDueDate: '#ip-comments-due-date-',
 		finalCommentsDueDate: '#final-comments-due-date-',
 		statementOfCommonGroundDueDate: '#statement-of-common-ground-due-date-',
@@ -53,6 +53,17 @@ export class DateTimeSection extends Page {
 	}
 
 	enterDueDates(timetableItems, startDate, intervalDays) {
+		timetableItems.forEach((item, index) => {
+			if (!item.editable) return;
+
+			const dueDate = new Date(startDate);
+			dueDate.setDate(dueDate.getDate() + index * intervalDays);
+
+			this.#setAllDateFields(`#${item.row}-`, dueDate);
+		});
+	}
+
+	enterInquiryDueDates(timetableItems, startDate, intervalDays) {
 		timetableItems.forEach((item, index) => {
 			if (!item.editable) return;
 

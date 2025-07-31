@@ -20,9 +20,7 @@ const inquiryAddress = {
 	postcode: 'BS20 1BS'
 };
 
-// let inquiryDate = (new Date(), 28);
-
-const getRandomNum = () => Math.floor(Math.random() * 100);
+const estimatedInquiryDays = Math.floor(Math.random() * 100);
 
 const timetableItems = [
 	{
@@ -30,7 +28,7 @@ const timetableItems = [
 		editable: true
 	},
 	{
-		row: 'lpa-statement-due-date',
+		row: 'statement-due-date',
 		editable: true
 	},
 	{
@@ -76,11 +74,36 @@ it('Start case as inquiry with address and estimated days', () => {
 	});
 	caseDetailsPage.clickButtonByText('Continue');
 	caseDetailsPage.selectRadioButtonByValue('Yes');
-	caseDetailsPage.inputEstimatedInquiryDays(getRandomNum);
+	caseDetailsPage.inputEstimatedInquiryDays(estimatedInquiryDays);
 	caseDetailsPage.clickButtonByText('Continue');
 	caseDetailsPage.selectRadioButtonByValue('Yes');
 	caseDetailsPage.clickButtonByText('Continue');
 	caseDetailsPage.addInquiryAddress(inquiryAddress);
 	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.enterTimeTableDueDatesCaseStart(timetableItems, new Date(), 7);
 	caseDetailsPage.clickButtonByText('Continue');
 });
+
+const verifyDateChanges = (addedDays) => {
+	caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
+	caseDetailsPage.clickRowChangeLink(timetableItems[3].row);
+
+	//const safeAddedDays = Math.max(addedDays, 1);
+	const startDate = getNextBusinessDay(new Date(), safeAddedDays + 2); // buffer to avoid today/weekend
+
+	const getNextBusinessDay = (startDate, addedDays = 2) => {
+		const date = new Date(startDate);
+		date.setDate(date.getDate() + addedDays);
+
+		while (
+			date.getDay() === 0 || // Sunday
+			date.getDay() === 6 || // Saturday
+			(date.getDate() === 1 && date.getMonth() === 0) // Jan 1
+		) {
+			date.setDate(date.getDate() + 1);
+		}
+
+		return date;
+	};
+	//const futureDate = getNextBusinessDay(new Date(), + addedDays); // buffer to avoid today/weekend
+};
