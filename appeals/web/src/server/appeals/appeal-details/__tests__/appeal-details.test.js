@@ -38,6 +38,10 @@ const baseUrl = '/appeals-service/appeal-details';
 const pastDate = '2025-01-06T23:59:00.000Z';
 const futureDate = '3000-01-06T23:59:00.000Z';
 
+const linkedAppealsAreAllInternalAndNotALead = linkedAppeals.filter(
+	(linkedAppeal) => !linkedAppeal.isParentAppeal && !linkedAppeal.externalSource
+);
+
 const appealStatuses = [
 	{ appealStatus: 'assign_case_officer', statusPassedEvent: false },
 	{ appealStatus: 'awaiting_transfer', statusPassedEvent: false },
@@ -2270,13 +2274,14 @@ describe('appeal-details', () => {
 			);
 		});
 
-		it('should render an action link to the manage linked appeals page, if there are linked appeals', async () => {
+		it('should render an action link to the manage linked appeals page, if there are linked appeals, the status is not past LPA Questionnaire, all the linked appeals are children and internal', async () => {
 			nock.cleanAll();
 			nock('http://test/')
 				.get(`/appeals/${appealData.appealId}`)
 				.reply(200, {
 					...appealData,
-					linkedAppeals
+					appealStatus: 'lpa_questionnaire',
+					linkedAppeals: linkedAppealsAreAllInternalAndNotALead
 				});
 			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
 			nock('http://test/')
@@ -2299,7 +2304,7 @@ describe('appeal-details', () => {
 				skipPrettyPrint: true
 			});
 
-			expect(linkedAppealsRowElement.innerHTML).not.toContain(
+			expect(linkedAppealsRowElement.innerHTML).toContain(
 				'href="/appeals-service/appeal-details/1/linked-appeals/manage" data-cy="manage-linked-appeals">Manage<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
 		});
@@ -2312,7 +2317,7 @@ describe('appeal-details', () => {
 					...appealData,
 					isParentAppeal: true,
 					appealStatus: 'lpa_questionnaire',
-					linkedAppeals
+					linkedAppeals: linkedAppealsAreAllInternalAndNotALead
 				});
 			nock('http://test/').get(`/appeals/${appealData.appealId}/case-notes`).reply(200, caseNotes);
 			nock('http://test/')
@@ -2335,7 +2340,7 @@ describe('appeal-details', () => {
 				skipPrettyPrint: true
 			});
 
-			expect(linkedAppealsRowElement.innerHTML).not.toContain(
+			expect(linkedAppealsRowElement.innerHTML).toContain(
 				'href="/appeals-service/appeal-details/1/linked-appeals/add" data-cy="add-linked-appeal">Add<span class="govuk-visually-hidden"> Linked appeals</span></a>'
 			);
 		});
