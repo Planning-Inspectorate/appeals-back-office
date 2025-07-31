@@ -183,7 +183,7 @@ export const postConfirmOtherAppeals = async (request, response) => {
 				session: request.session,
 				bannerDefinitionKey: 'relatedAppeal',
 				appealId: request.session.appealId,
-				text: `This appeal is now related to ${request.session.relatedAppealReference}`
+				text: `Related appeal added`
 			});
 		} catch (error) {
 			let errorMessage = 'Something went wrong when posting related appeal';
@@ -311,7 +311,7 @@ export const postRemoveOtherAppeals = async (request, response) => {
 	}
 
 	try {
-		const { appealId, relatedAppealShortReference, relationshipId } = request.params;
+		const { appealId, relationshipId } = request.params;
 		const { removeAppealRelationship } = request.body;
 		const currentUrl = getOriginPathname(request);
 		const origin = currentUrl.split('/').slice(0, -4).join('/');
@@ -333,7 +333,7 @@ export const postRemoveOtherAppeals = async (request, response) => {
 				session: request.session,
 				bannerDefinitionKey: 'relatedAppeal',
 				appealId,
-				text: `You have removed the relationship between this appeal and appeal ${relatedAppealShortReference}`
+				text: `Related appeal removed`
 			});
 
 			const appealData = request.currentAppeal;
