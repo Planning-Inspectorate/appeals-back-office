@@ -13,9 +13,10 @@ import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page
  *  @param {WebNetResidence|null|undefined} netResidence
  *  @param {string|null|undefined} netLoss
  *  @param {string|null|undefined} netGain
+ * @param {string|undefined} backUrl
  * @returns {PageContent}
  */
-export function addNetResidence(appealData, errors, netResidence, netLoss, netGain) {
+export function addNetResidence(appealData, errors, netResidence, netLoss, netGain, backUrl) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	/** @type {PageComponent} */
 	const selectResubmitAppealComponent = {
@@ -87,7 +88,7 @@ export function addNetResidence(appealData, errors, netResidence, netLoss, netGa
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Is there a net gain or loss of residential units?',
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}`,
+		backLinkUrl: backUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Is there a net gain or loss of residential units?',
 		pageComponents: [selectResubmitAppealComponent],
