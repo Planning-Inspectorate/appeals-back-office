@@ -11,11 +11,9 @@ export const getCaseOverview = (mappedData) => ({
 		rows: [
 			removeSummaryListActions(mappedData.appeal?.lpaReference?.display.summaryListItem),
 			mappedData.appeal.appealType.display.summaryListItem,
-			{
-				...(mappedData.appeal?.caseProcedure?.display.summaryListItem?.actions.items[0]?.href
-					? mappedData.appeal?.caseProcedure?.display.summaryListItem
-					: removeSummaryListActions(mappedData.appeal?.caseProcedure?.display.summaryListItem))
-			},
+			mappedData.appeal?.caseProcedure?.display.summaryListItem?.actions.items[0]?.href
+				? mappedData.appeal?.caseProcedure?.display.summaryListItem
+				: removeSummaryListActions(mappedData.appeal?.caseProcedure?.display.summaryListItem),
 			mappedData.appeal?.allocationDetails?.display.summaryListItem,
 			mappedData.appeal?.linkedAppeals?.display.summaryListItem,
 			mappedData.appeal?.otherAppeals?.display.summaryListItem,
