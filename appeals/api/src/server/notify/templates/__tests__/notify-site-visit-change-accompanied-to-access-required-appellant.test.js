@@ -35,7 +35,7 @@ describe('site-visit-change-accompanied-to-access-required-appellant.md', () => 
 			'',
 			'Our inspector (or their representative) will visit 101, Example View between 8:00am and 12:00pm on 10 September 2025.',
 			'',
-			'Alternatively, and only if it is possible at the site, you can provide written consent for access for our inspector at planningcaseofficerscbos@planninginspectorate.gov.uk. Include our appeal reference number in any communication.',
+			'Alternatively, and only if it is possible at the site, you can provide written consent for access for our inspector at caseofficers@planninginspectorate.gov.uk. Include our appeal reference number in any communication.',
 			'',
 			'# About the visit',
 			'',
