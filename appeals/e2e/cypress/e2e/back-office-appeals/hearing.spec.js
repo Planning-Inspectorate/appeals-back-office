@@ -583,7 +583,6 @@ describe('Setup hearing and add hearing estimates', () => {
 			// navigate to details page
 			caseDetailsPage.clickLinkByText(caseRef);
 
-			// caseDetailsPage.clickHearingBannerLink();
 			caseDetailsPage.clickHearingBannerAddressLink();
 			hearingSectionPage.addHearingLocationAddress(originalAddress);
 			hearingSectionPage.verifyHearingHeader(headers.hearing.checkDetails);
