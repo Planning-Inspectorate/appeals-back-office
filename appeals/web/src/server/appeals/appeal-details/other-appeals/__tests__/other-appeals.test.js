@@ -64,7 +64,14 @@ describe('other-appeals', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter an appeal reference</a>');
+			expect(errorSummaryHtml).toContain('Enter the appeal reference number</a>');
+
+			const errorMessageHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-message',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorMessageHtml).toContain('Enter the appeal reference number</p>');
 		});
 
 		it('should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference is less than 7 digits', async () => {
@@ -82,7 +89,14 @@ describe('other-appeals', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Appeal reference must be 7 digits</a>');
+			expect(errorSummaryHtml).toContain('Appeal reference number must be 7 numbers</a>');
+
+			const errorMessageHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-message',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorMessageHtml).toContain('Appeal reference number must be 7 numbers</p>');
 		});
 
 		it('should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference is greater than 7 digits', async () => {
@@ -100,7 +114,14 @@ describe('other-appeals', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Appeal reference must be 7 digits</a>');
+			expect(errorSummaryHtml).toContain('Appeal reference number must be 7 numbers</a>');
+
+			const errorMessageHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-message',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorMessageHtml).toContain('Appeal reference number must be 7 numbers</p>');
 		});
 
 		it('should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference contains both numbers and letters', async () => {
@@ -119,6 +140,13 @@ describe('other-appeals', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Enter appeal reference number using numbers 0 to 9</a>');
+
+			const errorMessageHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-message',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorMessageHtml).toContain('Enter appeal reference number using numbers 0 to 9</p>');
 		});
 
 		it('should re-render the "Enter the appeal reference number" page with the expected error, if the provided appeal reference contains only letters', async () => {
@@ -137,6 +165,13 @@ describe('other-appeals', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Enter appeal reference number using numbers 0 to 9</a>');
+
+			const errorMessageHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-message',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorMessageHtml).toContain('Enter appeal reference number using numbers 0 to 9</p>');
 		});
 
 		it('should re-render the "Enter the appeal reference number" page with error "Enter a valid appeal reference", if the provided appeal reference was invalid', async () => {
@@ -157,7 +192,14 @@ describe('other-appeals', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a valid appeal reference</a>');
+			expect(errorSummaryHtml).toContain('Enter a real appeal reference number</a>');
+
+			const errorMessageHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-message',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorMessageHtml).toContain('Enter a real appeal reference number</p>');
 		});
 
 		it('should redirect to the "Related appeal details" page if related appeal reference is valid', async () => {

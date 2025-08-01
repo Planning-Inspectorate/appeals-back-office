@@ -72,7 +72,7 @@ export const postAddOtherAppeals = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {string | undefined} appealReferenceInputValue
- * @param {object | undefined} errors
+ * @param {import('@pins/express/types/express.js').ValidationErrors | undefined} errors
  */
 const renderAddOtherAppeals = async (
 	request,
@@ -91,7 +91,10 @@ const renderAddOtherAppeals = async (
 	const mappedPageContent = await addOtherAppealsPage(
 		request.currentAppeal,
 		appealReferenceInputValue,
-		origin
+		origin,
+		errors?.addOtherAppealsReference?.msg
+			? { msg: errors?.addOtherAppealsReference?.msg }
+			: undefined
 	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -180,7 +183,7 @@ export const postConfirmOtherAppeals = async (request, response) => {
 				session: request.session,
 				bannerDefinitionKey: 'relatedAppeal',
 				appealId: request.session.appealId,
-				text: `This appeal is now related to ${request.session.relatedAppealReference}`
+				text: `Related appeal added`
 			});
 		} catch (error) {
 			let errorMessage = 'Something went wrong when posting related appeal';
@@ -308,7 +311,7 @@ export const postRemoveOtherAppeals = async (request, response) => {
 	}
 
 	try {
-		const { appealId, relatedAppealShortReference, relationshipId } = request.params;
+		const { appealId, relationshipId } = request.params;
 		const { removeAppealRelationship } = request.body;
 		const currentUrl = getOriginPathname(request);
 		const origin = currentUrl.split('/').slice(0, -4).join('/');
@@ -330,7 +333,7 @@ export const postRemoveOtherAppeals = async (request, response) => {
 				session: request.session,
 				bannerDefinitionKey: 'relatedAppeal',
 				appealId,
-				text: `You have removed the relationship between this appeal and appeal ${relatedAppealShortReference}`
+				text: `Related appeal removed`
 			});
 
 			const appealData = request.currentAppeal;

@@ -15,9 +15,10 @@ import { generateHorizonAppealUrl } from '#lib/display-page-formatter.js';
  * @param {Appeal} appealData
  * @param {string} appealReferenceInputValue
  * @param {string} origin
+ * @param {{msg : string} | undefined} error
  * @returns {Promise<PageContent>}
  */
-export async function addOtherAppealsPage(appealData, appealReferenceInputValue, origin) {
+export async function addOtherAppealsPage(appealData, appealReferenceInputValue, origin, error) {
 	/** @type {PageComponent[]} */
 	const addOtherAppealsPageContent = [
 		{
@@ -35,6 +36,7 @@ export async function addOtherAppealsPage(appealData, appealReferenceInputValue,
 			parameters: {
 				id: 'add-other-appeals-reference',
 				name: 'addOtherAppealsReference',
+				errorMessage: error?.msg ? { text: error.msg } : null,
 				label: {
 					text: 'Enter the appeal reference number',
 					classes: 'govuk-label--l',
