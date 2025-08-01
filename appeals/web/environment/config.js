@@ -79,7 +79,8 @@ export function loadConfig() {
 		SSL_KEY_FILE,
 		RETRY_MAX_ATTEMPTS,
 		RETRY_STATUS_CODES,
-		USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA
+		USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
+		FEATURE_FLAG_CANCEL_CASE
 	} = environment;
 
 	const config = {
@@ -146,7 +147,8 @@ export function loadConfig() {
 			featureFlagSimplifyTeamAssignment: FEATURE_FLAG_SIMPLIFY_TEAM_ASSIGNMENT === 'true',
 			featureFlagChangeAppealType: FEATURE_FLAG_CHANGE_APPEAL_TYPE === 'true',
 			featureFlagPdfDownload: FEATURE_FLAG_PDF_DOWNLOAD === 'true',
-			featureFlagNetResidence: FEATURE_FLAG_NET_RESIDENCE === 'true'
+			featureFlagNetResidence: FEATURE_FLAG_NET_RESIDENCE === 'true',
+			featureFlagCancelCase: FEATURE_FLAG_CANCEL_CASE === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST
