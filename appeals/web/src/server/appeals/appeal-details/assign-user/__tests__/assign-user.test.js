@@ -27,9 +27,7 @@ describe('assign-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Search for case officer by name or email address</label></h1>'
-			);
+			expect(element.innerHTML).toContain('Case officer</label></h1>');
 			expect(element.innerHTML).toContain('accessible-autocomplete" id="users" name="user"');
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
@@ -45,9 +43,7 @@ describe('assign-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Search for case officer by name or email address</label></h1>'
-			);
+			expect(element.innerHTML).toContain('Case officer</label></h1>');
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -55,9 +51,7 @@ describe('assign-user', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Enter a case officer’s name or email address</a>'
-			);
+			expect(unprettifiedErrorSummaryHTML).toContain('Enter a case officer</a>');
 		});
 
 		it('should save user to the session and redirect to check details page if user selected', async () => {
@@ -80,9 +74,7 @@ describe('assign-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Search for inspector by name or email address</label></h1>'
-			);
+			expect(element.innerHTML).toContain('Inspector</label></h1>');
 			expect(element.innerHTML).toContain('accessible-autocomplete" id="users" name="user"');
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
@@ -96,9 +88,7 @@ describe('assign-user', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Search for inspector by name or email address</label></h1>'
-			);
+			expect(element.innerHTML).toContain('Inspector</label></h1>');
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -106,9 +96,7 @@ describe('assign-user', () => {
 			}).innerHTML;
 
 			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Enter an inspector’s name or email address</a>'
-			);
+			expect(unprettifiedErrorSummaryHTML).toContain('Enter an inspector</a>');
 		});
 
 		it('should save user to the session and redirect to check details page if user selected', async () => {
