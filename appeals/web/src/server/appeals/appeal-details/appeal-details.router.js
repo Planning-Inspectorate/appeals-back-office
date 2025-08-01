@@ -44,6 +44,7 @@ import updateDecisionLetterRouter from './update-decision-letter/update-decision
 import inquiryRouter from './inquiry/inquiry.router.js';
 import assignUserRouter from './assign-user/assign-user.router.js';
 import netResidenceRouter from './net-residence/net-residence.router.js';
+import cancelAppealRouter from './cancel/cancel.router.js';
 import changeAppealTypeMiddleware from './change-appeal-type.middleware.js';
 const router = createRouter();
 
@@ -233,6 +234,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	netResidenceRouter
+);
+router.use(
+	'/:appealId/cancel',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	cancelAppealRouter
 );
 
 router.use('/:appealId', validateAppeal, representationsRouter);
