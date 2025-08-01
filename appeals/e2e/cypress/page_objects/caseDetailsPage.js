@@ -578,6 +578,10 @@ export class CaseDetailsPage extends Page {
 		this.elements.decisionOutcomeText().contains(text, { matchCase: false });
 	}
 
+	checkAddLinkedAppealDoesNotExist() {
+		this.elements.addLinkedAppeal().should('not.exist');
+	}
+
 	checkViewDecisionLetterIsLink(text) {
 		this.elements.decisionOutcomeText().contains(this.basePageElements.link, text);
 	}
