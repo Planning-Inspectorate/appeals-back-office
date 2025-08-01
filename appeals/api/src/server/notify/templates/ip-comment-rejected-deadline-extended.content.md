@@ -11,8 +11,8 @@ We rejected your comment because:
 
 # What happens next
 
-{% if ip_comment_due_before_resubmission_deadline -%}
-    You can submit a different comment by {{deadline_date}}.
+{% if resubmit_comment_to_fo -%}
+    You can [submit a different comment]({{front_office_url}}/comment-planning-appeal/enter-appeal-reference) by {{deadline_date}}.
 
 {% else -%}
     You can send a different comment to caseofficers@planninginspectorate.gov.uk by {{deadline_date}}.

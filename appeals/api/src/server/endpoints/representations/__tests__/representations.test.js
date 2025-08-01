@@ -14,7 +14,6 @@ import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
-// TODO add test here
 describe('/appeals/:id/reps', () => {
 	beforeEach(() => {});
 	afterEach(() => {
@@ -415,7 +414,7 @@ describe('/appeals/:id/reps', () => {
 				const expectedEmailPayload = {
 					lpa_reference: mockAppeal.applicationReference,
 					deadline_date: '',
-					ip_comment_due_before_resubmission_deadline: true,
+					resubmit_comment_to_fo: true,
 					appeal_reference_number: mockAppeal.reference,
 					reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
 					site_address: expectedSiteAddress
@@ -514,7 +513,7 @@ describe('/appeals/:id/reps', () => {
 				const expectedEmailPayload = {
 					lpa_reference: mockAppeal.applicationReference,
 					deadline_date: '16 December 2024',
-					ip_comment_due_before_resubmission_deadline: true,
+					resubmit_comment_to_fo: false,
 					appeal_reference_number: mockAppeal.reference,
 					reasons: ['Invalid submission', 'Other: Provided documents were incomplete'],
 					site_address: expectedSiteAddress
