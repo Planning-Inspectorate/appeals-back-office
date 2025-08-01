@@ -80,7 +80,8 @@ describe('appeal withdrawal routes', () => {
 						status: APPEAL_CASE_STATUS.EVENT,
 						valid: true
 					}
-				]
+				],
+				hearing: null
 			};
 			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
 
