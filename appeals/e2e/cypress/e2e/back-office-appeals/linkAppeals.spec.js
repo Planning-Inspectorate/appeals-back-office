@@ -305,15 +305,10 @@ describe('link appeals', () => {
 						caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
-						//link child appeals together
+						//attempt to add a child appeal from a child appeal
 						happyPathHelper.assignCaseOfficer(childCase1);
 						caseDetailsPage.clickAccordionByButton('Overview');
-						caseDetailsPage.clickAddLinkedAppeal();
-						caseDetailsPage.fillInput(childCase2);
-						caseDetailsPage.clickButtonByText('Continue');
-
-						//exit page
-						caseDetailsPage.checkHeading(`You have already linked appeal ${childCase2}`);
+						caseDetailsPage.checkAddLinkedAppealDoesNotExist();
 					});
 				});
 			});
