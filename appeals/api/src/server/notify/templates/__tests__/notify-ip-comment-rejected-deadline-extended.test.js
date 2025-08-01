@@ -19,7 +19,7 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 				lpa_reference: '12345XYZ',
 				deadline_date: '01 January 2021',
 				reasons: ['Reason one', 'Reason two', 'Reason three'],
-				ip_comment_due_before_resubmission_deadline: true
+				resubmit_comment_to_fo: true
 			}
 		};
 	});
@@ -44,7 +44,7 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'You can submit a different comment by 01 January 2021.', // TODO
+			'You can [submit a different comment](/mock-front-office-url/comment-planning-appeal/enter-appeal-reference) by 01 January 2021.',
 			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
@@ -69,7 +69,7 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			...notifySendData,
 			personalisation: {
 				...notifySendData.personalisation,
-				ip_comment_due_before_resubmission_deadline: false
+				resubmit_comment_to_fo: false
 			}
 		};
 

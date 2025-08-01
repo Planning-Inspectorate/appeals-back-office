@@ -3,16 +3,18 @@ import { addDays } from './business-days.js';
 import { dateISOStringToDisplayDate } from './date-formatter.js';
 
 /**
+ * IP comments can be re-submit after rejection to FO if the overall due date is after
+ * the three business day deadline for comments. Else they should be done by email.
  *
  * @param {Boolean} allowResubmit // Is resubmission allowed
  * @param {Date | null} dueDate // Overall due date for Interested Party (IP) Comments
- * @returns {Promise<{ resubmissionDueDate: string, ipCommentDueBeforeResubmissionDeadline: Boolean }>}
+ * @returns {Promise<{ resubmissionDueDate: string, resubmitToFO: Boolean }>}
  */
 export const getDetailsForCommentResubmission = async (allowResubmit, dueDate) => {
 	if (!allowResubmit) {
 		return {
 			resubmissionDueDate: '',
-			ipCommentDueBeforeResubmissionDeadline: true
+			resubmitToFO: true
 		};
 	}
 
@@ -26,18 +28,17 @@ export const getDetailsForCommentResubmission = async (allowResubmit, dueDate) =
 
 		return {
 			resubmissionDueDate,
-			ipCommentDueBeforeResubmissionDeadline: true
+			resubmitToFO: true
 		};
 	}
 
-	const ipCommentDueBeforeResubmissionDeadline =
-		ipCommentDueDate.getTime() > dueDate.getTime() ? true : false;
-	const resubmissionDueDate = ipCommentDueBeforeResubmissionDeadline
-		? dateISOStringToDisplayDate(ipCommentDueDate.toISOString())
-		: dateISOStringToDisplayDate(dueDate.toISOString());
+	const resubmitToFO = dueDate > ipCommentDueDate;
+	const resubmissionDueDate = resubmitToFO
+		? dateISOStringToDisplayDate(dueDate.toISOString())
+		: dateISOStringToDisplayDate(ipCommentDueDate.toISOString());
 
 	return {
 		resubmissionDueDate,
-		ipCommentDueBeforeResubmissionDeadline
+		resubmitToFO
 	};
 };

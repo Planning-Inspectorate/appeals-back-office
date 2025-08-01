@@ -34,8 +34,10 @@ export const ipCommentRejection = async ({
 	const siteAddress = formatSiteAddress(appeal);
 	const reasons = formatReasons(representation);
 	const { ipCommentsDueDate = null } = appeal.appealTimetable || {};
-	const { ipCommentDueBeforeResubmissionDeadline, resubmissionDueDate } =
-		await getDetailsForCommentResubmission(allowResubmit, ipCommentsDueDate);
+	const { resubmitToFO, resubmissionDueDate } = await getDetailsForCommentResubmission(
+		allowResubmit,
+		ipCommentsDueDate
+	);
 	const recipientEmail = representation.represented?.email;
 
 	if (recipientEmail) {
@@ -49,7 +51,7 @@ export const ipCommentRejection = async ({
 			site_address: siteAddress,
 			reasons,
 			deadline_date: resubmissionDueDate,
-			ip_comment_due_before_resubmission_deadline: ipCommentDueBeforeResubmissionDeadline
+			resubmit_comment_to_fo: resubmitToFO
 		};
 
 		await notifySend({
