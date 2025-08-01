@@ -6,9 +6,5 @@ export const validateUser = (isInspector = false) =>
 		body('user')
 			.trim()
 			.notEmpty()
-			.withMessage(
-				isInspector
-					? 'Enter an inspector’s name or email address'
-					: 'Enter a case officer’s name or email address'
-			)
+			.withMessage(isInspector ? 'Enter an inspector' : 'Enter a case officer')
 	);
