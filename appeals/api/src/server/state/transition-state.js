@@ -18,7 +18,7 @@ import { currentStatus } from '#utils/current-status.js';
 /** @typedef {import('#db-client').AppealType} AppealType */
 /** @typedef {import('#db-client').AppealStatus} AppealStatus */
 /** @typedef {import('xstate').StateValue} StateValue */
-
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /**
  * @param {number} appealId
  * @param {string} azureAdUserId
@@ -46,7 +46,9 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		? APPEAL_TYPE_SHORTHAND_FPA
 		: APPEAL_TYPE_SHORTHAND_HAS;
 
-	const stateMachine = createStateMachine(appealTypeKey, procedureKey, currentState);
+	const eventElapsed = getEventElapsed(appeal, appealType, procedureKey);
+
+	const stateMachine = createStateMachine(appealTypeKey, procedureKey, currentState, eventElapsed);
 	const stateMachineService = interpret(stateMachine);
 
 	stateMachineService.onTransition((/** @type {{value: StateValue}} */ state) => {
@@ -85,5 +87,28 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	stateMachineService.stop();
 };
-
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {AppealType} appealType
+ * @param {string} procedureType
+ */
+const getEventElapsed = (appeal, appealType, procedureType) => {
+	if (appealType) {
+		switch (procedureType) {
+			case APPEAL_CASE_PROCEDURE.HEARING:
+				//TODO: different behaviour for hearings
+				break;
+			case APPEAL_CASE_PROCEDURE.INQUIRY:
+				//TODO: different behaviour for inquiry
+				break;
+			case APPEAL_CASE_PROCEDURE.WRITTEN:
+			default:
+				return appeal.siteVisit?.visitDate
+					? new Date(appeal.siteVisit?.visitDate) < new Date()
+					: false;
+		}
+	}
+	return false;
+};
 export default transitionState;
