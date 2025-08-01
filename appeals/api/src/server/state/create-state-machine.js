@@ -14,20 +14,23 @@ import { VALIDATION_OUTCOME_CANCEL } from '@pins/appeals/constants/support.js';
 /**
  * @typedef {import('@planning-inspectorate/data-model').APPEAL_CASE_TYPE} AppealType
  * @typedef {import('@planning-inspectorate/data-model').APPEAL_CASE_PROCEDURE} ProcedureType
+ * @typedef {object} AdditionalCheckObject
  * */
 
 /**
  * @param {AppealType} appealType
  * @param {ProcedureType} procedureType
  * @param {string} currentState
+ * @param {boolean} [eventElapsed]
  */
-const createStateMachine = (appealType, procedureType, currentState) =>
+const createStateMachine = (appealType, procedureType, currentState, eventElapsed = false) =>
 	createMachine({
 		id: 'appeals-state-machine',
 		initial: currentState || APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 		context: {
 			appealType,
-			procedureType
+			procedureType,
+			eventElapsed
 		},
 		states: {
 			[APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER]: {
@@ -147,10 +150,16 @@ const createStateMachine = (appealType, procedureType, currentState) =>
 			},
 			[APPEAL_CASE_STATUS.FINAL_COMMENTS]: {
 				on: {
-					[VALIDATION_OUTCOME_COMPLETE]: {
-						target: APPEAL_CASE_STATUS.EVENT,
-						cond: isAppealTypeAndProcedureTypeValid
-					},
+					[VALIDATION_OUTCOME_COMPLETE]: [
+						{
+							target: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+							cond: isEventElapsedAndValid
+						},
+						{
+							target: APPEAL_CASE_STATUS.EVENT,
+							cond: isAppealTypeAndProcedureTypeValid
+						}
+					],
 					[APPEAL_CASE_STATUS.CLOSED]: {
 						target: APPEAL_CASE_STATUS.CLOSED,
 						cond: isAppealTypeAndProcedureTypeValid
@@ -335,7 +344,7 @@ const createStateMachine = (appealType, procedureType, currentState) =>
 	});
 
 /**
- * @typedef {{ appealType: string, procedureType: string }} Ctx
+ * @typedef {{ appealType: string, procedureType: string, eventElapsed: boolean }} Ctx
  * @typedef {{ state: { value: string, meta: Record<string, any> } }} State
  * @typedef {import('xstate').EventObject} _evt
  */
@@ -357,6 +366,27 @@ const isAppealTypeAndProcedureTypeValid = (ctx, _evt, { state }) => {
 	return (
 		meta.validAppealTypes.includes(appealType) && meta.validProcedureTypes.includes(procedureType)
 	);
+};
+
+/**
+ * Guard that checks if the site visit has elapsed.
+ * @param {Ctx} ctx - The context object containing appealType and procedureType.
+ * @returns {boolean}
+ */
+const isEventElapsed = (ctx) => {
+	return ctx.eventElapsed === true;
+};
+
+/**
+ * Checks if the appeal type and procedure type are valid for the current state.
+ * @param {Ctx} ctx - The context object containing appealType and procedureType.
+ * @param {Object} _evt - The event object (not used in this function).
+ * @param {{ state: import('xstate').State<Ctx, any, any, any> }} meta
+ * @returns {boolean} - Returns true if the appeal type and procedure type are valid for
+ * the current state, otherwise false.
+ */
+const isEventElapsedAndValid = (ctx, _evt, meta) => {
+	return isAppealTypeAndProcedureTypeValid(ctx, _evt, meta) && isEventElapsed(ctx);
 };
 
 const targetStateOnStatementsComplete = {
