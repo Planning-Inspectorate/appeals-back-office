@@ -46,7 +46,15 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		? APPEAL_TYPE_SHORTHAND_FPA
 		: APPEAL_TYPE_SHORTHAND_HAS;
 
-	const stateMachine = createStateMachine(appealTypeKey, procedureKey, currentState);
+	const siteVisitDate = appeal.siteVisit?.visitDate;
+	const siteVisitElapsed = siteVisitDate ? new Date(siteVisitDate) < new Date() : false;
+
+	const stateMachine = createStateMachine(
+		appealTypeKey,
+		procedureKey,
+		currentState,
+		siteVisitElapsed
+	);
 	const stateMachineService = interpret(stateMachine);
 
 	stateMachineService.onTransition((/** @type {{value: StateValue}} */ state) => {

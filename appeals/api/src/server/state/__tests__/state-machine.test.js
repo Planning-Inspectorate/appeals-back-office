@@ -15,13 +15,15 @@ import createStateMachine from '../create-state-machine';
  * Function to get the next state for HAS appeals based on the initial state and event.
  * @param {string} initial - The initial state of the appeal.
  * @param {string} event - The event that triggers the state transition.
+ * @param {boolean} [siteVisitElapsed] - Whether the site visit has elapsed.
  * @return {import('xstate').StateValue} - The next state of the appeal.
  **/
-const nextStateHAS = (initial, event) => {
+const nextStateHAS = (initial, event, siteVisitElapsed = false) => {
 	const machine = createStateMachine(
 		APPEAL_TYPE_SHORTHAND_HAS,
 		APPEAL_CASE_PROCEDURE.WRITTEN,
-		initial
+		initial,
+		siteVisitElapsed
 	);
 	const service = interpret(machine).start();
 
@@ -34,10 +36,16 @@ const nextStateHAS = (initial, event) => {
  * @param {string} initial - The initial state of the appeal.
  * @param {string} event - The event that triggers the state transition.
  * @param {string} procedureType - The event that triggers the state transition.
+ * @param {boolean} [siteVisitElapsed] - Whether the site visit has elapsed.
  * @return {import('xstate').StateValue} - The next state of the appeal.
  **/
-const nextStateFPA = (initial, event, procedureType) => {
-	const machine = createStateMachine(APPEAL_TYPE_SHORTHAND_FPA, procedureType, initial);
+const nextStateFPA = (initial, event, procedureType, siteVisitElapsed = false) => {
+	const machine = createStateMachine(
+		APPEAL_TYPE_SHORTHAND_FPA,
+		procedureType,
+		initial,
+		siteVisitElapsed
+	);
 	const service = interpret(machine).start();
 
 	service.send(event);
@@ -345,6 +353,28 @@ describe('State Machine Transitions', () => {
 				);
 			}
 		);
+		test('should transition to AWAITING_EVENT if site visit has NOT elapsed', () => {
+			const initialState = APPEAL_CASE_STATUS.FINAL_COMMENTS;
+			const event = VALIDATION_OUTCOME_COMPLETE;
+			const procedure = APPEAL_CASE_PROCEDURE.WRITTEN;
+			const siteVisitElapsed = false;
+
+			const expectedState = APPEAL_CASE_STATUS.EVENT;
+
+			expect(nextStateFPA(initialState, event, procedure, siteVisitElapsed)).toBe(expectedState);
+		});
+
+		test('should transition to ISSUE_DETERMINATION if site visit HAS elapsed', () => {
+			const initialState = APPEAL_CASE_STATUS.FINAL_COMMENTS;
+			const event = VALIDATION_OUTCOME_COMPLETE;
+			const procedure = APPEAL_CASE_PROCEDURE.WRITTEN;
+			const siteVisitElapsed = true;
+
+			const expectedState = APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
+
+			expect(nextStateFPA(initialState, event, procedure, siteVisitElapsed)).toBe(expectedState);
+		});
+
 		test.each([
 			[
 				APPEAL_CASE_STATUS.FINAL_COMMENTS,
