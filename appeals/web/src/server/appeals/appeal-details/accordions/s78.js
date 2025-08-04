@@ -87,7 +87,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 
 	const caseManagement = getCaseManagement(mappedData);
 
-	const caseHearing = getCaseHearing(mappedData, appealDetails);
+	const caseHearing = getCaseHearing(mappedData, appealDetails, session);
 
 	const caseInquiry = getCaseInquiry(mappedData, appealDetails);
 

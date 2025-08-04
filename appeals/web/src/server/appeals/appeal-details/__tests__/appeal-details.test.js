@@ -34,6 +34,12 @@ import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
+const {
+	app: readOnlyApp,
+	installMockApi: installReadOnlyMockApi,
+	teardown: teardownReadOnly
+} = createTestEnvironment({ groups: ['readonly'] });
+const readOnlyRequest = supertest(readOnlyApp);
 const baseUrl = '/appeals-service/appeal-details';
 const pastDate = '2025-01-06T23:59:00.000Z';
 const futureDate = '3000-01-06T23:59:00.000Z';
@@ -63,6 +69,7 @@ const appealStatuses = [
 describe('appeal-details', () => {
 	beforeEach(() => {
 		installMockApi();
+		installReadOnlyMockApi();
 		// @ts-ignore
 		usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
 		// @ts-ignore
@@ -97,7 +104,10 @@ describe('appeal-details', () => {
 			.get(/appeals\/\d+\/appellant-cases\/\d+/)
 			.reply(200, { planningObligation: { hasObligation: false } });
 	});
-	afterEach(teardown);
+	afterEach(() => {
+		teardown();
+		teardownReadOnly();
+	});
 
 	describe('GET /:appealId', () => {
 		describe('Notification banners', () => {
@@ -4482,6 +4492,162 @@ describe('appeal-details', () => {
 				expect(unprettifiedHearingSectionHtml).toContain(
 					`href="/appeals-service/appeal-details/${appealId}/hearing/estimates/add">Add hearing estimates</a>`
 				);
+			});
+
+			it('should render empty states for Hearing accordion when hearing is not set up and user is read only', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+						hearing: null
+					});
+
+				const response = await readOnlyRequest.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+
+				const hearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section'
+				});
+
+				expect(hearingSectionHtml.innerHTML).toMatchSnapshot();
+
+				const button = hearingSectionHtml.querySelector(
+					'a.govuk-button:contains("Set up hearing")'
+				);
+				expect(button).toBeFalsy();
+
+				const unprettifiedHearingSection = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section',
+					skipPrettyPrint: true
+				});
+				const unprettifiedHearingSectionHtml = unprettifiedHearingSection.innerHTML;
+
+				expect(unprettifiedHearingSectionHtml).toContain('Hearing estimates</h3>');
+
+				expect(unprettifiedHearingSection.querySelectorAll('p.govuk-body')).toHaveLength(2);
+				expect(
+					unprettifiedHearingSection.querySelectorAll('p.govuk-body')[0].textContent.trim()
+				).toBe('Not set up');
+				expect(
+					unprettifiedHearingSection.querySelectorAll('p.govuk-body')[1].textContent.trim()
+				).toBe('Not set up');
+			});
+
+			it('should render no change links for Hearing accordion when hearing is set up and user is read only', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealDataFullPlanning,
+						appealId,
+						procedureType: APPEAL_CASE_PROCEDURE.HEARING,
+						hearing: {
+							hearingId: '123',
+							hearingStartTime: '2025-05-15T12:00:00.000Z',
+							address: {
+								addressLine1: '123 Main St',
+								addressLine2: 'Apt 1',
+								town: 'Anytown',
+								county: 'Anycounty',
+								postcode: 'AA1 1AA'
+							}
+						},
+						hearingEstimate: {
+							preparationTime: 1,
+							sittingTime: 2.5,
+							reportingTime: 3
+						}
+					});
+
+				const response = await readOnlyRequest.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+
+				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+				expect(unprettifiedHTML).toContain('Case details</h1>');
+				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
+				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+
+				const hearingSectionHtml = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section'
+				});
+
+				expect(hearingSectionHtml.innerHTML).toMatchSnapshot();
+
+				const button = hearingSectionHtml.querySelector(
+					'a.govuk-button:contains("Set up hearing")'
+				);
+				expect(button).toBeFalsy();
+
+				const unprettifiedHearingSection = parseHtml(response.text, {
+					rootElement: '#case-details-hearing-section',
+					skipPrettyPrint: true
+				});
+
+				expect(
+					unprettifiedHearingSection.querySelectorAll('dd.govuk-summary-list__value')
+				).toHaveLength(7);
+				expect(
+					unprettifiedHearingSection
+						.querySelectorAll('dd.govuk-summary-list__value')[0]
+						.textContent.trim()
+				).toBe('15 May 2025');
+				expect(
+					unprettifiedHearingSection
+						.querySelectorAll('dd.govuk-summary-list__value')[1]
+						.textContent.trim()
+				).toBe('1:00pm');
+				expect(
+					unprettifiedHearingSection
+						.querySelectorAll('dd.govuk-summary-list__value')[2]
+						.textContent.trim()
+				).toBe('Yes');
+				expect(
+					unprettifiedHearingSection
+						.querySelectorAll('dd.govuk-summary-list__value')[3]
+						.innerHTML.trim()
+				).toBe('123 Main St<br>Apt 1<br>Anytown<br>Anycounty<br>AA1 1AA');
+				expect(
+					unprettifiedHearingSection
+						.querySelectorAll('dd.govuk-summary-list__value')[4]
+						.textContent.trim()
+				).toBe('1 day');
+				expect(
+					unprettifiedHearingSection
+						.querySelectorAll('dd.govuk-summary-list__value')[5]
+						.textContent.trim()
+				).toBe('2.5 days');
+				expect(
+					unprettifiedHearingSection
+						.querySelectorAll('dd.govuk-summary-list__value')[6]
+						.textContent.trim()
+				).toBe('3 days');
+
+				expect(unprettifiedHearingSection.querySelector('a[data-cy="change-date"]')).toBeFalsy();
+				expect(unprettifiedHearingSection.querySelector('a[data-cy="change-time"]')).toBeFalsy();
+				expect(
+					unprettifiedHearingSection.querySelector(
+						'a[data-cy="change-whether-the-address-is-known-or-not"]'
+					)
+				).toBeFalsy();
+				expect(
+					unprettifiedHearingSection.querySelector('a[data-cy="change-preparation-time"]')
+				).toBeFalsy();
+				expect(
+					unprettifiedHearingSection.querySelector('a[data-cy="change-sitting-time"]')
+				).toBeFalsy();
+				expect(
+					unprettifiedHearingSection.querySelector('a[data-cy="change-reporting-time"]')
+				).toBeFalsy();
 			});
 
 			it('should render the hearing details summary list when hearing is present with address', async () => {

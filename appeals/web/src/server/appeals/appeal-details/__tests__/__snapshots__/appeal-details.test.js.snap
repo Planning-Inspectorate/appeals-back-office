@@ -90,6 +90,49 @@ exports[`appeal-details GET /:appealId Costs should render a "Appellant applicat
 
 exports[`appeal-details GET /:appealId Costs should render a "Appellant application" row in the costs accordion 2`] = `"<td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>"`;
 
+exports[`appeal-details GET /:appealId Hearing should render empty states for Hearing accordion when hearing is not set up and user is read only 1`] = `
+"<div id="case-details-hearing-section">
+    <p class="govuk-body govuk-!-margin-bottom-7">Not set up</p>
+    <h3 class="govuk-heading-m">Hearing estimates</h3>
+    <p class="govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2">Not set up</p>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Hearing should render no change links for Hearing accordion when hearing is set up and user is read only 1`] = `
+"<div id="case-details-hearing-section">
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+            <dd class="govuk-summary-list__value">15 May 2025</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+            <dd class="govuk-summary-list__value">1:00pm</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the hearing will take place?</dt>
+            <dd             class="govuk-summary-list__value">Yes</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+            <dd class="govuk-summary-list__value">123 Main St
+                <br>Apt 1
+                <br>Anytown
+                <br>Anycounty
+                <br>AA1 1AA</dd>
+        </div>
+    </dl>
+    <h3 class="govuk-heading-m">Hearing estimates</h3>
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Preparation time</dt>
+            <dd class="govuk-summary-list__value">1 day</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Sitting time</dt>
+            <dd class="govuk-summary-list__value">2.5 days</dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reporting time</dt>
+            <dd class="govuk-summary-list__value">3 days</dd>
+        </div>
+    </dl>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Hearing should render the Hearing accordion with the expected content for s78 cases with a procedureType of "Hearing" 1`] = `
 "<div id="case-details-hearing-section"><a href="/appeals-service/appeal-details/3/hearing/setup?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
     role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Set up hearing</a>
