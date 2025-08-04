@@ -182,7 +182,7 @@ export class CaseDetailsPage extends Page {
 		personalListFilterDropdown: () => cy.get('.govuk-select'),
 		caseDetailsSections: () => cy.get('.govuk-accordion__section-heading-text-focus'),
 		pageHeading: () => cy.get(this._cyDataSelectors.pageHeading),
-		inquiryEstimatedDaysInput: () => cy.get('.govuk-input govuk-input--width-3'),
+		inquiryEstimatedDaysInput: () => cy.get('#inquiry-estimation-days'),
 		line1: () => cy.get('#address-line-1'),
 		line2: () => cy.get('#address-line-2'),
 		town: () => cy.get('#town'),
@@ -532,8 +532,8 @@ export class CaseDetailsPage extends Page {
 		this.clickButtonByText('Apply');
 	}
 
-	inputEstimatedInquiryDays() {
-		this.elements.inquiryEstimatedDaysInput();
+	inputEstimatedInquiryDays(estimatedInquiryDays) {
+		this.elements.inquiryEstimatedDaysInput().type(estimatedInquiryDays.toString());
 	}
 
 	/***************************************************************
@@ -742,6 +742,11 @@ export class CaseDetailsPage extends Page {
 
 	changeTimetableDates(timetableItems, date, intervalDays) {
 		dateTimeSection.enterDueDates(timetableItems, date, intervalDays);
+		this.clickButtonByText('Continue');
+	}
+
+	enterTimeTableDueDatesCaseStart(timetableItems, date, intervalDays) {
+		dateTimeSection.enterInquiryDueDates(timetableItems, date, intervalDays);
 		this.clickButtonByText('Continue');
 	}
 
