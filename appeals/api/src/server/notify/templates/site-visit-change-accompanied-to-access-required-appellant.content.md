@@ -2,7 +2,7 @@
 
 # The site visit has changed
 
-We now require you, or someone else, to attend the site visit to provide access for our inspector.
+We now require you (or someone else) to attend the site visit to provide access for our inspector.
 
 # Visit details
 
@@ -17,4 +17,3 @@ You cannot give the inspector any documents or discuss the appeal with them.
 The inspector will carry out the inspection on their own.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk

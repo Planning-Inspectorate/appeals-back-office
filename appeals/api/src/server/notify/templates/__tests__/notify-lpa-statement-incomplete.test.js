@@ -22,7 +22,7 @@ describe('lpa-statement-incomplete.md', () => {
 		const expectedContent = [
 			'We need more information before we can review your statement.',
 			'',
-			'The statement is incomplete because:',
+			'',
 			'- Reason one',
 			'- Reason two',
 			'- Reason three',

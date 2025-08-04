@@ -32,12 +32,6 @@ describe('site-visit-change-accompanied-to-access-required-lpa.md', () => {
 			'',
 			'Our inspector (or their representative) will now carry out the inspection on their own.',
 			'',
-			'# About the visit',
-			'',
-			'If you see the inspector, you cannot give them any documents or discuss the appeal with them.',
-			'',
-			'If you need to contact us, include our reference number in any communication.',
-			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');

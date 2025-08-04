@@ -29,7 +29,7 @@ describe('site-visit-change-accompanied-to-access-required-appellant.md', () => 
 			'',
 			'# The site visit has changed',
 			'',
-			'We now require you, or someone else, to attend the site visit to provide access for our inspector.',
+			'We now require you (or someone else) to attend the site visit to provide access for our inspector.',
 			'',
 			'# Visit details',
 			'',
@@ -43,8 +43,7 @@ describe('site-visit-change-accompanied-to-access-required-appellant.md', () => 
 			'',
 			'The inspector will carry out the inspection on their own.',
 			'',
-			'The Planning Inspectorate',
-			'caseofficers@planninginspectorate.gov.uk'
+			'The Planning Inspectorate'
 		].join('\n');
 
 		await notifySend(notifySendData);
