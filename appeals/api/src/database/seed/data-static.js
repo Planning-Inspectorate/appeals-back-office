@@ -106,15 +106,15 @@ export const appealTypes = [
 		enabled: false
 	},
 	{
-		key: APPEAL_CASE_TYPE.ZP,
-		type: APPEAL_TYPE.CAS_PLANNING,
-		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CAS_PLANNING,
-		enabled: false
-	},
-	{
 		key: APPEAL_CASE_TYPE.ZA,
 		type: APPEAL_TYPE.CAS_ADVERTISEMENT,
 		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CAS_ADVERTISEMENT,
+		enabled: false
+	},
+	{
+		key: APPEAL_CASE_TYPE.ZP,
+		type: APPEAL_TYPE.CAS_PLANNING,
+		changeAppealType: APPEAL_TYPE_CHANGE_APPEALS.CAS_PLANNING,
 		enabled: false
 	}
 ];

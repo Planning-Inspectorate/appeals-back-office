@@ -46,7 +46,8 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                                 <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
                                 <option value="77">Planning listed building and conservation area appeal</option>
-                                <option                                 value="78">CAS planning</option>
+                                <option                                 value="78">CAS advert</option>
+                                    <option value="79">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -249,7 +250,8 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                                 <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
                                 <option value="77">Planning listed building and conservation area appeal</option>
-                                <option                                 value="78">CAS planning</option>
+                                <option                                 value="78">CAS advert</option>
+                                    <option value="79">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -435,7 +437,8 @@ exports[`national-list GET / should render national list - appeal type filter ap
                                 <option value="66">Householder</option>
                                 <option value="75" selected>Planning appeal</option>
                                 <option value="77">Planning listed building and conservation area appeal</option>
-                                <option                                 value="78">CAS planning</option>
+                                <option                                 value="78">CAS advert</option>
+                                    <option value="79">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -581,7 +584,8 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                                 <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
                                 <option value="77">Planning listed building and conservation area appeal</option>
-                                <option                                 value="78">CAS planning</option>
+                                <option                                 value="78">CAS advert</option>
+                                    <option value="79">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -746,7 +750,8 @@ exports[`national-list GET / should render national list - no search term - filt
                                 <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
                                 <option value="77">Planning listed building and conservation area appeal</option>
-                                <option                                 value="78">CAS planning</option>
+                                <option                                 value="78">CAS advert</option>
+                                    <option value="79">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -906,7 +911,8 @@ exports[`national-list GET / should render national list - search term - filter 
                                 <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
                                 <option value="77">Planning listed building and conservation area appeal</option>
-                                <option                                 value="78">CAS planning</option>
+                                <option                                 value="78">CAS advert</option>
+                                    <option value="79">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1066,7 +1072,8 @@ exports[`national-list GET / should render national list - search term - no resu
                                 <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
                                 <option value="77">Planning listed building and conservation area appeal</option>
-                                <option                                 value="78">CAS planning</option>
+                                <option                                 value="78">CAS advert</option>
+                                    <option value="79">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1185,7 +1192,8 @@ exports[`national-list GET / should render national list - search term 1`] = `
                                 <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
                                 <option value="77">Planning listed building and conservation area appeal</option>
-                                <option                                 value="78">CAS planning</option>
+                                <option                                 value="78">CAS advert</option>
+                                    <option value="79">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1347,7 +1355,8 @@ exports[`national-list GET / should render the header with navigation containing
                                 <option value="66">Householder</option>
                                 <option value="75">Planning appeal</option>
                                 <option value="77">Planning listed building and conservation area appeal</option>
-                                <option                                 value="78">CAS planning</option>
+                                <option                                 value="78">CAS advert</option>
+                                    <option value="79">CAS planning</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">

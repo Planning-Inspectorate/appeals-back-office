@@ -211,7 +211,7 @@ describe('appeals list routes', () => {
 				const expectedQuery = {
 					where: {
 						appealStatus: { some: { valid: true } },
-						appealType: { key: { in: ['D', 'W', 'Y', 'ZP'] } }
+						appealType: { key: { in: ['D', 'W', 'Y', 'ZP', 'ZA'] } }
 					},
 					include: {
 						address: true,
