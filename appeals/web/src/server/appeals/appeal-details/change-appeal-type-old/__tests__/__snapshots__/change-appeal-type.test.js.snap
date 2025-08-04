@@ -61,7 +61,12 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
                                         type="radio" value="78">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">(ZP) CAS planning</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">(ZA) CAS advert</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-type-5" name="appealType"
+                                        type="radio" value="79">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-5">(ZP) CAS planning</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -394,7 +399,12 @@ exports[`change-appeal-type POST /change-appeal-type/appeal-type should re-rende
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
                                         type="radio" value="78">
-                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">(ZP) CAS planning</label>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">(ZA) CAS advert</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="appeal-type-5" name="appealType"
+                                        type="radio" value="79">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-5">(ZP) CAS planning</label>
                                     </div>
                         </div>
                         </fieldset>

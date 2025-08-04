@@ -38,6 +38,7 @@ apps_config = {
     featureFlagLinkedAppeals          = true
     featureFlagS20                    = true
     featureFlagCAS                    = true
+    featureFlagCasAdvert              = true
     featureFlagIssueDecision          = true
     featureFlagReIssueDecision        = true
     featureFlagNotifyCaseHistory      = true

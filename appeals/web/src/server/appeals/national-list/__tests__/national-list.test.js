@@ -114,6 +114,7 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Planning listed building and conservation area appeal</option>'
 			);
+			expect(unprettifiedElement.innerHTML).toContain('CAS advert</option>');
 			expect(unprettifiedElement.innerHTML).toContain('CAS planning</option>');
 		});
 

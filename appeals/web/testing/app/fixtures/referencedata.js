@@ -1571,6 +1571,12 @@ export const appealTypesData = [
 	},
 	{
 		id: 78,
+		type: 'CAS advert',
+		key: 'ZA',
+		enabled: false
+	},
+	{
+		id: 79,
 		type: 'CAS planning',
 		key: 'ZP',
 		enabled: false

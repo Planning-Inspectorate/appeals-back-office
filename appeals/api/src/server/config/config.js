@@ -43,6 +43,8 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_LINKED_APPEALS && environment.FEATURE_FLAG_LINKED_APPEALS === 'true',
 		featureFlagS20: environment.FEATURE_FLAG_S20 && environment.FEATURE_FLAG_S20 === 'true',
 		featureFlagCAS: environment.FEATURE_FLAG_CAS && environment.FEATURE_FLAG_CAS === 'true',
+		featureFlagCasAdvert:
+			environment.FEATURE_FLAG_CAS_ADVERT && environment.FEATURE_FLAG_CAS_ADVERT === 'true',
 		featureFlagNetResidence:
 			environment.FEATURE_FLAG_NET_RESIDENCE && environment.FEATURE_FLAG_NET_RESIDENCE === 'true'
 	},
