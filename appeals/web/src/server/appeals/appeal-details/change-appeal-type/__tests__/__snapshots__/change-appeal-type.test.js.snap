@@ -57,11 +57,11 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
-                                        type="radio" value="78">
+                                        type="radio" value="79">
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-5" name="appealType"
-                                        type="radio" value="79">
+                                        type="radio" value="78">
                                     </div>
                                 </div>
                             </fieldset>
@@ -107,11 +107,11 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
-                                        type="radio" value="78">
+                                        type="radio" value="79">
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-5" name="appealType"
-                                        type="radio" value="79">
+                                        type="radio" value="78">
                                     </div>
                                 </div>
                             </fieldset>
@@ -665,11 +665,11 @@ exports[`change-appeal-type POST /change-appeal-type/appeal-type should re-rende
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
-                                        type="radio" value="78">
+                                        type="radio" value="79">
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-5" name="appealType"
-                                        type="radio" value="79">
+                                        type="radio" value="78">
                                     </div>
                         </div>
                         </fieldset>
