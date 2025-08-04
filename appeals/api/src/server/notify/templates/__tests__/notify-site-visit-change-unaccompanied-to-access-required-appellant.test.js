@@ -35,7 +35,7 @@ describe('site-visit-change-unaccompanied-to-access-required-appellant.md', () =
 			'',
 			'Our inspector (or their representative) will visit 5, Meadow Way between 9:00am and 11:00am on 27 September 2025.',
 			'',
-			'You can provide written consent for access for our inspector at caseofficers@planninginspectorate.gov.uk. Include our appeal reference number in any communication.',
+			'You can provide written consent for access for our inspector at caseofficers@planninginspectorate.gov.uk (only if it is possible at the site). Include our appeal reference number in any communication.',
 			'',
 			'# About the visit',
 			'',
