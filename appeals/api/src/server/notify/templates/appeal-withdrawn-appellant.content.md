@@ -6,7 +6,7 @@ We have withdrawn the appeal following your request on {{withdrawal_date}}.
 
 # What happens next
 
-We have closed the appeal and cancelled the {{event_type}}.
+We have closed the appeal{% if event_set %} and cancelled the {{event_type}}{% endif %}.
 
 # Feedback
 
