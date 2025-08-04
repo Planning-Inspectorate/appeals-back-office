@@ -60,7 +60,9 @@ export class CaseDetailsPage extends Page {
 		setUpTimetableHearingDate: 'set up-timetable-hearing-date',
 		hearingBannerLink: 'setup-hearing',
 		hearingBannerAddressLink: 'add-hearing-address',
-		pageHeading: 'h1'
+		pageHeading: 'h1',
+		changeInquiryDate: 'change-inquiry-date',
+		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -187,7 +189,9 @@ export class CaseDetailsPage extends Page {
 		line2: () => cy.get('#address-line-2'),
 		town: () => cy.get('#town'),
 		county: () => cy.get('#county'),
-		postcode: () => cy.get('#post-code')
+		postcode: () => cy.get('#post-code'),
+		changeInquiryDate: () => cy.getByData(this._cyDataSelectors.changeInquiryDate),
+		changeInquiryExpectedDays: () => cy.getByData(this._cyDataSelectors.changeInquiryNumberOfDays)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -280,6 +284,12 @@ export class CaseDetailsPage extends Page {
 
 	clickIssueLpaCostsDecision() {
 		this.elements.issueLpaCostsDecision().click({ force: true });
+	}
+	clickChangeInquiryDate() {
+		this.elements.changeInquiryDate().click();
+	}
+	clickChangeInquiryEstimatedDays() {
+		this.elements.changeInquiryExpectedDays().click();
 	}
 
 	inputCaseNotes(text, index = 0) {
