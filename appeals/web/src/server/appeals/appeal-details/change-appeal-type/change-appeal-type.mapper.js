@@ -110,7 +110,16 @@ export function invalidChangeAppealType(appealDetails) {
  */
 function mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal, currentAppealType) {
 	return appealTypes
-		.sort((a, b) => a.key.localeCompare(b.key))
+		.sort((a, b) => {
+			// CAS Planning should be listed before CAS Advert
+			if (a.key === 'ZP' && b.key === 'ZA') {
+				return -1;
+			}
+			if (a.key === 'ZA' && b.key === 'ZP') {
+				return 1;
+			}
+			return a.key.localeCompare(b.key);
+		})
 		.map((appealType) => ({
 			value: appealType.id.toString(),
 			text: appealType.changeAppealType,
