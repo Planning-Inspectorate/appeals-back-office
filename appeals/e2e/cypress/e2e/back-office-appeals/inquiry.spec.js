@@ -100,6 +100,39 @@ it('Start case as inquiry without address or estimated days', () => {
 	caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 });
 
+it.only('Change Inquiry date from check your answers page', () => {
+	cy.wait(1000);
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		dateTimeSection.enterInquiryDate(inquiryDate);
+	});
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.selectRadioButtonByValue('No');
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.selectRadioButtonByValue('No');
+	caseDetailsPage.clickButtonByText('Continue');
+	verifyDateChanges(7);
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.clickChangeInquiryDate();
+	cy.getBusinessActualDate(new Date(), 25).then((inquiryDate) => {
+		dateTimeSection.enterInquiryDate(inquiryDate);
+	});
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.selectRadioButtonByValue('No');
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.selectRadioButtonByValue('No');
+	caseDetailsPage.clickButtonByText('Continue');
+	verifyDateChanges(7);
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.clickChangeInquiryEstimatedDays();
+	caseDetailsPage.selectRadioButtonByValue('Yes');
+	caseDetailsPage.inputEstimatedInquiryDays(estimatedInquiryDays);
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.selectRadioButtonByValue('No');
+	caseDetailsPage.clickButtonByText('Continue');
+	verifyDateChanges(7);
+	caseDetailsPage.clickButtonByText('Continue');
+});
+
 const verifyDateChanges = (addedDays) => {
 	const safeAddedDays = Math.max(addedDays, 1);
 
