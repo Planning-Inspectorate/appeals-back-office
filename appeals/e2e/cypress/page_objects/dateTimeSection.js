@@ -64,17 +64,6 @@ export class DateTimeSection extends Page {
 		});
 	}
 
-	enterInquiryDueDates(timetableItems, startDate, intervalDays) {
-		timetableItems.forEach((item, index) => {
-			if (!item.editable) return;
-
-			const dueDate = new Date(startDate);
-			dueDate.setDate(dueDate.getDate() + index * intervalDays);
-
-			this.#setAllDateFields(`#${item.row}-`, dueDate);
-		});
-	}
-
 	enterLpaqDate(date) {
 		this.#setAllDateFields(this.selectorPrefix.lpaqDate, date);
 	}

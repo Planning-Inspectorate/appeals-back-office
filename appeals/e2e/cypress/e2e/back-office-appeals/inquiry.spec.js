@@ -76,30 +76,35 @@ it('Start case as inquiry with address and estimated days', () => {
 	caseDetailsPage.clickButtonByText('Continue');
 	caseDetailsPage.addInquiryAddress(inquiryAddress);
 	caseDetailsPage.clickButtonByText('Continue');
-	caseDetailsPage.enterTimeTableDueDatesCaseStart(timetableItems, new Date(), 7);
+	verifyDateChanges(7);
 	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.clickButtonByText('Start case');
+	caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
+	caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
+});
+
+it('Start case as inquiry without address or estimated days', () => {
+	cy.wait(1000);
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		dateTimeSection.enterInquiryDate(inquiryDate);
+	});
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.selectRadioButtonByValue('No');
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.selectRadioButtonByValue('No');
+	caseDetailsPage.clickButtonByText('Continue');
+	verifyDateChanges(7);
+	caseDetailsPage.clickButtonByText('Continue');
+	caseDetailsPage.clickButtonByText('Start case');
+	caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
+	caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 });
 
 const verifyDateChanges = (addedDays) => {
-	caseDetailsPage.checkTimetableDueDatesAndChangeLinks(timetableItems);
-	caseDetailsPage.clickRowChangeLink(timetableItems[3].row);
+	const safeAddedDays = Math.max(addedDays, 1);
 
-	//const safeAddedDays = Math.max(addedDays, 1);
-	const startDate = getNextBusinessDay(new Date(), safeAddedDays + 2); // buffer to avoid today/weekend
-
-	const getNextBusinessDay = (startDate, addedDays = 2) => {
-		const date = new Date(startDate);
-		date.setDate(date.getDate() + addedDays);
-
-		while (
-			date.getDay() === 0 || // Sunday
-			date.getDay() === 6 || // Saturday
-			(date.getDate() === 1 && date.getMonth() === 0) // Jan 1
-		) {
-			date.setDate(date.getDate() + 1);
-		}
-
-		return date;
-	};
-	//const futureDate = getNextBusinessDay(new Date(), + addedDays); // buffer to avoid today/weekend
+	// Get the future business date using Cypress task/helper
+	cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
+		caseDetailsPage.enterTimeTableDueDatesCaseStart(timetableItems, startDate, 7);
+	});
 };
