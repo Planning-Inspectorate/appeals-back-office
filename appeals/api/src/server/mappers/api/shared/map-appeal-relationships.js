@@ -25,31 +25,7 @@ export const mapAppealRelationships = (data) => {
 			? appeal.parentAppeals
 					.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
 					.map((relationship) => {
-						const appealType = `${relationship.parent?.appealType?.type} (${relationship.parent?.appealType?.key})`;
-
-						const currentStatus =
-							relationship.parent?.appealStatus
-								.filter(({ valid }) => valid)
-								.map(({ status }) => status) || [];
-
-						const completedStateList =
-							relationship.parent?.appealStatus
-								.filter(({ valid }) => !valid)
-								.map(({ status }) => status) || [];
-
-						return {
-							appealId: relationship.parentId,
-							appealReference: relationship.parentRef,
-							externalSource: relationship.externalSource === true,
-							linkingDate: relationship.linkingDate.toISOString(),
-							appealType,
-							externalAppealType: relationship.externalAppealType,
-							relationshipId: relationship.id,
-							externalId: relationship.externalId,
-							isParentAppeal: true,
-							currentStatus: currentStatus.length ? currentStatus[0] : undefined,
-							completedStateList
-						};
+						return mapLinkedAppeal(relationship.parent, relationship, true);
 					})
 			: [];
 
@@ -58,31 +34,7 @@ export const mapAppealRelationships = (data) => {
 			? appeal.childAppeals
 					.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
 					.map((relationship) => {
-						const appealType = `${relationship.child?.appealType?.type} (${relationship.child?.appealType?.key})`;
-
-						const currentStatus =
-							relationship.child?.appealStatus
-								.filter(({ valid }) => valid)
-								.map(({ status }) => status) || [];
-
-						const completedStateList =
-							relationship.child?.appealStatus
-								.filter(({ valid }) => !valid)
-								.map(({ status }) => status) || [];
-
-						return {
-							appealId: relationship.childId,
-							appealReference: relationship.childRef,
-							externalSource: relationship.externalSource === true,
-							linkingDate: relationship.linkingDate.toISOString(),
-							appealType,
-							externalAppealType: relationship.externalAppealType,
-							relationshipId: relationship.id,
-							externalId: relationship.externalId,
-							isParentAppeal: false,
-							currentStatus: currentStatus.length ? currentStatus[0] : undefined,
-							completedStateList
-						};
+						return mapLinkedAppeal(relationship.child, relationship, false);
 					})
 			: [];
 
@@ -90,7 +42,8 @@ export const mapAppealRelationships = (data) => {
 
 	const awaitingLinkedAppeal =
 		isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
-		isAwaitingLinkedAppeal(appeal, linkedAppeals);
+		// @ts-ignore
+		isAwaitingLinkedAppeal(appeal, data.linkedAppeals);
 
 	const otherAppeals = appealRelationships.length
 		? appealRelationships
@@ -121,5 +74,39 @@ export const mapAppealRelationships = (data) => {
 		otherAppeals,
 		isChildAppeal: parentAppeals.length > 0,
 		isParentAppeal: childAppeals.length > 0
+	};
+};
+
+/**
+ *
+ * @param {Appeal | null | undefined} appeal
+ * @param {*} relationship
+ * @param {Boolean} isParentAppeal
+ * @returns {*}
+ */
+const mapLinkedAppeal = (appeal, relationship, isParentAppeal) => {
+	const { linkingDate, externalSource, externalAppealType, externalId } = relationship;
+	const { id: appealId, appealStatus, reference: appealReference } = appeal || {};
+
+	// @ts-ignore
+	const appealType = `${appeal?.appealType?.type} (${appeal?.appealType?.key})`;
+
+	const currentStatus =
+		appealStatus?.filter(({ valid }) => valid).map(({ status }) => status) || [];
+
+	const completedStateList =
+		appealStatus?.filter(({ valid }) => !valid).map(({ status }) => status) || [];
+
+	return {
+		appealId,
+		appealReference,
+		externalSource: externalSource === true,
+		linkingDate: linkingDate.toISOString(),
+		appealType,
+		externalAppealType,
+		externalId,
+		isParentAppeal,
+		currentStatus: currentStatus[0] ?? undefined,
+		completedStateList
 	};
 };

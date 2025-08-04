@@ -18,7 +18,11 @@ import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
 /** @typedef {Partial<AppealSummary & { appealTimetable: Record<string,string> }>} PersonalListAppeal */
 
-const ALLOWED_CHILD_APPEAL_ACTION_STATUSES = [APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE];
+const ALLOWED_CHILD_APPEAL_ACTION_STATUSES = [
+	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+	APPEAL_CASE_STATUS.VALIDATION,
+	APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+];
 
 /**
  * @param {AppealSummary} appeal
@@ -156,6 +160,9 @@ export function personalListPage(
 					appeal.isParentAppeal,
 					appeal.isChildAppeal
 				);
+				const actionLinks = canDisplayAction(appeal)
+					? mapActionLinksForAppeal(appeal, isCaseOfficer, request)
+					: '';
 
 				return [
 					{
@@ -181,12 +188,10 @@ export function personalListPage(
 					},
 					{
 						classes: 'action-required',
-						html: canDisplayAction(appeal)
-							? mapActionLinksForAppeal(appeal, isCaseOfficer, request)
-							: ''
+						html: actionLinks || ''
 					},
 					{
-						text: canDisplayAction(appeal) ? dateISOStringToDisplayDate(appeal.dueDate) || '' : ''
+						text: actionLinks?.length ? dateISOStringToDisplayDate(appeal.dueDate) || '' : ''
 					},
 					{
 						html: '',

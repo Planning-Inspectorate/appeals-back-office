@@ -27,7 +27,11 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 		case APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER:
 			actions.push('assignCaseOfficer');
 			break;
-		case APPEAL_CASE_STATUS.READY_TO_START:
+		case APPEAL_CASE_STATUS.READY_TO_START: // @ts-ignore
+			if (appealDetails.awaitingLinkedAppeal && config.featureFlags.featureFlagLinkedAppeals) {
+				actions.push('awaitingLinkedAppeal');
+				break;
+			}
 			actions.push('startAppeal');
 			break;
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:

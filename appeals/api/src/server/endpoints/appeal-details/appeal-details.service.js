@@ -12,6 +12,9 @@ import { getCache, setCache } from '@pins/appeals/utils/cache-data.js';
 import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 
 const {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
@@ -39,8 +42,9 @@ const loadAndFormatAppeal = async ({
 	context = /** @type {keyof contextEnum} */ (contextEnum.appealDetails)
 }) => {
 	const appealTypes = await loadAppealTypes();
+	const linkedAppeals = await loadLinkedAppeals(appeal);
 
-	const mappedAppeal = mapCase({ appeal, appealTypes, context });
+	const mappedAppeal = mapCase({ appeal, appealTypes, linkedAppeals, context });
 	if (!mappedAppeal) {
 		return null;
 	}
@@ -166,8 +170,26 @@ const loadAppealTypes = async () => {
 	return appealTypes;
 };
 
+/**
+ *
+ * @param {Appeal} appeal
+ * @returns {Promise<*[]>}
+ */
+const loadLinkedAppeals = async (appeal) => {
+	if (
+		!isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) ||
+		(!appeal?.parentAppeals?.length && !appeal?.childAppeals?.length)
+	) {
+		return [];
+	}
+
+	const parentRef = appeal.parentAppeals?.[0]?.parentRef ?? appeal.reference;
+	return appealRepository.getLinkedAppeals(parentRef, CASE_RELATIONSHIP_LINKED);
+};
+
 export const appealDetailService = {
 	loadAndFormatAppeal,
+	loadLinkedAppeals,
 	assignUser,
 	assignedUserType,
 	updateAppealDetails

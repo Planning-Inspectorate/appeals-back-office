@@ -17,7 +17,7 @@ import mergeMaps from '#utils/merge-maps.js';
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealS78Case} AppealS78Case */
 /** @typedef {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|AppealHASCase|AppealS78Case} MapResult */
 /** @typedef {import('@pins/appeals.api').Api.Folder} Folder */
-/** @typedef {{ appeal: Appeal, appealTypes?: AppealType[]|undefined, context: keyof contextEnum|undefined }} MappingRequest */
+/** @typedef {{ appeal: Appeal, appealTypes?: AppealType[]|undefined, linkedAppeals?: *[]|undefined, context: keyof contextEnum|undefined }} MappingRequest */
 
 /**
  *
@@ -27,6 +27,7 @@ import mergeMaps from '#utils/merge-maps.js';
 export const mapCase = ({
 	appeal,
 	appealTypes = [],
+	linkedAppeals = [],
 	context = /** @type {keyof contextEnum} */ (contextEnum.appealDetails)
 }) => {
 	if (!context || !appeal?.id || !appeal?.caseCreatedDate) {
@@ -36,7 +37,7 @@ export const mapCase = ({
 	const caseMap =
 		context === contextEnum.broadcast
 			? createIntegrationMap({ appeal, context })
-			: createDataMap({ appeal, appealTypes, context });
+			: createDataMap({ appeal, appealTypes, linkedAppeals, context });
 
 	return createDataLayout(caseMap, { appeal, context });
 };
