@@ -43,6 +43,8 @@ describe('appeal-valid-start-case-lpa.md', () => {
 			'',
 			'[Submit your questionnaire and other documents](/mock-front-office-url/manage-appeals/134526), including your appeal notification letter and a list of those notified by 01 January 2025.',
 			'',
+			'[Find out your responsibilities in the appeal process](http://www.gov.uk/government/publications/planning-appeals-procedural-guide/procedural-guide-planning-appeals-england).',
+			'',
 			'The Planning Inspectorate',
 			'caseofficers@planninginspectorate.gov.uk'
 		].join('\n');

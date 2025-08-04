@@ -2,15 +2,15 @@
 
 # Appeal decision
 
-A decision has been made on this appeal.
+We have made a decision on this appeal.
 
 [Sign in to our service]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}) to view the decision letter dated {{decision_date}}.
 
-The appellant has been informed of the decision.
+We have also informed the appellant of the decision.
 
 # The Planning Inspectorate’s role
 
-The Planning Inspectorate cannot change or revoke the decision. Only the High Court can change this decision.
+The Planning Inspectorate cannot change or revoke the decision. You can [challenge the decision in the High Court](https://www.gov.uk/appeal-planning-decision/if-you-think-the-appeal-decision-is-legally-incorrect) if you think the Planning Inspectorate made a legal mistake.
 
 # Feedback
 

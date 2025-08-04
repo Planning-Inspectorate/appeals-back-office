@@ -13,7 +13,8 @@ test('should call notify sendEmail for appeal-withdrawn-appellant with the corre
 			appeal_reference_number: '134526',
 			lpa_reference: '48269/APP/2021/1482',
 			site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-			withdrawal_date: '01 January 2025'
+			withdrawal_date: '01 January 2025',
+			event_type: 'site visit'
 		},
 		appeal: {
 			id: 'mock-appeal-generic-id',
@@ -31,15 +32,11 @@ test('should call notify sendEmail for appeal-withdrawn-appellant with the corre
 		'',
 		'# Appeal withdrawn',
 		'',
-		'We have withdrawn this appeal following your request on 01 January 2025.',
+		'We have withdrawn the appeal following your request on 01 January 2025.',
 		'',
-		'# Next steps',
+		'# What happens next',
 		'',
-		'Your case will be closed.',
-		'',
-		'Any appointments made for this appeal will be cancelled.',
-		'',
-		'The planning department that refused your application has been informed.',
+		'We have closed the appeal and cancelled the site visit.',
 		'',
 		'# Feedback',
 		'',
