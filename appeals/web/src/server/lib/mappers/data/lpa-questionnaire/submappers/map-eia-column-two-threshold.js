@@ -10,7 +10,7 @@ export const mapEiaColumnTwoThreshold = ({
 		id: 'eia-column-two-threshold',
 		text: 'Does the development meet or exceed the threshold or criteria in column 2?',
 		value: lpaQuestionnaireData.eiaColumnTwoThreshold,
-		defaultText: '',
+		defaultText: 'Not applicable',
 		addCyAttribute: true,
 		link: `${currentRoute}/environmental-impact-assessment/column-two-threshold/change`,
 		editable: userHasUpdateCase,
