@@ -13,7 +13,7 @@ import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 /**
  *
  * @param {MappingRequest} data
- * @returns {{awaitingLinkedAppeal: boolean, linkedAppeals: AppealRelationship[], otherAppeals: AppealRelationship[], isParentAppeal: boolean, isChildAppeal: boolean }}
+ * @returns {{awaitingLinkedAppeal: boolean, linkedAppeals: Partial<AppealRelationship>[], otherAppeals: AppealRelationship[], isParentAppeal: boolean, isChildAppeal: boolean }}
  */
 export const mapAppealRelationships = (data) => {
 	const { appeal } = data;
@@ -25,7 +25,7 @@ export const mapAppealRelationships = (data) => {
 			? appeal.parentAppeals
 					.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
 					.map((relationship) => {
-						return mapLinkedAppeal(relationship.parent, relationship, true);
+						return mapLinkedAppeal(relationship, true);
 					})
 			: [];
 
@@ -34,7 +34,7 @@ export const mapAppealRelationships = (data) => {
 			? appeal.childAppeals
 					.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
 					.map((relationship) => {
-						return mapLinkedAppeal(relationship.child, relationship, false);
+						return mapLinkedAppeal(relationship, false);
 					})
 			: [];
 
@@ -79,17 +79,19 @@ export const mapAppealRelationships = (data) => {
 
 /**
  *
- * @param {Appeal | null | undefined} appeal
- * @param {*} relationship
+ * @param {{parent?: Appeal | null | undefined, child?: Appeal | null | undefined, linkingDate: Date, externalSource: boolean | null, externalAppealType: string | null, externalId: string | null}} relationship
  * @param {Boolean} isParentAppeal
- * @returns {*}
+ * @returns {Partial<AppealRelationship & {currentStatus: string, completedStateList: string[]}>}
  */
-const mapLinkedAppeal = (appeal, relationship, isParentAppeal) => {
-	const { linkingDate, externalSource, externalAppealType, externalId } = relationship;
-	const { id: appealId, appealStatus, reference: appealReference } = appeal || {};
-
-	// @ts-ignore
-	const appealType = `${appeal?.appealType?.type} (${appeal?.appealType?.key})`;
+const mapLinkedAppeal = (relationship, isParentAppeal) => {
+	const { linkingDate, externalSource, externalAppealType, externalId, parent, child } =
+		relationship;
+	const {
+		id: appealId,
+		appealStatus,
+		reference: appealReference,
+		appealType
+	} = (isParentAppeal ? parent : child) || {};
 
 	const currentStatus =
 		appealStatus?.filter(({ valid }) => valid).map(({ status }) => status) || [];
@@ -102,7 +104,7 @@ const mapLinkedAppeal = (appeal, relationship, isParentAppeal) => {
 		appealReference,
 		externalSource: externalSource === true,
 		linkingDate: linkingDate.toISOString(),
-		appealType,
+		appealType: `${appealType?.type} (${appealType?.key})`,
 		externalAppealType,
 		externalId,
 		isParentAppeal,
