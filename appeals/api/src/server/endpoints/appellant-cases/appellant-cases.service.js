@@ -1,15 +1,14 @@
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
+	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
+	ERROR_NO_RECIPIENT_EMAIL,
+	ERROR_NOT_FOUND
+} from '@pins/appeals/constants/support.js';
+import {
 	isOutcomeIncomplete,
 	isOutcomeInvalid,
 	isOutcomeValid
 } from '#utils/check-validation-outcome.js';
-
-import {
-	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
-	ERROR_NOT_FOUND,
-	ERROR_NO_RECIPIENT_EMAIL
-} from '@pins/appeals/constants/support.js';
 
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import transitionState from '../../state/transition-state.js';
@@ -26,6 +25,9 @@ import { notifySend } from '#notify/notify-send.js';
 import { APPEAL_DEVELOPMENT_TYPES } from '@pins/appeals/constants/appellant-cases.constants.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
+import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
+import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
+import { allValidationOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('express').Request} Request */
@@ -73,7 +75,22 @@ export const updateAppellantCaseValidationOutcome = async (
 	});
 
 	if (!isOutcomeIncomplete(validationOutcome.name)) {
-		await transitionState(appealId, azureAdUserId, validationOutcome.name);
+		if (!isLinkedAppeal(appeal)) {
+			await transitionState(appealId, azureAdUserId, validationOutcome.name);
+		} else {
+			// @ts-ignore
+			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
+			if (allValidationOutcomesAreComplete(linkedAppeals)) {
+				await Promise.all(
+					linkedAppeals.map((appeal) => {
+						const validationOutcome = appeal.appellantCase?.appellantCaseValidationOutcome;
+						if (validationOutcome) {
+							return transitionState(appeal.id, azureAdUserId, validationOutcome?.name);
+						}
+					})
+				);
+			}
+		}
 	} else {
 		createAuditTrail({
 			appealId,

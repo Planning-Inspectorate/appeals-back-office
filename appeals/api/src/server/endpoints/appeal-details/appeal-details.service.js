@@ -176,14 +176,20 @@ const loadAppealTypes = async () => {
  * @returns {Promise<*[]>}
  */
 const loadLinkedAppeals = async (appeal) => {
+	const parentAppeals = appeal?.parentAppeals?.filter(
+		(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
+	);
+	const childAppeals = appeal?.childAppeals?.filter(
+		(childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED
+	);
 	if (
 		!isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) ||
-		(!appeal?.parentAppeals?.length && !appeal?.childAppeals?.length)
+		(!parentAppeals?.length && !childAppeals?.length)
 	) {
 		return [];
 	}
 
-	const parentRef = appeal.parentAppeals?.[0]?.parentRef ?? appeal.reference;
+	const parentRef = parentAppeals?.[0]?.parentRef ?? appeal.reference;
 	return appealRepository.getLinkedAppeals(parentRef, CASE_RELATIONSHIP_LINKED);
 };
 
