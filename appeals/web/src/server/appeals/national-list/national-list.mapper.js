@@ -55,13 +55,13 @@ export function nationalListPage(
 			inspectorFilter
 		].some((filter) => filter && filter !== 'all');
 
-	const appealStatusFilterItemsArray = ['all', ...(appeals?.statusesInNationalList || [])].map(
-		(appealStatus) => ({
+	const appealStatusFilterItemsArray = ['all', ...(appeals?.statusesInNationalList || [])]
+		.map((appealStatus) => ({
 			text: mapStatusFilterLabel(appealStatus),
 			value: appealStatus,
 			selected: appealStatusFilter === appealStatus
-		})
-	);
+		}))
+		.sort((a, b) => a.text.toLowerCase().localeCompare(b.text.toLowerCase()));
 
 	const inspectorStatusFilterItemsArray = ['all', 'assigned', 'unassigned'].map(
 		(inspectorStatus) => ({
