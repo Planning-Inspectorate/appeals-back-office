@@ -16,7 +16,7 @@ import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
-/** @typedef {Partial<AppealSummary & { appealTimetable: Record<string,string> }>} PersonalListAppeal */
+/** @typedef {Partial<AppealSummary & { appealTimetable: Record<string,string>, awaitingLinkedAppeal: boolean}>} PersonalListAppeal */
 
 const ALLOWED_CHILD_APPEAL_ACTION_STATUSES = [
 	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
@@ -292,6 +292,12 @@ function mapRequiredActionToPersonalListActionHtml(
 						`/appeals-service/appeal-details/${appealId}/appellant-case`
 				  )}">Awaiting appellant update<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				: 'Awaiting appellant update';
+		}
+		case 'assignCaseOfficer': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/assign-case-officer/search-case-officer`
+			)}">Assign case officer<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'awaitingFinalComments': {
 			return 'Awaiting final comments';

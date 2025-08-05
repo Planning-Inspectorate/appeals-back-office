@@ -147,6 +147,7 @@ export async function appellantCasePage(
 	if (
 		reviewOutcomeRadiosInputInstruction &&
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.VALIDATION &&
+		appealDetails.documentationSummary?.appellantCase?.status?.toLowerCase() !== 'valid' &&
 		userHasPermission(permissionNames.setStageOutcome, session)
 	) {
 		reviewOutcomeComponents.push({

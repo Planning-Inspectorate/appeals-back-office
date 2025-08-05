@@ -27,7 +27,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 		case APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER:
 			actions.push('assignCaseOfficer');
 			break;
-		case APPEAL_CASE_STATUS.READY_TO_START: // @ts-ignore
+		case APPEAL_CASE_STATUS.READY_TO_START:
 			if (appealDetails.awaitingLinkedAppeal && config.featureFlags.featureFlagLinkedAppeals) {
 				actions.push('awaitingLinkedAppeal');
 				break;
@@ -73,6 +73,11 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			actions.push('issueDecision');
 			break;
 		case APPEAL_CASE_STATUS.VALIDATION: {
+			if (appealDetails.awaitingLinkedAppeal && config.featureFlags.featureFlagLinkedAppeals) {
+				actions.push('awaitingLinkedAppeal');
+				break;
+			}
+
 			const appellantCaseOverdue =
 				appealDetails.documentationSummary.appellantCase?.dueDate &&
 				dateIsInThePast(
@@ -92,6 +97,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			} else if (appellantCaseReceived) {
 				actions.push('reviewAppellantCase');
 			}
+
 			break;
 		}
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE: {

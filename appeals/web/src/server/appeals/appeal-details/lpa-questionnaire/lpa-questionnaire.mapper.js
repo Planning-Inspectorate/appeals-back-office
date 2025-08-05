@@ -155,6 +155,7 @@ export async function lpaQuestionnairePage(
 	if (
 		reviewOutcomeRadiosInputInstruction &&
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE &&
+		appealDetails.documentationSummary?.lpaQuestionnaire?.status?.toLowerCase() !== 'complete' &&
 		userHasPermission(permissionNames.setStageOutcome, session)
 	) {
 		reviewOutcomeComponents.push({

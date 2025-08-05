@@ -1,5 +1,6 @@
 import { currentStatus } from '#utils/current-status.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { isArray } from 'lodash-es';
 
 /**
  *
@@ -12,6 +13,14 @@ export const isAwaitingLinkedAppeal = (appeal, linkedAppeals) => {
 		return true;
 	}
 	switch (currentStatus(appeal)) {
+		case APPEAL_CASE_STATUS.VALIDATION: {
+			const validationOutcome =
+				appeal.appellantCase?.appellantCaseValidationOutcome?.name?.toLowerCase();
+			if (validationOutcome !== 'valid') {
+				return false;
+			}
+			return !allValidationOutcomesAreComplete(linkedAppeals);
+		}
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE: {
 			const validationOutcome =
 				appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome?.name?.toLowerCase();
@@ -47,6 +56,25 @@ export const allLpaQuestionnaireOutcomesAreComplete = (linkedAppeals) => {
 
 /**
  *
+ * @param {*[]} linkedAppeals
+ * @returns {*|boolean}
+ */
+export const allValidationOutcomesAreComplete = (linkedAppeals) => {
+	if (!linkedAppeals.length) {
+		return true;
+	}
+	// @ts-ignore
+	return linkedAppeals.every((linkedAppeal) => {
+		// Make sure the linked appeal is the actual appeal and not a wrapper
+		const appeal = linkedAppeal.appeal || linkedAppeal;
+		const validationOutcome =
+			appeal.appellantCase?.appellantCaseValidationOutcome?.name?.toLowerCase();
+		return validationOutcome === 'valid';
+	});
+};
+
+/**
+ *
  * @param {*} appeal
  * @param {*[]}linkedAppeals
  * @returns {*|boolean}
@@ -62,15 +90,18 @@ const allLinkedAppealsHaveSameAppealStatus = (appeal, linkedAppeals) => {
 		// If the linked appeal is an appeal wrapper
 		if (linkedAppeal.appeal) {
 			//@ts-ignore
-			return linkedAppeal.appeal.appealStatus.find((item) => item.status === appealStatus);
+			return includesStatus(linkedAppeal.appeal, appealStatus);
 		}
 		if (linkedAppeal.child && linkedAppeal.parent) {
 			return (
 				//@ts-ignore
-				linkedAppeal.child.appealStatus.find((item) => item.status === appealStatus) &&
+				includesStatus(linkedAppeal.child, appealStatus) &&
 				//@ts-ignore
-				linkedAppeal.parent.appealStatus.find((item) => item.status === appealStatus)
+				includesStatus(linkedAppeal.parent, appealStatus)
 			);
+		}
+		if (isArray(linkedAppeal.appealStatus)) {
+			return includesStatus(linkedAppeal, appealStatus);
 		}
 		return (
 			appealStatus === linkedAppeal.currentStatus ||
@@ -78,3 +109,14 @@ const allLinkedAppealsHaveSameAppealStatus = (appeal, linkedAppeals) => {
 		);
 	});
 };
+
+/**
+ *
+ * @param {*} appeal
+ * @param {string} status
+ * @returns {boolean}
+ */
+function includesStatus(appeal, status) {
+	// @ts-ignore
+	return appeal.appealStatus?.some((item) => item.status === status);
+}
