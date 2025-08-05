@@ -20,7 +20,8 @@ const inquiryAddress = {
 	postcode: 'BS20 1BS'
 };
 
-const estimatedInquiryDays = Math.floor(Math.random() * 100);
+//generate a number between 0.5 & 99.5
+const estimatedInquiryDays = (Math.floor(Math.random() * 199) + 1) / 2;
 
 const timetableItems = [
 	{
@@ -100,7 +101,7 @@ it('Start case as inquiry without address or estimated days', () => {
 	caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 });
 
-it.only('Change Inquiry date from check your answers page', () => {
+it('Change Inquiry date from check your answers page', () => {
 	cy.wait(1000);
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		dateTimeSection.enterInquiryDate(inquiryDate);
