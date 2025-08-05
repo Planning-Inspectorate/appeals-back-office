@@ -22,7 +22,7 @@ export const correctionNoticePage = (appealId, appealReference, correctionNotice
 	const pageContent = {
 		title: 'Appeal decision',
 		backLinkUrl,
-		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		preHeading: `Appeal ${appealShortReference(appealReference)} - update decision letter`,
 		heading: 'Correction notice',
 		pageComponents: [
 			textareaInput({
