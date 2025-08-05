@@ -66,9 +66,7 @@ export function mapStatusFilterLabel(appealStatus) {
 		appealStatus
 			.replace('issue_determination', 'issue_decision')
 			.replace('lpa_', 'LPA_')
-			.replace('awaiting_event', 'awaiting_EVENT')
-			.replace('event', 'EVENT_ready_to_set_up')
-			.replace('EVENT', 'event')
+			.replace(/^event$/, 'event_ready_to_set_up')
 			.replaceAll('_', ' ')
 	);
 }
