@@ -52,13 +52,13 @@ export function personalListPage(
 	const account = /** @type {AccountInfo} */ (authSession.getAccount(session));
 	const userGroups = account?.idTokenClaims?.groups ?? [];
 	const isCaseOfficer = userGroups.includes(config.referenceData.appeals.caseOfficerGroupId);
-	const filterItemsArray = ['all', ...(appealsAssignedToCurrentUser?.statuses || [])].map(
-		(appealStatus) => ({
+	const filterItemsArray = ['all', ...(appealsAssignedToCurrentUser?.statuses || [])]
+		.map((appealStatus) => ({
 			text: capitalizeFirstLetter(mapStatusFilterLabel(appealStatus)),
 			value: appealStatus,
 			selected: appealStatusFilter === appealStatus
-		})
-	);
+		}))
+		.sort((a, b) => a.text.toLowerCase().localeCompare(b.text.toLowerCase()));
 
 	/** @type {PageComponent} */
 	const searchAllCasesButton = {
