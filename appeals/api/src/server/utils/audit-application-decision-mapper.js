@@ -12,7 +12,7 @@ const auditApplicationDecisionMapper = (applicationDecision) => {
 		case APPEAL_APPLICATION_DECISION.REFUSED:
 			return 'Refused';
 		case APPEAL_APPLICATION_DECISION.NOT_RECEIVED:
-			return 'Not Received';
+			return 'Not received';
 		default:
 			return '';
 	}

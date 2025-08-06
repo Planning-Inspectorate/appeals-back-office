@@ -18,7 +18,7 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { getFormattedReasons } from '#utils/email-formatter.js';
-import { camelToScreamingSnake } from '#utils/string-utils.js';
+import { camelToScreamingSnake, capitalizeFirstLetter } from '#utils/string-utils.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
@@ -212,12 +212,15 @@ export function renderAuditTrailDetail(data) {
 	/** @type {Record<string, *>} */
 	const auditTrailParameters = {
 		AUDIT_TRAIL_DEVELOPMENT_TYPE_UPDATED: () =>
-			APPEAL_DEVELOPMENT_TYPES.find(
-				(/** @type {{value: string, label: string}} */ item) => item.value === data.developmentType
-			)?.label || data.developmentType,
+			capitalizeFirstLetter(
+				APPEAL_DEVELOPMENT_TYPES.find(
+					(/** @type {{value: string, label: string}} */ item) =>
+						item.value === data.developmentType
+				)?.label || data.developmentType
+			),
 		AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED: () => data.siteAreaSquareMetres,
 		AUDIT_TRAIL_IS_GREEN_BELT_UPDATED: () => (data.isGreenBelt ? 'Yes' : 'No'),
-		AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED: () => data.knowsOtherOwners,
+		AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED: () => data.knowsOtherOwners ?? 'No data',
 		AUDIT_TRAIL_SITE_ACCESS_DETAILS_UPDATED: () =>
 			data.siteAccessDetails ? `Yes\n${data.siteAccessDetails}` : 'No',
 		AUDIT_TRAIL_SITE_SAFETY_DETAILS_UPDATED: () =>
@@ -236,7 +239,7 @@ export function renderAuditTrailDetail(data) {
 		AUDIT_TRAIL_TENANT_AGRICULTURAL_HOLDING_UPDATED: () =>
 			data.tenantAgriculturalHolding ? 'Yes' : 'No',
 		AUDIT_TRAIL_OTHER_TENANTS_AGRICULTURAL_HOLDING_UPDATED: () =>
-			data.otherTenantsAgriculturalHolding,
+			data.otherTenantsAgriculturalHolding ? 'Yes' : 'No',
 		AUDIT_TRAIL_APPLICATION_DECISION_UPDATED: () =>
 			auditApplicationDecisionMapper(/** @type {string} */ (data.applicationDecision)),
 		AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_UPDATED: () => data.appellantProcedurePreference,
@@ -246,7 +249,7 @@ export function renderAuditTrailDetail(data) {
 			data.appellantProcedurePreferenceDuration,
 		AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_WITNESS_COUNT_UPDATED: () =>
 			data.appellantProcedurePreferenceWitnessCount,
-		AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED: () => data.planningObligation
+		AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED: () => data.statusPlanningObligation
 	};
 
 	if (!auditTrailParameters[constantKey]) {
