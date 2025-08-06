@@ -242,12 +242,37 @@ describe('decision routes', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenCalledTimes(6);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
-				templateName: 'decision-is-allowed-split-dismissed-appellant',
+				templateName: 'appellant-costs-decision-appellant',
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+				},
+				recipientEmail: appeal.agent.email
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+				},
+				templateName: 'lpa-costs-decision-lpa',
+				recipientEmail: appeal.agent.email
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(3, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
 				personalisation: {
 					appeal_reference_number: appeal.reference,
 					lpa_reference: appeal.applicationReference,
@@ -255,10 +280,37 @@ describe('decision routes', () => {
 					decision_date: formatDate(utcDate, false),
 					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
 				},
+				templateName: 'decision-is-allowed-split-dismissed-appellant',
 				recipientEmail: appeal.agent.email
 			});
 
-			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+			expect(mockNotifySend).toHaveBeenNthCalledWith(4, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+				},
+				templateName: 'appellant-costs-decision-lpa',
+				recipientEmail: appeal.lpa.email
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(5, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+				},
+				templateName: 'lpa-costs-decision-appellant',
+				recipientEmail: appeal.lpa.email
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(6, {
 				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
 				personalisation: {

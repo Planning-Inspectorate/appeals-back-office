@@ -9,7 +9,13 @@ import {
 import { notifySend } from '#notify/notify-send.js';
 import { loadEnvironment } from '@pins/platform';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { AUDIT_TRAIL_DECISION_ISSUED } from '@pins/appeals/constants/support.js';
+import {
+	AUDIT_TRAIL_DECISION_ISSUED,
+	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
+	AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
+	DECISION_TYPE_APPELLANT_COSTS,
+	DECISION_TYPE_LPA_COSTS
+} from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { AUDIT_TRAIL_CORRECTION_NOTICE_ADDED } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
@@ -94,6 +100,87 @@ export const publishDecision = async (
 	}
 
 	return null;
+};
+
+/**
+ * @param {Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient } notifyClient
+ * @param {string} siteAddress
+ * @param {string} azureAdUserId
+ * @param {string} decisionType
+ * @returns
+ */
+export const publishCostsDecision = async (
+	appeal,
+	notifyClient,
+	siteAddress,
+	azureAdUserId,
+	decisionType
+) => {
+	const personalisation = {
+		appeal_reference_number: appeal.reference,
+		site_address: siteAddress,
+		lpa_reference: appeal.applicationReference || '',
+		front_office_url: environment.FRONT_OFFICE_URL || ''
+	};
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	const lpaEmail = appeal.lpa?.email || '';
+
+	const costDecisionDetails = getCostDecisionDetails(decisionType);
+	if (!costDecisionDetails) {
+		throw new Error('Unable to parse decision type for cost decision details.');
+	}
+	const { recipientEmailTemplate, lpaEmailTemplate, auditTrailDetails } = costDecisionDetails;
+
+	if (recipientEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: recipientEmailTemplate,
+			notifyClient,
+			recipientEmail,
+			personalisation
+		});
+	}
+
+	if (lpaEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: lpaEmailTemplate,
+			notifyClient,
+			recipientEmail: lpaEmail,
+			personalisation
+		});
+	}
+
+	await createAuditTrail({
+		appealId: appeal.id,
+		azureAdUserId,
+		details: auditTrailDetails
+	});
+};
+
+/**
+ *
+ * @param {string} decisionType
+ * @returns
+ */
+const getCostDecisionDetails = (decisionType) => {
+	switch (decisionType) {
+		case DECISION_TYPE_APPELLANT_COSTS: {
+			return {
+				recipientEmailTemplate: 'appellant-costs-decision-appellant',
+				lpaEmailTemplate: 'appellant-costs-decision-lpa',
+				auditTrailDetails: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED
+			};
+		}
+		case DECISION_TYPE_LPA_COSTS: {
+			return {
+				recipientEmailTemplate: 'lpa-costs-decision-lpa',
+				lpaEmailTemplate: 'lpa-costs-decision-appellant',
+				auditTrailDetails: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED
+			};
+		}
+	}
 };
 
 /**
