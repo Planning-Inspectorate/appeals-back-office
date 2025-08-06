@@ -29,7 +29,6 @@ describe('appellant-final-comments.mapper', () => {
 
 	it('should display appellant final comments row if the procedure type is written', () => {
 		data.appealDetails.procedureType = 'Written';
-		console.log(data);
 		const result = mapAppellantFinalComments(data);
 		expect(result).toEqual({
 			display: {

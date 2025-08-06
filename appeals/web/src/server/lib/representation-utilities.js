@@ -10,7 +10,7 @@ export function isRepresentationReviewRequired(representationStatus) {
 }
 
 /**
- * @typedef {'appellant-final-comments'|'lpa-final-comments'|'lpa-statement'} RepresentationType
+ * @typedef {'appellant-final-comments'|'lpa-final-comments'|'lpa-statement' |'appellant-proofs-evidence' |'lpa-proofs-evidence'} RepresentationType
  *
  * @param {string} currentRoute
  * @param {string|undefined} documentationStatus
@@ -44,15 +44,19 @@ export function mapRepresentationDocumentSummaryActionLink(
 	/** @type {Record<RepresentationType, string>} */
 	const visuallyHiddenTexts = {
 		'lpa-statement': 'LPA statement',
-		'appellant-final-comments': 'appellant final comments',
-		'lpa-final-comments': 'LPA final comments'
+		'appellant-final-comments': 'Appellant final comments',
+		'lpa-final-comments': 'LPA final comments',
+		'appellant-proofs-evidence': 'Appellant proof of evidence',
+		'lpa-proofs-evidence': 'LPA proof of evidence'
 	};
 
 	/** @type {Record<RepresentationType, string>} */
 	const hrefs = {
 		'lpa-statement': `${currentRoute}/lpa-statement`,
 		'lpa-final-comments': `${currentRoute}/final-comments/lpa`,
-		'appellant-final-comments': `${currentRoute}/final-comments/appellant`
+		'appellant-final-comments': `${currentRoute}/final-comments/appellant`,
+		'appellant-proofs-evidence': `${currentRoute}/appellant-proof-of-evidence`,
+		'lpa-proofs-evidence': `${currentRoute}/lpa-proof-of-evidence`
 	};
 
 	return `<a href="${addBackLinkQueryToUrl(request, hrefs[representationType])}" data-cy="${

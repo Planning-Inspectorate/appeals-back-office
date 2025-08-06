@@ -283,7 +283,7 @@ describe('Final comments links', () => {
 			}
 		);
 		expect(link).toBe(
-			`<a href="${baseRoute}/final-comments/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="review-appellant-final-comments" class="govuk-link">Review<span class="govuk-visually-hidden"> appellant final comments</span></a>`
+			`<a href="${baseRoute}/final-comments/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="review-appellant-final-comments" class="govuk-link">Review<span class="govuk-visually-hidden"> Appellant final comments</span></a>`
 		);
 	});
 
@@ -315,7 +315,7 @@ describe('Final comments links', () => {
 			}
 		);
 		expect(link).toBe(
-			`<a href="${baseRoute}/final-comments/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-appellant-final-comments" class="govuk-link">View<span class="govuk-visually-hidden"> appellant final comments</span></a>`
+			`<a href="${baseRoute}/final-comments/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F4419" data-cy="view-appellant-final-comments" class="govuk-link">View<span class="govuk-visually-hidden"> Appellant final comments</span></a>`
 		);
 	});
 

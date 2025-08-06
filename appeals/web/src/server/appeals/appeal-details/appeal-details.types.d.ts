@@ -380,6 +380,8 @@ export interface WebDocumentationSummary extends DocumentationSummary {
 	ipComments?: Omit<WebDocumentationSummaryEntry, 'dueDate'>;
 	appellantFinalComments?: WebDocumentationSummaryEntry;
 	lpaFinalComments?: WebDocumentationSummaryEntry;
+	appellantProofOfEvidence?: WebDocumentationSummaryEntry;
+	lpaProofOfEvidence?: WebDocumentationSummaryEntry;
 }
 
 export interface WebAppeal extends SingleAppealDetailsResponse {

@@ -11,6 +11,7 @@ import { getCaseHearing } from './s78/case-hearing.js';
 import { getCaseInquiry } from './s78/case-inquiry.js';
 import { removeAccordionComponentsActions } from './utils/index.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { getCaseDocumentation } from '#appeals/appeal-details/accordions/common/case-documentation.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /**
@@ -52,32 +53,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 		}
 	];
 
-	/** @type {PageComponent} */
-	const caseDocumentation = {
-		type: 'table',
-		parameters: {
-			head: [
-				{ text: 'Documentation' },
-				{ text: 'Status' },
-				{ text: 'Date' },
-				{ text: 'Action', classes: 'govuk-!-text-align-right' }
-			],
-			rows: [
-				mappedData.appeal.appellantCase.display.tableItem,
-				mappedData.appeal.lpaQuestionnaire.display.tableItem,
-				...(!isChildAppeal(appealDetails)
-					? [
-							mappedData.appeal.lpaStatement.display.tableItem,
-							mappedData.appeal.ipComments.display.tableItem,
-							mappedData.appeal.appellantFinalComments.display.tableItem,
-							mappedData.appeal.lpaFinalComments.display.tableItem
-					  ]
-					: []),
-				mappedData.appeal.environmentalAssessment.display.tableItem
-			].filter(isDefined),
-			firstCellIsHeader: true
-		}
-	};
+	const caseDocumentation = getCaseDocumentation(mappedData, appealDetails);
 
 	const caseCosts = getCaseCosts(mappedData);
 
@@ -111,7 +87,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 	}
 
 	/** @type {PageComponent} */
-	const appealDetailsAccordion = {
+	return {
 		type: 'accordion',
 		wrapperHtml: {
 			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
@@ -175,6 +151,4 @@ export function generateAccordion(appealDetails, mappedData, session) {
 			]
 		}
 	};
-
-	return appealDetailsAccordion;
 }
