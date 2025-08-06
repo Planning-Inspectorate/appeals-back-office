@@ -7,12 +7,12 @@ import { APPEAL_PROOF_OF_EVIDENCE_STATUS } from '@pins/appeals/constants/common.
 /** @type {import('../mapper.js').SubMapper} */
 export const mapLPAProofOfEvidence = ({ appealDetails, currentRoute, request }) => {
 	const id = 'lpa-proofs-evidence';
-	if (appealDetails.procedureType.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY) {
+	if (appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.INQUIRY) {
 		return { id, display: {} };
 	}
 
 	const statusText =
-		appealDetails.documentationSummary?.lpaProofOfEvidence.representationStatus.toLowerCase() ===
+		appealDetails.documentationSummary?.lpaProofOfEvidence?.representationStatus?.toLowerCase() ===
 		APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED.toLowerCase()
 			? APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
 			: APPEAL_PROOF_OF_EVIDENCE_STATUS.AWAITING;
@@ -28,7 +28,7 @@ export const mapLPAProofOfEvidence = ({ appealDetails, currentRoute, request }) 
 		receivedText,
 		actionHtml: mapRepresentationDocumentSummaryActionLink(
 			currentRoute,
-			appealDetails?.documentationSummary?.lpaProofOfEvidence?.representationStatus,
+			appealDetails?.documentationSummary?.lpaProofOfEvidence?.representationStatus || undefined,
 			appealDetails?.documentationSummary?.lpaProofOfEvidence?.representationStatus,
 			'lpa-proofs-evidence',
 			request
