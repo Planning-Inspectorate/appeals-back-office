@@ -18,7 +18,7 @@ import {
 	postCheckYourAnswers,
 	renderCheckYourAnswers
 } from '../../document-attachments/controller/check-your-answers.js';
-import { validateRedactionStatus } from '#appeals/appeal-details/withdrawal/withdrawal.validators.js';
+import { validateRedactionStatus } from '#lib/validators/redaction-status-validator.js';
 
 const router = createRouter({ mergeParams: true });
 

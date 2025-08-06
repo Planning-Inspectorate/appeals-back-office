@@ -1,63 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`withdrawal GET /redaction-status should render the redaction status page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the redaction status of this document?</h1>
-                                </legend>
-                                <div class="govuk-radios" data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="withdrawal-redaction-status" name="withdrawal-redaction-status"
-                                        type="radio" value="redacted">
-                                        <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status">Redacted</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="withdrawal-redaction-status-2"
-                                        name="withdrawal-redaction-status" type="radio" value="unredacted" checked>
-                                        <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-2">Unredacted</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="withdrawal-redaction-status-3"
-                                        name="withdrawal-redaction-status" type="radio" value="no redaction required">
-                                        <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-3">No redaction required</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`withdrawal GET /start should render the withdrawal request upload page with a file upload component 1`] = `
+exports[`withdrawal GET /new should render the withdrawal request upload page with a file upload component 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds top-errors-hook"></div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Upload appellant&#39;s withdrawal request</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062 - withdraw appeal</span>
+            <h1             class="govuk-heading-l">Request to withdraw appeal</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
-            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date"
+            <div class="govuk-grid-row pins-file-upload" data-next-page-url="/appeals-service/appeal-details/1/withdrawal/check-details"
             data-form-id="1" data-case-id="1" data-case-reference="APP/Q9999/D/21/351062"
             data-folder-id="437" data-document-type="appellantCaseWithdrawalLetter"
             data-document-stage="appellant-case" data-blob-storage-host="https://127.0.0.1:10000/devstoreaccount1"
@@ -66,10 +21,10 @@ exports[`withdrawal GET /start should render the withdrawal request upload page 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF.</span><span> The file must be smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
-                            <h2 class="pins-file-upload__container-title">Upload appellant&#39;s withdrawal request</h2>
+                            <h2 class="pins-file-upload__container-title">Upload request to withdraw appeal</h2>
                             <div class="pins-file-upload__upload">
                                 <input class="display--none" id="upload-file-1" accept="application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-outlook,image/jpeg,image/jpeg,video/mpeg,audio/mpeg,video/mp4,video/quicktime,image/png,image/tiff,image/tiff"
                                 type="file" name="files" value="Choose file" aria-controls="file-list-1">
@@ -160,7 +115,7 @@ exports[`withdrawal GET /withdrawal/check-your-answers should render the check y
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check your answers</h1>
+            <h1 class="govuk-heading-l">Check details and withdraw appeal</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -168,46 +123,86 @@ exports[`withdrawal GET /withdrawal/check-your-answers should render the check y
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Withdrawal request</dt>
-                            <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request to withdraw appeal</dt>
+                            <dd                             class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
                                 target="_blank">test-document.txt</a>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start">Change<span class="govuk-visually-hidden"> withdrawal request</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request date</dt>
-                            <dd class="govuk-summary-list__value">1 January 2024</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date">Change<span class="govuk-visually-hidden"> request date</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
-                            <dd class="govuk-summary-list__value">Unredacted</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status">Change<span class="govuk-visually-hidden"> redaction status</span></a>
-                            </dd>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/new">Change<span class="govuk-visually-hidden"> withdrawal request</span></a>
+                                </dd>
                         </div>
                     </dl>
-                    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                        <strong                         class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You are about to tell
-                            the relevant parties the appeal has been withdrawn and it is being closed.
-                            Any appointments for this case should be cancelled. Only limited changes
-                            can be made to the case once it is closed.</strong>
-                    </div>
                 </div>
             </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                                <div class="govuk-checkboxes__item">
-                                    <input class="govuk-checkboxes__input" id="confirm-withdrawal" name="confirm-withdrawal"
-                                    type="checkbox" value="yes">
-                                    <label class="govuk-label govuk-checkboxes__label" for="confirm-withdrawal">The relevant parties can be informed of the appeal withdrawal</label>
-                                </div>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <details class="govuk-details">
+                                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                                    </summary>
+                                    <div class="govuk-details__text">
+                                        <div class="pins-notify-preview-border">
+                                            <h2>Appeal details</h2>
+                                            <div class="govuk-inset-text">Appeal reference number: 134526
+                                                <br>Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom
+                                                <br>Planning application reference: 48269/APP/2021/1482
+                                                <br>
+                                            </div>
+                                            <h2>Appeal withdrawn</h2>We have withdrawn the appeal following your request on 01 January 2025.
+                                            <br>
+                                            <br>
+                                            <h2>What happens next</h2>We have closed the appeal and cancelled the site visit.
+                                            <br>
+                                            <br>
+                                            <h2>Feedback</h2>We welcome your feedback on our appeals process. Tell us on this short
+                                            <a                                             href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u"
+                                            class="govuk-link">feedback form</a>.
+                                                <br>
+                                                <br>The Planning Inspectorate
+                                                <br>
+                                                <br>caseofficers@planninginspectorate.gov.uk
+                                                <br>
+                                                <br>
+                                        </div>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <details class="govuk-details">
+                                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                                    </summary>
+                                    <div class="govuk-details__text">
+                                        <div class="pins-notify-preview-border">We have withdrawn the appeal after the appellant's request.
+                                            <br>
+                                            <br>
+                                            <h2>Appeal details</h2>
+                                            <div class="govuk-inset-text">Appeal reference number: 234567
+                                                <br>Address: 98 The Avenue, Leftfield, Maidstone, Kent, MD21 5YY, United Kingdom
+                                                <br>Planning application reference: 48269/APP/2021/1483
+                                                <br>
+                                            </div>
+                                            <h2>What happens next</h2>We have closed the appeal and cancelled the site visit.
+                                            <br>
+                                            <br>
+                                            <h2>Feedback</h2>We welcome your feedback on our appeals process. Tell us on this short
+                                            <a                                             href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u"
+                                            class="govuk-link">feedback form</a>.
+                                                <br>
+                                                <br>The Planning Inspectorate
+                                                <br>
+                                                <br>caseofficers@planninginspectorate.gov.uk
+                                                <br>
+                                                <br>
+                                        </div>
+                                    </div>
+                                </details>
                             </div>
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        data-module="govuk-button">Withdraw appeal</button>
                     </form>
                 </div>
             </div>
@@ -216,126 +211,7 @@ exports[`withdrawal GET /withdrawal/check-your-answers should render the check y
 </main>"
 `;
 
-exports[`withdrawal GET /withdrawal-request-date should render the withdrawal request date page with the expected content if fileUploadInfo is present in the session 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Date of withdrawal request</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <div class="govuk-hint">This is the date on the withdrawal correspondence from the appellant</div>
-                </div>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset" role="group" aria-describedby="withdrawal-request-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Enter date</legend>
-                                <div id="withdrawal-request-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                                <div class="govuk-date-input" id="withdrawal-request-date">
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="withdrawal-request-date-day">Day</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="withdrawal-request-date-day" name="withdrawal-request-date-day" type="text"
-                                            inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="withdrawal-request-date-month">Month</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
-                                            id="withdrawal-request-date-month" name="withdrawal-request-date-month"
-                                            type="text" inputmode="numeric">
-                                        </div>
-                                    </div>
-                                    <div class="govuk-date-input__item">
-                                        <div class="govuk-form-group">
-                                            <label class="govuk-label govuk-date-input__label" for="withdrawal-request-date-year">Year</label>
-                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
-                                            id="withdrawal-request-date-year" name="withdrawal-request-date-year" type="text"
-                                            inputmode="numeric">
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`withdrawal POST /redaction-status should re-render the redaction status page with the expected error message if no redaction status is provided 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#withdrawal-redaction-status">Please select the redaction status</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <fieldset class="govuk-fieldset">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                                    <h1 class="govuk-fieldset__heading"> What is the redaction status of this document?</h1>
-                                </legend>
-                                <div class="govuk-radios" data-module="govuk-radios">
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="withdrawal-redaction-status" name="withdrawal-redaction-status"
-                                        type="radio" value="redacted">
-                                        <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status">Redacted</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="withdrawal-redaction-status-2"
-                                        name="withdrawal-redaction-status" type="radio" value="unredacted" checked>
-                                        <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-2">Unredacted</label>
-                                    </div>
-                                    <div class="govuk-radios__item">
-                                        <input class="govuk-radios__input" id="withdrawal-redaction-status-3"
-                                        name="withdrawal-redaction-status" type="radio" value="no redaction required">
-                                        <label class="govuk-label govuk-radios__label" for="withdrawal-redaction-status-3">No redaction required</label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`withdrawal POST /start should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
+exports[`withdrawal POST /new should render a 500 error page if request body upload-info is in an incorrect format 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -347,81 +223,6 @@ exports[`withdrawal POST /start should render a 500 error page if request body u
             <p class="govuk-body">Try again later.</p>
             <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
                 the problem persists.</p>
-        </div>
-    </div>
-</main>"
-`;
-
-exports[`withdrawal POST /withdrawal/check-your-answers should render the check your asnwers page with the expected error message if confirm checkbox is not checked 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm-withdrawal">Please confirm that the relevant parties can be informed of the appeal withdrawal</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check your answers</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <dl class="govuk-summary-list">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Withdrawal request</dt>
-                            <dd class="govuk-summary-list__value"><a class="govuk-link" href="/documents/APP/Q9999/D/21/351062/download-uncommitted/1/test-document.txt"
-                                target="_blank">test-document.txt</a>
-                            </dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start">Change<span class="govuk-visually-hidden"> withdrawal request</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Request date</dt>
-                            <dd class="govuk-summary-list__value">1 January 2024</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/withdrawal-request-date">Change<span class="govuk-visually-hidden"> request date</span></a>
-                            </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redaction status</dt>
-                            <dd class="govuk-summary-list__value">Unredacted</dd>
-                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/redaction-status">Change<span class="govuk-visually-hidden"> redaction status</span></a>
-                            </dd>
-                        </div>
-                    </dl>
-                    <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                        <strong                         class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You are about to tell
-                            the relevant parties the appeal has been withdrawn and it is being closed.
-                            Any appointments for this case should be cancelled. Only limited changes
-                            can be made to the case once it is closed.</strong>
-                    </div>
-                </div>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                                <div class="govuk-checkboxes__item">
-                                    <input class="govuk-checkboxes__input" id="confirm-withdrawal" name="confirm-withdrawal"
-                                    type="checkbox" value="yes">
-                                    <label class="govuk-label govuk-checkboxes__label" for="confirm-withdrawal">The relevant parties can be informed of the appeal withdrawal</label>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
 </main>"

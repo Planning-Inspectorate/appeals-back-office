@@ -4,7 +4,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { notifySend } from '#notify/notify-send.js';
-import { PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
+import { getEventType } from '@pins/appeals/utils/event-type.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
@@ -68,19 +68,4 @@ export const publishWithdrawal = async (
 	}
 
 	return null;
-};
-
-/**
- * @param {Appeal} appeal
- * @returns
- */
-const getEventType = (appeal) => {
-	let eventType = '';
-
-	if (appeal.hearing && appeal.procedureType?.id === PROCEDURE_TYPE_ID_MAP.hearing) {
-		eventType = 'hearing';
-	} else if (appeal.siteVisit) {
-		eventType = 'site visit';
-	}
-	return eventType;
 };
