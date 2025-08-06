@@ -4387,23 +4387,46 @@ describe('appeal-details', () => {
 				expect(unprettifiedHTML).not.toContain('Hearing</span></h2>');
 			});
 
-			it('should render the Site accordion for HAS cases', async () => {
-				nock('http://test/')
-					.get(`/appeals/${appealId}`)
-					.reply(200, {
-						...appealData,
-						appealId
-					});
+			[
+				{ title: 'not a linked appeal' },
+				{
+					title: 'a linked child appeal',
+					isChildAppeal: true,
+					isParentAppeal: false
+				},
+				{
+					title: 'a linked lead appeal',
+					isChildAppeal: false,
+					isParentAppeal: true
+				}
+			].map((config) =>
+				it(`should ${
+					config.isChildAppeal ? 'not ' : ''
+				}render the site accordion for HAS cases when ${config.title}`, async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealData,
+							...config,
+							appealId
+						});
 
-				const response = await request.get(`${baseUrl}/${appealId}`);
+					const response = await request.get(`${baseUrl}/${appealId}`);
 
-				expect(response.statusCode).toBe(200);
+					expect(response.statusCode).toBe(200);
 
-				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
-				expect(unprettifiedHTML).toContain('Case details</h1>');
-				expect(unprettifiedHTML).toContain('Site</span></h2>');
-			});
+					expect(unprettifiedHTML).toContain('Case details</h1>');
+					if (config.isChildAppeal) {
+						// eslint-disable-next-line jest/no-conditional-expect
+						expect(unprettifiedHTML).not.toContain('Site</span></h2>');
+					} else {
+						// eslint-disable-next-line jest/no-conditional-expect
+						expect(unprettifiedHTML).toContain('Site</span></h2>');
+					}
+				})
+			);
 
 			for (const procedureType of [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.INQUIRY]) {
 				it(`should not render the Hearing accordion for s78 cases with a procedureType of ${procedureType}`, async () => {
@@ -4426,6 +4449,47 @@ describe('appeal-details', () => {
 					expect(unprettifiedHTML).not.toContain('Hearing</span></h2>');
 				});
 			}
+
+			[
+				{ title: 'not a linked appeal' },
+				{
+					title: 'a linked child appeal',
+					isChildAppeal: true,
+					isParentAppeal: false
+				},
+				{
+					title: 'a linked lead appeal',
+					isChildAppeal: false,
+					isParentAppeal: true
+				}
+			].map((config) =>
+				it(`should ${
+					config.isChildAppeal ? 'not ' : ''
+				}render the site accordion for S78 cases when ${config.title}`, async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							...config,
+							appealId
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Case details</h1>');
+					if (config.isChildAppeal) {
+						// eslint-disable-next-line jest/no-conditional-expect
+						expect(unprettifiedHTML).not.toContain('Site</span></h2>');
+					} else {
+						// eslint-disable-next-line jest/no-conditional-expect
+						expect(unprettifiedHTML).toContain('Site</span></h2>');
+					}
+				})
+			);
 
 			for (const procedureType of [APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY]) {
 				it(`should not render the site accordion for s78 cases with a procedureType of ${procedureType}`, async () => {
