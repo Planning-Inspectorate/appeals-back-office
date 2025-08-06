@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { mapAppellantProofOfEvidence } from '../appellant-proof-of-evidence-and-witness.mapper.js';
 
 describe('mapAppellantProofOfEvidence', () => {
