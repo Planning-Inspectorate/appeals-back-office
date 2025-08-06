@@ -9,6 +9,7 @@ import { getCaseTeam } from './common/case-team.js';
 import { getSiteDetails } from './common/site-details.js';
 import { removeAccordionComponentsActions } from './utils/index.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /**
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
@@ -19,7 +20,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 export function generateAccordion(appealDetails, mappedData, session) {
 	const caseOverview = getCaseOverview(mappedData);
 
-	const siteDetails = getSiteDetails(mappedData, appealDetails);
+	const siteDetails = isChildAppeal(appealDetails) ? [] : getSiteDetails(mappedData, appealDetails);
 
 	/** @type {PageComponent[]} */
 	const caseTimetable = appealDetails.startedAt
