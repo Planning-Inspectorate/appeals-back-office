@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { mapLPAProofOfEvidence } from '../lpa-proof-of-evidence-and-witness.mapper.js';
 
 describe('mapLPAProofOfEvidence', () => {
