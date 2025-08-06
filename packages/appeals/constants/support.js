@@ -81,7 +81,7 @@ export const AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED =
 export const AUDIT_TRAIL_DOCUMENT_DATE_CHANGED =
 	'Document {replacement0} (version {replacement1}) received date changed';
 export const AUDIT_TRAIL_DOCUMENT_NAME_CHANGED =
-	'Document {replacement0} has been renamed as {replacement1}';
+	'Document {replacement0} has been updated to {replacement1}';
 export const AUDIT_TRAIL_LPAQ_IMPORT_MSG = 'The LPA questionnaire was received';
 export const AUDIT_TRAIL_REP_IMPORT_MSG = '{replacement0} was received';
 export const AUDIT_TRAIL_PROGRESSED_TO_STATUS = 'The case has progressed to {replacement0}';
