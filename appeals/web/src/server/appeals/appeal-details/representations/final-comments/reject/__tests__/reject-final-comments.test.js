@@ -146,7 +146,7 @@ describe('final-comments', () => {
 					`Why are you rejecting the ${finalCommentsType.label}&#39;s final comments?`
 				);
 				expect(unprettifiedHTML).toContain(
-					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}?backUrl=/final-comments/${finalCommentsType.type}/reject/confirm">Change<span class="govuk-visually-hidden"> review decision</span></a></dd>`
+					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}?backUrl=/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}/reject/confirm">Change<span class="govuk-visually-hidden"> review decision</span></a></dd>`
 				);
 				expect(unprettifiedHTML).toContain(
 					`Reject ${finalCommentsType.label} final comments</button></form>`
