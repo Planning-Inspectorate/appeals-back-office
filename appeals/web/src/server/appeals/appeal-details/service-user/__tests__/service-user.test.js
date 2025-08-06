@@ -377,6 +377,45 @@ describe('service-user', () => {
 						'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case'
 					);
 				});
+				it('should display errors if invalid characters are present in first name, last name and organisation name fields', async () => {
+					const appealId = appealData.appealId;
+					nock('http://test/').patch(`/appeals/${appealId}/service-user`).reply(200, {
+						serviceUserId: 1
+					});
+					const invalidData = {
+						firstName: '%',
+						lastName: '%',
+						organisationName: '%',
+						phoneNumber: '+44 7975451891',
+						emailAddress: 'jakub.mccallum@email.com'
+					};
+					const response = await request
+						.post(`${baseUrl}/${appealId}/service-user/${action}/agent`)
+						.send(invalidData);
+
+					expect(response.statusCode).toBe(200);
+
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).toMatchSnapshot();
+					expect(element.innerHTML).toContain('Agent&#39;s contact details');
+
+					const errorSummaryHtml = parseHtml(response.text, {
+						rootElement: '.govuk-error-summary',
+						skipPrettyPrint: true
+					}).innerHTML;
+
+					expect(errorSummaryHtml).toContain('There is a problem</h2>');
+					expect(errorSummaryHtml).toContain(
+						'<a href="#first-name">First name must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes'
+					);
+					expect(errorSummaryHtml).toContain(
+						'<a href="#last-name">Last name must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes'
+					);
+					expect(errorSummaryHtml).toContain(
+						'<a href="#organisation-name">Organisation name must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes'
+					);
+				});
 			});
 			if (action === 'change') {
 				describe('appellant', () => {

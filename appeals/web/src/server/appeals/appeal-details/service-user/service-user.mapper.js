@@ -3,7 +3,6 @@
  */
 
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { errorOrganisationNameAllowEmpty } from '#lib/error-handlers/change-screen-error-handlers.js';
 import { capitalize } from 'lodash-es';
 
 /**
@@ -84,7 +83,11 @@ export const changeServiceUserPage = (
 						text: `Company or organisation name`
 					},
 					value: serviceUserDetails?.organisationName ?? '',
-					errorMessage: errorOrganisationNameAllowEmpty(errors)
+					errorMessage: errors?.organisationName
+						? {
+								text: errors.organisationName.msg
+						  }
+						: undefined
 				}
 			},
 			{
