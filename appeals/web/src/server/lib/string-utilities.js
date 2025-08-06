@@ -46,6 +46,16 @@ export const padNumberWithZero = (num, length = 2) => num.toString().padStart(le
 export const snakeCaseToSpaceSeparated = (str) => str.replaceAll('-', ' ');
 
 /**
+ *
+ * @param {string} s
+ * @returns
+ */
+export const camelCaseToWords = (s) => {
+	const result = s.replace(/([A-Z])/g, ' $1');
+	return result.charAt(0).toUpperCase() + result.slice(1);
+};
+
+/**
  * Converts a string to camelCase format.
  * Handles spaces, underscores, hyphens, and any non-alphanumeric separator.
  * @param {string} str - The string to convert.
