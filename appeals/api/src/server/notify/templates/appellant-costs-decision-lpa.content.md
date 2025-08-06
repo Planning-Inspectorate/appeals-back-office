@@ -1,0 +1,11 @@
+We have made a decision on the appellant's application for an award of appeal costs.
+
+{% include 'parts/appeal-details.md' %}
+
+# Appeal costs decision
+
+[Sign in to our service](https://{{front_office_url}}/manage-appeals/{{appeal_reference_number}}/appeal-details) to view the decision.
+
+We have also informed the appellant of the decision.
+
+{% include 'parts/feedback.md' %}
