@@ -111,7 +111,7 @@ export const confirmRejectFinalCommentPage = (
 						actions: {
 							items: [
 								{
-									href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}?backUrl=/final-comments/${finalCommentsType}/reject/confirm`,
+									href: `/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}?backUrl=/appeals-service/appeal-details/${appealDetails.appealId}/final-comments/${finalCommentsType}/reject/confirm`,
 									text: 'Change',
 									visuallyHiddenText: 'review decision'
 								}
