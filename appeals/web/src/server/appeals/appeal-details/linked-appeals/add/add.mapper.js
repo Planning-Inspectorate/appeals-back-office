@@ -1,6 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/index.js';
-import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { appealStatusToStatusText } from '#lib/nunjucks-filters/status-tag.js';
 
@@ -54,6 +54,7 @@ export function addLinkedAppealPage(appealData, sessionData, backLinkUrl, errorM
  */
 export function addLinkedAppealCheckAndConfirmPage(request) {
 	const { currentAppeal, session } = request;
+	const backUrl = getBackLinkUrlFromQuery(request);
 
 	const sessionData = session.linkableAppeal;
 
@@ -101,7 +102,9 @@ export function addLinkedAppealCheckAndConfirmPage(request) {
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Details of the appeal you're linking to ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/linked-appeals/add/lead-appeal`,
+		backLinkUrl:
+			backUrl ||
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/linked-appeals/add/lead-appeal`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		heading: 'Check details and add linked appeal',
 		submitButtonProperties: {
@@ -132,25 +135,29 @@ export function addLinkedAppealCheckAndConfirmPage(request) {
 								]
 							}
 						},
-						{
-							key: {
-								text: 'Which is the lead appeal?'
-							},
-							value: {
-								html: leadAppealLines.join('\n<br>\n')
-							},
-							actions: {
-								items: [
+						...(session.linkableAppeal.confirmOnlyLeadAppeal
+							? []
+							: [
 									{
-										text: 'Change',
-										href: addBackLinkQueryToUrl(
-											request,
-											`/appeals-service/appeal-details/${currentAppeal.appealId}/linked-appeals/add/lead-appeal`
-										)
+										key: {
+											text: 'Which is the lead appeal?'
+										},
+										value: {
+											html: leadAppealLines.join('\n<br>\n')
+										},
+										actions: {
+											items: [
+												{
+													text: 'Change',
+													href: addBackLinkQueryToUrl(
+														request,
+														`/appeals-service/appeal-details/${currentAppeal.appealId}/linked-appeals/add/lead-appeal`
+													)
+												}
+											]
+										}
 									}
-								]
-							}
-						}
+							  ])
 					]
 				}
 			},

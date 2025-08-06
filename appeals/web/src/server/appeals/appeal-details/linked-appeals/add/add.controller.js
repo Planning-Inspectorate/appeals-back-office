@@ -8,7 +8,7 @@ import {
 	invalidCaseStatusPage
 } from './add.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -37,6 +37,8 @@ export const renderAddLinkedAppealReference = (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postAddLinkedAppeal = (request, response) => {
+	const { currentAppeal, session } = request;
+
 	if (request.errors) {
 		return renderAddLinkedAppealReference(request, response);
 	}
@@ -70,6 +72,30 @@ export const postAddLinkedAppeal = (request, response) => {
 		});
 	}
 
+	if (currentAppeal.isParentAppeal) {
+		// The current appeal is a lead already, so make it the lead of this relationship
+		session.linkableAppeal.leadAppeal = currentAppeal.appealReference;
+	} else if (session.linkableAppeal.linkableAppealSummary?.childAppeals?.length) {
+		// The chosen appeal is a lead already as it has child appeals, so make it the lead of this relationship
+		session.linkableAppeal.leadAppeal =
+			session.linkableAppeal.linkableAppealSummary.appealReference;
+	} else {
+		// Neither the current appeal nor the chosen appeal is a lead
+		delete session.linkableAppeal.leadAppeal;
+	}
+
+	// Bypass the page selecting the lead appeal if already known
+	if (session.linkableAppeal.leadAppeal) {
+		session.linkableAppeal.confirmOnlyLeadAppeal = true;
+		return response.redirect(
+			addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/linked-appeals/add/check-and-confirm`
+			)
+		);
+	}
+
+	session.linkableAppeal.confirmOnlyLeadAppeal = false;
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/linked-appeals/add/lead-appeal`
 	);
