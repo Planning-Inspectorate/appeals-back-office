@@ -409,7 +409,7 @@ export function mapInquiryDetails(appealId, action, values) {
 				rows: [
 					textSummaryListItem({
 						id: 'inquiry-date',
-						text: 'Inquiry Date',
+						text: 'Inquiry date',
 						value: date,
 						link: `/appeals-service/appeal-details/${appealId}/inquiry/${action}/date`,
 						editable: true

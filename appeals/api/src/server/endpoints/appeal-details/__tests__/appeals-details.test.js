@@ -198,6 +198,16 @@ const s78AppealDto = {
 			receivedAt: null,
 			representationStatus: null,
 			isRedacted: false
+		},
+		appellantProofOfEvidence: {
+			status: 'not_received',
+			receivedAt: null,
+			representationStatus: null
+		},
+		lpaProofOfEvidence: {
+			status: 'not_received',
+			receivedAt: null,
+			representationStatus: null
 		}
 	},
 	healthAndSafety: {

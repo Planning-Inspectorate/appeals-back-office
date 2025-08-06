@@ -2993,7 +2993,7 @@ describe('appeal-details', () => {
 						reviewPageRoute: 'final-comments/appellant',
 						cyAttribute: 'review-appellant-final-comments',
 						viewCyAttribute: 'view-appellant-final-comments',
-						actionLinkHiddenText: 'appellant final comments'
+						actionLinkHiddenText: 'Appellant final comments'
 					},
 					{
 						name: 'LPA',
@@ -4101,6 +4101,12 @@ describe('appeal-details', () => {
 					nock('http://test/')
 						.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
 						.reply(200, { items: [] });
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=appellant_proofs_evidence`)
+						.reply(200, { items: [] });
+					nock('http://test/')
+						.get(`/appeals/${appealId}/reps?type=lpa_proofs_evidence`)
+						.reply(200, { items: [] });
 				});
 
 				it('should render the correct rows when case procedure is Inquiry and case started and has no planning obligation', async () => {
@@ -4384,6 +4390,12 @@ describe('appeal-details', () => {
 				nock('http://test/')
 					.get(/appeals\/\d+\/appellant-cases\/\d+/)
 					.reply(200, { planningObligation: { hasObligation: false } });
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=appellant_proofs_evidence`)
+					.reply(200, { items: [] });
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=lpa_proofs_evidence`)
+					.reply(200, { items: [] });
 			});
 
 			it('should not render the Hearing accordion for HAS cases', async () => {
@@ -5203,6 +5215,12 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
 					.reply(200, lpaFinalCommentsAwaitingReview);
 				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=appellant_proofs_evidence`)
+					.reply(200, { items: [] });
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=lpa_proofs_evidence`)
+					.reply(200, { items: [] });
+				nock('http://test/')
 					.get(/appeals\/\d+\/appellant-cases\/\d+/)
 					.reply(200, { planningObligation: { hasObligation: false } });
 			});
@@ -5296,8 +5314,7 @@ describe('appeal-details', () => {
 					.reply(200, {
 						...appealDataFullPlanning,
 						appealId,
-						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY,
-						inquiry: null
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
 					});
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
@@ -5347,6 +5364,13 @@ describe('appeal-details', () => {
 							}
 						}
 					});
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=appellant_proofs_evidence`)
+					.reply(200, {});
+
+				nock('http://test/')
+					.get(`/appeals/${appealId}/reps?type=lpa_proofs_evidence`)
+					.reply(200, {});
 
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
