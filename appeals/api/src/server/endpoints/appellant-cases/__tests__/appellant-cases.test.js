@@ -1149,7 +1149,7 @@ describe('appellant cases routes', () => {
 			const patchBody = {
 				developmentType: 'other-minor'
 			};
-			const expectedLabel = 'other minor developments';
+			const expectedLabel = 'Other minor developments';
 
 			const { appellantCase, id } = householdAppeal;
 			const response = await request
@@ -1205,7 +1205,7 @@ describe('appellant cases routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 				data: {
 					appealId: householdAppeal.id,
-					details: 'Development type updated to unknown-type',
+					details: 'Development type updated to Unknown-type',
 					loggedAt: expect.any(Date),
 					userId: householdAppeal.caseOfficer.id
 				}
