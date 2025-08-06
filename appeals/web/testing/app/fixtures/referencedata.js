@@ -418,6 +418,18 @@ export const appealData = {
 			dueDate: '2024-10-11T10:27:06.626Z',
 			receivedAt: '2024-08-02T10:27:06.626Z',
 			representationStatus: 'awaiting_review'
+		},
+		appellantProofOfEvidence: {
+			status: 'not_received',
+			dueDate: '2024-10-12T10:27:06.626Z',
+			receivedAt: '2024-08-02T10:27:06.626Z',
+			representationStatus: 'awaiting_review'
+		},
+		lpaProofOfEvidence: {
+			status: 'not_received',
+			dueDate: '2024-10-13T10:27:06.626Z',
+			receivedAt: '2024-08-02T10:27:06.626Z',
+			representationStatus: 'awaiting_review'
 		}
 	},
 	environmentalAssessment: {

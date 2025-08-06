@@ -28,6 +28,7 @@ import { mapEiaConsultedBodiesDetails } from './submappers/map-eia-consulted-bod
 import { mapReasonForNeighbourVisits } from './submappers/map-reason-for-neighbour-visits.js';
 import { mapInNearOrLikelyToAffectDesignatedSites } from './submappers/map-designated-sites.js';
 import { mapChangedListedBuildingDetails } from './submappers/map-changed-listed-building-details.js';
+import { mapAppellantProofOfEvidence } from '#lib/mappers/data/appeal/submappers/appellant-proof-of-evidence-and-witness.mapper.js';
 
 export const submaps = {
 	...hasSubmaps,
