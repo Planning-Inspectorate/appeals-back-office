@@ -34,8 +34,9 @@ export const postValidDate = async (request, response) => {
 			let /** @type {import('@pins/express').ValidationErrors} */ errorMessage = {
 					'valid-date-day': {
 						location: 'body',
-						param: 'all-fields',
+						path: 'all-fields',
 						value: '',
+						type: 'field',
 						msg: 'The valid date must be a real date.'
 					}
 				};
@@ -65,8 +66,9 @@ export const postValidDate = async (request, response) => {
 			let /** @type {import('@pins/express').ValidationErrors} */ errorMessage = {
 					'valid-date-day': {
 						location: 'body',
-						param: 'all-fields',
+						path: 'all-fields',
 						value: '',
+						type: 'field',
 						msg: 'The valid date must be on or after the date the case was received.'
 					}
 				};

@@ -91,13 +91,13 @@ export const mapUpdateDueDatePage = (appealTimetables, timetableType, appealDeta
  * @param { number } updatedDueDateDay
  * @param { string } apiError
  * @returns {import("@pins/express").ValidationErrors | undefined}
-
  */
 export const apiErrorMapper = (updatedDueDateDay, apiError) => ({
 	'due-date-day': {
 		value: String(updatedDueDateDay),
 		msg: `Date ${apiError}`,
-		param: '',
+		type: 'field',
+		path: '',
 		location: 'body'
 	}
 });

@@ -10,12 +10,13 @@ describe('Address', () => {
 		it('should return undefined if addressLine1 does not exist', () => {
 			/** @type {import("@pins/express").ValidationErrors | undefined} */
 			const errors = {
-				town: { value: '', msg: 'Enter the town', param: 'town', location: 'body' },
+				town: { value: '', msg: 'Enter the town', path: 'town', location: 'body', type: 'field' },
 				postCode: {
 					value: '',
 					msg: 'Enter a full UK postcode',
-					param: 'postCode',
-					location: 'body'
+					path: 'postCode',
+					location: 'body',
+					type: 'field'
 				}
 			};
 			expect(errorAddressLine1(errors)).toEqual(undefined);
@@ -23,7 +24,13 @@ describe('Address', () => {
 		it('should return error text if addressLine1 does exist', () => {
 			/** @type {import("@pins/express").ValidationErrors | undefined} */
 			const errors = {
-				addressLine1: { value: '', msg: 'Enter address line 1', param: 'town', location: 'body' }
+				addressLine1: {
+					value: '',
+					msg: 'Enter address line 1',
+					path: 'town',
+					location: 'body',
+					type: 'field'
+				}
 			};
 			expect(errorAddressLine1(errors)).toEqual({
 				text: 'Enter address line 1'
@@ -34,14 +41,26 @@ describe('Address', () => {
 		it('should return undefined if town does not exist', () => {
 			/** @type {import("@pins/express").ValidationErrors | undefined} */
 			const errors = {
-				addressLine1: { value: '', msg: 'Enter the address', param: 'town', location: 'body' }
+				addressLine1: {
+					value: '',
+					msg: 'Enter the address',
+					path: 'town',
+					location: 'body',
+					type: 'field'
+				}
 			};
 			expect(errorTown(errors)).toEqual(undefined);
 		});
 		it('should return error text if town does exist', () => {
 			/** @type {import("@pins/express").ValidationErrors | undefined} */
 			const errors = {
-				town: { value: '', msg: 'Enter town or city', param: 'town', location: 'body' }
+				town: {
+					value: '',
+					msg: 'Enter town or city',
+					path: 'town',
+					location: 'body',
+					type: 'field'
+				}
 			};
 			expect(errorTown(errors)).toEqual({
 				text: 'Enter town or city'
@@ -52,19 +71,26 @@ describe('Address', () => {
 		it('should return undefined if postCode does not exist', () => {
 			/** @type {import("@pins/express").ValidationErrors | undefined} */
 			const errors = {
-				addressLine1: { value: '', msg: 'Enter the address', param: 'town', location: 'body' }
+				addressLine1: {
+					value: '',
+					msg: 'Enter the address',
+					path: 'town',
+					location: 'body',
+					type: 'field'
+				}
 			};
 			expect(errorPostcode(errors)).toEqual(undefined);
 		});
 		it('should return error text if postCode does exist', () => {
 			/** @type {import("@pins/express").ValidationErrors | undefined} */
 			const errors = {
-				town: { value: '', msg: 'Enter the town', param: 'town', location: 'body' },
+				town: { value: '', msg: 'Enter the town', path: 'town', location: 'body', type: 'field' },
 				postCode: {
 					value: '',
 					msg: 'Enter a full UK postcode',
-					param: 'postCode',
-					location: 'body'
+					path: 'postCode',
+					location: 'body',
+					type: 'field'
 				}
 			};
 			expect(errorPostcode(errors)).toEqual({

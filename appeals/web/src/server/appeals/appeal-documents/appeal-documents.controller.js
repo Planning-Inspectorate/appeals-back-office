@@ -40,7 +40,7 @@ import {
 
 /**
  * @param {import("@pins/express").ValidationErrors | undefined} errors
- * @returns {Record<string, { param: string; [key: string]: any; }> | undefined}
+ * @returns {Record<string, { path: string; [key: string]: any; }> | undefined}
  */
 export const mapErrorsForDocumentDates = (errors) => {
 	if (!errors) {
@@ -59,10 +59,10 @@ export const mapErrorsForDocumentDates = (errors) => {
 
 	return Object.entries(errors).reduce(
 		(/**@type {import("@pins/express").ValidationErrors} */ newErrors, [key, error]) => {
-			const { param } = error;
+			const { path } = error;
 
-			if (param in dateFields) {
-				const newKey = `${key}.${dateFields[/** @type {DateFieldKey} */ (param)]}`;
+			if (path in dateFields) {
+				const newKey = `${key}.${dateFields[/** @type {DateFieldKey} */ (path)]}`;
 				newErrors[newKey] = error;
 			} else {
 				newErrors[key] = error;
