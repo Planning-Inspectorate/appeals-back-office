@@ -61,7 +61,8 @@ const renderIncompleteReason = async (request, response) => {
 				incompleteReasonOptions,
 				body,
 				webAppellantCaseReviewOutcome,
-				appellantCaseResponse.validation
+				appellantCaseResponse.validation,
+				errors
 			);
 
 		const pageContent = mapIncompleteReasonPage(

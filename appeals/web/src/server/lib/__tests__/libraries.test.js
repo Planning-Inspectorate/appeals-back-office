@@ -490,6 +490,7 @@ describe('Libraries', () => {
 					[],
 					{},
 					'invalidReason',
+					undefined,
 					undefined
 				);
 
@@ -503,7 +504,8 @@ describe('Libraries', () => {
 						value: '22',
 						text: 'Documents have not been submitted on time',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					},
 					{
 						value: '23',
@@ -514,7 +516,8 @@ describe('Libraries', () => {
 						value: '24',
 						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -528,6 +531,7 @@ describe('Libraries', () => {
 					[],
 					{},
 					'invalidReason',
+					undefined,
 					undefined
 				);
 
@@ -541,7 +545,8 @@ describe('Libraries', () => {
 						value: '22',
 						text: 'Documents have not been submitted on time',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					},
 					{
 						value: '23',
@@ -552,7 +557,8 @@ describe('Libraries', () => {
 						value: '24',
 						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -566,6 +572,7 @@ describe('Libraries', () => {
 					[],
 					{},
 					'invalidReason',
+					undefined,
 					undefined
 				);
 				const expectedResult = [
@@ -591,6 +598,7 @@ describe('Libraries', () => {
 					[],
 					{},
 					'invalidReason',
+					undefined,
 					undefined
 				);
 				const expectedResult = [
@@ -635,6 +643,7 @@ describe('Libraries', () => {
 					],
 					{},
 					'invalidReason',
+					undefined,
 					undefined
 				);
 				const expectedResult = [
@@ -652,7 +661,8 @@ describe('Libraries', () => {
 								'test document 1 has not been submitted on time',
 								'test document 2 has not been submitted on time'
 							]
-						}
+						},
+						error: [undefined, undefined]
 					},
 					{
 						value: '23',
@@ -663,7 +673,8 @@ describe('Libraries', () => {
 						value: '24',
 						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -687,7 +698,8 @@ describe('Libraries', () => {
 								'test document 2 has not been submitted on time'
 							]
 						}
-					}
+					},
+					undefined
 				);
 				const expectedResult = [
 					{
@@ -704,7 +716,8 @@ describe('Libraries', () => {
 								'test document 1 has not been submitted on time',
 								'test document 2 has not been submitted on time'
 							]
-						}
+						},
+						error: [undefined, undefined]
 					},
 					{
 						value: '23',
@@ -715,7 +728,8 @@ describe('Libraries', () => {
 						value: '24',
 						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -735,6 +749,7 @@ describe('Libraries', () => {
 						]
 					},
 					'invalidReason',
+					undefined,
 					undefined
 				);
 				const expectedResult = [
@@ -752,7 +767,8 @@ describe('Libraries', () => {
 								'test document 1 has not been submitted on time',
 								'test document 2 has not been submitted on time'
 							]
-						}
+						},
+						error: [undefined, undefined]
 					},
 					{
 						value: '23',
@@ -763,7 +779,8 @@ describe('Libraries', () => {
 						value: '24',
 						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -803,7 +820,8 @@ describe('Libraries', () => {
 						reasonsText: {
 							22: ['session text item 1']
 						}
-					}
+					},
+					undefined
 				);
 				const expectedResult = [
 					{
@@ -817,7 +835,8 @@ describe('Libraries', () => {
 						checked: true,
 						addAnother: {
 							textItems: ['session text item 1']
-						}
+						},
+						error: [undefined]
 					},
 					{
 						value: '23',
@@ -828,7 +847,8 @@ describe('Libraries', () => {
 						value: '24',
 						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -871,7 +891,8 @@ describe('Libraries', () => {
 						reasonsText: {
 							22: ['session text item 1']
 						}
-					}
+					},
+					undefined
 				);
 
 				const expectedResult = [
@@ -886,7 +907,8 @@ describe('Libraries', () => {
 						checked: true,
 						addAnother: {
 							textItems: ['body text item 1']
-						}
+						},
+						error: [undefined]
 					},
 					{
 						value: '23',
@@ -897,7 +919,8 @@ describe('Libraries', () => {
 						value: '24',
 						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
