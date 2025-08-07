@@ -3,8 +3,7 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
 	mapNotificationBannersFromSession,
 	createNotificationBanner,
-	sortNotificationBanners,
-	dateInput
+	sortNotificationBanners
 } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
@@ -16,7 +15,6 @@ import {
 	mapRedactionStatusKeyToName,
 	mapUncommittedDocumentDownloadUrl
 } from '../../appeal-documents/appeal-documents.mapper.js';
-import { dateFieldNamePrefix } from './withdrawl.constants.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -146,115 +144,6 @@ export function manageWithdrawalRequestFolderPage(
 	if (pageContent.pageComponents) {
 		preRenderPageComponents(pageContent.pageComponents);
 	}
-
-	return pageContent;
-}
-
-/**
- *
- * @param {Appeal} appealData
- * @param {string} withdrawalRequestDay
- * @param {string} withdrawalRequestMonth
- * @param {string} withdrawalRequestYear
- * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @returns {PageContent}
- */
-export function dateWithdrawalRequestPage(
-	appealData,
-	withdrawalRequestDay,
-	withdrawalRequestMonth,
-	withdrawalRequestYear,
-	errors
-) {
-	const title = 'Date of withdrawal request';
-
-	// /** @type {PageComponent} */
-	const selectDateComponent = dateInput({
-		name: dateFieldNamePrefix,
-		id: dateFieldNamePrefix,
-		namePrefix: dateFieldNamePrefix,
-		value: {
-			day: withdrawalRequestDay,
-			month: withdrawalRequestMonth,
-			year: withdrawalRequestYear
-		},
-		legendText: 'Enter date',
-		hint: 'For example, 27 3 2023',
-		errors: errors
-	});
-
-	return {
-		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/start`,
-		backLinkText: 'Back',
-		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
-		heading: title,
-		prePageComponents: [
-			{
-				type: 'hint',
-				parameters: {
-					text: 'This is the date on the withdrawal correspondence from the appellant'
-				}
-			}
-		],
-		pageComponents: [selectDateComponent]
-	};
-}
-
-/**
- *
- * @param {Appeal} appealDetails
- * @param {RedactionStatus[] | undefined} redactionStatuses
- * @param {WithdrawalRequest} withdrawal
- * @returns {PageContent}
- */
-export function withdrawalDocumentRedactionStatusPage(
-	appealDetails,
-	redactionStatuses,
-	withdrawal
-) {
-	const redactionStatusesItems = redactionStatuses?.map((redactionStatus) => ({
-		value: redactionStatus.name.toLowerCase(),
-		text: redactionStatus.name,
-		checked: withdrawal?.redactionStatus === redactionStatus.name.toLowerCase()
-	}));
-
-	// if redaction status isn't set then pre-set it to 'unredacted' by default if available
-	if (!withdrawal?.redactionStatus && redactionStatusesItems) {
-		const redactionStatusesDefaultIndex = redactionStatusesItems?.findIndex(
-			(redactionStatusItem) => redactionStatusItem.value === 'unredacted'
-		);
-
-		if (redactionStatusesDefaultIndex && redactionStatusesItems[redactionStatusesDefaultIndex]) {
-			redactionStatusesItems[redactionStatusesDefaultIndex].checked = true;
-		}
-	}
-
-	const shortAppealReference = appealShortReference(appealDetails.appealReference);
-
-	/** @type {PageContent} */
-	const pageContent = {
-		title: `What is the redaction status of this document? - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/withdrawal/withdrawal-request-date`,
-		preHeading: `Appeal ${shortAppealReference}`,
-		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'withdrawal-redaction-status',
-					idPrefix: 'withdrawal-redaction-status',
-					fieldset: {
-						legend: {
-							text: 'What is the redaction status of this document?',
-							isPageHeading: true,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
-					items: redactionStatusesItems
-				}
-			}
-		]
-	};
 
 	return pageContent;
 }
