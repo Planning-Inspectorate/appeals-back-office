@@ -7,9 +7,9 @@ locals {
   resource_suffix           = "${local.service_name}-${var.environment}"
   secondary_resource_suffix = "${local.service_name}-secondary-${var.environment}"
   # if equals "training" will shorten to "train" so storage account name length is upto 24 chars
-  environment = var.environment == "training" ? "train" : var.environment
+  environment = var.environment == "training" ? "train" : var.environment == "staging" ? "stage" : var.environment
   # keep the suffix short for training env, as it can only be upto 24 characters total for azurerm_storage_account
-  shorter_resource_suffix = var.environment == "training" ? "${local.service_name}-${"train"}" : local.resource_suffix
+  shorter_resource_suffix = var.environment == "training" ? "${local.service_name}-${"train"}" : var.environment == "staging" ? "stage" : local.resource_suffix
 
   service_bus_hostname = "${azurerm_servicebus_namespace.main.name}.servicebus.windows.net"
 
