@@ -145,6 +145,26 @@ describe('appeals api mappers', () => {
 		expect(s20LpaqOutput).toHaveProperty('preserveGrantLoan');
 	});
 
+	test('should only map the data model fields specific to the case type', async () => {
+		const appealS20 = {
+			...mocks.s20Appeal,
+			folders: []
+		};
+
+		// @ts-ignore
+		const s20CaseOutput = mapCase({ appeal: appealS20, context: contextEnum.broadcast });
+
+		expect(s20CaseOutput).not.toBe(null);
+
+		/**
+		 * @type {import('@planning-inspectorate/data-model').Schemas.AppealS78Case}
+		 */ // @ts-ignore
+		const s20LpaqOutput = mapCase({ appeal: appealS20, context: contextEnum.broadcast });
+
+		expect(s20LpaqOutput?.preserveGrantLoan).toBe(true);
+		expect(s20LpaqOutput?.consultHistoricEngland).toBe(true);
+	});
+
 	test('should only map the appellant case fields specific to the case type', async () => {
 		const appealHAS = {
 			...mocks.householdAppeal,
