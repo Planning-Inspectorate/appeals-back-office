@@ -64,6 +64,7 @@ interface SingleAppealDetailsResponse {
 		appellantDecisionFolder?: FolderInfo | null;
 		lpaDecisionFolder?: FolderInfo | null;
 	};
+	costsSummary?: CostsSummary;
 	decision: {
 		folderId: number;
 		outcome?: string | null;
@@ -572,6 +573,7 @@ interface AppealListResponse {
 	isHearingSetup: boolean | null;
 	hasHearingAddress: boolean | null;
 	awaitingLinkedAppeal: boolean | null;
+	costsSummary?: CostsSummary;
 	numberOfResidencesNetChange: number | null;
 }
 interface DocumentationSummary {
@@ -590,6 +592,17 @@ interface DocumentationSummaryEntry {
 	representationStatus?: string | undefined | null;
 	counts?: Record<string, number>;
 	isRedacted?: boolean;
+}
+
+interface CostsSummary {
+	appellantCostsApplication: boolean;
+	appellantCostsCorrespondence: boolean;
+	appellantCostsDecisionLetter: boolean;
+	appellantCostsWithdrawal: boolean;
+	lpaCostsApplication: boolean;
+	lpaCostsCorrespondence: boolean;
+	lpaCostsDecisionLetter: boolean;
+	lpaCostsWithdrawal: boolean;
 }
 
 interface FolderInfo {
@@ -1008,6 +1021,7 @@ export {
 	AssignedUser,
 	BankHolidayFeedDivisions,
 	BankHolidayFeedEvents,
+	CostsSummary,
 	CreateAuditTrail,
 	CreateAuditTrailRequest,
 	DocumentationSummary,

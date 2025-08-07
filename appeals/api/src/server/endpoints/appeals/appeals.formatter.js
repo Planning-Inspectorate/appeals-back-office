@@ -8,7 +8,11 @@ import {
 	formatLpaStatementStatus
 } from '#utils/format-documentation-status.js';
 import { add } from 'date-fns';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS
+} from '@planning-inspectorate/data-model';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED
@@ -17,6 +21,7 @@ import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.servi
 import { currentStatus } from '#utils/current-status.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
+import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,
@@ -36,6 +41,7 @@ const approxStageCompletion = {
 /** @typedef {import('@pins/appeals.api').Appeals.AppealTimetable} AppealTimetable */
 /** @typedef {import('@pins/appeals.api').Appeals.SingleAppealDetailsResponse} SingleAppealDetailsResponse */
 /** @typedef {import('#endpoints/appeals').DocumentationSummary} DocumentationSummary */
+/** @typedef {import('#endpoints/appeals').CostsSummary} CostsSummary */
 /** @typedef {import('#db-client').AppealStatus} AppealStatus */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
@@ -43,7 +49,7 @@ const approxStageCompletion = {
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBUserAppeal} DBUserAppeal */
 
 /**
- * @param {DBAppeal} appeal
+ * @param {DBAppeal & {costsSummary?: CostsSummary}} appeal
  * @param {AppealRelationship[]} linkedAppeals
  * @returns {AppealListResponse}}
  */
@@ -104,8 +110,23 @@ const formatMyAppeal = async ({
 	isHearingSetup: !!appeal.hearing,
 	hasHearingAddress: !!appeal.hearing?.addressId,
 	awaitingLinkedAppeal,
+	costsSummary: await formatCostsSummary(appeal),
 	numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange ?? null
 });
+
+/**
+ * @param {DBAppeal | DBUserAppeal} appeal
+ * @returns {Promise<CostsSummary>}
+ * */
+const formatCostsSummary = async (appeal) => {
+	const costsFolders = await getFoldersForAppeal(appeal.id, APPEAL_CASE_STAGE.COSTS);
+	// @ts-ignore
+	return costsFolders.reduce((costsSummary, folder) => {
+		const costsType = folder.path.replace('costs/', '');
+		const hasDocuments = folder.documents?.filter((doc) => !doc.isDeleted).length > 0;
+		return { ...costsSummary, [costsType]: hasDocuments };
+	}, {});
+};
 
 /**
  * @param {DBAppeal | DBUserAppeal} appeal

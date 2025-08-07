@@ -10,12 +10,17 @@ import {
 import config from '#environment/config.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
+import { buildIssueDecisionLogicData } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 
-/** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'} AppealRequiredAction */
+
+/** @typedef {import('@pins/appeals').CostsSummary} CostsSummary */
+/** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
+/** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} PersonalListAppeal */
 
 /**
  * This logic is documented in `docs/reference/appeal-action-required-logic.md`. Please ensure this document is kept updated to reflect any changes made in this function.
- * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal|import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} appealDetails
+ * @param {WebAppeal|PersonalListAppeal} appealDetails
  * @param { 'summary'|'detail' } view
  * @returns {AppealRequiredAction[]}
  */
@@ -247,6 +252,24 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			}
 			break;
 		}
+		case APPEAL_CASE_STATUS.COMPLETE: {
+			const {
+				appellantHasAppliedForCosts,
+				appellantDecisionHasAlreadyBeenIssued,
+				lpaHasAppliedForCosts,
+				lpaDecisionHasAlreadyBeenIssued
+			} = appealDetails?.costsSummary
+				? // @ts-ignore
+				  mapCostsDecisionDataFromCostsSummary(appealDetails.costsSummary)
+				: buildIssueDecisionLogicData(appealDetails);
+			if (appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued) {
+				actions.push('issueAppellantCostsDecision');
+			}
+			if (lpaHasAppliedForCosts && !lpaDecisionHasAlreadyBeenIssued) {
+				actions.push('issueLpaCostsDecision');
+			}
+			break;
+		}
 		default:
 			break;
 	}
@@ -262,3 +285,24 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 
 	return actions;
 }
+
+/**
+ * @param {CostsSummary} costsSummary
+ * @returns {{ appellantHasAppliedForCosts: boolean, appellantDecisionHasAlreadyBeenIssued: boolean, lpaHasAppliedForCosts: boolean, lpaDecisionHasAlreadyBeenIssued: boolean}}
+ */
+const mapCostsDecisionDataFromCostsSummary = (costsSummary) => {
+	const {
+		appellantCostsApplication,
+		appellantCostsWithdrawal,
+		appellantCostsDecisionLetter,
+		lpaCostsApplication,
+		lpaCostsWithdrawal,
+		lpaCostsDecisionLetter
+	} = costsSummary || {};
+	return {
+		appellantHasAppliedForCosts: appellantCostsApplication && !appellantCostsWithdrawal,
+		appellantDecisionHasAlreadyBeenIssued: appellantCostsDecisionLetter,
+		lpaHasAppliedForCosts: lpaCostsApplication && !lpaCostsWithdrawal,
+		lpaDecisionHasAlreadyBeenIssued: lpaCostsDecisionLetter
+	};
+};

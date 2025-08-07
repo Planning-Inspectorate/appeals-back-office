@@ -18,7 +18,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	baseUrl,
-	buildLogicData,
+	buildIssueDecisionLogicData,
 	mapDecisionOutcome
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
@@ -456,7 +456,7 @@ export function checkAndConfirmPage(appealData, request) {
 		lpaHasAppliedForCosts,
 		appellantDecisionHasAlreadyBeenIssued,
 		lpaDecisionHasAlreadyBeenIssued
-	} = buildLogicData(appealData);
+	} = buildIssueDecisionLogicData(appealData);
 
 	if (!appellantHasAppliedForCosts || appellantDecisionHasAlreadyBeenIssued) {
 		request.session.appellantCostsDecision = {};

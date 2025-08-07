@@ -1133,6 +1133,24 @@ export interface SingleAppealResponse {
 	}[];
 	/** @example true */
 	awaitingLinkedAppeal?: boolean;
+	costsSummary?: {
+		/** @example false */
+		appellantCostsApplication?: boolean;
+		/** @example false */
+		appellantCostsCorrespondence?: boolean;
+		/** @example false */
+		appellantCostsDecisionLetter?: boolean;
+		/** @example false */
+		appellantCostsWithdrawal?: boolean;
+		/** @example false */
+		lpaCostsApplication?: boolean;
+		/** @example false */
+		lpaCostsCorrespondence?: boolean;
+		/** @example false */
+		lpaCostsDecisionLetter?: boolean;
+		/** @example false */
+		lpaCostsWithdrawal?: boolean;
+	};
 	/** @example false */
 	isParentAppeal?: boolean;
 	/** @example true */

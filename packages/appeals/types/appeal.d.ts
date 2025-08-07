@@ -27,6 +27,17 @@ export interface AppealSummary {
 	numberOfResidencesNetChange?: number | null;
 }
 
+export interface CostsSummary {
+	appellantCostsApplication: boolean;
+	appellantCostsCorrespondence: boolean;
+	appellantCostsDecisionLetter: boolean;
+	appellantCostsWithdrawal: boolean;
+	lpaCostsApplication: boolean;
+	lpaCostsCorrespondence: boolean;
+	lpaCostsDecisionLetter: boolean;
+	lpaCostsWithdrawal: boolean;
+}
+
 export interface AppealList {
 	itemCount: number;
 	items: AppealSummary[];

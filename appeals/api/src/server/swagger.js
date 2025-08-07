@@ -368,6 +368,16 @@ export const spec = {
 				}
 			],
 			awaitingLinkedAppeal: true,
+			costsSummary: {
+				appellantCostsApplication: false,
+				appellantCostsCorrespondence: false,
+				appellantCostsDecisionLetter: false,
+				appellantCostsWithdrawal: false,
+				lpaCostsApplication: false,
+				lpaCostsCorrespondence: false,
+				lpaCostsDecisionLetter: false,
+				lpaCostsWithdrawal: false
+			},
 			isParentAppeal: false,
 			isChildAppeal: true,
 			localPlanningDepartment: 'Some Borough Council',

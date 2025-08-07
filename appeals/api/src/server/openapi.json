@@ -8373,6 +8373,43 @@
 						"type": "boolean",
 						"example": true
 					},
+					"costsSummary": {
+						"type": "object",
+						"properties": {
+							"appellantCostsApplication": {
+								"type": "boolean",
+								"example": false
+							},
+							"appellantCostsCorrespondence": {
+								"type": "boolean",
+								"example": false
+							},
+							"appellantCostsDecisionLetter": {
+								"type": "boolean",
+								"example": false
+							},
+							"appellantCostsWithdrawal": {
+								"type": "boolean",
+								"example": false
+							},
+							"lpaCostsApplication": {
+								"type": "boolean",
+								"example": false
+							},
+							"lpaCostsCorrespondence": {
+								"type": "boolean",
+								"example": false
+							},
+							"lpaCostsDecisionLetter": {
+								"type": "boolean",
+								"example": false
+							},
+							"lpaCostsWithdrawal": {
+								"type": "boolean",
+								"example": false
+							}
+						}
+					},
 					"isParentAppeal": {
 						"type": "boolean",
 						"example": false
