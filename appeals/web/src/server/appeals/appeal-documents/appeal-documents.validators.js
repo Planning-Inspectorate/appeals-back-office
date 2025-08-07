@@ -68,7 +68,8 @@ export const validateDocumentDetailsBodyFormat = createValidator(
 
 export const validateDocumentDetailsReceivedDatesFields = createValidator(
 	body('items.*.receivedDate').custom((value, { req }) => {
-		const documentName = `${getDocumentName(req) ? getDocumentName(req) : 'Received'}`;
+		const docName = getDocumentName(req);
+		const documentName = docName || 'Received';
 		const day = value.day;
 		const month = value.month;
 		const year = value.year;
@@ -143,8 +144,9 @@ export const validateDocumentDetailsReceivedDatesFields = createValidator(
 );
 
 export const validateDocumentDetailsReceivedDateValid = createValidator(
-	body('items.*.receivedDate').custom((value, { req }) => {
-		const documentName = `${getDocumentName(req) ? getDocumentName(req) : 'Received'}`;
+	body('items.*.receivedDate').custom((value, { /** @type {RequestWithFolder} */ req }) => {
+		const docName = getDocumentName(req);
+		const documentName = docName || 'Received';
 		const day = value.day;
 		const month = value.month;
 		const year = value.year;
@@ -168,7 +170,8 @@ export const validateDocumentDetailsReceivedDateValid = createValidator(
 
 export const validateDocumentDetailsReceivedDateIsNotFutureDate = createValidator(
 	body('items.*.receivedDate').custom((value, { req }) => {
-		const documentName = `${getDocumentName(req) ? getDocumentName(req) : 'Received'}`;
+		const docName = getDocumentName(req);
+		const documentName = docName || 'Received';
 		const day = value.day;
 		const month = value.month;
 		const year = value.year;
@@ -207,7 +210,7 @@ export const validateDocumentDeleteAnswer = createValidator(
 );
 
 export const getDocumentName = (
-	/** @type {import("express-validator/src/base").Request} */ req
+	/** @type {import("express-validator/lib/base").Request} */ req
 ) => {
 	const { currentFolder } = req;
 	const folderDisplayLabel = mapFolderNameToDisplayLabel(currentFolder?.path);

@@ -383,12 +383,13 @@ export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
 		delete req?.originalDate;
 
 		for (const e of Object.keys(req.errors)) {
-			if (req.errors[e].msg.includes('whole-page')) {
-				const [cause, message] = req.errors[e].msg.split('::');
-				req.errors[e].param = `${cause}`;
-				req.errors[e].msg = message;
+			const error = req.errors[e];
+			if (error.msg.includes('whole-page')) {
+				const [cause, message] = error.msg.split('::');
+				error.path = `${cause}`;
+				error.msg = message;
 				req.errors = {
-					e: req.errors[e]
+					e: error
 				};
 				return next();
 			}
@@ -418,7 +419,7 @@ export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
 				const errorDetails = req.errors[`${firstErrorKey}`];
 				if (errorDetails.msg.includes('::')) {
 					const [cause, message] = errorDetails.msg.split('::');
-					errorDetails.param = `${cause}`;
+					errorDetails.path = `${cause}`;
 					errorDetails.msg = message;
 					switch (cause) {
 						case 'all-fields':
@@ -440,7 +441,8 @@ export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
 					}
 				} else {
 					req.errors[`${fieldNamePrefix}-day`] = req.errors[`${fieldNamePrefix}`];
-					req.errors[`${fieldNamePrefix}-day`].param = 'all-fields';
+					const errorDetails = req.errors[`${fieldNamePrefix}-day`];
+					errorDetails.path = 'all-fields';
 					firstErrorKey = dateFields[1];
 				}
 
@@ -472,7 +474,7 @@ export const extractAndProcessDocumentDateErrors = () => {
 				const errorDetails = req.errors[key];
 				if (errorDetails.msg.includes('::')) {
 					const [cause, message] = errorDetails.msg.split('::');
-					errorDetails.param = `${cause}`;
+					errorDetails.path = `${cause}`;
 					errorDetails.msg = message;
 				}
 			}
