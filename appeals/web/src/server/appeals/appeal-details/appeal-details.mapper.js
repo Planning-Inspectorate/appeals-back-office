@@ -7,6 +7,7 @@ import { generateCaseNotes } from './case-notes/case-notes.mapper.js';
 import { generateStatusTags } from './status-tags/status-tags.mapper.js';
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
 import { formatCaseOfficerDetailsForCaseSummary } from '#lib/mappers/utils/format-case-officer-details-for-case-summary.js';
+import { getCancelAppealSection } from './cancel/cancel-appeal-section.js';
 
 export const pageHeading = 'Case details';
 
@@ -87,13 +88,16 @@ export async function appealDetailsPage(
 		...mapNotificationBannersFromSession(session, 'appealDetails', appealDetails.appealId)
 	]);
 
+	const caseCancel = getCancelAppealSection(appealDetails, currentRoute);
+
 	const pageComponents = [
 		...notificationBanners,
 		...(await generateStatusTags(mappedData, appealDetails, request)),
 		caseSummary,
 		...caseDownload,
 		caseNotes,
-		accordion
+		accordion,
+		...(caseCancel ?? [])
 	];
 
 	preRenderPageComponents(pageComponents);
