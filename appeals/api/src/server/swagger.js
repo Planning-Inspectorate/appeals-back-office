@@ -368,6 +368,10 @@ export const spec = {
 				}
 			],
 			awaitingLinkedAppeal: true,
+			costsDecision: {
+				awaitingAppellantCostsDecision: false,
+				awaitingLpaCostsDecision: false
+			},
 			isParentAppeal: false,
 			isChildAppeal: true,
 			localPlanningDepartment: 'Some Borough Council',

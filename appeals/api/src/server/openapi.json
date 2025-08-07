@@ -8373,6 +8373,19 @@
 						"type": "boolean",
 						"example": true
 					},
+					"costsDecision": {
+						"type": "object",
+						"properties": {
+							"awaitingAppellantCostsDecision": {
+								"type": "boolean",
+								"example": false
+							},
+							"awaitingLpaCostsDecision": {
+								"type": "boolean",
+								"example": false
+							}
+						}
+					},
 					"isParentAppeal": {
 						"type": "boolean",
 						"example": false

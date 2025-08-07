@@ -1133,6 +1133,12 @@ export interface SingleAppealResponse {
 	}[];
 	/** @example true */
 	awaitingLinkedAppeal?: boolean;
+	costsDecision?: {
+		/** @example false */
+		awaitingAppellantCostsDecision?: boolean;
+		/** @example false */
+		awaitingLpaCostsDecision?: boolean;
+	};
 	/** @example false */
 	isParentAppeal?: boolean;
 	/** @example true */

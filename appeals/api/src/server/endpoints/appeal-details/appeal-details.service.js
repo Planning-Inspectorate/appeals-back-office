@@ -15,6 +15,7 @@ import { camelToScreamingSnake } from '#utils/string-utils.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
+import { formatCostsDecision } from '#endpoints/appeals/appeals.formatter.js';
 
 const {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
@@ -43,8 +44,9 @@ const loadAndFormatAppeal = async ({
 }) => {
 	const appealTypes = await loadAppealTypes();
 	const linkedAppeals = await loadLinkedAppeals(appeal);
+	const costsDecision = await formatCostsDecision(appeal);
 
-	const mappedAppeal = mapCase({ appeal, appealTypes, linkedAppeals, context });
+	const mappedAppeal = mapCase({ appeal, appealTypes, linkedAppeals, costsDecision, context });
 	if (!mappedAppeal) {
 		return null;
 	}

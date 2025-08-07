@@ -19,6 +19,7 @@ import { mapHearingEstimate } from './map-hearing-estimate.js';
 import { mapCompletedStateList } from '#mappers/api/shared/map-completed-state-list.js';
 import { mapInquiry } from './map-inquiry.js';
 import { mapInquiryEstimate } from './map-inquiry-estimate.js';
+import { mapAppealCostsDecision } from '#mappers/api/shared/map-appeal-costs-decision.js';
 
 export const apiSharedMappers = {
 	appealSummary: mapAppealSummary,
@@ -33,6 +34,7 @@ export const apiSharedMappers = {
 	stateList: mapStateList,
 	completedStateList: mapCompletedStateList,
 	decision: mapAppealDecision,
+	costsDecision: mapAppealCostsDecision,
 	appealRelationships: mapAppealRelationships,
 	neighbouringSites: mapNeighbouringSites,
 	appealTransferStatus: mapTransferStatus,
