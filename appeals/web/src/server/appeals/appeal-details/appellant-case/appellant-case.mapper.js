@@ -562,6 +562,7 @@ export function mapAppellantCaseNotificationBanners(
  * @param {BodyValidationOutcome} [bodyValidationOutcome]
  * @param {AppellantCaseSessionValidationOutcome} [sessionValidationOutcome]
  * @param {import('./appellant-case.types.js').AppellantCaseValidationOutcomeResponse} [existingValidationOutcome]
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {import('../../appeals.types.js').CheckboxItemParameter[]}
  */
 export function mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
@@ -569,7 +570,8 @@ export function mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
 	reasonOptions,
 	bodyValidationOutcome,
 	sessionValidationOutcome,
-	existingValidationOutcome
+	existingValidationOutcome,
+	errors = undefined
 ) {
 	/** @type {IncompleteInvalidReasonsResponse[]} */
 	let existingReasons = [];
@@ -607,7 +609,8 @@ export function mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters(
 		existingReasons,
 		bodyValidationOutcome,
 		bodyValidationBaseKey,
-		sessionValidationOutcome
+		sessionValidationOutcome,
+		errors
 	);
 }
 
