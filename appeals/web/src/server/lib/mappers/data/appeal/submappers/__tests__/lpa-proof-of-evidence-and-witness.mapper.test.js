@@ -39,11 +39,11 @@ describe('mapLPAProofOfEvidence', () => {
 					text: null
 				},
 				{
-					text: null
+					text: ''
 				},
 				{
 					classes: 'govuk-!-text-align-right',
-					html: null
+					html: ''
 				}
 			]
 		}
@@ -64,8 +64,8 @@ describe('mapLPAProofOfEvidence', () => {
 		data.appealDetails.documentationSummary.lpaProofOfEvidence.representationStatus =
 			'not_received';
 		expected.display.tableItem[1].text = 'Awaiting';
-		expected.display.tableItem[2].text = null;
-		expected.display.tableItem[3].html = null;
+		expected.display.tableItem[2].text = '';
+		expected.display.tableItem[3].html = '';
 
 		const result = mapLPAProofOfEvidence(data);
 
