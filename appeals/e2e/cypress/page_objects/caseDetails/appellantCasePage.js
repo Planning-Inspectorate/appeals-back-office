@@ -20,16 +20,21 @@ export class AppellantCasePage extends Page {
 		changeHealthSafety: 'change-site-safety',
 		changeAppRef: 'change-application-reference',
 		changeLpaName: 'change-lpa-name',
-		changeDecision: 'change-application-decision'
+		changeDecision: 'change-application-decision',
+		addRelatedAppeals: 'add-related-appeals',
+		changeRelatedAppeals: 'manage-related-appeals'
 	};
 
 	elements = {
 		appellantSection: () => cy.get('.appeal-appellant'),
-		agentSection: () => cy.get('.appeal-agent')
+		agentSection: () => cy.get('.appeal-agent'),
+		addRelatedAppeal: () => cy.getByData(this._cyDataSelectors.addRelatedAppeals),
+		changeRelatedAppeal: () => cy.getByData(this._cyDataSelectors.changeRelatedAppeals),
+		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`)
 	};
 
-	/********************************************************
-	 ******************** Navigation *************************
+	/*********************************************************
+	 ******************** Navigation **************************
 	 *********************************************************/
 
 	navigateToAppellantCase(caseRef) {
@@ -39,7 +44,19 @@ export class AppellantCasePage extends Page {
 	}
 
 	/********************************************************
-	 ******************** Assertions *************************
+	 ******************** Actions ****************************
+	 ********************************************************/
+
+	clickAddRelatedAppeals() {
+		this.elements.addRelatedAppeal().click();
+	}
+
+	clickChangeRelatedAppeals() {
+		this.elements.changeRelatedAppeal().click();
+	}
+
+	/*********************************************************
+	 ******************** Assertions **************************
 	 *********************************************************/
 
 	assertAppellantDetails({ firstName, lastName, organisation, email, phone }) {
@@ -141,6 +158,10 @@ export class AppellantCasePage extends Page {
 
 	assertOtherAppeals(value) {
 		this.assertFieldLabelAndValue('Are there other appeals linked to your development?', value);
+	}
+
+	assertRelatedAppealValue(caseRef) {
+		this.elements.relatedAppealValue(caseRef).should('be.visible');
 	}
 
 	assertApplicationDecision(value) {

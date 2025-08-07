@@ -14,9 +14,14 @@ export class LpaqPage extends Page {
 	_cyDataSelectors = {
 		changeCorrectAppealType: 'change-is-correct-appeal-type',
 		changeGreenBelt: 'change-site-within-green-belt',
-		addConservationAreaMap: 'add-conservation-area-map-and-guidance'
+		addConservationAreaMap: 'add-conservation-area-map-and-guidance',
+		addRelatedAppeals: 'add-related-appeals'
 	};
 
+	elements = {
+		addRelatedAppeal: () => cy.getByData(this._cyDataSelectors.addRelatedAppeals),
+		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`)
+	};
 	/********************************************************
 	 ******************** Navigation *************************
 	 *********************************************************/
@@ -28,8 +33,20 @@ export class LpaqPage extends Page {
 	}
 
 	/********************************************************
+	 ******************** Actions ****************************
+	 *********************************************************/
+
+	clickAddRelatedAppeals() {
+		this.elements.addRelatedAppeal().click();
+	}
+
+	/********************************************************
 	 ******************** Assertions *************************
 	 *********************************************************/
+
+	assertRelatedAppealValue(caseRef) {
+		this.elements.relatedAppealValue(caseRef).should('be.visible');
+	}
 
 	assertFieldLabelAndValue(labelText, expectedValue) {
 		cy.get('.govuk-summary-list__key')
