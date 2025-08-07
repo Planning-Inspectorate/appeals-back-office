@@ -13,6 +13,7 @@ export class CaseDetailsPage extends Page {
 
 	_cyDataSelectors = {
 		reviewLpaQuestionnaire: 'review-lpa-questionnaire-banner',
+		viewLpaQuestionnaire: 'review-lpa-questionnaire',
 		changeCaseOfficer: 'change-case-officer',
 		assignCaseOfficer: 'assign-case-officer',
 		assignInspector: 'assign-inspector',
@@ -77,6 +78,7 @@ export class CaseDetailsPage extends Page {
 
 	elements = {
 		reviewLpaQuestionnaire: () => cy.getByData(this._cyDataSelectors.reviewLpaQuestionnaire),
+		viewLpaQuestionnaire: () => cy.getByData(this._cyDataSelectors.viewLpaQuestionnaire),
 		changeCaseOfficer: () => cy.getByData(this._cyDataSelectors.changeCaseOfficer),
 		assignCaseOfficer: () => cy.getByData(this._cyDataSelectors.assignCaseOfficer).last(),
 		assignInspector: () => cy.getByData(this._cyDataSelectors.assignInspector),
@@ -196,6 +198,10 @@ export class CaseDetailsPage extends Page {
 	/********************************************************
 	 ************************ Actions ************************
 	 *********************************************************/
+
+	clickViewLpaQuestionnaire() {
+		this.elements.viewLpaQuestionnaire().click();
+	}
 
 	clickManageDocsCostDecision() {
 		this.elements.manageCostDecision().click();
