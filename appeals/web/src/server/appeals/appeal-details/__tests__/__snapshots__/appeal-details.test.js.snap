@@ -596,59 +596,9 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-2"> Site</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-2"> Timetable</span></h2>
                     </div>
                     <div id="accordion-default2-content-2" class="govuk-accordion__section-content">
-                        <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-                                <dd class="govuk-summary-list__value">Accompanied</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-                                <dd class="govuk-summary-list__value">9 October 2023</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
-                                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-                                <dd class="govuk-summary-list__value">9:38am</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
-                                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-                                <dd class="govuk-summary-list__value">10:00am</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
-                                    data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-                                <dd                                 class="govuk-summary-list__value">
-                                    <ul class="govuk-list govuk-list--bullet">
-                                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                                    </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
-                                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                                            </li>
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
-                                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                                            </li>
-                                        </ul>
-                                    </dd>
-                            </div>
-                        </dl>
-                    </div>
-                </div>
-                <div class="govuk-accordion__section">
-                    <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-3"> Timetable</span></h2>
-                    </div>
-                    <div id="accordion-default2-content-3" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list appeal-case-timetable">
                             <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                                 <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -675,9 +625,9 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-4"> Documentation</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-3"> Documentation</span></h2>
                     </div>
-                    <div id="accordion-default2-content-4" class="govuk-accordion__section-content">
+                    <div id="accordion-default2-content-3" class="govuk-accordion__section-content">
                         <table class="govuk-table">
                             <thead class="govuk-table__head">
                                 <tr class="govuk-table__row">
@@ -708,9 +658,9 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-5"> Costs</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-4"> Costs</span></h2>
                     </div>
-                    <div id="accordion-default2-content-5" class="govuk-accordion__section-content">
+                    <div id="accordion-default2-content-4" class="govuk-accordion__section-content">
                         <table class="govuk-table">
                             <thead class="govuk-table__head">
                                 <tr class="govuk-table__row">
@@ -786,9 +736,9 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-6"> Contacts</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-5"> Contacts</span></h2>
                     </div>
-                    <div id="accordion-default2-content-6" class="govuk-accordion__section-content">
+                    <div id="accordion-default2-content-5" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
                                 <dd class="govuk-summary-list__value">
@@ -828,9 +778,9 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-7"> Team</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-6"> Team</span></h2>
                     </div>
-                    <div id="accordion-default2-content-7" class="govuk-accordion__section-content">
+                    <div id="accordion-default2-content-6" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
@@ -853,9 +803,9 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-8"> Case management</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-7"> Case management</span></h2>
                     </div>
-                    <div id="accordion-default2-content-8" class="govuk-accordion__section-content">
+                    <div id="accordion-default2-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
@@ -878,12 +828,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                 <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -1339,12 +1283,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
-                                </dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -1495,59 +1433,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Timetable</span></h2>
                     </div>
                     <div id="accordion-default1-content-2" class="govuk-accordion__section-content">
-                        <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-                                <dd class="govuk-summary-list__value">Accompanied</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-                                <dd class="govuk-summary-list__value">9 October 2023</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-                                <dd class="govuk-summary-list__value">9:38am</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-                                <dd class="govuk-summary-list__value">10:00am</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                                    data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-                                <dd                                 class="govuk-summary-list__value">
-                                    <ul class="govuk-list govuk-list--bullet">
-                                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                                    </ul>
-                                    </dd>
-                                    <dd class="govuk-summary-list__actions">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
-                                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                                            </li>
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
-                                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                                            </li>
-                                        </ul>
-                                    </dd>
-                            </div>
-                        </dl>
-                    </div>
-                </div>
-                <div class="govuk-accordion__section">
-                    <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
-                    </div>
-                    <div id="accordion-default1-content-3" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list appeal-case-timetable">
                             <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                                 <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -1574,9 +1462,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Documentation</span></h2>
                     </div>
-                    <div id="accordion-default1-content-4" class="govuk-accordion__section-content">
+                    <div id="accordion-default1-content-3" class="govuk-accordion__section-content">
                         <table class="govuk-table">
                             <thead class="govuk-table__head">
                                 <tr class="govuk-table__row">
@@ -1607,9 +1495,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Costs</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Costs</span></h2>
                     </div>
-                    <div id="accordion-default1-content-5" class="govuk-accordion__section-content">
+                    <div id="accordion-default1-content-4" class="govuk-accordion__section-content">
                         <table class="govuk-table">
                             <thead class="govuk-table__head">
                                 <tr class="govuk-table__row">
@@ -1685,9 +1573,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Contacts</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
                     </div>
-                    <div id="accordion-default1-content-6" class="govuk-accordion__section-content">
+                    <div id="accordion-default1-content-5" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
                                 <dd class="govuk-summary-list__value">
@@ -1727,9 +1615,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Team</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
                     </div>
-                    <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
+                    <div id="accordion-default1-content-6" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
@@ -1752,9 +1640,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-8"> Case management</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
                     </div>
-                    <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
+                    <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
@@ -1777,12 +1665,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                 <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -2233,12 +2115,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                 <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -2702,12 +2578,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
-                                </dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -3169,12 +3039,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
-                                </dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -3337,9 +3201,59 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Timetable</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-2"> Site</span></h2>
                     </div>
                     <div id="accordion-default1-content-2" class="govuk-accordion__section-content">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
+                                <dd class="govuk-summary-list__value">Accompanied</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
+                                <dd class="govuk-summary-list__value">9:38am</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
+                                <dd class="govuk-summary-list__value">10:00am</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                                    data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
+                                </dd>
+                            </div>
+                            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                                <dd                                 class="govuk-summary-list__value">
+                                    <ul class="govuk-list govuk-list--bullet">
+                                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
+                                    </ul>
+                                    </dd>
+                                    <dd class="govuk-summary-list__actions">
+                                        <ul class="govuk-summary-list__actions-list">
+                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
+                                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                                            </li>
+                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
+                                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                                            </li>
+                                        </ul>
+                                    </dd>
+                            </div>
+                        </dl>
+                    </div>
+                </div>
+                <div class="govuk-accordion__section">
+                    <div class="govuk-accordion__section-header">
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Timetable</span></h2>
+                    </div>
+                    <div id="accordion-default1-content-3" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list appeal-case-timetable">
                             <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
                                 <dd class="govuk-summary-list__value">23 May 2023</dd>
@@ -3372,9 +3286,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-3"> Documentation</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Documentation</span></h2>
                     </div>
-                    <div id="accordion-default1-content-3" class="govuk-accordion__section-content">
+                    <div id="accordion-default1-content-4" class="govuk-accordion__section-content">
                         <table class="govuk-table">
                             <thead class="govuk-table__head">
                                 <tr class="govuk-table__row">
@@ -3405,9 +3319,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Costs</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Costs</span></h2>
                     </div>
-                    <div id="accordion-default1-content-4" class="govuk-accordion__section-content">
+                    <div id="accordion-default1-content-5" class="govuk-accordion__section-content">
                         <table class="govuk-table">
                             <thead class="govuk-table__head">
                                 <tr class="govuk-table__row">
@@ -3483,9 +3397,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Contacts</span></h2>
                     </div>
-                    <div id="accordion-default1-content-5" class="govuk-accordion__section-content">
+                    <div id="accordion-default1-content-6" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
                                 <dd class="govuk-summary-list__value">
@@ -3525,9 +3439,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Team</span></h2>
                     </div>
-                    <div id="accordion-default1-content-6" class="govuk-accordion__section-content">
+                    <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
@@ -3550,9 +3464,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-8"> Case management</span></h2>
                     </div>
-                    <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
+                    <div id="accordion-default1-content-8" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
@@ -3575,12 +3489,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                 <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -4033,12 +3941,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                 <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -4507,12 +4409,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
-                                </dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -4950,12 +4846,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                 <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -5412,12 +5302,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                 <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -5960,12 +5844,6 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                 <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -6952,12 +6830,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
-                                </dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -7408,12 +7280,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
-                                </dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -7859,12 +7725,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                 <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -8320,12 +8180,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
-                                </dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -8766,12 +8620,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                 <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -9225,12 +9073,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                 <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                <dd class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
-                                    data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
                                 </dd>
                             </div>
                         </dl>
@@ -9706,12 +9548,6 @@ exports[`appeal-details should not render a back button 1`] = `
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case history</dt>
                                             <dd class="govuk-summary-list__value"></dd>
                                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/audit" data-cy="view-case-history">View<span class="govuk-visually-hidden"> Case history</span></a>
-                                            </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal withdrawal</dt>
-                                            <dd class="govuk-summary-list__value"></dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/withdrawal/start"
-                                                data-cy="start-appeal-withdrawal">Start<span class="govuk-visually-hidden"> Appeal withdrawal</span></a>
                                             </dd>
                                         </div>
                                     </dl>
