@@ -5,7 +5,6 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import * as authSession from '../../app/auth/auth-session.service.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { mapStatusText, mapStatusFilterLabel } from '#lib/appeal-status.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -16,9 +15,13 @@ import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
-/** @typedef {Partial<AppealSummary & { appealTimetable: Record<string,string> }>} PersonalListAppeal */
+/** @typedef {Partial<AppealSummary & { appealTimetable: Record<string,string>, awaitingLinkedAppeal: boolean}>} PersonalListAppeal */
 
-const ALLOWED_CHILD_APPEAL_ACTION_STATUSES = [APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE];
+const ALLOWED_CHILD_APPEAL_ACTION_STATUSES = [
+	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+	APPEAL_CASE_STATUS.VALIDATION,
+	APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE
+];
 
 /**
  * @param {AppealSummary} appeal
@@ -48,13 +51,13 @@ export function personalListPage(
 	const account = /** @type {AccountInfo} */ (authSession.getAccount(session));
 	const userGroups = account?.idTokenClaims?.groups ?? [];
 	const isCaseOfficer = userGroups.includes(config.referenceData.appeals.caseOfficerGroupId);
-	const filterItemsArray = ['all', ...(appealsAssignedToCurrentUser?.statuses || [])].map(
-		(appealStatus) => ({
-			text: capitalizeFirstLetter(mapStatusFilterLabel(appealStatus)),
+	const filterItemsArray = ['all', ...(appealsAssignedToCurrentUser?.statuses || [])]
+		.map((appealStatus) => ({
+			text: mapStatusFilterLabel(appealStatus),
 			value: appealStatus,
 			selected: appealStatusFilter === appealStatus
-		})
-	);
+		}))
+		.sort((a, b) => a.text.toLowerCase().localeCompare(b.text.toLowerCase()));
 
 	/** @type {PageComponent} */
 	const searchAllCasesButton = {
@@ -156,6 +159,9 @@ export function personalListPage(
 					appeal.isParentAppeal,
 					appeal.isChildAppeal
 				);
+				const actionLinks = canDisplayAction(appeal)
+					? mapActionLinksForAppeal(appeal, isCaseOfficer, request)
+					: '';
 
 				return [
 					{
@@ -181,12 +187,10 @@ export function personalListPage(
 					},
 					{
 						classes: 'action-required',
-						html: canDisplayAction(appeal)
-							? mapActionLinksForAppeal(appeal, isCaseOfficer, request)
-							: ''
+						html: actionLinks || ''
 					},
 					{
-						text: canDisplayAction(appeal) ? dateISOStringToDisplayDate(appeal.dueDate) || '' : ''
+						text: actionLinks?.length ? dateISOStringToDisplayDate(appeal.dueDate) || '' : ''
 					},
 					{
 						html: '',
@@ -287,6 +291,12 @@ function mapRequiredActionToPersonalListActionHtml(
 						`/appeals-service/appeal-details/${appealId}/appellant-case`
 				  )}">Awaiting appellant update<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				: 'Awaiting appellant update';
+		}
+		case 'assignCaseOfficer': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/assign-case-officer/search-case-officer`
+			)}">Assign case officer<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'awaitingFinalComments': {
 			return 'Awaiting final comments';

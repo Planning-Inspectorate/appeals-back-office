@@ -281,6 +281,8 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 		id: number;
 		reference: string;
 		applicationReference: string;
+		parentAppeals: AppealRelationship[] | undefined;
+		childAppeals: AppealRelationship[] | undefined;
 	};
 	appellantCaseId: number;
 	azureAdUserId: string;

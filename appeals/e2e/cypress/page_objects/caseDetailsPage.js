@@ -60,7 +60,9 @@ export class CaseDetailsPage extends Page {
 		setUpTimetableHearingDate: 'set up-timetable-hearing-date',
 		hearingBannerLink: 'setup-hearing',
 		hearingBannerAddressLink: 'add-hearing-address',
-		pageHeading: 'h1'
+		pageHeading: 'h1',
+		changeInquiryDate: 'change-inquiry-date',
+		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -181,7 +183,15 @@ export class CaseDetailsPage extends Page {
 		timeTableRows: () => cy.get('.appeal-case-timetable dt'),
 		personalListFilterDropdown: () => cy.get('.govuk-select'),
 		caseDetailsSections: () => cy.get('.govuk-accordion__section-heading-text-focus'),
-		pageHeading: () => cy.get(this._cyDataSelectors.pageHeading)
+		pageHeading: () => cy.get(this._cyDataSelectors.pageHeading),
+		inquiryEstimatedDaysInput: () => cy.get('#inquiry-estimation-days'),
+		line1: () => cy.get('#address-line-1'),
+		line2: () => cy.get('#address-line-2'),
+		town: () => cy.get('#town'),
+		county: () => cy.get('#county'),
+		postcode: () => cy.get('#post-code'),
+		changeInquiryDate: () => cy.getByData(this._cyDataSelectors.changeInquiryDate),
+		changeInquiryExpectedDays: () => cy.getByData(this._cyDataSelectors.changeInquiryNumberOfDays)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -274,6 +284,12 @@ export class CaseDetailsPage extends Page {
 
 	clickIssueLpaCostsDecision() {
 		this.elements.issueLpaCostsDecision().click({ force: true });
+	}
+	clickChangeInquiryDate() {
+		this.elements.changeInquiryDate().click();
+	}
+	clickChangeInquiryEstimatedDays() {
+		this.elements.changeInquiryExpectedDays().click();
 	}
 
 	inputCaseNotes(text, index = 0) {
@@ -408,6 +424,22 @@ export class CaseDetailsPage extends Page {
 	clickAddAnother() {
 		cy.get(this.selectors.button).filter(':visible').contains('Add another').click();
 	}
+	addHearingLocationAddress(address) {
+		this.hearingSectionElements.address.line1().clear().type(address.line1);
+		this.hearingSectionElements.address.line2().clear().type(address.line2);
+		this.hearingSectionElements.address.town().clear().type(address.town);
+		this.hearingSectionElements.address.county().clear().type(address.county);
+		this.hearingSectionElements.address.postcode().clear().type(address.postcode);
+		this.clickButtonByText('Continue');
+	}
+
+	addInquiryAddress(address) {
+		this.elements.line1().clear().type(address.line1);
+		this.elements.line2().clear().type(address.line2);
+		this.elements.town().clear().type(address.town);
+		this.elements.county().clear().type(address.county);
+		this.elements.postcode().clear().type(address.postcode);
+	}
 
 	clickAddAgreementToChangeDescriptionEvidence() {
 		this.elements.addAgreementToChangeDescriptionEvidence().click();
@@ -508,6 +540,10 @@ export class CaseDetailsPage extends Page {
 		this.basePageElements.summaryDetails().click();
 		this.elements.personalListFilterDropdown().select(text);
 		this.clickButtonByText('Apply');
+	}
+
+	inputEstimatedInquiryDays(estimatedInquiryDays) {
+		this.elements.inquiryEstimatedDaysInput().type(estimatedInquiryDays.toString());
 	}
 
 	/***************************************************************
@@ -717,6 +753,10 @@ export class CaseDetailsPage extends Page {
 	changeTimetableDates(timetableItems, date, intervalDays) {
 		dateTimeSection.enterDueDates(timetableItems, date, intervalDays);
 		this.clickButtonByText('Continue');
+	}
+
+	enterTimeTableDueDatesCaseStart(timetableItems, date, intervalDays) {
+		dateTimeSection.enterDueDates(timetableItems, date, intervalDays);
 	}
 
 	clickUpdateTimetableDueDates(date) {

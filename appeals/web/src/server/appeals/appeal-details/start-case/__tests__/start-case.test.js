@@ -1,4 +1,5 @@
 import { parseHtml } from '@pins/platform';
+import { jest } from '@jest/globals';
 import nock from 'nock';
 import supertest from 'supertest';
 import { createTestEnvironment } from '#testing/index.js';
@@ -158,24 +159,34 @@ describe('start-case', () => {
 	});
 
 	describe('GET /start-case/change', () => {
-		it('should render the change start date page with the expected content', async () => {
-			nock('http://test/').get('/appeals/1').reply(200, appealData);
+		it.each([
+			['working day', '2024-06-03T22:59:00.000Z', '3 June 2024'],
+			['weekend', '2024-06-01T22:59:00.000Z', '3 June 2024']
+		])(
+			'should render the change start date page with the expected content on a %s',
+			async (_, dateString, expectedDisplayDate) => {
+				jest
+					.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+					.setSystemTime(new Date(dateString));
+				try {
+					nock('http://test/').get('/appeals/1').reply(200, appealData);
 
-			const response = await request.get(`${baseUrl}/1/start-case/change`);
+					const response = await request.get(`${baseUrl}/1/start-case/change`);
+					const element = parseHtml(response.text);
 
-			const element = parseHtml(response.text);
+					expect(element.innerHTML).toContain('Change start date</h1>');
 
-			expect(element.innerHTML).toContain('Change start date</h1>');
+					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
-
-			expect(unprettifiedElement.innerHTML).toContain(
-				`Warning</span> Confirming will change the start day to ${dateISOStringToDisplayDate(
-					new Date().toISOString()
-				)} and update the case timetable. New start letters will be sent to relevant parties.</strong>`
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
-		});
+					expect(unprettifiedElement.innerHTML).toContain(
+						`Warning</span> Confirming will change the start day to ${expectedDisplayDate} and update the case timetable. New start letters will be sent to relevant parties.</strong>`
+					);
+					expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+				} finally {
+					jest.useRealTimers();
+				}
+			}
+		);
 	});
 
 	describe('POST /start-case/change', () => {

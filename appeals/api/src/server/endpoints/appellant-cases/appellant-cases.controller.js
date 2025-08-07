@@ -88,7 +88,9 @@ const updateAppellantCaseById = async (req, res) => {
 							agent: appeal.agent,
 							id: appeal.id,
 							reference: appeal.reference,
-							applicationReference: appeal.applicationReference || ''
+							applicationReference: appeal.applicationReference || '',
+							parentAppeals: appeal.parentAppeals,
+							childAppeals: appeal.childAppeals
 						},
 						appellantCaseId,
 						azureAdUserId,

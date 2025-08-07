@@ -1,3 +1,5 @@
+import { isDefined } from '#lib/ts-utilities.js';
+
 /**
  * @param {{appeal: MappedInstructions}} mappedData
  * @returns {PageComponent}
@@ -11,6 +13,6 @@ export const getCaseManagement = (mappedData) => ({
 			mappedData.appeal.mainPartyCorrespondence.display.summaryListItem,
 			mappedData.appeal.caseHistory.display.summaryListItem,
 			mappedData.appeal.appealWithdrawal.display.summaryListItem
-		]
+		].filter(isDefined)
 	}
 });

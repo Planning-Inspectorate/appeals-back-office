@@ -13,7 +13,7 @@ import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 /**
  *
  * @param {MappingRequest} data
- * @returns {{awaitingLinkedAppeal: boolean, linkedAppeals: AppealRelationship[], otherAppeals: AppealRelationship[], isParentAppeal: boolean, isChildAppeal: boolean }}
+ * @returns {{awaitingLinkedAppeal: boolean, linkedAppeals: Partial<AppealRelationship>[], otherAppeals: AppealRelationship[], isParentAppeal: boolean, isChildAppeal: boolean }}
  */
 export const mapAppealRelationships = (data) => {
 	const { appeal } = data;
@@ -25,31 +25,7 @@ export const mapAppealRelationships = (data) => {
 			? appeal.parentAppeals
 					.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
 					.map((relationship) => {
-						const appealType = `${relationship.parent?.appealType?.type} (${relationship.parent?.appealType?.key})`;
-
-						const currentStatus =
-							relationship.parent?.appealStatus
-								.filter(({ valid }) => valid)
-								.map(({ status }) => status) || [];
-
-						const completedStateList =
-							relationship.parent?.appealStatus
-								.filter(({ valid }) => !valid)
-								.map(({ status }) => status) || [];
-
-						return {
-							appealId: relationship.parentId,
-							appealReference: relationship.parentRef,
-							externalSource: relationship.externalSource === true,
-							linkingDate: relationship.linkingDate.toISOString(),
-							appealType,
-							externalAppealType: relationship.externalAppealType,
-							relationshipId: relationship.id,
-							externalId: relationship.externalId,
-							isParentAppeal: true,
-							currentStatus: currentStatus.length ? currentStatus[0] : undefined,
-							completedStateList
-						};
+						return mapLinkedAppeal(relationship, true);
 					})
 			: [];
 
@@ -58,31 +34,7 @@ export const mapAppealRelationships = (data) => {
 			? appeal.childAppeals
 					.filter((relationship) => relationship.type === CASE_RELATIONSHIP_LINKED)
 					.map((relationship) => {
-						const appealType = `${relationship.child?.appealType?.type} (${relationship.child?.appealType?.key})`;
-
-						const currentStatus =
-							relationship.child?.appealStatus
-								.filter(({ valid }) => valid)
-								.map(({ status }) => status) || [];
-
-						const completedStateList =
-							relationship.child?.appealStatus
-								.filter(({ valid }) => !valid)
-								.map(({ status }) => status) || [];
-
-						return {
-							appealId: relationship.childId,
-							appealReference: relationship.childRef,
-							externalSource: relationship.externalSource === true,
-							linkingDate: relationship.linkingDate.toISOString(),
-							appealType,
-							externalAppealType: relationship.externalAppealType,
-							relationshipId: relationship.id,
-							externalId: relationship.externalId,
-							isParentAppeal: false,
-							currentStatus: currentStatus.length ? currentStatus[0] : undefined,
-							completedStateList
-						};
+						return mapLinkedAppeal(relationship, false);
 					})
 			: [];
 
@@ -90,7 +42,8 @@ export const mapAppealRelationships = (data) => {
 
 	const awaitingLinkedAppeal =
 		isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
-		isAwaitingLinkedAppeal(appeal, linkedAppeals);
+		// @ts-ignore
+		isAwaitingLinkedAppeal(appeal, data.linkedAppeals);
 
 	const otherAppeals = appealRelationships.length
 		? appealRelationships
@@ -121,5 +74,41 @@ export const mapAppealRelationships = (data) => {
 		otherAppeals,
 		isChildAppeal: parentAppeals.length > 0,
 		isParentAppeal: childAppeals.length > 0
+	};
+};
+
+/**
+ *
+ * @param {{parent?: Appeal | null | undefined, child?: Appeal | null | undefined, linkingDate: Date, externalSource: boolean | null, externalAppealType: string | null, externalId: string | null}} relationship
+ * @param {Boolean} isParentAppeal
+ * @returns {Partial<AppealRelationship & {currentStatus: string, completedStateList: string[]}>}
+ */
+const mapLinkedAppeal = (relationship, isParentAppeal) => {
+	const { linkingDate, externalSource, externalAppealType, externalId, parent, child } =
+		relationship;
+	const {
+		id: appealId,
+		appealStatus,
+		reference: appealReference,
+		appealType
+	} = (isParentAppeal ? parent : child) || {};
+
+	const currentStatus =
+		appealStatus?.filter(({ valid }) => valid).map(({ status }) => status) || [];
+
+	const completedStateList =
+		appealStatus?.filter(({ valid }) => !valid).map(({ status }) => status) || [];
+
+	return {
+		appealId,
+		appealReference,
+		externalSource: externalSource === true,
+		linkingDate: linkingDate.toISOString(),
+		appealType: `${appealType?.type} (${appealType?.key})`,
+		externalAppealType,
+		externalId,
+		isParentAppeal,
+		currentStatus: currentStatus[0] ?? undefined,
+		completedStateList
 	};
 };

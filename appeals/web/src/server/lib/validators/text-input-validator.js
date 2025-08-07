@@ -3,6 +3,7 @@ import { body } from 'express-validator';
 
 import stringTokenReplacement from '@pins/appeals/utils/string-token-replacement.js';
 import { capitalize } from 'lodash-es';
+import { camelCaseToWords } from '#lib/string-utilities.js';
 
 const TEXT_INPUT_MAX_CHARACTERS = 300;
 
@@ -25,10 +26,10 @@ export const createTextInputValidator = (
 			})
 			.bail()
 			.matches(/^[A-Za-z0-9 .,'!&-]+$/)
-			.withMessage((value, { req }) => {
+			.withMessage(() => {
 				return `${capitalize(
-					req.params?.userType ? `${req.params.userType} name` : 'Organisation name'
-				)}  must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes`;
+					`${camelCaseToWords(fieldName)}`
+				)} must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes`;
 			})
 			.isLength({ max: maxCharactersAllowed })
 			.withMessage(maxCharactersErrorMessage)

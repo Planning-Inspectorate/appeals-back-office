@@ -1,24 +1,24 @@
 import { dateIsInTheFuture, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
-import { wrapComponents } from '#lib/mappers/index.js';
+import { simpleHtmlComponent, userHasPermission, wrapComponents } from '#lib/mappers/index.js';
 import { startOfDay } from 'date-fns';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { permissionNames } from '#environment/permissions.js';
 
 /**
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @param {import('express-session').Session} session
  * @returns {PageComponent[]|undefined}
  */
-export const getCaseHearing = (mappedData, appealDetails) => {
+export const getCaseHearing = (mappedData, appealDetails, session) => {
 	if (
 		appealDetails.procedureType?.toLowerCase() !== APPEAL_CASE_PROCEDURE.HEARING ||
-		!appealDetails.startedAt ||
-		!(
-			mappedData.appeal.setUpHearing.display.buttonItem ||
-			mappedData.appeal.addHearingEstimates.display.htmlItem
-		)
+		!appealDetails.startedAt
 	) {
 		return;
 	}
+
+	const canEditHearing = userHasPermission(permissionNames.updateCase, session);
 
 	/** @type {PageComponent | undefined} */
 	const hearingComponent = appealDetails.hearing
@@ -26,7 +26,9 @@ export const getCaseHearing = (mappedData, appealDetails) => {
 				type: 'summary-list',
 				parameters: { rows: mappedData.appeal.hearingDetails.display.summaryListItems }
 		  }
-		: mappedData.appeal.setUpHearing.display.buttonItem;
+		: canEditHearing
+		? mappedData.appeal.setUpHearing.display.buttonItem
+		: simpleHtmlComponent('p', { class: 'govuk-body govuk-!-margin-bottom-7' }, 'Not set up');
 
 	const hearingStartTime = appealDetails.hearing?.hearingStartTime;
 	const beginningOfHearingDay =
@@ -51,7 +53,13 @@ export const getCaseHearing = (mappedData, appealDetails) => {
 				type: 'summary-list',
 				parameters: { rows: mappedData.appeal.hearingEstimates.display.summaryListItems }
 		  }
-		: mappedData.appeal.addHearingEstimates.display.htmlItem;
+		: canEditHearing
+		? mappedData.appeal.addHearingEstimates.display.htmlItem
+		: simpleHtmlComponent(
+				'p',
+				{ class: 'govuk-body govuk-!-margin-top-6 govuk-!-margin-bottom-2' },
+				'Not set up'
+		  );
 
 	return [
 		wrapComponents(

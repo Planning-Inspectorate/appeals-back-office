@@ -193,7 +193,9 @@ export const renderDecisionLetterUpload = async (request, response) => {
 		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
 	};
 
-	restoreFileUploadInfo(request.session, 'inspectorDecision');
+	if (!shouldFollowReIssueDecisionFlow(currentAppeal)) {
+		restoreFileUploadInfo(request.session, 'inspectorDecision');
+	}
 	const captionSuffix = shouldFollowReIssueDecisionFlow(currentAppeal)
 		? 'update decision letter'
 		: 'issue decision';

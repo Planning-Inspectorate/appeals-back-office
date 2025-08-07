@@ -89,7 +89,7 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 		{
 			title: 'Check details and update decision letter',
 			heading: 'Check details and update decision letter',
-			preHeading: `Appeal ${appealShortReference(appealReference)}`,
+			preHeading: `Appeal ${appealShortReference(appealReference)} - update decision letter`,
 			backLinkUrl: `${baseUrl}/correction-notice`,
 			submitButtonText: 'Update decision letter',
 			responses: {

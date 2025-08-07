@@ -23,7 +23,7 @@ import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 export function generateAccordion(appealDetails, mappedData, session) {
 	const caseOverview = getCaseOverview(mappedData);
 
-	const siteDetails = getSiteDetails(mappedData, appealDetails);
+	const siteDetails = isChildAppeal(appealDetails) ? [] : getSiteDetails(mappedData, appealDetails);
 
 	/** @type {PageComponent[]} */
 	const caseTimetable = [
@@ -87,7 +87,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 
 	const caseManagement = getCaseManagement(mappedData);
 
-	const caseHearing = getCaseHearing(mappedData, appealDetails);
+	const caseHearing = getCaseHearing(mappedData, appealDetails, session);
 
 	const caseInquiry = getCaseInquiry(mappedData, appealDetails);
 

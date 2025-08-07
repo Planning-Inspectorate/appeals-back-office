@@ -10,7 +10,7 @@ export const mapEiaRequiresEnvironmentalStatement = ({
 		id: 'eia-requires-environmental-statement',
 		text: 'Did your screening opinion say the development needed an environmental statement?',
 		value: lpaQuestionnaireData.eiaRequiresEnvironmentalStatement,
-		defaultText: '',
+		defaultText: 'Not applicable',
 		addCyAttribute: true,
 		link: `${currentRoute}/environmental-impact-assessment/requires-environmental-statement/change`,
 		editable: userHasUpdateCase,

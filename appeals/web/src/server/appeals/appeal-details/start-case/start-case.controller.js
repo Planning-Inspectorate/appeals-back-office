@@ -13,6 +13,7 @@ import featureFlags from '#common/feature-flags.js';
 import { FEATURE_FLAG_NAMES, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getStartDate = async (request, response) => {
@@ -106,10 +107,13 @@ const renderChangeDatePage = async (request, response) => {
 	if (!startedAt || documentationSummary?.lpaQuestionnaire?.status !== 'not_received') {
 		return response.render('app/500.njk');
 	}
+
+	const nextBusinessDayFromToday = await recalculateDateIfNotBusinessDay(getTodaysISOString());
+
 	const mappedPageContent = changeDatePage(
 		appealId,
 		appealReference,
-		dateISOStringToDisplayDate(getTodaysISOString())
+		dateISOStringToDisplayDate(nextBusinessDayFromToday)
 	);
 
 	return response.render('patterns/display-page.pattern.njk', {

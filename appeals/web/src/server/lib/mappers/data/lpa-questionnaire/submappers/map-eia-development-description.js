@@ -12,7 +12,7 @@ export const mapEiaDevelopmentDescription = ({
 		text: 'Description of development',
 		value: lpaQuestionnaireData.eiaDevelopmentDescription
 			? eiaDescriptions[lpaQuestionnaireData.eiaDevelopmentDescription]
-			: '',
+			: 'Not applicable',
 		link: `${currentRoute}/eia-development-description/change`,
 		editable: userHasUpdateCase
 	});

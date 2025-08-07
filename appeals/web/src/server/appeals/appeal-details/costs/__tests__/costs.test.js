@@ -686,7 +686,7 @@ describe('costs', () => {
 						expect(errorSummaryElement.innerHTML).toContain(
 							`${
 								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-							} costs ${costsDocumentType} date must include a month and a year`
+							} costs ${costsDocumentType} date must include a month and year`
 						);
 					});
 
@@ -723,7 +723,7 @@ describe('costs', () => {
 						expect(errorSummaryElement.innerHTML).toContain(
 							`${
 								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-							} costs ${costsDocumentType} date must include a day and a year`
+							} costs ${costsDocumentType} date must include a day and year`
 						);
 					});
 
@@ -760,7 +760,7 @@ describe('costs', () => {
 						expect(errorSummaryElement.innerHTML).toContain(
 							`${
 								costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-							} costs ${costsDocumentType} date must include a day and a month`
+							} costs ${costsDocumentType} date must include a day and month`
 						);
 					});
 

@@ -325,11 +325,7 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 			where,
 			include: {
 				address: true,
-				appealStatus: {
-					where: {
-						valid: true
-					}
-				},
+				appealStatus: true,
 				appealTimetable: true,
 				appealType: true,
 				procedureType: true,
