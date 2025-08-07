@@ -169,6 +169,5 @@ export const getAppealTimetableTypes = (appeal, appellantCase) => {
 			}
 			break;
 	}
-	console.log(validAppealTimetableType);
 	return validAppealTimetableType;
 };
