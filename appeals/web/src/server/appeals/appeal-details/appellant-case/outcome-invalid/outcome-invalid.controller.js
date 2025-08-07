@@ -52,7 +52,8 @@ const renderInvalidReason = async (request, response) => {
 			invalidReasonOptions,
 			body,
 			request.session.webAppellantCaseReviewOutcome,
-			appellantCaseResponse.validation
+			appellantCaseResponse.validation,
+			errors
 		);
 
 		const pageContent = mapInvalidReasonPage(

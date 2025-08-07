@@ -14,6 +14,7 @@
  * @param {BodyValidationOutcome} bodyValidationOutcome
  * @param {string} bodyValidationBaseKey
  * @param {AppellantCaseSessionValidationOutcome|LPAQuestionnaireSessionValidationOutcome|undefined} sessionValidationOutcome
+ * @param {import('@pins/express').ValidationErrors | undefined} error
  * @returns {import('../appeals/appeals.types.js').CheckboxItemParameter[]}
  */
 export function mapReasonOptionsToCheckboxItemParameters(
@@ -22,7 +23,8 @@ export function mapReasonOptionsToCheckboxItemParameters(
 	existingReasons,
 	bodyValidationOutcome,
 	bodyValidationBaseKey,
-	sessionValidationOutcome
+	sessionValidationOutcome,
+	error = undefined
 ) {
 	return reasonOptions.map((reason) => {
 		const addAnotherTextItemsFromExistingOutcome = getAddAnotherTextItemsFromExistingOutcome(
@@ -49,12 +51,19 @@ export function mapReasonOptionsToCheckboxItemParameters(
 			textItems = addAnotherTextItemsFromExistingOutcome;
 		}
 
+		const errors = textItems.map((textItem, index) => {
+			return error && error?.[`${bodyValidationBaseKey}-${reason.id}-${index + 1}`]?.msg
+				? error?.[`${bodyValidationBaseKey}-${reason.id}-${index + 1}`]?.msg
+				: undefined;
+		});
+
 		return {
 			value: `${reason.id}`,
 			text: reason.name,
 			checked: checkedOptions?.includes(reason.id) || false,
 			...(reason.hasText && {
-				addAnother: { textItems }
+				addAnother: { textItems },
+				error: errors
 			})
 		};
 	});

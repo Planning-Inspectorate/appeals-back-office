@@ -21,6 +21,7 @@
 	{%- for option in reasonOptions -%}
 		{%- if option.addAnother -%}
 			{%- set addAnotherReasonHtml = addAnotherReason({
+				error: option.error,
 				textItems: option.addAnother.textItems,
 				inputName: 'incompleteReason-' + option.value,
 				inputId: 'incomplete-reason-' + option.value,
