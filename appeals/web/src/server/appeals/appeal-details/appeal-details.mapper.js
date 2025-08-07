@@ -7,6 +7,8 @@ import { generateCaseNotes } from './case-notes/case-notes.mapper.js';
 import { generateStatusTags } from './status-tags/status-tags.mapper.js';
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
 import { formatCaseOfficerDetailsForCaseSummary } from '#lib/mappers/utils/format-case-officer-details-for-case-summary.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 export const pageHeading = 'Case details';
 
@@ -47,7 +49,7 @@ export async function appealDetailsPage(
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/**
-	 * @type {PageComponent}
+	 * @type {PageComponent | undefined}
 	 */
 	const caseSummary = {
 		type: 'summary-list',
@@ -57,21 +59,25 @@ export async function appealDetailsPage(
 		},
 		parameters: {
 			classes: 'pins-summary-list--no-border',
-			rows: [
-				...(mappedData.appeal.caseOfficer.display.summaryListItem
-					? [
-							formatCaseOfficerDetailsForCaseSummary(
-								mappedData.appeal.caseOfficer.display.summaryListItem
-							)
+			rows:
+				appealDetails.appealType === APPEAL_TYPE.S78 &&
+				appealDetails.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY
+					? []
+					: [
+							...(mappedData.appeal.caseOfficer.display.summaryListItem
+								? [
+										formatCaseOfficerDetailsForCaseSummary(
+											mappedData.appeal.caseOfficer.display.summaryListItem
+										)
+								  ]
+								: []),
+							...(mappedData.appeal.siteAddress.display.summaryListItem
+								? [mappedData.appeal.siteAddress.display.summaryListItem]
+								: []),
+							...(mappedData.appeal.localPlanningAuthority.display.summaryListItem
+								? [mappedData.appeal.localPlanningAuthority.display.summaryListItem]
+								: [])
 					  ]
-					: []),
-				...(mappedData.appeal.siteAddress.display.summaryListItem
-					? [mappedData.appeal.siteAddress.display.summaryListItem]
-					: []),
-				...(mappedData.appeal.localPlanningAuthority.display.summaryListItem
-					? [mappedData.appeal.localPlanningAuthority.display.summaryListItem]
-					: [])
-			]
 		}
 	};
 

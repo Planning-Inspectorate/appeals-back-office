@@ -4,6 +4,10 @@ import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
 import {
+	DOCUMENT_STATUS_NOT_RECEIVED,
+	DOCUMENT_STATUS_RECEIVED
+} from '@pins/appeals/constants/support.js';
+import {
 	appealData,
 	appealDataFullPlanning,
 	linkedAppeals,
@@ -31,6 +35,7 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -2707,6 +2712,7 @@ describe('appeal-details', () => {
 
 		describe('Overview', () => {
 			const appealId = 2;
+
 			beforeEach(() => {
 				nock.cleanAll();
 				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
@@ -2718,6 +2724,10 @@ describe('appeal-details', () => {
 					.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
 					.reply(200, finalCommentsForReview)
 					.persist();
+			});
+
+			afterEach(() => {
+				jest.clearAllMocks();
 			});
 
 			it('should render a "Is there a net gain or loss of residential units?" row in the overview accordion for S78', async () => {
@@ -2886,6 +2896,162 @@ describe('appeal-details', () => {
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
 				expect(response.text).not.toContain('.appeal-net-residence-gain-or-loss');
+			});
+
+			it('should not render Site Address and LPA rows in the overview accordion for S78 if procedure type is not inquiry', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealType: 'Planning appeal',
+						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						planningObligation: { hasObligation: false },
+						numberOfResidencesNetChange: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.text).not.toContain('.appeal-site-address');
+				expect(response.text).not.toContain('.appeal-local-planning-authority');
+			});
+
+			it('should render Site Address and LPA rows in the overview accordion for S78 if procedure type is inquiry', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealType: 'Planning appeal',
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						planningObligation: { hasObligation: false },
+						numberOfResidencesNetChange: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.text).toContain('appeal-site-address');
+				expect(response.text).toContain('appeal-local-planning-authority');
+			});
+
+			it('should not render Site Address and LPA rows in the overview accordion for S20 if procedure type is inquiry', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealType: APPEAL_TYPE.HOUSEHOLDER,
+						procedureType: APPEAL_CASE_PROCEDURE.INQUIRY
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						planningObligation: { hasObligation: false },
+						numberOfResidencesNetChange: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.text).not.toContain('.appeal-site-address');
+				expect(response.text).not.toContain('.appeal-local-planning-authority');
+			});
+
+			it('Should display procedure type change link because type is S78 and lpastatement status is not received', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealType: APPEAL_TYPE.S78,
+						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+						documentationSummary: {
+							lpaStatement: {
+								status: DOCUMENT_STATUS_NOT_RECEIVED
+							}
+						}
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						planningObligation: { hasObligation: false },
+						numberOfResidencesNetChange: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.text).toContain(
+					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+				);
+			});
+
+			it('Should not display procedure type change link because type is S78 and lpastatement status is received', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealType: APPEAL_TYPE.S78,
+						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+						documentationSummary: {
+							lpaStatement: {
+								status: DOCUMENT_STATUS_RECEIVED
+							}
+						}
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						planningObligation: { hasObligation: false },
+						numberOfResidencesNetChange: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.text).not.toContain(
+					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+				);
+			});
+
+			it('Should not display case proceudre change link because appeal type is not S78', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealType: APPEAL_TYPE.HOUSEHOLDER,
+						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+						documentationSummary: {
+							lpaStatement: {
+								status: DOCUMENT_STATUS_NOT_RECEIVED
+							}
+						}
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						planningObligation: { hasObligation: false },
+						numberOfResidencesNetChange: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.text).not.toContain(
+					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+				);
 			});
 		});
 
