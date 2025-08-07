@@ -160,10 +160,6 @@ export class AppellantCasePage extends Page {
 		this.assertFieldLabelAndValue('Are there other appeals linked to your development?', value);
 	}
 
-	assertRelatedAppealValue(caseRef) {
-		this.elements.relatedAppealValue(caseRef).should('be.visible');
-	}
-
 	assertApplicationDecision(value) {
 		this.assertFieldLabelAndValue('Was your application granted or refused?', value);
 	}

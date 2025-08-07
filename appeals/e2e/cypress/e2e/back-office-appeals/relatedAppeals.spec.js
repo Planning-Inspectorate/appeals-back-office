@@ -219,13 +219,15 @@ describe('related appeals', () => {
 				appellantCasePage.clickButtonByText('Continue');
 				appellantCasePage.selectRadioButtonByValue('yes');
 				appellantCasePage.clickButtonByText('Continue');
-				appellantCasePage.assertRelatedAppealValue(relatedCase);
 
 				//appellant case
+				caseDetailsPage.assertRelatedAppealValue(relatedCase);
 				appellantCasePage.validateBannerMessage('Success', 'Related appeal added');
 				appellantCasePage.clickBackLink();
-				appellantCasePage.clickAccordionByText('Overview');
-				appellantCasePage.assertRelatedAppealValue(relatedCase);
+
+				//case details
+				caseDetailsPage.clickAccordionByText('Overview');
+				caseDetailsPage.assertRelatedAppealValue(relatedCase);
 			});
 		});
 	});
@@ -249,13 +251,15 @@ describe('related appeals', () => {
 				lpaqPage.clickButtonByText('Continue');
 				lpaqPage.selectRadioButtonByValue('yes');
 				lpaqPage.clickButtonByText('Continue');
-				lpaqPage.assertRelatedAppealValue(relatedCase);
 
 				//LPAQ details
+				caseDetailsPage.assertRelatedAppealValue(relatedCase);
 				lpaqPage.validateBannerMessage('Success', 'Related appeal added');
 				lpaqPage.clickBackLink();
-				lpaqPage.clickAccordionByText('Overview');
-				lpaqPage.assertRelatedAppealValue(relatedCase);
+
+				//case details
+				caseDetailsPage.clickAccordionByText('Overview');
+				caseDetailsPage.assertRelatedAppealValue(relatedCase);
 			});
 		});
 	});

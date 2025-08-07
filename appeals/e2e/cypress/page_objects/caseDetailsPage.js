@@ -193,7 +193,8 @@ export class CaseDetailsPage extends Page {
 		county: () => cy.get('#county'),
 		postcode: () => cy.get('#post-code'),
 		changeInquiryDate: () => cy.getByData(this._cyDataSelectors.changeInquiryDate),
-		changeInquiryExpectedDays: () => cy.getByData(this._cyDataSelectors.changeInquiryNumberOfDays)
+		changeInquiryExpectedDays: () => cy.getByData(this._cyDataSelectors.changeInquiryNumberOfDays),
+		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -555,6 +556,10 @@ export class CaseDetailsPage extends Page {
 	/***************************************************************
 	 ************************ Verification ************************
 	 ****************************************************************/
+
+	assertRelatedAppealValue(caseRef) {
+		this.elements.relatedAppealValue(caseRef).should('be.visible');
+	}
 
 	checkAdditonalDocsAppellantCase(value) {
 		this.basePageElements.summaryListValue().last().contains(value).should('be.visible');
