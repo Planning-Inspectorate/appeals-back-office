@@ -218,6 +218,7 @@ export default {
 		lpaQuestionnaireSubmittedDate: new Date('2023-05-08T23:00:00.000Z'),
 		lpaStatement: null,
 		preserveGrantLoan: true,
+		historicEnglandConsultation: true,
 		newConditionDetails: null,
 		siteAccessDetails: 'There is a tall hedge around the site which obstructs the view of the site',
 		siteSafetyDetails: 'There may be no mobile reception at the site',
