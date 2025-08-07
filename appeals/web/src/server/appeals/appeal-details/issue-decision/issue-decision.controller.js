@@ -30,7 +30,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import {
 	baseUrl,
-	buildLogicData,
+	buildIssueDecisionLogicData,
 	checkDecisionUrl,
 	getDecisions,
 	mapDecisionOutcome
@@ -77,7 +77,7 @@ export const postIssueDecision = async (request, response) => {
 			lpaHasAppliedForCosts,
 			appellantDecisionHasAlreadyBeenIssued,
 			lpaDecisionHasAlreadyBeenIssued
-		} = buildLogicData(currentAppeal);
+		} = buildIssueDecisionLogicData(currentAppeal);
 
 		if (appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued) {
 			nextPageUrl = `${baseUrl(currentAppeal)}/appellant-costs-decision`;
@@ -156,7 +156,7 @@ export const postDecisionLetterUpload = async (request, response) => {
 		lpaHasAppliedForCosts,
 		appellantDecisionHasAlreadyBeenIssued,
 		lpaDecisionHasAlreadyBeenIssued
-	} = buildLogicData(currentAppeal);
+	} = buildIssueDecisionLogicData(currentAppeal);
 
 	let nextPageUrl;
 
@@ -243,7 +243,8 @@ export const postAppellantCostsDecision = async (request, response) => {
 		outcome: body.appellantCostsDecision
 	};
 
-	const { lpaHasAppliedForCosts, lpaDecisionHasAlreadyBeenIssued } = buildLogicData(currentAppeal);
+	const { lpaHasAppliedForCosts, lpaDecisionHasAlreadyBeenIssued } =
+		buildIssueDecisionLogicData(currentAppeal);
 
 	let nextPageUrl;
 
@@ -293,7 +294,8 @@ export const postAppellantCostsDecisionLetterUpload = async (request, response) 
 
 	request.currentFolder = cloneDeep(currentAppeal.costs.appellantDecisionFolder);
 
-	const { lpaHasAppliedForCosts, lpaDecisionHasAlreadyBeenIssued } = buildLogicData(currentAppeal);
+	const { lpaHasAppliedForCosts, lpaDecisionHasAlreadyBeenIssued } =
+		buildIssueDecisionLogicData(currentAppeal);
 
 	let nextPageUrl;
 	if (!specificDecisionType && lpaHasAppliedForCosts && !lpaDecisionHasAlreadyBeenIssued) {
@@ -378,7 +380,7 @@ export const renderLpaCostsDecision = async (request, response) => {
 	const { errors, currentAppeal, session } = request;
 
 	const { appellantHasAppliedForCosts, appellantDecisionHasAlreadyBeenIssued } =
-		buildLogicData(currentAppeal);
+		buildIssueDecisionLogicData(currentAppeal);
 
 	const backUrl =
 		appellantHasAppliedForCosts && !appellantDecisionHasAlreadyBeenIssued

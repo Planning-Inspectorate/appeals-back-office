@@ -62,6 +62,10 @@ const householdAppealDto = {
 	awaitingLinkedAppeal: false,
 	caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
 	costs: {},
+	costsDecision: {
+		awaitingAppellantCostsDecision: false,
+		awaitingLpaCostsDecision: false
+	},
 	internalCorrespondence: {},
 	decision: {
 		folderId: savedFolder.id,
@@ -157,6 +161,10 @@ const s78AppealDto = {
 	awaitingLinkedAppeal: false,
 	caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
 	costs: {},
+	costsDecision: {
+		awaitingAppellantCostsDecision: false,
+		awaitingLpaCostsDecision: false
+	},
 	decision: {
 		folderId: savedFolder.id,
 		path: `${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`

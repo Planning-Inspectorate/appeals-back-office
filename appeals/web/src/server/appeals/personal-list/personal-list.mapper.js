@@ -12,10 +12,11 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /** @typedef {import('@pins/appeals').AppealSummary} AppealSummary */
+/** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
-/** @typedef {Partial<AppealSummary & { appealTimetable: Record<string,string>, awaitingLinkedAppeal: boolean}>} PersonalListAppeal */
+/** @typedef {Partial<AppealSummary & { appealTimetable: Record<string,string>, awaitingLinkedAppeal: boolean, costsDecision?: CostsDecision}>} PersonalListAppeal */
 
 const ALLOWED_CHILD_APPEAL_ACTION_STATUSES = [
 	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
@@ -324,6 +325,18 @@ function mapRequiredActionToPersonalListActionHtml(
 				request,
 				`/appeals-service/appeal-details/${appealId}/issue-decision/decision`
 			)}">Issue decision<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+		}
+		case 'issueAppellantCostsDecision': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/issue-decision/issue-appellant-costs-decision-letter-upload`
+			)}">Issue appellant costs decision<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+		}
+		case 'issueLpaCostsDecision': {
+			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+				request,
+				`/appeals-service/appeal-details/${appealId}/issue-decision/issue-lpa-costs-decision-letter-upload`
+			)}">Issue LPA costs decision<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'lpaQuestionnaireOverdue': {
 			return 'LPA questionnaire overdue';
