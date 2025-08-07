@@ -21,6 +21,10 @@ import {
 	dayMonthYearHourMinuteToISOString,
 	dateISOStringToDayMonthYearHourMinute
 } from '#lib/dates.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { addressToString } from '#lib/address-formatter.js';
+import { getEventType } from '@pins/appeals/utils/event-type.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getViewWithdrawalDocumentFolder = async (request, response) => {
@@ -75,7 +79,7 @@ export const postWithdrawalRequestRequestUpload = async (request, response) => {
 	await postDocumentUpload({
 		request,
 		response,
-		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/withdrawal/withdrawal-request-date`
+		nextPageUrl: `/appeals-service/appeal-details/${currentAppeal.appealId}/withdrawal/new/check-your-answers`
 	});
 };
 
@@ -304,7 +308,7 @@ export const postCheckYourAnswers = async (request, response) => {
 			return response.status(500).render('app/500.njk');
 		}
 
-		if (!objectContainsAllKeys(request.session, ['fileUploadInfo', 'withdrawal'])) {
+		if (!objectContainsAllKeys(request.session, ['fileUploadInfo'])) {
 			return response.status(500).render('app/500.njk');
 		}
 
@@ -317,12 +321,21 @@ export const postCheckYourAnswers = async (request, response) => {
 			return renderCheckYourAnswers(request, response);
 		}
 
-		const { documentId, redactionStatus } = request.session.withdrawal;
+		const { documentId } = request.session.withdrawal;
+		const unredacted = '2';
 
 		const redactionStatuses = await getDocumentRedactionStatuses(apiClient);
 
 		addDocumentDetailsFormDataToFileUploadInfo(
-			{ items: [{ documentId, receivedDate: {}, redactionStatus }] },
+			{
+				items: [
+					{
+						documentId,
+						receivedDate: { date: new Date().toISOString() },
+						redactionStatus: unredacted
+					}
+				]
+			},
 			request.session.fileUploadInfo.files,
 			redactionStatuses
 		);
@@ -358,11 +371,36 @@ export const renderCheckYourAnswers = async (request, response) => {
 	if (!currentAppeal || currentAppeal.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN) {
 		return response.status(404).render('app/404');
 	}
-	if (!objectContainsAllKeys(session, ['fileUploadInfo', 'withdrawal'])) {
+	if (!objectContainsAllKeys(session, ['fileUploadInfo'])) {
 		return response.status(500).render('app/500.njk');
 	}
+	const personalisation = {
+		appeal_reference_number: currentAppeal.appealReference,
+		lpa_reference: currentAppeal.planningApplicationReference,
+		site_address: addressToString(currentAppeal.appealSite),
+		withdrawal_date: formatDate(new Date(), false),
+		event_set: !!getEventType(currentAppeal),
+		event_type: getEventType(currentAppeal)
+	};
+	const appealWithdrawnAppellantTemplateName = 'appeal-withdrawn-appellant.content.md';
+	const appealWithdrawnAppellantTemplate = await generateNotifyPreview(
+		request.apiClient,
+		appealWithdrawnAppellantTemplateName,
+		personalisation
+	);
 
-	const mappedPageContent = checkAndConfirmPage(currentAppeal, request.session);
+	const appealWithdrawnLPATemplateName = 'appeal-withdrawn-lpa.content.md';
+	const appealWithdrawnLPATemplate = await generateNotifyPreview(
+		request.apiClient,
+		appealWithdrawnLPATemplateName,
+		personalisation
+	);
+	const mappedPageContent = checkAndConfirmPage(
+		currentAppeal,
+		request.session,
+		appealWithdrawnAppellantTemplate,
+		appealWithdrawnLPATemplate
+	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,

@@ -13,7 +13,7 @@ router
 	.post(asyncHandler(controller.postWithdrawalRequestRequestUpload));
 
 router
-	.route('/check-your-answers')
+	.route('/new/check-your-answers')
 	.get(asyncHandler(controller.getCheckYourAnswers))
 	.post(validators.validateCheckYourAnswers, asyncHandler(controller.postCheckYourAnswers));
 
