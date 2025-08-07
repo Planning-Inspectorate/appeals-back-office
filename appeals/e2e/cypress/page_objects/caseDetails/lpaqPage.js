@@ -44,10 +44,6 @@ export class LpaqPage extends Page {
 	 ******************** Assertions *************************
 	 *********************************************************/
 
-	assertRelatedAppealValue(caseRef) {
-		this.elements.relatedAppealValue(caseRef).should('be.visible');
-	}
-
 	assertFieldLabelAndValue(labelText, expectedValue) {
 		cy.get('.govuk-summary-list__key')
 			.contains(labelText)
