@@ -17,6 +17,6 @@ export const mapLpaQuestionnaire = (data) => {
 	return {
 		...mapLpaQuestionnaireSharedFields(data),
 		preserveGrantLoan: casedata?.preserveGrantLoan ?? null,
-		historicEnglandConsultation: casedata?.historicEnglandConsultation ?? null
+		consultHistoricEngland: casedata?.historicEnglandConsultation ?? null
 	};
 };

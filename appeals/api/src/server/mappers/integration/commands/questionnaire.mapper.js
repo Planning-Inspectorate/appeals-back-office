@@ -65,7 +65,8 @@ export const mapQuestionnaireIn = (command, designatedSites) => {
 		...(isS78 && { ...sharedFields }),
 		...(isS20 && {
 			...sharedFields,
-			preserveGrantLoan: casedata.preserveGrantLoan
+			preserveGrantLoan: casedata.preserveGrantLoan,
+			historicEnglandConsultation: casedata.consultHistoricEngland
 		})
 	};
 };
