@@ -43,21 +43,25 @@ export function decisionInvalidConfirmationPage(appealId, appealReference) {
  * @param {string} appealReference
  * @param {import('#appeals/appeals.types.js').CheckboxItemParameter[]} mappedInvalidReasonOptions
  * @param {string | undefined} errorMessage
+ * @param {boolean} sourceIsAppellantCase
  * @returns {PageContent}
  */
 export const mapInvalidReasonPage = (
 	appealId,
 	appealReference,
 	mappedInvalidReasonOptions,
-	errorMessage = undefined
+	errorMessage = undefined,
+	sourceIsAppellantCase
 ) => {
 	const shortAppealReference = appealShortReference(appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Why is the appeal invalid?`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/appellant-case`,
-		preHeading: `Appeal ${shortAppealReference}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/${
+			sourceIsAppellantCase ? 'appellant-case' : ''
+		}`,
+		preHeading: `Appeal ${shortAppealReference} - mark as invalid`,
 		pageComponents: [
 			{
 				type: 'checkboxes',
@@ -86,7 +90,7 @@ export const mapInvalidReasonPage = (
 				option,
 				'invalidReason-',
 				'invalid-reason-',
-				'Which part is incorrect or incomplete?'
+				'Enter a reason'
 			)
 		);
 	return pageContent;
