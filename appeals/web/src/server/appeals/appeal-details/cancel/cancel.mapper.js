@@ -32,7 +32,7 @@ export function mapCancelAppealPage(appealData, errorMessage) {
 							text: 'Appeal invalid'
 						},
 						{
-							value: 'withdraw',
+							value: 'withdrawal',
 							text: 'Request to withdraw appeal'
 						}
 					],
