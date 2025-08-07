@@ -34,11 +34,11 @@ describe('mapAppellantProofOfEvidence', () => {
 					text: null
 				},
 				{
-					text: null
+					text: ''
 				},
 				{
 					classes: 'govuk-!-text-align-right',
-					html: null
+					html: ''
 				}
 			]
 		}
@@ -60,8 +60,8 @@ describe('mapAppellantProofOfEvidence', () => {
 		data.appealDetails.documentationSummary.appellantProofOfEvidence.representationStatus =
 			'not_received';
 		expected.display.tableItem[1].text = 'Awaiting';
-		expected.display.tableItem[2].text = null;
-		expected.display.tableItem[3].html = null;
+		expected.display.tableItem[2].text = '';
+		expected.display.tableItem[3].html = '';
 
 		const result = mapAppellantProofOfEvidence(data);
 
