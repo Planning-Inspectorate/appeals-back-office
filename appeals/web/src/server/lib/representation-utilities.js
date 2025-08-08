@@ -55,8 +55,8 @@ export function mapRepresentationDocumentSummaryActionLink(
 		'lpa-statement': `${currentRoute}/lpa-statement`,
 		'lpa-final-comments': `${currentRoute}/final-comments/lpa`,
 		'appellant-final-comments': `${currentRoute}/final-comments/appellant`,
-		'appellant-proofs-evidence': `${currentRoute}/appellant-proof-of-evidence`,
-		'lpa-proofs-evidence': `${currentRoute}/lpa-proof-of-evidence`
+		'appellant-proofs-evidence': `${currentRoute}/proof-of-evidence/appellant`,
+		'lpa-proofs-evidence': `${currentRoute}/proof-of-evidence/lpa`
 	};
 
 	return `<a href="${addBackLinkQueryToUrl(request, hrefs[representationType])}" data-cy="${

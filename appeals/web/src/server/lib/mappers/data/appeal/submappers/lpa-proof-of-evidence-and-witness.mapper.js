@@ -13,13 +13,16 @@ export const mapLPAProofOfEvidence = ({ appealDetails, currentRoute, request }) 
 
 	const statusText =
 		appealDetails.documentationSummary?.lpaProofOfEvidence?.representationStatus?.toLowerCase() ===
-		APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED.toLowerCase()
+		APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
 			? APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
 			: APPEAL_PROOF_OF_EVIDENCE_STATUS.AWAITING;
 
 	const { receivedAt } = appealDetails.documentationSummary?.lpaProofOfEvidence ?? {};
 
-	const receivedText = statusText === 'Received' ? dateISOStringToDisplayDate(receivedAt) : '';
+	const receivedText =
+		statusText === APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
+			? dateISOStringToDisplayDate(receivedAt)
+			: '';
 
 	return documentationFolderTableItem({
 		id,

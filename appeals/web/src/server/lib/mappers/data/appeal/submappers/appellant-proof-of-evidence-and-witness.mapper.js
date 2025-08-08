@@ -13,13 +13,16 @@ export const mapAppellantProofOfEvidence = ({ appealDetails, currentRoute, reque
 
 	const statusText =
 		appealDetails.documentationSummary?.appellantProofOfEvidence?.representationStatus?.toLowerCase() ===
-		APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED.toLowerCase()
+		APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
 			? APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
 			: APPEAL_PROOF_OF_EVIDENCE_STATUS.AWAITING;
 
 	const { receivedAt } = appealDetails.documentationSummary?.appellantProofOfEvidence ?? {};
 
-	const receivedText = statusText === 'Received' ? dateISOStringToDisplayDate(receivedAt) : '';
+	const receivedText =
+		statusText === APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
+			? dateISOStringToDisplayDate(receivedAt)
+			: '';
 
 	return documentationFolderTableItem({
 		id,

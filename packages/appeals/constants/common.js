@@ -74,8 +74,10 @@ export const APPEAL_REPRESENTATION_TYPE = Object.freeze({
 });
 
 export const APPEAL_PROOF_OF_EVIDENCE_STATUS = Object.freeze({
-	AWAITING: 'Awaiting',
-	RECEIVED: 'Received'
+	AWAITING: 'awaiting',
+	RECEIVED: 'received',
+	VALID: 'valid',
+	INVALID: 'invalid'
 });
 
 export const APPEAL_REPRESENTATION_STATUS = Object.freeze({

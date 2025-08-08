@@ -3545,6 +3545,146 @@ export const lpaStatementAwaitingReview = {
 	rejectionReasons: []
 };
 
+export const proofOfEvidenceForReview = {
+	itemCount: 1,
+	items: [
+		{
+			id: 3670,
+			origin: 'citizen',
+			author: 'Lee Thornton',
+			status: 'awaiting_review',
+			originalRepresentation: 'Awaiting proof of evidence review',
+			redactedRepresentation: '',
+			created: '2024-10-09T17:23:24.406Z',
+			notes: '',
+			attachments: [],
+			representationType: 'lpa_proofs_evidence',
+			siteVisitRequested: false,
+			represented: {
+				id: 3838,
+				name: 'Lee Thornton',
+				email: 'test1@example.com',
+				address: {
+					addressLine1: '',
+					postCode: ''
+				}
+			}
+		}
+	],
+	page: 1,
+	pageCount: 1,
+	pageSize: 30
+};
+
+export const proofOfEvidenceForReviewWithAttachments = {
+	itemCount: 1,
+	items: [
+		{
+			id: 3670,
+			origin: 'citizen',
+			author: 'Lee Thornton',
+			status: 'awaiting_review',
+			originalRepresentation: 'Awaiting proof of evidence review',
+			redactedRepresentation: '',
+			created: '2024-10-09T17:23:24.406Z',
+			notes: '',
+			representationType: 'lpa_proofs_evidence',
+			siteVisitRequested: false,
+			attachments: [
+				{
+					documentVersion: {
+						document: {
+							caseId: '4881',
+							folderId: 135568,
+							guid: 'ed52cdc1-3cc2-462a-8623-c1ae256969d6',
+							name: 'blank copy 5.pdf',
+							isDeleted: false
+						}
+					}
+				},
+				{
+					documentVersion: {
+						document: {
+							caseId: '4881',
+							folderId: 135568,
+							guid: 'ceb49369-01d4-479b-84f5-50136e7ceb6f',
+							name: 'deleted_file.pdf',
+							isDeleted: true
+						}
+					}
+				}
+			],
+			represented: {
+				id: 3838,
+				name: 'Lee Thornton',
+				email: 'test1@example.com',
+				address: {
+					addressLine1: '',
+					postCode: ''
+				}
+			}
+		}
+	],
+	page: 1,
+	pageCount: 1,
+	pageSize: 30
+};
+
+export const appellantProofOfEvidenceAwaitingReview = {
+	itemCount: 1,
+	items: [
+		{
+			id: 46419,
+			origin: 'citizen',
+			author: 'Eva Sharma',
+			status: 'awaiting_review',
+			redactedRepresentation: '',
+			created: '2025-01-21T14:35:04.205Z',
+			notes: 'test notes',
+			attachments: [],
+			representationType: 'appellant_proofs_evidence',
+			siteVisitRequested: false,
+			source: 'citizen',
+			represented: {
+				id: 50577,
+				name: 'Eva Sharma',
+				email: 'test9@example.com',
+				address: {
+					addressLine1: '',
+					postCode: ''
+				}
+			},
+			rejectionReasons: []
+		}
+	],
+	page: 1,
+	pageCount: 1,
+	pageSize: 30
+};
+
+export const lpaProofOfEvidenceAwaitingReview = {
+	itemCount: 1,
+	items: [
+		{
+			id: 46420,
+			origin: 'lpa',
+			author: 'Worthing Borough Council',
+			status: 'awaiting_review',
+			redactedRepresentation: '',
+			created: '2025-01-21T14:35:04.213Z',
+			notes: 'test notes',
+			attachments: [],
+			representationType: 'lpa_proofs_evidence',
+			siteVisitRequested: false,
+			source: 'citizen',
+			rejectionReasons: []
+		}
+	],
+	page: 1,
+	pageCount: 1,
+	pageSize: 30
+};
+
 export const getAppealRepsResponse = {
 	itemCount: 0,
 	items: [],
