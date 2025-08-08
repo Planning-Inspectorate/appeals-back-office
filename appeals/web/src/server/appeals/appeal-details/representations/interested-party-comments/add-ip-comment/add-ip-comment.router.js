@@ -14,12 +14,13 @@ import {
 } from './add-ip-comment.validators.js';
 import { validateInterestedPartyAddress } from '../common/validators.js';
 import { validateRedactionStatus } from '../../representations.validators.js';
+import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 
 const router = createRouter({ mergeParams: true });
 
 router
 	.route('/ip-details')
-	.get(asyncHandler(controller.renderIpDetails))
+	.get(saveBackUrl('addIpComment'), asyncHandler(controller.renderIpDetails))
 	.post(
 		validateInterestedPartyDetails,
 		saveBodyToSession('addIpComment'),
