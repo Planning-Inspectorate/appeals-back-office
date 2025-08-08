@@ -1533,7 +1533,7 @@ describe('LPA Questionnaire review', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain(
-				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
+				`>Reason must be ${textInputCharacterLimits.checkboxTextItemsLength} characters or less</a>`
 			);
 		});
 
@@ -1557,7 +1557,7 @@ describe('LPA Questionnaire review', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain(
-				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
+				`>Reason must be ${textInputCharacterLimits.checkboxTextItemsLength} characters or less</a>`
 			);
 		});
 

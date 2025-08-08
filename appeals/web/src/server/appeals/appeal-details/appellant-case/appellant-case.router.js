@@ -4,7 +4,7 @@ import * as controller from './appellant-case.controller.js';
 import * as validators from './appellant-case.validators.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
 import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
-import outcomeInvalidRouter from './outcome-invalid/outcome-invalid.router.js';
+import outcomeInvalidRouter from '../invalid-appeal/invalid-appeal.router.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { validateAppeal } from '../appeal-details.middleware.js';

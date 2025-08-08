@@ -314,11 +314,11 @@ export const appellantCaseInvalidReasons = [
 		hasText: false
 	},
 	{
-		name: "The appellant doesn't have the right to appeal",
+		name: 'The appellant does not have the right to appeal',
 		hasText: false
 	},
 	{
-		name: 'Other',
+		name: 'Other reason',
 		hasText: true
 	}
 ];

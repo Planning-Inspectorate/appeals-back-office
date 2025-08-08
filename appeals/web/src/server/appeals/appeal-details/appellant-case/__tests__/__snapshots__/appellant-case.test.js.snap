@@ -3822,7 +3822,7 @@ exports[`appellant-case GET /appellant-case/incomplete/date should render the up
 exports[`appellant-case GET /appellant-case/invalid should render the invalid reason page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3850,7 +3850,7 @@ exports[`appellant-case GET /appellant-case/invalid should render the invalid re
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -3883,7 +3883,7 @@ exports[`appellant-case GET /appellant-case/invalid should render the invalid re
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -5330,7 +5330,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incomplete-reason-2026-1">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#incomplete-reason-2026-1">Reason must be 1000 characters or less</a>
                             </li>
                         </ul>
                     </div>
@@ -6218,7 +6218,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incomplete-reason-2026-1">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#incomplete-reason-2026-1">Reason must be 1000 characters or less</a>
                             </li>
                         </ul>
                     </div>
@@ -7264,7 +7264,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#invalid-reason-22-1">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#invalid-reason-22-1">Reason must be 1000 characters or less</a>
                             </li>
                         </ul>
                     </div>
@@ -7273,7 +7273,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7300,7 +7300,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7333,7 +7333,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7378,7 +7378,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7405,7 +7405,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7438,7 +7438,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7483,7 +7483,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7510,7 +7510,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7543,7 +7543,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7588,7 +7588,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7615,7 +7615,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7647,7 +7647,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7692,7 +7692,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7719,7 +7719,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7751,7 +7751,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7787,7 +7787,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#invalid-reason-22-1">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#invalid-reason-22-1">Reason must be 1000 characters or less</a>
                             </li>
                         </ul>
                     </div>
@@ -7796,7 +7796,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7823,7 +7823,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7855,7 +7855,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7900,7 +7900,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7930,7 +7930,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7963,7 +7963,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
