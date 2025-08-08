@@ -17,4 +17,4 @@ The Planning Inspectorate cannot change or revoke the decision. You can [challen
 We welcome your feedback on our appeals service. Tell us on this short [feedback form](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).
 
 The Planning Inspectorate
-allcustomerteam@planninginspectorate.gov.uk
+[enquiries@planninginspectorate.gov.uk](mailto:enquiries@planninginspectorate.gov.uk)
