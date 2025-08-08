@@ -52,7 +52,7 @@ export const postCancelAppeal = async (request, response) => {
 		);
 	} else if (cancelReason === CANCEL_REASON.WITHDRAWAL) {
 		return response.redirect(
-			`/appeals-service/appeal-details/${request.currentAppeal.appealId}/withdrawal/start`
+			`/appeals-service/appeal-details/${request.currentAppeal.appealId}/withdrawal/new`
 		);
 	}
 
