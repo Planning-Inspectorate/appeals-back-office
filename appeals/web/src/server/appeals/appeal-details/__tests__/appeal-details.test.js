@@ -5025,7 +5025,7 @@ describe('appeal-details', () => {
 			appealStatuses
 				.filter(({ statusPassedEvent }) => !statusPassedEvent)
 				.forEach(({ appealStatus }) => {
-					it(`should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (${appealStatus})`, async () => {
+					it(`should not render a row in the case overview accordion, if the appeal status is before "issue_determination" (${appealStatus})`, async () => {
 						const appealId = 2;
 
 						nock('http://test/')
@@ -5041,17 +5041,7 @@ describe('appeal-details', () => {
 							});
 						nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
 						const response = await request.get(`${baseUrl}/${appealId}`);
-
-						const rowHtml = parseHtml(response.text, {
-							rootElement: '.govuk-summary-list__row.appeal-decision',
-							skipPrettyPrint: true
-						}).innerHTML;
-
-						expect(rowHtml).toMatchSnapshot();
-						expect(rowHtml).toContain('Decision</dt>');
-						expect(rowHtml).not.toContain(
-							'href="/appeals-service/appeal-details/2/issue-decision/decision"'
-						);
+						expect(response.text).not.toContain('govuk-summary-list__row appeal-decision');
 					});
 				});
 		});
