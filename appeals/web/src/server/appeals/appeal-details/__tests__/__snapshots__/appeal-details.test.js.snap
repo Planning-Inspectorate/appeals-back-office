@@ -54,30 +54,6 @@ data-index="0">
 
 exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with "Issue" action link to the issue decision start page, if the appeal status is "issue_determination" 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-decision">Issue<span class="govuk-visually-hidden"> Decision</span></a></dd></div>"`;
 
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (assign_case_officer) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (awaiting_transfer) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (closed) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (evidence) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (final_comments) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (lpa_questionnaire) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (ready_to_start) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (statements) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (transferred) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (validation) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (withdrawn) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
-exports[`appeal-details GET /:appealId Appeal decision should render a row in the case overview accordion with no action link, if the appeal status is anything other than "issue_determination" (witnesses) 1`] = `"<div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt><dd class="govuk-summary-list__value"> Not issued</dd></div>"`;
-
 exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (complete) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/issue-appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-appellant-costs-decision">Issue<span class="govuk-visually-hidden"> Appellant costs decision</span></a></dd></div>"`;
 
 exports[`appeal-details GET /:appealId Appellant costs decision should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (invalid) 1`] = `"<div class="govuk-summary-list__row costs-appellant-decision"><dt class="govuk-summary-list__key"> Appellant costs decision</dt><dd class="govuk-summary-list__value"> Not issued</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/issue-decision/issue-appellant-costs-decision-letter-upload?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="issue-appellant-costs-decision">Issue<span class="govuk-visually-hidden"> Appellant costs decision</span></a></dd></div>"`;
@@ -588,9 +564,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -984,9 +957,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -1425,9 +1395,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -1818,9 +1785,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -2276,9 +2240,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -2738,9 +2699,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -3193,9 +3151,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -3644,9 +3599,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -4111,9 +4063,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                                     </ul>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -4549,9 +4498,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/other-appeals/add"
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -5005,9 +4951,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                                         </li>
                                     </ul>
                                 </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -5547,9 +5490,6 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -7429,9 +7369,6 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Invalid</dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -7882,9 +7819,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -8323,9 +8257,6 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
                             </div>
                         </dl>
                     </div>
@@ -8791,9 +8722,6 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                 </dd>
                             </div>
-                            <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                <dd class="govuk-summary-list__value">Dismissed</dd>
-                            </div>
                         </dl>
                     </div>
                 </div>
@@ -9251,9 +9179,6 @@ exports[`appeal-details should not render a back button 1`] = `
                                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/other-appeals/add"
                                                 data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Related appeals</span></a>
                                             </dd>
-                                        </div>
-                                        <div class="govuk-summary-list__row appeal-decision"><dt class="govuk-summary-list__key"> Decision</dt>
-                                            <dd class="govuk-summary-list__value">Dismissed</dd>
                                         </div>
                                     </dl>
                                 </div>

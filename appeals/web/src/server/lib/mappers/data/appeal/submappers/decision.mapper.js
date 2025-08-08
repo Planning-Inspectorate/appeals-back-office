@@ -16,6 +16,10 @@ import config from '#environment/config.js';
 export const mapDecision = ({ appealDetails, session, request }) => {
 	const { appealId, appealStatus, decision } = appealDetails;
 
+	if (!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT)) {
+		return { id: 'decision', display: {} };
+	}
+
 	const canIssueDecision =
 		!decision?.outcome && appealStatus === APPEAL_CASE_STATUS.ISSUE_DETERMINATION;
 
