@@ -53,7 +53,7 @@ let caseRef;
 
 const setupTestCase = () => {
 	cy.login(users.appeals.caseAdmin);
-	cy.createCase({ caseType: 'W' }).then((ref) => {
+	cy.createCase({ caseType: 'W', planningObligation: true }).then((ref) => {
 		caseRef = ref;
 		cy.addLpaqSubmissionToCase(caseRef);
 		happyPathHelper.assignCaseOfficer(caseRef);
@@ -68,7 +68,9 @@ beforeEach(() => {
 });
 
 it('Start case as inquiry with address and estimated days', () => {
-	dateTimeSection.enterInquiryDate(inquiryDate);
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		dateTimeSection.enterInquiryDate(inquiryDate);
+	});
 	caseDetailsPage.clickButtonByText('Continue');
 	caseDetailsPage.selectRadioButtonByValue('Yes');
 	caseDetailsPage.inputEstimatedInquiryDays(estimatedInquiryDays);
@@ -82,6 +84,20 @@ it('Start case as inquiry with address and estimated days', () => {
 	caseDetailsPage.clickButtonByText('Start case');
 	caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 	caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
+
+	// Verify timetable row
+	const timeTableRows = [
+		'Valid date',
+		'Start date',
+		'LPA questionnaire due',
+		'LPA statement due',
+		'Interested party comments due',
+		'Statement of common ground due',
+		'Planning obligation due',
+		'Proof of evidence and witness due',
+		'Inquiry'
+	];
+	caseDetailsPage.verifyTimeTableRows(timeTableRows);
 });
 
 it('Start case as inquiry without address or estimated days', () => {
