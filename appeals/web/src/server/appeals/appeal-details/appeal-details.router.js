@@ -32,6 +32,7 @@ import internalCorrespondenceRouter from './internal-correspondence/internal-cor
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
 import interestedPartyCommentsRouter from './representations/interested-party-comments/interested-party-comments.router.js';
 import finalCommentsRouter from './representations/final-comments/final-comments.router.js';
+import proofOfEvidenceRouter from './representations/proof-of-evidence/proof-of-evidence.router.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
 import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
 import representationsRouter from './representations/representations.router.js';
@@ -74,6 +75,7 @@ router.use('/:appealId/timetable', timetableRouter);
 router.use('/:appealId/appellant-case', appellantCaseRouter);
 router.use('/:appealId/interested-party-comments', interestedPartyCommentsRouter);
 router.use('/:appealId/final-comments', finalCommentsRouter);
+router.use('/:appealId/proof-of-evidence', proofOfEvidenceRouter);
 router.use(
 	'/:appealId/site-visit',
 	validateAppeal,

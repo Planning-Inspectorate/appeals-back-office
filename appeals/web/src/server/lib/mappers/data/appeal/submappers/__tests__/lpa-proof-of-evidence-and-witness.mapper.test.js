@@ -51,7 +51,7 @@ describe('mapLPAProofOfEvidence', () => {
 
 	it('should return correct table row when status is received', () => {
 		data.appealDetails.documentationSummary.lpaProofOfEvidence.representationStatus = 'received';
-		expected.display.tableItem[1].text = 'Received';
+		expected.display.tableItem[1].text = 'received';
 		expected.display.tableItem[2].text = '2 August 2025';
 		expected.display.tableItem[3].html = expect.stringContaining('LPA proof of evidence');
 
@@ -63,7 +63,7 @@ describe('mapLPAProofOfEvidence', () => {
 	it('should return correct table row when status is not received', () => {
 		data.appealDetails.documentationSummary.lpaProofOfEvidence.representationStatus =
 			'not_received';
-		expected.display.tableItem[1].text = 'Awaiting';
+		expected.display.tableItem[1].text = 'awaiting';
 		expected.display.tableItem[2].text = '';
 		expected.display.tableItem[3].html = '';
 
