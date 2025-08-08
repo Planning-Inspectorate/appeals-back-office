@@ -3,7 +3,7 @@ import {
 	sharedIpCommentsPage
 } from './interested-party-comments.mapper.js';
 import * as interestedPartyCommentsService from './interested-party-comments.service.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 
 /**
  *
@@ -61,7 +61,7 @@ export async function renderInterestedPartyComments(request, response) {
 		validComments,
 		invalidComments,
 		session,
-		getBackLinkUrlFromQuery(request)
+		getSavedBackUrl(request, 'manageIpComments')
 	);
 
 	return response.status(200).render('appeals/appeal/interested-party-comments.njk', {
@@ -84,7 +84,11 @@ export async function renderSharedInterestedPartyComments(request, response) {
 		'published'
 	);
 
-	const pageContent = sharedIpCommentsPage(currentAppeal, comments.items);
+	const pageContent = sharedIpCommentsPage(
+		currentAppeal,
+		comments.items,
+		getSavedBackUrl(request, 'manageIpComments')
+	);
 
 	return response.status(200).render('patterns/display-page.pattern.njk', {
 		errors,

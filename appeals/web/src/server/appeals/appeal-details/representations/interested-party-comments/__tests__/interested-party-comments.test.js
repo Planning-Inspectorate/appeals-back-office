@@ -110,6 +110,46 @@ describe('interested-party-comments', () => {
 			expect(backLinkInnerHtml).toContain(`href="${backLinkUrl}`);
 		});
 
+		it('should render a back link to the originally specified backUrl', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.twice()
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					appealStatus: 'statements'
+				});
+			nock('http://test/')
+				.get('/appeals/2/reps')
+				.query({ pageNumber: '1', pageSize: '1000', status: 'awaiting_review', type: 'comment' })
+				.reply(200, interestedPartyCommentsAwaitingReview);
+			nock('http://test/')
+				.get('/appeals/2/reps')
+				.query({ pageNumber: '1', pageSize: '1000', status: 'valid', type: 'comment' })
+				.reply(200, interestedPartyCommentsValid);
+			nock('http://test/')
+				.get('/appeals/2/reps')
+				.query({ pageNumber: '1', pageSize: '1000', status: 'invalid', type: 'comment' })
+				.reply(200, interestedPartyCommentsInvalid);
+
+			// set back URL
+			await request.get(`${baseUrl}/2/interested-party-comments?backUrl=/test/back/url`);
+			// visit other page(s)
+			await request.get(`${baseUrl}/2/interested-party-comments/add/ip-details`);
+			// visit the original page
+			const response = await request.get(`${baseUrl}/2/interested-party-comments`);
+
+			const backLinkInnerHtml = parseHtml(response.text, {
+				rootElement: '.govuk-back-link'
+			}).innerHTML;
+
+			expect(response.statusCode).toEqual(200);
+
+			const backLinkUrl = '/test/back/url';
+
+			expect(backLinkInnerHtml).toContain(`href="${backLinkUrl}`);
+		});
+
 		it('should render interestedPartyComments page with invalid comments', async () => {
 			const response = await request.get(`${baseUrl}/2/interested-party-comments`);
 			const dom = parseHtml(response.text);
@@ -211,6 +251,31 @@ describe('interested-party-comments', () => {
 			const backLinkHtml = parseHtml(response.text, { rootElement: '.govuk-back-link' }).innerHTML;
 
 			expect(backLinkHtml).toContain('href="/test/back/url"');
+		});
+
+		it('should show the backUrl for the previous page if backUrl was more recently set on the main landing page', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.twice()
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					appealStatus: 'statements'
+				});
+
+			await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/ip-details?backUrl=/test/back/url1`
+			);
+			await request.get(`${baseUrl}/${appealId}/interested-party-comments?backUrl=/test/back/url2`);
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/ip-details`
+			);
+
+			const backLinkHtml = parseHtml(response.text, { rootElement: '.govuk-back-link' });
+
+			expect(backLinkHtml.querySelector('a')?.getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments'
+			);
 		});
 	});
 });
