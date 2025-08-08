@@ -8,7 +8,7 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/new')
-	.get(validateAppeal, asyncHandler(controller.getCancelAppealPage))
-	.post(validateAppeal, validateCancelReason, asyncHandler(controller.postCancelAppeal));
+	.get(validateAppeal, asyncHandler(controller.getInvalidAppealReasonsPage))
+	.post(validateAppeal, validateCancelReason, asyncHandler(controller.postInvalidAppealReasons));
 
 export default router;

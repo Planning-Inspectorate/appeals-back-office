@@ -1,28 +1,29 @@
-import { mapCancelAppealPage } from './invalid.mapper.js';
+import { mapInvalidAppealReasonsPage } from './invalid.mapper.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getCancelAppealPage = async (request, response) => {
-	return renderCancelAppealPage(request, response);
+export const getInvalidAppealReasonsPage = async (request, response) => {
+	return renderInvalidAppealReasonsPage(request, response);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-const renderCancelAppealPage = async (request, response) => {
-	const { errors, currentAppeal } = request;
+const renderInvalidAppealReasonsPage = async (request, response) => {
+	const { errors, currentAppeal, session } = request;
 
 	if (!currentAppeal) {
 		return response.status(404).render('app/404.njk');
 	}
 
 	const appealId = currentAppeal.appealId;
-	const mappedPageContent = mapCancelAppealPage(
+	const mappedPageContent = mapInvalidAppealReasonsPage(
 		currentAppeal,
-		errors ? errors['cancelReasonRadio'].msg : undefined
+		session,
+		errors ? errors['appealInvalidReasons'].msg : undefined
 	);
 
 	if (!appealId || !mappedPageContent) {
@@ -39,27 +40,14 @@ const renderCancelAppealPage = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postCancelAppeal = async (request, response) => {
+export const postInvalidAppealReasons = async (request, response) => {
+	request.session.appealInvalidReasons = request.body['appealInvalidReasons'];
+
 	if (request.errors) {
-		return renderCancelAppealPage(request, response);
+		return renderInvalidAppealReasonsPage(request, response);
 	}
 
-	const cancelReason = request.body['cancelReasonRadio'];
-
-	if (cancelReason === CANCEL_REASON.INVALID) {
-		return response.redirect(
-			`/appeals-service/appeal-details/${request.currentAppeal.appealId}/invalid/new`
-		);
-	} else if (cancelReason === CANCEL_REASON.WITHDRAWAL) {
-		return response.redirect(
-			`/appeals-service/appeal-details/${request.currentAppeal.appealId}/withdrawal/start`
-		);
-	}
-
-	return response.status(500).render('app/500.njk');
-};
-
-const CANCEL_REASON = {
-	INVALID: 'invalid',
-	WITHDRAWAL: 'withdrawal'
+	return response.redirect(
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/invalid/check`
+	);
 };
