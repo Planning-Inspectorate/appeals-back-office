@@ -22,6 +22,7 @@ export const enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml = (
 				textItems: option?.addAnother?.textItems,
 				inputName: inputName + option.value,
 				inputId: inputId + option.value,
+				error: option?.error,
 				labelText
 			}
 		}
