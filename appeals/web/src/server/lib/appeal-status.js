@@ -10,7 +10,11 @@ import { capitalizeFirstLetter } from '#lib/string-utilities.js';
  * @returns {string}
  * */
 export function mapStatusText(appealStatus, appealType, appealProcedureType) {
-	if (![APPEAL_TYPE.HOUSEHOLDER, APPEAL_TYPE.S78].includes(appealType)) {
+	if (
+		![APPEAL_TYPE.HOUSEHOLDER, APPEAL_TYPE.S78, APPEAL_TYPE.PLANNED_LISTED_BUILDING].includes(
+			appealType
+		)
+	) {
 		return appealStatus;
 	}
 
@@ -66,9 +70,7 @@ export function mapStatusFilterLabel(appealStatus) {
 		appealStatus
 			.replace('issue_determination', 'issue_decision')
 			.replace('lpa_', 'LPA_')
-			.replace('awaiting_event', 'awaiting_EVENT')
-			.replace('event', 'EVENT_ready_to_set_up')
-			.replace('EVENT', 'event')
+			.replace(/^event$/, 'event_ready_to_set_up')
 			.replaceAll('_', ' ')
 	);
 }
