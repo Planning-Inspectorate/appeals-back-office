@@ -3,6 +3,16 @@ import * as appellantCaseService from '../appellant-case/appellant-case.service.
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
 import { decisionInvalidConfirmationPage, mapInvalidReasonPage } from './invalid-appeal.mapper.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import {
+	buildRejectionReasons,
+	rejectionReasonHtml
+} from '../representations/common/components/reject-reasons.js';
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
 
 /**
  *
@@ -139,4 +149,129 @@ export const postInvalidReason = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getConfirmation = async (request, response) => {
 	renderDecisionInvalidConfirmationPage(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getCheckPage = async (request, response) => {
+	try {
+		if (!objectContainsAllKeys(request.session, 'webAppellantCaseReviewOutcome')) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		const {
+			currentAppeal,
+			session: { webAppellantCaseReviewOutcome },
+			errors
+		} = request;
+
+		const reasonOptions =
+			await appellantCaseService.getAppellantCaseNotValidReasonOptionsForOutcome(
+				request.apiClient,
+				webAppellantCaseReviewOutcome.validationOutcome
+			);
+		if (!reasonOptions) {
+			throw new Error('error retrieving invalid reason options');
+		}
+
+		const invalidReasons = buildRejectionReasons(
+			reasonOptions,
+			webAppellantCaseReviewOutcome.reasons,
+			webAppellantCaseReviewOutcome.reasonsText
+		);
+
+		const personalisation = {
+			appeal_reference_number: currentAppeal.appealReference,
+			lpa_reference: currentAppeal.planningApplicationReference || '',
+			site_address: appealSiteToAddressString(currentAppeal.appealSite),
+			reasons: invalidReasons
+		};
+
+		const { appellantTemplate, lpaTemplate } = await generateInvalidAppealNotifyPreviews(
+			request.apiClient,
+			personalisation
+		);
+
+		return renderCheckYourAnswersComponent(
+			{
+				title: 'Check details and mark appeal as invalid',
+				heading: 'Check details and mark appeal as invalid',
+				preHeading: `Appeal ${appealShortReference(currentAppeal.appealReference)}`,
+				backLinkUrl: `${request.baseUrl}/new`,
+				submitButtonText: 'Mark appeal as invalid',
+				responses: {
+					'Why is the appeal invalid?': {
+						html: '',
+						pageComponents: [
+							{
+								type: 'show-more',
+								parameters: {
+									html: rejectionReasonHtml(invalidReasons),
+									labelText: 'Read more'
+								}
+							}
+						],
+						actions: {
+							Change: {
+								href: `${addBackLinkQueryToUrl(request, `${request.baseUrl}/new`)}`,
+								visuallyHiddenText: 'Why is the appeal invalid?'
+							}
+						}
+					}
+				},
+				after: [
+					{
+						type: 'details',
+						wrapperHtml: {
+							opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+							closing: '</div></div>'
+						},
+						parameters: {
+							summaryText: `Preview email to appellant`,
+							html: appellantTemplate.renderedHtml
+						}
+					},
+					{
+						type: 'details',
+						wrapperHtml: {
+							opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+							closing: '</div></div>'
+						},
+						parameters: {
+							summaryText: `Preview email to LPA`,
+							html: lpaTemplate.renderedHtml
+						}
+					}
+				]
+			},
+			response,
+			errors
+		);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong whilst marking appeal as invalid'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * Generate Notify preview templates for appellant and LPA
+ * @param {import('got').Got} apiClient
+ * @param {object} personalisation
+ * @returns {Promise<{appellantTemplate: any, lpaTemplate: any}>}
+ */
+const generateInvalidAppealNotifyPreviews = async (apiClient, personalisation) => {
+	const appellantTemplateName = 'appeal-invalid.content.md';
+	//TODO: replace with the correct LPA template name
+	const lpaTemplateName = 'appeal-invalid.content.md';
+
+	const [appellantTemplate, lpaTemplate] = await Promise.all([
+		generateNotifyPreview(apiClient, appellantTemplateName, personalisation),
+		generateNotifyPreview(apiClient, lpaTemplateName, personalisation)
+	]);
+	return { appellantTemplate, lpaTemplate };
 };
