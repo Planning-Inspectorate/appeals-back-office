@@ -30,7 +30,7 @@ describe('Date Validation', () => {
 	});
 
 	it('All fields are blank', () => {
-		inquirySectionPage.setUpEnquiry('', '', '', '10', '00');
+		inquirySectionPage.setUpInquiry('', '', '', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Enter the inquiry date'],
@@ -39,7 +39,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Only day entered - month and year are blank', () => {
-		inquirySectionPage.setUpEnquiry('08', '', '', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '', '', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date must include a month and a year'],
@@ -48,7 +48,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Only month entered - day and year are blank', () => {
-		inquirySectionPage.setUpEnquiry('', '08', '', '10', '00');
+		inquirySectionPage.setUpInquiry('', '08', '', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date must include a day and a year'],
@@ -57,7 +57,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Only year entered - day and month are blank', () => {
-		inquirySectionPage.setUpEnquiry('', '', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('', '', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date must include a day and a month'],
@@ -66,7 +66,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Day and month entered - year is blank', () => {
-		inquirySectionPage.setUpEnquiry('08', '08', '', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '08', '', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date must include a year'],
@@ -75,7 +75,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Year and day entered - month is blank', () => {
-		inquirySectionPage.setUpEnquiry('08', '', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date must include a month'],
@@ -84,7 +84,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Month and year entered - day is blank', () => {
-		inquirySectionPage.setUpEnquiry('', '08', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('', '08', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date must include a day'],
@@ -93,7 +93,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Year has too few digits', () => {
-		inquirySectionPage.setUpEnquiry('08', '08', '202', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '08', '202', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date year must be 4 digits'],
@@ -102,7 +102,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Day has too many digits', () => {
-		inquirySectionPage.setUpEnquiry('808', '08', '202', '10', '00');
+		inquirySectionPage.setUpInquiry('808', '08', '202', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date day must be 1 or 2 digits'],
@@ -111,7 +111,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Month has too many digits', () => {
-		inquirySectionPage.setUpEnquiry('08', '808', '202', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '808', '202', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date month must be 1 or 2 digits'],
@@ -120,7 +120,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Year has too many digits', () => {
-		inquirySectionPage.setUpEnquiry('08', '08', '20258', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '08', '20258', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date year must be 4 digits'],
@@ -129,7 +129,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Day is not in valid range - < 1', () => {
-		inquirySectionPage.setUpEnquiry('0', '08', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('0', '08', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date day must be between 1 and 31'],
@@ -138,7 +138,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Day is not in valid range - > 31', () => {
-		inquirySectionPage.setUpEnquiry('32', '08', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('32', '08', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date day must be between 1 and 31'],
@@ -147,7 +147,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Month is not in valid range - < 1', () => {
-		inquirySectionPage.setUpEnquiry('08', '0', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '0', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date month must be between 1 and 12'],
@@ -156,7 +156,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Month is not in valid range - > 12', () => {
-		inquirySectionPage.setUpEnquiry('08', '18', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '18', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date month must be between 1 and 12'],
@@ -165,7 +165,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Day contains invalid characters - alphabetical', () => {
-		inquirySectionPage.setUpEnquiry('abc', '18', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('abc', '18', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date day must be a number'],
@@ -174,7 +174,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Day contains invalid characters - empty space', () => {
-		inquirySectionPage.setUpEnquiry(' ', '18', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry(' ', '18', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date day must be a number'],
@@ -183,7 +183,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Day contains invalid characters - symbolic characters', () => {
-		inquirySectionPage.setUpEnquiry('%^&', '18', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('%^&', '18', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date day must be a number'],
@@ -192,7 +192,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Day contains invalid characters - aplhanumeric', () => {
-		inquirySectionPage.setUpEnquiry('abc123', '18', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('abc123', '18', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date day must be a number'],
@@ -201,7 +201,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Month contains invalid characters - alphabetical', () => {
-		inquirySectionPage.setUpEnquiry('08', 'abc', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('08', 'abc', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date month must be a number'],
@@ -210,7 +210,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Month contains invalid characters - symbolic characters', () => {
-		inquirySectionPage.setUpEnquiry('08', '%^&', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '%^&', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date month must be a number'],
@@ -219,7 +219,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Month contains invalid characters - aplhanumeric', () => {
-		inquirySectionPage.setUpEnquiry('08', 'abc123', '2025', '10', '00');
+		inquirySectionPage.setUpInquiry('08', 'abc123', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date month must be a number'],
@@ -228,7 +228,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Year contains invalid characters - alphabetical', () => {
-		inquirySectionPage.setUpEnquiry('08', '08', 'abc', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '08', 'abc', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date year must be a number'],
@@ -237,7 +237,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Year contains invalid characters - symbolic characters', () => {
-		inquirySectionPage.setUpEnquiry('08', '08', '%^&', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '08', '%^&', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date year must be a number'],
@@ -246,7 +246,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Year contains invalid characters - aplhanumeric', () => {
-		inquirySectionPage.setUpEnquiry('08', '08', 'abc123', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '08', 'abc123', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['Inquiry date year must be a number'],
@@ -255,7 +255,7 @@ describe('Date Validation', () => {
 	});
 
 	it('Date is in the past', () => {
-		inquirySectionPage.setUpEnquiry('08', '08', '2024', '10', '00');
+		inquirySectionPage.setUpInquiry('08', '08', '2024', '10', '00');
 
 		inquirySectionPage.verifyErrors({
 			messages: ['The inquiry date must be in the future'],
