@@ -52,7 +52,9 @@ export async function postShareRepresentations(request, response) {
 		switch (currentAppeal.appealStatus) {
 			case APPEAL_CASE_STATUS.STATEMENTS:
 				if (publishedReps.length === 0 && currentAppeal.procedureType === 'Hearing') {
-					return 'progressedToHearingReadyToSetUp';
+					return currentAppeal.hearing.hearingStartTime
+						? 'progressedToAwaitingHearing'
+						: 'progressedToHearingReadyToSetUp';
 				} else if (publishedReps.length > 0) {
 					return 'commentsAndLpaStatementShared';
 				} else {
