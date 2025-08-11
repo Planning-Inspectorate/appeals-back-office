@@ -5,7 +5,7 @@ describe('business day validation routes', () => {
 		describe('POST', () => {
 			test('valid business day', async () => {
 				const payload = {
-					inputDate: '2023-12-20T23:59:00.000Z'
+					inputDate: '2024-12-20T23:59:00.000Z'
 				};
 
 				const response = await request.post('/appeals/validate-business-date').send(payload);
@@ -15,7 +15,7 @@ describe('business day validation routes', () => {
 
 			test('invalid business day', async () => {
 				const payload = {
-					inputDate: '2023-12-25T23:59:00.000Z'
+					inputDate: '2024-12-25T23:59:00.000Z'
 				};
 
 				const response = await request.post('/appeals/validate-business-date').send(payload);
