@@ -2858,7 +2858,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span></span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of development</h2>
@@ -2911,7 +2911,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span></span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
@@ -2968,7 +2968,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span></span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
@@ -3025,7 +3025,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span></span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
@@ -3101,7 +3101,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/ should rend
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span>The total size of your uploaded files must be smaller than 1GB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>Each file must be a PDF, DOC, DOCX, PPT, PPTX, XLS, XLSX, MSG, JPG, JPEG, MPEG, MP3, MP4, MOV, PNG, TIF or TIFF and smaller than 25MB.</span><span></span><span>The total size of your uploaded files must be smaller than 1GB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload additional documents</h2>
@@ -3153,7 +3153,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload evidence of your agreement to change the description of development</h2>
@@ -3205,7 +3205,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Update additional document</h2>
@@ -3261,7 +3261,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Update additional document</h2>
@@ -3317,7 +3317,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Update additional document</h2>
@@ -3392,7 +3392,7 @@ exports[`appellant-case GET /appellant-case/add-documents/:folderId/:documentId 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="WyJ0ZXN0LXBkZi1kb2N1bWVudEZvbGRlckluZm8ucGRmIiwic2FtcGxlLTIwcy1kb2N1bWVudEZvbGRlckluZm8ubXA0IiwicGgwLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIiwicGgxLWRvY3VtZW50Rm9sZGVySW5mby5qcGVnIl0=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Update additional document</h2>
@@ -3544,8 +3544,8 @@ exports[`appellant-case GET /appellant-case/check-your-answers should render the
                         <div class="pins-show-more" data-label="Read more" data-mode="html">
                             <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
                                 <li>Documents have not been submitted on time: test reason text 1</li>
-                                <li>Other: test reason text 1</li>
-                                <li>Other: test reason text 2</li>
+                                <li>Other reason: test reason text 1</li>
+                                <li>Other reason: test reason text 2</li>
                             </ul>
                         </div>
                     </dd>
@@ -3822,7 +3822,7 @@ exports[`appellant-case GET /appellant-case/incomplete/date should render the up
 exports[`appellant-case GET /appellant-case/invalid should render the invalid reason page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -3850,7 +3850,7 @@ exports[`appellant-case GET /appellant-case/invalid should render the invalid re
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -3870,12 +3870,12 @@ exports[`appellant-case GET /appellant-case/invalid should render the invalid re
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
                                 type="checkbox" value="23">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant doesn&#39;t have the right to appeal</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant does not have the right to appeal</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
                                 type="checkbox" value="24" data-aria-controls="conditional-invalid-reason-4">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other reason</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
                             id="conditional-invalid-reason-4">
@@ -3883,7 +3883,7 @@ exports[`appellant-case GET /appellant-case/invalid should render the invalid re
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -5330,7 +5330,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incomplete-reason-2026-1">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#incomplete-reason-2026-1">Reason must be 1000 characters or less</a>
                             </li>
                         </ul>
                     </div>
@@ -6218,7 +6218,7 @@ exports[`appellant-case POST /appellant-case/incomplete should re-render the inc
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#incomplete-reason-2026-1">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#incomplete-reason-2026-1">Reason must be 1000 characters or less</a>
                             </li>
                         </ul>
                     </div>
@@ -7264,7 +7264,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#invalid-reason-22-1">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#invalid-reason-22-1">Reason must be 1000 characters or less</a>
                             </li>
                         </ul>
                     </div>
@@ -7273,7 +7273,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7300,7 +7300,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7320,12 +7320,12 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
                                 type="checkbox" value="23">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant doesn&#39;t have the right to appeal</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant does not have the right to appeal</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
                                 type="checkbox" value="24" data-aria-controls="conditional-invalid-reason-4">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other reason</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
                             id="conditional-invalid-reason-4">
@@ -7333,7 +7333,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7378,7 +7378,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7405,7 +7405,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7425,12 +7425,12 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
                                 type="checkbox" value="23">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant doesn&#39;t have the right to appeal</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant does not have the right to appeal</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
                                 type="checkbox" value="24" data-aria-controls="conditional-invalid-reason-4">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other reason</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
                             id="conditional-invalid-reason-4">
@@ -7438,7 +7438,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7483,7 +7483,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7510,7 +7510,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7530,12 +7530,12 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
                                 type="checkbox" value="23">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant doesn&#39;t have the right to appeal</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant does not have the right to appeal</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
                                 type="checkbox" value="24" data-aria-controls="conditional-invalid-reason-4">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other reason</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
                             id="conditional-invalid-reason-4">
@@ -7543,7 +7543,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7588,7 +7588,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7615,7 +7615,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7635,19 +7635,19 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
                                 type="checkbox" value="23">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant doesn&#39;t have the right to appeal</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant does not have the right to appeal</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
                                 type="checkbox" value="24" checked data-aria-controls="conditional-invalid-reason-4">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other reason</label>
                             </div>
                             <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-4">
                                 <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7692,7 +7692,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7719,7 +7719,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7739,19 +7739,19 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
                                 type="checkbox" value="23">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant doesn&#39;t have the right to appeal</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant does not have the right to appeal</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
                                 type="checkbox" value="24" checked data-aria-controls="conditional-invalid-reason-4">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other reason</label>
                             </div>
                             <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-4">
                                 <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7787,7 +7787,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#invalid-reason-22-1">Text in text fields cannot exceed 1000 characters</a>
+                            <li><a href="#invalid-reason-22-1">Reason must be 1000 characters or less</a>
                             </li>
                         </ul>
                     </div>
@@ -7796,7 +7796,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7823,7 +7823,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7843,19 +7843,19 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
                                 type="checkbox" value="23">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant doesn&#39;t have the right to appeal</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant does not have the right to appeal</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
                                 type="checkbox" value="24" checked data-aria-controls="conditional-invalid-reason-4">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other reason</label>
                             </div>
                             <div class="govuk-checkboxes__conditional" id="conditional-invalid-reason-4">
                                 <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7900,7 +7900,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as invalid</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -7930,7 +7930,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-22-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>
@@ -7950,12 +7950,12 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-3" name="invalidReason"
                                 type="checkbox" value="23">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant doesn&#39;t have the right to appeal</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-3">The appellant does not have the right to appeal</label>
                             </div>
                             <div class="govuk-checkboxes__item">
                                 <input class="govuk-checkboxes__input" id="invalid-reason-4" name="invalidReason"
                                 type="checkbox" value="24" data-aria-controls="conditional-invalid-reason-4">
-                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other</label>
+                                <label class="govuk-label govuk-checkboxes__label" for="invalid-reason-4">Other reason</label>
                             </div>
                             <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
                             id="conditional-invalid-reason-4">
@@ -7963,7 +7963,7 @@ exports[`appellant-case POST /appellant-case/invalid should re-render the invali
                                     <div class="pins-add-another__item govuk-!-margin-top-6">
                                         <div class="govuk-grid-row">
                                             <div class="govuk-grid-column-full flex-row space-between">
-                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Which part is incorrect or incomplete?</label>
+                                                <label for="invalid-reason-24-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
                                                 <div class="pins-add-another__remove-button-container"></div>
                                             </div>
                                         </div>

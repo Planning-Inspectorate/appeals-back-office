@@ -1,7 +1,7 @@
 import logger from '#lib/logger.js';
-import * as appellantCaseService from '../appellant-case.service.js';
-import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case.mapper.js';
-import { decisionInvalidConfirmationPage, mapInvalidReasonPage } from './outcome-invalid.mapper.js';
+import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
+import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
+import { decisionInvalidConfirmationPage, mapInvalidReasonPage } from './invalid-appeal.mapper.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 
 /**
@@ -55,11 +55,14 @@ const renderInvalidReason = async (request, response) => {
 			appellantCaseResponse.validation
 		);
 
+		const sourceIsAppellantCase = request.baseUrl.includes('appellant-case');
+
 		const pageContent = mapInvalidReasonPage(
 			currentAppeal.appealId,
 			currentAppeal.appealReference,
 			mappedInvalidReasonOptions,
-			errors ? errors['invalidReason']?.msg : undefined
+			errors ? errors['invalidReason']?.msg : undefined,
+			sourceIsAppellantCase
 		);
 
 		return response.status(200).render('patterns/display-page.pattern.njk', {
@@ -106,7 +109,7 @@ export const postInvalidReason = async (request, response) => {
 			currentAppeal: { appealId }
 		} = request;
 
-		/** @type {import('../appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
+		/** @type {import('../appellant-case/appellant-case.types.js').AppellantCaseSessionValidationOutcome} */
 		request.session.webAppellantCaseReviewOutcome = {
 			appealId,
 			validationOutcome: 'invalid',
@@ -114,9 +117,13 @@ export const postInvalidReason = async (request, response) => {
 			reasonsText: getNotValidReasonsTextFromRequestBody(request.body, 'invalidReason')
 		};
 
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/appellant-case/check-your-answers`
-		);
+		if (request.baseUrl.includes('appellant-case')) {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/appellant-case/check-your-answers`
+			);
+		} else {
+			return response.redirect(`/appeals-service/appeal-details/${appealId}/invalid/check`);
+		}
 	} catch (error) {
 		logger.error(
 			error,

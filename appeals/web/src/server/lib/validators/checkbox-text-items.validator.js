@@ -60,7 +60,12 @@ const textItemCustomValidator = (textItem) => {
 	}
 	if (textItem.length > textInputCharacterLimits.checkboxTextItemsLength) {
 		throw new Error(
-			`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters`
+			`Reason must be ${textInputCharacterLimits.checkboxTextItemsLength} characters or less`
+		);
+	}
+	if (!textItem.match(/^[A-Za-z0-9 .,'!&-]+$/)) {
+		throw new Error(
+			'Reason must only include letters a to z, numbers 0 to 9, and special characters such as hyphens, spaces and apostrophes'
 		);
 	}
 	return true;

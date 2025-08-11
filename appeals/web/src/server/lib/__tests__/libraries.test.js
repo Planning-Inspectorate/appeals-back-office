@@ -507,12 +507,12 @@ describe('Libraries', () => {
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: false
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
 						addAnother: { textItems: [''] }
 					}
@@ -545,12 +545,12 @@ describe('Libraries', () => {
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: false
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
 						addAnother: { textItems: [''] }
 					}
@@ -576,7 +576,7 @@ describe('Libraries', () => {
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: false
 					}
 				];
@@ -601,7 +601,7 @@ describe('Libraries', () => {
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: true
 					}
 				];
@@ -656,12 +656,12 @@ describe('Libraries', () => {
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: true
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
 						addAnother: { textItems: [''] }
 					}
@@ -708,12 +708,12 @@ describe('Libraries', () => {
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: true
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
 						addAnother: { textItems: [''] }
 					}
@@ -756,12 +756,12 @@ describe('Libraries', () => {
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: true
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
 						addAnother: { textItems: [''] }
 					}
@@ -821,12 +821,12 @@ describe('Libraries', () => {
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: true
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
 						addAnother: { textItems: [''] }
 					}
@@ -890,12 +890,12 @@ describe('Libraries', () => {
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: true
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
 						addAnother: { textItems: [''] }
 					}
@@ -930,7 +930,7 @@ describe('Libraries', () => {
 				);
 
 				expect(result).toEqual(
-					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
+					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant does not have the right to appeal</li></ul>'
 				);
 			});
 
@@ -938,7 +938,7 @@ describe('Libraries', () => {
 				const result = mapReasonsToReasonsListHtml(appellantCaseInvalidReasons, ['22', '23'], {});
 
 				expect(result).toEqual(
-					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
+					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant does not have the right to appeal</li></ul>'
 				);
 			});
 
@@ -948,7 +948,7 @@ describe('Libraries', () => {
 				});
 
 				expect(result).toEqual(
-					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time: test reason text 1</li><li>Documents have not been submitted on time: test reason text 2</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
+					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time: test reason text 1</li><li>Documents have not been submitted on time: test reason text 2</li><li>The appellant does not have the right to appeal</li></ul>'
 				);
 			});
 		});

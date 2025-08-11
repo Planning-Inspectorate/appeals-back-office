@@ -61,7 +61,7 @@ exports[`issue-decision GET /appellant-costs-decision-letter-upload should rende
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="W10=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload appellant costs decision letter</h2>
@@ -184,7 +184,7 @@ exports[`issue-decision GET /decision-letter-upload should render the decision l
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload decision letter</h2>
@@ -236,7 +236,7 @@ exports[`issue-decision GET /issue-appellant-costs-decision-letter-upload should
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="W10=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload appellant costs decision letter</h2>
@@ -398,7 +398,7 @@ exports[`issue-decision GET /issue-lpa-costs-decision-letter-upload should rende
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="W10=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload LPA costs decision letter</h2>
@@ -490,7 +490,7 @@ exports[`issue-decision GET /lpa-costs-decision-letter-upload should render the 
                 <form method="POST" novalidate="novalidate" class="govuk-grid-column-two-thirds"
                 data-filenames-in-folder="W10=">
                     <div class="pins-file-upload__container">
-                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF and smaller than 25MB.</span>
+                        <div class="govuk-body pins-file-upload__instructions"><span>The file must be a PDF.</span><span> The file must be smaller than 25MB.</span>
                         </div>
                         <div class="middle-errors-hook">
                             <h2 class="pins-file-upload__container-title">Upload LPA costs decision letter</h2>
