@@ -487,7 +487,7 @@ function notifyLpaFinalCommentsPublished(appeal, notifyClient, azureAdUserId) {
  * @param {string} azureAdUserId
  * */
 function notifyAppellantFinalCommentsPublished(appeal, notifyClient, azureAdUserId) {
-	const recipientEmail = appeal.appellant?.email;
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	if (!recipientEmail) {
 		throw new Error(
 			`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no appellant email address in appeal`
