@@ -263,4 +263,25 @@ describe('related appeals', () => {
 			});
 		});
 	});
+
+	it.only('related appeals error messaging', () => {
+		cy.createCase().then((caseRef) => {
+			happyPathHelper.assignCaseOfficer(caseRef);
+			caseDetailsPage.clickAccordionByButton('Overview');
+			caseDetailsPage.clickAddRelatedAppeals();
+
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.checkErrorMessageDisplays('Enter the appeal reference number');
+
+			assertErrorForInput('AAA', 'Appeal reference number must be 7 numbers');
+			assertErrorForInput('12345678', 'Appeal reference number must be 7 numbers');
+			assertErrorForInput('A&JIOPH', 'Enter appeal reference number using numbers 0 to 9');
+		});
+	});
+
+	const assertErrorForInput = (input, expectedError) => {
+		caseDetailsPage.fillInput(input);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.checkErrorMessageDisplays(expectedError);
+	};
 });
