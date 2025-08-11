@@ -153,6 +153,14 @@ describe('State Machine Transitions', () => {
 				APPEAL_CASE_STATUS.WITHDRAWN,
 				APPEAL_CASE_STATUS.WITHDRAWN,
 				APPEAL_CASE_STATUS.WITHDRAWN
+			],
+			[
+				APPEAL_CASE_STATUS.VALIDATION,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID
 			]
 		])(
 			'correctly transitions from %s state on %s event to %s state',
@@ -255,6 +263,14 @@ describe('State Machine Transitions', () => {
 				APPEAL_CASE_STATUS.WITHDRAWN,
 				APPEAL_CASE_STATUS.WITHDRAWN,
 				APPEAL_CASE_STATUS.WITHDRAWN
+			],
+			[
+				APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID
 			]
 		])(
 			'correctly transitions from %s state on %s event to %s state',
@@ -302,6 +318,13 @@ describe('State Machine Transitions', () => {
 				APPEAL_CASE_STATUS.WITHDRAWN,
 				APPEAL_CASE_STATUS.WITHDRAWN,
 				APPEAL_CASE_STATUS.WITHDRAWN
+			],
+			[
+				APPEAL_CASE_STATUS.STATEMENTS,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID
 			]
 		])(
 			'correctly transitions from %s state on %s event to %s state for FPA',
@@ -403,6 +426,13 @@ describe('State Machine Transitions', () => {
 				APPEAL_CASE_STATUS.FINAL_COMMENTS,
 				APPEAL_CASE_STATUS.FINAL_COMMENTS,
 				APPEAL_CASE_STATUS.FINAL_COMMENTS
+			],
+			[
+				APPEAL_CASE_STATUS.FINAL_COMMENTS,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID
 			]
 		])(
 			'correctly remains at %s state for HAS and FPA - hearing and inquiry',
@@ -450,6 +480,14 @@ describe('State Machine Transitions', () => {
 				APPEAL_CASE_STATUS.WITHDRAWN,
 				APPEAL_CASE_STATUS.WITHDRAWN,
 				APPEAL_CASE_STATUS.WITHDRAWN
+			],
+			[
+				APPEAL_CASE_STATUS.EVENT,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID
 			]
 		])(
 			'correctly transitions from %s state on %s event to %s state',
@@ -509,6 +547,14 @@ describe('State Machine Transitions', () => {
 				APPEAL_CASE_STATUS.EVIDENCE,
 				APPEAL_CASE_STATUS.EVIDENCE,
 				APPEAL_CASE_STATUS.WITHDRAWN
+			],
+			[
+				APPEAL_CASE_STATUS.EVIDENCE,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID
 			]
 		])(
 			'transitions from %s on %s to %s',
@@ -568,6 +614,14 @@ describe('State Machine Transitions', () => {
 				APPEAL_CASE_STATUS.WITHDRAWN,
 				APPEAL_CASE_STATUS.WITHDRAWN,
 				APPEAL_CASE_STATUS.WITHDRAWN
+			],
+			[
+				APPEAL_CASE_STATUS.AWAITING_EVENT,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID
 			]
 		])(
 			'transitions from %s on %s to %s',
