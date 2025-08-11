@@ -12,7 +12,9 @@ export class DateTimeSection extends Page {
 		visitEndHour: '#visit-end-time-hour',
 		visitEndMinute: '#visit-end-time-minute',
 		hearingTimeHour: '#hearing-time-hour',
-		hearingTimeMinute: '#hearing-time-minute'
+		hearingTimeMinute: '#hearing-time-minute',
+		inquiryTimeHour: '#inquiry-time-hour',
+		inquiryTimeMinute: '#inquiry-time-minute'
 	};
 
 	// Prefix of date selector which is expected to end in 'day', 'month' and 'year' for each dropdown in the HTML
@@ -32,7 +34,9 @@ export class DateTimeSection extends Page {
 		finalCommentsDueDate: '#final-comments-due-date-',
 		statementOfCommonGroundDueDate: '#statement-of-common-ground-due-date-',
 		proofOfEvidenceAndWitnessesDueDate: '#proof-of-evidence-and-witnesses-due-date-',
-		inquiryDate: '#inquiry-date-'
+		inquiryDate: '#inquiry-date-',
+		inquiry: '#inquiry',
+		hearing: '#hearing'
 	};
 
 	// E L E M E N T S
@@ -44,7 +48,9 @@ export class DateTimeSection extends Page {
 		enterVisitEndHour: () => cy.get(this.selectors.visitEndHour),
 		enterVisitEndMinute: () => cy.get(this.selectors.visitEndMinute),
 		enterHearingTimeHour: () => cy.get(this.selectors.hearingTimeHour),
-		enterHearingTimeMinute: () => cy.get(this.selectors.hearingTimeMinute)
+		enterHearingTimeMinute: () => cy.get(this.selectors.hearingTimeMinute),
+		enterInquiryTimeHour: () => cy.get(this.selectors.inquiryTimeHour),
+		enterInquiryTimeMinute: () => cy.get(this.selectors.inquiryTimeMinute)
 	};
 
 	// A C T I O N S
@@ -91,10 +97,23 @@ export class DateTimeSection extends Page {
 		this.#setAllDateFields(this.selectorPrefix.inquiryDate, date);
 	}
 
+	enterInquiryDate(day, month, year) {
+		this.#setDateFields(this.selectorPrefix.inquiryDate, day, month, year);
+	}
+
+	enterInquiryTime(hour, minute) {
+		if (hour) this.#set(this.elements.enterInquiryTimeHour(), hour);
+		if (minute) this.#set(this.elements.enterInquiryTimeMinute(), minute);
+	}
+
 	clearWithdrawalDate() {
 		cy.get('#withdrawal-request-date-day').clear();
 		cy.get('#withdrawal-request-date-month').clear();
 		cy.get('#withdrawal-request-date-year').clear();
+	}
+
+	clearInquiryDateAndTime() {
+		this.#clearDateAndTimeFields(this.selectorPrefix.inquiry);
 	}
 
 	enterChangeAppealTypeResubmissionDate(date) {
@@ -125,6 +144,23 @@ export class DateTimeSection extends Page {
 		this.#set(this.#getElement(dateSelectorPrefix, 'day'), date.getDate());
 		this.#set(this.#getElement(dateSelectorPrefix, 'month'), date.getMonth() + 1);
 		this.#set(this.#getElement(dateSelectorPrefix, 'year'), date.getFullYear());
+	}
+
+	#setDateFields(dateSelectorPrefix, day, month, year) {
+		if (day) this.#set(this.#getElement(dateSelectorPrefix, 'day'), day);
+		if (month) this.#set(this.#getElement(dateSelectorPrefix, 'month'), month);
+		if (year) this.#set(this.#getElement(dateSelectorPrefix, 'year'), year);
+	}
+
+	#clearDateAndTimeFields(dateSelectorPrefix) {
+		// clear date
+		this.#getElement(dateSelectorPrefix, '-date-day').clear();
+		this.#getElement(dateSelectorPrefix, '-date-month').clear();
+		this.#getElement(dateSelectorPrefix, '-date-year').clear();
+
+		//clear time
+		this.#getElement(dateSelectorPrefix, '-time-hour').clear();
+		this.#getElement(dateSelectorPrefix, '-time-minute').clear();
 	}
 
 	#set(element, value, index = 0) {
