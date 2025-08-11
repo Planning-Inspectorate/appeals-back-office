@@ -111,17 +111,8 @@ export class HearingSectionPage extends CaseDetailsPage {
 		listCasesPage.clickAppealByRef(caseRef);
 		caseDetailsPage.clickAccordionByButton('Hearing');
 	}
-	verifyErrorMessages(options) {
-		options.messages.forEach((message) => {
-			caseDetailsPage.checkErrorMessageDisplays(message);
-		});
-
-		options.fields.forEach((field) => {
-			caseDetailsPage.verifyInputFieldIsFocusedWhenErrorMessageLinkIsClicked(field, 'id', field);
-			if (options.verifyInlineErrors) {
-				caseDetailsPage.verifyInlineErrorMessage(`${field}-error`);
-			}
-		});
+	verifyErrors(options) {
+		this.verifyErrorMessages(options);
 	}
 	ensureHearingExists(caseRef, date) {
 		return cy.loadAppealDetails(caseRef).then((appealDetails) => {
