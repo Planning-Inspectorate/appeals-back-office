@@ -264,7 +264,7 @@ describe('related appeals', () => {
 		});
 	});
 
-	it.only('related appeals error messaging', () => {
+	it('related appeals error messaging', () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickAccordionByButton('Overview');
