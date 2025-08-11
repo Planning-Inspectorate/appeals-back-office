@@ -98,6 +98,19 @@ it('Start case as inquiry with address and estimated days', () => {
 		'Inquiry'
 	];
 	caseDetailsPage.verifyTimeTableRows(timeTableRows);
+
+	// Verify order of sections
+	const expectedSections = [
+		'Overview',
+		'Timetable',
+		'Inquiry',
+		'Documentation',
+		'Costs',
+		'Contacts',
+		'Team',
+		'Case management'
+	];
+	caseDetailsPage.verifyCaseDetailsSection(expectedSections);
 });
 
 it('Start case as inquiry without address or estimated days', () => {
