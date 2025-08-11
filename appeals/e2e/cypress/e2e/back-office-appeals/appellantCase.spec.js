@@ -59,8 +59,8 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it('should display expected fields for householder (D) case', () => {
-		cy.createCase().then((caseRef) => {
+	it.only('should display expected fields for householder (D) case', () => {
+		cy.createCase({ applicationDecision: 'not_received' }).then((caseRef) => {
 			appellantCasePage.navigateToAppellantCase(caseRef);
 			// ✅ Appellant section
 			appellantCasePage.assertAppellantDetails({
@@ -94,8 +94,9 @@ describe('Managing Appellant Case Details', () => {
 			appellantCasePage.assertApplicationDate(formatDate(casedata.applicationDate));
 			appellantCasePage.assertDevelopmentDescription(casedata.originalDevelopmentDescription);
 			appellantCasePage.assertOtherAppeals(casedata.nearbyCaseReferences.length ? 'Yes' : 'No');
-			appellantCasePage.assertApplicationDecision(capitalize(casedata.applicationDecision));
-			appellantCasePage.assertDecisionDate(formatDate(casedata.applicationDecisionDate));
+			appellantCasePage.assertApplicationDecision('I have not received a decision');
+			//check for I have not recieved a decision condition
+			appellantCasePage.assertNotReceivedDecisionDate(formatDate(casedata.applicationDecisionDate));
 			// Appeal details
 			appellantCasePage.assertAppealType('Full planning');
 			// Upload document status

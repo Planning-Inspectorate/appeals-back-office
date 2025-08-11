@@ -171,6 +171,13 @@ export class AppellantCasePage extends Page {
 		);
 	}
 
+	assertNotReceivedDecisionDate(value) {
+		this.assertFieldLabelAndValue(
+			'What date was your decision due from the local planning authority?',
+			value
+		);
+	}
+
 	// Section 4 – Appeal details
 	assertAppealType(value) {
 		this.assertFieldLabelAndValue('What type of application is your appeal about?', value);
