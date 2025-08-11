@@ -14,6 +14,7 @@ import {
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import isFPA from '@pins/appeals/utils/is-fpa.js';
 import { currentStatus } from '#utils/current-status.js';
+import { mapCompletedStateList } from '#mappers/api/shared/map-completed-state-list.js';
 
 /** @typedef {import('#db-client').AppealType} AppealType */
 /** @typedef {import('#db-client').AppealStatus} AppealStatus */
@@ -66,7 +67,11 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		return;
 	}
 
-	await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
+	if (isStatePassed(appeal, newState)) {
+		await appealStatusRepository.rollBackAppealStatusTo(appealId, newState);
+	} else {
+		await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
+	}
 
 	createAuditTrail({
 		appealId,
@@ -87,6 +92,18 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	stateMachineService.stop();
 };
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {string} newState
+ * @returns {boolean}
+ */
+const isStatePassed = (appeal, newState) => {
+	const completedStateList = mapCompletedStateList({ appeal });
+	return completedStateList.includes(newState);
+};
+
 /**
  *
  * @param {Appeal} appeal
