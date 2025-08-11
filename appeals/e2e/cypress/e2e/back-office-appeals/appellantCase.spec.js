@@ -59,7 +59,7 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	it.only('should display expected fields for householder (D) case', () => {
+	it('should display expected fields for householder (D) case', () => {
 		cy.createCase({ applicationDecision: 'not_received' }).then((caseRef) => {
 			appellantCasePage.navigateToAppellantCase(caseRef);
 			// ✅ Appellant section
