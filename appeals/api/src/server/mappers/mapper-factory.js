@@ -17,7 +17,7 @@ import mergeMaps from '#utils/merge-maps.js';
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealS78Case} AppealS78Case */
 /** @typedef {AppealDTO|AppellantCaseDto|LpaQuestionnaireDTO|AppealHASCase|AppealS78Case} MapResult */
 /** @typedef {import('@pins/appeals.api').Api.Folder} Folder */
-/** @typedef {{ appeal: Appeal, appealTypes?: AppealType[]|undefined, linkedAppeals?: *[]|undefined, context: keyof contextEnum|undefined }} MappingRequest */
+/** @typedef {{ appeal: Appeal, appealTypes?: AppealType[]|undefined, linkedAppeals?: *[]|undefined, context?: keyof contextEnum }} MappingRequest */
 
 /**
  *
