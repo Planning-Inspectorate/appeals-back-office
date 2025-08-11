@@ -15,7 +15,7 @@ export class InquirySectionPage extends CaseDetailsPage {
 		dateTimeSection.clearInquiryDateAndTime();
 	}
 
-	setUpEnquiry(day, month, year, hour, minute) {
+	setUpInquiry(day, month, year, hour, minute) {
 		dateTimeSection.enterInquiryDate(day, month, year);
 		dateTimeSection.enterInquiryTime(hour, minute);
 		this.clickButtonByText('Continue');
