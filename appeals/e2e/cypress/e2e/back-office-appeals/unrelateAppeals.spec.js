@@ -28,27 +28,18 @@ describe('unrelate appeals', () => {
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.validateBannerMessage(
-						'Success',
-						'This appeal is now related to ' + caseRefToRelate
-					);
+					caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 					caseDetailsPage.clickAddRelatedAppeals();
 					caseDetailsPage.fillInput(secondCaseRefToRelate);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.validateBannerMessage(
-						'Success',
-						'This appeal is now related to ' + secondCaseRefToRelate
-					);
+					caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 					caseDetailsPage.clickManageRelatedAppeals();
 					caseDetailsPage.clickRemoveRelatedAppealByRef(caseRefToRelate);
 					caseDetailsPage.selectRadioButtonByValue('Yes');
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.validateBannerMessage(
-						'Success',
-						'You have removed the relationship between this appeal and appeal ' + caseRefToRelate
-					);
+					caseDetailsPage.validateBannerMessage('Success', 'Related appeal removed');
 				});
 			});
 		});
@@ -68,19 +59,13 @@ describe('unrelate appeals', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage(
-				'Success',
-				'This appeal is now related to ' + horizonAppealId
-			);
+			caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 			caseDetailsPage.clickManageRelatedAppeals();
 			caseDetailsPage.clickRemoveRelatedAppealByRef(horizonAppealId);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage(
-				'Success',
-				'You have removed the relationship between this appeal and appeal ' + horizonAppealId
-			);
+			caseDetailsPage.validateBannerMessage('Success', 'Related appeal removed');
 		});
 	});
 });
