@@ -1439,7 +1439,7 @@ describe('mapAppealToDueDate Tests', () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.COMPLETE;
 
 		// @ts-ignore
-		const dueDate = await mapAppealToDueDate(mockAppeal, '', null);
+		const dueDate = await mapAppealToDueDate(mockAppeal, '', null, {});
 		expect(dueDate).toBeNull();
 	});
 

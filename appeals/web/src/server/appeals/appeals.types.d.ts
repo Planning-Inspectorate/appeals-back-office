@@ -10,6 +10,7 @@ export interface CheckboxItemParameter {
 	text: string;
 	conditional?: CheckboxRadioConditionalHtmlParameter;
 	checked?: boolean;
+	error?: object;
 }
 
 export interface SelectItemParameter {

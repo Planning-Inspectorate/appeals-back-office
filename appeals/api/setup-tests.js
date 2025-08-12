@@ -22,6 +22,9 @@ const mocklPAQuestionnaireUpdate = jest.fn().mockResolvedValue({});
 const mockAppealStatusFindMany = jest.fn().mockResolvedValue([]);
 const mockAppealStatusUpdateMany = jest.fn().mockResolvedValue({});
 const mockAppealStatusCreate = jest.fn().mockResolvedValue({});
+const mockAppealStatusFindFirst = jest.fn().mockResolvedValue({});
+const mockAppealStatusDeleteMany = jest.fn().mockResolvedValue({});
+const mockAppealStatusUpdate = jest.fn().mockResolvedValue({});
 const mockAppealUpdate = jest.fn().mockResolvedValue({});
 const mockAppealStatusCreateMany = jest.fn().mockResolvedValue({});
 const mockAppealFindMany = jest.fn().mockResolvedValue({});
@@ -35,7 +38,7 @@ const mockDocumentUpdate = jest.fn().mockResolvedValue({});
 const mockFolderFindUnique = jest.fn().mockResolvedValue({});
 const mockFolderFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentUpsert = jest.fn().mockResolvedValue({});
-const mockFolderFindMany = jest.fn().mockResolvedValue({});
+const mockFolderFindMany = jest.fn().mockResolvedValue([]);
 const mockDocumentFindMany = jest.fn().mockResolvedValue({});
 const mockDocumentCount = jest.fn().mockResolvedValue({});
 const mockDocumentFindFirst = jest.fn().mockResolvedValue({});
@@ -209,7 +212,10 @@ class MockPrismaClient {
 			updateMany: mockAppealStatusUpdateMany,
 			create: mockAppealStatusCreate,
 			createMany: mockAppealStatusCreateMany,
-			findMany: mockAppealStatusFindMany
+			findMany: mockAppealStatusFindMany,
+			findFirst: mockAppealStatusFindFirst,
+			deleteMany: mockAppealStatusDeleteMany,
+			update: mockAppealStatusUpdate
 		};
 	}
 

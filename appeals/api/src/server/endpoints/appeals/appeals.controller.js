@@ -11,7 +11,9 @@ import {
 import { formatLinkedAppealData, formatMyAppeal } from './appeals.formatter.js';
 import { retrieveAppealListData, updateCompletedEvents } from './appeals.service.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import config from '#config/config.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -113,7 +115,20 @@ const getMyAppeals = async (req, res) => {
 		})
 	);
 
-	const sortedAppeals = sortAppeals(formattedAppeals.flat());
+	const filteredAppeals = formattedAppeals
+		.flat()
+		.filter(
+			(appeal) =>
+				!!appeal &&
+				(appeal.appealStatus !== APPEAL_CASE_STATUS.COMPLETE ||
+					appeal.costsDecision?.awaitingAppellantCostsDecision ||
+					appeal.costsDecision?.awaitingLpaCostsDecision ||
+					(config.featureFlags.featureFlagNetResidence &&
+						appeal.numberOfResidencesNetChange === null &&
+						appeal.appealType === APPEAL_TYPE.S78))
+		);
+
+	const sortedAppeals = sortAppeals(filteredAppeals);
 
 	// Flatten to a unique array of strings
 	// @ts-ignore
