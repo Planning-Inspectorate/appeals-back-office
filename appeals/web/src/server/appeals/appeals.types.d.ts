@@ -39,8 +39,8 @@ export interface RepresentationTypesAwaitingReview {
 export interface AppealType {
 	id: number;
 	type: string;
-	shorthand: string;
 	key: string;
+	processCode: string | null;
 	changeAppealType: string;
 }
 
