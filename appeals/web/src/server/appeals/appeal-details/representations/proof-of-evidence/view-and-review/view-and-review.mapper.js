@@ -54,15 +54,17 @@ export function reviewProofOfEvidencePage(
 				{
 					value: APPEAL_PROOF_OF_EVIDENCE_STATUS.VALID,
 					text: 'Accept proof of evidence and witnesses',
-					checked: proofOfEvidence?.status === APPEAL_PROOF_OF_EVIDENCE_STATUS.VALID
+					checked:
+						proofOfEvidence?.status === APPEAL_PROOF_OF_EVIDENCE_STATUS.VALID ||
+						session.reviewProofOfEvidence?.status === APPEAL_PROOF_OF_EVIDENCE_STATUS.VALID
 				},
 				{
 					value: APPEAL_PROOF_OF_EVIDENCE_STATUS.INVALID,
 					text: 'Reject proof of evidence and witnesses',
 					checked:
 						proofOfEvidence?.status === APPEAL_PROOF_OF_EVIDENCE_STATUS.INVALID ||
-						(proofOfEvidence?.status === APPEAL_PROOF_OF_EVIDENCE_STATUS.AWAITING_REVIEW &&
-							session.rejectProofOfEvidence?.evidenceId === proofOfEvidence.id)
+						proofOfEvidence?.status === APPEAL_PROOF_OF_EVIDENCE_STATUS.AWAITING_REVIEW ||
+						session.reviewProofOfEvidence?.status === APPEAL_PROOF_OF_EVIDENCE_STATUS.INVALID
 				}
 			]
 		}
