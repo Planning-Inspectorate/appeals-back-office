@@ -8,7 +8,9 @@ let prismaClient;
  */
 function createPrismaClient() {
 	if (!prismaClient) {
-		prismaClient = new PrismaClient();
+		prismaClient = new PrismaClient({
+			log: ['query']
+		});
 	}
 
 	return prismaClient;
