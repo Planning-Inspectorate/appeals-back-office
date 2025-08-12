@@ -19,8 +19,8 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  *
  * @param {Appeal} appealDetails
  * @param {AppealType[]} appealTypes
- * @param { ChangeAppealTypeRequest } changeAppeal
- * @param {string|undefined} errorMessage
+ * @param { ChangeAppealTypeRequest | undefined | Object } changeAppeal
+ * @param {string | undefined} errorMessage
  * @returns {PageContent}
  */
 export function appealTypePage(appealDetails, appealTypes, changeAppeal, errorMessage) {
@@ -104,7 +104,7 @@ export function invalidChangeAppealType(appealDetails) {
 /**
  *
  * @param { AppealType[] } appealTypes
- * @param { ChangeAppealTypeRequest } changeAppeal
+ * @param { ChangeAppealTypeRequest | undefined | Object } changeAppeal
  * @param { string | null | undefined } currentAppealType
  * @returns { SelectItemParameter[]}
  */
@@ -123,10 +123,24 @@ function mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal, current
 		.map((appealType) => ({
 			value: appealType.id.toString(),
 			text: appealType.changeAppealType,
-			checked:
-				(changeAppeal && changeAppeal.appealTypeId === appealType.id) ||
-				(!changeAppeal && currentAppealType && currentAppealType === appealType.type)
+			checked: isAppealTypeRadioChecked(appealType, changeAppeal, currentAppealType)
 		}));
+}
+
+/**
+ *
+ * @param { AppealType } appealType
+ * @param { ChangeAppealTypeRequest | undefined | Object } changeAppeal
+ * @param { string | null | undefined } currentAppealType
+ * @returns { Boolean }
+ */
+function isAppealTypeRadioChecked(appealType, changeAppeal, currentAppealType) {
+	const changeAppealExists = changeAppeal !== undefined && 'appealTypeId' in changeAppeal;
+
+	return (
+		(changeAppealExists && changeAppeal.appealTypeId === appealType.id) ||
+		(!changeAppealExists && currentAppealType === appealType.type)
+	);
 }
 
 /**
