@@ -387,6 +387,13 @@ describe('hearing routes', () => {
 					]
 				});
 				databaseConnector.hearing.update.mockResolvedValue({ ...hearing, address: null });
+				databaseConnector.appealStatus.findFirst.mockResolvedValue({
+					id: 592,
+					appealId: fullPlanningAppeal.id,
+					status: APPEAL_CASE_STATUS.EVENT,
+					valid: false,
+					createdAt: new Date('2999-01-01T12:00:00.000Z')
+				});
 
 				const response = await request
 					.patch(`/appeals/${fullPlanningAppeal.id}/hearing/${hearing.id}`)
@@ -414,13 +421,16 @@ describe('hearing routes', () => {
 					}
 				});
 
-				expect(databaseConnector.appealStatus.create).toHaveBeenCalledWith({
-					data: {
-						appealId: fullPlanningAppeal.id,
-						createdAt: expect.any(Date),
-						status: 'event',
-						valid: true
+				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledWith({
+					where: {
+						createdAt: {
+							gt: new Date('2999-01-01T12:00:00.000Z')
+						}
 					}
+				});
+				expect(databaseConnector.appealStatus.update).toHaveBeenCalledWith({
+					where: { id: 592 },
+					data: { valid: true }
 				});
 
 				expect(mockNotifySend).not.toHaveBeenCalled();
