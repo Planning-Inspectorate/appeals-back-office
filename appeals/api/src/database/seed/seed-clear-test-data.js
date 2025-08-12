@@ -453,7 +453,9 @@ const getAppeals = async (lpaCodes) => {
 		}
 	});
 
-	return appeals.map((appeal) => {
+	const tmpAppeals = appeals.slice(0, 1000);
+
+	return tmpAppeals.map((appeal) => {
 		return {
 			id: appeal.id,
 			reference: appeal.reference
