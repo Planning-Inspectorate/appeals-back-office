@@ -64,7 +64,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		caseDetailsPage.clickHearingButton();
 		hearingSectionPage.setUpHearing(new Date(), ' ', ' ');
 
-		hearingSectionPage.verifyErrors({
+		hearingSectionPage.verifyErrorMessages({
 			messages: ['Enter the hearing time', 'The hearing date must be in the future'],
 			fields: ['hearing-time-hour', 'hearing-date-day']
 		});
@@ -74,7 +74,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		caseDetailsPage.clickHearingEstimateLink();
 		hearingSectionPage.addHearingEstimates('0.25', 'sittingTime', '99.5');
 
-		hearingSectionPage.verifyErrors({
+		hearingSectionPage.verifyErrorMessages({
 			messages: [
 				'Estimated preparation time must be in increments of 0.5',
 				'Estimated sitting time must be a number',
@@ -186,7 +186,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		// Handle missing yes/no selection
 		caseDetailsPage.clickButtonByText('Continue');
 
-		hearingSectionPage.verifyErrors({
+		hearingSectionPage.verifyErrorMessages({
 			messages: ['Select yes if you know the address of where the hearing will take place'],
 			fields: ['address-known']
 		});
@@ -203,7 +203,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		};
 
 		hearingSectionPage.addHearingLocationAddress(emptyAddress);
-		hearingSectionPage.verifyErrors({
+		hearingSectionPage.verifyErrorMessages({
 			messages: ['Enter address line 1', 'Enter town or city', 'Enter postcode'],
 			fields: ['address-line-1', 'town', 'post-code'],
 			verifyInlineErrors: true
@@ -217,7 +217,7 @@ describe('Setup hearing and add hearing estimates', () => {
 
 		hearingSectionPage.addHearingLocationAddress(invalidAddress);
 
-		hearingSectionPage.verifyErrors({
+		hearingSectionPage.verifyErrorMessages({
 			messages: ['Address line 1 must be 250 characters or less', 'Enter a full UK postcode'],
 			fields: ['address-line-1', 'post-code'],
 			verifyInlineErrors: true

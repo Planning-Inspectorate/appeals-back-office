@@ -20,8 +20,4 @@ export class InquirySectionPage extends CaseDetailsPage {
 		dateTimeSection.enterInquiryTime(hour, minute);
 		this.clickButtonByText('Continue');
 	}
-
-	verifyErrors(options) {
-		this.verifyErrorMessages(options);
-	}
 }

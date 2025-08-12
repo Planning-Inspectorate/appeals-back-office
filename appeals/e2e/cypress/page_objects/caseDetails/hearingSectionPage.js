@@ -111,9 +111,6 @@ export class HearingSectionPage extends CaseDetailsPage {
 		listCasesPage.clickAppealByRef(caseRef);
 		caseDetailsPage.clickAccordionByButton('Hearing');
 	}
-	verifyErrors(options) {
-		this.verifyErrorMessages(options);
-	}
 	ensureHearingExists(caseRef, date) {
 		return cy.loadAppealDetails(caseRef).then((appealDetails) => {
 			if (appealDetails.hearing === undefined) {
