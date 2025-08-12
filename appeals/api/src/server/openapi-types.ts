@@ -243,6 +243,8 @@ export interface QuestionnaireData {
 	casedata?: {
 		/** @example "6000000" */
 		caseReference?: string;
+		/** @example "D" */
+		caseType?: string;
 		/** @example "2024-05-31T23:00:00.000Z" */
 		lpaQuestionnaireSubmittedDate?: string;
 		/** @example "cupidatat ipsum eu culpa" */
@@ -2822,6 +2824,11 @@ export interface InquiryEstimateUpdateRequest {
 export interface InquiryEstimateResponse {
 	/** @example 1 */
 	inquiryEstimateId?: number;
+}
+
+export interface AppealStatusRollBackRequest {
+	/** @example "event" */
+	status?: string;
 }
 
 export interface Address {
