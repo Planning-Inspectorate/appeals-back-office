@@ -753,7 +753,6 @@ describe('Setup hearing and add hearing estimates', () => {
 			happyPathHelper.reviewAppellantCase(caseRef);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 			happyPathHelper.startS78Case(caseRef, 'hearing');
-
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 		});
