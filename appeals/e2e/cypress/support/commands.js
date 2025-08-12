@@ -208,6 +208,18 @@ Cypress.Commands.add('checkNotifySent', (reference, expectedNotifies) => {
 	// ensure input is always an array
 	const expected = [].concat(expectedNotifies);
 
+	expected.forEach(({ template, recipient }) => {
+		expect(
+			typeof template === 'string' && template.trim() !== '',
+			`notify template should be provided: "${template}"`
+		).to.be.true;
+
+		expect(
+			typeof recipient === 'string' && recipient.trim() !== '',
+			`notify recipient should be provided: "${recipient}"`
+		).to.be.true;
+	});
+
 	return cy.wrap(null).then(async () => {
 		// returns an array of email objects sent for the given appeal
 		const sentNotifies = await appealsApiClient.getNotifyEmails(reference);
