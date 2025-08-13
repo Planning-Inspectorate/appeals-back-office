@@ -276,6 +276,23 @@ describe('linked-appeals', () => {
 			expect(response.text).toEqual(`Found. Redirecting to ${linkedAppealsAddUrl}/already-linked`);
 		});
 
+		it('should redirect to a drop out page if both appeals are already linked as lead appeals', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, { ...appealData, isParentAppeal: true });
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
+				.reply(200, { ...linkableAppealSummaryBackOffice, childAppeals: [{ appealId: 2 }] });
+
+			const response = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(`Found. Redirecting to ${linkedAppealsAddUrl}/already-linked`);
+		});
+
 		it('should redirect to a drop out page if the appeal cannot be linked due to an invalid case status', async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
