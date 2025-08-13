@@ -6,7 +6,6 @@ import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { urlPaths } from '../../support/urlPaths';
 import { tag } from '../../support/tag';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { horizonTestAppeals } from '../../support/horizonTestAppeals.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 
@@ -150,10 +149,6 @@ describe('link appeals', () => {
 					caseDetailsPage.fillInput(childCase2);
 					caseDetailsPage.clickButtonByText('Continue');
 
-					//select lead appeal
-					caseDetailsPage.selectRadioButtonByValue(leadCase);
-					caseDetailsPage.clickButtonByText('Continue');
-
 					//CYA
 					caseDetailsPage.clickButtonByText('Add linked appeal');
 
@@ -204,7 +199,7 @@ describe('link appeals', () => {
 		});
 	});
 
-	it.skip('As a lead appeal, I am unable to link to another lead appeal', () => {
+	it('As a lead appeal, I am unable to link to another lead appeal', () => {
 		cy.createCase().then((leadCase1) => {
 			cy.createCase().then((leadCase2) => {
 				cy.createCase().then((childCase1) => {
@@ -254,7 +249,7 @@ describe('link appeals', () => {
 						caseDetailsPage.clickButtonByText('Continue');
 
 						//exit page
-						caseDetailsPage.checkHeading(`You have already linked appeal ${leadCase2}`);
+						caseDetailsPage.checkHeading(`You have already linked appeal ${leadCase1}`);
 					});
 				});
 			});
