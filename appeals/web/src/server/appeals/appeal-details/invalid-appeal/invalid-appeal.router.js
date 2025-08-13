@@ -15,4 +15,6 @@ router
 
 router.route('/confirmation').get(controller.getConfirmation);
 
+router.route('/check').get(controller.getCheckPage);
+
 export default router;

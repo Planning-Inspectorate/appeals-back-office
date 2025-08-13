@@ -366,6 +366,53 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/appeal-status/roll-back": {
+			"post": {
+				"tags": ["Appeal Status"],
+				"description": "Roll back appeal status to a previous state",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal status",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AppealStatusRollBackRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/AppealStatusRollBackRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/appeal-timetables/": {
 			"post": {
 				"tags": ["Appeal Timetables"],
@@ -6532,6 +6579,10 @@
 								"type": "string",
 								"example": "6000000"
 							},
+							"caseType": {
+								"type": "string",
+								"example": "D"
+							},
 							"lpaQuestionnaireSubmittedDate": {
 								"type": "string",
 								"example": "2024-05-31T23:00:00.000Z"
@@ -11904,6 +11955,15 @@
 					"inquiryEstimateId": {
 						"type": "number",
 						"example": 1
+					}
+				}
+			},
+			"AppealStatusRollBackRequest": {
+				"type": "object",
+				"properties": {
+					"status": {
+						"type": "string",
+						"example": "event"
 					}
 				}
 			},

@@ -8,6 +8,7 @@ import {
 import { createTestEnvironment } from '#testing/index.js';
 import nock from 'nock';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { appellantEmailTemplate, lpaEmailTemplate } from '../invalid-appeal-data.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -256,6 +257,40 @@ describe('invalid-appeal', () => {
 			expect(response.text).toBe(
 				'Found. Redirecting to /appeals-service/appeal-details/1/invalid/check'
 			);
+		});
+	});
+
+	describe('GET /check', () => {
+		beforeEach(() => {
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataNotValidated);
+			nock('http://test/')
+				.get('/appeals/appellant-case-invalid-reasons')
+				.reply(200, appellantCaseInvalidReasons);
+			nock('http://test/')
+				.post(`/appeals/notify-preview/appeal-invalid.content.md`)
+				.reply(200, appellantEmailTemplate);
+			nock('http://test/')
+				.post(`/appeals/notify-preview/appeal-invalid.content.md`)
+				.reply(200, lpaEmailTemplate);
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render the invalid appeal check page', async () => {
+			await request.post(`${baseUrl}/invalid/new`).send({
+				invalidReason: invalidReasonsWithoutTextIds[0]
+			});
+			const response = await request.get(`${baseUrl}/invalid/check`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and mark appeal as invalid</h1>');
+			expect(element.innerHTML).toContain('Preview email to appellant');
+			expect(element.innerHTML).toContain('Preview email to LPA');
 		});
 	});
 });

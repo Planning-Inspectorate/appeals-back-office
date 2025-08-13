@@ -1,11 +1,3 @@
-/**
- * @param {import('got').Got} apiClient
- * @param {string} appealId
- * @param {string} commentsId
- * */
-export const getFinalComments = (apiClient, appealId, commentsId) =>
-	apiClient.get(`appeals/${appealId}/reps/${commentsId}`).json();
-
 export const DOCUMENT_STAGE = 'representation';
 export const DOCUMENT_TYPE = 'representationAttachments';
 

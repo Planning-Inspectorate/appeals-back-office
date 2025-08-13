@@ -1711,6 +1711,15 @@ export const spec = {
 				}
 			}
 		},
+		AppealStatusRollBackRequest: {
+			type: 'object',
+			properties: {
+				status: {
+					type: 'string',
+					example: 'event'
+				}
+			}
+		},
 		...ApiDefinitions
 	},
 	components: {}

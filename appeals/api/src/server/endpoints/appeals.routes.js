@@ -50,6 +50,7 @@ import { default as appealDetailsRoutes } from './appeal-details/appeal-details.
 import { notifyPreviewRouter } from './notify-preview/notify-preview.routes.js';
 import { inquiryRoutes } from './Inquiry/inquiry.routes.js';
 import { inquiryEstimatesRoutes } from './inquiry-estimates/inquiry-estimates.routes.js';
+import { appealStatusRoutes } from './appeal-status/appeal-status.routes.js';
 
 const router = createRouter();
 router.use(integrationsRoutes);
@@ -110,5 +111,7 @@ router.use(hearingEstimatesRoutes);
 
 router.use(inquiryRoutes);
 router.use(inquiryEstimatesRoutes);
+
+router.use(appealStatusRoutes);
 
 export { router as appealsRoutes };
