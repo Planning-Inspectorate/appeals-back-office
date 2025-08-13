@@ -45,7 +45,7 @@ jobs:
         parameters:
           dryRun: ${{ parameters.dryRun }}
           keepLastXDays: ${{ parameters.keepLastXDays }}
-          repositories: "['back-office/back-office-appeals-api', 'back-office/appeals-web']"
+          repositories: "['back-office/back-office-appeals-api', 'back-office/appeals-web', 'back-office/back-office-appeals-pdf']"
           resourceGroupsBySub: >
             {
               "dev": ["pins-rg-appeals-bo-dev", "pins-rg-appeals-bo-secondary-dev"],
