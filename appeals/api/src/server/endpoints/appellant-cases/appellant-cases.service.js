@@ -28,6 +28,7 @@ import auditApplicationDecisionMapper from '#utils/audit-application-decision-ma
 import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
 import { allValidationOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
+import { AUDIT_TRAIL_SUBMISSION_INVALID } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('express').Request} Request */
@@ -186,6 +187,16 @@ export const updateAppellantCaseValidationOutcome = async (
 				notifyClient,
 				recipientEmail,
 				personalisation
+			});
+
+			let details = AUDIT_TRAIL_SUBMISSION_INVALID;
+			invalidReasonsList.forEach((invalidReason) => {
+				details += `\n• ${invalidReason}`;
+			});
+			createAuditTrail({
+				appealId,
+				azureAdUserId,
+				details
 			});
 		}
 	}
