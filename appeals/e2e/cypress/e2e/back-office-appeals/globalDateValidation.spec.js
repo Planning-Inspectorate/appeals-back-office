@@ -10,20 +10,29 @@ import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectio
 const caseDetailsPage = new CaseDetailsPage();
 const inquirySectionPage = new InquirySectionPage();
 
-const setupTestCase = () => {
+let caseRef;
+
+const createTestCase = () => {
 	cy.login(users.appeals.caseAdmin);
 	cy.createCase({ caseType: 'W' }).then((ref) => {
-		//caseRef = ref;
-		cy.addLpaqSubmissionToCase(ref);
-		happyPathHelper.assignCaseOfficer(ref);
-		caseDetailsPage.checkStatusOfCase('Validation', 0);
-		happyPathHelper.reviewAppellantCase(ref);
-		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-		happyPathHelper.startS78InquiryCase(ref, 'inquiry');
+		caseRef = ref;
+		cy.addLpaqSubmissionToCase(caseRef);
 	});
 };
 
+const setupTestCase = () => {
+	happyPathHelper.assignCaseOfficer(caseRef);
+	caseDetailsPage.checkStatusOfCase('Validation', 0);
+	happyPathHelper.reviewAppellantCase(caseRef);
+	caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+	happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
+};
+
 describe('Date Validation', () => {
+	before(() => {
+		createTestCase();
+	});
+
 	beforeEach(() => {
 		setupTestCase();
 		inquirySectionPage.clearInquiryDateAndTime();
