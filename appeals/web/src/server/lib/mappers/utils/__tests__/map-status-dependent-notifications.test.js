@@ -38,7 +38,8 @@ describe('mapStatusDependentNotifications', () => {
 		{
 			bannerKey: 'progressFromStatements',
 			requiredAction: 'progressFromStatements',
-			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'readyForValidation',
@@ -68,7 +69,8 @@ describe('mapStatusDependentNotifications', () => {
 			bannerKey: 'interestedPartyCommentsAwaitingReview',
 			requiredAction: 'reviewIpComments',
 			expectedContainedHtml:
-				'<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p>'
+				'<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'readyForLpaQuestionnaireReview',
@@ -97,7 +99,8 @@ describe('mapStatusDependentNotifications', () => {
 		{
 			bannerKey: 'shareCommentsAndLpaStatement',
 			requiredAction: 'shareIpCommentsAndLpaStatement',
-			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'appealValidAndReadyToStart',
