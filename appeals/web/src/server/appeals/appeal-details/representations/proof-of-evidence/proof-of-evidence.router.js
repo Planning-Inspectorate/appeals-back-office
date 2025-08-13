@@ -6,6 +6,7 @@ import {
 	withSingularRepresentation
 } from './proof-of-evidence.middleware.js';
 import manageDocumentsRouter from '../document-attachments/manage-documents.router.js';
+import acceptProofOfEvidenceRouter from './accept/accept.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -21,6 +22,13 @@ router.use(
 	withSingularRepresentation,
 	getRepresentationAttachmentsFolder,
 	manageDocumentsRouter
+);
+
+router.use(
+	'/:proofOfEvidenceType/accept',
+	validateAppeal,
+	withSingularRepresentation,
+	acceptProofOfEvidenceRouter
 );
 
 export default router;

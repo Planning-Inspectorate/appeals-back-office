@@ -18,7 +18,7 @@ exports[`proof-of-evidence GET /review-proof-of-evidence with data should render
                             </li>
                         </ol>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/add-document">Change<span class="govuk-visually-hidden"> proof of evidence and witnesses</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/change/135568">Change<span class="govuk-visually-hidden"> proof of evidence and witnesses</span></a>
                         </dd>
                 </div>
             </dl>
@@ -63,7 +63,7 @@ exports[`proof-of-evidence GET /review-proof-of-evidence with data should render
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Proof of evidence and witnesses</dt>
                     <dd                     class="govuk-summary-list__value">No documents</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/add-document">Change<span class="govuk-visually-hidden"> proof of evidence and witnesses</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/change/undefined">Change<span class="govuk-visually-hidden"> proof of evidence and witnesses</span></a>
                         </dd>
                 </div>
             </dl>
@@ -129,7 +129,7 @@ exports[`proof-of-evidence POST /review-proof-of-evidence with data should rende
                             </li>
                         </ol>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/add-document">Change<span class="govuk-visually-hidden"> proof of evidence and witnesses</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/change/135568">Change<span class="govuk-visually-hidden"> proof of evidence and witnesses</span></a>
                         </dd>
                 </div>
             </dl>
