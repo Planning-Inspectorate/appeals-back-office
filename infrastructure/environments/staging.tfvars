@@ -156,8 +156,8 @@ vnet_config = {
   address_space                       = "10.15.32.0/22"
   apps_subnet_address_space           = "10.15.32.0/24"
   main_subnet_address_space           = "10.15.3.0/24"
-  secondary_address_space             = "10.15.23.0/22"
-  secondary_apps_subnet_address_space = "10.15.23.0/24"
+  secondary_address_space             = "10.15.36.0/22"
+  secondary_apps_subnet_address_space = "10.15.36.0/24"
   secondary_subnet_address_space      = "10.15.11.0/24"
 }
 
