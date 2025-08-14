@@ -591,13 +591,15 @@ function mapLPAQuestionnaireNotificationBanners(
  * @param {BodyValidationOutcome} [bodyValidationOutcome]
  * @param {SessionValidationOutcome} [sessionValidationOutcome]
  * @param {import('@pins/appeals.api').Appeals.ValidationOutcomeResponse | null} [existingValidationOutcome]
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {import('../../appeals.types.js').CheckboxItemParameter[]}
  */
 export function mapIncompleteReasonOptionsToCheckboxItemParameters(
 	reasonOptions,
 	bodyValidationOutcome,
 	sessionValidationOutcome,
-	existingValidationOutcome
+	existingValidationOutcome,
+	errors = undefined
 ) {
 	/** @type {import('@pins/appeals.api').Appeals.IncompleteInvalidReasonsResponse[]} */
 	let existingReasons = [];
@@ -629,7 +631,8 @@ export function mapIncompleteReasonOptionsToCheckboxItemParameters(
 		existingReasons,
 		bodyValidationOutcome,
 		bodyValidationBaseKey,
-		sessionValidationOutcome
+		sessionValidationOutcome,
+		errors
 	);
 }
 

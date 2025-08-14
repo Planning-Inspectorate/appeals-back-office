@@ -13,9 +13,13 @@ import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements'|'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'} AppealRequiredAction */
 
+/** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
+/** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
+/** @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} PersonalListAppeal */
+
 /**
  * This logic is documented in `docs/reference/appeal-action-required-logic.md`. Please ensure this document is kept updated to reflect any changes made in this function.
- * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal|import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} appealDetails
+ * @param {WebAppeal|PersonalListAppeal} appealDetails
  * @param { 'summary'|'detail' } view
  * @returns {AppealRequiredAction[]}
  */
@@ -248,6 +252,15 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				if (lpaFinalCommentsAwaitingReview) {
 					actions.push('reviewLpaFinalComments');
 				}
+			}
+			break;
+		}
+		case APPEAL_CASE_STATUS.COMPLETE: {
+			if (appealDetails.costsDecision?.awaitingAppellantCostsDecision) {
+				actions.push('issueAppellantCostsDecision');
+			}
+			if (appealDetails.costsDecision?.awaitingLpaCostsDecision) {
+				actions.push('issueLpaCostsDecision');
 			}
 			break;
 		}

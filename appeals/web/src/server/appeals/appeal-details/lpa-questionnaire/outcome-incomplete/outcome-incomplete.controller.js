@@ -50,7 +50,8 @@ const renderIncompleteReason = async (request, response) => {
 			incompleteReasonOptions,
 			body,
 			session.webLPAQuestionnaireReviewOutcome,
-			lpaQuestionnaireResponse.validation
+			lpaQuestionnaireResponse.validation,
+			errors
 		);
 
 		return response.status(200).render('appeals/appeal/lpa-questionnaire-incomplete.njk', {

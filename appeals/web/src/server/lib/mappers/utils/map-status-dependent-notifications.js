@@ -50,11 +50,8 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		'readyForValidation',
 		'appellantFinalCommentsAwaitingReview',
 		'lpaFinalCommentsAwaitingReview',
-		'interestedPartyCommentsAwaitingReview',
 		'readyForLpaQuestionnaireReview',
-		'lpaStatementAwaitingReview',
 		'shareFinalComments',
-		'shareCommentsAndLpaStatement',
 		'updateLpaStatement',
 		'addHearingAddress',
 		'setupHearing',
@@ -105,6 +102,22 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					request,
 					generateIssueDecisionUrl(appealDetails.appealId)
 				)}">Issue decision</a></p>`
+			});
+		case 'issueAppellantCostsDecision':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-notification-banner__link" data-cy="issue-appellant-costs-decision" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/issue-decision/issue-appellant-costs-decision-letter-upload`
+				)}">Issue appellant costs decision</a>`
+			});
+		case 'issueLpaCostsDecision':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-notification-banner__link" data-cy="issue-lpa-costs-decision" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/issue-decision/issue-lpa-costs-decision-letter-upload`
+				)}">Issue LPA costs decision</a>`
 			});
 		case 'progressFromFinalComments':
 			return createNotificationBanner({

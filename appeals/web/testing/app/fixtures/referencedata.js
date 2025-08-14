@@ -4082,6 +4082,12 @@ export const appealDataToGetRequiredActions = {
 			}
 		}
 	},
+	awaitingLinkedAppeal: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+		appealType: 'Planning appeal',
+		awaitingLinkedAppeal: true
+	},
 	addResidencesNetChange: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.COMPLETE,

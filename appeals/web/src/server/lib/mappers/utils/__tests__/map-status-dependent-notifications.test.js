@@ -38,7 +38,8 @@ describe('mapStatusDependentNotifications', () => {
 		{
 			bannerKey: 'progressFromStatements',
 			requiredAction: 'progressFromStatements',
-			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Progress to final comments</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'readyForValidation',
@@ -68,7 +69,8 @@ describe('mapStatusDependentNotifications', () => {
 			bannerKey: 'interestedPartyCommentsAwaitingReview',
 			requiredAction: 'reviewIpComments',
 			expectedContainedHtml:
-				'<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p>'
+				'<p class="govuk-notification-banner__heading">Interested party comments awaiting review</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'readyForLpaQuestionnaireReview',
@@ -86,7 +88,8 @@ describe('mapStatusDependentNotifications', () => {
 			bannerKey: 'lpaStatementAwaitingReview',
 			requiredAction: 'reviewLpaStatement',
 			expectedContainedHtml:
-				'<p class="govuk-notification-banner__heading">LPA statement awaiting review</p>'
+				'<p class="govuk-notification-banner__heading">LPA statement awaiting review</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'shareFinalComments',
@@ -96,12 +99,20 @@ describe('mapStatusDependentNotifications', () => {
 		{
 			bannerKey: 'shareCommentsAndLpaStatement',
 			requiredAction: 'shareIpCommentsAndLpaStatement',
-			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Share IP comments and LPA statement</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'appealValidAndReadyToStart',
 			requiredAction: 'startAppeal',
-			expectedContainedHtml: '<p class="govuk-notification-banner__heading">Appeal valid</p>'
+			expectedContainedHtml: '<p class="govuk-notification-banner__heading">Appeal valid</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'awaitingLinkedAppeal',
+			requiredAction: 'awaitingLinkedAppeal',
+			expectedContainedHtml:
+				'<p class="govuk-notification-banner__heading">Awaiting linked appeal</p>'
 		},
 		{
 			bannerKey: 'updateLpaStatement',
@@ -112,7 +123,8 @@ describe('mapStatusDependentNotifications', () => {
 		{
 			bannerKey: 'addResidencesNetChange',
 			requiredAction: 'addResidencesNetChange',
-			expectedContainedHtml: `<a class="govuk-link" data-cy="add-residences-net-change" href="/appeals-service/appeal-details/${mockAppealData.appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}">Add number of residential units</a>`
+			expectedContainedHtml: `<a class="govuk-link" data-cy="add-residences-net-change" href="/appeals-service/appeal-details/${mockAppealData.appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}">Add number of residential units</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		}
 	];
 
@@ -129,6 +141,40 @@ describe('mapStatusDependentNotifications', () => {
 			expect(result[0].type).toBe('notification-banner');
 			expect(result[0].parameters.type).toBe('important');
 			expect(result[0].parameters.html).toContain(testCase.expectedContainedHtml);
+		});
+	}
+
+	for (const testCase of testCases.filter(
+		(testCase) => !testCase.bannerShouldNotDisplayWhenChildLinkedAppeal
+	)) {
+		it(`should return "${testCase.bannerKey}" banner when getRequiredActionsForAppeal returns "${testCase.requiredAction} when the appeal is a child linked appeal"`, async () => {
+			const result = mapStatusDependentNotifications(
+				{ ...appealDataToGetRequiredActions[testCase.requiredAction], isChildAppeal: true },
+				{
+					originalUrl: `/appeals-service/appeal-details/${mockAppealData.appealId}`
+				}
+			);
+
+			expect(Array.isArray(result)).toBe(true);
+			expect(result[0].type).toBe('notification-banner');
+			expect(result[0].parameters.type).toBe('important');
+			expect(result[0].parameters.html).toContain(testCase.expectedContainedHtml);
+		});
+	}
+
+	for (const testCase of testCases.filter(
+		(testCase) => testCase.bannerShouldNotDisplayWhenChildLinkedAppeal
+	)) {
+		it(`should not return "${testCase.bannerKey}" banner when getRequiredActionsForAppeal returns "${testCase.requiredAction} when the appeal is a child linked appeal"`, async () => {
+			const result = mapStatusDependentNotifications(
+				{ ...appealDataToGetRequiredActions[testCase.requiredAction], isChildAppeal: true },
+				{
+					originalUrl: `/appeals-service/appeal-details/${mockAppealData.appealId}`
+				}
+			);
+
+			expect(Array.isArray(result)).toBe(true);
+			expect(result.length).toBe(0);
 		});
 	}
 });

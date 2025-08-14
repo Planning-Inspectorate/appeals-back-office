@@ -117,6 +117,14 @@ export const notificationBannerDefinitions = {
 		type: 'important',
 		pages: ['appealDetails']
 	},
+	issueAppellantCostsDecision: {
+		type: 'important',
+		pages: ['appealDetails']
+	},
+	issueLpaCostsDecision: {
+		type: 'important',
+		pages: ['appealDetails']
+	},
 	readyForValidation: {
 		type: 'important',
 		pages: ['appealDetails']
@@ -524,6 +532,16 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['appealDetails'],
 		text: 'Inquiry updated'
+	},
+	appellantProofOfEvidenceAcceptSuccess: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appellant proof of evidence accepted'
+	},
+	lpaProofOfEvidenceAcceptSuccess: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'LPA proof of evidence accepted'
 	}
 };
 
@@ -533,6 +551,8 @@ const appealActionRequiredToNotificationBannerMapping = {
 	arrangeSiteVisit: 'readyForSetUpSiteVisit',
 	assignCaseOfficer: 'assignCaseOfficer',
 	issueDecision: 'readyForDecision',
+	issueAppellantCostsDecision: 'issueAppellantCostsDecision',
+	issueLpaCostsDecision: 'issueLpaCostsDecision',
 	progressFromFinalComments: 'progressFromFinalComments',
 	progressFromStatements: 'progressFromStatements',
 	progressHearingCaseWithNoRepsFromStatements: 'progressHearingCaseWithNoRepsFromStatements',
