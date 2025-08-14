@@ -428,9 +428,9 @@ const deleteAppealData = async (
 		deleteRepsAttachments,
 		deleteHearingEstimate,
 		deleteHearing,
-		deleteAppeals,
 		deleteInquiry,
-		deleteInquiryEstimate
+		deleteInquiryEstimate,
+		deleteAppeals
 	]);
 };
 
