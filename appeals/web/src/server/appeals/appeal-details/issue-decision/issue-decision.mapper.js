@@ -544,7 +544,7 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 		if (letterDate) {
 			rows.push({
 				key: 'Decision issue date',
-				value: dateISOStringToDisplayDate(letterDate)
+				value: latestDecsionDocumentText || dateISOStringToDisplayDate(letterDate)
 			});
 		}
 		if (documentName) {
@@ -564,12 +564,6 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 							}
 					  ]
 					: null
-			});
-		}
-		if (letterDate) {
-			rows.push({
-				key: 'Decision issue date',
-				value: latestDecsionDocumentText || dateISOStringToDisplayDate(letterDate)
 			});
 		}
 	}

@@ -9019,6 +9019,37 @@ exports[`appeal-details GET /:appealId should render the received appeal details
 </main>"
 `;
 
+exports[`appeal-details GET /:appealId should render the view decision page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Decision</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="POST" novalidate="novalidate">
+                <dl class="govuk-summary-list">
+                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Decision</dt>
+                        <dd class="govuk-summary-list__value">Dismissed</dd>
+                    </div>
+                    <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Decision issue date</dt>
+                        <dd class="govuk-summary-list__value">4 August 2023 (reissued on 11 October 2023)</dd>
+                    </div>
+                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter</dt>
+                        <dd class="govuk-summary-list__value"><a class="govuk-link" download href="/documents/1/download/e1e90a49-fab3-44b8-a21a-bb73af089f6b/decision-letter.pdf"
+                            target="_blank">decision-letter.pdf</a>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/update-decision-letter/upload-decision-letter?backUrl=%2Fappeals-service%2Fappeal-details%2F2%2Fissue-decision%2Fview-decision">Change<span class="govuk-visually-hidden"> decision letter</span></a>
+                        </dd>
+                    </div>
+                </dl>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`appeal-details should not render a back button 1`] = `
 "<body class="govuk-template__body">
     <script nonce="EdcOUaJ8lczj9tIPO0lPow==">
