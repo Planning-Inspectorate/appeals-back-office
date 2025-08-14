@@ -1798,9 +1798,24 @@ describe('appeal-status', () => {
 			);
 		});
 
+		it(`should return 'site_visit_ready_to_set_up' if appealStatus is 'event' appeal type is S20 and appealProcedureType is undefined`, () => {
+			expect(
+				mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.PLANNED_LISTED_BUILDING, undefined)
+			).toBe('site_visit_ready_to_set_up');
+		});
+
 		it(`should return 'site_visit_ready_to_set_up' if appealStatus is 'event' and appealProcedureType is 'written'`, () => {
 			expect(
 				mapStatusText(APPEAL_CASE_STATUS.EVENT, APPEAL_TYPE.S78, APPEAL_CASE_PROCEDURE.WRITTEN)
+			).toBe('site_visit_ready_to_set_up');
+		});
+		it(`should return 'site_visit_ready_to_set_up' if appealStatus is 'event', appeal type is S20 and appealProcedureType is 'written'`, () => {
+			expect(
+				mapStatusText(
+					APPEAL_CASE_STATUS.EVENT,
+					APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+					APPEAL_CASE_PROCEDURE.WRITTEN
+				)
 			).toBe('site_visit_ready_to_set_up');
 		});
 
@@ -1822,11 +1837,30 @@ describe('appeal-status', () => {
 			);
 		});
 
+		it(`should return 'awaiting_site_visit' if appealStatus is 'awaiting_event, event type is S20and appealProcedureType is undefined`, () => {
+			expect(
+				mapStatusText(
+					APPEAL_CASE_STATUS.AWAITING_EVENT,
+					APPEAL_TYPE.PLANNED_LISTED_BUILDING,
+					undefined
+				)
+			).toBe('awaiting_site_visit');
+		});
+
 		it(`should return 'awaiting_site_visit' if appealStatus is 'awaiting_event' and appealProcedureType is 'written'`, () => {
 			expect(
 				mapStatusText(
 					APPEAL_CASE_STATUS.AWAITING_EVENT,
 					APPEAL_TYPE.S78,
+					APPEAL_CASE_PROCEDURE.WRITTEN
+				)
+			).toBe('awaiting_site_visit');
+		});
+		it(`should return 'awaiting_site_visit' if appealStatus is 'awaiting_event', appeal type is S20 and appealProcedureType is 'written'`, () => {
+			expect(
+				mapStatusText(
+					APPEAL_CASE_STATUS.AWAITING_EVENT,
+					APPEAL_TYPE.PLANNED_LISTED_BUILDING,
 					APPEAL_CASE_PROCEDURE.WRITTEN
 				)
 			).toBe('awaiting_site_visit');

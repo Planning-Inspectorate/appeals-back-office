@@ -2042,5 +2042,65 @@ describe('/appeals/:id/reps/publish', () => {
 				templateName: 'final-comments-done-appellant'
 			});
 		});
+		test('send notify lpa and appellant final comments S20 agent email', async () => {
+			mockS20Appeal.appellant.email = null;
+			mockS20Appeal.agent = {
+				email: 'agent@example.com'
+			};
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => mockS20Appeal.address[key])
+				.filter((value) => value)
+				.join(', ');
+			const expectedEmailPayload = {
+				lpa_reference: mockS20Appeal.applicationReference,
+				has_ip_comments: false,
+				has_statement: false,
+				appeal_reference_number: mockS20Appeal.reference,
+				final_comments_deadline: '',
+				site_address: expectedSiteAddress
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(mockS20Appeal);
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ representationType: 'appellant_final_comment' },
+				{ representationType: 'lpa_final_comment' }
+			]);
+			databaseConnector.representation.updateMany.mockResolvedValue([]);
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'final_comments' })
+				.set('azureAdUserId', '732652365');
+			expect(response.status).toEqual(200);
+			expect(response.status).toEqual(200);
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId: expect.anything(),
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next: ''
+				},
+				recipientEmail: appealS20.lpa.email,
+				templateName: 'final-comments-done-lpa'
+			});
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				azureAdUserId: expect.anything(),
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					what_happens_next: ''
+				},
+				recipientEmail: mockS20Appeal.agent.email,
+				templateName: 'final-comments-done-appellant'
+			});
+		});
 	});
 });

@@ -10,7 +10,11 @@ import { capitalizeFirstLetter } from '#lib/string-utilities.js';
  * @returns {string}
  * */
 export function mapStatusText(appealStatus, appealType, appealProcedureType) {
-	if (![APPEAL_TYPE.HOUSEHOLDER, APPEAL_TYPE.S78].includes(appealType)) {
+	if (
+		![APPEAL_TYPE.HOUSEHOLDER, APPEAL_TYPE.S78, APPEAL_TYPE.PLANNED_LISTED_BUILDING].includes(
+			appealType
+		)
+	) {
 		return appealStatus;
 	}
 
