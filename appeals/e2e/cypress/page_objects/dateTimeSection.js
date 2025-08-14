@@ -97,7 +97,7 @@ export class DateTimeSection extends Page {
 		this.#setAllDateFields(this.selectorPrefix.inquiryDate, date);
 	}
 
-	enterInquiryDate(day, month, year) {
+	setInquiryDate(day, month, year) {
 		this.#setDateFields(this.selectorPrefix.inquiryDate, day, month, year);
 	}
 
