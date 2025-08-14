@@ -371,6 +371,19 @@ export class Page {
 		cy.focused().should('have.attr', attribute, value);
 	}
 
+	verifyErrorMessages(options) {
+		options.messages.forEach((message) => {
+			this.checkErrorMessageDisplays(message);
+		});
+
+		options.fields.forEach((field) => {
+			this.verifyInputFieldIsFocusedWhenErrorMessageLinkIsClicked(field, 'id', field);
+			if (options.verifyInlineErrors) {
+				this.verifyInlineErrorMessage(`${field}-error`);
+			}
+		});
+	}
+
 	verifyTagOnPersonalListPage(caseRef, expectedTagText) {
 		cy.get(this.selectors.link)
 			.contains(caseRef)
