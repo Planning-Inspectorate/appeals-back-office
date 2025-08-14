@@ -1,4 +1,3 @@
-import { LPANotificationMethods, LPAQuestionnaire } from '#utils/db-client';
 import { Schema } from 'index';
 
 declare global {
@@ -64,6 +63,7 @@ interface SingleAppealDetailsResponse {
 		appellantDecisionFolder?: FolderInfo | null;
 		lpaDecisionFolder?: FolderInfo | null;
 	};
+	costsDecision?: CostsDecision;
 	decision: {
 		folderId: number;
 		outcome?: string | null;
@@ -281,6 +281,8 @@ interface UpdateAppellantCaseValidationOutcomeParams {
 		id: number;
 		reference: string;
 		applicationReference: string;
+		parentAppeals: AppealRelationship[] | undefined;
+		childAppeals: AppealRelationship[] | undefined;
 	};
 	appellantCaseId: number;
 	azureAdUserId: string;
@@ -570,6 +572,7 @@ interface AppealListResponse {
 	isHearingSetup: boolean | null;
 	hasHearingAddress: boolean | null;
 	awaitingLinkedAppeal: boolean | null;
+	costsDecision?: CostsDecision;
 	numberOfResidencesNetChange: number | null;
 }
 interface DocumentationSummary {

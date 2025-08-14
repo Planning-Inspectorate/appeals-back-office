@@ -15,7 +15,7 @@ export const getCaseInquiry = (mappedData, appealDetails) => {
 		return;
 	}
 
-	/** @type {PageComponent | undefined} */
+	/** @type {PageComponent} */
 	const inquiryComponent = {
 		type: 'summary-list',
 		parameters: { rows: mappedData.appeal.inquiryDetails.display.summaryListItems }

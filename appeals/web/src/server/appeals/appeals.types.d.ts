@@ -10,6 +10,7 @@ export interface CheckboxItemParameter {
 	text: string;
 	conditional?: CheckboxRadioConditionalHtmlParameter;
 	checked?: boolean;
+	error?: object;
 }
 
 export interface SelectItemParameter {
@@ -39,8 +40,8 @@ export interface RepresentationTypesAwaitingReview {
 export interface AppealType {
 	id: number;
 	type: string;
-	shorthand: string;
 	key: string;
+	processCode: string | null;
 	changeAppealType: string;
 }
 

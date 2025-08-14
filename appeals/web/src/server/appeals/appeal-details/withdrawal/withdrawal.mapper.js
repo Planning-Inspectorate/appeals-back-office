@@ -1,11 +1,9 @@
-import { capitalize } from 'lodash-es';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
 	mapNotificationBannersFromSession,
 	createNotificationBanner,
-	sortNotificationBanners,
-	dateInput
+	sortNotificationBanners
 } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
@@ -17,11 +15,9 @@ import {
 	mapRedactionStatusKeyToName,
 	mapUncommittedDocumentDownloadUrl
 } from '../../appeal-documents/appeal-documents.mapper.js';
-import { dateFieldNamePrefix } from './withdrawl.constants.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
- * @typedef {import('./withdrawal.types.js').WithdrawalRequest} WithdrawalRequest
  * @typedef {import('@pins/appeals.api').Api.DocumentVersionAuditEntry} DocumentVersionAuditEntry
  * @typedef {import('@pins/appeals.api').Appeals.DocumentInfo} DocumentInfo
  * @typedef {import('@pins/appeals.api').Appeals.DocumentVersionInfo} DocumentVersionInfo
@@ -152,120 +148,18 @@ export function manageWithdrawalRequestFolderPage(
 }
 
 /**
- *
- * @param {Appeal} appealData
- * @param {string} withdrawalRequestDay
- * @param {string} withdrawalRequestMonth
- * @param {string} withdrawalRequestYear
- * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @returns {PageContent}
- */
-export function dateWithdrawalRequestPage(
-	appealData,
-	withdrawalRequestDay,
-	withdrawalRequestMonth,
-	withdrawalRequestYear,
-	errors
-) {
-	const title = 'Date of withdrawal request';
-
-	// /** @type {PageComponent} */
-	const selectDateComponent = dateInput({
-		name: dateFieldNamePrefix,
-		id: dateFieldNamePrefix,
-		namePrefix: dateFieldNamePrefix,
-		value: {
-			day: withdrawalRequestDay,
-			month: withdrawalRequestMonth,
-			year: withdrawalRequestYear
-		},
-		legendText: 'Enter date',
-		hint: 'For example, 27 3 2023',
-		errors: errors
-	});
-
-	return {
-		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/start`,
-		backLinkText: 'Back',
-		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
-		heading: title,
-		prePageComponents: [
-			{
-				type: 'hint',
-				parameters: {
-					text: 'This is the date on the withdrawal correspondence from the appellant'
-				}
-			}
-		],
-		pageComponents: [selectDateComponent]
-	};
-}
-
-/**
- *
- * @param {Appeal} appealDetails
- * @param {RedactionStatus[] | undefined} redactionStatuses
- * @param {WithdrawalRequest} withdrawal
- * @returns {PageContent}
- */
-export function withdrawalDocumentRedactionStatusPage(
-	appealDetails,
-	redactionStatuses,
-	withdrawal
-) {
-	const redactionStatusesItems = redactionStatuses?.map((redactionStatus) => ({
-		value: redactionStatus.name.toLowerCase(),
-		text: redactionStatus.name,
-		checked: withdrawal?.redactionStatus === redactionStatus.name.toLowerCase()
-	}));
-
-	// if redaction status isn't set then pre-set it to 'unredacted' by default if available
-	if (!withdrawal?.redactionStatus && redactionStatusesItems) {
-		const redactionStatusesDefaultIndex = redactionStatusesItems?.findIndex(
-			(redactionStatusItem) => redactionStatusItem.value === 'unredacted'
-		);
-
-		if (redactionStatusesDefaultIndex && redactionStatusesItems[redactionStatusesDefaultIndex]) {
-			redactionStatusesItems[redactionStatusesDefaultIndex].checked = true;
-		}
-	}
-
-	const shortAppealReference = appealShortReference(appealDetails.appealReference);
-
-	/** @type {PageContent} */
-	const pageContent = {
-		title: `What is the redaction status of this document? - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/withdrawal/withdrawal-request-date`,
-		preHeading: `Appeal ${shortAppealReference}`,
-		pageComponents: [
-			{
-				type: 'radios',
-				parameters: {
-					name: 'withdrawal-redaction-status',
-					idPrefix: 'withdrawal-redaction-status',
-					fieldset: {
-						legend: {
-							text: 'What is the redaction status of this document?',
-							isPageHeading: true,
-							classes: 'govuk-fieldset__legend--l'
-						}
-					},
-					items: redactionStatusesItems
-				}
-			}
-		]
-	};
-
-	return pageContent;
-}
-
-/**
  * @param {Appeal} appealData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
+ * @param {*} appealWithdrawnAppellantTemplate
+ * @param {*} appealWithdrawnLPATemplate
  * @returns {PageContent}
  */
-export function checkAndConfirmPage(appealData, session) {
+export function checkAndConfirmPage(
+	appealData,
+	session,
+	appealWithdrawnAppellantTemplate,
+	appealWithdrawnLPATemplate
+) {
 	const uncommittedFile = session.fileUploadInfo?.files[0];
 
 	/** @type {PageComponent} */
@@ -275,7 +169,7 @@ export function checkAndConfirmPage(appealData, session) {
 			rows: [
 				{
 					key: {
-						text: 'Withdrawal request'
+						text: 'Request to withdraw appeal'
 					},
 					value: {
 						html: `<a class="govuk-link" href="${mapUncommittedDocumentDownloadUrl(
@@ -288,84 +182,50 @@ export function checkAndConfirmPage(appealData, session) {
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/start`,
+								href: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/new`,
 								visuallyHiddenText: 'withdrawal request'
 							}
 						]
 					}
-				},
-				{
-					key: {
-						text: 'Request date'
-					},
-					value: {
-						text: dateISOStringToDisplayDate(session.withdrawal?.withdrawalRequestDate)
-					},
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/withdrawal-request-date`,
-								visuallyHiddenText: 'request date'
-							}
-						]
-					}
-				},
-				{
-					key: {
-						text: 'Redaction status'
-					},
-					value: {
-						text: capitalize(session.withdrawal?.redactionStatus)
-					},
-					actions: {
-						items: [
-							{
-								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/redaction-status`,
-								visuallyHiddenText: 'redaction status'
-							}
-						]
-					}
 				}
 			]
 		}
 	};
 
 	/** @type {PageComponent} */
-	const warningTextComponent = {
-		type: 'warning-text',
+	const appellantEmailComponent = {
+		type: 'details',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
-			text: 'You are about to tell the relevant parties the appeal has been withdrawn and it is being closed. Any appointments for this case should be cancelled. Only limited changes can be made to the case once it is closed.'
+			summaryText: `Preview email to appellant`,
+			html: appealWithdrawnAppellantTemplate.renderedHtml
 		}
 	};
-
 	/** @type {PageComponent} */
-	const insetConfirmComponent = {
-		type: 'checkboxes',
+	const lpaEmailComponent = {
+		type: 'details',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
 		parameters: {
-			name: 'confirm-withdrawal',
-			idPrefix: 'confirm-withdrawal',
-			items: [
-				{
-					text: 'The relevant parties can be informed of the appeal withdrawal',
-					value: 'yes',
-					checked: false
-				}
-			]
+			summaryText: `Preview email to LPA`,
+			html: appealWithdrawnLPATemplate.renderedHtml
 		}
 	};
-
-	const title = 'Check your answers';
+	const title = 'Check details and withdraw appeal';
 	const pageContent = {
 		title,
-		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/withdrawal-request-date`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/withdrawal/new`,
 		backLinkText: 'Back',
 		preHeading: `Appeal ${appealShortReference(appealData.appealReference)}`,
 		heading: title,
-		submitButtonText: 'Confirm',
-		prePageComponents: [summaryListComponent, warningTextComponent],
-		pageComponents: [insetConfirmComponent]
+		submitButtonText: 'Withdraw appeal',
+		prePageComponents: [summaryListComponent],
+		pageComponents: [appellantEmailComponent, lpaEmailComponent]
 	};
 
 	if (pageContent.pageComponents) {

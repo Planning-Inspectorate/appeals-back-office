@@ -20,16 +20,21 @@ export class AppellantCasePage extends Page {
 		changeHealthSafety: 'change-site-safety',
 		changeAppRef: 'change-application-reference',
 		changeLpaName: 'change-lpa-name',
-		changeDecision: 'change-application-decision'
+		changeDecision: 'change-application-decision',
+		addRelatedAppeals: 'add-related-appeals',
+		changeRelatedAppeals: 'manage-related-appeals'
 	};
 
 	elements = {
 		appellantSection: () => cy.get('.appeal-appellant'),
-		agentSection: () => cy.get('.appeal-agent')
+		agentSection: () => cy.get('.appeal-agent'),
+		addRelatedAppeal: () => cy.getByData(this._cyDataSelectors.addRelatedAppeals),
+		changeRelatedAppeal: () => cy.getByData(this._cyDataSelectors.changeRelatedAppeals),
+		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`)
 	};
 
-	/********************************************************
-	 ******************** Navigation *************************
+	/*********************************************************
+	 ******************** Navigation **************************
 	 *********************************************************/
 
 	navigateToAppellantCase(caseRef) {
@@ -39,7 +44,19 @@ export class AppellantCasePage extends Page {
 	}
 
 	/********************************************************
-	 ******************** Assertions *************************
+	 ******************** Actions ****************************
+	 ********************************************************/
+
+	clickAddRelatedAppeals() {
+		this.elements.addRelatedAppeal().click();
+	}
+
+	clickChangeRelatedAppeals() {
+		this.elements.changeRelatedAppeal().click();
+	}
+
+	/*********************************************************
+	 ******************** Assertions **************************
 	 *********************************************************/
 
 	assertAppellantDetails({ firstName, lastName, organisation, email, phone }) {
@@ -150,6 +167,13 @@ export class AppellantCasePage extends Page {
 	assertDecisionDate(value) {
 		this.assertFieldLabelAndValue(
 			'What’s the date on the decision letter from the local planning authority?​',
+			value
+		);
+	}
+
+	assertNotReceivedDecisionDate(value) {
+		this.assertFieldLabelAndValue(
+			'What date was your decision due from the local planning authority?',
 			value
 		);
 	}

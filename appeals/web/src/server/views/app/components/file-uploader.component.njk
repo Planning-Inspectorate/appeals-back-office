@@ -4,7 +4,10 @@
 {%- from "govuk/components/checkboxes/macro.njk" import govukCheckboxes -%}
 
 {%- macro extensionsHtml(params) -%}
-	<span>{{ "Each file must be a " if params.multiple else "The file must be a " }}{{ params.allowedTypes | formattedFileTypes }}{{ " and smaller than 25MB"}}.</span>
+	<span>{{ "Each file must be a " if params.multiple else "The file must be a " }}{{ params.allowedTypes | formattedFileTypes }}{{ " and smaller than 25MB"  if params.multiple else "" }}.</span>
+	<span>
+		{{ "" if params.multiple else "The file must be smaller than 25MB." }}
+	</span>
 {% endmacro %}
 
 {%- macro fileUploader(params) -%}

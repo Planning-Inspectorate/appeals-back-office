@@ -27,6 +27,8 @@ import { submaps as hasSubmaps } from './has.js';
  *   } | null} [inspectorUser]
  * @property {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantFinalComments]
  * @property {import('#appeals/appeal-details/representations/representations.service.js').Representation} [lpaFinalComments]
+ * @property {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantProofOfEvidence]
+ * @property {import('#appeals/appeal-details/representations/representations.service.js').Representation} [lpaProofOfEvidence]
  * @property {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} [appellantCase]
  */
 
@@ -50,6 +52,8 @@ const submaps = {
  * @param {boolean} [skipAssignedUsersData]
  * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantFinalComments]
  * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [lpaFinalComments]
+ * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [appellantProofOfEvidence]
+ * @param {import('#appeals/appeal-details/representations/representations.service.js').Representation} [lpaProofOfEvidence]
  * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} [appellantCase]
  * @returns {Promise<{appeal: MappedInstructions}>}
  */
@@ -61,7 +65,9 @@ export async function initialiseAndMapAppealData(
 	skipAssignedUsersData = false,
 	appellantFinalComments,
 	lpaFinalComments,
-	appellantCase
+	appellantCase,
+	appellantProofOfEvidence,
+	lpaProofOfEvidence
 ) {
 	if (appealDetails === undefined) {
 		throw new Error('appealDetails is undefined');
@@ -109,7 +115,9 @@ export async function initialiseAndMapAppealData(
 			inspectorUser,
 			appellantFinalComments,
 			lpaFinalComments,
-			appellantCase
+			appellantCase,
+			appellantProofOfEvidence,
+			lpaProofOfEvidence
 		});
 	});
 	return mappedData;

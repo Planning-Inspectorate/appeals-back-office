@@ -68,7 +68,16 @@ export const APPEAL_REPRESENTATION_TYPE = Object.freeze({
 	APPELLANT_STATEMENT: 'appellant_statement',
 	COMMENT: 'comment',
 	LPA_FINAL_COMMENT: 'lpa_final_comment',
-	APPELLANT_FINAL_COMMENT: 'appellant_final_comment'
+	APPELLANT_FINAL_COMMENT: 'appellant_final_comment',
+	LPA_PROOFS_EVIDENCE: 'lpa_proofs_evidence',
+	APPELLANT_PROOFS_EVIDENCE: 'appellant_proofs_evidence'
+});
+
+export const APPEAL_PROOF_OF_EVIDENCE_STATUS = Object.freeze({
+	AWAITING: 'awaiting',
+	RECEIVED: 'received',
+	VALID: 'valid',
+	INVALID: 'invalid'
 });
 
 export const APPEAL_REPRESENTATION_STATUS = Object.freeze({

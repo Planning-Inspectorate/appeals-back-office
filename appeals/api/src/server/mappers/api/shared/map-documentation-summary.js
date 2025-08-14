@@ -41,6 +41,16 @@ export const mapDocumentationSummary = (data) => {
 			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
 		) ?? null;
 
+	const lpaProofOfEvidence =
+		appeal.representations?.find(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+		) ?? null;
+
+	const appellantProofOfEvidence =
+		appeal.representations?.find(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+		) ?? null;
+
 	const mostRecentIpComment = maxBy(ipComments, (comment) => new Date(comment.dateCreated));
 
 	const redactLPAStatementMatching = checkRedactedText(
@@ -88,6 +98,20 @@ export const mapDocumentationSummary = (data) => {
 					? appellantFinalComments.dateCreated.toISOString()
 					: null,
 				representationStatus: appellantFinalComments?.status ?? null
+			},
+			appellantProofOfEvidence: {
+				status: appellantProofOfEvidence ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: appellantProofOfEvidence?.dateCreated
+					? appellantProofOfEvidence.dateCreated.toISOString()
+					: null,
+				representationStatus: appellantProofOfEvidence?.status ?? null
+			},
+			lpaProofOfEvidence: {
+				status: lpaProofOfEvidence ? DOCUMENT_STATUS_RECEIVED : DOCUMENT_STATUS_NOT_RECEIVED,
+				receivedAt: lpaProofOfEvidence?.dateCreated
+					? lpaProofOfEvidence.dateCreated.toISOString()
+					: null,
+				representationStatus: lpaProofOfEvidence?.status ?? null
 			}
 		})
 	};

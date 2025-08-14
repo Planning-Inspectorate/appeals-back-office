@@ -7,6 +7,7 @@ import { generateCaseNotes } from './case-notes/case-notes.mapper.js';
 import { generateStatusTags } from './status-tags/status-tags.mapper.js';
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
 import { formatCaseOfficerDetailsForCaseSummary } from '#lib/mappers/utils/format-case-officer-details-for-case-summary.js';
+import { getCancelAppealSection } from './cancel/cancel-appeal-section.js';
 
 export const pageHeading = 'Case details';
 
@@ -20,6 +21,8 @@ export const pageHeading = 'Case details';
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('./representations/representations.service.js').Representation|undefined} [appellantFinalComments]
  * @param {import('./representations/representations.service.js').Representation|undefined} [lpaFinalComments]
+ * @param {import('./representations/representations.service.js').Representation|undefined} [appellantProofOfEvidence]
+ * @param {import('./representations/representations.service.js').Representation|undefined} [lpaProofOfEvidence]
  * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} [appellantCase]
  * @returns {Promise<PageContent>}
  */
@@ -31,7 +34,9 @@ export async function appealDetailsPage(
 	request,
 	appellantFinalComments,
 	lpaFinalComments,
-	appellantCase
+	appellantCase,
+	appellantProofOfEvidence,
+	lpaProofOfEvidence
 ) {
 	const mappedData = await initialiseAndMapAppealData(
 		appealDetails,
@@ -41,7 +46,9 @@ export async function appealDetailsPage(
 		false,
 		appellantFinalComments,
 		lpaFinalComments,
-		appellantCase
+		appellantCase,
+		appellantProofOfEvidence,
+		lpaProofOfEvidence
 	);
 
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
@@ -87,13 +94,16 @@ export async function appealDetailsPage(
 		...mapNotificationBannersFromSession(session, 'appealDetails', appealDetails.appealId)
 	]);
 
+	const caseCancel = getCancelAppealSection(appealDetails, currentRoute);
+
 	const pageComponents = [
 		...notificationBanners,
 		...(await generateStatusTags(mappedData, appealDetails, request)),
 		caseSummary,
 		...caseDownload,
 		caseNotes,
-		accordion
+		accordion,
+		...(caseCancel ?? [])
 	];
 
 	preRenderPageComponents(pageComponents);

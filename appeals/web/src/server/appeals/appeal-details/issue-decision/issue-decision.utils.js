@@ -8,6 +8,7 @@ import {
  * @typedef {import('@pins/express/types/express.js').Request & {specificDecisionType?: string}} Request
  * @typedef {import("express-session").Session & Partial<import("express-session").SessionData>} Session
  * @typedef {import('../appeal-details.types.js').WebAppeal} WebAppeal
+ * @typedef {import('#appeals/personal-list/personal-list.mapper').PersonalListAppeal} PersonalListAppeal
  */
 
 /**
@@ -80,10 +81,10 @@ export function generateIssueDecisionUrl(appealId) {
 
 /**
  *
- * @param {WebAppeal} currentAppeal
+ * @param {WebAppeal | Partial<PersonalListAppeal & { appealTimetable: Record<string, string>; awaitingLinkedAppeal: boolean; costs?: *; costsDecision?: *}>} currentAppeal
  * @returns {{appellantHasAppliedForCosts: boolean, lpaHasAppliedForCosts: boolean, appellantDecisionHasAlreadyBeenIssued: boolean, lpaDecisionHasAlreadyBeenIssued: boolean}}
  */
-export function buildLogicData(currentAppeal) {
+export function buildIssueDecisionLogicData(currentAppeal) {
 	const appellantApplicationDocumentsExists =
 		!!currentAppeal.costs?.appellantApplicationFolder?.documents?.length;
 	const appellantWithdrawalDocumentsExists =

@@ -8,6 +8,7 @@ import redactIpCommentRouter from './redact/redact.router.js';
 import * as controller from './interested-party-comments.controller.js';
 import { validateComment } from './interested-party-comments.middleware.js';
 import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
+import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -29,6 +30,7 @@ router
 	.get(
 		validateAppeal,
 		clearUncommittedFilesFromSession,
+		saveBackUrl('manageIpComments', { invalidateKeys: ['addIpComment'] }),
 		asyncHandler(controller.handleInterestedPartyComments)
 	);
 

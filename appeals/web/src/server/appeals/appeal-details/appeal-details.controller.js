@@ -4,6 +4,7 @@ import { getAppealCaseNotes } from './case-notes/case-notes.service.js';
 import { getSingularRepresentationByType } from './representations/representations.service.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { getAppellantCaseFromAppealId } from './appellant-case/appellant-case.service.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -23,7 +24,7 @@ export const viewAppealDetails = async (request, response) => {
 		currentAppeal.appealId.toString()
 	);
 
-	let appellantFinalComments, lpaFinalComments;
+	let appellantFinalComments, lpaFinalComments, appellantProofOfEvidence, lpaProofOfEvidence;
 
 	if (currentAppeal.appealType === APPEAL_TYPE.S78) {
 		[appellantFinalComments, lpaFinalComments] = await Promise.all([
@@ -38,6 +39,21 @@ export const viewAppealDetails = async (request, response) => {
 				APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
 			)
 		]);
+
+		if (currentAppeal.procedureType.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
+			[appellantProofOfEvidence, lpaProofOfEvidence] = await Promise.all([
+				getSingularRepresentationByType(
+					request.apiClient,
+					currentAppeal.appealId.toString(),
+					APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+				),
+				getSingularRepresentationByType(
+					request.apiClient,
+					currentAppeal.appealId.toString(),
+					APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+				)
+			]);
+		}
 	}
 
 	const appellantCase = await getAppellantCaseFromAppealId(
@@ -59,7 +75,9 @@ export const viewAppealDetails = async (request, response) => {
 		request,
 		appellantFinalComments,
 		lpaFinalComments,
-		appellantCase
+		appellantCase,
+		appellantProofOfEvidence,
+		lpaProofOfEvidence
 	);
 
 	mappedPageContent.pageComponents = mappedPageContent.pageComponents || [];

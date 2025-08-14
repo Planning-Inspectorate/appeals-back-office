@@ -15,6 +15,7 @@ import { camelToScreamingSnake } from '#utils/string-utils.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
+import { formatCostsDecision } from '#endpoints/appeals/appeals.formatter.js';
 
 const {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
@@ -43,8 +44,9 @@ const loadAndFormatAppeal = async ({
 }) => {
 	const appealTypes = await loadAppealTypes();
 	const linkedAppeals = await loadLinkedAppeals(appeal);
+	const costsDecision = await formatCostsDecision(appeal);
 
-	const mappedAppeal = mapCase({ appeal, appealTypes, linkedAppeals, context });
+	const mappedAppeal = mapCase({ appeal, appealTypes, linkedAppeals, costsDecision, context });
 	if (!mappedAppeal) {
 		return null;
 	}
@@ -176,14 +178,20 @@ const loadAppealTypes = async () => {
  * @returns {Promise<*[]>}
  */
 const loadLinkedAppeals = async (appeal) => {
+	const parentAppeals = appeal?.parentAppeals?.filter(
+		(parentAppeal) => parentAppeal.type === CASE_RELATIONSHIP_LINKED
+	);
+	const childAppeals = appeal?.childAppeals?.filter(
+		(childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED
+	);
 	if (
 		!isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) ||
-		(!appeal?.parentAppeals?.length && !appeal?.childAppeals?.length)
+		(!parentAppeals?.length && !childAppeals?.length)
 	) {
 		return [];
 	}
 
-	const parentRef = appeal.parentAppeals?.[0]?.parentRef ?? appeal.reference;
+	const parentRef = parentAppeals?.[0]?.parentRef ?? appeal.reference;
 	return appealRepository.getLinkedAppeals(parentRef, CASE_RELATIONSHIP_LINKED);
 };
 

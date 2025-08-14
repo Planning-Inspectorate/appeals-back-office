@@ -20,5 +20,4 @@ We rejected your comment because:
 {% endif -%}
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
-
+enquiries@planninginspectorate.gov.uk

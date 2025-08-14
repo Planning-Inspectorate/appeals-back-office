@@ -77,7 +77,7 @@ export async function assignUserPage(appealDetails, isInspector, session, errors
 		title: `Search for ${userTypeText} by name or email address`,
 		backLinkText: 'Back',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		preHeading: `Appeal ${shortAppealReference}  - Assign ${userTypeText}`,
+		preHeading: `Appeal ${shortAppealReference}  - assign ${userTypeText}`,
 		pageComponents: [selectSearchPageComponent, searchButtonPageComponent]
 	};
 

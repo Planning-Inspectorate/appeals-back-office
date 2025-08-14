@@ -14,6 +14,7 @@ const { app, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 const linkedAppealsPath = '/linked-appeals';
+const linkedAppealsAddUrl = `${baseUrl}/1${linkedAppealsPath}/add`;
 const managePath = '/manage';
 const unlinkAppealPath = '/unlink-appeal';
 
@@ -97,7 +98,7 @@ describe('linked-appeals', () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
 
-			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add`);
+			const response = await request.get(linkedAppealsAddUrl);
 			const element = parseHtml(response.text, { rootElement: 'body' });
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -115,7 +116,7 @@ describe('linked-appeals', () => {
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
+			const response = await request.post(linkedAppealsAddUrl).send({
 				'appeal-reference': ''
 			});
 			const element = parseHtml(response.text);
@@ -139,7 +140,7 @@ describe('linked-appeals', () => {
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
+			const response = await request.post(linkedAppealsAddUrl).send({
 				'appeal-reference': '123456'
 			});
 			const element = parseHtml(response.text);
@@ -163,7 +164,7 @@ describe('linked-appeals', () => {
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
+			const response = await request.post(linkedAppealsAddUrl).send({
 				'appeal-reference': '12345678'
 			});
 			const element = parseHtml(response.text);
@@ -187,7 +188,7 @@ describe('linked-appeals', () => {
 				.get(`/appeals/linkable-appeal/${testInvalidLinkableAppealReference}/linked`)
 				.reply(404);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
+			const response = await request.post(linkedAppealsAddUrl).send({
 				'appeal-reference': testInvalidLinkableAppealReference
 			});
 			const element = parseHtml(response.text);
@@ -205,38 +206,91 @@ describe('linked-appeals', () => {
 			expect(errorSummaryHtml).toContain('Enter a valid appeal reference</a>');
 		});
 
-		it('should redirect to the check and confirm page if the reference was provided and a matching appeal was found', async () => {
+		it('should redirect to the check and confirm page if the reference was provided, a matching appeal was found, is unlinked, and the current appeal is already a lead', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, { ...appealData, isParentAppeal: true });
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
+				.reply(200, linkableAppealSummaryBackOffice);
+
+			const response = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(
+				`Found. Redirecting to ${linkedAppealsAddUrl}/check-and-confirm?backUrl=${encodeURIComponent(
+					linkedAppealsAddUrl
+				)}`
+			);
+		});
+
+		it('should redirect to the check and confirm page if the reference was provided, a matching appeal was found, is already a lead, and the current appeal is unlinked', async () => {
+			nock.cleanAll();
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
+				.reply(200, { ...linkableAppealSummaryBackOffice, childAppeals: [{ appealId: 2 }] });
+
+			const response = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(
+				`Found. Redirecting to ${linkedAppealsAddUrl}/check-and-confirm?backUrl=${encodeURIComponent(
+					linkedAppealsAddUrl
+				)}`
+			);
+		});
+
+		it('should redirect to the lead appeal page if the reference was provided, a matching appeal was found, and neither appeals are already linked', async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
+			const response = await request.post(linkedAppealsAddUrl).send({
 				'appeal-reference': testValidLinkableAppealReference
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/lead-appeal'
-			);
+			expect(response.text).toEqual(`Found. Redirecting to ${linkedAppealsAddUrl}/lead-appeal`);
 		});
 
-		it('should redirect to a drop out page if the appeal is already linked', async () => {
+		it('should redirect to a drop out page if either appeal is already linked as a child', async () => {
 			nock.cleanAll();
 			nock('http://test/').get('/appeals/1').reply(200, appealData);
 			nock('http://test/')
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(409);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
+			const response = await request.post(linkedAppealsAddUrl).send({
 				'appeal-reference': testValidLinkableAppealReference
 			});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/already-linked'
-			);
+			expect(response.text).toEqual(`Found. Redirecting to ${linkedAppealsAddUrl}/already-linked`);
+		});
+
+		it('should redirect to a drop out page if both appeals are already linked as lead appeals', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, { ...appealData, isParentAppeal: true });
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
+				.reply(200, { ...linkableAppealSummaryBackOffice, childAppeals: [{ appealId: 2 }] });
+
+			const response = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toEqual(`Found. Redirecting to ${linkedAppealsAddUrl}/already-linked`);
 		});
 
 		it('should redirect to a drop out page if the appeal cannot be linked due to an invalid case status', async () => {
@@ -246,13 +300,13 @@ describe('linked-appeals', () => {
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(432);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add`).send({
+			const response = await request.post(linkedAppealsAddUrl).send({
 				'appeal-reference': testValidLinkableAppealReference
 			});
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/invalid-case-status'
+				`Found. Redirecting to ${linkedAppealsAddUrl}/invalid-case-status`
 			);
 		});
 	});
@@ -272,18 +326,16 @@ describe('linked-appeals', () => {
 				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
 				.reply(200, linkableAppealSummaryBackOffice);
 
-			const addLinkedAppealReferenceResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
-				.send({
-					'appeal-reference': testValidLinkableAppealReference
-				});
+			const addLinkedAppealReferenceResponse = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
 
 			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
 			expect(addLinkedAppealReferenceResponse.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/lead-appeal'
+				`Found. Redirecting to ${linkedAppealsAddUrl}/lead-appeal`
 			);
 
-			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add/lead-appeal`);
+			const response = await request.get(`${linkedAppealsAddUrl}/lead-appeal`);
 			const element = parseHtml(response.text, { rootElement: 'body' });
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -298,6 +350,117 @@ describe('linked-appeals', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				`${appealData.appealSite.addressLine1}</span>`
 			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<span>${linkableAppealSummaryBackOffice.appealReference}</span>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`${linkableAppealSummaryBackOffice.siteAddress.addressLine1}</span>`
+			);
+		});
+
+		it('should render the check and confirm page when a lead appeal has been chosen and both appeals are currently unlinked', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, { ...appealData, appealReference: testValidLinkableAppealReference })
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.reply(200, {
+					...appealData,
+					appealId: linkableAppealSummaryBackOffice.appealId,
+					appealReference: linkableAppealSummaryBackOffice.appealReference
+				});
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
+				.reply(200, linkableAppealSummaryBackOffice);
+
+			const addLinkedAppealReferenceResponse = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
+
+			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
+			expect(addLinkedAppealReferenceResponse.text).toEqual(
+				`Found. Redirecting to ${linkedAppealsAddUrl}/lead-appeal`
+			);
+
+			const selectLeadAppealResponse = await request
+				.post(`${linkedAppealsAddUrl}/lead-appeal`)
+				.send({
+					'lead-appeal': testValidLinkableAppealReference
+				});
+
+			expect(selectLeadAppealResponse.statusCode).toBe(302);
+			expect(selectLeadAppealResponse.text).toEqual(
+				`Found. Redirecting to ${linkedAppealsAddUrl}/check-and-confirm`
+			);
+
+			const response = await request.get(`${linkedAppealsAddUrl}/check-and-confirm`);
+			const element = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			});
+
+			expect(unprettifiedElement.innerHTML).toContain('Check details and add linked appeal</h1>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<span>${testValidLinkableAppealReference}</span>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`${appealData.appealSite.addressLine1}</span>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Which is the lead appeal?</dt>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				`<span>${linkableAppealSummaryBackOffice.appealReference}</span>`
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				`${linkableAppealSummaryBackOffice.siteAddress.addressLine1}</span>`
+			);
+		});
+
+		it('should render the check and confirm page when a lead appeal has been chosen as it is already linked', async () => {
+			nock.cleanAll();
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, { ...appealData, isParentAppeal: true })
+				.persist();
+			nock('http://test/')
+				.get(`/appeals/${linkableAppealSummaryBackOffice.appealId}`)
+				.reply(200, {
+					...appealData,
+					appealId: linkableAppealSummaryBackOffice.appealId,
+					appealReference: linkableAppealSummaryBackOffice.appealReference
+				});
+			nock('http://test/')
+				.get(`/appeals/linkable-appeal/${testValidLinkableAppealReference}/linked`)
+				.reply(200, linkableAppealSummaryBackOffice);
+
+			const addLinkedAppealReferenceResponse = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
+
+			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
+			expect(addLinkedAppealReferenceResponse.text).toEqual(
+				`Found. Redirecting to ${linkedAppealsAddUrl}/check-and-confirm?backUrl=${encodeURIComponent(
+					linkedAppealsAddUrl
+				)}`
+			);
+
+			const response = await request.get(`${linkedAppealsAddUrl}/check-and-confirm`);
+			const element = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, {
+				rootElement: 'body',
+				skipPrettyPrint: true
+			});
+
+			expect(unprettifiedElement.innerHTML).toContain('Check details and add linked appeal</h1>');
+			expect(unprettifiedElement.innerHTML).not.toContain('Which is the lead appeal?</dt>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				`<span>${linkableAppealSummaryBackOffice.appealReference}</span>`
 			);
@@ -323,15 +486,15 @@ describe('linked-appeals', () => {
 				.reply(200, linkableAppealSummaryBackOffice);
 
 			const addLinkedAppealReferenceResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
+				.post(linkedAppealsAddUrl)
 				.send({ 'appeal-reference': testValidLinkableAppealReference });
 
 			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
 			expect(addLinkedAppealReferenceResponse.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/lead-appeal'
+				`Found. Redirecting to ${linkedAppealsAddUrl}/lead-appeal`
 			);
 
-			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add/lead-appeal`);
+			const response = await request.get(`${linkedAppealsAddUrl}/lead-appeal`);
 			const element = parseHtml(response.text, {
 				rootElement: 'body',
 				skipPrettyPrint: true
@@ -363,21 +526,21 @@ describe('linked-appeals', () => {
 				});
 
 			const addResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
+				.post(linkedAppealsAddUrl)
 				.send({ 'appeal-reference': testValidLinkableAppealReference });
 
 			expect(addResponse.statusCode).toBe(302);
 
 			const leadAppealResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add/lead-appeal`)
+				.post(`${linkedAppealsAddUrl}/lead-appeal`)
 				.send({ 'lead-appeal': testValidLinkableAppealReference });
 
 			expect(leadAppealResponse.statusCode).toBe(302);
 			expect(leadAppealResponse.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/check-and-confirm'
+				`Found. Redirecting to ${linkedAppealsAddUrl}/check-and-confirm`
 			);
 
-			const response = await request.get(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
+			const response = await request.get(`${linkedAppealsAddUrl}/check-and-confirm`);
 
 			const element = parseHtml(response.text, {
 				rootElement: 'body',
@@ -402,12 +565,12 @@ describe('linked-appeals', () => {
 				});
 
 			const addResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
+				.post(linkedAppealsAddUrl)
 				.send({ 'appeal-reference': testValidLinkableAppealReference });
 
 			expect(addResponse.statusCode).toBe(302);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add/lead-appeal`);
+			const response = await request.post(`${linkedAppealsAddUrl}/lead-appeal`);
 
 			const element = parseHtml(response.text, {
 				rootElement: 'body',
@@ -456,21 +619,19 @@ describe('linked-appeals', () => {
 					}
 				});
 
-			const addLinkedAppealReferenceResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
-				.send({
-					'appeal-reference': testValidLinkableAppealReference
-				});
+			const addLinkedAppealReferenceResponse = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
 
 			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
 
 			const leadAppealResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add/lead-appeal`)
+				.post(`${linkedAppealsAddUrl}/lead-appeal`)
 				.send({ 'lead-appeal': testValidLinkableAppealReference });
 
 			expect(leadAppealResponse.statusCode).toBe(302);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
+			const response = await request.post(`${linkedAppealsAddUrl}/check-and-confirm`);
 
 			expect(response.statusCode).toBe(200);
 
@@ -516,18 +677,16 @@ describe('linked-appeals', () => {
 				.reply(200, linkableAppealSummaryBackOffice);
 			nock('http://test/').post('/appeals/1/link-appeal').reply(200, {});
 
-			const addLinkedAppealReferenceResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
-				.send({
-					'appeal-reference': testValidLinkableAppealReference
-				});
+			const addLinkedAppealReferenceResponse = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
 
 			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
 			expect(addLinkedAppealReferenceResponse.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/lead-appeal'
+				`Found. Redirecting to ${linkedAppealsAddUrl}/lead-appeal`
 			);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
+			const response = await request.post(`${linkedAppealsAddUrl}/check-and-confirm`);
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
@@ -560,18 +719,16 @@ describe('linked-appeals', () => {
 				.reply(200, linkableAppealSummaryBackOffice);
 			nock('http://test/').post('/appeals/1/link-appeal').reply(200, {});
 
-			const addLinkedAppealReferenceResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
-				.send({
-					'appeal-reference': testValidLinkableAppealReference
-				});
+			const addLinkedAppealReferenceResponse = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
 
 			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
 			expect(addLinkedAppealReferenceResponse.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/lead-appeal'
+				`Found. Redirecting to ${linkedAppealsAddUrl}/lead-appeal`
 			);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
+			const response = await request.post(`${linkedAppealsAddUrl}/check-and-confirm`);
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
@@ -604,18 +761,16 @@ describe('linked-appeals', () => {
 				.reply(200, linkableAppealSummaryHorizon);
 			nock('http://test/').post('/appeals/1/link-legacy-appeal').reply(200, {});
 
-			const addLinkedAppealReferenceResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
-				.send({
-					'appeal-reference': testValidLinkableAppealReference
-				});
+			const addLinkedAppealReferenceResponse = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
 
 			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
 			expect(addLinkedAppealReferenceResponse.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/lead-appeal'
+				`Found. Redirecting to ${linkedAppealsAddUrl}/lead-appeal`
 			);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
+			const response = await request.post(`${linkedAppealsAddUrl}/check-and-confirm`);
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');
@@ -648,18 +803,16 @@ describe('linked-appeals', () => {
 				.reply(200, linkableAppealSummaryHorizon);
 			nock('http://test/').post('/appeals/1/link-legacy-appeal').reply(200, {});
 
-			const addLinkedAppealReferenceResponse = await request
-				.post(`${baseUrl}/1${linkedAppealsPath}/add`)
-				.send({
-					'appeal-reference': testValidLinkableAppealReference
-				});
+			const addLinkedAppealReferenceResponse = await request.post(linkedAppealsAddUrl).send({
+				'appeal-reference': testValidLinkableAppealReference
+			});
 
 			expect(addLinkedAppealReferenceResponse.statusCode).toBe(302);
 			expect(addLinkedAppealReferenceResponse.text).toEqual(
-				'Found. Redirecting to /appeals-service/appeal-details/1/linked-appeals/add/lead-appeal'
+				`Found. Redirecting to ${linkedAppealsAddUrl}/lead-appeal`
 			);
 
-			const response = await request.post(`${baseUrl}/1${linkedAppealsPath}/add/check-and-confirm`);
+			const response = await request.post(`${linkedAppealsAddUrl}/check-and-confirm`);
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toEqual('Found. Redirecting to /appeals-service/appeal-details/1');

@@ -368,6 +368,10 @@ export const spec = {
 				}
 			],
 			awaitingLinkedAppeal: true,
+			costsDecision: {
+				awaitingAppellantCostsDecision: false,
+				awaitingLpaCostsDecision: false
+			},
 			isParentAppeal: false,
 			isChildAppeal: true,
 			localPlanningDepartment: 'Some Borough Council',
@@ -1704,6 +1708,15 @@ export const spec = {
 				inquiryEstimateId: {
 					type: 'number',
 					example: 1
+				}
+			}
+		},
+		AppealStatusRollBackRequest: {
+			type: 'object',
+			properties: {
+				status: {
+					type: 'string',
+					example: 'event'
 				}
 			}
 		},

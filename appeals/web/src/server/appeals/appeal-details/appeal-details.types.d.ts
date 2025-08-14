@@ -1,12 +1,11 @@
 import { Address } from '@pins/appeals';
 import { LPAQuestionnaireValidationOutcomeResponse } from './lpa-questionnaire/lpa-questionnaire.types';
 import {
-	SingleAppealDetailsResponse,
-	GetAuditTrailsResponse,
 	AppealTimetable,
-	DocumentationSummaryEntry,
 	DocumentationSummary,
-	FolderInfo
+	DocumentationSummaryEntry,
+	FolderInfo,
+	SingleAppealDetailsResponse
 } from '@pins/appeals.api/src/server/endpoints/appeals';
 import { SiteVisit } from '@pins/appeals.api/src/database/schema';
 
@@ -380,6 +379,8 @@ export interface WebDocumentationSummary extends DocumentationSummary {
 	ipComments?: Omit<WebDocumentationSummaryEntry, 'dueDate'>;
 	appellantFinalComments?: WebDocumentationSummaryEntry;
 	lpaFinalComments?: WebDocumentationSummaryEntry;
+	appellantProofOfEvidence?: WebDocumentationSummaryEntry;
+	lpaProofOfEvidence?: WebDocumentationSummaryEntry;
 }
 
 export interface WebAppeal extends SingleAppealDetailsResponse {

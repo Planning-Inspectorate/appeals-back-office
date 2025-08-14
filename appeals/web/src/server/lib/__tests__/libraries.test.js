@@ -490,6 +490,7 @@ describe('Libraries', () => {
 					[],
 					{},
 					'invalidReason',
+					undefined,
 					undefined
 				);
 
@@ -503,18 +504,20 @@ describe('Libraries', () => {
 						value: '22',
 						text: 'Documents have not been submitted on time',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: false
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -528,6 +531,7 @@ describe('Libraries', () => {
 					[],
 					{},
 					'invalidReason',
+					undefined,
 					undefined
 				);
 
@@ -541,18 +545,20 @@ describe('Libraries', () => {
 						value: '22',
 						text: 'Documents have not been submitted on time',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: false
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -566,6 +572,7 @@ describe('Libraries', () => {
 					[],
 					{},
 					'invalidReason',
+					undefined,
 					undefined
 				);
 				const expectedResult = [
@@ -576,7 +583,7 @@ describe('Libraries', () => {
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: false
 					}
 				];
@@ -591,6 +598,7 @@ describe('Libraries', () => {
 					[],
 					{},
 					'invalidReason',
+					undefined,
 					undefined
 				);
 				const expectedResult = [
@@ -601,7 +609,7 @@ describe('Libraries', () => {
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: true
 					}
 				];
@@ -635,6 +643,7 @@ describe('Libraries', () => {
 					],
 					{},
 					'invalidReason',
+					undefined,
 					undefined
 				);
 				const expectedResult = [
@@ -652,18 +661,20 @@ describe('Libraries', () => {
 								'test document 1 has not been submitted on time',
 								'test document 2 has not been submitted on time'
 							]
-						}
+						},
+						error: [undefined, undefined]
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: true
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -687,7 +698,8 @@ describe('Libraries', () => {
 								'test document 2 has not been submitted on time'
 							]
 						}
-					}
+					},
+					undefined
 				);
 				const expectedResult = [
 					{
@@ -704,18 +716,20 @@ describe('Libraries', () => {
 								'test document 1 has not been submitted on time',
 								'test document 2 has not been submitted on time'
 							]
-						}
+						},
+						error: [undefined, undefined]
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: true
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -735,6 +749,7 @@ describe('Libraries', () => {
 						]
 					},
 					'invalidReason',
+					undefined,
 					undefined
 				);
 				const expectedResult = [
@@ -752,18 +767,20 @@ describe('Libraries', () => {
 								'test document 1 has not been submitted on time',
 								'test document 2 has not been submitted on time'
 							]
-						}
+						},
+						error: [undefined, undefined]
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: true
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -803,7 +820,8 @@ describe('Libraries', () => {
 						reasonsText: {
 							22: ['session text item 1']
 						}
-					}
+					},
+					undefined
 				);
 				const expectedResult = [
 					{
@@ -817,18 +835,20 @@ describe('Libraries', () => {
 						checked: true,
 						addAnother: {
 							textItems: ['session text item 1']
-						}
+						},
+						error: [undefined]
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: true
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -871,7 +891,8 @@ describe('Libraries', () => {
 						reasonsText: {
 							22: ['session text item 1']
 						}
-					}
+					},
+					undefined
 				);
 
 				const expectedResult = [
@@ -886,18 +907,20 @@ describe('Libraries', () => {
 						checked: true,
 						addAnother: {
 							textItems: ['body text item 1']
-						}
+						},
+						error: [undefined]
 					},
 					{
 						value: '23',
-						text: "The appellant doesn't have the right to appeal",
+						text: 'The appellant does not have the right to appeal',
 						checked: true
 					},
 					{
 						value: '24',
-						text: 'Other',
+						text: 'Other reason',
 						checked: false,
-						addAnother: { textItems: [''] }
+						addAnother: { textItems: [''] },
+						error: [undefined]
 					}
 				];
 
@@ -930,7 +953,7 @@ describe('Libraries', () => {
 				);
 
 				expect(result).toEqual(
-					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
+					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant does not have the right to appeal</li></ul>'
 				);
 			});
 
@@ -938,7 +961,7 @@ describe('Libraries', () => {
 				const result = mapReasonsToReasonsListHtml(appellantCaseInvalidReasons, ['22', '23'], {});
 
 				expect(result).toEqual(
-					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
+					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time</li><li>The appellant does not have the right to appeal</li></ul>'
 				);
 			});
 
@@ -948,7 +971,7 @@ describe('Libraries', () => {
 				});
 
 				expect(result).toEqual(
-					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time: test reason text 1</li><li>Documents have not been submitted on time: test reason text 2</li><li>The appellant doesn\'t have the right to appeal</li></ul>'
+					'<ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet"><li>Documents have not been submitted on time: test reason text 1</li><li>Documents have not been submitted on time: test reason text 2</li><li>The appellant does not have the right to appeal</li></ul>'
 				);
 			});
 		});

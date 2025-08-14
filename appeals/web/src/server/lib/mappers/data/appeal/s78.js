@@ -22,6 +22,8 @@ import { mapInquiryEstimates } from './submappers/inquiry-inquiry-estimates.js';
 import { mapInquiryDetails } from './submappers/inquiry-details.js';
 import { mapNetResidenceChange } from './submappers/net-residence-change.mapper.js';
 import { mapNetResidenceGainOrLoss } from './submappers/net-residence-gain-or-less.mapper.js';
+import { mapAppellantProofOfEvidence } from '#lib/mappers/data/appeal/submappers/appellant-proof-of-evidence-and-witness.mapper.js';
+import { mapLPAProofOfEvidence } from '#lib/mappers/data/appeal/submappers/lpa-proof-of-evidence-and-witness.mapper.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -48,5 +50,7 @@ export const submaps = {
 	hearingDate: mapHearingDate,
 	inquiryDate: mapInquiryDate,
 	netResidenceChange: mapNetResidenceChange,
-	netResidenceGainOrLoss: mapNetResidenceGainOrLoss
+	netResidenceGainOrLoss: mapNetResidenceGainOrLoss,
+	appellantProofOfEvidence: mapAppellantProofOfEvidence,
+	lpaProofOfEvidence: mapLPAProofOfEvidence
 };

@@ -13,6 +13,7 @@ export class CaseDetailsPage extends Page {
 
 	_cyDataSelectors = {
 		reviewLpaQuestionnaire: 'review-lpa-questionnaire-banner',
+		viewLpaQuestionnaire: 'review-lpa-questionnaire',
 		changeCaseOfficer: 'change-case-officer',
 		assignCaseOfficer: 'assign-case-officer',
 		assignInspector: 'assign-inspector',
@@ -77,6 +78,7 @@ export class CaseDetailsPage extends Page {
 
 	elements = {
 		reviewLpaQuestionnaire: () => cy.getByData(this._cyDataSelectors.reviewLpaQuestionnaire),
+		viewLpaQuestionnaire: () => cy.getByData(this._cyDataSelectors.viewLpaQuestionnaire),
 		changeCaseOfficer: () => cy.getByData(this._cyDataSelectors.changeCaseOfficer),
 		assignCaseOfficer: () => cy.getByData(this._cyDataSelectors.assignCaseOfficer).last(),
 		assignInspector: () => cy.getByData(this._cyDataSelectors.assignInspector),
@@ -191,11 +193,16 @@ export class CaseDetailsPage extends Page {
 		county: () => cy.get('#county'),
 		postcode: () => cy.get('#post-code'),
 		changeInquiryDate: () => cy.getByData(this._cyDataSelectors.changeInquiryDate),
-		changeInquiryExpectedDays: () => cy.getByData(this._cyDataSelectors.changeInquiryNumberOfDays)
+		changeInquiryExpectedDays: () => cy.getByData(this._cyDataSelectors.changeInquiryNumberOfDays),
+		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`)
 	};
 	/********************************************************
 	 ************************ Actions ************************
 	 *********************************************************/
+
+	clickViewLpaQuestionnaire() {
+		this.elements.viewLpaQuestionnaire().click();
+	}
 
 	clickManageDocsCostDecision() {
 		this.elements.manageCostDecision().click();
@@ -549,6 +556,10 @@ export class CaseDetailsPage extends Page {
 	/***************************************************************
 	 ************************ Verification ************************
 	 ****************************************************************/
+
+	assertRelatedAppealValue(caseRef) {
+		this.elements.relatedAppealValue(caseRef).should('be.visible');
+	}
 
 	checkAdditonalDocsAppellantCase(value) {
 		this.basePageElements.summaryListValue().last().contains(value).should('be.visible');

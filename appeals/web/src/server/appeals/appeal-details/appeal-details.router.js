@@ -30,8 +30,10 @@ import inspectorAccessRouter from './inspector-access/inspector-access.router.js
 import safetyRisksRouter from './safety-risks/safety-risks.router.js';
 import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
+import withdrawalRouterOld from './withdrawal-old/withdrawal.router.js';
 import interestedPartyCommentsRouter from './representations/interested-party-comments/interested-party-comments.router.js';
 import finalCommentsRouter from './representations/final-comments/final-comments.router.js';
+import proofOfEvidenceRouter from './representations/proof-of-evidence/proof-of-evidence.router.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
 import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
 import representationsRouter from './representations/representations.router.js';
@@ -45,6 +47,7 @@ import inquiryRouter from './inquiry/inquiry.router.js';
 import assignUserRouter from './assign-user/assign-user.router.js';
 import netResidenceRouter from './net-residence/net-residence.router.js';
 import cancelAppealRouter from './cancel/cancel.router.js';
+import invalidAppealRouter from './invalid-appeal/invalid-appeal.router.js';
 import changeAppealTypeMiddleware from './change-appeal-type.middleware.js';
 const router = createRouter();
 
@@ -74,6 +77,7 @@ router.use('/:appealId/timetable', timetableRouter);
 router.use('/:appealId/appellant-case', appellantCaseRouter);
 router.use('/:appealId/interested-party-comments', interestedPartyCommentsRouter);
 router.use('/:appealId/final-comments', finalCommentsRouter);
+router.use('/:appealId/proof-of-evidence', proofOfEvidenceRouter);
 router.use(
 	'/:appealId/site-visit',
 	validateAppeal,
@@ -178,7 +182,7 @@ router.use(
 	'/:appealId/withdrawal',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
-	withdrawalRouter
+	config.featureFlags.featureFlagCancelCase ? withdrawalRouter : withdrawalRouterOld
 );
 
 router.use(
@@ -240,6 +244,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	cancelAppealRouter
+);
+router.use(
+	'/:appealId/invalid',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	invalidAppealRouter
 );
 
 router.use('/:appealId', validateAppeal, representationsRouter);

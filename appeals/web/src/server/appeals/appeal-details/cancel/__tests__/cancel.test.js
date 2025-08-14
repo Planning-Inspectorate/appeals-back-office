@@ -55,7 +55,7 @@ describe('cancel', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/withdrawal/start'
+				'Found. Redirecting to /appeals-service/appeal-details/1/withdrawal/new'
 			);
 		});
 

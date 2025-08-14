@@ -32,7 +32,7 @@ exports[`assign-user GET /assign-case-officer/check-details should render the ca
 exports[`assign-user GET /assign-case-officer/search-case-officer should render the search for case officer page with expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062  - Assign case officer</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062  - assign case officer</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -89,7 +89,7 @@ exports[`assign-user GET /assign-inspector/check-details should render the inspe
 exports[`assign-user GET /assign-inspector/search-inspector should render the search for inspector page with expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062  - Assign inspector</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062  - assign inspector</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -132,7 +132,7 @@ exports[`assign-user POST /assign-case-officer/search-case-officer should re-ren
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062  - Assign case officer</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062  - assign case officer</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -176,7 +176,7 @@ exports[`assign-user POST /assign-inspector/search-inspector should re-render th
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062  - Assign inspector</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062  - assign inspector</span>
         </div>
     </div>
     <div class="govuk-grid-row">

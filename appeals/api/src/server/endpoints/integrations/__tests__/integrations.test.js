@@ -1,13 +1,16 @@
 import { request } from '#tests/../app-test.js';
 import {
 	appealIngestionInput,
+	appealIngestionInputCasPlanning,
 	appealIngestionInputS20,
 	appealIngestionInputS78,
 	docIngestionInput,
 	validAppellantCase,
+	validAppellantCaseCASPlanning,
 	validAppellantCaseS20,
 	validAppellantCaseS78,
 	validLpaQuestionnaire,
+	validLpaQuestionnaireCASPlanning,
 	validLpaQuestionnaireIngestion,
 	validLpaQuestionnaireIngestionS20,
 	validLpaQuestionnaireIngestionS78,
@@ -102,6 +105,7 @@ describe('/appeals/case-submission', () => {
 	describe('POST successful appeal gets ingested', () => {
 		test.each([
 			['HAS', appealIngestionInput, validAppellantCase],
+			['CAS_PLANNING', appealIngestionInputCasPlanning, validAppellantCaseCASPlanning],
 			['S78', appealIngestionInputS78, validAppellantCaseS78],
 			['S20', appealIngestionInputS20, validAppellantCaseS20]
 		])(
@@ -190,6 +194,7 @@ describe('/appeals/lpaq-submission', () => {
 	describe('POST valid LPA submission', () => {
 		test.each([
 			['HAS', validLpaQuestionnaireIngestion, validLpaQuestionnaire],
+			['CAS_PLANNING', validLpaQuestionnaireIngestion, validLpaQuestionnaireCASPlanning],
 			['S78', validLpaQuestionnaireIngestionS78, validLpaQuestionnaireS78],
 			['S20', validLpaQuestionnaireIngestionS20, validLpaQuestionnaireS20]
 		])(

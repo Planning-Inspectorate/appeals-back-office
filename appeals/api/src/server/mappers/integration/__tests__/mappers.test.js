@@ -1,6 +1,7 @@
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { findStatusDate } from '#utils/mapping/map-dates.js';
 import { isCaseInvalid } from '#utils/case-invalid.js';
+import { mapDesignatedSiteNames } from '../shared/s20s78/questionnaire-fields.js';
 
 describe('appeals generic mappers', () => {
 	test('map case validation date on invalid appeal', async () => {
@@ -126,5 +127,35 @@ describe('appeals generic mappers', () => {
 			  findStatusDate(appeal.appealStatus, APPEAL_CASE_STATUS.READY_TO_START);
 
 		expect(output).toBe('2025-03-19T09:12:33.334Z');
+	});
+});
+
+describe('mapDesignatedSiteNames', () => {
+	test('mapDesignatedSiteNames should connect predefined sites and manually insert a single custom answer', async () => {
+		/**
+		 * @type {import('@planning-inspectorate/data-model').Schemas.LPAQS78SubmissionProperties}
+		 */
+		const input = {
+			caseReference: '',
+			lpaQuestionnaireSubmittedDate: '',
+			siteAccessDetails: [],
+			siteSafetyDetails: [],
+			nearbyCaseReferences: [],
+			neighbouringSiteAddresses: [],
+			designatedSitesNames: ['expected', 'first, custom', 'second custom']
+		};
+		const expected = [
+			{ key: 'expected', name: 'Expected', id: 1 },
+			{ key: 'expected2', name: 'Expected 2', id: 2 }
+		];
+
+		const result = mapDesignatedSiteNames(input, expected);
+
+		expect(result).toEqual({
+			designatedSiteNames: {
+				create: [{ designatedSite: { connect: { key: 'expected' } } }]
+			},
+			designatedSiteNameCustom: 'first, custom'
+		});
 	});
 });

@@ -24,7 +24,7 @@ exports[`cancel GET /new should render the cancel appeal page with radio compone
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="cancel-reason-radio-2" name="cancelReasonRadio"
-                                        type="radio" value="withdraw">
+                                        type="radio" value="withdrawal">
                                         <label class="govuk-label govuk-radios__label" for="cancel-reason-radio-2">Request to withdraw appeal</label>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@ exports[`cancel POST /new should render cancel appeal page with errors if cancel
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="cancel-reason-radio-2" name="cancelReasonRadio"
-                                        type="radio" value="withdraw">
+                                        type="radio" value="withdrawal">
                                         <label class="govuk-label govuk-radios__label" for="cancel-reason-radio-2">Request to withdraw appeal</label>
                                     </div>
                                 </div>

@@ -113,10 +113,10 @@ exports[`set up inquiry GET /inquiry/setup/check-details should match the snapsh
                         </dl>
                         <h3 class="govuk-heading-m">Inquiry details</h3>
                         <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry Date</dt>
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry date</dt>
                                 <dd class="govuk-summary-list__value">1 February 3025</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/date"
-                                    data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry Date</span></a>
+                                    data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry date</span></a>
                                 </dd>
                             </div>
                         </dl>

@@ -47,7 +47,7 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'You can [submit a different comment](/mock-front-office-url/comment-planning-appeal/enter-appeal-reference) by 01 January 2021.',
 			'',
 			'The Planning Inspectorate',
-			'caseofficers@planninginspectorate.gov.uk'
+			'enquiries@planninginspectorate.gov.uk'
 		].join('\n');
 
 		await notifySend(notifySendData);
@@ -95,7 +95,7 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			'You can send a different comment to caseofficers@planninginspectorate.gov.uk by 01 January 2021.',
 			'',
 			'The Planning Inspectorate',
-			'caseofficers@planninginspectorate.gov.uk'
+			'enquiries@planninginspectorate.gov.uk'
 		].join('\n');
 
 		await notifySend(notifySendData);

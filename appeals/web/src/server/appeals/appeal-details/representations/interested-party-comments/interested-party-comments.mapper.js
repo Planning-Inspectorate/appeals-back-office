@@ -113,9 +113,10 @@ function generateTableRows(items, isReview = false) {
 /**
  * @param {Appeal} appealDetails
  * @param {Representation[]} comments
+ * @param {string} [backUrl]
  * @returns {PageContent}
  * */
-export function sharedIpCommentsPage(appealDetails, comments) {
+export function sharedIpCommentsPage(appealDetails, comments, backUrl) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent} */
@@ -202,7 +203,7 @@ export function sharedIpCommentsPage(appealDetails, comments) {
 
 	return {
 		title: 'Interested party comments',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Interested party comments',
 		pageComponents: pageComponents

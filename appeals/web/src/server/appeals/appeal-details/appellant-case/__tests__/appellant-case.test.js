@@ -1583,7 +1583,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
+				`Reason must be ${textInputCharacterLimits.checkboxTextItemsLength} characters or less</a>`
 			);
 		});
 
@@ -1607,7 +1607,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
+				`Reason must be ${textInputCharacterLimits.checkboxTextItemsLength} characters or less</a>`
 			);
 		});
 
@@ -1828,7 +1828,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
+				`Reason must be ${textInputCharacterLimits.checkboxTextItemsLength} characters or less</a>`
 			);
 		});
 
@@ -1852,7 +1852,7 @@ describe('appellant-case', () => {
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHtml).toContain(
-				`Text in text fields cannot exceed ${textInputCharacterLimits.checkboxTextItemsLength} characters</a>`
+				`Reason must be ${textInputCharacterLimits.checkboxTextItemsLength} characters or less</a>`
 			);
 		});
 

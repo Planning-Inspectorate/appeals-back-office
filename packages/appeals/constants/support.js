@@ -81,11 +81,12 @@ export const AUDIT_TRAIL_DOCUMENT_NO_REDACTION_REQUIRED =
 export const AUDIT_TRAIL_DOCUMENT_DATE_CHANGED =
 	'Document {replacement0} (version {replacement1}) received date changed';
 export const AUDIT_TRAIL_DOCUMENT_NAME_CHANGED =
-	'Document {replacement0} has been renamed as {replacement1}';
+	'Document {replacement0} has been updated to {replacement1}';
 export const AUDIT_TRAIL_LPAQ_IMPORT_MSG = 'The LPA questionnaire was received';
 export const AUDIT_TRAIL_REP_IMPORT_MSG = '{replacement0} was received';
 export const AUDIT_TRAIL_PROGRESSED_TO_STATUS = 'The case has progressed to {replacement0}';
 export const AUDIT_TRAIL_SUBMISSION_INCOMPLETE = 'The {replacement0} was marked as incomplete';
+export const AUDIT_TRAIL_SUBMISSION_INVALID = 'Appeal marked as invalid:';
 export const AUDIT_TRAIL_REMOVED_CASE_OFFICER =
 	'The case officer {replacement0} was removed from the team';
 export const AUDIT_TRAIL_REMOVED_INSPECTOR =

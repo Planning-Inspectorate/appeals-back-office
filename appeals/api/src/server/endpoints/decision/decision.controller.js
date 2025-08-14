@@ -1,7 +1,5 @@
-import { publishDecision } from './decision.service.js';
+import { publishCostsDecision, publishDecision } from './decision.service.js';
 import {
-	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
-	AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_INSPECTOR,
 	DECISION_TYPE_LPA_COSTS,
@@ -9,7 +7,6 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { isCurrentStatus } from '#utils/current-status.js';
 
 /** @typedef {import('express').Request} Request */
@@ -57,21 +54,15 @@ export const postInspectorDecision = async (req, res) => {
 							azureAdUserId
 						);
 					}
-					case DECISION_TYPE_APPELLANT_COSTS: {
-						await createAuditTrail({
-							appealId: appeal.id,
-							azureAdUserId,
-							details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED
-						});
-						return null;
-					}
+					case DECISION_TYPE_APPELLANT_COSTS:
 					case DECISION_TYPE_LPA_COSTS: {
-						await createAuditTrail({
-							appealId: appeal.id,
+						return publishCostsDecision(
+							appeal,
+							notifyClient,
+							siteAddress,
 							azureAdUserId,
-							details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED
-						});
-						return null;
+							decisionType
+						);
 					}
 				}
 			}

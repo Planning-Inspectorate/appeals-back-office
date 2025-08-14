@@ -55,14 +55,6 @@ export const errorLastName = (/** @type {Error}*/ errors) => {
 		: undefined;
 };
 
-export const errorOrganisationNameAllowEmpty = (/** @type {Error}*/ errors) => {
-	return errors?.organisationName
-		? {
-				text: 'Enter an organisation or company name, or leave empty'
-		  }
-		: undefined;
-};
-
 export const errorEmail = (/** @type {Error}*/ errors) => {
 	return errors?.emailAddress
 		? {

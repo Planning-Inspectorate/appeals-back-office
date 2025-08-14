@@ -161,6 +161,12 @@ export const getAppealTimetableTypes = (appeal, appellantCase) => {
 					validAppealTimetableType.push('planningObligationDueDate');
 				}
 			}
+			if (appeal.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE.INQUIRY) {
+				validAppealTimetableType.push('statementOfCommonGroundDueDate');
+				if (appellantCase.planningObligation?.hasObligation) {
+					validAppealTimetableType.push('planningObligationDueDate');
+				}
+			}
 			break;
 	}
 	return validAppealTimetableType;

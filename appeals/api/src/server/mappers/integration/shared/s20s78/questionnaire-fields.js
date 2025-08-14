@@ -7,7 +7,7 @@
  * @param {DesignatedSite[]} designatedSites
  * @returns {*|undefined}
  */
-const mapDesignatedSiteNames = (casedata, designatedSites) => {
+export const mapDesignatedSiteNames = (casedata, designatedSites) => {
 	if (casedata.designatedSitesNames && casedata.designatedSitesNames.length > 0) {
 		const defaultSiteNames = designatedSites.map((site) => site.key);
 
