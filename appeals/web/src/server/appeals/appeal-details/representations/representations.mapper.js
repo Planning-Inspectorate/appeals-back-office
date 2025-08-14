@@ -169,7 +169,9 @@ export function statementAndCommentsSharePage(appeal, request, backUrl) {
 			  };
 
 	let heading;
-	if (appeal.procedureType === 'Hearing' && appeal.hearing?.hearingStartTime) {
+	const hearingIsSetUp = Boolean(appeal.hearing?.hearingStartTime && appeal.hearing?.address);
+
+	if (appeal.procedureType === 'Hearing' && hearingIsSetUp) {
 		heading = 'Progress to awaiting hearing';
 	} else if (appeal.procedureType === 'Hearing') {
 		heading = 'Progress to hearing ready to set up';
