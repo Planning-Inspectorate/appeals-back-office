@@ -203,7 +203,7 @@ describe('final-comments', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Actions</th>');
 			expect(unprettifiedElement.innerHTML).toContain('test-pdf-documentFolderInfo.pdf</span>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				`<a href="/appeals-service/appeal-details/2/final-comments/lpa/add-document" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>`
+				`<a href="/appeals-service/appeal-details/2/final-comments/lpa/add-document" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Add document</a>`
 			);
 		});
 	});

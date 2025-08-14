@@ -913,8 +913,9 @@ export function manageFolderPage({
 	const buttonComponent = {
 		type: 'button',
 		parameters: {
-			text: addButtonTextOverride || 'Add documents',
-			href: addButtonUrl?.replace('{{folderId}}', folder.folderId.toString())
+			text: addButtonTextOverride || 'Add document',
+			href: addButtonUrl?.replace('{{folderId}}', folder.folderId.toString()),
+			classes: 'govuk-button--secondary'
 		}
 	};
 
@@ -928,6 +929,7 @@ export function manageFolderPage({
 		pageComponents: [
 			...notificationBanners,
 			...errorSummaryPageComponents,
+			buttonComponent,
 			{
 				type: 'table',
 				wrapperHtml: {
@@ -991,8 +993,7 @@ export function manageFolderPage({
 						mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEditUrl)
 					])
 				}
-			},
-			buttonComponent
+			}
 		]
 	};
 
