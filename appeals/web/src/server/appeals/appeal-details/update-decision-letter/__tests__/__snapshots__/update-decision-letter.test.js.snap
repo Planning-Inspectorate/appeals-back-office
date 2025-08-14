@@ -55,8 +55,8 @@ exports[`update-decision-letter GET /decision-letter-upload should render the de
 exports[`update-decision-letter GET /issue-decision/check-your-decision should render the check your decision page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update decision letter</span>
-            <h1             class="govuk-heading-l">Check details and update decision letter</h1>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and update decision letter</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

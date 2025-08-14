@@ -239,9 +239,7 @@ describe('update-decision-letter', () => {
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Appeal 351062 - update decision letter</span>'
-			);
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
 			expect(unprettifiedElement.innerHTML).toContain('Check details and update decision letter');
 			expect(unprettifiedElement.innerHTML).toContain('Decision letter');
 			expect(unprettifiedElement.innerHTML).toContain('Correction notice');
