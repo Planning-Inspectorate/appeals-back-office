@@ -2452,6 +2452,33 @@ describe('appeal-details', () => {
 			);
 		});
 
+		it('should render the view decision page', async () => {
+			const appealId = '2';
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealData,
+					appealStatus: 'complete',
+					completedStateList: ['awaiting_event']
+				});
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
+				.reply(200, documentFileVersionInfo);
+			const response = await request.get(`${baseUrl}/${appealId}/issue-decision/view-decision`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const innerHTML = parseHtml(response.text).innerHTML;
+			expect(innerHTML).toContain('Dismissed');
+			expect(innerHTML).toContain('4 August 2023 (reissued on 11 October 2023)');
+			expect(innerHTML).toContain(
+				'download href="/documents/1/download/e1e90a49-fab3-44b8-a21a-bb73af089f6b/decision-letter.pdf'
+			);
+		});
+
 		it('should render a Decision inset panel when the appealStatus is complete and only one version exists', async () => {
 			const appealId = '2';
 
