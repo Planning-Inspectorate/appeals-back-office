@@ -17,7 +17,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @returns {SharedPageComponentProperties & AccordionPageComponent}
  */
 export function generateAccordion(appealDetails, mappedData, session) {
-	const caseOverview = getCaseOverview(mappedData);
+	const caseOverview = getCaseOverview(mappedData, appealDetails);
 
 	const siteDetails = getSiteDetails(mappedData, appealDetails);
 

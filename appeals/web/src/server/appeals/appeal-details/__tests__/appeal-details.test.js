@@ -31,6 +31,8 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -2886,6 +2888,93 @@ describe('appeal-details', () => {
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
 				expect(response.text).not.toContain('.appeal-net-residence-gain-or-loss');
+			});
+
+			it('Should display procedure type change link because type is S78 and lpastatement status is not received', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealType: APPEAL_TYPE.S78,
+						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+						documentationSummary: {
+							lpaStatement: {
+								status: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+							}
+						}
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						planningObligation: { hasObligation: false },
+						numberOfResidencesNetChange: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.text).toContain(
+					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+				);
+			});
+
+			it('Should not display procedure type change link because type is S78 and lpastatement status is received', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealType: APPEAL_TYPE.S78,
+						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+						documentationSummary: {
+							lpaStatement: {
+								status: APPEAL_REPRESENTATION_STATUS.PUBLISHED
+							}
+						}
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						planningObligation: { hasObligation: false },
+						numberOfResidencesNetChange: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.text).not.toContain(
+					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+				);
+			});
+
+			it('Should not display case proceudre change link because appeal type is not S78', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealType: APPEAL_TYPE.HOUSEHOLDER,
+						procedureType: APPEAL_CASE_PROCEDURE.WRITTEN,
+						documentationSummary: {
+							lpaStatement: {
+								status: APPEAL_REPRESENTATION_STATUS.VALID
+							}
+						}
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						planningObligation: { hasObligation: false },
+						numberOfResidencesNetChange: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.text).not.toContain(
+					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/case-procedure" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+				);
 			});
 		});
 
