@@ -94,4 +94,35 @@ jobs:
   - script: |
       echo "Assigning per-worker index and jitter..."
       # ADO is 1-based; convert to 0-based
-      ex
+      export CYPRESS_WORKER_INDEX=$(( $(System.JobPositionInPhase) - 1 ))
+      export LOGIN_JITTER_MS=500
+
+      echo "Worker index: $CYPRESS_WORKER_INDEX"
+      echo "Login jitter (ms): $LOGIN_JITTER_MS"
+
+      echo "Running specs:"
+      for spec in $(echo $(SPEC) | tr ',' ' '); do
+        echo "- $spec"
+      done
+
+      npx cypress run --spec "$(SPEC)"
+    workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
+    env:
+      TZ: 'Europe/London'
+      BASE_URL: $(APPEALS_BASE_URL)
+      CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
+      CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)
+      INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
+      VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
+      USER_PASSWORD: $(USER_PASSWORD)
+      HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
+      CYPRESS_WORKER_INDEX: $(CYPRESS_WORKER_INDEX)
+      LOGIN_JITTER_MS: $(LOGIN_JITTER_MS)
+    displayName: "Run Cypress Tests (per-worker index + jitter)"
+
+  - task: PublishBuildArtifacts@1
+    condition: failed()
+    inputs:
+      pathToPublish: 'appeals/e2e/cypress/screenshots'
+      artifactName: 'FailedTests'
+    displayName: "Publish Failed Tests Artifacts"
