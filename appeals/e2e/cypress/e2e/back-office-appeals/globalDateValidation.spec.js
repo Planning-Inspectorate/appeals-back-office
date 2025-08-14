@@ -12,53 +12,12 @@ const inquirySectionPage = new InquirySectionPage();
 
 let caseRef;
 
-const createTestCase = () => {
-	//cy.login(users.appeals.caseAdmin);
-	cy.createCase({ caseType: 'W' }).then((ref) => {
-		caseRef = ref;
-		cy.addLpaqSubmissionToCase(caseRef);
-	});
-};
-
-const setupTestCase = async () => {
-	//cy.log(`caseRef is `, caseRef);
-	cy.log(`** in setupTestCase `, caseRef);
-	cy.login(users.appeals.caseAdmin);
-	happyPathHelper.assignCaseOfficer(caseRef);
-	caseDetailsPage.checkStatusOfCase('Validation', 0);
-	happyPathHelper.reviewAppellantCase(caseRef);
-	caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-	happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
-};
-
-/*const setupTestCase = () => {
-	happyPathHelper.assignCaseOfficer(caseRef);
-	caseDetailsPage.checkStatusOfCase('Validation', 0);
-	happyPathHelper.reviewAppellantCase(caseRef);
-	caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-	happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
-};
-
-const setupTestCase = () => {
-	cy.login(users.appeals.caseAdmin);
-	cy.createCase({ caseType: 'W' }).then((ref) => {
-		caseRef = ref;
-		cy.addLpaqSubmissionToCase(caseRef);
-		happyPathHelper.assignCaseOfficer(caseRef);
-		caseDetailsPage.checkStatusOfCase('Validation', 0);
-		happyPathHelper.reviewAppellantCase(caseRef);
-		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-		happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
-	});
-};*/
-
-describe('Date Validation', () => {
+describe('Date Validation', { testIsolation: false }, () => {
 	before(() => {
-		createTestCase();
+		setupTestCase();
 	});
 
 	beforeEach(() => {
-		setupTestCase();
 		inquirySectionPage.clearInquiryDateAndTime();
 	});
 
@@ -295,4 +254,17 @@ describe('Date Validation', () => {
 			fields: ['inquiry-date-day']
 		});
 	});
+	const setupTestCase = () => {
+		cy.login(users.appeals.caseAdmin);
+
+		cy.createCase({ caseType: 'W' }).then((ref) => {
+			caseRef = ref;
+			cy.addLpaqSubmissionToCase(caseRef);
+			happyPathHelper.assignCaseOfficer(caseRef);
+			caseDetailsPage.checkStatusOfCase('Validation', 0);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+			happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
+		});
+	};
 });
