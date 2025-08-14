@@ -1,5 +1,9 @@
 // @ts-nocheck
-import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
+import {
+	CASE_RELATIONSHIP_LINKED,
+	CASE_RELATIONSHIP_RELATED,
+	ERROR_NOT_FOUND
+} from '@pins/appeals/constants/support.js';
 import { request } from '#tests/../app-test.js';
 import {
 	householdAppeal,
@@ -11,6 +15,7 @@ import {
 import { jest } from '@jest/globals';
 import { cloneDeep } from 'lodash-es';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import { azureAdUserId } from '#tests/shared/mocks.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -1103,6 +1108,129 @@ describe('/appeals/:id/reps/publish', () => {
 				},
 				recipientEmail: appealS78.appellant.email,
 				templateName: 'received-statement-and-ip-comments-appellant'
+			});
+		});
+
+		test('send notify comments and statements (written) S78 when appeals linked', async () => {
+			const expectedSiteAddress = [
+				'addressLine1',
+				'addressLine2',
+				'addressTown',
+				'addressCounty',
+				'postcode',
+				'addressCountry'
+			]
+				.map((key) => mockS78Appeal.address[key])
+				.filter((value) => value)
+				.join(', ');
+
+			const expectedEmailPayload = {
+				lpa_reference: mockS78Appeal.applicationReference,
+				appeal_reference_number: mockS78Appeal.reference,
+				has_ip_comments: false,
+				has_statement: false,
+				final_comments_deadline: '4 December 2024',
+				site_address: expectedSiteAddress
+			};
+
+			const childAppeals = [
+				{ type: CASE_RELATIONSHIP_LINKED, childId: 100 },
+				{ type: CASE_RELATIONSHIP_RELATED, childId: 200 },
+				{ type: CASE_RELATIONSHIP_LINKED, childId: 300 }
+			];
+
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...mockS78Appeal,
+				childAppeals
+			});
+			databaseConnector.appealStatus.create.mockResolvedValue({});
+			databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+			databaseConnector.representation.findMany.mockResolvedValue([
+				{ representationType: 'lpa_statement' },
+				{ representationType: 'comment' }
+			]);
+			databaseConnector.representation.updateMany.mockResolvedValue([]);
+			databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+				{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+			]);
+			databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+			databaseConnector.user.upsert.mockResolvedValue({ id: 1, azureAdUserId });
+
+			const response = await request
+				.post('/appeals/1/reps/publish')
+				.query({ type: 'statements' })
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(200);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId: expect.anything(),
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					has_ip_comments: true,
+					has_statement: true,
+					what_happens_next:
+						'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
+					subject: 'Submit your final comments'
+				},
+				recipientEmail: appealS78.lpa.email,
+				templateName: 'received-statement-and-ip-comments-lpa'
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				azureAdUserId: expect.anything(),
+				notifyClient: expect.anything(),
+				personalisation: {
+					...expectedEmailPayload,
+					has_ip_comments: true,
+					has_statement: true,
+					what_happens_next:
+						'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
+					subject: 'Submit your final comments'
+				},
+				recipientEmail: appealS78.appellant.email,
+				templateName: 'received-statement-and-ip-comments-appellant'
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+				data: {
+					appealId: mockS78Appeal.id,
+					details: 'The case has progressed to final_comments',
+					loggedAt: expect.any(Date),
+					userId: 1
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+				data: {
+					appealId: childAppeals[0].childId,
+					details: 'The case has progressed to final_comments',
+					loggedAt: expect.any(Date),
+					userId: 1
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
+				data: {
+					appealId: childAppeals[2].childId,
+					details: 'The case has progressed to final_comments',
+					loggedAt: expect.any(Date),
+					userId: 1
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(4, {
+				data: {
+					appealId: mockS78Appeal.id,
+					details: 'Statements and IP comments shared',
+					loggedAt: expect.any(Date),
+					userId: 1
+				}
 			});
 		});
 

@@ -7,13 +7,15 @@ import BackOfficeAppError from '#utils/app-error.js';
 import logger from '#utils/logger.js';
 import transitionState from '#state/transition-state.js';
 import {
+	CASE_RELATIONSHIP_LINKED,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
-	APPEAL_REPRESENTATION_TYPE
+	APPEAL_REPRESENTATION_TYPE,
+	FEATURE_FLAG_NAMES
 } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
@@ -24,6 +26,7 @@ import { isCurrentStatus } from '#utils/current-status.js';
 import config from '#config/config.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -262,6 +265,17 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 	);
 
 	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+
+	if (appeal.childAppeals?.length && isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+		await Promise.all(
+			appeal.childAppeals
+				.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+				.map((childAppeal) =>
+					// @ts-ignore
+					transitionState(childAppeal.childId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE)
+				)
+		);
+	}
 
 	const finalCommentsDueDate = formatDate(
 		new Date(appeal.appealTimetable?.finalCommentsDueDate || ''),
