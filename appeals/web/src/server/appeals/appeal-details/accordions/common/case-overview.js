@@ -37,6 +37,10 @@ export const getCaseOverview = (mappedData, appealDetails) => ({
  * @returns {boolean}
  */
 const displayProcedureChangeLink = (appealDetails) => {
+	if (!featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_PROCEDURE_TYPE)) {
+		return false;
+	}
+
 	const procedureTypes = [
 		FEATURE_FLAG_NAMES.SECTION_78_HEARING,
 		FEATURE_FLAG_NAMES.SECTION_78_INQUIRY,
@@ -52,7 +56,6 @@ const displayProcedureChangeLink = (appealDetails) => {
 	const { representationStatus } = appealDetails.documentationSummary?.lpaStatement ?? {};
 
 	if (
-		!featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_PROCEDURE_TYPE) ||
 		appealDetails.appealType !== APPEAL_TYPE.S78 ||
 		!areMultipleFlagsActive ||
 		representationStatus === APPEAL_REPRESENTATION_STATUS.PUBLISHED
