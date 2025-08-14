@@ -25,6 +25,9 @@ extends:
       - name: Test
         dependsOn:
           - Dev
+      - name: Staging
+        dependsOn:
+          - Test
       - name: Training
         dependsOn:
           - Test

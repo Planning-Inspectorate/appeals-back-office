@@ -1,26 +1,6 @@
 # common variables loaded by default
 # see https://developer.hashicorp.com/terraform/language/values/variables#variable-definitions-tfvars-files
 
-sb_topic_names = {
-  submissions = {
-    appellant         = "appeal-fo-appellant-submission"
-    lpa_questionnaire = "appeal-fo-lpa-questionnaire-submission"
-    representation    = "appeal-fo-representation-submission"
-  }
-
-  events = {
-    appeal_has            = "appeal-has"
-    appeal_s78            = "appeal-s78"
-    document              = "appeal-document"
-    document_to_move      = "appeal-document-to-move"
-    event                 = "appeal-event"
-    listed_building       = "listed-building"
-    service_user          = "appeal-service-user"
-    appeal_representation = "appeal-representation"
-    appeal_event_estimate = "appeal-event-estimate"
-  }
-}
-
 sb_ttl = {
   # default service bus topic TTL
   default = "P3D"

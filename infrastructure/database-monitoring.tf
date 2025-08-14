@@ -46,10 +46,10 @@ resource "azurerm_storage_container" "sql_server" {
   container_access_type = "private"
 }
 
-resource "azurerm_advanced_threat_protection" "sql_server_storage" {
-  target_resource_id = azurerm_storage_account.sql_server.id
-  enabled            = true
-}
+# resource "azurerm_advanced_threat_protection" "sql_server_storage" {
+#   target_resource_id = azurerm_storage_account.sql_server.id
+#   enabled            = true
+# }
 
 resource "azurerm_role_assignment" "sql_server_storage" {
   scope                = azurerm_storage_account.sql_server.id

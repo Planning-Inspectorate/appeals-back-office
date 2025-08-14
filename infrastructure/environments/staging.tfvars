@@ -5,10 +5,10 @@ apps_config = {
   node_environment           = "production"
   private_endpoint_enabled   = true
   session_max_age            = 10800000
-  front_office_url           = "https://appeals-service-test.planninginspectorate.gov.uk"
+  front_office_url           = "https://appeals-service-staging.planninginspectorate.gov.uk"
 
   auth = {
-    client_id = "591f9564-095c-459a-b090-ce0f0a16ee09" # Appeals Back Office TEST
+    client_id = "93848033-8cc2-4390-852c-7a6ad4f3c286" # Appeals Back Office staging
     group_ids = {
       case_officer = "e30a4389-029b-4de8-a94b-c492a3a0854a"
       cs_team      = "812fec35-4f1e-4a7c-bb1a-49d1a9fea519"
@@ -64,25 +64,25 @@ apps_config = {
 }
 
 common_config = {
-  resource_group_name = "pins-rg-common-test-ukw-001"
+  resource_group_name = "pins-rg-common-staging-ukw-001"
   action_group_names = {
-    bo_tech              = "pins-ag-odt-appeals-bo-tech-test"
-    bo_service_manager   = "pins-ag-odt-appeals-bo-service-manager-test"
-    fo_tech              = "pins-ag-odt-appeals-fo-tech-test"
-    fo_service_manager   = "pins-ag-odt-appeals-fo-service-manager-test"
-    data_service_manager = "pins-ag-odt-data-service-manager-test"
-    iap                  = "pins-ag-odt-iap-test"
-    its                  = "pins-ag-odt-its-test"
-    info_sec             = "pins-ag-odt-info-sec-test"
+    bo_tech              = "pins-ag-odt-appeals-bo-tech-staging"
+    bo_service_manager   = "pins-ag-odt-appeals-bo-service-manager-staging"
+    fo_tech              = "pins-ag-odt-appeals-fo-tech-staging"
+    fo_service_manager   = "pins-ag-odt-appeals-fo-service-manager-staging"
+    data_service_manager = "pins-ag-odt-data-service-manager-staging"
+    iap                  = "pins-ag-odt-iap-staging"
+    its                  = "pins-ag-odt-its-staging"
+    info_sec             = "pins-ag-odt-info-sec-staging"
   }
 }
 
 documents_config = {
   account_replication_type = "LRS"
-  domain                   = "https://back-office-appeals-docs-test.planninginspectorate.gov.uk"
+  domain                   = "https://back-office-appeals-docs-staging.planninginspectorate.gov.uk"
 }
 
-environment = "test"
+environment = "staging"
 
 front_door_config = {
   name        = "pins-fd-common-tooling"
@@ -92,10 +92,10 @@ front_door_config = {
 }
 
 front_office_infra_config = {
-  deploy_connections = true
+  deploy_connections = false
   network = {
-    name = "pins-vnet-common-test-ukw-001"
-    rg   = "pins-rg-common-test-ukw-001"
+    name = "pins-vnet-common-staging-ukw-001"
+    rg   = "pins-rg-common-staging-ukw-001"
   }
 }
 
@@ -110,21 +110,21 @@ horizon_infra_config = {
 
 sb_topic_names = {
   submissions = {
-    appellant         = "appeal-fo-appellant-submission-test"
-    lpa_questionnaire = "appeal-fo-lpa-questionnaire-submission-test"
-    representation    = "appeal-fo-representation-submission-test"
+    appellant         = "appeal-fo-appellant-submission-staging"
+    lpa_questionnaire = "appeal-fo-lpa-questionnaire-submission-stag"
+    representation    = "appeal-fo-representation-submission-staging"
   }
 
   events = {
-    appeal_has            = "appeal-has-test"
-    appeal_s78            = "appeal-s78-test"
-    document              = "appeal-document-test"
-    document_to_move      = "appeal-document-to-move-test"
-    event                 = "appeal-event-test"
-    listed_building       = "listed-building-test"
-    service_user          = "appeal-service-user-test"
-    appeal_representation = "appeal-representation-test"
-    appeal_event_estimate = "appeal-event-estimate-test"
+    appeal_has            = "appeal-has-staging"
+    appeal_s78            = "appeal-s78-staging"
+    document              = "appeal-document-staging"
+    document_to_move      = "appeal-document-to-move-staging"
+    event                 = "appeal-event-staging"
+    listed_building       = "listed-building-staging"
+    service_user          = "appeal-service-user-staging"
+    appeal_representation = "appeal-representation-staging"
+    appeal_event_estimate = "appeal-event-estimate-staging"
   }
 }
 
@@ -136,8 +136,8 @@ service_bus_config = {
 
 sql_config = {
   admin = {
-    login_username = "pins-odt-sql-test-appeals-bo"
-    object_id      = "1819fc4a-bd5e-4e01-a727-16d865fb3f82"
+    login_username = "pins-odt-sql-staging-appeals-bo"
+    object_id      = "7c2f34b4-4f84-48dc-8b04-93881773bbf1"
   }
   sku_name    = "S0"
   max_size_gb = 250
@@ -153,15 +153,15 @@ sql_config = {
 }
 
 vnet_config = {
-  address_space                       = "10.15.4.0/22"
-  apps_subnet_address_space           = "10.15.4.0/24"
-  main_subnet_address_space           = "10.15.5.0/24"
-  secondary_address_space             = "10.15.20.0/22"
-  secondary_apps_subnet_address_space = "10.15.20.0/24"
-  secondary_subnet_address_space      = "10.15.21.0/24"
+  address_space                       = "10.15.32.0/22"
+  apps_subnet_address_space           = "10.15.32.0/24"
+  main_subnet_address_space           = "10.15.32.4/24"
+  secondary_address_space             = "10.15.32.12/22"
+  secondary_apps_subnet_address_space = "10.15.32.12/24"
+  secondary_subnet_address_space      = "10.15.34.8/24"
 }
 
-web_app_domain = "back-office-appeals-test.planninginspectorate.gov.uk"
+web_app_domain = "back-office-appeals-staging.planninginspectorate.gov.uk"
 
 waf_rate_limits = {
   enabled             = true

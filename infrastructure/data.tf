@@ -30,3 +30,12 @@ data "azurerm_cdn_frontdoor_endpoint" "shared" {
   profile_name        = var.front_door_config.name
   provider            = azurerm.front_door
 }
+
+data "azurerm_servicebus_namespace" "test_sb" {
+  name                = "${local.org}-sb-${local.service_name}-test"
+  resource_group_name = "${local.org}-rg-${local.service_name}-test"
+}
+
+data "azurerm_resource_group" "test_rg" {
+  name = "${local.org}-rg-${local.service_name}-test"
+}
