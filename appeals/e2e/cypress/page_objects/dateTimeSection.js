@@ -164,7 +164,7 @@ export class DateTimeSection extends Page {
 	}
 
 	#set(element, value, index = 0) {
-		element.eq(index).clear().type(value);
+		element.eq(index).clear().type(value, { delay: 0 });
 	}
 
 	#getElement(dateSelectorPrefix, dateType) {
