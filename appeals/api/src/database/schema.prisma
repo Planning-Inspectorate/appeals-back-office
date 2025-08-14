@@ -94,6 +94,7 @@ model AppealRelationship {
 
   @@index([parentId])
   @@index([childId])
+  @@index([type, parentRef, childRef])
 }
 
 /// AppealType model
@@ -309,7 +310,7 @@ model AppellantCase {
   siteGridReferenceNorthing                String?
   typeOfPlanningApplication                String?
 
-  @@index([appealId])
+  // DPF - duplicate @@index([appealId])
 }
 
 /// AppellantCaseValidationOutcome model
@@ -461,7 +462,7 @@ model LPAQuestionnaire {
   historicEnglandConsultation Boolean?
   preserveGrantLoan           Boolean?
 
-  @@index([appealId])
+  // DPF - duplicate @@index([appealId])
   @@index([isGreenBelt])
 }
 
@@ -627,6 +628,7 @@ model Document {
   @@unique([name, folderId])
   @@unique([guid, latestVersionId])
   @@index([caseId, folderId])
+  @@index([folderId])
 }
 
 /// DocumentVersion model
