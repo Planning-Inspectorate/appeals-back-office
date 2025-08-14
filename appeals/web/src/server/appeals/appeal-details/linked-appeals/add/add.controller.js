@@ -72,10 +72,21 @@ export const postAddLinkedAppeal = (request, response) => {
 		});
 	}
 
+	const proposedLinkableAppealIsLead = Boolean(
+		session.linkableAppeal.linkableAppealSummary?.childAppeals?.length
+	);
+
+	if (proposedLinkableAppealIsLead && currentAppeal.isParentAppeal) {
+		// cannot link two parent appeals
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/linked-appeals/add/already-linked`
+		);
+	}
+
 	if (currentAppeal.isParentAppeal) {
 		// The current appeal is a lead already, so make it the lead of this relationship
 		session.linkableAppeal.leadAppeal = currentAppeal.appealReference;
-	} else if (session.linkableAppeal.linkableAppealSummary?.childAppeals?.length) {
+	} else if (proposedLinkableAppealIsLead) {
 		// The chosen appeal is a lead already as it has child appeals, so make it the lead of this relationship
 		session.linkableAppeal.leadAppeal =
 			session.linkableAppeal.linkableAppealSummary.appealReference;
