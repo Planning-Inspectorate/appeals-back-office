@@ -6,7 +6,13 @@ All of the linked appeals will use the timetable for the lead appeal {{lead_appe
 
 # What happens next
 
+{% if linked_before_lpa_questionnaire -%}
+We will contact you again when we start the appeal.
+
+{% else -%}
 There will be one {{event_type}} for all of the linked appeals.
+
+{% endif -%}
 
 The Planning Inspectorate
 caseofficers@planninginspectorate.gov.uk

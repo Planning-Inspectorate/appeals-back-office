@@ -31,3 +31,24 @@ export const canLinkAppeals = (appeal, type, relationship) => {
 
 	return relationship === 'lead' ? !isChild : !isChild && !isLead;
 };
+
+/**
+ * Checks if an appeals status is before LPA Questionnaire.
+ *
+ * If the lead already has other Children, it checks against the lead,
+ * else it uses the current appeal.
+ *
+ *
+ * @param {Appeal} appeal
+ * @param {Appeal} linkedAppeal
+ * @param {Boolean} isCurrentAppealParent
+ * @returns {Boolean}
+ */
+export const checkAppealsStatusBeforeLPAQ = (appeal, linkedAppeal, isCurrentAppealParent) => {
+	if (!isCurrentAppealParent && linkedAppeal.childAppeals?.length) {
+		const appealStatus = linkedAppeal.appealStatus?.[linkedAppeal.appealStatus.length - 1];
+		return appealStatus?.status !== 'lpa_questionnaire';
+	}
+	const appealStatus = appeal.appealStatus?.[appeal.appealStatus.length - 1];
+	return appealStatus?.status !== 'lpa_questionnaire';
+};

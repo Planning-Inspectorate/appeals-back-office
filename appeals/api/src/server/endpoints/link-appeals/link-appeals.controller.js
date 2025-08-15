@@ -7,7 +7,7 @@ import {
 	AUDIT_TRAIL_APPEAL_RELATION_ADDED,
 	AUDIT_TRAIL_APPEAL_RELATION_REMOVED
 } from '@pins/appeals/constants/support.js';
-import { canLinkAppeals } from './link-appeals.service.js';
+import { canLinkAppeals, checkAppealsStatusBeforeLPAQ } from './link-appeals.service.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED,
@@ -79,13 +79,20 @@ export const linkAppeal = async (req, res) => {
 		? formatAddressSingleLine(currentAppeal.address)
 		: 'Address not available';
 
+	const linkedBeforeLPAQ = checkAppealsStatusBeforeLPAQ(
+		currentAppeal,
+		linkedAppeal,
+		isCurrentAppealParent
+	);
+
 	const personalisation = {
 		appeal_reference_number: currentAppeal.reference,
 		lead_appeal_reference_number: relationship.parentRef,
 		child_appeal_reference_number: relationship.childRef,
 		lpa_reference: currentAppeal.applicationReference || '',
 		site_address: siteAddress,
-		event_type: 'site visit'
+		event_type: 'site visit',
+		linked_before_lpa_questionnaire: linkedBeforeLPAQ
 	};
 
 	const appellantEmail = currentAppeal.agent?.email || currentAppeal.appellant?.email;
