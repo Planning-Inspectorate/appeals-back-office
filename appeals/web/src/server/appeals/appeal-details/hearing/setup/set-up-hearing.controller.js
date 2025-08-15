@@ -546,9 +546,12 @@ export const postHearingCheckDetails = async (request, response) => {
 			...(hearing.addressKnown === 'yes' && submittedAddress)
 		});
 
+		const bannerDefinitionKey =
+			hearing.address && hearing.hearingStartTime ? 'hearingSetUp' : 'hearingUpdated';
+
 		addNotificationBannerToSession({
 			session: request.session,
-			bannerDefinitionKey: 'hearingSetUp',
+			bannerDefinitionKey: bannerDefinitionKey,
 			appealId
 		});
 
