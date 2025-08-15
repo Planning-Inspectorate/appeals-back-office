@@ -34,6 +34,7 @@ jobs:
         SPEC: cypress/e2e/back-office-appeals/addCostDecisionRedacted.spec.js,cypress/e2e/back-office-appeals/changeAppealType.spec.js,cypress/e2e/back-office-appeals/changeSiteVisit.spec.js,cypress/e2e/back-office-appeals/changeStartDate.spec.js,cypress/e2e/back-office-appeals/changeContact.spec.js
       group4:
         SPEC: cypress/e2e/back-office-appeals/hearing.spec.js
+
   steps:
   - task: NodeTool@0
     inputs:
@@ -45,6 +46,20 @@ jobs:
       scriptPath: 'appeals/e2e/install-chromium.sh'
     displayName: 'Install Chromium'
     condition: eq(variables['agent.os'], 'Linux')
+
+  - task: Cache@2
+    inputs:
+      key: 'node | "$(Agent.OS)" | appeals/e2e/package-lock.json'
+      path: 'appeals/e2e/node_modules'
+      restoreKeys: 'node | "$(Agent.OS)"'
+    displayName: Cache node_modules
+
+  - task: Cache@2
+    inputs:
+      key: 'cypress | "$(Agent.OS)" | 13.6.4'
+      path: ~/.cache/Cypress
+      restoreKeys: 'cypress | "$(Agent.OS)"'
+    displayName: Cache Cypress binary
 
   - task: Npm@1
     inputs:
@@ -59,19 +74,16 @@ jobs:
 
   - script: |
       echo "Assigning per-worker index and jitter..."
-      # ADO is 1-based; convert to 0-based
       export CYPRESS_WORKER_INDEX=$(( $(System.JobPositionInPhase) - 1 ))
-      export LOGIN_JITTER_MS=2500
+      export LOGIN_JITTER_MS=1000
 
       echo "Worker index: $CYPRESS_WORKER_INDEX"
       echo "Login jitter (ms): $LOGIN_JITTER_MS"
 
-      echo "Running specs:"
-      for spec in $(echo $(SPEC) | tr ',' ' '); do
-        echo "- $spec"
-      done
+      echo "Specs (comma-separated, no spaces):"
+      echo "${SPEC}"
 
-      npx cypress run --spec "$(SPEC)"
+      npx cypress run --spec "$(echo "${SPEC}" | tr -d ' ')"
     workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
     env:
       TZ: 'Europe/London'
