@@ -413,6 +413,70 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/appeal-status/{status}/created-date": {
+			"get": {
+				"tags": ["Appeal Status"],
+				"description": "Gets a single status created date by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "status",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Created date for appeal status",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "string",
+									"example": "2050-01-01T10:30:00.000Z",
+									"xml": {
+										"name": "main"
+									}
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"type": "string",
+									"example": "2050-01-01T10:30:00.000Z",
+									"xml": {
+										"name": "main"
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/appeal-timetables/": {
 			"post": {
 				"tags": ["Appeal Timetables"],

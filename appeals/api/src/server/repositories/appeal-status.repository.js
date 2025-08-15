@@ -50,4 +50,22 @@ const rollBackAppealStatusTo = (appealId, status) =>
 		});
 	});
 
-export default { updateAppealStatusByAppealId, rollBackAppealStatusTo };
+/**
+ * @param {number} appealId
+ * @param {string} status
+ * @returns {Promise<{createdDate: Date}|undefined>}
+ */
+const getAppealStatusCreatedDate = async (appealId, status) => {
+	const appealStatus = await databaseConnector.appealStatus.findFirst({
+		where: {
+			appealId: appealId,
+			status
+		}
+	});
+
+	if (appealStatus) {
+		return { createdDate: appealStatus.createdAt };
+	}
+};
+
+export default { updateAppealStatusByAppealId, rollBackAppealStatusTo, getAppealStatusCreatedDate };

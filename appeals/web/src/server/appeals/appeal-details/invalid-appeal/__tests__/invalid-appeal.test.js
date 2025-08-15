@@ -3,7 +3,8 @@ import supertest from 'supertest';
 import {
 	appealData,
 	appellantCaseDataNotValidated,
-	appellantCaseInvalidReasons
+	appellantCaseInvalidReasons,
+	appellantCaseDataInvalidOutcome
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import nock from 'nock';
@@ -272,7 +273,7 @@ describe('invalid-appeal', () => {
 				.post(`/appeals/notify-preview/appeal-invalid.content.md`)
 				.reply(200, appellantEmailTemplate);
 			nock('http://test/')
-				.post(`/appeals/notify-preview/appeal-invalid.content.md`)
+				.post(`/appeals/notify-preview/appeal-invalid-lpa.content.md`)
 				.reply(200, lpaEmailTemplate);
 		});
 
@@ -291,6 +292,31 @@ describe('invalid-appeal', () => {
 			expect(element.innerHTML).toContain('Check details and mark appeal as invalid</h1>');
 			expect(element.innerHTML).toContain('Preview email to appellant');
 			expect(element.innerHTML).toContain('Preview email to LPA');
+		});
+	});
+
+	describe('GET /view', () => {
+		beforeEach(() => {
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, appellantCaseDataInvalidOutcome);
+			nock('http://test/')
+				.get('/appeals/1/appeal-status/invalid/created-date')
+				.reply(200, { createdDate: '2050-01-01T00:00:00.000Z' });
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should render the invalid appeal view page', async () => {
+			const response = await request.get(`${baseUrl}/invalid/view`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Appeal marked as invalid</h1>');
+			expect(element.innerHTML).toContain('Why is the appeal invalid?');
+			expect(element.innerHTML).toContain('Invalid date');
 		});
 	});
 });

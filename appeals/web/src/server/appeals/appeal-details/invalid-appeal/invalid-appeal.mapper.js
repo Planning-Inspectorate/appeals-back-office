@@ -1,5 +1,10 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
+
+/**
+ * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
+ */
 
 /**
  *
@@ -94,4 +99,78 @@ export const mapInvalidReasonPage = (
 			)
 		);
 	return pageContent;
+};
+
+/**
+ * @param {string} appealId
+ * @param {string} appealReference
+ * @param {string} invalidDate
+ * @param {Object[]} invalidReasons
+ * @returns {PageContent}
+ */
+export const viewInvalidAppealPage = (appealId, appealReference, invalidDate, invalidReasons) => {
+	const formattedInvalidReasons = getFormattedReasons(invalidReasons);
+
+	/** @type {PageComponent} */
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: {
+						text: 'Why is the appeal invalid?'
+					},
+					value: {
+						html: formattedInvalidReasons
+					}
+				},
+				{
+					key: {
+						text: 'Invalid date'
+					},
+					value: {
+						text: dateISOStringToDisplayDate(invalidDate)
+					}
+				}
+			]
+		}
+	};
+
+	const title = `Appeal marked as invalid`;
+	const pageContent = {
+		title,
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		heading: title,
+		pageComponents: [summaryListComponent]
+	};
+
+	return pageContent;
+};
+
+/**
+ * @param {Object[]} reasonsArray
+ * @returns {string} - List of formatted reasons
+ */
+export const getFormattedReasons = (reasonsArray) => {
+	if (!reasonsArray || reasonsArray.length === 0) {
+		throw new Error('No reasons found');
+	}
+
+	const reasons = reasonsArray.flatMap((item) => {
+		// @ts-ignore
+		const reasonName = /** @type {string} */ item.name;
+		// @ts-ignore
+		const reasonText = /** @type {string[]} */ item.text;
+
+		if (reasonText.length > 0) {
+			return reasonText.map((/** @type {string} */ textItem) => `${reasonName.name}: ${textItem}`);
+		} else {
+			return [reasonName.name];
+		}
+	});
+
+	const listItems = reasons.map((reason) => `<li>${reason}</li>`).join('');
+
+	return `<ul>${listItems}</ul>`;
 };
