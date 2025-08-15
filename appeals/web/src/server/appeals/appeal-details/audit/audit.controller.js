@@ -97,9 +97,7 @@ export const renderAudit = async (request, response) => {
 		notificationsArray = await Promise.all(
 			/** @type {AuditNotifications} */ (notifications).map(async (notification) => {
 				const createdAt = utcToZonedTime(notification.dateCreated, 'Europe/London');
-				const opening = `<div class="govuk-grid-row"><div class="govuk-grid-column-full">${
-					notification.subject
-				} sent to ${await mapEmailToRecipientType(
+				const opening = `${notification.subject} sent to ${mapEmailToRecipientType(
 					notification.recipient,
 					appeal,
 					await tryMapUsers(appeal.caseOfficer || '', request.session),
@@ -116,7 +114,7 @@ export const renderAudit = async (request, response) => {
 								closing: '</div></div>'
 							},
 							parameters: {
-								summaryText: 'View Email',
+								summaryText: 'View email',
 								html: notification.renderedSubject + notification.renderedContent
 							}
 						}
