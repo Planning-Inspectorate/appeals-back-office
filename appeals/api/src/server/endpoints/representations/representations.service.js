@@ -220,6 +220,26 @@ export async function updateRepresentation(repId, payload) {
 	return updatedRep;
 }
 
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {string} azureAdUserId
+ * @param {string} trigger
+ * @returns {Promise<void>}
+ */
+async function transitionLinkedChildAppealsState(appeal, azureAdUserId, trigger) {
+	if (appeal.childAppeals?.length) {
+		await Promise.all(
+			appeal.childAppeals
+				.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+				.map((childAppeal) =>
+					// @ts-ignore
+					transitionState(childAppeal.childId, azureAdUserId, trigger)
+				)
+		);
+	}
+}
+
 /** @typedef {Awaited<ReturnType<updateRepresentation>>} UpdatedDBRepresentation */
 
 /** @typedef {(appeal: Appeal, azureAdUserId: string, notifyClient: import('#endpoints/appeals.js').NotifyClient) => Promise<Representation[]>} PublishFunction */
@@ -266,15 +286,8 @@ export async function publishLpaStatements(appeal, azureAdUserId, notifyClient) 
 
 	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 
-	if (appeal.childAppeals?.length && isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
-		await Promise.all(
-			appeal.childAppeals
-				.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
-				.map((childAppeal) =>
-					// @ts-ignore
-					transitionState(childAppeal.childId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE)
-				)
-		);
+	if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+		await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
 
 	const finalCommentsDueDate = formatDate(
@@ -376,6 +389,10 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 	);
 
 	await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+		await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+	}
 
 	try {
 		if (
