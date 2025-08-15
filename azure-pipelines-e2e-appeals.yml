@@ -49,7 +49,7 @@ jobs:
 
   - task: Cache@2
     inputs:
-      key: 'node | "$(Agent.OS)" | appeals/e2e/package-lock.json'
+      key: 'node | "$(Agent.OS)" | appeals/package-lock.json'
       path: 'appeals/e2e/node_modules'
       restoreKeys: 'node | "$(Agent.OS)"'
     displayName: Cache node_modules
