@@ -2,7 +2,10 @@ import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
 import * as controller from './appeal-status.controller.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
-import { validateAppealStatusRollBackRequest } from './appeal-status.validators.js';
+import {
+	validateAppealStatusRollBackRequest,
+	getAppealStatusDateValidator
+} from './appeal-status.validators.js';
 
 const router = createRouter();
 
@@ -28,6 +31,29 @@ router.post(
 	checkAppealExistsByIdAndAddToRequest,
 	validateAppealStatusRollBackRequest,
 	asyncHandler(controller.rollBackAppealStatus)
+);
+
+router.get(
+	'/:appealId/appeal-status/:status/created-date',
+	/*
+        #swagger.tags = ['Appeal Status']
+        #swagger.path = '/appeals/{appealId}/appeal-status/{status}/created-date'
+		#swagger.description = 'Gets a single status created date by id'
+        #swagger.parameters['azureAdUserId'] = {
+            in: 'header',
+            required: true,
+            example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+        }
+        #swagger.responses[200] = {
+			description: 'Created date for appeal status',
+			schema: '2050-01-01T10:30:00.000Z',
+		}
+		#swagger.responses[400] = {}
+        #swagger.responses[404] = {}
+	*/
+	checkAppealExistsByIdAndAddToRequest,
+	getAppealStatusDateValidator,
+	asyncHandler(controller.getAppealStatusCreatedDate)
 );
 
 export { router as appealStatusRoutes };
