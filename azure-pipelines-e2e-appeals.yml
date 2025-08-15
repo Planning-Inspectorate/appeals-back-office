@@ -35,6 +35,7 @@ jobs:
         group4:
           SPEC: appeals/e2e/cypress/e2e/back-office-appeals/reviewAppellantCase.spec.js,appeals/e2e/cypress/e2e/back-office-appeals/manageDocsAppellantCase.spec.js,appeals/e2e/cypress/e2e/back-office-appeals/progressS78ToDecision.spec.js,appeals/e2e/cypress/e2e/back-office-appeals/progressS20ToDecision.spec.js,appeals/e2e/cypress/e2e/back-office-appeals/appellantCase.spec.js,appeals/e2e/cypress/e2e/back-office-appeals/changeContact.spec.js,appeals/e2e/cypress/e2e/back-office-appeals/caseHistory.spec.js,appeals/e2e/cypress/e2e/back-office-appeals/updateLpaqDueDate.spec.js
 
+
     steps:
       - task: NodeTool@0
         inputs:
