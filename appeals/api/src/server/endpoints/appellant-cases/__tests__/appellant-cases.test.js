@@ -687,7 +687,7 @@ describe('appellant cases routes', () => {
 					]
 				});
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				expect(response.status).toEqual(200);
 			});
@@ -764,7 +764,7 @@ describe('appellant cases routes', () => {
 					]
 				});
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				expect(response.status).toEqual(200);
 			});
@@ -821,7 +821,7 @@ describe('appellant cases routes', () => {
 					})
 				});
 
-				expect(mockNotifySend).toHaveBeenCalledTimes(1);
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				expect(response.status).toEqual(200);
 			});
@@ -865,7 +865,7 @@ describe('appellant cases routes', () => {
 						.send(body)
 						.set('azureAdUserId', azureAdUserId);
 
-					expect(mockNotifySend).toHaveBeenCalledTimes(1);
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
@@ -881,6 +881,22 @@ describe('appellant cases routes', () => {
 						},
 						recipientEmail: appeal.agent.email,
 						templateName: 'appeal-invalid'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							lpa_reference: appeal.applicationReference,
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							reasons: [
+								'Appeal has not been submitted on time',
+								'Other: The appeal site address does not match'
+							]
+						},
+						recipientEmail: appeal.lpa.email,
+						templateName: 'appeal-invalid-lpa'
 					});
 
 					expect(response.status).toEqual(200);
