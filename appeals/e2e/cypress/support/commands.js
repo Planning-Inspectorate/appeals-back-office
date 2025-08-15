@@ -2,6 +2,16 @@
 import { BrowserAuthData } from '../fixtures/browser-auth-data';
 import { appealsApiClient } from './appealsApiClient';
 
+//OVERWRITE
+
+Cypress.Commands.overwrite('type', (originalFn, subject, text, options = {}) => {
+	options.delay = 0;
+
+	return originalFn(subject, text, options);
+});
+
+//ADD
+
 const cookiesToSet = ['domain', 'expiry', 'httpOnly', 'path', 'secure'];
 
 Cypress.Commands.add('clearCookiesFiles', () => {
