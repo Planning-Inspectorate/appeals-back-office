@@ -1,7 +1,11 @@
 import logger from '#lib/logger.js';
 import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
-import { decisionInvalidConfirmationPage, mapInvalidReasonPage } from './invalid-appeal.mapper.js';
+import {
+	decisionInvalidConfirmationPage,
+	mapInvalidReasonPage,
+	viewInvalidAppealPage
+} from './invalid-appeal.mapper.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
@@ -257,6 +261,19 @@ export const getCheckPage = async (request, response) => {
 
 		return response.status(500).render('app/500.njk');
 	}
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getInvalidPage = async (request, response) => {
+	const {
+		currentAppeal: { appealId, appealReference }
+	} = request;
+
+	const pageContent = viewInvalidAppealPage(appealId, appealReference);
+
+	return response.status(200).render('patterns/display-page.pattern.njk', {
+		pageContent
+	});
 };
 
 /**

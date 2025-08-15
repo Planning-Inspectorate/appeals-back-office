@@ -83,6 +83,9 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 					? `Decision issued on ${letterDateObject.originalLetterDate} (updated on ${letterDateObject.latestLetterDate})`
 					: `Decision issued on ${letterDateObject.latestLetterDate}`
 			);
+		} else {
+			insetTextRows.push('Marked as invalid on ');
+			insetTextRows.push(getViewInvalidAppealLink(appealDetails.appealId));
 		}
 
 		const hasCostsAppellantDecision = Boolean(
@@ -213,3 +216,6 @@ const getViewDecisionLinkOld = (appealDetails) => {
 
 const getViewDecisionLink = (/** @type {number} */ appealId) =>
 	`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/view-decision">View decision</a>`;
+
+const getViewInvalidAppealLink = (/** @type {number} */ appealId) =>
+	`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/invalid/view">View details</a>`;

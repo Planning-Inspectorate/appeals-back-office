@@ -2,6 +2,10 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { enhanceCheckboxOptionWithAddAnotherReasonConditionalHtml } from '#lib/enhance-html.js';
 
 /**
+ * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
+ */
+
+/**
  *
  * @param {string} appealId
  * @param {string} appealReference
@@ -93,5 +97,48 @@ export const mapInvalidReasonPage = (
 				'Enter a reason'
 			)
 		);
+	return pageContent;
+};
+
+/**
+ * @param {string} appealId
+ * @param {string} appealReference
+ * @returns {PageContent}
+ */
+export const viewInvalidAppealPage = (appealId, appealReference) => {
+	/** @type {PageComponent} */
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: {
+						text: 'Why is the appeal invalid?'
+					},
+					value: {
+						text: 'Invalid reasons:'
+					}
+				},
+				{
+					key: {
+						text: 'Invalid date'
+					},
+					value: {
+						// html: displayPageFormatter.formatFreeTextForDisplay(request.session.invalidReason)
+					}
+				}
+			]
+		}
+	};
+
+	const title = `Appeal marked as invalid`;
+	const pageContent = {
+		title,
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		heading: title,
+		pageComponents: [summaryListComponent]
+	};
+
 	return pageContent;
 };

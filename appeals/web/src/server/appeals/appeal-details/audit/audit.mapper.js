@@ -47,7 +47,7 @@ const uuidRegex =
  * @returns {Promise<string>}
  */
 export const tryMapUsers = async (log, session) => {
-	const result = log.replace('00000000-0000-0000-0000-000000000000', 'System');
+	const result = log.replace('00000000-0000-0000-0000-000000000000', 'Systemkjknkjn');
 	const uuid = uuidRegex.exec(result);
 
 	if (!uuid) {
