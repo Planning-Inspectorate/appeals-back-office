@@ -309,8 +309,6 @@ model AppellantCase {
   siteGridReferenceEasting                 String?
   siteGridReferenceNorthing                String?
   typeOfPlanningApplication                String?
-
-  // DPF - duplicate @@index([appealId])
 }
 
 /// AppellantCaseValidationOutcome model
@@ -462,7 +460,6 @@ model LPAQuestionnaire {
   historicEnglandConsultation Boolean?
   preserveGrantLoan           Boolean?
 
-  // DPF - duplicate @@index([appealId])
   @@index([isGreenBelt])
 }
 
