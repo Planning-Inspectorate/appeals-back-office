@@ -34,6 +34,7 @@ model Appeal {
   casePublishedDate     DateTime?
   caseCompletedDate     DateTime?
   withdrawalRequestDate DateTime?
+  caseInvalidDate       DateTime?
   caseResubmittedTypeId Int?
   caseTransferredId     String?
   eiaScreeningRequired  Boolean?

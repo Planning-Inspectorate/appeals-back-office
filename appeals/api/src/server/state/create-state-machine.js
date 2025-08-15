@@ -266,6 +266,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
 					},
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID },
+					[APPEAL_CASE_STATUS.INVALID]: { target: APPEAL_CASE_STATUS.INVALID },
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
 					}
