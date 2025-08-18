@@ -11,7 +11,7 @@ import config from '#environment/config.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
-/** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'} AppealRequiredAction */
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
@@ -168,6 +168,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE ||
 				(ipCommentsCounts?.valid && ipCommentsCounts?.valid > 0);
 
+			console.log(appealDetails);
 			if (
 				ipCommentsDueDatePassed &&
 				lpaStatementDueDatePassed &&
@@ -176,6 +177,16 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			) {
 				if (hasItemsToShare) {
 					actions.push('shareIpCommentsAndLpaStatement');
+				} else if (
+					// @ts-ignore
+					appealDetails.procedureType === 'Hearing' &&
+					// @ts-ignore
+					appealDetails.hearing?.hearingStartTime &&
+					// @ts-ignore
+					appealDetails.hearing?.addressId
+				) {
+					actions.push('progressHearingCaseWithNoRepsAndHearingSetUpFromStatements');
+					console.log(actions);
 				} else if (appealDetails.procedureType === 'Hearing') {
 					actions.push('progressHearingCaseWithNoRepsFromStatements');
 				} else {
