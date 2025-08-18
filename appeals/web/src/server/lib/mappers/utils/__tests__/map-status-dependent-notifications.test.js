@@ -29,7 +29,8 @@ describe('mapStatusDependentNotifications', () => {
 		{
 			bannerKey: 'readyForDecision',
 			requiredAction: 'issueDecision',
-			expectedContainedHtml: '<p class="govuk-notification-banner__heading">Ready for decision</p>'
+			expectedContainedHtml: '<p class="govuk-notification-banner__heading">Ready for decision</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'progressFromFinalComments',

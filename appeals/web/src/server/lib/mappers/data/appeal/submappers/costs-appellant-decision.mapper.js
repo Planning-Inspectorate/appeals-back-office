@@ -4,6 +4,7 @@ import { isStatePassed } from '#lib/appeal-status.js';
 import { permissionNames } from '#environment/permissions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { baseUrl } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapCostsAppellantDecision = ({ appealDetails, currentRoute, session, request }) => {
@@ -11,6 +12,7 @@ export const mapCostsAppellantDecision = ({ appealDetails, currentRoute, session
 		appealDetails.costs ?? {};
 
 	if (
+		isChildAppeal(appealDetails) ||
 		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
 		!appellantApplicationFolder?.documents?.length ||
 		appellantWithdrawalFolder?.documents?.length
