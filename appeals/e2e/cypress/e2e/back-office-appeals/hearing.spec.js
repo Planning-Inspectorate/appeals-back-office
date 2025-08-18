@@ -72,7 +72,7 @@ describe('Setup hearing and add hearing estimates', () => {
 
 	it('should not accept invalid input - Hearing Estimate', () => {
 		caseDetailsPage.clickHearingEstimateLink();
-		hearingSectionPage.addHearingEstimates('0.25', 'sittingTime', '99.5');
+		hearingSectionPage.addEstimates('0.25', 'sittingTime', '99.5');
 
 		hearingSectionPage.verifyErrorMessages({
 			messages: [
@@ -87,7 +87,7 @@ describe('Setup hearing and add hearing estimates', () => {
 
 	it('should navigate back to overview page - Hearing Estimate', () => {
 		caseDetailsPage.clickHearingEstimateLink();
-		hearingSectionPage.addHearingEstimates(
+		hearingSectionPage.addEstimates(
 			initialEstimates.preparationTime,
 			initialEstimates.sittingTime,
 			initialEstimates.reportingTime
@@ -104,7 +104,7 @@ describe('Setup hearing and add hearing estimates', () => {
 	it('should add and update hearing Estimates', () => {
 		// Adding initial hearing estimates
 		caseDetailsPage.clickHearingEstimateLink();
-		hearingSectionPage.addHearingEstimates(
+		hearingSectionPage.addEstimates(
 			initialEstimates.preparationTime,
 			initialEstimates.sittingTime,
 			initialEstimates.reportingTime
@@ -127,7 +127,7 @@ describe('Setup hearing and add hearing estimates', () => {
 
 		// Updating estimates from the check details page
 		caseDetailsPage.clickRowChangeLink('estimated-preparation-time');
-		hearingSectionPage.addHearingEstimates(
+		hearingSectionPage.addEstimates(
 			updatedEstimates.preparationTime,
 			updatedEstimates.sittingTime,
 			updatedEstimates.reportingTime
@@ -152,7 +152,7 @@ describe('Setup hearing and add hearing estimates', () => {
 
 		// Updating estimates from the overview page
 		caseDetailsPage.clickRowChangeLink('reporting-time');
-		hearingSectionPage.addHearingEstimates(
+		hearingSectionPage.addEstimates(
 			finalEstimates.preparationTime,
 			finalEstimates.sittingTime,
 			finalEstimates.reportingTime

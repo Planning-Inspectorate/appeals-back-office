@@ -341,5 +341,78 @@ export const appealsApiClient = {
 		} catch {
 			return false;
 		}
+	},
+
+	async addInquiry(appealId, date) {
+		try {
+			const requestBody = createApiSubmission(appealsApiRequests.inquiryDetails);
+			requestBody.inquiryStartTime = date.toISOString();
+			requestBody.inquiryEndTime = date.toISOString();
+			requestBody.startDate = date.toISOString();
+			requestBody.lpaQuestionnaireDueDate = date.toISOString();
+			requestBody.statementDueDate = date.toISOString();
+			requestBody.ipCommentsDueDate = date.toISOString();
+			requestBody.statementOfCommonGroundDueDate = date.toISOString();
+			requestBody.proofOfEvidenceAndWitnessesDueDate = date.toISOString();
+			requestBody.planningObligationDueDate = date.toISOString();
+
+			const url = `${baseUrl}appeals/${appealId}/inquiry`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify(requestBody)
+			});
+
+			expect(response.status).eq(201);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+
+	async addEstimate(procedureType, appealId, estimate = null) {
+		try {
+			console.log('Below is from estimate final api call');
+			console.log(estimate);
+			let requestBody;
+			if (estimate !== null) {
+				requestBody = estimate;
+			} else requestBody = createApiSubmission(appealsApiRequests.estimateDetails);
+
+			const url = `${baseUrl}appeals/${appealId}/${procedureType}-estimates`;
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify(requestBody)
+			});
+
+			expect(response.status).eq(201);
+			return await response.json();
+		} catch {
+			return false;
+		}
+	},
+
+	async deleteEstimate(procedureType, appealId) {
+		try {
+			const url = `${baseUrl}appeals/${appealId}/${procedureType}-estimates`;
+			const response = await fetch(url, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				}
+			});
+			expect(response.status).eq(200);
+			return await response.json();
+		} catch {
+			return false;
+		}
 	}
 };
