@@ -90,6 +90,7 @@ const deleteUnwantedFixtures = () => {
 		'sample-video.mp4',
 		'users.js',
 		'test.pdf',
+		'test-2.pdf',
 		'appeals-api-requests.js',
 		'appealsApiRequests.js',
 		'sample-file-2.doc',
