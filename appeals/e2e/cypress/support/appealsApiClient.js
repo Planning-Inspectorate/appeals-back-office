@@ -375,10 +375,8 @@ export const appealsApiClient = {
 
 	async addEstimate(procedureType, appealId, estimate = null) {
 		try {
-			console.log('Below is from estimate final api call');
-			console.log(estimate);
 			let requestBody;
-			if (estimate !== null) {
+			if (estimate) {
 				requestBody = estimate;
 			} else requestBody = createApiSubmission(appealsApiRequests.estimateDetails);
 
