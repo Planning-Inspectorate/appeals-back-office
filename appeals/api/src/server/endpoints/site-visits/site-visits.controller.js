@@ -8,7 +8,9 @@ import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains
 import { formatSiteVisit } from './site-visits.formatter.js';
 import { createSiteVisit, updateSiteVisit } from './site-visits.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import transitionState from '#state/transition-state.js';
+import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -78,6 +80,10 @@ const postSiteVisit = async (req, res) => {
 
 	if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
 		await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+
+		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+			await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+		}
 	}
 
 	return res.status(201).send({

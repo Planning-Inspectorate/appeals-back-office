@@ -5,9 +5,8 @@ import representationRepository from '#repositories/representation.repository.js
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import logger from '#utils/logger.js';
-import transitionState from '#state/transition-state.js';
+import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
 import {
-	CASE_RELATIONSHIP_LINKED,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
@@ -218,26 +217,6 @@ export async function updateRepresentation(repId, payload) {
 	}
 
 	return updatedRep;
-}
-
-/**
- *
- * @param {Appeal} appeal
- * @param {string} azureAdUserId
- * @param {string} trigger
- * @returns {Promise<void>}
- */
-async function transitionLinkedChildAppealsState(appeal, azureAdUserId, trigger) {
-	if (appeal.childAppeals?.length) {
-		await Promise.all(
-			appeal.childAppeals
-				.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
-				.map((childAppeal) =>
-					// @ts-ignore
-					transitionState(childAppeal.childId, azureAdUserId, trigger)
-				)
-		);
-	}
 }
 
 /** @typedef {Awaited<ReturnType<updateRepresentation>>} UpdatedDBRepresentation */
