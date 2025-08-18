@@ -169,7 +169,8 @@ describe('appeal linked appeals routes', () => {
 						child_appeal_reference_number: childAppeal.reference,
 						event_type: 'site visit',
 						lpa_reference: householdAppeal.applicationReference,
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						linked_before_lpa_questionnaire: true
 					},
 					recipientEmail: householdAppeal.agent.email,
 					templateName: 'link-appeal'
@@ -183,7 +184,8 @@ describe('appeal linked appeals routes', () => {
 						child_appeal_reference_number: childAppeal.reference,
 						event_type: 'site visit',
 						lpa_reference: householdAppeal.applicationReference,
-						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom'
+						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
+						linked_before_lpa_questionnaire: true
 					},
 					recipientEmail: householdAppeal.agent.email,
 					templateName: 'link-appeal'
