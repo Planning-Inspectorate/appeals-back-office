@@ -409,7 +409,7 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#levy-expected-date-month">Date month must be a number</a>
+                            <li><a href="#levy-expected-date-month">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -431,9 +431,8 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When do you expect to formally adopt the community infrastructure levy?</h1>
                                 </legend>
-                                <p id="infrastructure-levy-expected-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be a
-                                    number</p>
-                                <div class="govuk-date-input" id="infrastructure-levy-expected-date">
+                                <p id="infrastructure-levy-expected-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date must be a real date</p>
+                                <div                                 class="govuk-date-input" id="infrastructure-levy-expected-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-expected-date-day">Day</label>
@@ -457,15 +456,15 @@ exports[`infrastructure-levy-expected-date POST /change should re-render the exp
                                             inputmode="numeric">
                                         </div>
                                     </div>
-                                </div>
-                            </fieldset>
                         </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
+                        </fieldset>
                 </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 </main>"
 `;

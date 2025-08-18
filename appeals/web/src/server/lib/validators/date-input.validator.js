@@ -8,8 +8,9 @@ import {
 	dayMonthYearHourMinuteToISOString,
 	dateIsAfter
 } from '../dates.js';
-import { capitalize, lowerCase } from 'lodash-es';
+import { lowerCase } from 'lodash-es';
 import { toCamelCase } from '#lib/string-utilities.js';
+import { MONTH_SET } from '#lib/constants.js';
 
 export const createDateInputFieldsValidator = (
 	fieldNamePrefix = 'date',
@@ -21,9 +22,24 @@ export const createDateInputFieldsValidator = (
 ) => {
 	return createValidator(
 		body([`${bodyScope}${fieldNamePrefix}`]).custom((_, { req }) => {
-			const day = req.body[`${fieldNamePrefix}${dayFieldName}`];
-			const month = req.body[`${fieldNamePrefix}${monthFieldName}`];
-			const year = req.body[`${fieldNamePrefix}${yearFieldName}`];
+			req.originalDate = {};
+			[
+				`${fieldNamePrefix}${dayFieldName}`,
+				`${fieldNamePrefix}${monthFieldName}`,
+				`${fieldNamePrefix}${yearFieldName}`
+			].forEach((field) => {
+				req.originalDate[field] = req.body?.[field];
+				if (req.body?.[field] && typeof req.body[field] === 'string')
+					req.body[field] = req.body[field].trim();
+			});
+
+			const { day, month, year } = destructureDateFields(
+				req.body,
+				fieldNamePrefix,
+				dayFieldName,
+				monthFieldName,
+				yearFieldName
+			);
 
 			if (!day && !month && !year) {
 				throw new Error(`all-fields::Enter the ${lowerCase(messageFieldNamePrefix)}`, {
@@ -67,13 +83,19 @@ export const createDateInputFieldsValidator = (
 				throw new Error(`day::${messageFieldNamePrefix} day must be between 1 and 31`);
 			}
 			if (!/^\d+$/.test(month)) {
-				throw new Error(`month::${messageFieldNamePrefix} month must be a number`);
-			}
-			if (!/^\d{1,2}$/.test(month)) {
-				throw new Error(`month::${messageFieldNamePrefix} month must be 1 or 2 digits`);
-			}
-			if (!/^0?[1-9]$|^1[0-2]$/.test(month)) {
-				throw new Error(`month::${messageFieldNamePrefix} month must be between 1 and 12`);
+				const monthNum = MONTH_SET[month.toLowerCase()];
+				if (!monthNum) {
+					throw new Error(`month::${messageFieldNamePrefix} must be a real date`);
+				} else {
+					req.body[`${fieldNamePrefix}${monthFieldName}`] = monthNum;
+				}
+			} else {
+				if (!/^\d{1,2}$/.test(month)) {
+					throw new Error(`month::${messageFieldNamePrefix} month must be 1 or 2 digits`);
+				}
+				if (!/^0?[1-9]$|^1[0-2]$/.test(month)) {
+					throw new Error(`month::${messageFieldNamePrefix} month must be between 1 and 12`);
+				}
 			}
 			if (!/^\d+$/.test(year)) {
 				throw new Error(`year::${messageFieldNamePrefix} year must be a number`);
@@ -81,7 +103,6 @@ export const createDateInputFieldsValidator = (
 			if (!/^\d{4}$/.test(year)) {
 				throw new Error(`year::${messageFieldNamePrefix} year must be 4 digits`);
 			}
-
 			return true;
 		})
 	);
@@ -124,12 +145,11 @@ export const createDateInputDateValidityValidator = (
  */
 export const dateIsABusinessDay = async (apiClient, value) => {
 	try {
-		const result = await apiClient
+		return await apiClient
 			.post(`appeals/validate-business-date`, {
 				json: { inputDate: value }
 			})
 			.json();
-		return result;
 	} catch {
 		return false;
 	}
@@ -161,7 +181,9 @@ export const createDateInputDateBusinessDayValidator = (
 
 				const result = await dateIsABusinessDay(req.apiClient, dateToValidate);
 				if (result === false) {
-					return Promise.reject();
+					return Promise.reject(
+						new Error(`The ${lowerCase(messageFieldNamePrefix || '')} must be a business day`)
+					);
 				}
 				return result;
 			})
@@ -209,9 +231,13 @@ export const createDateInputDateInPastOrTodayValidator = (
 	createValidator(
 		body(`${fieldNamePrefix}`)
 			.custom((bodyFields, { req }) => {
-				const day = req.body[`${fieldNamePrefix}${dayFieldName}`];
-				const month = req.body[`${fieldNamePrefix}${monthFieldName}`];
-				const year = req.body[`${fieldNamePrefix}${yearFieldName}`];
+				const { day, month, year } = destructureDateFields(
+					req.body,
+					fieldNamePrefix,
+					dayFieldName,
+					monthFieldName,
+					yearFieldName
+				);
 
 				if (!(day && month && year)) {
 					return true;
@@ -224,11 +250,7 @@ export const createDateInputDateInPastOrTodayValidator = (
 				return dateIsTodayOrInThePast({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
 			.withMessage(
-				capitalize(
-					`${
-						(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''
-					}must be today or in the past`
-				)
+				`all-fields::The ${lowerCase(messageFieldNamePrefix || '')} must be today or in the past`
 			)
 	);
 
@@ -242,9 +264,13 @@ export const createDateInputDateInPastValidator = (
 	createValidator(
 		body(`${fieldNamePrefix}`)
 			.custom((bodyFields, { req }) => {
-				const day = req.body[`${fieldNamePrefix}${dayFieldName}`];
-				const month = req.body[`${fieldNamePrefix}${monthFieldName}`];
-				const year = req.body[`${fieldNamePrefix}${yearFieldName}`];
+				const { day, month, year } = destructureDateFields(
+					req.body,
+					fieldNamePrefix,
+					dayFieldName,
+					monthFieldName,
+					yearFieldName
+				);
 
 				if (!(day && month && year)) {
 					return true;
@@ -256,13 +282,7 @@ export const createDateInputDateInPastValidator = (
 
 				return dateIsInThePast({ day: dayNumber, month: monthNumber, year: yearNumber });
 			})
-			.withMessage(
-				capitalize(
-					`all-fields::${
-						(messageFieldNamePrefix && messageFieldNamePrefix + ' ') || ''
-					}must in the past`
-				)
-			)
+			.withMessage(`all-fields::The ${lowerCase(messageFieldNamePrefix || '')} must in the past`)
 	);
 
 export const createDateInputDateInFutureOfDateValidator = (
@@ -277,15 +297,20 @@ export const createDateInputDateInFutureOfDateValidator = (
 	createValidator(
 		body(`${fieldNamePrefix}`).custom((bodyFields, { req }) => {
 			if (!fieldNameToComparePrefix) return true;
-
-			const getDateParts = (/** @type {string} */ prefix) => ({
-				day: req.body[`${prefix}${dayFieldName}`],
-				month: req.body[`${prefix}${monthFieldName}`],
-				year: req.body[`${prefix}${yearFieldName}`]
-			});
-
-			const currentParts = getDateParts(fieldNamePrefix);
-			const compareParts = getDateParts(fieldNameToComparePrefix);
+			const currentParts = destructureDateFields(
+				req.body,
+				fieldNamePrefix,
+				dayFieldName,
+				monthFieldName,
+				yearFieldName
+			);
+			const compareParts = destructureDateFields(
+				req.body,
+				fieldNameToComparePrefix,
+				dayFieldName,
+				monthFieldName,
+				yearFieldName
+			);
 
 			// If any part of the current date is missing, skip validation
 			if (!currentParts.day || !currentParts.month || !currentParts.year) {
@@ -337,14 +362,26 @@ export const createDateInputDateInFutureOfDateValidator = (
 	);
 
 /**
+ * @typedef {import('express').Request} ExpressRequest
+ * @typedef {import('express').Response} ExpressResponse
+ * @typedef {import('express').NextFunction} NextFunction
+ * @typedef {ExpressRequest & { originalDate?: Record<string, any> }} Request
  * @param {{ fieldNamePrefix: string }} dateComponentConfig - Configuration for the date component.
- * @returns {import('express').RequestHandler} The configured Express middleware.
+ * @returns {(req: Request, res: ExpressResponse, next: NextFunction) => void} The configured Express middleware.
  */
 export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
 	return (req, res, next) => {
 		if (!req.errors) {
+			delete req?.originalDate;
 			return next();
 		}
+
+		const originalDateFields = Object.keys(req?.originalDate || {});
+		for (const field of originalDateFields) {
+			req.body[field] = req?.originalDate?.[field] ? req?.originalDate?.[field] : req.body[field];
+		}
+		delete req?.originalDate;
+
 		for (const e of Object.keys(req.errors)) {
 			if (req.errors[e].msg.includes('whole-page')) {
 				const [cause, message] = req.errors[e].msg.split('::');
@@ -370,7 +407,7 @@ export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
 		let firstErrorKey = null;
 
 		for (const field of dateFields) {
-			if (req.errors && req.errors[field]) {
+			if (req?.errors[field]) {
 				firstErrorKey = field;
 				break;
 			}
@@ -385,25 +422,13 @@ export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
 					errorDetails.msg = message;
 					switch (cause) {
 						case 'all-fields':
-							req.errors[`${fieldNamePrefix}-day`] = errorDetails;
-							firstErrorKey = dateFields[1];
-							break;
 						case 'day':
-							req.errors[`${fieldNamePrefix}-day`] = errorDetails;
-							firstErrorKey = dateFields[1];
-							break;
 						case 'day-month':
-							req.errors[`${fieldNamePrefix}-day`] = errorDetails;
-							firstErrorKey = dateFields[1];
-							break;
 						case 'day-year':
 							req.errors[`${fieldNamePrefix}-day`] = errorDetails;
 							firstErrorKey = dateFields[1];
 							break;
 						case 'month':
-							req.errors[`${fieldNamePrefix}-month`] = errorDetails;
-							firstErrorKey = dateFields[2];
-							break;
 						case 'month-year':
 							req.errors[`${fieldNamePrefix}-month`] = errorDetails;
 							firstErrorKey = dateFields[2];
@@ -453,5 +478,28 @@ export const extractAndProcessDocumentDateErrors = () => {
 			}
 		}
 		return next();
+	};
+};
+
+/**
+ * Extracts day, month, and year fields from a body object.
+ * @param {Record<string, any>} bodyField - The request body or object containing date fields.
+ * @param {string} fieldNamePrefix - Prefix for the field names.
+ * @param {string} dayFieldName - Suffix for the day field.
+ * @param {string} monthFieldName - Suffix for the month field.
+ * @param {string} yearFieldName - Suffix for the year field.
+ * @returns {{ day?: any, month?: any, year?: any}}
+ */
+const destructureDateFields = (
+	bodyField,
+	fieldNamePrefix,
+	dayFieldName,
+	monthFieldName,
+	yearFieldName
+) => {
+	return {
+		day: bodyField?.[`${fieldNamePrefix}${dayFieldName}`],
+		month: bodyField?.[`${fieldNamePrefix}${monthFieldName}`],
+		year: bodyField?.[`${fieldNamePrefix}${yearFieldName}`]
 	};
 };

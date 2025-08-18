@@ -426,7 +426,7 @@ exports[`application-submission-date POST /change should re-render the Date page
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#application-submission-date-month">Date month must be a number</a>
+                            <li><a href="#application-submission-date-month">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -450,9 +450,8 @@ exports[`application-submission-date POST /change should re-render the Date page
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <p id="application-submission-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be a
-                                    number</p>
-                                <div class="govuk-date-input" id="application-submission-date">
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date must be a real date</p>
+                                <div                                 class="govuk-date-input" id="application-submission-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="application-submission-date-day">Day</label>
@@ -477,15 +476,15 @@ exports[`application-submission-date POST /change should re-render the Date page
                                             type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
-                                </div>
-                            </fieldset>
                         </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
+                        </fieldset>
                 </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 </main>"
 `;
@@ -861,7 +860,7 @@ exports[`application-submission-date POST /change should re-render the Date page
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#application-submission-date-day">Date must be today or in the past</a>
+                            <li><a href="#application-submission-date-day">The date must be today or in the past</a>
                             </li>
                         </ul>
                     </div>
@@ -885,8 +884,8 @@ exports[`application-submission-date POST /change should re-render the Date page
                                 </legend>
                                 <div id="application-submission-date-hint" class="govuk-hint">For example, 27 3 2023</div>
                                 <p id="application-submission-date-error"
-                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date must be today or
-                                    in the past</p>
+                                class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be today
+                                    or in the past</p>
                                 <div class="govuk-date-input" id="application-submission-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">

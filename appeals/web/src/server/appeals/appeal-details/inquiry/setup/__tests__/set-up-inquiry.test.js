@@ -98,21 +98,30 @@ describe('set up inquiry', () => {
 
 		beforeEach(() => {
 			nock('http://test/')
+				.persist()
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
 		});
 
-		it('should redirect to /inquiry/setup/address with valid inputs', async () => {
-			const response = await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send({
-				'inquiry-date-day': '01',
-				'inquiry-date-month': '02',
-				'inquiry-date-year': '3025',
-				'inquiry-time-hour': '12',
-				'inquiry-time-minute': '00'
-			});
+		afterEach(() => {
+			nock.cleanAll();
+		});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toBe(`${baseUrl}/${appealId}/inquiry/setup/estimation`);
+		it('should redirect to /inquiry/setup/address with valid inputs', async () => {
+			const monthVariants = ['02', 'Feb', 'February'];
+
+			for (const month of monthVariants) {
+				const response = await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send({
+					'inquiry-date-day': '01',
+					'inquiry-date-month': month,
+					'inquiry-date-year': '3025',
+					'inquiry-time-hour': '12',
+					'inquiry-time-minute': '00'
+				});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.headers.location).toBe(`${baseUrl}/${appealId}/inquiry/setup/estimation`);
+			}
 		});
 
 		it('should return 400 on invalid date with appropriate error message', async () => {
@@ -153,23 +162,26 @@ describe('set up inquiry', () => {
 		});
 
 		it('should return 400 on date in the past with appropriate error message', async () => {
-			const response = await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send({
-				'inquiry-date-day': '28',
-				'inquiry-date-month': '02',
-				'inquiry-date-year': '1999',
-				'inquiry-time-hour': '12',
-				'inquiry-time-minute': '00'
-			});
+			const monthVariants = ['02', 'February', 'Feb'];
 
-			expect(response.statusCode).toBe(400);
+			for (const month of monthVariants) {
+				const response = await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send({
+					'inquiry-date-day': '28',
+					'inquiry-date-month': month,
+					'inquiry-date-year': '1999',
+					'inquiry-time-hour': '12',
+					'inquiry-time-minute': '00'
+				});
 
-			const errorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
+				expect(response.statusCode).toBe(400);
+				const errorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
 
-			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('The inquiry date must be in the future');
+				expect(errorSummaryHtml).toContain('There is a problem</h2>');
+				expect(errorSummaryHtml).toContain('The inquiry date must be in the future');
+			}
 		});
 
 		it('should return 400 on invalid time with appropriate error message', async () => {

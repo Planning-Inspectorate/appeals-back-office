@@ -48,27 +48,31 @@ describe('infrastructure-levy-expected-date', () => {
 
 	describe('POST /change', () => {
 		it('should re-direct to the LPA Questionnaire page if the date is valid', async () => {
-			const validData = {
-				'levy-expected-date-day': '11',
-				'levy-expected-date-month': '06',
-				'levy-expected-date-year': '2021'
-			};
+			const monthVariants = ['06', 'June', 'Jun'];
 
-			nock('http://test/')
-				.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
-				.reply(200, lpaQuestionnaireDataNotValidated);
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
-				.reply(200, {});
+			for (const monthVariant of monthVariants) {
+				const validData = {
+					'levy-expected-date-day': '11',
+					'levy-expected-date-month': monthVariant,
+					'levy-expected-date-year': '2021'
+				};
 
-			const response = await request
-				.post(`${baseUrl}/infrastructure-levy-expected-date/change`)
-				.send(validData);
+				nock('http://test/')
+					.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+					.reply(200, lpaQuestionnaireDataNotValidated);
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+					.reply(200, {});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				`Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/${lpaQuestionnaireId}`
-			);
+				const response = await request
+					.post(`${baseUrl}/infrastructure-levy-expected-date/change`)
+					.send(validData);
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/${lpaQuestionnaireId}`
+				);
+			}
 		});
 
 		it('should re-render the expected levy adoption date change page if day is not valid', async () => {
@@ -117,7 +121,10 @@ describe('infrastructure-levy-expected-date', () => {
 		it('should re-render the expected levy adoption date change page with an error message if the provided date month is invalid', async () => {
 			const testCases = [
 				{ value: '', expectedError: 'Date must include a month' },
-				{ value: 'a', expectedError: 'Date month must be a number' },
+				{
+					value: 'a',
+					expectedError: 'Date must be a real date'
+				},
 				{ value: '0', expectedError: 'Date month must be between 1 and 12' },
 				{ value: '13', expectedError: 'Date month must be between 1 and 12' }
 			];
