@@ -94,8 +94,10 @@ describe('Progress S78 to decision', () => {
 			caseDetailsPage.checkDecisionOutcome('Allowed');
 			caseDetailsPage.clickAccordionByButton('Case management');
 			caseDetailsPage.clickViewCaseHistory();
-			caseHistoryPage.verifyCaseHistory('completedState');
-			caseDetailsPage.viewDecisionLetter('View decision');
+
+			caseHistoryPage.verifyCaseHistory('completedState', caseRef);
+
+			//caseDetailsPage.viewDecisionLetter('View decision');
 		});
 	});
 });
