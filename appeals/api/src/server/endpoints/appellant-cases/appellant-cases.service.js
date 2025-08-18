@@ -189,6 +189,16 @@ export const updateAppellantCaseValidationOutcome = async (
 				personalisation
 			});
 
+			if (updatedAppeal.lpa?.email) {
+				await notifySend({
+					azureAdUserId,
+					templateName: 'appeal-invalid-lpa',
+					notifyClient,
+					recipientEmail: updatedAppeal.lpa.email,
+					personalisation
+				});
+			}
+
 			let details = AUDIT_TRAIL_SUBMISSION_INVALID;
 			invalidReasonsList.forEach((invalidReason) => {
 				details += `\n• ${invalidReason}`;

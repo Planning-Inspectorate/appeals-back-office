@@ -73,7 +73,8 @@ export class CaseDetailsPage extends Page {
 		document2: 'sample-file-2.doc',
 		document3: 'sample-file-3.doc',
 		img: 'sample-img.jpeg',
-		pdf: 'test.pdf'
+		pdf: 'test.pdf',
+		pdf2: 'test-2.pdf'
 	};
 
 	elements = {
@@ -136,6 +137,7 @@ export class CaseDetailsPage extends Page {
 		changeAgent: () => cy.getByData(this._cyDataSelectors.changeAgent),
 		getAppellantEmailAddress: () => cy.get('#email-address.govuk-input'),
 		getAgentEmailAddress: () => cy.get('#email-address.govuk-input'),
+		getCorrectioNotice: () => cy.get('#correction-notice'),
 		getWarningText: () => cy.get('.govuk-warning-text__text'),
 		manageCrossTeamCorrespondence: () =>
 			cy.getByData(this._cyDataSelectors.manageCrossTeamCorrespondence),
@@ -168,6 +170,11 @@ export class CaseDetailsPage extends Page {
 		lpaStatementReviewLink: () => cy.getByData(this._cyDataSelectors.reviewLpaStatement),
 		caseStatusTag: () => cy.get('.govuk-grid-column-full > .govuk-grid-column-full > .govuk-tag'),
 		rowChangeLink: (row) => cy.getByData(`change-${row}`),
+		changeLinkByLabel: (label) =>
+			cy
+				.contains('.govuk-summary-list__row', label)
+				.find('.govuk-summary-list__actions a.govuk-link'),
+		viewLpaStatement: () => cy.getByData('view-lpa-statement'),
 		showMoreToggle: () => cy.get('.pins-show-more__toggle-label'),
 		showMoreContent: () => cy.get('.pins-show-more'),
 		lPAStatementTableChangeLink: (row) =>
@@ -487,12 +494,20 @@ export class CaseDetailsPage extends Page {
 		this.basePageElements.linkByText(text);
 	}
 
+	clickViewDecisionLetter(text) {
+		this.basePageElements.linkByText(text).click();
+	}
+
 	clickSiteVisitBanner(caseRef) {
 		this.elements.siteVisitBanner(caseRef).click();
 	}
 
 	clickRowChangeLink(row) {
 		this.elements.rowChangeLink(row).click();
+	}
+
+	clickChangeLinkByLabel(label) {
+		this.elements.changeLinkByLabel(label).click();
 	}
 
 	clickLpaStatementChangeLink(row) {
@@ -551,6 +566,10 @@ export class CaseDetailsPage extends Page {
 
 	inputEstimatedInquiryDays(estimatedInquiryDays) {
 		this.elements.inquiryEstimatedDaysInput().type(estimatedInquiryDays.toString());
+	}
+
+	inputCorrectionNotice(correctionNotice) {
+		this.elements.getCorrectioNotice().click().clear().type(correctionNotice);
 	}
 
 	/***************************************************************
@@ -708,6 +727,15 @@ export class CaseDetailsPage extends Page {
 
 	verifyAppealRefOnCaseDetails(caseRef) {
 		this.elements.getAppealRefCaseDetails().contains(caseRef);
+	}
+
+	verifyCheckYourAnswers(label, value) {
+		cy.contains('dt.govuk-summary-list__key', label)
+			.parents('.govuk-summary-list__row')
+			.find('dd.govuk-summary-list__value')
+			.invoke('text')
+			.then((t) => t.trim())
+			.should('contain', value); // or .should('equal', expected) if exact
 	}
 
 	verifyWarningText(text) {

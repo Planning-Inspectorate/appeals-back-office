@@ -17,7 +17,8 @@ describe('mapStatusDependentNotifications', () => {
 			bannerKey: 'readyForSetUpSiteVisit',
 			requiredAction: 'arrangeSiteVisit',
 			expectedContainedHtml:
-				'<p class="govuk-notification-banner__heading">Site visit ready to set up</p>'
+				'<p class="govuk-notification-banner__heading">Site visit ready to set up</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'assignCaseOfficer',
@@ -33,7 +34,8 @@ describe('mapStatusDependentNotifications', () => {
 		{
 			bannerKey: 'progressFromFinalComments',
 			requiredAction: 'progressFromFinalComments',
-			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Progress case</a>`
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Progress case</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'progressFromStatements',
@@ -57,13 +59,15 @@ describe('mapStatusDependentNotifications', () => {
 			bannerKey: 'appellantFinalCommentsAwaitingReview',
 			requiredAction: 'reviewAppellantFinalComments',
 			expectedContainedHtml:
-				'<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p>'
+				'<p class="govuk-notification-banner__heading">Appellant final comments awaiting review</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'lpaFinalCommentsAwaitingReview',
 			requiredAction: 'reviewLpaFinalComments',
 			expectedContainedHtml:
-				'<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p>'
+				'<p class="govuk-notification-banner__heading">LPA final comments awaiting review</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'interestedPartyCommentsAwaitingReview',
@@ -94,7 +98,8 @@ describe('mapStatusDependentNotifications', () => {
 		{
 			bannerKey: 'shareFinalComments',
 			requiredAction: 'shareFinalComments',
-			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Share final comments</a>`
+			expectedContainedHtml: `<a href="/appeals-service/appeal-details/${mockAppealData.appealId}/share?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}" class="govuk-heading-s govuk-notification-banner__link">Share final comments</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'shareCommentsAndLpaStatement',
@@ -118,7 +123,8 @@ describe('mapStatusDependentNotifications', () => {
 			bannerKey: 'updateLpaStatement',
 			requiredAction: 'updateLpaStatement',
 			expectedContainedHtml:
-				'<p class="govuk-notification-banner__heading">LPA statement incomplete</p>'
+				'<p class="govuk-notification-banner__heading">LPA statement incomplete</p>',
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		},
 		{
 			bannerKey: 'addResidencesNetChange',

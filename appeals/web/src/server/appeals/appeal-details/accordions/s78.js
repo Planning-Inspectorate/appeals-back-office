@@ -22,7 +22,7 @@ import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
  * @returns {SharedPageComponentProperties & AccordionPageComponent}
  */
 export function generateAccordion(appealDetails, mappedData, session) {
-	const caseOverview = getCaseOverview(mappedData);
+	const caseOverview = getCaseOverview(mappedData, appealDetails);
 
 	const siteDetails = isChildAppeal(appealDetails) ? [] : getSiteDetails(mappedData, appealDetails);
 

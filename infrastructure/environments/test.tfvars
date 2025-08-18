@@ -47,6 +47,7 @@ apps_config = {
     featureFlagPdfDownload            = true
     featureFlagNetResidence           = true
     featureFlagCancelCase             = true
+    featureFlagChangeProcedureType    = true
   }
 
   use_system_test_bc_for_change_lpa = true
