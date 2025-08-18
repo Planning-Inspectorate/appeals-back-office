@@ -884,12 +884,4 @@ export class CaseDetailsPage extends Page {
 	checkHeading = (expectedText) => {
 		this.elements.pageHeading().should('have.text', expectedText);
 	};
-
-	verifyInquiryEstimateSectionIsDisplayed() {
-		this.elements.caseDetailsInquiryEstimateLink().should('contain.text', 'Add hearing estimates');
-	}
-
-	verifyInquirySectionIsDisplayed() {
-		this.elements.caseDetailsHearingSectionButton().should('be.visible');
-	}
 }
