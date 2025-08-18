@@ -9,7 +9,8 @@ import {
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
 	APPEAL_TYPE_SHORTHAND_HAS,
 	APPEAL_TYPE_SHORTHAND_FPA,
-	VALIDATION_OUTCOME_COMPLETE
+	VALIDATION_OUTCOME_COMPLETE,
+	CASE_RELATIONSHIP_LINKED
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import isFPA from '@pins/appeals/utils/is-fpa.js';
@@ -96,6 +97,26 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 /**
  *
  * @param {Appeal} appeal
+ * @param {string} azureAdUserId
+ * @param {string} trigger
+ * @returns {Promise<void>}
+ */
+async function transitionLinkedChildAppealsState(appeal, azureAdUserId, trigger) {
+	if (appeal.childAppeals?.length) {
+		await Promise.all(
+			appeal.childAppeals
+				.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+				.map((childAppeal) =>
+					// @ts-ignore
+					transitionState(childAppeal.childId, azureAdUserId, trigger)
+				)
+		);
+	}
+}
+
+/**
+ *
+ * @param {Appeal} appeal
  * @param {string} newState
  * @returns {boolean}
  */
@@ -128,4 +149,6 @@ const getEventElapsed = (appeal, appealType, procedureType) => {
 	}
 	return false;
 };
+
 export default transitionState;
+export { transitionLinkedChildAppealsState };
