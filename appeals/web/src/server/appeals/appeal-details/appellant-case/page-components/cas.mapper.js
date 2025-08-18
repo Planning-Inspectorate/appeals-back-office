@@ -143,6 +143,7 @@ export function generateCASComponents(appealDetails, appellantCaseData, mappedAp
 				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
 				mappedAppellantCaseData.appealStatement.display.summaryListItem,
 				mappedAppellantCaseData.costsDocument.display.summaryListItem,
+				mappedAppellantCaseData.designAndAccessStatement.display.summaryListItem,
 				mappedAppellantCaseData.supportingDocuments.display.summaryListItem
 			]
 		}
