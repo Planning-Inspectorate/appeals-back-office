@@ -286,3 +286,28 @@ Cypress.Commands.add('navigateToAppealDetailsPage', (reference) => {
 		cy.visit(`appeals-service/appeal-details/${appealId}`);
 	});
 });
+
+Cypress.Commands.add('addInquiryViaApi', (reference, date) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		return await appealsApiClient.addInquiry(appealId, date);
+	});
+});
+
+Cypress.Commands.add('addEstimateViaApi', (procedureType, reference, estimate = null) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		console.log(estimate);
+		return await appealsApiClient.addEstimate(procedureType, appealId, estimate);
+	});
+});
+
+Cypress.Commands.add('deleteEstimateViaApi', (procedureType, reference) => {
+	return cy.wrap(null).then(async () => {
+		const details = await appealsApiClient.loadCaseDetails(reference);
+		const appealId = await details.appealId;
+		return await appealsApiClient.deleteEstimate(procedureType, appealId);
+	});
+});

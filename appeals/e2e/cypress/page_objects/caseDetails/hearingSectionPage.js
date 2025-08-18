@@ -12,20 +12,7 @@ const dateTimeSection = new DateTimeSection();
 export class HearingSectionPage extends CaseDetailsPage {
 	hearingSectionElements = {
 		...this.elements, // Inherit parent elements
-		estimatedPreparationTime: () => cy.get('#preparation-time'),
-		estimatedSittingTime: () => cy.get('#sitting-time'),
-		estimatedReportingTime: () => cy.get('#reporting-time'),
-
-		address: {
-			line1: () => cy.get('#address-line-1'),
-			line2: () => cy.get('#address-line-2'),
-			town: () => cy.get('#town'),
-			county: () => cy.get('#county'),
-			postcode: () => cy.get('#post-code')
-		},
-
 		changeHearing: () => cy.get('.govuk-summary-list__actions > .govuk-link').last(),
-		hearingSectionHeader: () => cy.get('h1'),
 		keepHearing: () => cy.get('#keepHearing'),
 		cancelHearing: () => cy.get('#cancelHearing')
 	};
@@ -48,13 +35,6 @@ export class HearingSectionPage extends CaseDetailsPage {
 		this.clickButtonByText('Continue');
 	}
 
-	addHearingEstimates(preparationTime, sittingTime, reportingTime) {
-		this.hearingSectionElements.estimatedPreparationTime().clear().type(preparationTime);
-		this.hearingSectionElements.estimatedSittingTime().clear().type(sittingTime);
-		this.hearingSectionElements.estimatedReportingTime().clear().type(reportingTime);
-		this.clickButtonByText('Continue');
-	}
-
 	verifyHearingEstimate(estimateField, value) {
 		const daysCount = parseFloat(value);
 		const daySuffix = daysCount === 1 ? 'day' : 'days';
@@ -66,15 +46,6 @@ export class HearingSectionPage extends CaseDetailsPage {
 			.siblings('dd')
 			.should('be.visible')
 			.and('contain.text', expectedText);
-	}
-
-	addHearingLocationAddress(address) {
-		this.hearingSectionElements.address.line1().clear().type(address.line1);
-		this.hearingSectionElements.address.line2().clear().type(address.line2);
-		this.hearingSectionElements.address.town().clear().type(address.town);
-		this.hearingSectionElements.address.county().clear().type(address.county);
-		this.hearingSectionElements.address.postcode().clear().type(address.postcode);
-		this.clickButtonByText('Continue');
 	}
 
 	verifyHearingValues(hearingField, expectedText, isAddressKnown = false, address = []) {
@@ -96,7 +67,7 @@ export class HearingSectionPage extends CaseDetailsPage {
 	}
 
 	verifyHearingHeader(sectionHeader) {
-		this.hearingSectionElements.hearingSectionHeader().should('contain.text', sectionHeader);
+		this.elements.pageHeading().should('contain.text', sectionHeader);
 	}
 
 	verifyYouCannotCheckTheseAnswersPage() {
