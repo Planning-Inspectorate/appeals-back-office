@@ -330,28 +330,37 @@ describe('change-appeal-type', () => {
 	});
 
 	it('should re-render the final date page with an error message if the provided date is not a business day', async () => {
-		const response = await request
-			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
-			.send({
-				'change-appeal-final-date-day': 4,
-				'change-appeal-final-date-month': 1,
-				'change-appeal-final-date-year': 2030
-			});
+		const monthVariants = [
+			{ description: 'numeric month', value: 1 },
+			{ description: 'full month name', value: 'January' },
+			{ description: 'abbreviated month name', value: 'Jan' }
+		];
 
-		expect(response.statusCode).toBe(200);
+		for (const variant of monthVariants) {
+			const response = await request
+				.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+				.send({
+					'change-appeal-final-date-day': 4,
+					'change-appeal-final-date-month': variant.value,
+					'change-appeal-final-date-year': 2030
+				});
 
-		const element = parseHtml(response.text);
-		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
+			expect(response.statusCode).toBe(200);
 
-		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-			rootElement: '.govuk-error-summary',
-			skipPrettyPrint: true
-		}).innerHTML;
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot(variant.description);
+			expect(element.innerHTML).toContain('What is the final date the appellant must resubmit by?');
 
-		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('The date must be a business day</a>');
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain('The date must be a business day</a>');
+		}
 	});
+
 	describe('GET /change-appeal-type/add-horizon-reference', () => {
 		it('should render the add horizon reference page', async () => {
 			const response = await request.get(

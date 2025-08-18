@@ -403,7 +403,7 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#levy-adopted-date-month">Date month must be a number</a>
+                            <li><a href="#levy-adopted-date-month">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -425,9 +425,8 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
                                     <h1 class="govuk-fieldset__heading"> When was the community infrastructure levy formally adopted?</h1>
                                 </legend>
-                                <p id="infrastructure-levy-adopted-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be a
-                                    number</p>
-                                <div class="govuk-date-input" id="infrastructure-levy-adopted-date">
+                                <p id="infrastructure-levy-adopted-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date must be a real date</p>
+                                <div                                 class="govuk-date-input" id="infrastructure-levy-adopted-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="levy-adopted-date-day">Day</label>
@@ -450,15 +449,15 @@ exports[`infrastructure-levy-adopted-date POST /change should re-render the levy
                                             id="levy-adopted-date-year" name="levy-adopted-date-year" type="text" inputmode="numeric">
                                         </div>
                                     </div>
-                                </div>
-                            </fieldset>
                         </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
+                        </fieldset>
                 </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 </main>"
 `;

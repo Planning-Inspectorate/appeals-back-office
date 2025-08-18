@@ -6957,7 +6957,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#due-date-month">Appeal due date month must be a number</a>
+                            <li><a href="#due-date-month">Appeal due date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6976,8 +6976,8 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
-            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Appeal due date month
-                must be a number</p>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Appeal due date must
+                be a real date</p>
             <div class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
@@ -6990,7 +6990,7 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                        id="due-date-month" name="due-date-month" type="text" value="dec" inputmode="numeric">
+                        id="due-date-month" name="due-date-month" type="text" value="decend" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
@@ -7192,7 +7192,129 @@ exports[`appellant-case POST /appellant-case/incomplete/date should re-render th
 </main>"
 `;
 
-exports[`appellant-case POST /appellant-case/incomplete/date should re-render the update date page with the expected error message if provided date is not in the future 1`] = `
+exports[`appellant-case POST /appellant-case/incomplete/date should re-render the update date page with the expected error message if provided date is not in the future: abbreviated month name 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#due-date-day">The appeal due date must be in the future</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The appeal due date must
+                be in the future</p>
+            <div class="govuk-date-input" id="due-date">
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-month" name="due-date-month" type="text" value="Jan" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-year" name="due-date-year" type="text" value="2000" inputmode="numeric">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/incomplete/date should re-render the update date page with the expected error message if provided date is not in the future: full month name 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#due-date-day">The appeal due date must be in the future</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Update appeal due date</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full"></div>
+    </div>
+    <form method="post" novalidate="novalidate">
+        <div class="govuk-form-group govuk-form-group--error">
+            <div id="due-date-hint" class="govuk-hint">For example, 27 3 2007</div>
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The appeal due date must
+                be in the future</p>
+            <div class="govuk-date-input" id="due-date">
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-day" name="due-date-day" type="text" value="1" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-month" name="due-date-month" type="text" value="January" inputmode="numeric">
+                    </div>
+                </div>
+                <div class="govuk-date-input__item">
+                    <div class="govuk-form-group">
+                        <label class="govuk-label govuk-date-input__label" for="due-date-year">Year</label>
+                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                        id="due-date-year" name="due-date-year" type="text" value="2000" inputmode="numeric">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="govuk-button-group">
+            <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>
+        </div>
+    </form>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/incomplete/date should re-render the update date page with the expected error message if provided date is not in the future: numeric month 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -8155,7 +8277,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
 </main>"
 `;
 
-exports[`appellant-case POST /appellant-case/valid/date should re-render the update date page with the expected error message if an invalid month was provided should re-render the update date page with the expected error message if an invalid month "dec" was provided 1`] = `
+exports[`appellant-case POST /appellant-case/valid/date should re-render the update date page with the expected error message if an invalid month was provided should re-render the update date page with the expected error message if an invalid month "descend" was provided 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -8164,7 +8286,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#valid-date-month">Valid date month must be a number</a>
+                            <li><a href="#valid-date-month">Valid date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -8190,8 +8312,8 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Valid date month must
-                                be a number</p>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Valid date must be a
+                                real date</p>
                             <div class="govuk-date-input" id="valid-date">
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">
@@ -8204,7 +8326,8 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the upd
                                     <div class="govuk-form-group">
                                         <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
                                         <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                                        id="valid-date-month" name="valid-date-month" type="text" value="dec" inputmode="numeric">
+                                        id="valid-date-month" name="valid-date-month" type="text" value="descend"
+                                        inputmode="numeric">
                                     </div>
                                 </div>
                                 <div class="govuk-date-input__item">
@@ -8652,7 +8775,151 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
 </main>"
 `;
 
-exports[`appellant-case POST /appellant-case/valid/date should re-render the valid date page with the expected error message if date was in past but prior to the date the case was received 1`] = `
+exports[`appellant-case POST /appellant-case/valid/date should re-render the valid date page with the expected error message if date was in past but prior to the date the case was received: abbreviated month name 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#valid-date-day">The valid date must be on or after the date the case was received.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter valid date for case</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The valid date must be
+                                on or after the date the case was received.</p>
+                            <div class="govuk-date-input"
+                            id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="2023" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
+                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/valid/date should re-render the valid date page with the expected error message if date was in past but prior to the date the case was received: full month name 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#valid-date-day">The valid date must be on or after the date the case was received.</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter valid date for case</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The valid date must be
+                                on or after the date the case was received.</p>
+                            <div class="govuk-date-input"
+                            id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="2023" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
+                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/valid/date should re-render the valid date page with the expected error message if date was in past but prior to the date the case was received: numeric month 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -8794,7 +9061,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
 </main>"
 `;
 
-exports[`appellant-case POST /appellant-case/valid/date should re-render the valid date page with the expected error message if provided date is not in the past 1`] = `
+exports[`appellant-case POST /appellant-case/valid/date should re-render the valid date page with the expected error message if provided date is not in the past: month as abbreviation 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -8803,7 +9070,7 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#valid-date-day">Valid date must be today or in the past</a>
+                            <li><a href="#valid-date-day">The valid date must be today or in the past</a>
                             </li>
                         </ul>
                     </div>
@@ -8829,8 +9096,151 @@ exports[`appellant-case POST /appellant-case/valid/date should re-render the val
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Valid date must be today
-                                or in the past</p>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The valid date must be
+                                today or in the past</p>
+                            <div class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="Jan" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
+                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/valid/date should re-render the valid date page with the expected error message if provided date is not in the past: month as full name 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#valid-date-day">The valid date must be today or in the past</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter valid date for case</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The valid date must be
+                                today or in the past</p>
+                            <div class="govuk-date-input" id="valid-date">
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-day">Day</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-day" name="valid-date-day" type="text" value="1" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-month">Month</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-month" name="valid-date-month" type="text" value="January"
+                                        inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label govuk-date-input__label" for="valid-date-year">Year</label>
+                                        <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                        id="valid-date-year" name="valid-date-year" type="text" value="3000" inputmode="numeric">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="govuk-inset-text">Confirming will inform the relevant parties of the valid date</div>
+                        <button                         type="submit" data-prevent-double-click="true" class="govuk-button" data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`appellant-case POST /appellant-case/valid/date should re-render the valid date page with the expected error message if provided date is not in the past: month as number 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#valid-date-day">The valid date must be today or in the past</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter valid date for case</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <p class="govuk-body">This is the date all case documentation was received and the appeal was
+                        valid.</p>
+                </div>
+            </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <div id="valid-date-hint" class="govuk-hint">For example, 27 3 2023</div>
+                            <p id="valid-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The valid date must be
+                                today or in the past</p>
                             <div class="govuk-date-input" id="valid-date">
                                 <div class="govuk-date-input__item">
                                     <div class="govuk-form-group">

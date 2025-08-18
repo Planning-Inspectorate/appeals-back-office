@@ -298,19 +298,23 @@ describe('site-visit', () => {
 		});
 
 		it('should re-direct to the appeal-details page when site visit date is in the past and other data is valid', async () => {
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
-				'visit-type': 'unaccompanied',
-				'visit-date-day': '29',
-				'visit-date-month': '2',
-				'visit-date-year': '2000',
-				'visit-start-time-hour': '10',
-				'visit-start-time-minute': '00',
-				'visit-end-time-hour': '11',
-				'visit-end-time-minute': '30'
-			});
+			const monthVariants = ['2', 'February', 'Feb'];
+			for (const month of monthVariants) {
+				nock('http://test/').post('/appeals/1/site-visits').reply(200, siteVisitData);
+				const response = await request.post(`${baseUrl}/1${siteVisitPath}/schedule-visit`).send({
+					'visit-type': 'unaccompanied',
+					'visit-date-day': '29',
+					'visit-date-month': month,
+					'visit-date-year': '2000',
+					'visit-start-time-hour': '10',
+					'visit-start-time-minute': '00',
+					'visit-end-time-hour': '11',
+					'visit-end-time-minute': '30'
+				});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+			}
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit start time hour is invalid', async () => {

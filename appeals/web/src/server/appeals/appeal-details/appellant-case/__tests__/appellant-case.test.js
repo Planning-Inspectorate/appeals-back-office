@@ -2150,27 +2150,36 @@ describe('appellant-case', () => {
 
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
-			const response = await request
-				.post(
-					`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
-				)
-				.send({
-					'due-date-day': '1',
-					'due-date-month': '1',
-					'due-date-year': '2000'
-				});
+			const monthVariants = [
+				{ description: 'numeric month', value: '1' },
+				{ description: 'full month name', value: 'January' },
+				{ description: 'abbreviated month name', value: 'Jan' }
+			];
 
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
+			for (const variant of monthVariants) {
+				const response = await request
+					.post(
+						`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
+					)
+					.send({
+						'due-date-day': '1',
+						'due-date-month': variant.value,
+						'due-date-year': '2000'
+					});
 
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'The appeal due date must be in the future</a>'
-			);
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot(variant.description);
+
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain(
+					'The appeal due date must be in the future</a>'
+				);
+			}
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid day was provided', async () => {
@@ -2325,7 +2334,7 @@ describe('appellant-case', () => {
 				)
 				.send({
 					'due-date-day': '1',
-					'due-date-month': 'dec',
+					'due-date-month': 'decend',
 					'due-date-year': '3000'
 				});
 
@@ -2340,7 +2349,7 @@ describe('appellant-case', () => {
 				skipPrettyPrint: true
 			}).innerHTML;
 			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date month must be a number</a>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Appeal due date must be a real date</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid year was provided', async () => {
@@ -2462,22 +2471,25 @@ describe('appellant-case', () => {
 
 			expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
-			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
+			const monthVariants = ['12', 'December', 'Dec'];
+			for (const month of monthVariants) {
+				nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 
-			const response = await request
-				.post(
-					`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
-				)
-				.send({
-					'due-date-day': '2',
-					'due-date-month': '12',
-					'due-date-year': '3000'
-				});
+				const response = await request
+					.post(
+						`${baseUrl}/1${appellantCasePagePath}${incompleteOutcomePagePath}${updateDueDatePagePath}`
+					)
+					.send({
+						'due-date-day': '2',
+						'due-date-month': month,
+						'due-date-year': '3000'
+					});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/check-your-answers'
-			);
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/appellant-case/check-your-answers'
+				);
+			}
 		});
 	});
 
@@ -2727,28 +2739,54 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the valid date page with the expected error message if provided date is not in the past', async () => {
-			const response = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
-				.send({
-					'valid-date-day': '1',
-					'valid-date-month': '1',
-					'valid-date-year': '3000'
-				});
+			const testCases = [
+				{
+					description: 'month as number',
+					payload: {
+						'valid-date-day': '1',
+						'valid-date-month': '1',
+						'valid-date-year': '3000'
+					}
+				},
+				{
+					description: 'month as full name',
+					payload: {
+						'valid-date-day': '1',
+						'valid-date-month': 'January',
+						'valid-date-year': '3000'
+					}
+				},
+				{
+					description: 'month as abbreviation',
+					payload: {
+						'valid-date-day': '1',
+						'valid-date-month': 'Jan',
+						'valid-date-year': '3000'
+					}
+				}
+			];
 
-			expect(response.statusCode).toBe(200);
+			for (const testCase of testCases) {
+				const response = await request
+					.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+					.send(testCase.payload);
 
-			const element = parseHtml(response.text);
+				expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter valid date for case</h1>');
+				const element = parseHtml(response.text);
+				expect(element.innerHTML).toMatchSnapshot(testCase.description);
+				expect(element.innerHTML).toContain('Enter valid date for case</h1>');
 
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
 
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain('Valid date must be today or in the past</a>');
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain(
+					'The valid date must be today or in the past</a>'
+				);
+			}
 		});
 
 		it('should re-render the valid date page with the expected error message if an invalid day was provided', async () => {
@@ -2824,10 +2862,10 @@ describe('appellant-case', () => {
 				},
 				{
 					day: '1',
-					month: 'dec',
+					month: 'descend',
 					year: '3000',
-					description: 'month "dec"',
-					expectedErrorMessageHtml: 'Valid date month must be a number</a>'
+					description: 'month "descend"',
+					expectedErrorMessageHtml: 'Valid date must be a real date</a>'
 				}
 			];
 			testCases.forEach(({ day, month, year, description, expectedErrorMessageHtml }) => {
@@ -2931,30 +2969,38 @@ describe('appellant-case', () => {
 		});
 
 		it('should re-render the valid date page with the expected error message if date was in past but prior to the date the case was received', async () => {
-			const response = await request
-				.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
-				.send({
-					'valid-date-day': '1',
-					'valid-date-month': '1',
-					'valid-date-year': '2023'
-				});
+			const cases = [
+				{ description: 'numeric month', value: '1' },
+				{ description: 'full month name', value: 'January' },
+				{ description: 'abbreviated month name', value: 'Jan' }
+			];
 
-			expect(response.statusCode).toBe(200);
+			for (const caseItem of cases) {
+				const response = await request
+					.post(`${baseUrl}/1${appellantCasePagePath}${validOutcomePagePath}${validDatePagePath}`)
+					.send({
+						'valid-date-day': '1',
+						'valid-date-month': caseItem.value,
+						'valid-date-year': '2023'
+					});
 
-			const element = parseHtml(response.text);
+				expect(response.statusCode).toBe(200);
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Enter valid date for case</h1>');
+				const element = parseHtml(response.text);
 
-			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
+				expect(element.innerHTML).toMatchSnapshot(caseItem.description);
+				expect(element.innerHTML).toContain('Enter valid date for case</h1>');
 
-			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHtml).toContain(
-				'The valid date must be on or after the date the case was received.</a>'
-			);
+				const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
+
+				expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHtml).toContain(
+					'The valid date must be on or after the date the case was received.</a>'
+				);
+			}
 		});
 
 		it('should redirect to the case details page if a valid date was provided', async () => {

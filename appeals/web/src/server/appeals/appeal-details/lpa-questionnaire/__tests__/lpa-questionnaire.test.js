@@ -1896,7 +1896,7 @@ describe('LPA Questionnaire review', () => {
 
 			response = await request.post(`${baseUrl}/incomplete/date`).send({
 				'due-date-day': '1',
-				'due-date-month': 'dec',
+				'due-date-month': 'decend',
 				'due-date-year': '3000'
 			});
 
@@ -1912,7 +1912,7 @@ describe('LPA Questionnaire review', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Date month must be a number</a>');
+			expect(errorSummaryHtml).toContain('Date must be a real date</a>');
 		});
 
 		it('should re-render the update date page with the expected error message if an invalid year was provided', async () => {
@@ -2002,29 +2002,32 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should redirect to the check and confirm page if a valid date was provided', async () => {
-			nock('http://test/').post('/appeals/validate-business-date').reply(200, { success: true });
+			const monthVariants = ['12', 'December', 'Dec'];
+			for (const monthVariant of monthVariants) {
+				nock('http://test/').post('/appeals/validate-business-date').reply(200, { success: true });
 
-			// prerequisites to set session data
-			lpaQPostResponse = await request.post(baseUrl).send({
-				'review-outcome': 'incomplete'
-			});
-			incompleteReasonPostResponse = await request.post(`${baseUrl}/incomplete`).send({
-				incompleteReason: incompleteReasonIds
-			});
+				// prerequisites to set session data
+				lpaQPostResponse = await request.post(baseUrl).send({
+					'review-outcome': 'incomplete'
+				});
+				incompleteReasonPostResponse = await request.post(`${baseUrl}/incomplete`).send({
+					incompleteReason: incompleteReasonIds
+				});
 
-			expect(lpaQPostResponse.statusCode).toBe(302);
-			expect(incompleteReasonPostResponse.statusCode).toBe(302);
+				expect(lpaQPostResponse.statusCode).toBe(302);
+				expect(incompleteReasonPostResponse.statusCode).toBe(302);
 
-			const response = await request.post(`${baseUrl}/incomplete/date`).send({
-				'due-date-day': '2',
-				'due-date-month': '12',
-				'due-date-year': '3000'
-			});
+				const response = await request.post(`${baseUrl}/incomplete/date`).send({
+					'due-date-day': '2',
+					'due-date-month': monthVariant,
+					'due-date-year': '3000'
+				});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/check-your-answers'
-			);
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/check-your-answers'
+				);
+			}
 		});
 	});
 

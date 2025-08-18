@@ -707,6 +707,36 @@ describe('add-ip-comment', () => {
 			);
 		});
 
+		it('should redirect on valid month name date input', async () => {
+			const response = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
+				.send({
+					'date-day': '30',
+					'date-month': 'October',
+					'date-year': '2024'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
+			);
+		});
+
+		it('should redirect on valid month abbreviation date input', async () => {
+			const response = await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
+				.send({
+					'date-day': '30',
+					'date-month': 'OCT',
+					'date-year': '2024'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
+			);
+		});
+
 		it('should redirect on valid yesterday date input', async () => {
 			const response = await request
 				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
@@ -744,7 +774,7 @@ describe('add-ip-comment', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Submitted date must be today or in the past');
+			expect(errorSummaryHtml).toContain('The submitted date must be today or in the past');
 		});
 
 		it('should return 400 on empty date fields with appropriate error messages', async () => {
