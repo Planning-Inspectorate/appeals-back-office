@@ -19,7 +19,7 @@ export const APPEAL_DEVELOPMENT_TYPES = [
 
 /** @type {Array<{value: string, label: string}>} */
 export const PLANNING_OBLIGATION_STATUSES = [
-	{ value: 'not_started', label: 'Not yet started' },
+	{ value: 'not_started', label: 'Not started yet' },
 	{ value: 'finalised', label: 'Finalised' },
 	{ value: 'not-applicable', label: 'Not applicable' }
 ];
