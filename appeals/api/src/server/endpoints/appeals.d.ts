@@ -763,7 +763,7 @@ interface UpdateAppealRequest {
 
 interface SetAppealDecisionRequest {
 	documentDate: Date;
-	documentGuid: string;
+	documentGuid?: string;
 	version: number;
 	outcome: string;
 }

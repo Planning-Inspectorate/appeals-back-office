@@ -1,4 +1,4 @@
-import { publishCostsDecision, publishDecision } from './decision.service.js';
+import { publishChildDecision, publishCostsDecision, publishDecision } from './decision.service.js';
 import {
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_INSPECTOR,
@@ -11,7 +11,7 @@ import { isCurrentStatus } from '#utils/current-status.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
-/** @typedef {{decisionType: string, outcome: string, documentGuid: string, documentDate: Date}} Decision */
+/** @typedef {{decisionType: string, outcome: string, documentGuid: string, documentDate: Date, appealId: number, isChildAppeal: boolean}} Decision */
 
 /**
  * @param {Request} req
@@ -41,9 +41,24 @@ export const postInspectorDecision = async (req, res) => {
 	const results = await Promise.all(
 		decisions.map(
 			/** @param {Decision} decision **/ async (decision) => {
-				const { decisionType, documentDate, documentGuid, outcome } = decision;
+				const {
+					decisionType,
+					documentDate,
+					documentGuid,
+					outcome,
+					appealId: decisionAppealId,
+					isChildAppeal
+				} = decision;
 				switch (decisionType) {
 					case DECISION_TYPE_INSPECTOR: {
+						if (isChildAppeal) {
+							return publishChildDecision(
+								Number(decisionAppealId),
+								outcome,
+								documentDate,
+								azureAdUserId
+							);
+						}
 						return publishDecision(
 							appeal,
 							outcome,

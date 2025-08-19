@@ -225,8 +225,8 @@ const updateAppealById = (
 const setAppealDecision = (id, { documentDate, documentGuid, version = 1, outcome }) => {
 	const decisionDate = new Date(documentDate).toISOString();
 	// @ts-ignore
-	return databaseConnector.$transaction([
-		databaseConnector.inspectorDecision.create({
+	return databaseConnector.$transaction(async (tx) => {
+		const result = await tx.inspectorDecision.create({
 			data: {
 				appeal: {
 					connect: {
@@ -237,8 +237,13 @@ const setAppealDecision = (id, { documentDate, documentGuid, version = 1, outcom
 				decisionLetterGuid: documentGuid,
 				caseDecisionOutcomeDate: new Date(documentDate)
 			}
-		}),
-		databaseConnector.documentVersion.update({
+		});
+
+		if (!documentGuid) {
+			return result;
+		}
+
+		return tx.documentVersion.update({
 			where: {
 				documentGuid_version: {
 					documentGuid,
@@ -250,8 +255,8 @@ const setAppealDecision = (id, { documentDate, documentGuid, version = 1, outcom
 				published: true,
 				draft: false
 			}
-		})
-	]);
+		});
+	});
 };
 
 /**

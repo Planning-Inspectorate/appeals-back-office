@@ -9,7 +9,7 @@ import { getCaseTeam } from './common/case-team.js';
 import { getSiteDetails } from './common/site-details.js';
 import { removeAccordionComponentsActions } from './utils/index.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 
 /**
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
