@@ -20,14 +20,11 @@ export const getCheckAndConfirm = async (request, response) => {
 		params: { appealId }
 	} = request;
 
-	if (
-		!objectContainsAllKeys(session, 'changeProcedureType') ||
-		!objectContainsAllKeys(session.changeProcedureType, 'appealTimetable')
-	) {
+	if (!objectContainsAllKeys(session, 'appealTimetable')) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const appealTimetables = session.changeProcedureType.appealTimetable;
+	const appealTimetables = session.appealTimetable;
 
 	const { appellantCase } = request.locals;
 
@@ -45,7 +42,7 @@ export const getCheckAndConfirm = async (request, response) => {
 					textSummaryListItem({
 						id: 'appeal-procedure',
 						text: 'Appeal procedure',
-						value: appealProcedureToLabelText(session.changeProcedureType.appealProcedure),
+						value: appealProcedureToLabelText(session.appealProcedure),
 						link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/change-selected-procedure-type`,
 						editable: true
 					})?.display.summaryListItem

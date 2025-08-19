@@ -19,9 +19,8 @@ const renderChangeAppealTimetable = async (request, response) => {
 		errors,
 		locals: { appellantCase }
 	} = request;
-	const sessionData = session.changeProcedureType;
 	const mappedPageContent = mapChangeTimetablePage(
-		sessionData.appealTimetable,
+		session.appealTimetable,
 		currentAppeal,
 		appellantCase,
 		request.body,
