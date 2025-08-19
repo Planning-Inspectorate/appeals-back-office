@@ -29,6 +29,7 @@ import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
 import { allValidationOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 import { AUDIT_TRAIL_SUBMISSION_INVALID } from '@pins/appeals/constants/support.js';
+import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('express').Request} Request */
@@ -92,12 +93,6 @@ export const updateAppellantCaseValidationOutcome = async (
 				);
 			}
 		}
-	} else {
-		createAuditTrail({
-			appealId,
-			azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['appellant case'])
-		});
 	}
 
 	if (isOutcomeValid(validationOutcome.name)) {
@@ -146,6 +141,16 @@ export const updateAppellantCaseValidationOutcome = async (
 			const incompleteReasonsList = getFormattedReasons(
 				updatedAppellantCase?.appellantCaseIncompleteReasonsSelected ?? []
 			);
+
+			const details = `${
+				stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['Appeal']) + '\n'
+			}${formatReasonsToHtmlList(incompleteReasonsList)}`;
+
+			createAuditTrail({
+				appealId,
+				azureAdUserId,
+				details
+			});
 
 			if (updatedDueDate) {
 				const personalisation = {
@@ -199,10 +204,10 @@ export const updateAppellantCaseValidationOutcome = async (
 				});
 			}
 
-			let details = AUDIT_TRAIL_SUBMISSION_INVALID;
-			invalidReasonsList.forEach((invalidReason) => {
-				details += `\n• ${invalidReason}`;
-			});
+			const details = `${AUDIT_TRAIL_SUBMISSION_INVALID}\n${formatReasonsToHtmlList(
+				invalidReasonsList
+			)}`;
+
 			createAuditTrail({
 				appealId,
 				azureAdUserId,
