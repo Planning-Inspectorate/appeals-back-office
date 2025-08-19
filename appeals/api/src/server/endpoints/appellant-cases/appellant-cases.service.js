@@ -294,7 +294,7 @@ export function renderAuditTrailDetail(data) {
 			PLANNING_OBLIGATION_STATUSES.find(
 				(/** @type {{value: string, label: string}} */ item) =>
 					item.value === data.statusPlanningObligation
-			)?.label || 'Not answered'
+			)?.label || 'Not applicable'
 	};
 
 	if (!auditTrailParameters[constantKey]) {
