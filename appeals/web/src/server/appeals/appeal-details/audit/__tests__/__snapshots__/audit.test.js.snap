@@ -31,13 +31,13 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                             <br><span>10:55</span>
                         </td>
                         <td class="govuk-table__cell">
-                            <div class="pins-show-more" data-label="" data-mode="text" data-toggle-text-collapsed="Show more"
+                            <div class="pins-show-more" data-label="" data-mode="html" data-toggle-text-collapsed="Show more"
                             data-toggle-text-expanded="Show less">Thise case has over 300 characters in the details field. This is a test
                                 to ensure that the system can handle long text entries without issues.
-                                Case progressed to &lt;strong class=&quot;govuk-tag govuk-tag--grey&quot;&gt;Awaiting
-                                LPA questionnaire&lt;/strong&gt;. There should be over 300 character in
-                                this field to test the system&#39;s ability to handle long text entries
-                                without truncation or errors. - it should show the show more compoonent</div>
+                                Case progressed to <strong class="govuk-tag govuk-tag--grey">Awaiting LPA questionnaire</strong>.
+                                There should be over 300 character in this field to test the system's ability
+                                to handle long text entries without truncation or errors. - it should show
+                                the show more compoonent</div>
                         </td>
                         <td class="govuk-table__cell">Smith, John</td>
                     </tr>

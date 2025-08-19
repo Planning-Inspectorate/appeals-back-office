@@ -53,7 +53,7 @@ export const renderAudit = async (request, response) => {
 					component: {
 						type: 'show-more',
 						parameters: {
-							text: detailsHtml,
+							html: detailsHtml,
 							toggleTextCollapsed: 'Show more',
 							toggleTextExpanded: 'Show less'
 						}
