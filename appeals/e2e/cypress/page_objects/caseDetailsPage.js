@@ -298,7 +298,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickIssueAppellantCostsDecision() {
-		this.elements.issueAppellantCostsDecision().click();
+		this.elements.issueAppellantCostsDecision().click({ force: true });
 	}
 
 	clickIssueLpaCostsDecision() {
