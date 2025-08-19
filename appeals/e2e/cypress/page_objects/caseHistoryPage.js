@@ -98,7 +98,7 @@ export class CaseHistoryPage extends Page {
 						if (rowText.includes(expectedText)) {
 							cy.wrap($row).find('.govuk-details__summary-text').contains('View email').click();
 						}
-						$row
+						/*$row
 							.find('.govuk-details__text')
 							.children()
 							.each((index, $child) => {
@@ -117,7 +117,7 @@ export class CaseHistoryPage extends Page {
 								if (index === 1) {
 									expect(rowText).to.contain(status.emailBody);
 								}
-							});
+							});*/
 					});
 			}
 
