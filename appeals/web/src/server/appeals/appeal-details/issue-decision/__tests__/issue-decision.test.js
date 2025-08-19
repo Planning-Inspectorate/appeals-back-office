@@ -6,13 +6,12 @@ import { createTestEnvironment } from '#testing/index.js';
 import {
 	appealData,
 	documentFileInfo,
-	inspectorDecisionData,
+	documentFileVersionInfo,
 	documentRedactionStatuses,
 	fileUploadInfo,
-	documentFileVersionInfo
+	inspectorDecisionData
 } from '#testing/appeals/appeals.js';
 import { cloneDeep } from 'lodash-es';
-import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -34,6 +33,14 @@ describe('issue-decision', () => {
 	 * @type {import("superagent").Response}
 	 */
 	let issueDecisionResponse;
+	/**
+	 * @type {import("superagent").Response}
+	 */
+	let issueDecisionLeadResponse;
+	/**
+	 * @type {import("superagent").Response}
+	 */
+	let issueDecisionChildResponse;
 	/**
 	 * @type {import("superagent").Response}
 	 */
@@ -59,32 +66,102 @@ describe('issue-decision', () => {
 	afterEach(teardown);
 
 	describe('GET /decision', () => {
-		it(`should render the 'what is the decision' page with the expected content`, async () => {
-			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${decisionPath}`);
-			const element = parseHtml(response.text);
+		describe('Single appeal', () => {
+			it(`should render the 'what is the decision' page with the expected content`, async () => {
+				const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${decisionPath}`);
+				const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toMatchSnapshot();
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 - issue decision</span>');
+				expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 - issue decision</span>');
 
-			expect(unprettifiedElement.innerHTML).toContain('What is the decision?</h1>');
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-radios__input" id="decision" name="decision" type="radio" value="Allowed">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="Dismissed">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="Split">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="Invalid" data-aria-controls="conditional-decision-4">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'<textarea class="govuk-textarea" id="invalid-reason" name="invalidReason" rows="5" aria-describedby="invalid-reason-hint"></textarea>'
-			);
+				expect(unprettifiedElement.innerHTML).toContain('What is the decision?</h1>');
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision" name="decision" type="radio" value="allowed">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="dismissed">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split decision">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<input class="govuk-radios__input" id="decision-4" name="decision" type="radio" value="invalid" data-aria-controls="conditional-decision-4">'
+				);
+				expect(unprettifiedElement.innerHTML).toContain(
+					'<textarea class="govuk-textarea" id="invalid-reason" name="invalidReason" rows="5" aria-describedby="invalid-reason-hint"></textarea>'
+				);
+			});
+		});
+
+		describe('Linked appeals', () => {
+			let linkedAppealData;
+
+			beforeEach(() => {
+				linkedAppealData = cloneDeep(appealData);
+				linkedAppealData.appealId = 3;
+				linkedAppealData.isParentAppeal = true;
+				linkedAppealData.linkedAppeals = [{ appealId: 4, appealReference: '351066' }];
+				nock('http://test/').get('/appeals/3').reply(200, linkedAppealData).persist();
+			});
+
+			describe('Linked lead appeal', () => {
+				it(`should render the 'decision' page for the lead with the expected content`, async () => {
+					const response = await request.get(`${baseUrl}/3${issueDecisionPath}${decisionPath}`);
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).toMatchSnapshot();
+
+					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						'Appeal 351062 (lead) - issue decision</span>'
+					);
+
+					expect(unprettifiedElement.innerHTML).toContain('Decision for lead appeal 351062</h1>');
+					expect(unprettifiedElement.innerHTML).toContain(
+						'<input class="govuk-radios__input" id="decision" name="decision" type="radio" value="allowed">'
+					);
+					expect(unprettifiedElement.innerHTML).toContain(
+						'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="dismissed">'
+					);
+					expect(unprettifiedElement.innerHTML).toContain(
+						'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split decision">'
+					);
+				});
+			});
+
+			describe('Linked child appeal', () => {
+				it(`should render the 'decision' page for the child with the expected content`, async () => {
+					issueDecisionLeadResponse = await request
+						.post(`${baseUrl}/3/issue-decision/decision`)
+						.send({ decision: 'allowed' });
+
+					const response = await request.get(`${baseUrl}/3${issueDecisionPath}/4${decisionPath}`);
+					const element = parseHtml(response.text);
+
+					expect(element.innerHTML).toMatchSnapshot();
+
+					const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+					expect(unprettifiedElement.innerHTML).toContain(
+						'Appeal 351062 (lead) - issue decision</span>'
+					);
+
+					expect(unprettifiedElement.innerHTML).toContain('Decision for child appeal 351066</h1>');
+					expect(unprettifiedElement.innerHTML).toContain(
+						'<input class="govuk-radios__input" id="decision" name="decision" type="radio" value="allowed">'
+					);
+					expect(unprettifiedElement.innerHTML).toContain(
+						'<input class="govuk-radios__input" id="decision-2" name="decision" type="radio" value="dismissed">'
+					);
+					expect(unprettifiedElement.innerHTML).toContain(
+						'<input class="govuk-radios__input" id="decision-3" name="decision" type="radio" value="split decision">'
+					);
+				});
+			});
 		});
 	});
 
@@ -557,97 +634,204 @@ describe('issue-decision', () => {
 	describe('GET /issue-decision/check-your-decision', () => {
 		let issueDecisionAppealData;
 
-		beforeEach(async () => {
+		beforeEach(() => {
 			issueDecisionAppealData = cloneDeep(appealData);
 			issueDecisionAppealData.costs.appellantApplicationFolder.documents = [{}];
 			issueDecisionAppealData.costs.lpaApplicationFolder.documents = [{}];
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
-			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
-			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
-			nock('http://test/')
-				.get('/appeals/document-redaction-statuses')
-				.reply(200, documentRedactionStatuses)
-				.persist();
-
-			issueDecisionResponse = await request
-				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: 'Allowed' });
-
-			uploadDecisionLetterResponse = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
-				.send({
-					'upload-info':
-						'[{"name": "test-document.pdf", "GUID": "1", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "caseDecisionLetter", "size": 1, "stage": "appellant-case"}]'
-				});
-
-			issueAppellantCostsDecisionResponse = await request
-				.post(`${baseUrl}/1/issue-decision/appellant-costs-decision`)
-				.send({ appellantCostsDecision: 'true' });
-
-			uploadAppellantCostsDecisionLetterResponse = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
-				.send({
-					'upload-info':
-						'[{"name": "test-document-appellant.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
-				});
-
-			issueLpaCostsDecisionResponse = await request
-				.post(`${baseUrl}/1/issue-decision/lpa-costs-decision`)
-				.send({ lpaCostsDecision: 'true' });
-
-			uploadLpaCostsDecisionLetterResponse = await request
-				.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
-				.send({
-					'upload-info':
-						'[{"name": "test-document-lpa.pdf", "GUID": "3", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "lpaCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
-				});
 		});
 
 		afterEach(teardown);
 
-		it('should render the check your decision page', async () => {
-			expect(issueDecisionResponse.statusCode).toBe(302);
-			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
-			expect(issueAppellantCostsDecisionResponse.statusCode).toBe(302);
-			expect(uploadAppellantCostsDecisionLetterResponse.statusCode).toBe(302);
-			expect(issueLpaCostsDecisionResponse.statusCode).toBe(302);
-			expect(uploadLpaCostsDecisionLetterResponse.statusCode).toBe(302);
+		describe('Single appeal', () => {
+			beforeEach(async () => {
+				nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+				nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+				nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
 
-			const response = await request.get(
-				`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`
-			);
-			const element = parseHtml(response.text);
+				issueDecisionResponse = await request
+					.post(`${baseUrl}/1/issue-decision/decision`)
+					.send({ decision: 'Allowed' });
 
-			expect(element.innerHTML).toMatchSnapshot();
+				uploadDecisionLetterResponse = await request
+					.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+					.send({
+						'upload-info':
+							'[{"name": "test-document.pdf", "GUID": "1", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "caseDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+					});
 
-			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+				issueAppellantCostsDecisionResponse = await request
+					.post(`${baseUrl}/1/issue-decision/appellant-costs-decision`)
+					.send({ appellantCostsDecision: 'true' });
 
-			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
+				uploadAppellantCostsDecisionLetterResponse = await request
+					.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+					.send({
+						'upload-info':
+							'[{"name": "test-document-appellant.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+					});
 
-			expect(unprettifiedElement.innerHTML).toContain('Check details and issue decision</h1>');
+				issueLpaCostsDecisionResponse = await request
+					.post(`${baseUrl}/1/issue-decision/lpa-costs-decision`)
+					.send({ lpaCostsDecision: 'true' });
 
-			expect(unprettifiedElement.innerHTML).toContain('Decision</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('Allowed</dd>');
+				uploadLpaCostsDecisionLetterResponse = await request
+					.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+					.send({
+						'upload-info':
+							'[{"name": "test-document-lpa.pdf", "GUID": "3", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "lpaCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+					});
+			});
 
-			expect(unprettifiedElement.innerHTML).toContain('Decision letter</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('test-document.pdf</a>');
+			it('should render the check your decision page', async () => {
+				expect(issueDecisionResponse.statusCode).toBe(302);
+				expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+				expect(issueAppellantCostsDecisionResponse.statusCode).toBe(302);
+				expect(uploadAppellantCostsDecisionLetterResponse.statusCode).toBe(302);
+				expect(issueLpaCostsDecisionResponse.statusCode).toBe(302);
+				expect(uploadLpaCostsDecisionLetterResponse.statusCode).toBe(302);
 
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Do you want to issue the appellant&#39;s costs decision?</dt><dd class="govuk-summary-list__value"> Yes</dd>'
-			);
+				const response = await request.get(
+					`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`
+				);
+				const element = parseHtml(response.text);
 
-			expect(unprettifiedElement.innerHTML).toContain('Appellant costs decision letter</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('test-document-appellant.pdf</a>');
+				expect(element.innerHTML).toMatchSnapshot();
 
-			expect(unprettifiedElement.innerHTML).toContain(
-				'Do you want to issue the LPA&#39;s costs decision?</dt><dd class="govuk-summary-list__value"> Yes</dd>'
-			);
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
-			expect(unprettifiedElement.innerHTML).toContain('LPA costs decision letter</dt>');
-			expect(unprettifiedElement.innerHTML).toContain('test-document-lpa.pdf</a>');
+				expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span>');
 
-			expect(unprettifiedElement.innerHTML).toContain('Issue decision</button>');
+				expect(unprettifiedElement.innerHTML).toContain('Check details and issue decision</h1>');
+
+				expect(unprettifiedElement.innerHTML).toContain('Decision</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('Allowed</dd>');
+
+				expect(unprettifiedElement.innerHTML).toContain('Decision letter</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('test-document.pdf</a>');
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Do you want to issue the appellant&#39;s costs decision?</dt><dd class="govuk-summary-list__value"> Yes</dd>'
+				);
+
+				expect(unprettifiedElement.innerHTML).toContain('Appellant costs decision letter</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('test-document-appellant.pdf</a>');
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Do you want to issue the LPA&#39;s costs decision?</dt><dd class="govuk-summary-list__value"> Yes</dd>'
+				);
+
+				expect(unprettifiedElement.innerHTML).toContain('LPA costs decision letter</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('test-document-lpa.pdf</a>');
+
+				expect(unprettifiedElement.innerHTML).toContain('Issue decision</button>');
+			});
+		});
+
+		describe('Linked appeals', () => {
+			beforeEach(async () => {
+				issueDecisionAppealData.isParentAppeal = true;
+				issueDecisionAppealData.linkedAppeals = [{ appealId: 2, appealReference: '351066' }];
+
+				nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
+				nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
+				nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
+				nock('http://test/')
+					.get('/appeals/document-redaction-statuses')
+					.reply(200, documentRedactionStatuses)
+					.persist();
+
+				issueDecisionLeadResponse = await request
+					.post(`${baseUrl}/1/issue-decision/decision`)
+					.send({ decision: 'allowed' });
+
+				issueDecisionChildResponse = await request
+					.post(`${baseUrl}/1/issue-decision/2/decision`)
+					.send({ decision: 'split decision' });
+
+				uploadDecisionLetterResponse = await request
+					.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
+					.send({
+						'upload-info':
+							'[{"name": "test-document.pdf", "GUID": "1", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "caseDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+					});
+
+				issueAppellantCostsDecisionResponse = await request
+					.post(`${baseUrl}/1/issue-decision/appellant-costs-decision`)
+					.send({ appellantCostsDecision: 'true' });
+
+				uploadAppellantCostsDecisionLetterResponse = await request
+					.post(`${baseUrl}/1${issueDecisionPath}/${appellantCostsDecisionLetterUploadPath}`)
+					.send({
+						'upload-info':
+							'[{"name": "test-document-appellant.pdf", "GUID": "2", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "appellantCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+					});
+
+				issueLpaCostsDecisionResponse = await request
+					.post(`${baseUrl}/1/issue-decision/lpa-costs-decision`)
+					.send({ lpaCostsDecision: 'true' });
+
+				uploadLpaCostsDecisionLetterResponse = await request
+					.post(`${baseUrl}/1${issueDecisionPath}/${lpaCostsDecisionLetterUploadPath}`)
+					.send({
+						'upload-info':
+							'[{"name": "test-document-lpa.pdf", "GUID": "3", "blobStoreUrl": "/", "mimeType": "pdf", "documentType": "lpaCostsDecisionLetter", "size": 1, "stage": "appellant-case"}]'
+					});
+			});
+
+			afterEach(teardown);
+
+			it('should render the check your decision page', async () => {
+				expect(issueDecisionLeadResponse.statusCode).toBe(302);
+				expect(issueDecisionChildResponse.statusCode).toBe(302);
+				expect(uploadDecisionLetterResponse.statusCode).toBe(302);
+				expect(issueAppellantCostsDecisionResponse.statusCode).toBe(302);
+				expect(uploadAppellantCostsDecisionLetterResponse.statusCode).toBe(302);
+				expect(issueLpaCostsDecisionResponse.statusCode).toBe(302);
+				expect(uploadLpaCostsDecisionLetterResponse.statusCode).toBe(302);
+
+				const response = await request.get(
+					`${baseUrl}/1${issueDecisionPath}/${checkYourDecisionPath}`
+				);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+				expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 (lead)</span>');
+
+				expect(unprettifiedElement.innerHTML).toContain('Check details and issue decision</h1>');
+
+				expect(unprettifiedElement.innerHTML).toContain('Decision for lead appeal 351062</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('Allowed</dd>');
+
+				expect(unprettifiedElement.innerHTML).toContain('Decision for child appeal 351066</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('Split decision</dd>');
+
+				expect(unprettifiedElement.innerHTML).toContain('Decision letter</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('test-document.pdf</a>');
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Do you want to issue the appellant&#39;s costs decision?</dt><dd class="govuk-summary-list__value"> Yes</dd>'
+				);
+
+				expect(unprettifiedElement.innerHTML).toContain('Appellant costs decision letter</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('test-document-appellant.pdf</a>');
+
+				expect(unprettifiedElement.innerHTML).toContain(
+					'Do you want to issue the LPA&#39;s costs decision?</dt><dd class="govuk-summary-list__value"> Yes</dd>'
+				);
+
+				expect(unprettifiedElement.innerHTML).toContain('LPA costs decision letter</dt>');
+				expect(unprettifiedElement.innerHTML).toContain('test-document-lpa.pdf</a>');
+
+				expect(unprettifiedElement.innerHTML).toContain('Issue decision</button>');
+			});
 		});
 	});
 
@@ -1222,32 +1406,5 @@ describe('issue-decision', () => {
 				'4 August 2023 (reissued on 11 October 2023)'
 			);
 		});
-	});
-});
-
-describe('mapDecisionOutcome', () => {
-	it('should map "allowed" to "Allowed"', () => {
-		const result = mapDecisionOutcome('allowed');
-		expect(result).toBe('Allowed');
-	});
-
-	it('should map "dismissed" to "Dismissed"', () => {
-		const result = mapDecisionOutcome('dismissed');
-		expect(result).toBe('Dismissed');
-	});
-
-	it('should map "split" to "Split decision"', () => {
-		const result = mapDecisionOutcome('split');
-		expect(result).toBe('Split decision');
-	});
-
-	it('should return an empty string for undefined outcome', () => {
-		const result = mapDecisionOutcome(undefined);
-		expect(result).toBe('');
-	});
-
-	it('should return invalid for invalid outcome', () => {
-		const result = mapDecisionOutcome('invalid');
-		expect(result).toBe('Invalid');
 	});
 });
