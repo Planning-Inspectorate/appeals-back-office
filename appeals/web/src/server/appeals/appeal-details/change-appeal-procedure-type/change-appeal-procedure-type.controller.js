@@ -6,7 +6,7 @@
  * @param {NextFunction} next
  */
 export const updateChangeProcedureTypeSession = (request, response, next) => {
-	const sessionValues = request.session.changeProcedureType || {};
+	const sessionValues = request.session || {};
 	const appealDetails = request.currentAppeal;
 
 	sessionValues['existingAppealProcedure'] = appealDetails.procedureType.toLowerCase();
@@ -31,7 +31,7 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 		sessionValues.appealTimetable['finalCommentsDueDate'] ??
 		appealDetails.appealTimetable.finalCommentsDueDate;
 
-	request.session.changeProcedureType = sessionValues;
+	request.session = sessionValues;
 
 	next();
 };

@@ -22,7 +22,7 @@ const renderSelectProcedure = async (request, response) => {
 	const mappedPageContent = selectProcedurePage(
 		appealReference,
 		request.query?.backUrl ? String(request.query?.backUrl) : '/',
-		session.changeProcedureType,
+		session.appealProcedure,
 		errors ? errors['appealProcedure']?.msg : undefined
 	);
 
@@ -51,8 +51,7 @@ export const postChangeSelectProcedure = async (request, response) => {
 		}
 
 		if (
-			session.changeProcedureType.existingAppealProcedure.toLowerCase() ===
-				APPEAL_CASE_PROCEDURE.WRITTEN &&
+			session.existingAppealProcedure.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN &&
 			appealProcedure === APPEAL_CASE_PROCEDURE.WRITTEN
 		) {
 			return response.redirect(
