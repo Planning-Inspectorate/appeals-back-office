@@ -206,6 +206,7 @@ export const AUDIT_TRAIL_INQUIRY_ESTIMATES_UPDATED = 'Inquiry estimates updated'
 export const AUDIT_TRAIL_INQUIRY_ESTIMATES_REMOVED = 'Inquiry estimates removed';
 
 export const AUDIT_TRAIL_DECISION_ISSUED = 'Decision issued: {replacement0}';
+export const AUDIT_TRAIL_DECISION_LETTER_UPLOADED = 'Decision letter {replacement0} uploaded';
 export const AUDIT_TRAIL_DECISION_LETTER_UPDATED = 'Decision letter {replacement0} updated';
 export const AUDIT_TRAIL_CORRECTION_NOTICE_ADDED = 'Correction notice added: {replacement0} ';
 export const AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED = 'Appellant costs decision issued';
