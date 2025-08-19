@@ -16,3 +16,10 @@ export const APPEAL_DEVELOPMENT_TYPES = [
 	{ value: 'other-major', label: 'other major development' },
 	{ value: 'other-minor', label: 'other minor developments' }
 ];
+
+/** @type {Array<{value: string, label: string}>} */
+export const PLANNING_OBLIGATION_STATUSES = [
+	{ value: 'not_started', label: 'Not yet started' },
+	{ value: 'finalised', label: 'Finalised' },
+	{ value: 'not-applicable', label: 'Not applicable' }
+];
