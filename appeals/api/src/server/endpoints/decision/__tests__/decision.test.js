@@ -266,7 +266,7 @@ describe('decision routes', () => {
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
 				},
-				templateName: 'lpa-costs-decision-lpa',
+				templateName: 'lpa-costs-decision-appellant',
 				recipientEmail: appeal.agent.email
 			});
 
@@ -306,7 +306,7 @@ describe('decision routes', () => {
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
 				},
-				templateName: 'lpa-costs-decision-appellant',
+				templateName: 'lpa-costs-decision-lpa',
 				recipientEmail: appeal.lpa.email
 			});
 

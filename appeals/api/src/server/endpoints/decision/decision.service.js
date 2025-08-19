@@ -175,8 +175,8 @@ const getCostDecisionDetails = (decisionType) => {
 		}
 		case DECISION_TYPE_LPA_COSTS: {
 			return {
-				recipientEmailTemplate: 'lpa-costs-decision-lpa',
-				lpaEmailTemplate: 'lpa-costs-decision-appellant',
+				recipientEmailTemplate: 'lpa-costs-decision-appellant',
+				lpaEmailTemplate: 'lpa-costs-decision-lpa',
 				auditTrailDetails: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED
 			};
 		}
