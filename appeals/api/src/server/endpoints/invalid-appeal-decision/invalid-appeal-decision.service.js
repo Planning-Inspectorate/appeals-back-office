@@ -97,13 +97,15 @@ export const publishInvalidDecision = async (
 				personalisation: { ...personalisation, has_costs_decision: hasLpaCostsDecision }
 			})
 		]);
+		const details =
+			stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+				outcome[0].toUpperCase() + outcome.slice(1)
+			]) + `<br><br> Reason: ${invalidDecisionReason}`;
 
 		await createAuditTrail({
 			appealId: appeal.id,
 			azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-				outcome[0].toUpperCase() + outcome.slice(1)
-			])
+			details
 		});
 
 		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.INVALID);
