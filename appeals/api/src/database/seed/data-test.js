@@ -1151,6 +1151,7 @@ export async function seedTestData(databaseConnector) {
 
 			await addStatements(databaseConnector, id, lpaId, counters);
 			await addFinalComments(databaseConnector, id, appellantId || 0, lpaId, counters);
+			await addProofOfEvidence(databaseConnector, id, appellantId || 0, lpaId, counters);
 		}
 
 		const statusWithSiteVisitSet = appealStatus.find(
@@ -1449,6 +1450,130 @@ async function addFinalComment(databaseConnector, id, source, sourceId) {
 		},
 		include: {
 			represented: true
+		}
+	});
+}
+
+/**
+ * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {number} id
+ * @param {number} appellantId
+ * @param {number} lpaId
+ * @param {Object<string, number>} counters
+ */
+async function addProofOfEvidence(databaseConnector, id, appellantId, lpaId, counters) {
+	switch (counters.finalComment) {
+		case 1:
+			await addProofsEvidence(databaseConnector, id, 'appellant', appellantId);
+			break;
+		case 2:
+			await addProofsEvidence(databaseConnector, id, 'LPA', lpaId);
+			break;
+		case 3:
+			await addProofsEvidence(databaseConnector, id, 'appellant', appellantId);
+			await addProofsEvidence(databaseConnector, id, 'LPA', lpaId);
+			break;
+		default:
+			break;
+	}
+
+	if (counters.finalComment > 2) {
+		counters.finalComment = 0;
+	} else {
+		counters.finalComment++;
+	}
+}
+
+/**
+ * @param {import('#db-client').PrismaClient} databaseConnector
+ * @param {number} id
+ * @param {'appellant'|'LPA'} source
+ * @param {number} sourceId
+ */
+async function addProofsEvidence(databaseConnector, id, source, sourceId) {
+	const folder = await databaseConnector.folder.findFirstOrThrow({
+		where: {
+			path: 'representation/representationAttachments'
+		}
+	});
+	const doc = await databaseConnector.document.create({
+		data: {
+			name: `document-${id}-${sourceId}`,
+			folderId: folder.id,
+			isDeleted: false,
+			caseId: id
+		},
+		include: {
+			latestDocumentVersion: true
+		}
+	});
+	const documentVersion = await databaseConnector.documentVersion.create({
+		data: {
+			blobStorageContainer: 'document-service-uploads',
+			dateCreated: '2024-03-01T13:48:35.847Z',
+			description: 'Document img2.jpg (001) imported',
+			documentGuid: doc.guid,
+			documentType: 'lpaProofOfEvidence',
+			draft: false,
+			fileName: 'oimg.jpg',
+			mime: 'image/jpeg',
+			originalFilename: 'oimg.jpg',
+			size: 10293,
+			stage: 'lpa-questionnaire',
+			version: 1
+		},
+		include: {
+			latestVersion: true
+		}
+	});
+	await databaseConnector.document.update({
+		where: {
+			guid: doc.guid
+		},
+		data: {
+			latestVersionId: documentVersion.version
+		}
+	});
+	const representation = await databaseConnector.representation.create({
+		data: {
+			appeal: {
+				connect: {
+					id
+				}
+			},
+			representationType:
+				source === 'appellant'
+					? APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+					: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+			originalRepresentation: ``,
+			...(source === 'appellant'
+				? {
+						represented: {
+							connect: {
+								// @ts-ignore
+								id: sourceId
+							}
+						}
+				  }
+				: {
+						lpa: {
+							connect: {
+								// @ts-ignore
+								id: sourceId
+							}
+						}
+				  })
+		},
+		include: {
+			represented: true
+		}
+	});
+
+	await databaseConnector.representationAttachment.create({
+		data: {
+			documentGuid: doc.guid,
+			version: documentVersion.version,
+			representationId: representation.id
 		}
 	});
 }
