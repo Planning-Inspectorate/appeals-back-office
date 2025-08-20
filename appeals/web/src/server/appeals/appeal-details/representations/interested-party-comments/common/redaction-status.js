@@ -44,14 +44,18 @@ const mapper = (appealDetails, errors, value, backLinkUrl) => ({
 
 /**
  * @param {object} options
- * @param {(appealDetails: Appeal, comment: Representation) => string} options.getBackLinkUrl,
+ * @param {(appealDetails: Appeal, comment: Representation, request: import('@pins/express').Request) => string} options.getBackLinkUrl,
  * @param {(request: import('@pins/express').Request) => string} options.getValue
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
 export const renderRedactionStatusFactory =
 	({ getBackLinkUrl, getValue }) =>
 	(request, response) => {
-		const backLinkUrl = getBackLinkUrl(request.currentAppeal, request.currentRepresentation);
+		const backLinkUrl = getBackLinkUrl(
+			request.currentAppeal,
+			request.currentRepresentation,
+			request
+		);
 		const value = getValue(request);
 
 		const pageContent = mapper(request.currentAppeal, request.errors, value, backLinkUrl);
@@ -64,7 +68,7 @@ export const renderRedactionStatusFactory =
 
 /**
  * @param {object} options
- * @param {(appealDetails: Appeal, comment: Representation) => string} options.getRedirectUrl
+ * @param {(appealDetails: Appeal, comment: Representation, request: import('@pins/express').Request) => string} options.getRedirectUrl
  * @param {import('@pins/express').RenderHandler<{}, {}, ReqBody>} options.errorHandler
  * @returns {import('@pins/express').RenderHandler<{}, {}, ReqBody>}
  */
@@ -77,5 +81,5 @@ export const postRedactionStatusFactory =
 
 		const { currentAppeal, currentRepresentation } = request;
 
-		return response.redirect(getRedirectUrl(currentAppeal, currentRepresentation));
+		return response.redirect(getRedirectUrl(currentAppeal, currentRepresentation, request));
 	};

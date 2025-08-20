@@ -14,7 +14,6 @@ import {
 	getTodaysISOString,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
-import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').interestedPartyComment} IpComment */
@@ -26,15 +25,13 @@ import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 /**
  * @param {Appeal} appealDetails
  * @param {{ firstName: string, lastName: string, emailAddress: string }} values
- * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} backLinkUrl
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  * */
-export const ipDetailsPage = (appealDetails, values, request, errors) => ({
+export const ipDetailsPage = (appealDetails, values, backLinkUrl, errors) => ({
 	title: "Interested party's details",
-	backLinkUrl:
-		getSavedBackUrl(request, 'addIpComment') ||
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments`,
+	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	heading: "Interested party's details",
 	pageComponents: [
@@ -83,12 +80,13 @@ export const ipDetailsPage = (appealDetails, values, request, errors) => ({
 /**
  * @param {Appeal} appealDetails
  * @param {string} value
+ * @param {string} backLinkUrl
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns {PageContent}
  * */
-export const checkAddressPage = (appealDetails, value, errors) => ({
+export const checkAddressPage = (appealDetails, value, backLinkUrl, errors) => ({
 	title: 'Did the interested party provide an address?',
-	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-details`,
+	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	submitButtonProperties: {
 		text: 'Continue'
@@ -127,15 +125,13 @@ export const checkAddressPage = (appealDetails, value, errors) => ({
 /**
  * @param {Appeal} appealDetails
  * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @param {boolean} providedAddress
+ * @param {string} backButtonUrl
  * @param {number} folderId
  * @param {{ appealId: string, folderId: string, files: { GUID: string, name: string, documentType: string, allowedTypes: string[], size: number, stage: string, mimeType: string, receivedDate: string, redactionStatus: number, blobStoreUrl: string }[] }} fileUploadInfo - The file upload information object.
  * @returns {import('#appeals/appeal-documents/appeal-documents.types.js').DocumentUploadPageParameters}
  * */
-export const uploadPage = (appealDetails, errors, providedAddress, folderId, fileUploadInfo) => ({
-	backButtonUrl: providedAddress
-		? `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/ip-address`
-		: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/check-address`,
+export const uploadPage = (appealDetails, errors, backButtonUrl, folderId, fileUploadInfo) => ({
+	backButtonUrl,
 	appealId: String(appealDetails.appealId),
 	appealReference: appealDetails.appealReference,
 	preHeadingText: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
