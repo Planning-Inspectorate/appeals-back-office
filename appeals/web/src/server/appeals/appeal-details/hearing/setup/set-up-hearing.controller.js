@@ -13,6 +13,7 @@ import {
 } from '#lib/dates.js';
 import { createHearing, updateHearing } from './hearing.service.js';
 import { preserveQueryString, stripQueryString } from '#lib/url-utilities.js';
+import { applyEdits, clearEdits, getSessionValues } from '#lib/edit-utilities.js';
 
 /**
  * @param {string} path
@@ -58,50 +59,6 @@ const getBackLinkUrl = (request, prevPageUrl, cyaUrl) => {
 		: prevPageUrl
 		? preserveQueryString(request, prevPageUrl)
 		: flowEntrypoint;
-};
-
-/**
- * Returns the session values for the given key, or the /edit key if editing.
- * Also sets the /edit values if they do not yet exist when editing.
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {string} sessionKey
- * @returns {Record<string, string>}
- */
-const getSessionValues = (request, sessionKey) => {
-	const { query, session } = request;
-	const editEntrypoint = query.editEntrypoint;
-	if (editEntrypoint) {
-		const editKey = `${sessionKey}/edit`;
-		if (!session[editKey]) {
-			session[editKey] = session[sessionKey];
-		}
-		return session[editKey] || {};
-	}
-	return session[sessionKey] || {};
-};
-
-/**
- * Saves any edited values to the main session key and deletes the /edit key.
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {string} sessionKey
- */
-const applyEdits = (request, sessionKey) => {
-	const { session } = request;
-	const editKey = `${sessionKey}/edit`;
-	if (session[editKey]) {
-		session[sessionKey] = session[editKey];
-		delete session[editKey];
-	}
-};
-
-/**
- * Deletes the /edit session key without copying anything.
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {string} sessionKey
- */
-const clearEdits = (request, sessionKey) => {
-	const editKey = `${sessionKey}/edit`;
-	delete request.session[editKey];
 };
 
 /**

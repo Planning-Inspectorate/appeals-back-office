@@ -1,3 +1,5 @@
+import { preserveQueryString, stripQueryString } from '#lib/url-utilities.js';
+
 /**
  * Store the backUrl query param the session, scoped using a specific
  * session key (to represent the flow the user is currently entering),
@@ -53,3 +55,24 @@ export const getSavedBackUrl = (request, sessionKey) => {
 
 	return session[key]?.[appealId];
 };
+
+/**
+ * Generates a function that returns the previous page in the journey, or the
+ * backUrl session var if present, or the CYA page if we are at the point where
+ * we started editing.
+ * @param {string} sessionKey
+ * @returns {(request: import('@pins/express/types/express.js').Request, prevPageUrl: string | null, cyaUrl: string, defaultUrl?: string) => string}
+ */
+export function backLinkGenerator(sessionKey) {
+	return (request, prevPageUrl, cyaUrl, defaultUrl) => {
+		defaultUrl = defaultUrl || `/appeals-service/appeal-details/${request.currentAppeal.appealId}`;
+		const editEntrypoint = String(request.query.editEntrypoint);
+		const flowEntrypoint = String(getSavedBackUrl(request, sessionKey) || defaultUrl);
+
+		return stripQueryString(editEntrypoint) === stripQueryString(request.originalUrl)
+			? preserveQueryString(request, cyaUrl, { exclude: ['editEntrypoint'] })
+			: prevPageUrl
+			? preserveQueryString(request, prevPageUrl)
+			: flowEntrypoint;
+	};
+}
