@@ -3,14 +3,16 @@
 import { users } from '../fixtures/users';
 import { ListCasesPage } from '../page_objects/listCasesPage';
 import { CaseDetailsPage } from '../page_objects/caseDetailsPage.js';
+import { FileUploader } from '../page_objects/shared.js';
 import { DateTimeSection } from '../page_objects/dateTimeSection';
 import { urlPaths } from './urlPaths.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();
 const listCasesPage = new ListCasesPage();
+const fileUploader = new FileUploader();
 
-let sampleFiles = caseDetailsPage.sampleFiles;
+let sampleFiles = fileUploader.sampleFiles;
 
 export const happyPathHelper = {
 	assignCaseOfficer(caseRef) {
@@ -24,14 +26,11 @@ export const happyPathHelper = {
 		caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 	},
 	reviewAppellantCase(caseRef) {
-		let dueDate = new Date();
-
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.selectRadioButtonByValue('Valid');
 		caseDetailsPage.clickButtonByText('Continue');
-		dateTimeSection.enterValidDate(dueDate);
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
 	reviewLpaq(caseRef) {
@@ -120,7 +119,7 @@ export const happyPathHelper = {
 		happyPathHelper.assignCaseOfficer(caseRef);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.clickAddAgreementToChangeDescriptionEvidence();
-		caseDetailsPage.uploadSampleFile(sampleFiles.document);
+		fileUploader.uploadFiles(sampleFiles.document);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -138,7 +137,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('upload a new version');
-		caseDetailsPage.uploadSampleFile(sampleFiles.document2);
+		fileUploader.uploadFiles(sampleFiles.document2);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -151,7 +150,7 @@ export const happyPathHelper = {
 	uploadDocsLpaq(bannerMessage = 'Document added') {
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.clickAddNotifyingParties();
-		caseDetailsPage.uploadSampleFile(sampleFiles.document);
+		fileUploader.uploadFiles(sampleFiles.document);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -165,7 +164,7 @@ export const happyPathHelper = {
 		caseDetailsPage.clickManageNotifyingParties();
 		caseDetailsPage.clickLinkByText('View and edit');
 		caseDetailsPage.clickButtonByText('Upload a new version');
-		caseDetailsPage.uploadSampleFile(sampleFiles.document2);
+		fileUploader.uploadFiles(sampleFiles.document2);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -243,19 +242,19 @@ export const happyPathHelper = {
 		caseDetailsPage.clickIssueDecision();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(decision));
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+		fileUploader.uploadFiles(sampleFiles.pdf);
 		caseDetailsPage.clickButtonByText('Continue');
 
 		//Appellant costs
 		caseDetailsPage.selectRadioButtonByValue('Yes');
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+		fileUploader.uploadFiles(sampleFiles.pdf);
 		caseDetailsPage.clickButtonByText('Continue');
 
 		//LPA costs
 		caseDetailsPage.selectRadioButtonByValue('Yes');
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+		fileUploader.uploadFiles(sampleFiles.pdf);
 		caseDetailsPage.clickButtonByText('Continue');
 
 		//CYA
@@ -263,14 +262,14 @@ export const happyPathHelper = {
 
 		//Banner & inset text
 		caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
-		caseDetailsPage.checkDecisionOutcome(decision);
+		caseDetailsPage.checkStatusOfCase('Complete', 0);
 	},
 
 	issueDecisionWithoutCosts(caseRef, decision) {
 		caseDetailsPage.clickIssueDecision();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(decision));
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+		fileUploader.uploadFiles(sampleFiles.pdf);
 		caseDetailsPage.clickButtonByText('Continue');
 
 		//Dont issue appellant & LPA costs
@@ -289,14 +288,14 @@ export const happyPathHelper = {
 
 	issueAppellantCostsDecision(caseRef) {
 		caseDetailsPage.clickIssueAppellantCostsDecision();
-		caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+		fileUploader.uploadFiles(sampleFiles.pdf);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Issue appellant costs decision');
 	},
 
 	issueLpaCostsDecision(caseRef) {
 		caseDetailsPage.clickIssueLpaCostsDecision();
-		caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
+		fileUploader.uploadFiles(sampleFiles.pdf);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Issue lpa costs decision');
 	}
