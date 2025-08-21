@@ -1,4 +1,4 @@
-/** @typedef {Omit<import('@pins/appeals.api').Schema.LPA, 'id'>} LPA */
+/** @typedef {import('#utils/db-client/index.js').Prisma.LPACreateInput} LPA */
 
 /**
  * @param {import('../../server/utils/db-client/index.js').PrismaClient} databaseConnector
