@@ -64,7 +64,7 @@ export const mapInvalidReasonPage = (
 	const pageContent = {
 		title: `Why is the appeal invalid?`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealId}/${
-			sourceIsAppellantCase ? 'appellant-case' : ''
+			sourceIsAppellantCase ? 'appellant-case' : 'cancel'
 		}`,
 		preHeading: `Appeal ${shortAppealReference} - mark as invalid`,
 		pageComponents: [
