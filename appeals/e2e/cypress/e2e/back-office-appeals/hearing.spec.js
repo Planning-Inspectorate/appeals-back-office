@@ -605,12 +605,12 @@ describe('Setup hearing and add hearing estimates', () => {
 			hearingSectionPage.verifyCaseHistory([
 				'Appeal started',
 				'Appeal procedure: hearing',
-				'The case has progressed to Hearing ready to set up',
+				'Case progressed to Hearing ready to set up',
 				`Hearing set up on ${formatDateAndTime(hearingDate).date}`,
-				'The case has progressed to Awaiting hearing',
+				'Case progressed to Awaiting hearing',
 				'The hearing address has been added',
-				'The case has progressed to Issue decision',
-				'The case has progressed to Complete'
+				'Case progressed to Issue decision',
+				'Case progressed to Complete'
 			]);
 		});
 
