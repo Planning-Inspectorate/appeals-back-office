@@ -4182,17 +4182,17 @@ export const caseAuditLog = [
 	{
 		azureAdUserId: activeDirectoryUsersData[0].id,
 		details:
-			"Thise case has over 300 characters in the details field. This is a test to ensure that the system can handle long text entries without issues. The case has progressed to awaiting_lpa_questionnaire. There should be over 300 character in this field to test the system's ability to handle long text entries without truncation or errors. - it should show the show more compoonent",
+			"Thise case has over 300 characters in the details field. This is a test to ensure that the system can handle long text entries without issues. Case progressed to awaiting_lpa_questionnaire. There should be over 300 character in this field to test the system's ability to handle long text entries without truncation or errors. - it should show the show more compoonent",
 		loggedDate: '2025-05-27T09:55:30.175Z'
 	},
 	{
 		azureAdUserId: '00000000-0000-0000-0000-000000000000',
-		details: 'The case has progressed to issue_determination',
+		details: 'Case progressed to issue_determination',
 		loggedDate: '2025-05-27T09:55:36.910Z'
 	},
 	{
 		azureAdUserId: activeDirectoryUsersData[0].id,
-		details: 'The case has progressed to awaiting_event',
+		details: 'Case progressed to awaiting_event',
 		loggedDate: '2025-05-27T09:55:30.175Z'
 	},
 	{
@@ -4207,7 +4207,7 @@ export const caseAuditLog = [
 	},
 	{
 		azureAdUserId: activeDirectoryUsersData[0].id,
-		details: 'The case has progressed to event',
+		details: 'Case progressed to event',
 		loggedDate: '2025-05-27T09:55:22.781Z'
 	},
 	{
@@ -4227,7 +4227,7 @@ export const caseAuditLog = [
 	},
 	{
 		azureAdUserId: activeDirectoryUsersData[0].id,
-		details: 'The case has progressed to final_comments',
+		details: 'Case progressed to final_comments',
 		loggedDate: '2025-05-27T09:54:59.237Z'
 	},
 	{
@@ -4237,12 +4237,12 @@ export const caseAuditLog = [
 	},
 	{
 		azureAdUserId: activeDirectoryUsersData[0].id,
-		details: 'The case has progressed to statements',
+		details: 'Case progressed to statements',
 		loggedDate: '2025-05-27T09:52:39.253Z'
 	},
 	{
 		azureAdUserId: activeDirectoryUsersData[0].id,
-		details: 'The case has progressed to lpa_questionnaire',
+		details: 'Case progressed to lpa_questionnaire',
 		loggedDate: '2025-05-27T09:52:30.000Z'
 	},
 	{
@@ -4257,7 +4257,7 @@ export const caseAuditLog = [
 	},
 	{
 		azureAdUserId: activeDirectoryUsersData[0].id,
-		details: 'The case has progressed to ready_to_start',
+		details: 'Case progressed to ready_to_start',
 		loggedDate: '2025-05-27T09:52:23.597Z'
 	}
 ];
