@@ -68,7 +68,7 @@ export async function deleteAllRecords(databaseConnector) {
 	const deleteInquiries = databaseConnector.inquiry.deleteMany();
 	const deleteHearingEstimates = databaseConnector.hearingEstimate.deleteMany();
 	const deleteInquiryEstimates = databaseConnector.inquiryEstimate.deleteMany();
-
+	const deleteTeams = databaseConnector.team.deleteMany();
 	await databaseConnector.$queryRawUnsafe(`
 		UPDATE Document SET latestVersionId = NULL;
 		UPDATE Appeal SET inspectorUserId = NULL, caseOfficerUserId = NULL;
@@ -126,7 +126,8 @@ export async function deleteAllRecords(databaseConnector) {
 		deleteAppeals,
 		deleteAddresses,
 		deleteLPAs,
-		deleteListedBuildingDetails
+		deleteListedBuildingDetails,
+		deleteTeams
 	]);
 
 	await databaseConnector.$transaction([
