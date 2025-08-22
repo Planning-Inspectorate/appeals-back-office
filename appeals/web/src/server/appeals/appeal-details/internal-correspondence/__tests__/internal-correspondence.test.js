@@ -1618,7 +1618,7 @@ describe('internal correspondence', () => {
 					`${convertToTitle(correspondenceCategory)} correspondence documents</h1>`
 				);
 				expect(unprettifiedElement.innerHTML).toContain(
-					`<a href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}" role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>`
+					`<a href="/appeals-service/appeal-details/1/internal-correspondence/${correspondenceCategory}/upload-documents/${folder.folderId}" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button"> Add document</a>`
 				);
 			});
 		}

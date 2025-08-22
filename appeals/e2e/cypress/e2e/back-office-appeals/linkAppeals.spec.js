@@ -150,6 +150,7 @@ describe('link appeals', () => {
 					caseDetailsPage.clickButtonByText('Continue');
 
 					//CYA
+					caseDetailsPage.verifyRowExists('Which is the lead appeal?', false);
 					caseDetailsPage.clickButtonByText('Add linked appeal');
 
 					//case details

@@ -509,6 +509,56 @@ export const representationRejectionReasons = [
 		name: 'Other reason',
 		representationType: 'appellant_final_comment',
 		hasText: true
+	},
+	{
+		name: 'Includes personal or medical information',
+		representationType: 'lpa_proofs_evidence',
+		hasText: false
+	},
+	{
+		name: 'Includes inflammatory content',
+		representationType: 'lpa_proofs_evidence',
+		hasText: false
+	},
+	{
+		name: 'Not relevant to this appeal',
+		representationType: 'lpa_proofs_evidence',
+		hasText: false
+	},
+	{
+		name: 'Contains links to web pages',
+		representationType: 'lpa_proofs_evidence',
+		hasText: false
+	},
+	{
+		name: 'Other reason',
+		representationType: 'lpa_proofs_evidence',
+		hasText: true
+	},
+	{
+		name: 'Includes personal or medical information',
+		representationType: 'appellant_proofs_evidence',
+		hasText: false
+	},
+	{
+		name: 'Includes inflammatory content',
+		representationType: 'appellant_proofs_evidence',
+		hasText: false
+	},
+	{
+		name: 'Not relevant to this appeal',
+		representationType: 'appellant_proofs_evidence',
+		hasText: false
+	},
+	{
+		name: 'Contains links to web pages',
+		representationType: 'appellant_proofs_evidence',
+		hasText: false
+	},
+	{
+		name: 'Other reason',
+		representationType: 'appellant_proofs_evidence',
+		hasText: true
 	}
 ];
 

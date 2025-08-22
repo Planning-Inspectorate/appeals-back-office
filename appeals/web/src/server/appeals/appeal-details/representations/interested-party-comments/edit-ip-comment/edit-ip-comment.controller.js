@@ -7,6 +7,7 @@ import {
 } from './edit-ip-comment.service.js';
 import { checkAddressPage, siteVisitRequestedPage } from './edit-ip-comment.mappers.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -26,7 +27,10 @@ export async function renderEditAddress(request, response) {
 		currentAppeal,
 		currentRepresentation?.represented?.address,
 		errors,
-		`${currentRepresentation.id}/${backLinkUrl}`,
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}/${backLinkUrl}`
+		),
 		operationType
 	);
 

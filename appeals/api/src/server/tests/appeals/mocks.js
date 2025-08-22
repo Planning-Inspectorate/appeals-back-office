@@ -586,3 +586,9 @@ export const serviceUser = {
 	phoneNumber: null,
 	addressId: null
 };
+
+export const appealStatus = {
+	status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+	valid: true,
+	createdAt: new Date('2050-01-01T00:00:00.000Z')
+};

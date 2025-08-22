@@ -8,6 +8,7 @@ import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import config from '#environment/config.js';
 import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
+import { getInvalidStatusCreatedDate } from '../invalid-appeal/invalid-appeal.service.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
@@ -83,6 +84,15 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 					? `Decision issued on ${letterDateObject.originalLetterDate} (updated on ${letterDateObject.latestLetterDate})`
 					: `Decision issued on ${letterDateObject.latestLetterDate}`
 			);
+		} else if (isAppealInvalid) {
+			const invalidDate = await getInvalidStatusCreatedDate(
+				request.apiClient,
+				appealDetails.appealId
+			);
+			insetTextRows.push(
+				`Marked as invalid on ${dateISOStringToDisplayDate(invalidDate.createdDate)}`
+			);
+			insetTextRows.push(getViewInvalidAppealLink(appealDetails.appealId));
 		}
 
 		const hasCostsAppellantDecision = Boolean(
@@ -213,3 +223,6 @@ const getViewDecisionLinkOld = (appealDetails) => {
 
 const getViewDecisionLink = (/** @type {number} */ appealId) =>
 	`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/view-decision">View decision</a>`;
+
+const getViewInvalidAppealLink = (/** @type {number} */ appealId) =>
+	`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/invalid/view">View details</a>`;

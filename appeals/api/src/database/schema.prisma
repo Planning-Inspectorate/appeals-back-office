@@ -64,6 +64,8 @@ model Appeal {
   hearingEstimate       HearingEstimate?
   inquiry               Inquiry?
   inquiryEstimate       InquiryEstimate?
+  assignedTeam          Team?                @relation(fields: [assignedTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  assignedTeamId        Int?
 
   @@index([addressId])
   @@index([appealTypeId])
@@ -193,6 +195,8 @@ model LPA {
   email           String?
   appeals         Appeal[]
   representations Representation[] @relation("lpaRepresentation")
+  team            Team?            @relation("team", fields: [teamId], references: [id])
+  teamId          Int?
 }
 
 /// ServiceUser model
@@ -888,4 +892,14 @@ model InquiryEstimate {
   sittingTime     Decimal?
   reportingTime   Decimal?
   appeal          Appeal   @relation(fields: [appealId], references: [id])
+}
+
+/// Team model
+model Team {
+  id    Int     @id
+  name  String  @unique
+  email String?
+
+  lpas   LPA[]    @relation("team")
+  Appeal Appeal[]
 }

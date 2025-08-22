@@ -48,7 +48,7 @@ describe('case-procedure.mapper', () => {
 								attributes: {
 									'data-cy': 'change-case-procedure'
 								},
-								href: '/appeal-questionnaire/change-appeal-details/procedure-type',
+								href: '/appeal-questionnaire/change-appeal-procedure-type/change-selected-procedure-type',
 								text: 'Change',
 								visuallyHiddenText: 'Appeal procedure'
 							}
