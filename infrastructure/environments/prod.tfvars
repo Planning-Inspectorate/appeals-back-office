@@ -48,6 +48,7 @@ apps_config = {
     featureFlagNetResidence           = false
     featureFlagCancelCase             = false
     featureFlagChangeProcedureType    = false
+    featureFlagAdvertisement          = false
   }
 
   use_system_test_bc_for_change_lpa = false

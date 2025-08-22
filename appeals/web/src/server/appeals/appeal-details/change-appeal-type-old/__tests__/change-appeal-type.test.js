@@ -80,7 +80,9 @@ describe('change-appeal-type', () => {
 
 	describe('GET /change-appeal-type/resubmit', () => {
 		it('should render the resubmit page', async () => {
-			const response = await request.get(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`);
+			const response = await request
+				.get(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
+				.set('Appeal-Change-Type', 'true');
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -106,7 +108,8 @@ describe('change-appeal-type', () => {
 				.post(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
 				.send({
 					appealResubmit: true
-				});
+				})
+				.set('Appeal-Change-Type', 'true');
 
 			expect(response.statusCode).toBe(302);
 			expect(response.headers.location).toContain(changeAppealFinalDatePath);
@@ -120,7 +123,8 @@ describe('change-appeal-type', () => {
 				.post(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
 				.send({
 					appealResubmit: ''
-				});
+				})
+				.set('Appeal-Change-Type', 'true');
 
 			expect(response.statusCode).toBe(200);
 

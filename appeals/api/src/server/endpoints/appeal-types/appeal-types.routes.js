@@ -1,6 +1,6 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import { getLookupData } from '#common/controllers/lookup-data.controller.js';
+import { getAppealTypes } from './appeal-types.controller.js';
 
 const router = createRouter();
 
@@ -15,13 +15,18 @@ router.get(
 			required: true,
 			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 		}
+		#swagger.parameters['filterEnabled'] = {
+			in: 'header',
+			required: false,
+			example: true
+		}
 		#swagger.responses[200] = {
 			description: 'List of appeal types',
 			schema: { $ref: '#/components/schemas/AppealTypes' },
 		}
 		#swagger.responses[400] = {}
 	 */
-	asyncHandler(getLookupData('appealType'))
+	asyncHandler(getAppealTypes)
 );
 
 export { router as appealTypeRoutes };
