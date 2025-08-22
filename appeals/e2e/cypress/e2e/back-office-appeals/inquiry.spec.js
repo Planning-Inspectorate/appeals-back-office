@@ -4,20 +4,32 @@
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
-import { formatDateAndTime } from '../../support/utils/formatDateAndTime';
 import { urlPaths } from '../../support/urlPaths';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
+import { ListCasesPage } from '../../page_objects/listCasesPage';
+import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage';
 
 const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();
-const currentDate = new Date();
+const listCasesPage = new ListCasesPage();
+const inquirySectionPage = new InquirySectionPage();
 
 const inquiryAddress = {
-	line1: 'e2e Hearing Test Address',
-	line2: 'Hearing Street',
-	town: 'Hearing Town',
+	line1: 'e2e Inquiry Test Address',
+	line2: 'Inquiry Street',
+	town: 'Inquiry Town',
 	county: 'Somewhere',
 	postcode: 'BS20 1BS'
+};
+
+const initialEstimates = { preparationTime: 0.5, sittingTime: 1.0, reportingTime: 89.5 };
+const updatedEstimates = { preparationTime: 5.5, sittingTime: 1.5, reportingTime: 99 };
+
+const headers = {
+	inquiryEstimate: {
+		checkDetails: 'Check details and add inquiry estimates',
+		estimateForm: 'Inquiry estimates'
+	}
 };
 
 //generate a number between 0.5 & 99.5
@@ -161,6 +173,100 @@ it('Change Inquiry date from check your answers page', () => {
 	caseDetailsPage.clickButtonByText('Continue');
 	verifyDateChanges(7);
 	caseDetailsPage.clickButtonByText('Continue');
+});
+
+it('should not accept invalid input - inquiry Estimate', () => {
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.addInquiryViaApi(caseRef, inquiryDate);
+	});
+
+	cy.visit(urlPaths.appealsList);
+	listCasesPage.clickAppealByRef(caseRef);
+	caseDetailsPage.clickAccordionByButton('Inquiry');
+	caseDetailsPage.clickInquiryEstimateLink();
+
+	// Test empty fields
+	caseDetailsPage.addEstimates(' ', ' ', ' ');
+	caseDetailsPage.verifyErrorMessages({
+		messages: [
+			'Enter estimated preparation time',
+			'Enter estimated sitting',
+			'Enter estimated reporting time'
+		],
+		fields: ['preparation-time', 'sitting-time', 'reporting-time'],
+		verifyInlineErrors: true
+	});
+
+	// Test invalid values
+	caseDetailsPage.addEstimates('0.25', 'sittingTime', '99.5');
+	caseDetailsPage.verifyErrorMessages({
+		messages: [
+			'Estimated preparation time must be in increments of 0.5',
+			'Estimated sitting time must be a number',
+			'Estimated reporting time must be between 0 and 99'
+		],
+		fields: ['preparation-time', 'sitting-time', 'reporting-time'],
+		verifyInlineErrors: true
+	});
+});
+
+it('should add inquiry Estimates', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.addInquiryViaApi(caseRef, inquiryDate);
+	});
+
+	cy.visit(urlPaths.appealsList);
+	listCasesPage.clickAppealByRef(caseRef);
+	caseDetailsPage.clickAccordionByButton('Inquiry');
+	caseDetailsPage.clickInquiryEstimateLink();
+
+	// Add initial estimates and verify
+	caseDetailsPage.addEstimates(
+		initialEstimates.preparationTime,
+		initialEstimates.sittingTime,
+		initialEstimates.reportingTime
+	);
+	inquirySectionPage.verifyInquiryHeader(headers.inquiryEstimate.checkDetails);
+
+	// Verify initial estimates on check details page
+	['preparation', 'sitting', 'reporting'].forEach((type) => {
+		inquirySectionPage.verifyInquiryEstimate(
+			`estimated-${type}-time`,
+			initialEstimates[`${type}Time`]
+		);
+	});
+
+	// Update estimates and verify changes
+	caseDetailsPage.clickRowChangeLink('estimated-preparation-time');
+	caseDetailsPage.addEstimates(
+		updatedEstimates.preparationTime,
+		updatedEstimates.sittingTime,
+		updatedEstimates.reportingTime
+	);
+
+	['preparation', 'sitting', 'reporting'].forEach((type) => {
+		inquirySectionPage.verifyInquiryEstimate(
+			`estimated-${type}-time`,
+			updatedEstimates[`${type}Time`]
+		);
+	});
+
+	// Submit and verify successful addition
+	caseDetailsPage.clickButtonByText('Add inquiry estimates');
+	caseDetailsPage.validateBannerMessage('Success', 'Inquiry estimates added');
+
+	// Verify final estimates in UI and API response
+	['preparation', 'sitting', 'reporting'].forEach((type) => {
+		inquirySectionPage.verifyInquiryEstimate(`${type}-time`, updatedEstimates[`${type}Time`]);
+	});
+
+	cy.loadAppealDetails(caseRef).then((appealDetails) => {
+		const { preparationTime, sittingTime, reportingTime } = appealDetails?.inquiryEstimate || {};
+		expect(preparationTime).to.eq(updatedEstimates.preparationTime);
+		expect(sittingTime).to.eq(updatedEstimates.sittingTime);
+		expect(reportingTime).to.eq(updatedEstimates.reportingTime);
+	});
 });
 
 const verifyDateChanges = (addedDays) => {

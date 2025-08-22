@@ -180,6 +180,31 @@ const appealsApiRequests = {
 			postcode: 'NR35 2ND',
 			town: 'Woodton'
 		}
+	},
+	inquiryDetails: {
+		inquiryStartTime: "2026-11-10T00:00:00.000Z",
+		inquiryEndTime: "2026-11-10T00:00:00.000Z",
+		startDate: "2026-11-10T00:00:00.000Z",
+		estimatedDays: "5",
+		lpaQuestionnaireDueDate: "2026-11-10T00:00:00.000Z",
+		statementDueDate: "2026-11-10T00:00:00.000Z",
+		ipCommentsDueDate: "2026-11-10T00:00:00.000Z",
+		statementOfCommonGroundDueDate: "2026-11-10T00:00:00.000Z",
+		proofOfEvidenceAndWitnessesDueDate: "2026-11-10T00:00:00.000Z",
+		planningObligationDueDate: "2026-11-10T00:00:00.000Z",
+		address: {
+			addressLine1: "1 Grove Cottage",
+			addressLine2: "Shotesham Road",
+			country: "United Kingdom",
+			county: "Devon",
+			postcode: "NR35 2ND",
+			town: "Woodton"
+		}
+	},
+	estimateDetails: {
+		preparationTime: 1.5,
+		sittingTime: 0.5,
+		reportingTime: 2
 	}
 };
 

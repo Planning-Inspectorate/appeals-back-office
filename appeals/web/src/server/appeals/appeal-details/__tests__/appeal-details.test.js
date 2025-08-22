@@ -2960,7 +2960,7 @@ describe('appeal-details', () => {
 				const response = await request.get(`${baseUrl}/${appealId}`);
 
 				expect(response.text).toContain(
-					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-details/procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+					'<a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-case-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
 				);
 			});
 

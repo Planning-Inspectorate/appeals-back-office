@@ -2,7 +2,7 @@
 import supertest from 'supertest';
 import { app } from '../../../app-test.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal } from '#tests/appeals/mocks.js';
+import { householdAppeal, appealStatus } from '#tests/appeals/mocks.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { jest } from '@jest/globals';
 
@@ -145,6 +145,61 @@ describe('appeal status routes', () => {
 					.send({ status });
 
 				expect(response.status).toEqual(400);
+			});
+		});
+	});
+
+	describe('/appeals/:appealId/appeal-status/:status/created-date', () => {
+		describe('GET', () => {
+			const appealId = 1;
+			const status = APPEAL_CASE_STATUS.VALIDATION;
+
+			test('returns 200 with created date for status and appeal', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appealStatus.findFirst.mockResolvedValue(appealStatus);
+				const expectedDate = { createdDate: '2050-01-01T00:00:00.000Z' };
+				const response = await request
+					.get(`/appeals/${appealId}/appeal-status/${status}/created-date`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual(expectedDate);
+			});
+
+			test('returns 404 when the appeal is not found for that appealId', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue({});
+
+				const response = await request
+					.get(`/appeals/${appealId}/appeal-status/${status}/created-date`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(404);
+			});
+
+			test('returns 400 when the status is not part of accepted list', async () => {
+				const invalidAppealStatus = 'STATUS_DOES_NOT_EXIST';
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.get(`/appeals/${appealId}/appeal-status/${invalidAppealStatus}/created-date`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.text).toEqual(
+					'{"errors":{"status":"Must be one of the following values: assign_case_officer, awaiting_event, awaiting_transfer, closed, complete, event, evidence, final_comments, invalid, issue_determination, lpa_questionnaire, ready_to_start, statements, transferred, validation, withdrawn, witnesses"}}'
+				);
+			});
+
+			test('should return an empty object if no status found for that appealId', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appealStatus.findFirst.mockResolvedValue();
+
+				const response = await request
+					.get(`/appeals/${appealId}/appeal-status/${status}/created-date`)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({});
 			});
 		});
 	});

@@ -696,7 +696,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">Appellant costs application documents</h1>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">
@@ -742,8 +744,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                 </tbody>
             </table>
         </div>
-    </div><a href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1"
-    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>
+    </div>
 </main>"
 `;
 
@@ -753,7 +754,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">Appellant costs correspondence documents</h1>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">
@@ -799,8 +802,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                 </tbody>
             </table>
         </div>
-    </div><a href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3"
-    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>
+    </div>
 </main>"
 `;
 
@@ -810,7 +812,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">Appellant costs withdrawal documents</h1>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">
@@ -856,8 +860,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                 </tbody>
             </table>
         </div>
-    </div><a href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2"
-    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>
+    </div>
 </main>"
 `;
 
@@ -867,7 +870,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">LPA costs application documents</h1>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">
@@ -913,8 +918,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                 </tbody>
             </table>
         </div>
-    </div><a href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4"
-    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>
+    </div>
 </main>"
 `;
 
@@ -924,7 +928,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">LPA costs correspondence documents</h1>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">
@@ -970,8 +976,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                 </tbody>
             </table>
         </div>
-    </div><a href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6"
-    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>
+    </div>
 </main>"
 `;
 
@@ -981,7 +986,9 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">LPA costs withdrawal documents</h1>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">
@@ -1027,8 +1034,7 @@ exports[`costs application, withdrawal and correspondence GET /costs/:costsCateg
                 </tbody>
             </table>
         </div>
-    </div><a href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5"
-    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>
+    </div>
 </main>"
 `;
 
@@ -5740,7 +5746,9 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId should re
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">Costs decision documents</h1>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add documents</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">
@@ -5786,8 +5794,7 @@ exports[`costs decision GET /costs/decision/manage-documents/:folderId should re
                 </tbody>
             </table>
         </div>
-    </div><a href="/appeals-service/appeal-details/1/costs/decision/upload-documents/7"
-    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
+    </div>
 </main>"
 `;
 

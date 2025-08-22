@@ -88,7 +88,7 @@ describe('audit', () => {
 
 			expect(unprettifiedHtml).toContain('Case history</h1>');
 			expect(unprettifiedHtml).toContain(
-				'<td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Ready to start</strong></td>'
+				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Ready to start</strong></td>'
 			);
 			expect(unprettifiedHtml).toContain('<td class="govuk-table__cell">Case updated</td>');
 			expect(unprettifiedHtml).toContain(
@@ -96,16 +96,16 @@ describe('audit', () => {
 			);
 			expect(unprettifiedHtml).toContain('<td class="govuk-table__cell">Case updated</td>');
 			expect(unprettifiedHtml).toContain(
-				'<td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong></td>'
+				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong></td>'
 			);
 			expect(unprettifiedHtml).toContain(
-				'<td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Statements</strong></td>'
+				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Statements</strong></td>'
 			);
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">LPA questionnaire updated</td>'
 			);
 			expect(unprettifiedHtml).toContain(
-				'<td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Final comments</strong></td>'
+				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Final comments</strong></td>'
 			);
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">Statements and IP comments shared</td>'
@@ -117,7 +117,7 @@ describe('audit', () => {
 				'<td class="govuk-table__cell">LPA final comments accepted</td>'
 			);
 			expect(unprettifiedHtml).toContain(
-				'<td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Site visit ready to set up</strong></td>'
+				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Site visit ready to set up</strong></td>'
 			);
 			expect(unprettifiedHtml).toContain(
 				'<td class="govuk-table__cell">Final comments shared</td>'
@@ -126,10 +126,10 @@ describe('audit', () => {
 				'<td class="govuk-table__cell">The site visit was arranged for Thursday 2 October</td>'
 			);
 			expect(unprettifiedHtml).toContain(
-				'<td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--yellow">Awaiting site visit</strong></td>'
+				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--yellow">Awaiting site visit</strong></td>'
 			);
 			expect(unprettifiedHtml).toContain(
-				'<td class="govuk-table__cell">The case has progressed to <strong class="govuk-tag govuk-tag--green">Issue decision</strong></td>'
+				'<td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Issue decision</strong></td>'
 			);
 		});
 	});

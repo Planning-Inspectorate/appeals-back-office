@@ -5,9 +5,8 @@ import representationRepository from '#repositories/representation.repository.js
 import serviceUserRepository from '#repositories/service-user.repository.js';
 import BackOfficeAppError from '#utils/app-error.js';
 import logger from '#utils/logger.js';
-import transitionState from '#state/transition-state.js';
+import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
 import {
-	CASE_RELATIONSHIP_LINKED,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
@@ -220,26 +219,6 @@ export async function updateRepresentation(repId, payload) {
 	return updatedRep;
 }
 
-/**
- *
- * @param {Appeal} appeal
- * @param {string} azureAdUserId
- * @param {string} trigger
- * @returns {Promise<void>}
- */
-async function transitionLinkedChildAppealsState(appeal, azureAdUserId, trigger) {
-	if (appeal.childAppeals?.length) {
-		await Promise.all(
-			appeal.childAppeals
-				.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
-				.map((childAppeal) =>
-					// @ts-ignore
-					transitionState(childAppeal.childId, azureAdUserId, trigger)
-				)
-		);
-	}
-}
-
 /** @typedef {Awaited<ReturnType<updateRepresentation>>} UpdatedDBRepresentation */
 
 /** @typedef {(appeal: Appeal, azureAdUserId: string, notifyClient: import('#endpoints/appeals.js').NotifyClient) => Promise<Representation[]>} PublishFunction */
@@ -407,6 +386,10 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 		) {
 			notifyAppellantFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
 		}
+		if (result.length === 0) {
+			notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'appellant');
+			notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'local planning authority');
+		}
 	} catch (error) {
 		logger.error(error);
 	}
@@ -425,6 +408,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
  * @property {boolean} [hasLpaStatement]
  * @property {boolean} [hasIpComments]
  * @property {string} [subject]
+ * @property {string} [userTypeNoCommentSubmitted]
  * @property {string} azureAdUserId
  */
 
@@ -442,6 +426,7 @@ async function notifyPublished({
 	hasLpaStatement = false,
 	hasIpComments = false,
 	subject = '',
+	userTypeNoCommentSubmitted = '',
 	azureAdUserId
 }) {
 	const lpaReference = appeal.applicationReference;
@@ -473,7 +458,8 @@ async function notifyPublished({
 			what_happens_next: whatHappensNext,
 			has_ip_comments: hasIpComments,
 			has_statement: hasLpaStatement,
-			...(subject ? { subject } : {})
+			...(subject ? { subject } : {}),
+			user_type: userTypeNoCommentSubmitted
 		}
 	});
 }
@@ -517,5 +503,27 @@ function notifyAppellantFinalCommentsPublished(appeal, notifyClient, azureAdUser
 		templateName: 'final-comments-done-appellant',
 		recipientEmail,
 		azureAdUserId
+	});
+}
+
+/**
+ * @param {Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
+ * @param {'appellant' | 'local planning authority'} userTypeNoCommentSubmitted
+ */
+function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCommentSubmitted) {
+	const recipientEmail =
+		userTypeNoCommentSubmitted === 'appellant'
+			? appeal.lpa?.email
+			: appeal.agent?.email || appeal.appellant?.email;
+
+	return notifyPublished({
+		appeal,
+		notifyClient,
+		templateName: 'final-comments-none',
+		recipientEmail,
+		azureAdUserId,
+		userTypeNoCommentSubmitted
 	});
 }

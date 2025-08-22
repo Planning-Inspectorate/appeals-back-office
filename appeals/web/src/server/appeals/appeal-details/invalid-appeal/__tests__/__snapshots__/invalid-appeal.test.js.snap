@@ -187,6 +187,32 @@ exports[`invalid-appeal GET /check should render the invalid appeal check page 1
 </main>"
 `;
 
+exports[`invalid-appeal GET /view should render the invalid appeal view page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Appeal marked as invalid</h1>
+        </div>
+    </div>
+    <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why is the appeal invalid?</dt>
+            <dd             class="govuk-summary-list__value">
+                <ul>
+                    <li>Appellant name is not the same on the application form and appeal form</li>
+                    <li>Attachments and/or appendices have not been included to the full statement
+                        of case: test reason 1</li>
+                    <li>Other: test reason 2</li>
+                    <li>Other: test reason 3</li>
+                </ul>
+                </dd>
+        </div>
+        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Invalid date</dt>
+            <dd class="govuk-summary-list__value">1 January 2050</dd>
+        </div>
+    </dl>
+</main>"
+`;
+
 exports[`invalid-appeal POST  / , /new should re-render the invalid reason page with the expected error message if a single invalid reason with text was provided but the matching text property exceeds the character limit 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

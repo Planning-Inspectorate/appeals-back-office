@@ -1831,6 +1831,11 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (5. Upload documents)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Design and access statement</dt>
+                            <dd                             class="govuk-summary-list__value">No documents</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-design-access-statement">Add<span class="govuk-visually-hidden"> Design and access statement (5. Upload documents)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Plans, drawings and list of plans</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supporting-documents">Add<span class="govuk-visually-hidden"> Plans, drawings and list of plans (5. Upload documents)</span></a>
@@ -3983,7 +3988,9 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">Changed description documents</h1>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/appellant-case/add-documents/2864"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">
@@ -4062,8 +4069,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                 </tbody>
             </table>
         </div>
-    </div><a href="/appeals-service/appeal-details/1/appellant-case/add-documents/2864"
-    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
+    </div>
 </main>"
 `;
 
@@ -4102,7 +4108,9 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">Additional documents</h1>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/appellant-case/add-documents/2865"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">
@@ -4189,8 +4197,7 @@ exports[`appellant-case GET /appellant-case/manage-documents/:folderId/ should r
                 </tbody>
             </table>
         </div>
-    </div><a href="/appeals-service/appeal-details/1/appellant-case/add-documents/2865"
-    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
+    </div>
 </main>"
 `;
 
