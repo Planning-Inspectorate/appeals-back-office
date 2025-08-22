@@ -185,7 +185,7 @@ const appealsApiRequests = {
 		inquiryStartTime: "2026-11-10T00:00:00.000Z",
 		inquiryEndTime: "2026-11-10T00:00:00.000Z",
 		startDate: "2026-11-10T00:00:00.000Z",
-		estimatedDays: "5",
+		//estimatedDays: "5",
 		lpaQuestionnaireDueDate: "2026-11-10T00:00:00.000Z",
 		statementDueDate: "2026-11-10T00:00:00.000Z",
 		ipCommentsDueDate: "2026-11-10T00:00:00.000Z",

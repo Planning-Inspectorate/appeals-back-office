@@ -8,7 +8,7 @@ import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { urlPaths } from '../../support/urlPaths.js';
 import { tag } from '../../support/tag';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { formatDateAndTime } from '../../support/utils/formatDateAndTime';
+import { formatDateAndTime } from '../../support/utils/dateAndTime';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();

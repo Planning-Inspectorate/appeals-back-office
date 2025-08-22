@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Page } from './basePage';
-import { formatDateAndTime } from '../support/utils/formatDateAndTime';
+import { formatDateAndTime } from '../support/utils/dateAndTime';
 
 export class DateTimeSection extends Page {
 	// S E L E C T O R S
@@ -139,6 +139,21 @@ export class DateTimeSection extends Page {
 		this.#set(this.elements.enterHearingTimeMinute(), minute);
 	}
 
+	getDateAndTime(dateSelectorPrefix) {
+		// get date
+		const day = this.#getElementValue(this.selectorPrefix[dateSelectorPrefix], '-date-day') + '';
+		const month =
+			+this.#getElementValue(this.selectorPrefix[dateSelectorPrefix], '-date-month') - 1 + ''; // month is 0 - 11
+		const year = this.#getElementValue(this.selectorPrefix[dateSelectorPrefix], '-date-year') + '';
+
+		//get time
+		const hours = this.#getElementValue(this.selectorPrefix[dateSelectorPrefix], '-time-hour') + '';
+		const minutes =
+			this.#getElementValue(this.selectorPrefix[dateSelectorPrefix], '-time-minute') + '';
+
+		return { day, month, year, hours, minutes };
+	}
+
 	// Private helper methods
 	#setAllDateFields(dateSelectorPrefix, date) {
 		this.#set(this.#getElement(dateSelectorPrefix, 'day'), date.getDate());
@@ -169,5 +184,29 @@ export class DateTimeSection extends Page {
 
 	#getElement(dateSelectorPrefix, dateType) {
 		return cy.get(dateSelectorPrefix + dateType);
+	}
+
+	#getElementValue(dateSelectorPrefix, dateType) {
+		/*let value;
+		cy.get(dateSelectorPrefix + dateType).then(($element) => { 
+			value = $element;
+		});
+
+		cy.log(`** getElementValue - value is `, value);*/
+
+		let thevalue;
+		cy.get(dateSelectorPrefix + dateType)
+			/*.summaryListKey()
+			.contains(rowName)
+			.next()*/
+			.invoke('prop', 'value')
+			.then(async (value) => {
+				cy.log(`** getElementValue - value is `, value);
+				thevalue = await value;
+			});
+
+		cy.log(`** getElementValue - thevalue is `, thevalue);
+
+		return thevalue;
 	}
 }
