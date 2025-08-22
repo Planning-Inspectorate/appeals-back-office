@@ -21,6 +21,19 @@ describe('appeal types routes', () => {
 				expect(response.body).toEqual(appealTypes);
 			});
 
+			test('gets appeal types that are active in CBOS if query parameter filterEnabled is true', async () => {
+				// @ts-ignore
+				databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+
+				const response = await request
+					.get('/appeals/appeal-types')
+					.query('filterEnabled=true')
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual(appealTypes);
+			});
+
 			test('returns an error if appeal types are not found', async () => {
 				// @ts-ignore
 				databaseConnector.appealType.findMany.mockResolvedValue([]);

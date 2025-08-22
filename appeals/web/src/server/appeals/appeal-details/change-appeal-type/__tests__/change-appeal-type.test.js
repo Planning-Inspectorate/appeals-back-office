@@ -14,6 +14,7 @@ const resubmitPath = '/resubmit';
 const changeAppealFinalDatePath = '/change-appeal-final-date';
 const addHorizonReferencePath = '/add-horizon-reference';
 const checkTransferPath = '/check-transfer';
+const markAppealInvalidPath = '/mark-appeal-invalid';
 
 /** @typedef {import('../../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 
@@ -137,9 +138,7 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Should the appellant be asked to resubmit this appeal?</h1>'
-			);
+			expect(element.innerHTML).toContain('Does the appellant need to resubmit the appeal?</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -154,7 +153,14 @@ describe('change-appeal-type', () => {
 	});
 
 	describe('POST /change-appeal-type/resubmit', () => {
-		it('should redirect to the final date page the required field is equal to yes', async () => {
+		beforeEach(async () => {
+			// Ensure changeAppealType is set in session
+			await request.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`).send({
+				appealType: 1
+			});
+		});
+
+		it('should redirect to the mark appeal invalid page the required field is equal to yes', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
 				.send({
@@ -162,9 +168,39 @@ describe('change-appeal-type', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toContain(changeAppealFinalDatePath);
+			expect(response.headers.location).toContain(markAppealInvalidPath);
 			expect(response.text).toContain(
-				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/change-appeal-final-date'
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/mark-appeal-invalid'
+			);
+		});
+
+		// To Do: unskip when /update-appeal is developed
+		it.skip('should redirect to update appeal page if the required field is equal to no and the appeal type is in CBOS', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
+				.send({
+					appealResubmit: false
+				});
+
+			expect(response.statusCode).toBe(200);
+			expect(response.headers.location).toContain(markAppealInvalidPath);
+			expect(response.text).toContain(
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/update-appeal'
+			);
+		});
+
+		// To Do: unskip when /transfer-appeal is developed
+		it.skip('should redirect to transfer appeal page if the required field is equal to no and appeal type is not in CBOS', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
+				.send({
+					appealResubmit: false
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toContain(markAppealInvalidPath);
+			expect(response.text).toContain(
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/transfer-appeal'
 			);
 		});
 
@@ -180,9 +216,7 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'Should the appellant be asked to resubmit this appeal?</h1>'
-			);
+			expect(element.innerHTML).toContain('Does the appellant need to resubmit the appeal?</h1>');
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',

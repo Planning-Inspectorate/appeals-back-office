@@ -8,15 +8,18 @@ import {
 const lookupListData = [
 	{
 		id: 1,
-		name: 'Value 1'
+		name: 'Value 1',
+		key: 'D'
 	},
 	{
 		id: 2,
-		name: 'Value 2'
+		name: 'Value 2',
+		key: 'ZA'
 	},
 	{
 		id: 3,
-		name: 'Other'
+		name: 'Other',
+		key: 'W'
 	}
 ];
 

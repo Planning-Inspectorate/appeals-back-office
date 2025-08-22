@@ -2,8 +2,8 @@ import logger from '#lib/logger.js';
 import {
 	getAppealTypes,
 	postAppealChangeRequest,
-	postAppealTransferRequest,
-	postAppealTransferConfirmation
+	postAppealTransferConfirmation,
+	getNoResubmitAppealRequestRedirectUrl
 } from './change-appeal-type.service.js';
 import {
 	appealTypePage,
@@ -11,7 +11,8 @@ import {
 	resubmitAppealPage,
 	addHorizonReferencePage,
 	checkTransferPage,
-	invalidChangeAppealType
+	invalidChangeAppealType,
+	changeAppealMarkAppealInvalidPage
 } from './change-appeal-type.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
@@ -42,7 +43,7 @@ export const postAppealType = async (request, response) => {
 
 		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
 		request.session.changeAppealType = {
-			appealId: appealId,
+			appealId,
 			...request.session.changeAppealType,
 			appealTypeId: parseInt(appealType, 10)
 		};
@@ -130,11 +131,12 @@ export const postResubmitAppeal = async (request, response) => {
 		const isResubmit = appealResubmit === 'true';
 
 		if (!isResubmit) {
-			const appealTypeId = parseInt(request.session.changeAppealType.appealTypeId, 10);
-
-			await postAppealTransferRequest(request.apiClient, appealId, appealTypeId);
-
-			return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+			const redirectUrl = await getNoResubmitAppealRequestRedirectUrl(
+				request.apiClient,
+				request.session.changeAppealType.appealTypeId,
+				appealId
+			);
+			return response.redirect(redirectUrl);
 		}
 
 		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
@@ -144,7 +146,7 @@ export const postResubmitAppeal = async (request, response) => {
 		};
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/change-appeal-type/change-appeal-final-date`
+			`/appeals-service/appeal-details/${appealId}/change-appeal-type/mark-appeal-invalid`
 		);
 	} catch (error) {
 		logger.error(error);
@@ -400,6 +402,55 @@ export const postCheckTransfer = async (request, response) => {
 		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const markAppealInvalid = async (request, response) => {
+	const {
+		errors,
+		params: { appealId },
+		session: { changeAppealType }
+	} = request;
+	const appealData = request.currentAppeal;
+	const appealTypes = await getAppealTypes(request.apiClient);
+	const changeAppeal = appealTypes.find(
+		(appealType) => appealType.id === parseInt(changeAppealType.appealTypeId)
+	);
+
+	if (!changeAppeal) {
+		logger.error('error');
+		return response.status(500).render('app/500.njk');
+	}
+
+	const mappedPageContent = changeAppealMarkAppealInvalidPage(
+		appealId,
+		appealData.appealType.toLowerCase(),
+		changeAppeal.type
+	);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postMarkAppealInvalid = (request, response) => {
+	try {
+		const { appealId } = request.params;
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/change-appeal-type/change-appeal-final-date`
+		);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');

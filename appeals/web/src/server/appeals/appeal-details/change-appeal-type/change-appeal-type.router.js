@@ -18,6 +18,11 @@ router
 	.post(validators.validateResubmitAppeal, asyncHandler(controller.postResubmitAppeal));
 
 router
+	.route('/mark-appeal-invalid')
+	.get(asyncHandler(controller.markAppealInvalid))
+	.post(asyncHandler(controller.postMarkAppealInvalid));
+
+router
 	.route('/change-appeal-final-date')
 	.get(asyncHandler(controller.getChangeAppealFinalDate))
 	.post(
