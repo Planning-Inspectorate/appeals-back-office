@@ -1,6 +1,10 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import {
+	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsById,
+	checkAppealExistsByIdAndAddSelectToRequest
+} from '#middleware/check-appeal-exists-and-add-to-request.js';
 import {
 	loadAllAppealTypesAndAddToRequest,
 	validateAppealType,
@@ -39,7 +43,7 @@ router.get(
 		#swagger.responses[400] = {}
 	 */
 	loadAllAppealTypesAndAddToRequest,
-	checkAppealExistsByIdAndAddToRequest,
+	checkAppealExistsById,
 	asyncHandler(getAppealTypes)
 );
 
@@ -63,7 +67,15 @@ router.post(
 		#swagger.responses[400] = {}
 	 */
 	loadAllAppealTypesAndAddToRequest,
-	checkAppealExistsByIdAndAddToRequest,
+	asyncHandler(
+		checkAppealExistsByIdAndAddSelectToRequest({
+			appealStatus: true,
+			appealType: true,
+			address: true,
+			agent: true,
+			appellant: true
+		})
+	),
 	validateAppealStatus,
 	validateAppealType,
 	postAppealTypeChangeValidator,

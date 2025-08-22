@@ -47,3 +47,41 @@ export const checkAppealExistsByCaseReferenceAndAddToRequest = async (req, res, 
 	req.appeal = appeal;
 	next();
 };
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns {Promise<Response | void>}
+ */
+export const checkAppealExistsById = async (req, res, next) => {
+	const {
+		params: { appealId }
+	} = req;
+
+	const appeal = await appealRepository.getAppealById(Number(appealId), false);
+
+	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
+		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
+	}
+
+	next();
+};
+
+/**
+ * @param {import('#db-client').Prisma.AppealInclude} select
+ * @returns {(req: Request, res: Response, next: NextFunction) => Promise<Response | void>}
+ */
+export const checkAppealExistsByIdAndAddSelectToRequest = (select) => async (req, res, next) => {
+	const {
+		params: { appealId }
+	} = req;
+
+	const appeal = await appealRepository.getAppealByIdWithInclude(Number(appealId), select);
+
+	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
+		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
+	}
+
+	next();
+};

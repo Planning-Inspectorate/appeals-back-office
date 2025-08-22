@@ -120,8 +120,9 @@ function mapAppealTypesToSelectItemParameters(appealTypes, changeAppeal, current
 			}
 			return a.key.localeCompare(b.key);
 		})
+		.filter((appealType) => appealType.key !== 'Z') // Don't show old CAS type
 		.map((appealType) => ({
-			value: appealType.id.toString(),
+			value: appealType.id.toString(), // change this?
 			text: appealType.changeAppealType,
 			checked: isAppealTypeRadioChecked(appealType, changeAppeal, currentAppealType)
 		}));
@@ -138,7 +139,7 @@ function isAppealTypeRadioChecked(appealType, changeAppeal, currentAppealType) {
 	const changeAppealExists = changeAppeal !== undefined && 'appealTypeId' in changeAppeal;
 
 	return (
-		(changeAppealExists && changeAppeal.appealTypeId === appealType.id) ||
+		(changeAppealExists && Number(changeAppeal.appealTypeId) === appealType.id) ||
 		(!changeAppealExists && currentAppealType === appealType.type)
 	);
 }
@@ -159,7 +160,7 @@ export function resubmitAppealPage(appealDetails, changeAppeal, errorMessage) {
 			idPrefix: 'appeal-resubmit',
 			fieldset: {
 				legend: {
-					text: 'Should the appellant be asked to resubmit this appeal?',
+					text: 'Does the appellant need to resubmit this appeal?',
 					isPageHeading: true,
 					classes: 'govuk-fieldset__legend--l'
 				}
@@ -184,9 +185,9 @@ export function resubmitAppealPage(appealDetails, changeAppeal, errorMessage) {
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Should the appellant be asked to resubmit this appeal? - ${shortAppealReference}`,
+		title: 'Does the appellant need to resubmit this appeal?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/appeal-type`,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: `Appeal ${shortAppealReference} - change appeal type`,
 		pageComponents: [selectResubmitAppealComponent]
 	};
 
@@ -418,6 +419,36 @@ export function changeAppealFinalDatePage(
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [selectDateComponent, insetTextComponent],
 		submitButtonText: 'Confirm'
+	};
+
+	return pageContent;
+}
+
+/**
+ *
+ * @param {string} appealId
+ * @param {string} existingAppealType
+ * @param {string} newAppealType
+ * @returns
+ */
+export function changeAppealMarkAppealInvalidPage(appealId, existingAppealType, newAppealType) {
+	/** @type {PageComponent} */
+	const textComponent = {
+		type: 'html',
+		parameters: {
+			html: `
+			<p class="govuk-body">You need to add a deadline for the appellant to resubmit the new ${newAppealType} appeal.<p>
+      	`
+		}
+	};
+
+	const pageContent = {
+		title: `We will mark the ${existingAppealType} appeal as invalid`,
+		backLinkUrl: ``,
+		preHeading: `Appeal ${appealId}`,
+		heading: `We will mark the ${existingAppealType} appeal as invalid`,
+		pageComponents: [textComponent],
+		submitButtonText: 'Continue'
 	};
 
 	return pageContent;

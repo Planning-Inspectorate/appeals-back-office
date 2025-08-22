@@ -16,6 +16,8 @@ import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 /**
  * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise
  * @template T
+ * @typedef {import('#db-client').Prisma.AppealSelect} AppealSelect
+ * @typedef {import('#db-client').Prisma.AppealInclude} AppealInclude
  */
 
 const linkedAppealsInclude = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)
@@ -147,16 +149,35 @@ const appealDetailsInclude = {
  * @param {number} id
  * @returns {Promise<Appeal|undefined>}
  */
-const getAppealById = async (id) => {
+const getAppealById = async (id, includeDetails = true) => {
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			id
 		},
-		include: appealDetailsInclude
+		include: includeDetails ? appealDetailsInclude : null
 	});
 
 	if (appeal) {
 		// @ts-ignore
+		return appeal;
+	}
+};
+
+/**
+ *
+ * @param {number} id
+ * @param {AppealInclude<T>} include
+ * @template T
+ */
+const getAppealByIdWithInclude = async (id, include) => {
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		include
+	});
+
+	if (appeal) {
 		return appeal;
 	}
 };
@@ -472,6 +493,7 @@ const getAppealsWithCompletedEvents = () =>
 export default {
 	getLinkedAppeals,
 	getAppealById,
+	getAppealByIdWithInclude,
 	getAppealByAppealReference,
 	updateAppealById,
 	setAppealDecision,

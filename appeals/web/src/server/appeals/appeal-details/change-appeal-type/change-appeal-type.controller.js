@@ -11,40 +11,48 @@ import {
 	resubmitAppealPage,
 	addHorizonReferencePage,
 	checkTransferPage,
-	invalidChangeAppealType
+	invalidChangeAppealType,
+	changeAppealMarkAppealInvalidPage
 } from './change-appeal-type.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+// import featureFlags from '#common/feature-flags.js';
+// import { APPEAL_TYPE_CHANGE_APPEALS } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+
+/** @typedef {import('@pins/express/types/express.js').Request} Request */
+/** @typedef {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} Response */
+/** @typedef {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} ChangeAppealTypeRequest */
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {Request} request
+ * @param {Response} response
  */
 export const getAppealType = async (request, response) => {
 	return renderAppealType(request, response);
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {Request} request
+ * @param {Response} response
  */
 export const postAppealType = async (request, response) => {
 	try {
 		const { appealId } = request.params;
-		const { appealType } = request.body;
+		const { appealType: appealTypeId } = request.body;
 		const { errors } = request;
 
 		if (errors) {
 			return renderAppealType(request, response);
 		}
 
-		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		/** @type {ChangeAppealTypeRequest} */
 		request.session.changeAppealType = {
-			appealId: appealId,
+			appealId,
 			...request.session.changeAppealType,
-			appealTypeId: parseInt(appealType, 10)
+			appealTypeId
 		};
 
 		return response.redirect(
@@ -57,9 +65,8 @@ export const postAppealType = async (request, response) => {
 };
 
 /**
- *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {Request} request
+ * @param {Response} response
  */
 const renderAppealType = async (request, response) => {
 	const { errors } = request;
@@ -77,6 +84,22 @@ const renderAppealType = async (request, response) => {
 	) {
 		request.session.changeAppealType = {};
 	}
+
+	// CAS Planning, CAS Advert, Advertisement
+	/** @type {Array<string>} */
+	const filterThese = [
+		APPEAL_TYPE.CAS_ADVERTISEMENT,
+		APPEAL_TYPE.CAS_PLANNING,
+		APPEAL_TYPE.ADVERTISEMENT
+	];
+	const appealTypeIdsToFilter = appealTypes
+		.filter((appealType) => filterThese.includes(appealType.type))
+		.map((appealType) => appealType.id);
+
+	request.session.changeAppealType = {
+		...request.session.changeAppealType,
+		appealTypeIdsToFilter
+	};
 
 	const validAppealChangeTypeStatuses = [
 		APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
@@ -106,16 +129,16 @@ const renderAppealType = async (request, response) => {
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {Request} request
+ * @param {Response} response
  */
 export const getResubmitAppeal = async (request, response) => {
 	return renderResubmitAppeal(request, response);
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {Request} request
+ * @param {Response} response
  */
 export const postResubmitAppeal = async (request, response) => {
 	try {
@@ -130,9 +153,16 @@ export const postResubmitAppeal = async (request, response) => {
 		const isResubmit = appealResubmit === 'true';
 
 		if (!isResubmit) {
-			const appealTypeId = parseInt(request.session.changeAppealType.appealTypeId, 10);
+			/** @type {ChangeAppealTypeRequest} */
+			const { appealTypeId, appealTypeIdsToFilter } = request.session.changeAppealType;
+			// if (featureFlags.isFeatureActive('') && appealTypeIdsToFilter?.includes(appealTypeId)) {
+			if (appealTypeIdsToFilter?.includes(appealTypeId)) {
+				return response.redirect(
+					`/appeals-service/appeal-details/${appealId}/change-appeal-type/mark-appeal-invalid`
+				);
+			}
 
-			await postAppealTransferRequest(request.apiClient, appealId, appealTypeId);
+			await postAppealTransferRequest(request.apiClient, appealId, parseInt(appealTypeId, 10));
 
 			return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 		}
@@ -144,7 +174,7 @@ export const postResubmitAppeal = async (request, response) => {
 		};
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/change-appeal-type/change-appeal-final-date`
+			`/appeals-service/appeal-details/${appealId}/change-appeal-type/mark-appeal-invalid`
 		);
 	} catch (error) {
 		logger.error(error);
@@ -154,8 +184,8 @@ export const postResubmitAppeal = async (request, response) => {
 
 /**
  *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {Request} request
+ * @param {Response} response
  */
 const renderResubmitAppeal = async (request, response) => {
 	const { errors } = request;
@@ -174,16 +204,18 @@ const renderResubmitAppeal = async (request, response) => {
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ *
+ * @param {Request} request
+ * @param {Response} response
  */
 export const getChangeAppealFinalDate = async (request, response) => {
 	return renderChangeAppealFinalDate(request, response);
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ *
+ * @param {Request} request
+ * @param {Response} response
  */
 export const postChangeAppealFinalDate = async (request, response) => {
 	try {
@@ -211,7 +243,6 @@ export const postChangeAppealFinalDate = async (request, response) => {
 			})
 		);
 
-		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
 		request.session.changeAppealType = {};
 
 		addNotificationBannerToSession({
@@ -229,8 +260,8 @@ export const postChangeAppealFinalDate = async (request, response) => {
 
 /**
  *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {Request} request
+ * @param {Response} response
  */
 const renderChangeAppealFinalDate = async (request, response) => {
 	const { errors } = request;
@@ -257,8 +288,9 @@ const renderChangeAppealFinalDate = async (request, response) => {
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ *
+ * @param {Request} request
+ * @param {Response} response
  */
 export const getAddHorizonReference = async (request, response) => {
 	return renderAddHorizonReference(request, response);
@@ -266,8 +298,8 @@ export const getAddHorizonReference = async (request, response) => {
 
 /**
  *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {Request} request
+ * @param {Response} response
  */
 const renderAddHorizonReference = async (request, response) => {
 	const { errors } = request;
@@ -283,8 +315,9 @@ const renderAddHorizonReference = async (request, response) => {
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ *
+ * @param {Request} request
+ * @param {Response} response
  */
 export const postAddHorizonReference = async (request, response) => {
 	try {
@@ -311,7 +344,7 @@ export const postAddHorizonReference = async (request, response) => {
 			return renderAddHorizonReference(request, response);
 		}
 
-		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		/** @type {ChangeAppealTypeRequest} */
 		request.session.changeAppealType = {
 			...request.session.changeAppealType,
 			transferredAppealHorizonReference: horizonReference
@@ -327,8 +360,9 @@ export const postAddHorizonReference = async (request, response) => {
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ *
+ * @param {Request} request
+ * @param {Response} response
  */
 export const getCheckTransfer = async (request, response) => {
 	return renderCheckTransfer(request, response);
@@ -336,8 +370,8 @@ export const getCheckTransfer = async (request, response) => {
 
 /**
  *
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {Request} request
+ * @param {Response} response
  */
 const renderCheckTransfer = async (request, response) => {
 	if (
@@ -363,8 +397,9 @@ const renderCheckTransfer = async (request, response) => {
 };
 
 /**
- * @param {import('@pins/express/types/express.js').Request} request
- * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ *
+ * @param {Request} request
+ * @param {Response} response
  */
 export const postCheckTransfer = async (request, response) => {
 	try {
@@ -390,7 +425,7 @@ export const postCheckTransfer = async (request, response) => {
 			request.session.changeAppealType.transferredAppealHorizonReference
 		);
 
-		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		/** @type {ChangeAppealTypeRequest} */
 		request.session.changeAppealType = {};
 
 		addNotificationBannerToSession({
@@ -400,6 +435,58 @@ export const postCheckTransfer = async (request, response) => {
 		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ *
+ * @param {Request} request
+ * @param {Response} response
+ */
+export const markAppealInvalid = async (request, response) => {
+	const {
+		errors,
+		params: { appealId },
+		session: { changeAppealType }
+	} = request;
+	console.log(changeAppealType);
+	const appealData = request.currentAppeal;
+	const appealTypes = await getAppealTypes(request.apiClient);
+	const changeAppeal = appealTypes.find(
+		(appealType) => appealType.id === parseInt(changeAppealType.appealTypeId)
+	);
+
+	if (!changeAppeal) {
+		logger.error('error');
+		return response.status(500).render('app/500.njk');
+	}
+
+	const mappedPageContent = changeAppealMarkAppealInvalidPage(
+		appealId,
+		appealData.appealType,
+		changeAppeal.type
+	);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ *
+ * @param {Request} request
+ * @param {Response} response
+ */
+export const postMarkAppealInvalid = (request, response) => {
+	try {
+		const { appealId } = request.params;
+		return response.redirect(
+			`/appeals-service/appeal-details/${appealId}/change-appeal-type/change-appeal-final-date`
+		);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
