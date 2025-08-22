@@ -5,10 +5,18 @@ import { Page } from './basePage';
 export class FileUploader extends Page {
 	fixturesPath = 'cypress/fixtures/';
 
+	sampleFiles = {
+		document: 'sample-file.doc',
+		document2: 'sample-file-2.doc',
+		document3: 'sample-file-3.doc',
+		img: 'sample-img.jpeg',
+		pdf: 'test.pdf',
+		pdf2: 'test-2.pdf'
+	};
+
 	/************************ Locators **********************/
 
 	selectors = {
-		...this.elements,
 		uploadFile: 'upload-file-button',
 		uploadedFileHeading: '.govuk-heading-s',
 		uploadedFileRows: '.pins-file-upload__files-rows > li',

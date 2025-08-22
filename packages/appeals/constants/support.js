@@ -84,7 +84,7 @@ export const AUDIT_TRAIL_DOCUMENT_NAME_CHANGED =
 	'Document {replacement0} has been updated to {replacement1}';
 export const AUDIT_TRAIL_LPAQ_IMPORT_MSG = 'The LPA questionnaire was received';
 export const AUDIT_TRAIL_REP_IMPORT_MSG = '{replacement0} was received';
-export const AUDIT_TRAIL_PROGRESSED_TO_STATUS = 'The case has progressed to {replacement0}';
+export const AUDIT_TRAIL_PROGRESSED_TO_STATUS = 'Case progressed to {replacement0}';
 export const AUDIT_TRAIL_SUBMISSION_INCOMPLETE = 'The {replacement0} was marked as incomplete';
 export const AUDIT_TRAIL_SUBMISSION_INVALID = 'Appeal marked as invalid:';
 export const AUDIT_TRAIL_REMOVED_CASE_OFFICER =
@@ -206,6 +206,7 @@ export const AUDIT_TRAIL_INQUIRY_ESTIMATES_UPDATED = 'Inquiry estimates updated'
 export const AUDIT_TRAIL_INQUIRY_ESTIMATES_REMOVED = 'Inquiry estimates removed';
 
 export const AUDIT_TRAIL_DECISION_ISSUED = 'Decision issued: {replacement0}';
+export const AUDIT_TRAIL_DECISION_LETTER_UPLOADED = 'Decision letter {replacement0} uploaded';
 export const AUDIT_TRAIL_DECISION_LETTER_UPDATED = 'Decision letter {replacement0} updated';
 export const AUDIT_TRAIL_CORRECTION_NOTICE_ADDED = 'Correction notice added: {replacement0} ';
 export const AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED = 'Appellant costs decision issued';

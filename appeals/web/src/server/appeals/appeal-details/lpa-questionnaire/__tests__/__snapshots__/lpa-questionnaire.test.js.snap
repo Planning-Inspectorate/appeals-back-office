@@ -1393,7 +1393,7 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the community infrastructure levy formally adopted?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
+                            <dd                             class="govuk-summary-list__value">Not applicable</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/is-infrastructure-levy-formally-adopted/change"
                                     data-cy="change-is-infrastructure-levy-formally-adopted">Change<span class="govuk-visually-hidden"> Is the community infrastructure levy formally adopted? (5. Planning officer’s report and supplementary documents)</span></a>
                                 </dd>
@@ -3199,7 +3199,9 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">Changed description documents</h1>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">
@@ -3278,8 +3280,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                 </tbody>
             </table>
         </div>
-    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864"
-    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
+    </div>
 </main>"
 `;
 
@@ -3318,7 +3319,9 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">Additional documents</h1>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2865"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">
@@ -3405,8 +3408,7 @@ exports[`LPA Questionnaire review GET /lpa-questionnaire/1/manage-documents/:fol
                 </tbody>
             </table>
         </div>
-    </div><a href="/appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2865"
-    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add documents</a>
+    </div>
 </main>"
 `;
 

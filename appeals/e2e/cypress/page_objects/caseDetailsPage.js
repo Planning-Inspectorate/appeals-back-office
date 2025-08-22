@@ -113,9 +113,10 @@ export class CaseDetailsPage extends Page {
 		addNotifiyingParties: () => cy.getByData(this._cyDataSelectors.addNotifyingParties),
 		manageAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.manageAgreementToChangeDescriptionEvidence),
-		issueAppellantCostsDecision: () =>
-			cy.getByData(this._cyDataSelectors.issueAppellantCostsDecision),
-		issueLpaCostsDecision: () => cy.getByData(this._cyDataSelectors.issueLpaCostsDecision),
+		issueAppellantCostsDecision: (index = 0) =>
+			cy.getByData(this._cyDataSelectors.issueAppellantCostsDecision).eq(index),
+		issueLpaCostsDecision: (index = 0) =>
+			cy.getByData(this._cyDataSelectors.issueLpaCostsDecision).eq(index),
 		addAppellantApplication: () => cy.getByData(this._cyDataSelectors.addAppellantApplication),
 		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status'),
 		changeSiteOwnership: () => cy.getByData(this._cyDataSelectors.changeSiteOwnership),
@@ -201,7 +202,11 @@ export class CaseDetailsPage extends Page {
 		postcode: () => cy.get('#post-code'),
 		changeInquiryDate: () => cy.getByData(this._cyDataSelectors.changeInquiryDate),
 		changeInquiryExpectedDays: () => cy.getByData(this._cyDataSelectors.changeInquiryNumberOfDays),
-		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`)
+		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`),
+		estimatedPreparationTime: () => cy.get('#preparation-time'),
+		estimatedSittingTime: () => cy.get('#sitting-time'),
+		estimatedReportingTime: () => cy.get('#reporting-time'),
+		caseDetailsInquiryEstimateLink: () => cy.get('#addInquiryEstimates')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -439,11 +444,11 @@ export class CaseDetailsPage extends Page {
 		cy.get(this.selectors.button).filter(':visible').contains('Add another').click();
 	}
 	addHearingLocationAddress(address) {
-		this.hearingSectionElements.address.line1().clear().type(address.line1);
-		this.hearingSectionElements.address.line2().clear().type(address.line2);
-		this.hearingSectionElements.address.town().clear().type(address.town);
-		this.hearingSectionElements.address.county().clear().type(address.county);
-		this.hearingSectionElements.address.postcode().clear().type(address.postcode);
+		this.elements.line1().clear().type(address.line1);
+		this.elements.line2().clear().type(address.line2);
+		this.elements.town().clear().type(address.town);
+		this.elements.county().clear().type(address.county);
+		this.elements.postcode().clear().type(address.postcode);
 		this.clickButtonByText('Continue');
 	}
 
@@ -453,6 +458,13 @@ export class CaseDetailsPage extends Page {
 		this.elements.town().clear().type(address.town);
 		this.elements.county().clear().type(address.county);
 		this.elements.postcode().clear().type(address.postcode);
+	}
+
+	addEstimates(preparationTime, sittingTime, reportingTime) {
+		this.elements.estimatedPreparationTime().clear().type(preparationTime);
+		this.elements.estimatedSittingTime().clear().type(sittingTime);
+		this.elements.estimatedReportingTime().clear().type(reportingTime);
+		this.clickButtonByText('Continue');
 	}
 
 	clickAddAgreementToChangeDescriptionEvidence() {
@@ -520,6 +532,10 @@ export class CaseDetailsPage extends Page {
 
 	clickHearingEstimateLink() {
 		this.elements.caseDetailsHearingEstimateLink().click();
+	}
+
+	clickInquiryEstimateLink() {
+		this.elements.caseDetailsInquiryEstimateLink().click();
 	}
 
 	clickViewCaseHistory() {

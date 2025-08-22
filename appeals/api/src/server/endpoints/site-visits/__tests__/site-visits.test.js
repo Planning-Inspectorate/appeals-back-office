@@ -14,10 +14,12 @@ import {
 	ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME,
 	SITE_VISIT_TYPE_UNACCOMPANIED,
 	SITE_VISIT_TYPE_ACCOMPANIED,
-	SITE_VISIT_TYPE_ACCESS_REQUIRED
+	SITE_VISIT_TYPE_ACCESS_REQUIRED,
+	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
+	CASE_RELATIONSHIP_LINKED
 } from '@pins/appeals/constants/support.js';
 
-import { householdAppeal as householdAppealData } from '#tests/appeals/mocks.js';
+import { appealS78, householdAppeal as householdAppealData } from '#tests/appeals/mocks.js';
 import { casPlanningAppeal as casPlanningAppealData } from '#tests/appeals/mocks.js';
 import { fullPlanningAppeal as fullPlanningAppealData } from '#tests/appeals/mocks.js';
 import { listedBuildingAppeal as listedBuildingAppealData } from '#tests/appeals/mocks.js';
@@ -31,6 +33,7 @@ import {
 	fetchRescheduleTemplateIds,
 	fetchSiteVisitScheduleTemplateIds
 } from '../site-visits.service.js';
+import { cloneDeep } from 'lodash-es';
 
 describe('site visit routes', () => {
 	/** @type {typeof householdAppealData} */
@@ -236,6 +239,82 @@ describe('site visit routes', () => {
 						]),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
+					}
+				});
+				expect(response.status).toEqual(201);
+				expect(response.body).toEqual({
+					visitDate: siteVisit.visitDate,
+					visitEndTime: siteVisit.visitEndTime,
+					visitStartTime: siteVisit.visitStartTime,
+					visitType: siteVisit.siteVisitType.name
+				});
+			});
+
+			test('creates a site visit for linked appeals', async () => {
+				const siteVisit = cloneDeep({ ...householdAppeal.siteVisit, appealId: appealS78.id });
+				const appealStatus = [{ status: 'event', valid: true }];
+				const childAppeals = [{ childId: 100, type: CASE_RELATIONSHIP_LINKED }];
+				const linkedLeadAppeal = cloneDeep({
+					...appealS78,
+					siteVisit,
+					appealStatus,
+					childAppeals
+				});
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(linkedLeadAppeal);
+				// @ts-ignore
+				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const response = await request
+					.post(`/appeals/${linkedLeadAppeal.id}/site-visits`)
+					.send({
+						visitDate: siteVisit.visitDate,
+						visitEndTime: siteVisit.visitEndTime,
+						visitStartTime: siteVisit.visitStartTime,
+						visitType: siteVisit.siteVisitType.name
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.siteVisit.create).toHaveBeenCalledWith({
+					data: {
+						appealId: linkedLeadAppeal.id,
+						visitDate: new Date(siteVisit.visitDate),
+						visitEndTime: new Date(siteVisit.visitEndTime),
+						visitStartTime: new Date(siteVisit.visitStartTime),
+						siteVisitTypeId: siteVisit.siteVisitType.id
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(3);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: linkedLeadAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_SITE_VISIT_ARRANGED, [
+							format(parseISO(siteVisit.visitDate.split('T')[0]), DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
+						]),
+						loggedAt: expect.any(Date),
+						userId: linkedLeadAppeal.caseOfficer.id
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: linkedLeadAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['awaiting_event']),
+						loggedAt: expect.any(Date),
+						userId: linkedLeadAppeal.caseOfficer.id
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
+					data: {
+						appealId: childAppeals[0].childId,
+						details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['awaiting_event']),
+						loggedAt: expect.any(Date),
+						userId: linkedLeadAppeal.caseOfficer.id
 					}
 				});
 				expect(response.status).toEqual(201);
