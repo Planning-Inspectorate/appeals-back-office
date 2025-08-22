@@ -1048,7 +1048,153 @@ exports[`change-appeal-type should re-render the final date page with an error m
 </main>"
 `;
 
-exports[`change-appeal-type should re-render the final date page with an error message if the provided date is not a business day 1`] = `
+exports[`change-appeal-type should re-render the final date page with an error message if the provided date is not a business day: abbreviated month name 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#change-appeal-final-date-day">The date must be a business day</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <div id="change-appeal-final-date-hint"
+                                class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be a business
+                                    day</p>
+                                <div class="govuk-date-input" id="change-appeal-final-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                            id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
+                                            value="4" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                            id="change-appeal-final-date-month" name="change-appeal-final-date-month"
+                                            type="text" value="Jan" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                            id="change-appeal-final-date-year" name="change-appeal-final-date-year"
+                                            type="text" value="2030" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                            type</div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`change-appeal-type should re-render the final date page with an error message if the provided date is not a business day: full month name 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#change-appeal-final-date-day">The date must be a business day</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <div id="change-appeal-final-date-hint"
+                                class="govuk-hint">For example, 27 3 2023</div>
+                                <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be a business
+                                    day</p>
+                                <div class="govuk-date-input" id="change-appeal-final-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                            id="change-appeal-final-date-day" name="change-appeal-final-date-day" type="text"
+                                            value="4" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
+                                            id="change-appeal-final-date-month" name="change-appeal-final-date-month"
+                                            type="text" value="January" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="change-appeal-final-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input govuk-input--error"
+                                            id="change-appeal-final-date-year" name="change-appeal-final-date-year"
+                                            type="text" value="2030" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
+                            type</div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`change-appeal-type should re-render the final date page with an error message if the provided date is not a business day: numeric month 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">

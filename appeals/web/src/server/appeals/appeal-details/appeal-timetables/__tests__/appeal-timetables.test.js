@@ -81,19 +81,21 @@ describe('Appeal Timetables', () => {
 	});
 
 	it('should redirect to the case details page', async () => {
-		nock('http://test/').get('/appeals/1').reply(200, finalCommentReviewData);
-		nock('http://test/').patch('/appeals/1/appeal-timetables/1').reply(200, {
-			finalCommentReviewDate: '2050-01-02T01:00:00.000Z'
-		});
+		const monthVariants = ['1', 'January', 'Jan'];
+		for (const month of monthVariants) {
+			nock('http://test/').get('/appeals/1').reply(200, finalCommentReviewData);
+			nock('http://test/').patch('/appeals/1/appeal-timetables/1').reply(200, {
+				finalCommentReviewDate: '2050-01-02T01:00:00.000Z'
+			});
+			const response = await request.post(`${baseUrl}/final-comments`).send({
+				'due-date-day': '2',
+				'due-date-month': month,
+				'due-date-year': '2050'
+			});
 
-		const response = await request.post(`${baseUrl}/final-comments`).send({
-			'due-date-day': '2',
-			'due-date-month': '1',
-			'due-date-year': '2050'
-		});
-
-		expect(response.statusCode).toBe(302);
-		expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+		}
 	});
 
 	it('should render "Schedule LPA questionnaire Date" page', async () => {
