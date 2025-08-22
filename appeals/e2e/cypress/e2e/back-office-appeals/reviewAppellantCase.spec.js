@@ -59,7 +59,7 @@ describe('Review appellant case', () => {
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.chooseCheckboxByText("LPA's decision notice is incorrect or incomplete");
-			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 1);
+			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day.', 1);
 			caseDetailsPage.clickButtonByText('Continue');
 			dateTimeSection.enterDate(dueDate);
 			caseDetailsPage.clickButtonByText('Save and Continue');
@@ -80,9 +80,9 @@ describe('Review appellant case', () => {
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.chooseCheckboxByText("LPA's decision notice is incorrect or incomplete");
-			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 1);
+			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day.', 1);
 			caseDetailsPage.clickAddAnother();
-			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 2);
+			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day.', 2);
 			caseDetailsPage.clickButtonByText('Continue');
 			dateTimeSection.enterDate(dueDate);
 			caseDetailsPage.clickButtonByText('Save and Continue');
