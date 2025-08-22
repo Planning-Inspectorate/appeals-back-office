@@ -7,7 +7,9 @@ import {
 } from './edit-ip-comment.service.js';
 import { checkAddressPage, siteVisitRequestedPage } from './edit-ip-comment.mappers.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { preserveQueryString } from '#lib/url-utilities.js';
+import { preserveQueryString, stripQueryString } from '#lib/url-utilities.js';
+import { applyEdits, clearEdits, getSessionValues } from '#lib/edit-utilities.js';
+import { isEmpty } from 'lodash-es';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -22,15 +24,21 @@ export async function renderEditAddress(request, response) {
 	} = request;
 	const backLinkUrl = review === 'true' ? 'review' : 'view';
 	const operationType = editAddress === 'true' ? 'update' : 'add';
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}`;
+	const backUrl =
+		stripQueryString(String(request.query.editEntrypoint)) === stripQueryString(request.originalUrl)
+			? `${baseUrl}/edit/check/address`
+			: `${baseUrl}/${backLinkUrl}`;
+	const editIpComment = getSessionValues(request, 'editIpComment');
+	const address = isEmpty(editIpComment)
+		? currentRepresentation?.represented?.address
+		: editIpComment;
 
 	const pageContent = ipAddressPage(
 		currentAppeal,
-		currentRepresentation?.represented?.address,
+		address,
 		errors,
-		preserveQueryString(
-			request,
-			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}/${backLinkUrl}`
-		),
+		preserveQueryString(request, backUrl, { exclude: ['editEntrypoint'] }),
 		operationType
 	);
 
@@ -61,6 +69,8 @@ export async function renderSiteVisitRequested(request, response) {
  * */
 export async function renderCheckAddress(request, response) {
 	const { currentAppeal, currentRepresentation } = request;
+
+	clearEdits(request, 'editIpComment');
 
 	const pageContent = checkAddressPage(
 		currentAppeal,
@@ -125,6 +135,8 @@ export async function postEditAddress(request, response) {
 	if (errors) {
 		return renderEditAddress(request, response);
 	}
+
+	applyEdits(request, 'editIpComment');
 
 	return response.redirect(
 		url.format({

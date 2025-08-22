@@ -20,7 +20,9 @@ describe('edit-ip-comment', () => {
 			.get('/appeals/2')
 			.reply(200, { ...appealDataFullPlanning, appealId: 2, appealStatus: 'statements' });
 
-		nock('http://test/').get('/appeals/2/reps/5').reply(200, interestedPartyCommentForReview);
+		nock('http://test/')
+			.get('/appeals/2/reps/5')
+			.reply(200, { ...interestedPartyCommentForReview, id: 5 });
 
 		nock('http://test/')
 			.get('/appeals/2/document-folders?path=representation/representationAttachments')
@@ -87,6 +89,30 @@ describe('edit-ip-comment', () => {
 	testPageRendering('true', 'false', '/review');
 	testPageRendering('false', 'true', '/view');
 	testPageRendering('true', 'true', '/review');
+
+	describe('GET /edit/address (when editing)', () => {
+		let response, pageHtml;
+
+		beforeEach(async () => {
+			response = await request.get(
+				`${baseUrl}/2/interested-party-comments/5/edit/address?editAddress=true` +
+					`&editEntrypoint=${baseUrl}/2/interested-party-comments/5/edit/address`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+		});
+
+		it('should respond with status 200', () => {
+			expect(response.statusCode).toBe(200);
+		});
+
+		it('should render the correct back link', () => {
+			const backLink = pageHtml.querySelector('.govuk-back-link');
+			expect(backLink).not.toBeNull();
+			expect(backLink?.getAttribute('href')).toContain(
+				`${baseUrl}/2/interested-party-comments/5/edit/check/address`
+			);
+		});
+	});
 
 	describe('GET /edit/check/address', () => {
 		let response, pageHtml;
