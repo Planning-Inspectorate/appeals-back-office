@@ -1,7 +1,5 @@
 You have a new {{appeal_type}} appeal against the application {{lpa_reference}}.
 
-We will decide the appeal by {{procedure_type}}. You can tell us if you think a different procedure is more appropriate in the questionnaire.
-
 {% include 'parts/appeal-details.md' %}
 Start date: {{start_date}}
 
