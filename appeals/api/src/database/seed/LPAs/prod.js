@@ -107,7 +107,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'J1860',
 		name: 'Malvern Hills District Council',
-		email: 'developmentcontrol@malvernhills.gov.uk'
+		email: 'planningappeals@malvernhills.gov.uk'
 	},
 	{
 		lpaCode: 'Y1138',
