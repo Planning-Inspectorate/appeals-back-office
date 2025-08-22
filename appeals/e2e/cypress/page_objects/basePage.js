@@ -401,4 +401,10 @@ export class Page {
 			.eq(index)
 			.should('have.text', expectedTagText);
 	}
+
+	verifyRowExists(rowName, bool) {
+		let state = bool ? 'exist' : 'not.exist';
+
+		this.basePageElements.summaryListKey().contains(rowName).should(state);
+	}
 }
