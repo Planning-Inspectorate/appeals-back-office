@@ -3,7 +3,7 @@ import { permissionNames } from '#environment/permissions.js';
 import config from '#environment/config.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { mapActionComponent } from '#lib/mappers/index.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal

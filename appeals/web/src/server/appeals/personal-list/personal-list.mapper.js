@@ -9,7 +9,7 @@ import { mapStatusText, mapStatusFilterLabel } from '#lib/appeal-status.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 
 /** @typedef {import('@pins/appeals').AppealSummary} AppealSummary */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */

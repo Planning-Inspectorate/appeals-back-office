@@ -4,11 +4,13 @@ import logger from '#lib/logger.js';
 import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
 import { isStatePassed } from '#lib/appeal-status.js';
-import { mapDecisionOutcome } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import config from '#environment/config.js';
 import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
 import { getInvalidStatusCreatedDate } from '../invalid-appeal/invalid-appeal.service.js';
+import { toSentenceCase } from '#lib/string-utilities.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData
@@ -62,7 +64,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 	if (
 		isAppealInvalid ||
 		(isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
-			(appealDetails.decision.documentId ||
+			(appealDetails.decision?.outcome ||
 				appealDetails.costs.appellantDecisionFolder?.documents?.length ||
 				appealDetails.costs.lpaDecisionFolder?.documents?.length))
 	) {
@@ -76,7 +78,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		const insetTextRows = [];
 
 		if (appealDetails.decision?.outcome) {
-			insetTextRows.push(`Decision: ${mapDecisionOutcome(appealDetails.decision.outcome)}`);
+			insetTextRows.push(`Decision: ${toSentenceCase(appealDetails.decision.outcome)}`);
 			insetTextRows.push(
 				letterDateObject.latestFileVersion &&
 					letterDateObject.latestFileVersion?.version > 1 &&
@@ -109,11 +111,18 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		}
 
 		if (appealDetails.decision?.outcome || hasCostsAppellantDecision || hasCostsLpaDecision) {
-			insetTextRows.push(
-				config.featureFlags.featureFlagIssueDecision
-					? getViewDecisionLink(appealDetails.appealId)
-					: getViewDecisionLinkOld(appealDetails)
-			);
+			if (config.featureFlags.featureFlagIssueDecision) {
+				let appealId = appealDetails.appealId;
+				if (isChildAppeal(appealDetails)) {
+					// @ts-ignore
+					appealId = appealDetails.linkedAppeals.find(
+						(appealDetails) => appealDetails.isParentAppeal
+					)?.appealId;
+				}
+				insetTextRows.push(getViewDecisionLink(appealId, request));
+			} else {
+				insetTextRows.push(getViewDecisionLinkOld(appealDetails));
+			}
 		}
 
 		const html =
@@ -221,8 +230,19 @@ const getViewDecisionLinkOld = (appealDetails) => {
 	return decisionDownloadHtml;
 };
 
-const getViewDecisionLink = (/** @type {number} */ appealId) =>
-	`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/issue-decision/view-decision">View decision</a>`;
+/**
+ *
+ * @param {string|number} appealId
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @returns {string}
+ */
+const getViewDecisionLink = (appealId, request) => {
+	const viewDecisionUrl = addBackLinkQueryToUrl(
+		request,
+		`/appeals-service/appeal-details/${appealId}/issue-decision/view-decision`
+	);
+	return `<a class="govuk-link" href="${viewDecisionUrl}">View decision</a>`;
+};
 
 const getViewInvalidAppealLink = (/** @type {number} */ appealId) =>
 	`<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/invalid/view">View details</a>`;

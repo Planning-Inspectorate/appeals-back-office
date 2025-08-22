@@ -1,7 +1,7 @@
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
-import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapHearingDate = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {

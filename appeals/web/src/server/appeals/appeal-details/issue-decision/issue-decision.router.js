@@ -157,4 +157,17 @@ router
 		asyncHandler(controller.renderViewDecision)
 	);
 
+router
+	.route('/:childAppealId/decision')
+	.get(
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(controller.renderIssueDecision)
+	)
+	.post(
+		validators.validateDecision,
+		validators.validateInvalidReason,
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(controller.postIssueDecision)
+	);
+
 export default router;

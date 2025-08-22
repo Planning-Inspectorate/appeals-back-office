@@ -3,7 +3,7 @@ import { textSummaryListItem } from '#lib/mappers/index.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 
 /**
  * @param {string} date

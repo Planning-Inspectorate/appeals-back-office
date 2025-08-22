@@ -12,7 +12,7 @@ import { getCaseInquiry } from './s78/case-inquiry.js';
 import { removeAccordionComponentsActions } from './utils/index.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { getCaseDocumentation } from '#appeals/appeal-details/accordions/common/case-documentation.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 
 /**
  *

@@ -8,13 +8,15 @@ import { DECISION_TYPE_APPELLANT_COSTS } from '@pins/appeals/constants/support.j
  */
 export const clearIssueDecisionCache = async (request, response, next) => {
 	const appealId = request.params.appealId;
-	const { inspectorDecision, appellantCostsDecision, lpaCostsDecision } = request.session;
+	const { inspectorDecision, appellantCostsDecision, lpaCostsDecision, childDecisions } =
+		request.session;
 
 	// If the appealId in the session doesn't match the appealId in the request, clear the session data.
 	if (inspectorDecision?.appealId?.toString() !== appealId) request.session.inspectorDecision = {};
 	if (appellantCostsDecision?.appealId?.toString() !== appealId)
 		request.session.appellantCostsDecision = {};
 	if (lpaCostsDecision?.appealId?.toString() !== appealId) request.session.lpaCostsDecision = {};
+	if (childDecisions?.appealId?.toString() !== appealId) request.session.childDecisions = {};
 
 	next();
 };

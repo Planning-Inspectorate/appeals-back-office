@@ -69,3 +69,11 @@ export const toCamelCase = (str) => {
 		.map((word, idx) => (idx === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)))
 		.join('');
 };
+
+/**
+ * Converts a string to sentence case.
+ * @param {string} str - The string to convert.
+ * @returns {string} - The sentence case formatted string.
+ */
+export const toSentenceCase = (str) =>
+	capitalizeFirstLetter(camelCaseToWords(toCamelCase(str)).toLowerCase());
