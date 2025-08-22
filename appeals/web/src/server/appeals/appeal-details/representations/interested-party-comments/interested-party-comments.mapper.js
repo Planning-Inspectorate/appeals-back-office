@@ -64,7 +64,7 @@ export async function interestedPartyCommentsPage(
 
 /**
  * @param {Appeal} appealDetails
- * @param {import('../types.js').Representation['represented']['address']} address
+ * @param {import('../types.js').Representation['represented']['address'] | Record<string, string>} address
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {string} backLinkUrl
  * @param {string} operationType
