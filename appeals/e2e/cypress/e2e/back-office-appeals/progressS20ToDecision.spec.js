@@ -48,7 +48,7 @@ describe('Progress S20 to decision', () => {
 
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Confirm');
-			caseDetailsPage.checkStatusOfCase('Final comments', 0);
+			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
 
 			happyPathHelper.addLpaFinalComment(caseRef);
 			cy.loadAppealDetails(caseRef).then((appealData) => {
