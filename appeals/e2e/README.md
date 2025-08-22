@@ -4,10 +4,39 @@ These Cypress tests form the highest level of the automation test pryimid, runni
 
 ## Usage
 
-### Run all tests
+### Run all tests 
 
-`npm run cy:run` (Headless)\
-`npm run cy:open` (Interactive mode)
+Tests can be run using various modes depending on requirement 
+
+#### Headless mode 
+
+The following commands will run tests for different environments 
+
+```
+cy:run - run tests for local  
+cy:run:dev - run tests for dev 
+cy:run:test - run tests for test 
+```
+
+#### Interactive mode 
+
+The following commands will launch the test runner for different environments 
+
+```
+cy:open - run tests for local  
+cy:open:dev - run tests for dev 
+cy:open:test - run tests for test 
+```
+
+#### CI mode 
+
+The tests can also be run as per CI (continues integration) - i.e. as would be in the pipeline 
+
+```
+cy:ci:local - run tests for local  
+cy:ci:dev - run tests for dev 
+cy:ci:test - run tests for test 
+```
 
 ### Run only smoke tests (sub-set)
 
