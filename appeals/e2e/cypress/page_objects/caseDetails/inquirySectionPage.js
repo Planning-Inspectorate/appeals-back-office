@@ -4,10 +4,12 @@ import { CaseDetailsPage } from '../caseDetailsPage';
 import { DateTimeSection } from '../dateTimeSection.js';
 import { getDateAndTimeValues } from '../../support/utils/dateAndTime.js';
 import { EstimatedDaysSection } from '../estimatedDaysSection.js';
+import { AddressSection } from '../addressSection.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();
 const estimatedDaysSection = new EstimatedDaysSection();
+const addressSection = new AddressSection();
 
 export class InquirySectionPage extends CaseDetailsPage {
 	timetableItems = [
@@ -42,14 +44,17 @@ export class InquirySectionPage extends CaseDetailsPage {
 		time: 'Time',
 		doKnowEstimatedDays:
 			'Do you know the estimated number of days needed to carry out the inquiry?',
-		expectedNumberOfDays: 'Estimated number of days needed to carry out inquiry'
+		expectedNumberOfDays: 'Estimated number of days needed to carry out inquiry',
+		doKnowAddress: 'Do you know the address of where the inquiry will take place?',
+		address: 'Address'
 	};
 
 	inquirySectionLinks = {
 		date: 'date',
 		time: 'time',
 		whetherEstimatedDaysKnown: 'whether-the-estimated-number-of-days-is-known-or-not',
-		estimatedDays: 'estimated-days'
+		estimatedDays: 'estimated-days',
+		address: 'whether-the-address-is-known-or-not'
 	};
 
 	inquirySectionElements = {
@@ -122,6 +127,17 @@ export class InquirySectionPage extends CaseDetailsPage {
 		caseDetailsPage.selectRadioButtonByValue('No');
 		caseDetailsPage.clickButtonByText('Continue');
 
+		caseDetailsPage.clickButtonByText('Update Inquiry');
+	}
+
+	changeAddress(address) {
+		this.clickRowChangeLink(this.inquirySectionLinks.address);
+		caseDetailsPage.clickButtonByText('Continue');
+
+		// enter new address
+		addressSection.enterAddress(address);
+
+		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Update Inquiry');
 	}
 
