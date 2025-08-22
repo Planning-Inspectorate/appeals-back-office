@@ -374,21 +374,23 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 	}
 
 	try {
-		if (
-			result.some((rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT)
-		) {
-			notifyLpaFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
+		const hasLpaFinalComment = result.some(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+		);
+		const hasAppellantFinalComment = result.some(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+		);
+
+		if (hasLpaFinalComment) {
+			await notifyLpaFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
+		} else {
+			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'local planning authority');
 		}
-		if (
-			result.some(
-				(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
-			)
-		) {
-			notifyAppellantFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
-		}
-		if (result.length === 0) {
-			notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'appellant');
-			notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'local planning authority');
+
+		if (hasAppellantFinalComment) {
+			await notifyAppellantFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
+		} else {
+			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'appellant');
 		}
 	} catch (error) {
 		logger.error(error);
