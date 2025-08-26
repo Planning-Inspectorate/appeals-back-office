@@ -3,7 +3,11 @@
 /** @typedef {{ 'day': string, 'month': string, 'year': string }} RequestDate */
 /** @typedef {RequestDate} ReqBody */
 
+import { applyEdits } from '#lib/edit-utilities.js';
 import { dateSubmitted } from '../add-document.mapper.js';
+import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
+
+const getBackLinkUrl = backLinkGenerator('addDocument');
 
 /**
  * @param {object} options
@@ -14,7 +18,11 @@ export const renderDateSubmittedFactory =
 	({ getValue }) =>
 	(request, response) => {
 		const baseUrl = request.baseUrl;
-		const backLinkUrl = `${baseUrl}/redaction-status`;
+		const backLinkUrl = getBackLinkUrl(
+			request,
+			`${baseUrl}/redaction-status`,
+			`${baseUrl}/check-your-answers`
+		);
 
 		const value = getValue(request);
 
@@ -40,6 +48,8 @@ export const postDateSubmittedFactory =
 			}
 			const baseUrl = request.baseUrl;
 			const redirectUrl = `${baseUrl}/check-your-answers`;
+
+			applyEdits(request, 'addDocument');
 
 			response.redirect(redirectUrl);
 		} catch (error) {
