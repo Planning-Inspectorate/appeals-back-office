@@ -32,7 +32,7 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 				caseDetailsPage.verifyTableCellTextCaseHistory(
 					users.appeals.caseAdmin.email + ' was added to the team'
 				);
-				caseDetailsPage.verifyTableCellTextCaseHistory('The case has progressed to validation');
+				caseDetailsPage.verifyTableCellTextCaseHistory('Case progressed to validation');
 			});
 		}
 	);

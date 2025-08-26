@@ -22,7 +22,10 @@ import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { notifySend } from '#notify/notify-send.js';
-import { APPEAL_DEVELOPMENT_TYPES } from '@pins/appeals/constants/appellant-cases.constants.js';
+import {
+	APPEAL_DEVELOPMENT_TYPES,
+	PLANNING_OBLIGATION_STATUSES
+} from '@pins/appeals/constants/appellant-cases.constants.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
 import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
@@ -265,13 +268,13 @@ export function renderAuditTrailDetail(data) {
 			data.siteSafetyDetails ? `Yes\n${data.siteSafetyDetails}` : 'No',
 		AUDIT_TRAIL_APPLICATION_DATE_UPDATED: () =>
 			data.applicationDate
-				? formatDate(new Date(/** @type {string} */ (data.applicationDate)))
+				? formatDate(new Date(/** @type {string} */ (data.applicationDate)), false)
 				: undefined,
 		// @ts-ignore
 		AUDIT_TRAIL_DEVELOPMENT_DESCRIPTION_UPDATED: () => data.developmentDescription?.details,
 		AUDIT_TRAIL_APPLICATION_DECISION_DATE_UPDATED: () =>
 			data.applicationDecisionDate
-				? formatDate(new Date(/** @type {string} */ (data.applicationDecisionDate)))
+				? formatDate(new Date(/** @type {string} */ (data.applicationDecisionDate)), false)
 				: undefined,
 		AUDIT_TRAIL_AGRICULTURAL_HOLDING_UPDATED: () => (data.agriculturalHolding ? 'Yes' : 'No'),
 		AUDIT_TRAIL_TENANT_AGRICULTURAL_HOLDING_UPDATED: () =>
@@ -287,7 +290,11 @@ export function renderAuditTrailDetail(data) {
 			data.appellantProcedurePreferenceDuration,
 		AUDIT_TRAIL_APPELLANT_PROCEDURE_PREFERENCE_WITNESS_COUNT_UPDATED: () =>
 			data.appellantProcedurePreferenceWitnessCount,
-		AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED: () => data.statusPlanningObligation
+		AUDIT_TRAIL_STATUS_PLANNING_OBLIGATION_UPDATED: () =>
+			PLANNING_OBLIGATION_STATUSES.find(
+				(/** @type {{value: string, label: string}} */ item) =>
+					item.value === data.statusPlanningObligation
+			)?.label || 'Not applicable'
 	};
 
 	if (!auditTrailParameters[constantKey]) {

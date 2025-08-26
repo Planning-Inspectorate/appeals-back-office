@@ -24,7 +24,9 @@ exports[`interested-party-comments GET /manage-documents/:folderId/ should rende
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Manage folder</span>
             <h1 class="govuk-heading-l">Supporting documents</h1>
         </div>
-    </div>
+    </div><a href="/appeals-service/appeal-details/2/interested-party-comments/5/add-document"
+    role="button" draggable="false" class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"> Add document</a>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-full">
             <table class="govuk-table" id="documents-table">
@@ -70,8 +72,7 @@ exports[`interested-party-comments GET /manage-documents/:folderId/ should rende
                 </tbody>
             </table>
         </div>
-    </div><a href="/appeals-service/appeal-details/2/interested-party-comments/5/add-document"
-    role="button" draggable="false" class="govuk-button" data-module="govuk-button"> Add document</a>
+    </div>
 </main>"
 `;
 

@@ -35,31 +35,9 @@ describe('Issue Decision', () => {
 				});
 
 				//Issue decision
-				caseDetailsPage.clickIssueDecision();
-				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(issueDecision));
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
-				caseDetailsPage.clickButtonByText('Continue');
+				happyPathHelper.issueDecision(caseRef, issueDecision);
 
-				//Appellant costs
-				caseDetailsPage.selectRadioButtonByValue('Yes');
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//LPA costs
-				caseDetailsPage.selectRadioButtonByValue('Yes');
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//CYA
-				caseDetailsPage.clickButtonByText('Issue decision');
-
-				//Case details inset text
-				caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
-				caseDetailsPage.checkStatusOfCase('Complete', 0);
-				caseDetailsPage.checkDecisionOutcome(issueDecision);
+				//Case details
 				caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
 				caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
 				caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');

@@ -1,4 +1,6 @@
 import {
+	AUDIT_TRAIL_DECISION_LETTER_UPLOADED,
+	AUDIT_TRAIL_DECISION_LETTER_UPDATED,
 	AUDIT_TRAIL_DOCUMENT_DATE_CHANGED,
 	AUDIT_TRAIL_DOCUMENT_DELETED,
 	AUDIT_TRAIL_DOCUMENT_NAME_CHANGED,
@@ -21,7 +23,6 @@ import { formatDocument } from './documents.formatter.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
-import { AUDIT_TRAIL_DECISION_LETTER_UPDATED } from '@pins/appeals/constants/support.js';
 import { sendNewDecisionLetter } from '#endpoints/decision/decision.service.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
@@ -113,7 +114,7 @@ const addDocuments = async (req, res) => {
 					auditTrail = await createAuditTrail({
 						appealId: appeal.id,
 						azureAdUserId: req.get('azureAdUserId'),
-						details: stringTokenReplacement(AUDIT_TRAIL_DECISION_LETTER_UPDATED, [
+						details: stringTokenReplacement(AUDIT_TRAIL_DECISION_LETTER_UPLOADED, [
 							decisionLetterHtmlLink
 						])
 					});

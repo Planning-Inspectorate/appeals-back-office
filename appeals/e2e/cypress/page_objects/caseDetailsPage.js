@@ -113,9 +113,10 @@ export class CaseDetailsPage extends Page {
 		addNotifiyingParties: () => cy.getByData(this._cyDataSelectors.addNotifyingParties),
 		manageAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.manageAgreementToChangeDescriptionEvidence),
-		issueAppellantCostsDecision: () =>
-			cy.getByData(this._cyDataSelectors.issueAppellantCostsDecision),
-		issueLpaCostsDecision: () => cy.getByData(this._cyDataSelectors.issueLpaCostsDecision),
+		issueAppellantCostsDecision: (index = 0) =>
+			cy.getByData(this._cyDataSelectors.issueAppellantCostsDecision).eq(index),
+		issueLpaCostsDecision: (index = 0) =>
+			cy.getByData(this._cyDataSelectors.issueLpaCostsDecision).eq(index),
 		addAppellantApplication: () => cy.getByData(this._cyDataSelectors.addAppellantApplication),
 		costDecisionStatus: () => cy.get('.govuk-table__cell appeal-costs-decision-status'),
 		changeSiteOwnership: () => cy.getByData(this._cyDataSelectors.changeSiteOwnership),

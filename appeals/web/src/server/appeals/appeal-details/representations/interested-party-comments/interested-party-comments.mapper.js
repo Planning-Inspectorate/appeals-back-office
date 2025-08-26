@@ -8,6 +8,7 @@ import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-co
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { highlightRedactedSections } from '#lib/redaction-string-formatter.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse */
@@ -23,6 +24,7 @@ import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documen
  * @param {RepresentationList} invalid
  * @param {import('@pins/express').Session} session
  * @param {string | undefined} backUrl
+ * @param {import('@pins/express').Request} request
  * @returns {Promise<PageContent>}
  */
 export async function interestedPartyCommentsPage(
@@ -31,7 +33,8 @@ export async function interestedPartyCommentsPage(
 	valid,
 	invalid,
 	session,
-	backUrl
+	backUrl,
+	request
 ) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
@@ -44,7 +47,10 @@ export async function interestedPartyCommentsPage(
 	const pageContent = {
 		title: 'Interested party comments',
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		addCommentUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add`,
+		addCommentUrl: addBackLinkQueryToUrl(
+			request,
+			`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add`
+		),
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Interested party comments',
 		pageComponents: [...notificationBanners],
@@ -58,15 +64,15 @@ export async function interestedPartyCommentsPage(
 
 /**
  * @param {Appeal} appealDetails
- * @param {import('../types.js').Representation['represented']['address']} address
+ * @param {import('../types.js').Representation['represented']['address'] | Record<string, string>} address
  * @param {import('@pins/express').ValidationErrors | undefined} errors
- * @param {string} backPath
+ * @param {string} backLinkUrl
  * @param {string} operationType
  * @returns {PageContent}
  * */
-export const ipAddressPage = (appealDetails, address, errors, backPath, operationType) => ({
+export const ipAddressPage = (appealDetails, address, errors, backLinkUrl, operationType) => ({
 	title: "Interested party's address",
-	backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${backPath}`,
+	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	heading: "Interested party's address",
 	pageComponents: addressInputs({ address, operationType, errors })

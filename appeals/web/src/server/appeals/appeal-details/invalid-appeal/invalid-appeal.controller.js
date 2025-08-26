@@ -1,7 +1,11 @@
 import logger from '#lib/logger.js';
 import * as appellantCaseService from '../appellant-case/appellant-case.service.js';
 import { mapInvalidOrIncompleteReasonOptionsToCheckboxItemParameters } from '../appellant-case/appellant-case.mapper.js';
-import { decisionInvalidConfirmationPage, mapInvalidReasonPage } from './invalid-appeal.mapper.js';
+import {
+	decisionInvalidConfirmationPage,
+	mapInvalidReasonPage,
+	viewInvalidAppealPage
+} from './invalid-appeal.mapper.js';
 import { getNotValidReasonsTextFromRequestBody } from '#lib/validation-outcome-reasons-formatter.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
@@ -13,6 +17,7 @@ import {
 	rejectionReasonHtml
 } from '../representations/common/components/reject-reasons.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { getInvalidStatusCreatedDate } from './invalid-appeal.service.js';
 
 /**
  *
@@ -259,6 +264,35 @@ export const getCheckPage = async (request, response) => {
 	}
 };
 
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getInvalidPage = async (request, response) => {
+	const { currentAppeal } = request;
+
+	const appellantCase = await appellantCaseService
+		.getAppellantCaseFromAppealId(
+			request.apiClient,
+			currentAppeal.appealId,
+			currentAppeal.appellantCaseId
+		)
+		.catch((error) => logger.error(error));
+
+	const invalidDate = await getInvalidStatusCreatedDate(
+		request.apiClient,
+		currentAppeal.appealId
+	).catch((error) => logger.error(error));
+
+	const pageContent = viewInvalidAppealPage(
+		currentAppeal.appealId,
+		currentAppeal.appealReference,
+		invalidDate.createdDate,
+		appellantCase.validation.invalidReasons
+	);
+
+	return response.status(200).render('patterns/display-page.pattern.njk', {
+		pageContent
+	});
+};
+
 /**
  * Generate Notify preview templates for appellant and LPA
  * @param {import('got').Got} apiClient
@@ -267,8 +301,7 @@ export const getCheckPage = async (request, response) => {
  */
 const generateInvalidAppealNotifyPreviews = async (apiClient, personalisation) => {
 	const appellantTemplateName = 'appeal-invalid.content.md';
-	//TODO: replace with the correct LPA template name
-	const lpaTemplateName = 'appeal-invalid.content.md';
+	const lpaTemplateName = 'appeal-invalid-lpa.content.md';
 
 	const [appellantTemplate, lpaTemplate] = await Promise.all([
 		generateNotifyPreview(apiClient, appellantTemplateName, personalisation),

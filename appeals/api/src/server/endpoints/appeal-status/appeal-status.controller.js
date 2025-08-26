@@ -25,3 +25,17 @@ export const rollBackAppealStatus = async (req, res) => {
 		return res.status(500).json({ error: 'Failed to roll back appeal status' });
 	}
 };
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const getAppealStatusCreatedDate = async (req, res) => {
+	const { appealId, status } = req.params;
+	const statusCreatedDate = await appealStatusRepository.getAppealStatusCreatedDate(
+		Number(appealId),
+		status
+	);
+	return res.send(statusCreatedDate);
+};

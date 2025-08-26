@@ -29,6 +29,14 @@ import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import { dateSubmitted } from './add-ip-comment.mapper.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
+import { clearEdits, editLink, getSessionValues } from '#lib/edit-utilities.js';
+import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
+
+/** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
+/** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
+
+const getBackLinkUrl = backLinkGenerator('addIpComment');
 
 /**
  *
@@ -36,17 +44,17 @@ import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-uplo
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderIpDetails(request, response) {
-	const {
-		currentAppeal,
-		errors,
-		session: { addIpComment }
-	} = request;
+	const { currentAppeal, errors } = request;
+	const addIpComment = getSessionValues(request, 'addIpComment');
 	const values = {
 		firstName: addIpComment?.firstName,
 		lastName: addIpComment?.lastName,
 		emailAddress: addIpComment?.emailAddress
 	};
-	const pageContent = ipDetailsPage(currentAppeal, values, request, errors);
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`;
+	const backUrl = getBackLinkUrl(request, null, `${baseUrl}/add/check-your-answers`, baseUrl);
+	const pageContent = ipDetailsPage(currentAppeal, values, backUrl, errors);
+
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		errors: errors,
 		pageContent
@@ -59,13 +67,16 @@ export async function renderIpDetails(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderCheckAddress(request, response) {
-	const {
-		currentAppeal,
-		errors,
-		session: { addIpComment }
-	} = request;
+	const { currentAppeal, errors } = request;
+	const addIpComment = getSessionValues(request, 'addIpComment');
 	const value = addIpComment?.addressProvided;
-	const pageContent = checkAddressPage(currentAppeal, value, errors);
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`;
+	const backUrl = getBackLinkUrl(
+		request,
+		`${baseUrl}/add/ip-details`,
+		`${baseUrl}/add/check-your-answers`
+	);
+	const pageContent = checkAddressPage(currentAppeal, value, backUrl, errors);
 
 	return response.status(errors ? 400 : 200).render('patterns/check-and-confirm-page.pattern.njk', {
 		errors: errors,
@@ -79,11 +90,8 @@ export async function renderCheckAddress(request, response) {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export async function renderIpAddress(request, response) {
-	const {
-		currentAppeal,
-		errors,
-		session: { addIpComment }
-	} = request;
+	const { currentAppeal, errors } = request;
+	const addIpComment = getSessionValues(request, 'addIpComment');
 	const address = {
 		addressLine1: addIpComment?.addressLine1,
 		addressLine2: addIpComment?.addressLine2,
@@ -92,11 +100,12 @@ export async function renderIpAddress(request, response) {
 		postCode: addIpComment?.postCode
 	};
 	const operationType = request.query.editAddress === 'true' ? 'update' : 'add';
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add`;
 	const pageContent = ipAddressPage(
 		currentAppeal,
 		address,
 		errors,
-		'add/check-address',
+		getBackLinkUrl(request, `${baseUrl}/check-address`, `${baseUrl}/check-your-answers`),
 		operationType
 	);
 
@@ -118,10 +127,13 @@ export async function renderUpload(request, response) {
 		errors,
 		session: { fileUploadInfo }
 	} = request;
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add`;
 	const providedAddress = request.session.addIpComment?.addressProvided === 'yes';
+	const slug = providedAddress ? 'ip-address' : 'check-address';
+	const backUrl = getBackLinkUrl(request, `${baseUrl}/${slug}`, `${baseUrl}/check-your-answers`);
 
 	const { folderId } = await getAttachmentsFolder(apiClient, currentAppeal.appealId);
-	const pageContent = uploadPage(currentAppeal, errors, providedAddress, folderId, fileUploadInfo);
+	const pageContent = uploadPage(currentAppeal, errors, backUrl, folderId, fileUploadInfo);
 
 	return response
 		.status(errors ? 400 : 200)
@@ -143,9 +155,18 @@ export async function postUpload(request, response) {
 	});
 }
 
+/**
+ * @param {Appeal} appealDetails
+ * @param {Representation} _comment
+ * @param {import('@pins/express/types/express.js').Request} request
+ */
+const getRedactionStatusBackUrl = (appealDetails, _comment, request) => {
+	const baseUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add`;
+	return getBackLinkUrl(request, `${baseUrl}/redaction-status`, `${baseUrl}/check-your-answers`);
+};
+
 export const renderRedactionStatus = renderRedactionStatusFactory({
-	getBackLinkUrl: (appealDetails) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/upload`,
+	getBackLinkUrl: getRedactionStatusBackUrl,
 	getValue: (request) =>
 		request.session.addIpComment?.redactionStatus ||
 		request.body.redactionStatus ||
@@ -153,8 +174,11 @@ export const renderRedactionStatus = renderRedactionStatusFactory({
 });
 
 export const postRedactionStatus = postRedactionStatusFactory({
-	getRedirectUrl: (appealDetails) =>
-		`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/date-submitted`,
+	getRedirectUrl: (appealDetails, _comment, request) =>
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add/date-submitted`
+		),
 	errorHandler: renderRedactionStatus
 });
 
@@ -163,13 +187,15 @@ export const postRedactionStatus = postRedactionStatusFactory({
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * */
 export function renderDateSubmitted(request, response) {
-	const { currentAppeal, errors, session, body } = request;
-
+	const { currentAppeal, errors, body } = request;
+	/** @type {import('@pins/express/types/express.js').Request['session']['addIpComment'] | undefined} */
+	const addIpComment = getSessionValues(request, 'addIpComment');
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add`;
 	const pageContent = dateSubmitted(
 		currentAppeal,
 		errors,
-		session.addIpComment || body,
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/redaction-status`
+		addIpComment || body,
+		getBackLinkUrl(request, `${baseUrl}/redaction-status`, `${baseUrl}/check-your-answers`)
 	);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
@@ -197,7 +223,10 @@ export async function postIpDetails(request, response) {
 	const { currentAppeal } = request;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/check-address`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/check-address`
+		)
 	);
 }
 
@@ -215,9 +244,12 @@ export async function postCheckAddress(request, response) {
 	const { addressProvided } = request.body;
 
 	return response.redirect(
-		addressProvided === 'yes'
-			? `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/ip-address`
-			: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/upload`
+		preserveQueryString(
+			request,
+			addressProvided === 'yes'
+				? `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/ip-address`
+				: `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/upload`
+		)
 	);
 }
 
@@ -234,7 +266,10 @@ export async function postIpAddress(request, response) {
 	const { currentAppeal } = request;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/upload`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/upload`
+		)
 	);
 }
 
@@ -328,8 +363,8 @@ export async function postIPComment(request, response) {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export async function renderCheckYourAnswers(
-	{
+export async function renderCheckYourAnswers(request, response) {
+	const {
 		errors,
 		currentAppeal: { appealReference, appealId } = {},
 		session: {
@@ -366,12 +401,15 @@ export async function renderCheckYourAnswers(
 				postCode: ''
 			}
 		}
-	},
-	response
-) {
+	} = request;
+
 	if (!isValidRedactionStatus(redactionStatus)) {
 		throw new Error('Received invalid redaction status');
 	}
+
+	clearEdits(request, 'addIpComment');
+
+	const baseUrl = `/appeals-service/appeal-details/${appealId}/interested-party-comments/add`;
 
 	return renderCheckYourAnswersComponent(
 		{
@@ -385,7 +423,7 @@ export async function renderCheckYourAnswers(
 					html: `${firstName || ''} ${lastName || ''}<br>${emailAddress || ''}`,
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-details`,
+							href: editLink(baseUrl, 'ip-details'),
 							visuallyHiddenText: 'Contact details'
 						}
 					}
@@ -394,7 +432,7 @@ export async function renderCheckYourAnswers(
 					html: addressProvided === 'no' ? 'No' : 'Yes',
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/check-address`,
+							href: editLink(baseUrl, 'check-address'),
 							visuallyHiddenText: 'Address'
 						}
 					}
@@ -410,7 +448,7 @@ export async function renderCheckYourAnswers(
 						}),
 						actions: {
 							Change: {
-								href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-address`,
+								href: editLink(baseUrl, 'ip-address'),
 								visuallyHiddenText: 'Address provided'
 							}
 						}
@@ -420,7 +458,7 @@ export async function renderCheckYourAnswers(
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/upload`,
+							href: editLink(baseUrl, 'upload'),
 							visuallyHiddenText: 'Comment'
 						}
 					}
@@ -429,7 +467,7 @@ export async function renderCheckYourAnswers(
 					value: statusFormatMap[redactionStatus],
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/redaction-status`,
+							href: editLink(baseUrl, 'redaction-status'),
 							visuallyHiddenText: 'Redaction Status'
 						}
 					}
@@ -438,7 +476,7 @@ export async function renderCheckYourAnswers(
 					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
 					actions: {
 						Change: {
-							href: `/appeals-service/appeal-details/${appealId}/interested-party-comments/add/date-submitted`,
+							href: editLink(baseUrl, 'date-submitted'),
 							visuallyHiddenText: 'Date submitted'
 						}
 					}
@@ -459,7 +497,10 @@ export async function redirectToAdd(request, response) {
 	const { currentAppeal } = request;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/ip-details`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/add/ip-details`
+		)
 	);
 }
 
@@ -472,6 +513,9 @@ export async function redirectToIPComments(request, response) {
 	const { currentAppeal } = request;
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
+		preserveQueryString(
+			request,
+			`/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments`
+		)
 	);
 }

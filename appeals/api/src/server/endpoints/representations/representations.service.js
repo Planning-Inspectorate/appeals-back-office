@@ -374,17 +374,23 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 	}
 
 	try {
-		if (
-			result.some((rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT)
-		) {
-			notifyLpaFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
+		const hasLpaFinalComment = result.some(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+		);
+		const hasAppellantFinalComment = result.some(
+			(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+		);
+
+		if (hasLpaFinalComment) {
+			await notifyLpaFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
+		} else {
+			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'local planning authority');
 		}
-		if (
-			result.some(
-				(rep) => rep.representationType === APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
-			)
-		) {
-			notifyAppellantFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
+
+		if (hasAppellantFinalComment) {
+			await notifyAppellantFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
+		} else {
+			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'appellant');
 		}
 	} catch (error) {
 		logger.error(error);
@@ -404,6 +410,7 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
  * @property {boolean} [hasLpaStatement]
  * @property {boolean} [hasIpComments]
  * @property {string} [subject]
+ * @property {string} [userTypeNoCommentSubmitted]
  * @property {string} azureAdUserId
  */
 
@@ -421,6 +428,7 @@ async function notifyPublished({
 	hasLpaStatement = false,
 	hasIpComments = false,
 	subject = '',
+	userTypeNoCommentSubmitted = '',
 	azureAdUserId
 }) {
 	const lpaReference = appeal.applicationReference;
@@ -452,7 +460,8 @@ async function notifyPublished({
 			what_happens_next: whatHappensNext,
 			has_ip_comments: hasIpComments,
 			has_statement: hasLpaStatement,
-			...(subject ? { subject } : {})
+			...(subject ? { subject } : {}),
+			user_type: userTypeNoCommentSubmitted
 		}
 	});
 }
@@ -496,5 +505,27 @@ function notifyAppellantFinalCommentsPublished(appeal, notifyClient, azureAdUser
 		templateName: 'final-comments-done-appellant',
 		recipientEmail,
 		azureAdUserId
+	});
+}
+
+/**
+ * @param {Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
+ * @param {'appellant' | 'local planning authority'} userTypeNoCommentSubmitted
+ */
+function notifyNoFinalComments(appeal, notifyClient, azureAdUserId, userTypeNoCommentSubmitted) {
+	const recipientEmail =
+		userTypeNoCommentSubmitted === 'appellant'
+			? appeal.lpa?.email
+			: appeal.agent?.email || appeal.appellant?.email;
+
+	return notifyPublished({
+		appeal,
+		notifyClient,
+		templateName: 'final-comments-none',
+		recipientEmail,
+		azureAdUserId,
+		userTypeNoCommentSubmitted
 	});
 }

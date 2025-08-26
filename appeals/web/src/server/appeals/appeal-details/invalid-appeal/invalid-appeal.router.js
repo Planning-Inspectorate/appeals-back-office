@@ -24,4 +24,6 @@ router
 	.get(controller.getCheckPage)
 	.post(assertUserHasPermission(permissionNames.setCaseOutcome), asyncHandler(postCheckAndConfirm));
 
+router.route('/view').get(controller.getInvalidPage);
+
 export default router;

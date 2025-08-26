@@ -1,3 +1,4 @@
+import { applyEdits } from '#lib/edit-utilities.js';
 import { dateSubmitted } from '../../document-attachments/add-document.mapper.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
@@ -37,6 +38,8 @@ export const postDateSubmittedFactory =
 		if (request.errors) {
 			return errorHandler(request, response, next);
 		}
+
+		applyEdits(request, 'addIpComment');
 
 		const { currentAppeal, currentRepresentation } = request;
 

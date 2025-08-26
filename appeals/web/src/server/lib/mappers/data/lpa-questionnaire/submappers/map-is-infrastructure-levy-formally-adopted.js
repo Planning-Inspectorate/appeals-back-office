@@ -10,7 +10,7 @@ export const mapIsInfrastructureLevyFormallyAdopted = ({
 		id: 'is-infrastructure-levy-formally-adopted',
 		text: 'Is the community infrastructure levy formally adopted?',
 		value: lpaQuestionnaireData.isInfrastructureLevyFormallyAdopted,
-		defaultText: '',
+		defaultText: 'Not applicable',
 		addCyAttribute: true,
 		link: `${currentRoute}/is-infrastructure-levy-formally-adopted/change`,
 		editable: userHasUpdateCase
