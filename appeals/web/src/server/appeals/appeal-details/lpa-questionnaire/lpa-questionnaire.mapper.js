@@ -1,33 +1,33 @@
+import { isFeatureActive } from '#common/feature-flags.js';
 import config from '#environment/config.js';
+import { permissionNames } from '#environment/permissions.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
-	removeSummaryListActions,
-	userHasPermission,
-	inputInstructionIsRadiosInputInstruction,
-	yesNoInput,
-	createNotificationBanner,
-	mapNotificationBannersFromSession,
-	sortNotificationBanners,
-	dateInput
-} from '#lib/mappers/index.js';
+	dateISOStringToDayMonthYearHourMinute,
+	dateISOStringToDisplayDate,
+	dayMonthYearHourMinuteToDisplayDate,
+	dayMonthYearHourMinuteToISOString
+} from '#lib/dates.js';
 import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '#lib/mappers/data/lpa-questionnaire/mapper.js';
 import {
-	dayMonthYearHourMinuteToISOString,
-	dayMonthYearHourMinuteToDisplayDate,
-	dateISOStringToDayMonthYearHourMinute,
-	dateISOStringToDisplayDate
-} from '#lib/dates.js';
-import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
-import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
-import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
-import { isDefined, isFolderInfo } from '#lib/ts-utilities.js';
-import { appealShortReference } from '#lib/appeals-formatter.js';
+	createNotificationBanner,
+	dateInput,
+	inputInstructionIsRadiosInputInstruction,
+	mapNotificationBannersFromSession,
+	removeSummaryListActions,
+	sortNotificationBanners,
+	userHasPermission,
+	yesNoInput
+} from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
+import { isDefined, isFolderInfo } from '#lib/ts-utilities.js';
+import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
-import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { permissionNames } from '#environment/permissions.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleLPAQuestionnaireResponse} LPAQuestionnaire
@@ -740,6 +740,12 @@ function generateCaseTypeSpecificComponents(appealDetails, mappedAppealDetails, 
 		case APPEAL_TYPE.CAS_PLANNING:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
 				return generateCasPlanningLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
+			} else {
+				throw new Error('Feature flag inactive for CAS');
+			}
+		case APPEAL_TYPE.CAS_ADVERTISEMENT:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS_ADVERT)) {
+				return generateHASLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
 			} else {
 				throw new Error('Feature flag inactive for CAS');
 			}
