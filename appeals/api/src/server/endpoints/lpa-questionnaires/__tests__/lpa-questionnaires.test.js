@@ -519,7 +519,7 @@ describe('lpa questionnaires routes', () => {
 
 				const body = {
 					incompleteReasons: [{ id: 1 }, { id: 2 }],
-					lpaQuestionnaireDueDate: '2025-08-23T00:00:00.000Z',
+					lpaQuestionnaireDueDate: '2125-08-26T00:00:00.000Z',
 					validationOutcome: 'incomplete'
 				};
 				const { id, lpaQuestionnaire } = householdAppeal;
@@ -560,7 +560,7 @@ describe('lpa questionnaires routes', () => {
 				expect(response.status).toEqual(200);
 			});
 
-			test('updates an lpa questionnaire when the validation outcome is incomplete and lpaQuestionnaireDueDate is a bank holiday Friday with a folowing bank holiday Monday', async () => {
+			test('updates an lpa questionnaire when the validation outcome is incomplete and lpaQuestionnaireDueDate is a bank holiday Friday with a following bank holiday Monday', async () => {
 				const householdAppeal = householdAppealLPAQuestionnaireIncomplete;
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
