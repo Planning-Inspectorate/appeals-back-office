@@ -2886,6 +2886,12 @@ export interface TransferStatus {
 	transferredAppealReference: string;
 }
 
+export interface AssignedTeam {
+	name?: string | null;
+	/** @format email */
+	email?: string | null;
+}
+
 export interface Team {
 	/** @format uuid */
 	caseOfficer?: string | null;
@@ -11586,6 +11592,9 @@ export interface Appeal {
 	caseOfficer?: string | null;
 	/** @format uuid */
 	inspector?: string | null;
+	name?: string | null;
+	/** @format email */
+	email?: string | null;
 	allocation?: {
 		level: string;
 		band: number;

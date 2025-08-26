@@ -58,6 +58,10 @@ const householdAppealDto = {
 		caseResubmissionDueDate: null,
 		lpaQuestionnaireDueDate: householdAppeal.appealTimetable.lpaQuestionnaireDueDate.toISOString()
 	},
+	assignedTeam: {
+		email: 'temp@email.com',
+		name: 'temp'
+	},
 	appellantCaseId: householdAppeal.appellantCase.id,
 	awaitingLinkedAppeal: false,
 	caseOfficer: householdAppeal.caseOfficer.azureAdUserId,
@@ -158,6 +162,10 @@ const s78AppealDto = {
 	},
 	appealType: fullPlanningAppeal.appealType.type,
 	appellantCaseId: fullPlanningAppeal.appellantCase.id,
+	assignedTeam: {
+		email: 'temp@email.com',
+		name: 'temp'
+	},
 	awaitingLinkedAppeal: false,
 	caseOfficer: fullPlanningAppeal.caseOfficer.azureAdUserId,
 	costs: {},

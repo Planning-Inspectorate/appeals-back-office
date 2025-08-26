@@ -437,7 +437,9 @@ export const appealData = {
 		folderId: 17935,
 		path: 'appellant-case/environmentalAssessment',
 		documents: []
-	}
+	},
+	assignedTeamId: 1,
+	assignedTeam: { name: 'Test Team', email: 'test@emai.com' }
 };
 
 export const appealDataIssuedDecision = {

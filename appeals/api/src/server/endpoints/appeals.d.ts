@@ -51,6 +51,11 @@ interface SingleAppealDetailsResponse {
 	appellantCaseId: number;
 	appellant?: ServiceUserResponse | null;
 	agent?: ServiceUserResponse | null;
+	assignedTeamId?: number | null;
+	assignedTeam?: {
+		name: string | null;
+		email: string | null;
+	};
 	caseOfficer?: string | null;
 	costs: {
 		appellantApplicationFolder?: FolderInfo | null;

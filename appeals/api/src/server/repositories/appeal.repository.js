@@ -80,6 +80,7 @@ const appealDetailsInclude = {
 	appealStatus: true,
 	appealTimetable: true,
 	appealType: true,
+	assignedTeam: true,
 	caseOfficer: true,
 	inspector: true,
 	inspectorDecision: true,
