@@ -12182,6 +12182,21 @@
 					}
 				}
 			},
+			"AssignedTeam": {
+				"type": "object",
+				"required": [],
+				"properties": {
+					"name": {
+						"type": "string",
+						"nullable": true
+					},
+					"email": {
+						"type": "string",
+						"format": "email",
+						"nullable": true
+					}
+				}
+			},
 			"Team": {
 				"type": "object",
 				"required": [],
@@ -27679,6 +27694,15 @@
 					"inspector": {
 						"type": "string",
 						"format": "uuid",
+						"nullable": true
+					},
+					"name": {
+						"type": "string",
+						"nullable": true
+					},
+					"email": {
+						"type": "string",
+						"format": "email",
 						"nullable": true
 					},
 					"allocation": {

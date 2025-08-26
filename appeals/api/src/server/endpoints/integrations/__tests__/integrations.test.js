@@ -131,7 +131,8 @@ describe('/appeals/case-submission', () => {
 								status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 								createdAt: expect.any(String)
 							}
-						}
+						},
+						assignedTeamId: 1
 					}
 				});
 
@@ -541,7 +542,8 @@ describe('/appeals/representation-submission', () => {
 });
 
 const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
-	const appealCreatedResult = { id: 100, reference: '6000100' };
+	const appealCreatedResult = { id: 100, reference: '6000100', assignedTeamId: 1 };
+
 	// @ts-ignore
 	databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
 	// @ts-ignore
@@ -575,6 +577,21 @@ const createIntegrationMocks = (/** @type {*} */ appealIngestionInput) => {
 	]);
 	// @ts-ignore
 	databaseConnector.auditTrail.create.mockResolvedValue({});
+
+	// @ts-ignore
+	databaseConnector.team.findUnique.mockResolvedValue({
+		id: 1,
+		name: 'test',
+		email: 'test@email.com'
+	});
+	// @ts-ignore
+	databaseConnector.team.findFirst.mockResolvedValue({
+		id: 1
+	});
+	// @ts-ignore
+	databaseConnector.lPA.findUnique.mockResolvedValue({
+		teamId: 1
+	});
 	// @ts-ignore
 	databaseConnector.folder.findMany.mockResolvedValue(
 		appealIngestionInput.folders.create.map((/** @type {any} */ o, /** @type {number} */ ix) => {

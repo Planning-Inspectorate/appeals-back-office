@@ -107,6 +107,10 @@ export default {
 		phoneNumber: null,
 		addressId: null
 	},
+	assignedTeam: {
+		email: 'temp@email.com',
+		name: 'temp'
+	},
 	agent: null,
 	lpa: {
 		id: 2,

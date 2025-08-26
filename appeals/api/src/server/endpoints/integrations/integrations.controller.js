@@ -9,10 +9,12 @@ import {
 	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_DOCUMENT_IMPORTED,
 	AUDIT_TRAIL_SYSTEM_UUID,
-	AUDIT_TRAIL_REP_IMPORT_MSG
+	AUDIT_TRAIL_REP_IMPORT_MSG,
+	AUDIT_TRAIL_TEAM_ASSIGNED
 } from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { APPEAL_REPRESENTATION_TYPE, SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
+import { getAssignedTeam } from '#repositories/team.repository.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -39,13 +41,25 @@ export const importAppeal = async (req, res) => {
 	);
 
 	const { documentVersions } = casedata;
-	const { id, reference, appellantId, agentId } = casedata.appeal;
+	const { id, reference, appellantId, agentId, assignedTeamId } = casedata.appeal;
 
 	await createAuditTrail({
 		appealId: id,
 		details: AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
 		azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID
 	});
+
+	if (casedata.appeal.assignedTeamId) {
+		const team = await getAssignedTeam(casedata.appeal.assignedTeamId);
+		const teamAssignmentMessage = stringTokenReplacement(AUDIT_TRAIL_TEAM_ASSIGNED, [
+			team?.name ?? ''
+		]);
+		await createAuditTrail({
+			appealId: id,
+			details: teamAssignmentMessage,
+			azureAdUserId: AUDIT_TRAIL_SYSTEM_UUID
+		});
+	}
 
 	await Promise.all([
 		broadcasters.broadcastAppeal(id, EventType.Create),
@@ -79,7 +93,7 @@ export const importAppeal = async (req, res) => {
 		})
 	);
 
-	return res.status(201).send({ id, reference });
+	return res.status(201).send({ id, reference, assignedTeamId });
 };
 
 /**

@@ -48,6 +48,7 @@ import { mapVisitType } from './submappers/visit-type.mapper.js';
 import { mapLpaHealthAndSafety } from './submappers/lpa-health-and-safety.mapper.js';
 import { mapAppellantHealthAndSafety } from './submappers/appellant-health-and-safety.mapper.js';
 import { mapLpaNeighbouringSites } from './submappers/lpa-neighbouring-sites.mapper.js';
+import { mapCaseTeam } from './submappers/team.mapper.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -76,6 +77,7 @@ export const submaps = {
 	siteVisitDate: mapSiteVisitDate,
 	siteVisitStartTime: mapSiteVisitStartTime,
 	siteVisitEndTime: mapSiteVisitEndTime,
+	caseTeam: mapCaseTeam,
 	caseOfficer: mapCaseOfficer,
 	inspector: mapInspector,
 	crossTeamCorrespondence: mapCrossTeamCorrespondence,

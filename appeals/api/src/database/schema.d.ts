@@ -1,6 +1,7 @@
 import { RedactionStatus } from '#repositories/document-metadata.repository';
 import * as schema from '#utils/db-client';
 import { CaseOfficer, Inspector } from '@pins/appeals';
+import { AssignedTeam } from '@pins/appeals.api';
 
 export interface Appeal extends schema.Appeal {
 	parentAppeals?: AppealRelationship[];
@@ -19,6 +20,8 @@ export interface Appeal extends schema.Appeal {
 	lpaQuestionnaire?: LPAQuestionnaire | null;
 	appealTimetable?: AppealTimetable | null;
 	appellantCase?: AppellantCase | null;
+	assignedTeamId?: number | null;
+	assignedTeam?: AssignedTeam | null;
 	caseOfficer?: User | null;
 	inspector?: User | null;
 	siteVisit?: SiteVisit | null;

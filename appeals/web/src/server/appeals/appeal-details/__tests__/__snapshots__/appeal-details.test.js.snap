@@ -755,6 +755,17 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                     </div>
                     <div id="accordion-default2-content-6" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -1205,6 +1216,17 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -1586,6 +1608,17 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                     </div>
                     <div id="accordion-default1-content-6" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -2033,6 +2066,17 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -2491,6 +2535,17 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -2949,6 +3004,17 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -3398,6 +3464,17 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -3847,6 +3924,17 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -4310,6 +4398,17 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                     </div>
                     <div id="accordion-default3-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -4746,6 +4845,17 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -5199,6 +5309,17 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                     </div>
                     <div id="accordion-default2-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -5738,6 +5859,17 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -6185,6 +6317,33 @@ exports[`appeal-details GET /:appealId Status tags should render a status tag wi
 exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Validation" and a green modifier class if appeal status is validation 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Validation</strong>"`;
 
 exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Withdrawn" and a grey modifier class if appeal status is withdrawn 1`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Withdrawn</strong>"`;
+
+exports[`appeal-details GET /:appealId Team section should render the case-team section for appeal with not assigned displayed when no team is assigned" 1`] = `
+"<div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+    <dd class="govuk-summary-list__value">
+        <ul class="govuk-list">
+            <li>Not assigned</li>
+        </ul>
+    </dd>
+    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+        data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+    </dd>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Team section should render the case-team section for appeal with team name and email displayed" 1`] = `
+"<div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+    <dd class="govuk-summary-list__value">
+        <ul class="govuk-list">
+            <li>Test Team</li>
+            <li>test@emai.com</li>
+        </ul>
+    </dd>
+    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+        data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+    </dd>
+</div>"
+`;
 
 exports[`appeal-details GET /:appealId Timetable Valid date should render a "Timetable" with a Valid date row and a Start date row including no date and start action link 1`] = `
 "<dl class="govuk-summary-list appeal-case-timetable">
@@ -6722,6 +6881,17 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -7165,6 +7335,17 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -7602,6 +7783,17 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -8052,6 +8244,17 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -8491,6 +8694,17 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -8941,6 +9155,17 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                     </div>
                     <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                <dd class="govuk-summary-list__value">
+                                    <ul class="govuk-list">
+                                        <li>Test Team</li>
+                                        <li>test@emai.com</li>
+                                    </ul>
+                                </dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                </dd>
+                            </div>
                             <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                 <dd class="govuk-summary-list__value">
                                     <p class="govuk-body">Not assigned</p>
@@ -9444,6 +9669,17 @@ exports[`appeal-details should not render a back button 1`] = `
                                 </div>
                                 <div id="accordion-default2-content-7" class="govuk-accordion__section-content">
                                     <dl class="govuk-summary-list">
+                                        <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+                                            <dd class="govuk-summary-list__value">
+                                                <ul class="govuk-list">
+                                                    <li>Test Team</li>
+                                                    <li>test@emai.com</li>
+                                                </ul>
+                                            </dd>
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                                data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
+                                            </dd>
+                                        </div>
                                         <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                                             <dd class="govuk-summary-list__value">
                                                 <p class="govuk-body">Not assigned</p>
