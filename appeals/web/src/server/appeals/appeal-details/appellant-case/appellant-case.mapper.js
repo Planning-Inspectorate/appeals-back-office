@@ -1,39 +1,40 @@
+import { isFeatureActive } from '#common/feature-flags.js';
 import config from '#environment/config.js';
-import { dateInput, inputInstructionIsRadiosInputInstruction } from '#lib/mappers/index.js';
+import { permissionNames } from '#environment/permissions.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { ensureArray } from '#lib/array-utilities.js';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
-	dayMonthYearHourMinuteToISOString,
-	dayMonthYearHourMinuteToDisplayDate
+	dayMonthYearHourMinuteToDisplayDate,
+	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
-import { capitalize } from 'lodash-es';
-import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
-import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
-import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { initialiseAndMapData } from '#lib/mappers/data/appellant-case/mapper.js';
 import {
-	userHasPermission,
-	removeSummaryListActions,
-	mapNotificationBannersFromSession,
 	createNotificationBanner,
-	sortNotificationBanners
+	dateInput,
+	inputInstructionIsRadiosInputInstruction,
+	mapNotificationBannersFromSession,
+	removeSummaryListActions,
+	sortNotificationBanners,
+	userHasPermission
 } from '#lib/mappers/index.js';
-import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
+import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
+import { mapReasonOptionsToCheckboxItemParameters } from '#lib/validation-outcome-reasons-formatter.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
 	APPEAL_CASE_STATUS,
-	APPEAL_VIRUS_CHECK_STATUS,
-	APPEAL_DOCUMENT_TYPE
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
-import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
-import { isFeatureActive } from '#common/feature-flags.js';
-import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { generateHASComponents } from './page-components/has.mapper.js';
-import { generateS78Components } from './page-components/s78.mapper.js';
+import { capitalize } from 'lodash-es';
 import { generateCASComponents } from './page-components/cas.mapper.js';
-import { permissionNames } from '#environment/permissions.js';
-import { ensureArray } from '#lib/array-utilities.js';
+import { generateHASComponents } from './page-components/has.mapper.js';
 import { generateS20Components } from './page-components/s20.mapper.js';
+import { generateS78Components } from './page-components/s78.mapper.js';
 
 /**
  * @typedef {import('../../appeals.types.js').DayMonthYearHourMinute} DayMonthYearHourMinute
@@ -741,6 +742,17 @@ function generateCaseTypeSpecificComponents(
 				return generateCASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
 			} else {
 				throw new Error('Feature flag inactive for CAS');
+			}
+		case APPEAL_TYPE.CAS_ADVERTISEMENT:
+			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS_ADVERT)) {
+				return generateHASComponents(
+					appealDetails,
+					appellantCaseData,
+					mappedAppellantCaseData,
+					userHasUpdateCasePermission
+				);
+			} else {
+				throw new Error('Feature flag inactive for CAS adverts');
 			}
 		default:
 			throw new Error('Invalid appealType, unable to generate display page');

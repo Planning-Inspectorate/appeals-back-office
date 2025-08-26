@@ -1,9 +1,9 @@
 import { permissionNames } from '#environment/permissions.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { userHasPermission } from '#lib/mappers/index.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { submaps as hasSubmaps } from './has.js';
-import { submaps as s78Submaps } from './s78.js';
 import { submaps as s20Submaps } from './s20.js';
+import { submaps as s78Submaps } from './s78.js';
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
  * @typedef {import('../../../../app/auth/auth-session.service.js').SessionWithAuth & Express.Request["session"]} SessionWithAuth
@@ -26,6 +26,7 @@ import { submaps as s20Submaps } from './s20.js';
 /** @type {Record<string, Record<string, SubMapper>>} */
 const submaps = {
 	[APPEAL_TYPE.HOUSEHOLDER]: hasSubmaps,
+	[APPEAL_TYPE.CAS_ADVERTISEMENT]: hasSubmaps,
 	[APPEAL_TYPE.CAS_PLANNING]: hasSubmaps,
 	[APPEAL_TYPE.S78]: s78Submaps,
 	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s20Submaps
