@@ -12,7 +12,8 @@ import { yesNoInput } from '#lib/mappers/components/index.js';
  * @returns {PageContent}
  * */
 export const checkAddressPage = (appealDetails, commentId, address) => {
-	const editPageUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${commentId}/edit/address`;
+	const editBaseUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${commentId}/edit/address`;
+	const editPageUrl = `${editBaseUrl}?editEntrypoint=${editBaseUrl}`;
 
 	return {
 		title: 'Check your answers',

@@ -41,7 +41,6 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 		'awaitingLinkedAppeal',
 		'appealAwaitingTransfer',
 		'assignCaseOfficer',
-		'readyForDecision',
 		'readyForValidation',
 		'readyForLpaQuestionnaireReview',
 		'addHearingAddress',
@@ -133,6 +132,14 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 					request,
 					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
 				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to hearing ready to set up</a>`
+			});
+		case 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements':
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/share`
+				)}" class="govuk-heading-s govuk-notification-banner__link">Progress to awaiting hearing</a>`
 			});
 		case 'readyForValidation':
 			return createNotificationBanner({

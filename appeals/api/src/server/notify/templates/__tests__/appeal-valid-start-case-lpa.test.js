@@ -30,8 +30,6 @@ describe('appeal-valid-start-case-lpa.md', () => {
 		const expectedContent = [
 			'You have a new Householder appeal against the application 48269/APP/2021/1482.',
 			'',
-			'We will decide the appeal by a written procedure. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
-			'',
 			'# Appeal details',
 			'',
 			'^Appeal reference number: 134526',

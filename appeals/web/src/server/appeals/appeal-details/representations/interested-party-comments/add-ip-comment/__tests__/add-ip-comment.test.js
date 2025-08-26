@@ -19,9 +19,9 @@ describe('add-ip-comment', () => {
 		it('should redirect to /add/ip-details', () => {
 			return new Promise((resolve) => {
 				request
-					.get(`${baseUrl}/2/interested-party-comments/add`)
+					.get(`${baseUrl}/2/interested-party-comments/add?backUrl=/test/back/url`)
 					.expect(302)
-					.expect('Location', `./add/ip-details`)
+					.expect('Location', `./add/ip-details?backUrl=/test/back/url`)
 					.end(resolve);
 			});
 		});
@@ -33,15 +33,15 @@ describe('add-ip-comment', () => {
 		/** @type {*} */
 		let pageHtml;
 
-		beforeAll(async () => {
+		beforeEach(async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
 
 			const response = await request.get(
-				`${baseUrl}/${appealId}/interested-party-comments/add/ip-details`
+				`${baseUrl}/${appealId}/interested-party-comments/add/ip-details?backUrl=/test/back/url`
 			);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -62,6 +62,28 @@ describe('add-ip-comment', () => {
 
 		it('should render an Email address field', () => {
 			expect(pageHtml.querySelector('input#email-address')).not.toBeNull();
+		});
+
+		it('should render the correct back link', () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/test/back/url'
+			);
+		});
+
+		it('should render the correct back link when editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/ip-details` +
+					`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/ip-details`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
+			);
 		});
 
 		it('should render any previous response', async () => {
@@ -89,6 +111,41 @@ describe('add-ip-comment', () => {
 				'example@email.com'
 			);
 		});
+
+		it('should render the edited values if editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.times(3)
+				.reply(200, { ...appealData, appealId });
+
+			await request.post(`${baseUrl}/${appealId}/interested-party-comments/add/ip-details`).send({
+				firstName: 'First123',
+				lastName: 'Last456',
+				emailAddress: 'example@email.com'
+			});
+			await request
+				.post(
+					`${baseUrl}/${appealId}/interested-party-comments/add/ip-details` +
+						`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/ip-details`
+				)
+				.send({
+					firstName: 'First64',
+					lastName: 'Last32',
+					emailAddress: 'example2@email.com'
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/ip-details` +
+					`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/ip-details`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(pageHtml.querySelector('input#first-name').getAttribute('value')).toEqual('First64');
+			expect(pageHtml.querySelector('input#last-name').getAttribute('value')).toEqual('Last32');
+			expect(pageHtml.querySelector('input#email-address').getAttribute('value')).toEqual(
+				'example2@email.com'
+			);
+		});
 	});
 
 	describe('GET /add/check-address', () => {
@@ -97,7 +154,7 @@ describe('add-ip-comment', () => {
 		/** @type {*} */
 		let pageHtml;
 
-		beforeAll(async () => {
+		beforeEach(async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
@@ -105,7 +162,7 @@ describe('add-ip-comment', () => {
 			const response = await request.get(
 				`${baseUrl}/${appealId}/interested-party-comments/add/check-address`
 			);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -140,7 +197,7 @@ describe('add-ip-comment', () => {
 				`${baseUrl}/${appealId}/interested-party-comments/add/check-address`
 			);
 
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 
 			expect(
 				pageHtml.querySelector('input[type="radio"][value="no"]').getAttribute('checked')
@@ -148,6 +205,76 @@ describe('add-ip-comment', () => {
 			expect(
 				pageHtml.querySelector('input[type="radio"][value="yes"]').getAttribute('checked')
 			).toBeUndefined();
+		});
+
+		it('should render the edited response if editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.times(3)
+				.reply(200, { ...appealData, appealId });
+
+			await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/check-address`)
+				.send({ addressProvided: 'no' });
+			await request
+				.post(
+					`${baseUrl}/${appealId}/interested-party-comments/add/check-address` +
+						`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/check-address`
+				)
+				.send({ addressProvided: 'yes' });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/check-address` +
+					`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/check-address`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(
+				pageHtml.querySelector('input[type="radio"][value="yes"]').getAttribute('checked')
+			).toEqual('');
+			expect(
+				pageHtml.querySelector('input[type="radio"][value="no"]').getAttribute('checked')
+			).toBeUndefined();
+		});
+
+		it('should render the correct back link', () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/ip-details'
+			);
+		});
+
+		it('should render the correct back link when editing from this page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/check-address` +
+					`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/check-address`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
+			);
+		});
+
+		it('should render the correct back link when editing from a previous page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/check-address` +
+					`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/ip-details`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/ip-details' +
+					'?editEntrypoint=' +
+					'%2Fappeals-service%2Fappeal-details%2F2%2Finterested-party-comments%2Fadd%2Fip-details'
+			);
 		});
 	});
 
@@ -157,7 +284,7 @@ describe('add-ip-comment', () => {
 		/** @type {*} */
 		let pageHtml;
 
-		beforeAll(async () => {
+		beforeEach(async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
@@ -165,7 +292,7 @@ describe('add-ip-comment', () => {
 			const response = await request.get(
 				`${baseUrl}/${appealId}/interested-party-comments/add/ip-address`
 			);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -217,7 +344,7 @@ describe('add-ip-comment', () => {
 				`${baseUrl}/${appealId}/interested-party-comments/add/ip-address`
 			);
 
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 
 			expect(pageHtml.querySelector('input#address-line-1').getAttribute('value')).toEqual(
 				'Line 1'
@@ -228,6 +355,89 @@ describe('add-ip-comment', () => {
 			expect(pageHtml.querySelector('input#town').getAttribute('value')).toEqual('Town');
 			expect(pageHtml.querySelector('input#county').getAttribute('value')).toEqual('County');
 			expect(pageHtml.querySelector('input#post-code').getAttribute('value')).toEqual('AB1 2CD');
+		});
+
+		it('should render the edited response if editing', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.times(3)
+				.reply(200, { ...appealData, appealId });
+
+			await request.post(`${baseUrl}/${appealId}/interested-party-comments/add/ip-address`).send({
+				addressLine1: 'Line 1',
+				addressLine2: 'Line 2',
+				town: 'Town',
+				county: 'County',
+				postCode: 'AB1 2CD'
+			});
+			await request
+				.post(
+					`${baseUrl}/${appealId}/interested-party-comments/add/ip-address` +
+						`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/ip-address`
+				)
+				.send({
+					addressLine1: 'Line 12',
+					addressLine2: 'Line 22',
+					town: 'Town2',
+					county: 'County2',
+					postCode: 'AB1 2CD2'
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/ip-address` +
+					`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/ip-address`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(pageHtml.querySelector('input#address-line-1').getAttribute('value')).toEqual(
+				'Line 12'
+			);
+			expect(pageHtml.querySelector('input#address-line-2').getAttribute('value')).toEqual(
+				'Line 22'
+			);
+			expect(pageHtml.querySelector('input#town').getAttribute('value')).toEqual('Town2');
+			expect(pageHtml.querySelector('input#county').getAttribute('value')).toEqual('County2');
+			expect(pageHtml.querySelector('input#post-code').getAttribute('value')).toEqual('AB1 2CD2');
+		});
+
+		it('should render the correct back link', async () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/check-address'
+			);
+		});
+
+		it('should render the correct back link when editing from this page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/ip-address` +
+					`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/ip-address`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
+			);
+		});
+
+		it('should render the correct back link when editing from a previous page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/ip-address` +
+					`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/check-address`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/check-address' +
+					'?editEntrypoint=' +
+					'%2Fappeals-service%2Fappeal-details%2F2%2Finterested-party-comments%2Fadd%2Fcheck-address'
+			);
 		});
 	});
 
@@ -370,7 +580,7 @@ describe('add-ip-comment', () => {
 		/** @type {*} */
 		let pageHtml;
 
-		beforeAll(async () => {
+		beforeEach(async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
@@ -382,7 +592,7 @@ describe('add-ip-comment', () => {
 			const response = await request.get(
 				`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`
 			);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -403,6 +613,70 @@ describe('add-ip-comment', () => {
 			expect(pageHtml.querySelector('input#date-day')).not.toBeNull();
 			expect(pageHtml.querySelector('input#date-month')).not.toBeNull();
 			expect(pageHtml.querySelector('input#date-year')).not.toBeNull();
+		});
+
+		it('should render any previous response', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.twice()
+				.reply(200, { ...appealData, appealId });
+
+			await request
+				.post(`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`)
+				.send({
+					'date-day': '30',
+					'date-month': '10',
+					'date-year': '2024'
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(pageHtml.querySelector('input#date-day').getAttribute('value')).toEqual('30');
+			expect(pageHtml.querySelector('input#date-month').getAttribute('value')).toEqual('10');
+			expect(pageHtml.querySelector('input#date-year').getAttribute('value')).toEqual('2024');
+		});
+
+		it('should render the correct back link', async () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/redaction-status'
+			);
+		});
+
+		it('should render the correct back link when editing from this page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted` +
+					`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/date-submitted`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/check-your-answers'
+			);
+		});
+
+		it('should render the correct back link when editing from a previous page', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/date-submitted` +
+					`?editEntrypoint=${baseUrl}/${appealId}/interested-party-comments/add/ip-address`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/redaction-status' +
+					'?editEntrypoint=' +
+					'%2Fappeals-service%2Fappeal-details%2F2%2Finterested-party-comments%2Fadd%2Fip-address'
+			);
 		});
 	});
 
@@ -530,7 +804,7 @@ describe('add-ip-comment', () => {
 		/** @type {*} */
 		let pageHtml;
 
-		beforeAll(async () => {
+		beforeEach(async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
@@ -538,7 +812,7 @@ describe('add-ip-comment', () => {
 			const response = await request.get(
 				`${baseUrl}/${appealId}/interested-party-comments/add/check-your-answers`
 			);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
 		});
 
 		it('should match the snapshot', () => {
@@ -553,6 +827,12 @@ describe('add-ip-comment', () => {
 
 		it('should render a summary list', () => {
 			expect(pageHtml.querySelector('dl.govuk-summary-list')).not.toBeNull();
+		});
+
+		it('should render the correct back link', async () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/date-submitted'
+			);
 		});
 	});
 

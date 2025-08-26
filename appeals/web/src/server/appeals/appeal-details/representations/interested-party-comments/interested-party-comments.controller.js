@@ -61,7 +61,8 @@ export async function renderInterestedPartyComments(request, response) {
 		validComments,
 		invalidComments,
 		session,
-		getSavedBackUrl(request, 'manageIpComments')
+		getSavedBackUrl(request, 'manageIpComments'),
+		request
 	);
 
 	return response.status(200).render('appeals/appeal/interested-party-comments.njk', {

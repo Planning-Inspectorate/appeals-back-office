@@ -154,7 +154,7 @@ const getMyAppeals = async (req, res) => {
  * @returns {Promise<Response>}
  */
 async function updateCompletedEventsController(req, res) {
-	const { azureAdUserId } = req.params;
+	const azureAdUserId = req.params.azureAdUserId || req.get('azureAdUserId') || '';
 
 	await updateCompletedEvents(azureAdUserId);
 

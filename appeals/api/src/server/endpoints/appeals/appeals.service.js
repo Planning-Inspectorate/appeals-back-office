@@ -5,7 +5,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
 import { formatAppeal } from '#endpoints/appeals/appeals.formatter.js';
-import transitionState from '#state/transition-state.js';
+import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
@@ -16,6 +16,8 @@ import { addBusinessDays } from 'date-fns';
 import lpaRepository from '#repositories/lpa.repository.js';
 import { compact, uniq, uniqBy } from 'lodash-es';
 import userRepository from '#repositories/user.repository.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AssignedUser} AssignedUser */
 /** @typedef {import('@pins/appeals.api').Appeals.UsersToAssign} UsersToAssign */
@@ -181,9 +183,14 @@ async function updateCompletedEvents(azureAdUserId) {
 	const appealsToUpdate = await appealRepository.getAppealsWithCompletedEvents();
 
 	await Promise.all(
-		appealsToUpdate.map((appeal) =>
-			transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE)
-		)
+		appealsToUpdate.map(async (appeal) => {
+			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+
+			if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+				// @ts-ignore
+				await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+			}
+		})
 	);
 
 	await Promise.all(appealsToUpdate.map((appeal) => broadcasters.broadcastAppeal(appeal.id)));

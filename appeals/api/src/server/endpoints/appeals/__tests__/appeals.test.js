@@ -2,6 +2,8 @@
 import { jest } from '@jest/globals';
 import { request } from '../../../app-test.js';
 import {
+	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
+	CASE_RELATIONSHIP_LINKED,
 	ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS,
 	ERROR_MUST_BE_BOOLEAN,
 	ERROR_MUST_BE_GREATER_THAN_ZERO,
@@ -11,13 +13,13 @@ import {
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
 } from '@pins/appeals/constants/support.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal, fullPlanningAppeal } from '#tests/appeals/mocks.js';
+import { householdAppeal, fullPlanningAppeal, appealS78 } from '#tests/appeals/mocks.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.service.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
-import { omit } from 'lodash-es';
-
+import { cloneDeep, omit } from 'lodash-es';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const lpas = [
@@ -1599,5 +1601,55 @@ describe('getRelevantLinkedAppealIds Tests', () => {
 		// @ts-ignore
 		const result = getIdsOfReferencedAppeals(linkedAppealsWithDuplucate, currentAppealRef);
 		expect(result).toEqual([1028, 1029, 1043]);
+	});
+});
+
+describe('updateCompletedEvents', () => {
+	test('updates completed events', async () => {
+		const siteVisit = cloneDeep({ ...householdAppeal.siteVisit, appealId: appealS78.id });
+		const appealStatus = [{ status: 'awaiting_event', valid: true }];
+		const childAppeals = [{ childId: 100, type: CASE_RELATIONSHIP_LINKED }];
+		const linkedLeadAppeal = cloneDeep({
+			...appealS78,
+			siteVisit,
+			appealStatus,
+			childAppeals
+		});
+
+		// @ts-ignore
+		databaseConnector.appeal.findUnique.mockResolvedValue(linkedLeadAppeal);
+		// @ts-ignore
+		databaseConnector.appeal.findMany.mockResolvedValue([linkedLeadAppeal]);
+		// @ts-ignore
+		databaseConnector.user.upsert.mockResolvedValue({
+			id: 1,
+			azureAdUserId
+		});
+
+		const response = await request
+			.post(`/appeals/update-complete-events`)
+			.set('azureAdUserId', azureAdUserId);
+
+		expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(2);
+
+		expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+			data: {
+				appealId: linkedLeadAppeal.id,
+				details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['issue_determination']),
+				loggedAt: expect.any(Date),
+				userId: linkedLeadAppeal.caseOfficer.id
+			}
+		});
+
+		expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+			data: {
+				appealId: childAppeals[0].childId,
+				details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['issue_determination']),
+				loggedAt: expect.any(Date),
+				userId: linkedLeadAppeal.caseOfficer.id
+			}
+		});
+
+		expect(response.status).toEqual(204);
 	});
 });

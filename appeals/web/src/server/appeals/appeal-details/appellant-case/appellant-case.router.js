@@ -33,6 +33,7 @@ import applicationOutcomeRouter from './application-outcome/application-outcome.
 import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 import applicationDevelopmentTypeRouter from './application-development-type/application-development-type.router.js';
 import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
+import changeProcedureTypeRouter from '../change-appeal-procedure-type/change-appeal-procedure-type.router.js';
 import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
 
 const router = createRouter({ mergeParams: true });
@@ -169,6 +170,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	changeLpaRouter
+);
+
+router.use(
+	'/change-appeal-procedure-type/change-selected-procedure-type',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	changeProcedureTypeRouter
 );
 
 router

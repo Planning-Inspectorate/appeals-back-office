@@ -11,7 +11,8 @@ export const getCancelAppealSection = (appealDetails, currentRoute) => {
 	if (
 		!config.featureFlags.featureFlagCancelCase ||
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN ||
-		appealDetails.appealStatus === APPEAL_CASE_STATUS.INVALID
+		appealDetails.appealStatus === APPEAL_CASE_STATUS.INVALID ||
+		appealDetails.appealStatus === APPEAL_CASE_STATUS.COMPLETE
 	) {
 		return;
 	}
