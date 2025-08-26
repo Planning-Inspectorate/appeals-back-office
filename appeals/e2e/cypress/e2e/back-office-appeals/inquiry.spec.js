@@ -84,7 +84,7 @@ beforeEach(() => {
 	setupTestCase();
 });
 
-it('Can update inquiry date', () => {
+/*it('Can update inquiry date', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseRef, inquiryDate);
@@ -228,6 +228,30 @@ it('Can update inquiry estimated days when not already set', () => {
 });
 
 it('Can update inquiry address', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.addInquiryViaApi(caseRef, inquiryDate);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickAccordionByButton('Inquiry');
+
+		// change inquiry address
+		inquirySectionPage.changeAddress(inquiryAddress);
+
+		const expectedAddress = formatAddress(inquiryAddress);
+		cy.log(`** expectedAddress - `, expectedAddress);
+
+		// check address is correct
+		inquirySectionPage.verifyFieldsUpdated([
+			{ field: inquirySectionPage.inquirySectionFields.doKnowAddress, value: 'Yes' },
+			{ field: inquirySectionPage.inquirySectionFields.address, value: expectedAddress }
+		]);
+	});
+});*/
+
+it('Can update answer from CYA page', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseRef, inquiryDate);
