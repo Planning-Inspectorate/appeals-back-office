@@ -14,40 +14,16 @@ export const localPlanningDepartmentList = [
 		name: 'System Test Borough Council 2',
 		email: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
 	},
+
 	{
 		lpaCode: 'N5090',
 		name: 'Barnet',
 		email: 'planning.appeals@barnet.gov.uk'
 	},
 	{
-		lpaCode: 'G5180',
-		name: 'Bromley',
-		email: 'planningappeals@bromley.gov.uk'
-	},
-	{
-		lpaCode: 'T1600',
-		name: 'Gloucestershire',
-		email: 'planningdc@gloucestershire.gov.uk'
-	},
-	{
-		lpaCode: 'J1725',
-		name: 'Gosport',
-		email: 'planning@gosport.gov.uk'
-	},
-	{
-		lpaCode: 'E5330',
-		name: 'Greenwich',
-		email: 'planning-enforcement@royalgreenwich.gov.uk'
-	},
-	{
-		lpaCode: 'B5480',
-		name: 'Havering',
-		email: 'planning_appeals@havering.gov.uk'
-	},
-	{
-		lpaCode: 'L5810',
-		name: 'Richmond',
-		email: 'richmondplanningappeals@richmondandwandsworth.gov.uk'
+		lpaCode: 'H1705',
+		name: 'Basingstoke and Deane Borough Council',
+		email: 'appeals@basingstoke.gov.uk'
 	},
 	{
 		lpaCode: 'F0114',
@@ -55,9 +31,39 @@ export const localPlanningDepartmentList = [
 		email: 'Planning_appeals@bathnes.gov.uk'
 	},
 	{
+		lpaCode: 'V1260',
+		name: 'Bournemouth, Christchurch and Poole',
+		email: 'planning.bournemouth@bcpcouncil.gov.uk'
+	},
+	{
+		lpaCode: 'G5180',
+		name: 'Bromley',
+		email: 'planningappeals@bromley.gov.uk'
+	},
+	{
 		lpaCode: 'K0425',
 		name: 'Buckinghamshire Council - Wycombe Area',
 		email: 'planning.wyc@buckinghamshire.gov.uk'
+	},
+	{
+		lpaCode: 'X3405',
+		name: 'Cannock Chase District Council',
+		email: 'developmentcontrol@cannockchasedc.gov.uk'
+	},
+	{
+		lpaCode: 'D0840',
+		name: 'Cornwall Council',
+		email: 'planningappeals@cornwall.gov.uk'
+	},
+	{
+		lpaCode: 'F1610',
+		name: 'Cotswold District Council',
+		email: 'planning@cotswold.gov.uk'
+	},
+	{
+		lpaCode: 'U4610',
+		name: 'Coventry City Council',
+		email: 'planning@coventry.gov.uk'
 	},
 	{
 		lpaCode: 'J9497',
@@ -65,9 +71,34 @@ export const localPlanningDepartmentList = [
 		email: 'planning@dartmoor.gov.uk'
 	},
 	{
+		lpaCode: 'D1265',
+		name: 'Dorset',
+		email: 'Appeals@dorsetcouncil.gov.uk'
+	},
+	{
+		lpaCode: 'C4615',
+		name: 'Dudley Metropolitan Borough Council',
+		email: 'development.control@dudley.gov.uk'
+	},
+	{
+		lpaCode: 'U1105',
+		name: 'East Devon District Council',
+		email: 'planningappeals@eastdevon.gov.uk'
+	},
+	{
 		lpaCode: 'B3410',
 		name: 'East Staffordshire Borough Council',
 		email: 'dcsupport@eaststaffsbc.gov.uk'
+	},
+	{
+		lpaCode: 'W1715',
+		name: 'Eastleigh Borough Council',
+		email: 'ebcplanningsupport@eastleigh.gov.uk'
+	},
+	{
+		lpaCode: 'Y1110',
+		name: 'Exeter City Council',
+		email: 'planning@exeter.gov.uk'
 	},
 	{
 		lpaCode: 'F9498',
@@ -90,6 +121,21 @@ export const localPlanningDepartmentList = [
 		email: 'Development.Control@gloucester.gov.uk'
 	},
 	{
+		lpaCode: 'T1600',
+		name: 'Gloucestershire',
+		email: 'planningdc@gloucestershire.gov.uk'
+	},
+	{
+		lpaCode: 'J1725',
+		name: 'Gosport',
+		email: 'planning@gosport.gov.uk'
+	},
+	{
+		lpaCode: 'E5330',
+		name: 'Greenwich',
+		email: 'planning-enforcement@royalgreenwich.gov.uk'
+	},
+	{
 		lpaCode: 'N1730',
 		name: 'Hart District Council',
 		email: 'appeals@hart.gov.uk'
@@ -100,9 +146,34 @@ export const localPlanningDepartmentList = [
 		email: 'planning.development@havant.gov.uk'
 	},
 	{
+		lpaCode: 'B5480',
+		name: 'Havering',
+		email: 'planning_appeals@havering.gov.uk'
+	},
+	{
 		lpaCode: 'W1850',
 		name: 'Herefordshire Council',
 		email: 'planning_enquiries@herefordshire.gov.uk'
+	},
+	{
+		lpaCode: 'P2114',
+		name: 'Isle of Wight Council',
+		email: 'planningappeals@iow.gov.uk'
+	},
+	{
+		lpaCode: 'K3415',
+		name: 'Lichfield District Council',
+		email: 'appeals@lichfielddc.gov.uk'
+	},
+	{
+		lpaCode: 'R5510',
+		name: 'London Borough of Hillingdon',
+		email: 'PlanningAppeals@Hillingdon.gov.uk'
+	},
+	{
+		lpaCode: 'N5660',
+		name: 'London Borough of Lambeth',
+		email: 'planningappeals@lambeth.gov.uk'
 	},
 	{
 		lpaCode: 'J1860',
@@ -130,9 +201,29 @@ export const localPlanningDepartmentList = [
 		email: 'planningapplications@newcastle-staffs.gov.uk'
 	},
 	{
+		lpaCode: 'X1118',
+		name: 'North Devon District Council',
+		email: 'planningappeals@northdevon.gov.uk'
+	},
+	{
 		lpaCode: 'R3705',
 		name: 'North Warwickshire Borough Council',
 		email: 'planningcontrol@northwarks.gov.uk'
+	},
+	{
+		lpaCode: 'W3710',
+		name: 'Nuneaton and Bedworth Borough Council',
+		email: 'planning@nuneatonandbedworth.gov.uk'
+	},
+	{
+		lpaCode: 'N1160',
+		name: 'Plymouth City Council',
+		email: 'planningconsents@plymouth.gov.uk'
+	},
+	{
+		lpaCode: 'L5810',
+		name: 'Richmond',
+		email: 'richmondplanningappeals@richmondandwandsworth.gov.uk'
 	},
 	{
 		lpaCode: 'E3715',
@@ -155,6 +246,11 @@ export const localPlanningDepartmentList = [
 		email: 'planning@slough.gov.uk'
 	},
 	{
+		lpaCode: 'Q4625',
+		name: 'Solihull Metropolitan Borough Council',
+		email: 'planningenforcement@solihull.gov.uk'
+	},
+	{
 		lpaCode: 'Y9507',
 		name: 'South Downs National Park Authority',
 		email: 'planning@southdowns.gov.uk'
@@ -170,6 +266,26 @@ export const localPlanningDepartmentList = [
 		email: 'registration@southoxon.gov.uk'
 	},
 	{
+		lpaCode: 'D1780',
+		name: 'Southampton City Council',
+		email: 'planning.appeal@southampton.gov.uk'
+	},
+	{
+		lpaCode: 'Y3425',
+		name: 'Stafford Borough Council',
+		email: 'planning@staffordbc.gov.uk'
+	},
+	{
+		lpaCode: 'B3438',
+		name: 'Staffordshire Moorlands District Council',
+		email: 'planning@staffsmoorlands.gov.uk'
+	},
+	{
+		lpaCode: 'J3720',
+		name: 'Stratford-on-Avon District Council',
+		email: 'planning.appeals@stratford-dc.gov.uk'
+	},
+	{
 		lpaCode: 'C1625',
 		name: 'Stroud District Council',
 		email: 'planning.appeals@stroud.gov.uk'
@@ -178,6 +294,11 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'U3935',
 		name: 'Swindon Borough Council',
 		email: 'appeals@swindon.gov.uk'
+	},
+	{
+		lpaCode: 'Z3445',
+		name: 'Tamworth Borough Council',
+		email: 'planningadmin@tamworth.gov.uk'
 	},
 	{
 		lpaCode: 'P1133',
@@ -215,9 +336,19 @@ export const localPlanningDepartmentList = [
 		email: 'planningsupport@torridge.gov.uk'
 	},
 	{
+		lpaCode: 'V3120',
+		name: 'Vale of White Horse District Council',
+		email: 'registration@whitehorsedc.gov.uk'
+	},
+	{
 		lpaCode: 'V4630',
 		name: 'Walsall Metropolitan Borough Council',
 		email: 'planningservices@walsall.gov.uk'
+	},
+	{
+		lpaCode: 'T3725',
+		name: 'Warwick District Council',
+		email: 'planning_appeals@warwickdc.gov.uk'
 	},
 	{
 		lpaCode: 'W0340',
@@ -230,9 +361,24 @@ export const localPlanningDepartmentList = [
 		email: 'dc@westdevon.gov.uk'
 	},
 	{
+		lpaCode: 'D3125',
+		name: 'West Oxfordshire District Council',
+		email: 'Planning.Appeals@westoxon.gov.uk'
+	},
+	{
+		lpaCode: 'Y3940',
+		name: 'Wiltshire Council',
+		email: 'planningappeals@wiltshire.gov.uk'
+	},
+	{
 		lpaCode: 'L1765',
 		name: 'Winchester City Council',
 		email: 'appeals@winchester.gov.uk'
+	},
+	{
+		lpaCode: 'D4635',
+		name: 'Wolverhampton City Council',
+		email: 'planning.appeals@wolverhampton.gov.uk'
 	},
 	{
 		lpaCode: 'M3835',
