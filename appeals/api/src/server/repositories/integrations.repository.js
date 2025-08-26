@@ -22,7 +22,7 @@ export const createAppeal = async (data, documents, relatedReferences) => {
 	const transaction = await databaseConnector.$transaction(async (tx) => {
 		let appeal = await tx.appeal.create({ data });
 		const reference = createAppealReference(appeal.id).toString();
-		const team = await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '');
+		const teamId = await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '');
 		appeal = await tx.appeal.update({
 			where: { id: appeal.id },
 			data: {
@@ -33,7 +33,7 @@ export const createAppeal = async (data, documents, relatedReferences) => {
 						createdAt: new Date().toISOString()
 					}
 				},
-				assignedTeamId: team.id
+				assignedTeamId: teamId
 			}
 		});
 

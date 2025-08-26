@@ -3,7 +3,7 @@ import { databaseConnector } from '#utils/database-connector.js';
 /**
  *
  * @param {string} lpaCode
- * @returns {Promise<{id: number | null}>}
+ * @returns {Promise< number | null>}
  */
 export const getTeamIdFromLpaCode = async (lpaCode) => {
 	const team = await databaseConnector.lPA.findUnique({
@@ -12,12 +12,10 @@ export const getTeamIdFromLpaCode = async (lpaCode) => {
 	});
 
 	if (!team) {
-		return {
-			id: null
-		};
+		return null;
 	}
 
-	return { id: team.teamId };
+	return team.teamId;
 };
 /**
  *
