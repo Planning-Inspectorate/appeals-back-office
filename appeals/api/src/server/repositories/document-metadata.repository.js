@@ -29,7 +29,7 @@ export const addDocument = async (metadata, context) => {
 
 		metadata.documentGuid = guid;
 		metadata.version = 1;
-		metadata.fileName = name;
+		metadata.fileName = name || metadata.originalFilename;
 		const scanStatus = await tx.documentVersionAvScan.findUnique({
 			where: {
 				documentGuid_version: {

@@ -43,6 +43,7 @@ const mockDocumentFindMany = jest.fn().mockResolvedValue({});
 const mockDocumentCount = jest.fn().mockResolvedValue({});
 const mockDocumentFindFirst = jest.fn().mockResolvedValue({});
 const mockDocumentDelete = jest.fn().mockResolvedValue({});
+const mockDocumentCreate = jest.fn().mockResolvedValue({});
 const mockDocumentCreateMany = jest.fn().mockResolvedValue({});
 const mockDocumentVersionCreate = jest.fn().mockResolvedValue({});
 const mockDocumentVersionCreateMany = jest.fn().mockResolvedValue({});
@@ -133,6 +134,7 @@ const mockLpaFindUnique = jest.fn().mockResolvedValue({});
 const mockTeamFindUnique = jest.fn().mockResolvedValue({});
 const mockTeamFindFirst = jest.fn().mockResolvedValue({});
 const mockTeamFindMany = jest.fn().mockResolvedValue({});
+const mockBlobStorageCopyFile = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
@@ -245,7 +247,8 @@ class MockPrismaClient {
 			findMany: mockDocumentFindMany,
 			update: mockDocumentUpdate,
 			upsert: mockDocumentUpsert,
-			createMany: mockDocumentCreateMany
+			createMany: mockDocumentCreateMany,
+			create: mockDocumentCreate
 		};
 	}
 
@@ -572,6 +575,16 @@ jest.unstable_mockModule('./src/server/infrastructure/event-client.js', () => ({
 	eventClient: {
 		sendEvents: mockSendEvents
 	}
+}));
+
+jest.unstable_mockModule('@pins/blob-storage-client', () => ({
+	BlobStorageClient: { fromUrl: jest.fn().mockReturnValue({ copyFile: mockBlobStorageCopyFile }) }
+}));
+
+jest.unstable_mockModule('@azure/storage-blob', () => ({ BlobServiceClient: jest.fn() }));
+
+jest.unstable_mockModule('rhea', () => ({
+	default: { generate_uuid: jest.fn().mockReturnValue('mock-uuid') }
 }));
 
 const mockGotGet = jest.fn();
