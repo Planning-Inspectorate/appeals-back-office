@@ -56,7 +56,7 @@ variable "apps_config" {
       featureFlagPdfDownload            = bool
       featureFlagNetResidence           = bool
       featureFlagCancelCase             = bool
-			featureFlagChangeProcedureType    = bool
+      featureFlagChangeProcedureType    = bool
     })
 
     logging = object({
