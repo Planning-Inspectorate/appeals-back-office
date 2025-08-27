@@ -277,11 +277,10 @@ describe('decision routes', () => {
 					appeal_reference_number: appeal.reference,
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-					decision_date: formatDate(utcDate, false),
 					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
 				},
-				templateName: 'decision-is-allowed-split-dismissed-appellant',
-				recipientEmail: appeal.agent.email
+				templateName: 'appellant-costs-decision-lpa',
+				recipientEmail: appeal.lpa.email
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(4, {
@@ -293,7 +292,7 @@ describe('decision routes', () => {
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
 				},
-				templateName: 'appellant-costs-decision-lpa',
+				templateName: 'lpa-costs-decision-lpa',
 				recipientEmail: appeal.lpa.email
 			});
 
@@ -304,10 +303,11 @@ describe('decision routes', () => {
 					appeal_reference_number: appeal.reference,
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					decision_date: formatDate(utcDate, false),
 					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
 				},
-				templateName: 'lpa-costs-decision-lpa',
-				recipientEmail: appeal.lpa.email
+				templateName: 'decision-is-allowed-split-dismissed-appellant',
+				recipientEmail: appeal.agent.email
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(6, {
@@ -339,6 +339,128 @@ describe('decision routes', () => {
 				data: {
 					appealId: appeal.id,
 					details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
+					loggedAt: expect.any(Date),
+					userId: appeal.caseOfficer.id
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
+				data: {
+					appealId: appeal.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+						outcome[0].toUpperCase() + outcome.slice(1)
+					]),
+					loggedAt: expect.any(Date),
+					userId: appeal.caseOfficer.id
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(4, {
+				data: {
+					appealId: appeal.id,
+					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
+					loggedAt: expect.any(Date),
+					userId: appeal.caseOfficer.id
+				}
+			});
+
+			expect(response.status).toEqual(201);
+		});
+
+		test('returns 200 when all good for linked appeals', async () => {
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
+			const outcome = 'allowed';
+			const linkedAppeal = { appealId: 4, inspectorDecision: outcome };
+			const appeal = {
+				...fullPlanningAppeal,
+				isChildAppeal: true,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				],
+				linkedAppeals: [linkedAppeal]
+			};
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			// @ts-ignore
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			// @ts-ignore
+			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+
+			const response = await request
+				.post(`/appeals/${appeal.id}/decision`)
+				.send({
+					decisions: [
+						{
+							decisionType: DECISION_TYPE_INSPECTOR,
+							outcome,
+							documentDate: utcDate.toISOString(),
+							documentGuid: documentCreated.guid
+						},
+						{
+							appealId: linkedAppeal.appealId,
+							decisionType: DECISION_TYPE_INSPECTOR,
+							outcome,
+							documentDate: utcDate.toISOString(),
+							documentGuid: documentCreated.guid,
+							isChildAppeal: true
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					decision_date: formatDate(utcDate, false),
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+				},
+				templateName: 'decision-is-allowed-split-dismissed-appellant',
+				recipientEmail: appeal.agent.email
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					decision_date: formatDate(utcDate, false),
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+				},
+				templateName: 'decision-is-allowed-split-dismissed-lpa',
+				recipientEmail: appeal.lpa.email
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+				data: {
+					appealId: linkedAppeal.appealId,
+					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+						outcome[0].toUpperCase() + outcome.slice(1)
+					]),
+					loggedAt: expect.any(Date),
+					userId: appeal.caseOfficer.id
+				}
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+				data: {
+					appealId: linkedAppeal.appealId,
+					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}

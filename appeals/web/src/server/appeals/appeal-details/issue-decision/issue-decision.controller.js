@@ -19,7 +19,6 @@ import {
 } from '@planning-inspectorate/data-model';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
-import { appealShortReference } from '#lib/appeals-formatter.js';
 import { cloneDeep } from 'lodash-es';
 import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
 import { createNewDocument } from '#app/components/file-uploader.component.js';
@@ -33,9 +32,11 @@ import {
 	buildIssueDecisionLogicData,
 	checkDecisionUrl,
 	getDecisions,
-	mapDecisionOutcome
+	issueDecisionBackUrl,
+	preHeadingText
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { isStatePassed } from '#lib/appeal-status.js';
+import { isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 
 /**
  * @typedef {import('../../../appeals/appeal-documents/appeal-documents.types.js').FileUploadInfoItem} FileUploadInfoItem
@@ -56,20 +57,64 @@ export const postIssueDecision = async (request, response) => {
 		return renderIssueDecision(request, response);
 	}
 
-	if (session.inspectorDecision.outcome !== body.decision) {
-		session.inspectorDecision = { appealId };
-		session.appellantCostsDecision = { appealId };
-		session.lpaCostsDecision = { appealId };
+	const { childAppealId } = request.params || {};
+
+	const childAppeal =
+		childAppealId &&
+		currentAppeal.linkedAppeals.find(
+			// @ts-ignore
+			(linkedAppeal) => linkedAppeal.appealId === Number(childAppealId)
+		);
+
+	let nextLinkedAppeal;
+
+	if (isParentAppeal(currentAppeal)) {
+		if (childAppeal) {
+			const currentChildIndex = currentAppeal.linkedAppeals.findIndex(
+				// @ts-ignore
+				(linkedAppeal) => linkedAppeal === childAppeal
+			);
+			nextLinkedAppeal = currentAppeal.linkedAppeals[currentChildIndex + 1];
+		} else {
+			nextLinkedAppeal = currentAppeal.linkedAppeals[0];
+		}
 	}
 
-	/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
-	session.inspectorDecision = {
-		...request.session.inspectorDecision,
-		outcome: body.decision,
-		invalidReason: body.invalidReason
-	};
+	let nextPageUrl = nextLinkedAppeal
+		? `${baseUrl({ appealId })}/${nextLinkedAppeal.appealId}/decision`
+		: `${baseUrl({ appealId })}/decision-letter-upload`;
 
-	let nextPageUrl = `${baseUrl({ appealId })}/decision-letter-upload`;
+	if (childAppeal) {
+		const childDecision = session.childDecisions.decisions.find(
+			// @ts-ignore
+			(childDecision) => childDecision.appealId === childAppeal.appealId
+		);
+		if (childDecision) {
+			childDecision.outcome = body.decision;
+		} else {
+			session.childDecisions.decisions.push({
+				appealId: childAppeal.appealId,
+				outcome: body.decision,
+				appealReference: childAppeal.appealReference
+			});
+		}
+	} else {
+		if (session.inspectorDecision.outcome !== body.decision) {
+			session.inspectorDecision = {
+				appealId
+			};
+			session.appellantCostsDecision = { appealId };
+			session.lpaCostsDecision = { appealId };
+			session.childDecisions = { appealId, decisions: [] };
+		}
+
+		/** @type {import('./issue-decision.types.js').InspectorDecisionRequest} */
+		session.inspectorDecision = {
+			...request.session.inspectorDecision,
+			outcome: body.decision,
+			invalidReason: body.invalidReason
+		};
+	}
 
 	if (session.inspectorDecision.outcome === 'Invalid') {
 		const {
@@ -97,14 +142,36 @@ export const postIssueDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderIssueDecision = async (request, response) => {
-	const { errors, currentAppeal } = request;
+	const { errors, currentAppeal, session } = request;
+	const { childAppealId } = request.params || {};
+
+	const childAppeal =
+		childAppealId &&
+		currentAppeal.linkedAppeals.find(
+			// @ts-ignore
+			(linkedAppeal) => linkedAppeal.appealId === Number(childAppealId)
+		);
+
+	let inspectorDecision;
+	if (errors) {
+		inspectorDecision = {
+			outcome: request.body.decision,
+			invalidReason: request.body.invalidReason
+		};
+	} else if (childAppeal) {
+		inspectorDecision = session.childDecisions.decisions.find(
+			// @ts-ignore
+			(childDecision) => childDecision.appealId === childAppeal.appealId
+		);
+	} else {
+		inspectorDecision = session.inspectorDecision;
+	}
 
 	const mappedPageContent = issueDecisionPage(
 		currentAppeal,
-		errors
-			? { outcome: request.body.decision, invalidReason: request.body.invalidReason }
-			: request.session.inspectorDecision,
-		getBackLinkUrlFromQuery(request),
+		childAppeal,
+		inspectorDecision,
+		getBackLinkUrlFromQuery(request) || issueDecisionBackUrl(currentAppeal, childAppealId, request),
 		errors
 	);
 
@@ -207,17 +274,19 @@ export const renderDecisionLetterUpload = async (request, response) => {
 		};
 	}
 
+	const backUrl = isParentAppeal(currentAppeal)
+		? `${baseUrl(currentAppeal)}/${
+				currentAppeal.linkedAppeals[currentAppeal.linkedAppeals.length - 1].appealId
+		  }/decision`
+		: `${baseUrl(currentAppeal)}/decision`;
+
 	await renderDocumentUpload({
 		request,
 		response,
 		appealDetails: currentAppeal,
-		backButtonUrl:
-			getBackLinkUrlFromQuery(request) ||
-			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/decision`,
+		backButtonUrl: getBackLinkUrlFromQuery(request) || backUrl,
 		pageHeadingTextOverride: 'Decision letter',
-		preHeadingTextOverride: `Appeal ${appealShortReference(
-			currentAppeal.appealReference
-		)} - ${captionSuffix}`,
+		preHeadingTextOverride: preHeadingText(currentAppeal, captionSuffix),
 		uploadContainerHeadingTextOverride: 'Upload decision letter',
 		documentTitle: 'decision letter',
 		allowMultipleFiles: false,
@@ -334,9 +403,10 @@ export const renderAppellantCostsDecisionLetterUpload = async (request, response
 			getBackLinkUrlFromQuery(request) ||
 			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/appellant-costs-decision`,
 		pageHeadingTextOverride: 'Appellant costs decision letter',
-		preHeadingTextOverride: `Appeal ${appealShortReference(currentAppeal.appealReference)} ${
-			specificDecisionType ? '- issue appellant costs decision' : '- issue decision'
-		}`,
+		preHeadingTextOverride: preHeadingText(
+			currentAppeal,
+			specificDecisionType ? 'issue appellant costs decision' : 'issue decision'
+		),
 		uploadContainerHeadingTextOverride: 'Upload appellant costs decision letter',
 		documentTitle: 'appellant costs decision letter',
 		allowMultipleFiles: false,
@@ -442,9 +512,10 @@ export const renderLpaCostsDecisionLetterUpload = async (request, response) => {
 			getBackLinkUrlFromQuery(request) ||
 			`/appeals-service/appeal-details/${request.params.appealId}/issue-decision/lpa-costs-decision`,
 		pageHeadingTextOverride: 'LPA costs decision letter',
-		preHeadingTextOverride: `Appeal ${appealShortReference(currentAppeal.appealReference)} ${
-			specificDecisionType ? '- issue LPA costs decision' : '- issue decision'
-		}`,
+		preHeadingTextOverride: preHeadingText(
+			currentAppeal,
+			specificDecisionType ? 'issue LPA costs decision' : 'issue decision'
+		),
 		uploadContainerHeadingTextOverride: 'Upload LPA costs decision letter',
 		documentTitle: 'LPA costs decision letter',
 		allowMultipleFiles: false,
@@ -491,17 +562,20 @@ export const postCheckDecision = async (request, response) => {
 	}
 
 	if (decisions.length) {
-		await Promise.all(decisions.map((decision) => postDecisionDocument({ apiClient, decision })));
+		await Promise.all(
+			decisions
+				.filter((decision) => !decision.isChildAppeal)
+				.map((decision) => postDecisionDocument({ apiClient, decision }))
+		);
 		const decisionsToPost = decisions.map((decision) => {
-			const { decisionType, outcome, files } = decision;
+			const { appealId, decisionType, outcome, files, isChildAppeal = false } = decision;
 			return {
+				appealId,
 				decisionType,
 				documentGuid: files[0].GUID,
 				documentDate: getTodaysISOString(),
-				outcome:
-					decisionType === DECISION_TYPE_INSPECTOR
-						? mapDecisionOutcome(outcome).toLowerCase()
-						: null
+				outcome: decisionType === DECISION_TYPE_INSPECTOR ? outcome : null,
+				isChildAppeal
 			};
 		});
 

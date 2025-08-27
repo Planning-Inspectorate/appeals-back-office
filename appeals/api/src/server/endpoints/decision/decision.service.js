@@ -103,6 +103,39 @@ export const publishDecision = async (
 };
 
 /**
+ *
+ * @param {Number} appealId
+ * @param {string} outcome
+ * @param {Date} documentDate
+ * @param {string} azureAdUserId
+ * @returns
+ */
+export const publishChildDecision = async (appealId, outcome, documentDate, azureAdUserId) => {
+	const result = await appealRepository.setAppealDecision(appealId, {
+		documentDate,
+		version: 1,
+		outcome: outcome === 'split decision' ? APPEAL_CASE_DECISION_OUTCOME.SPLIT_DECISION : outcome
+	});
+
+	if (result) {
+		await createAuditTrail({
+			appealId,
+			azureAdUserId: azureAdUserId,
+			details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+				outcome[0].toUpperCase() + outcome.slice(1)
+			])
+		});
+
+		await transitionState(appealId, azureAdUserId, APPEAL_CASE_STATUS.COMPLETE);
+		await broadcasters.broadcastAppeal(appealId);
+
+		return result;
+	}
+
+	return null;
+};
+
+/**
  * @param {Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @param {string} siteAddress

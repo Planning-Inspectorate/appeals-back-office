@@ -1,17 +1,16 @@
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { textSummaryListItem } from '#lib/mappers/index.js';
-import { userHasPermission } from '#lib/mappers/index.js';
+import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
 import { permissionNames } from '#environment/permissions.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import {
 	baseUrl,
-	generateIssueDecisionUrl,
-	mapDecisionOutcome
+	generateIssueDecisionUrl
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import config from '#environment/config.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { toSentenceCase } from '#lib/string-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapDecision = ({ appealDetails, session, request }) => {
@@ -44,7 +43,7 @@ export const mapDecision = ({ appealDetails, session, request }) => {
 	return textSummaryListItem({
 		id: 'decision',
 		text: 'Decision',
-		value: mapDecisionOutcome(decision?.outcome || '') || 'Not issued',
+		value: toSentenceCase(decision?.outcome || '') || 'Not issued',
 		link,
 		editable,
 		actionText: canIssueDecision ? 'Issue' : 'View',
