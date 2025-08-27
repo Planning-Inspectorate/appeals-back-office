@@ -3,6 +3,9 @@ import {
 	DECISION_TYPE_INSPECTOR,
 	DECISION_TYPE_LPA_COSTS
 } from '@pins/appeals/constants/support.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import isLinkedAppeal from '#lib/mappers/utils/is-linked-appeal.js';
+import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 
 /**
  * @typedef {import('@pins/express/types/express.js').Request & {specificDecisionType?: string}} Request
@@ -41,34 +44,27 @@ export function checkDecisionUrl(request) {
  * @returns {any[]}
  */
 export function getDecisions(session) {
-	const { inspectorDecision, appellantCostsDecision, lpaCostsDecision } = session;
+	const { inspectorDecision, appellantCostsDecision, lpaCostsDecision, childDecisions } = session;
 
-	return [
+	const decisions = [
 		{ ...inspectorDecision, decisionType: DECISION_TYPE_INSPECTOR },
 		{ ...appellantCostsDecision, decisionType: DECISION_TYPE_APPELLANT_COSTS },
 		{ ...lpaCostsDecision, decisionType: DECISION_TYPE_LPA_COSTS }
 	].filter((decision) => decision?.files?.length);
-}
 
-/**
- * Checks if the given outcome is a valid InspectorDecisionRequest and returns the corresponding mapped value.
- * @param {string | undefined | null} outcome The outcome to check.
- * @returns {string} The mapped decision string, or a default value if the outcome is invalid or undefined.
- */
-export function mapDecisionOutcome(outcome) {
-	switch (outcome?.toLowerCase()) {
-		case 'allowed':
-			return 'Allowed';
-		case 'dismissed':
-			return 'Dismissed';
-		case 'split':
-		case 'split_decision':
-			return 'Split decision';
-		case 'invalid':
-			return 'Invalid';
-		default:
-			return '';
+	if (childDecisions?.decisions?.length) {
+		decisions.push(
+			// @ts-ignore
+			...childDecisions.decisions.map((decision) => ({
+				outcome: decision.outcome,
+				appealId: decision.appealId.toString(),
+				decisionType: DECISION_TYPE_INSPECTOR,
+				files: inspectorDecision.files,
+				isChildAppeal: true
+			}))
+		);
 	}
+	return decisions;
 }
 
 /**
@@ -85,22 +81,64 @@ export function generateIssueDecisionUrl(appealId) {
  * @returns {{appellantHasAppliedForCosts: boolean, lpaHasAppliedForCosts: boolean, appellantDecisionHasAlreadyBeenIssued: boolean, lpaDecisionHasAlreadyBeenIssued: boolean}}
  */
 export function buildIssueDecisionLogicData(currentAppeal) {
-	const appellantApplicationDocumentsExists =
-		!!currentAppeal.costs?.appellantApplicationFolder?.documents?.length;
-	const appellantWithdrawalDocumentsExists =
-		!!currentAppeal.costs?.appellantWithdrawalFolder?.documents?.length;
-	const lpaApplicationDocumentsExists =
-		!!currentAppeal.costs?.lpaApplicationFolder?.documents?.length;
-	const lpaWithdrawalDocumentsExists =
-		!!currentAppeal.costs?.lpaWithdrawalFolder?.documents?.length;
+	const appellantApplicationDocumentsCount =
+		currentAppeal.costs?.appellantApplicationFolder?.documents?.length || 0;
+	const appellantWithdrawalDocumentsCount =
+		currentAppeal.costs?.appellantWithdrawalFolder?.documents?.length || 0;
+	const lpaApplicationDocumentsCount =
+		currentAppeal.costs?.lpaApplicationFolder?.documents?.length || 0;
+	const lpaWithdrawalDocumentsCount =
+		currentAppeal.costs?.lpaWithdrawalFolder?.documents?.length || 0;
 	const appellantDecisionLetterExists =
 		!!currentAppeal.costs?.appellantDecisionFolder?.documents?.length;
 	const lpaDecisionLetterExists = !!currentAppeal.costs?.lpaDecisionFolder?.documents?.length;
 	return {
 		appellantHasAppliedForCosts:
-			appellantApplicationDocumentsExists && !appellantWithdrawalDocumentsExists,
-		lpaHasAppliedForCosts: lpaApplicationDocumentsExists && !lpaWithdrawalDocumentsExists,
+			appellantApplicationDocumentsCount > appellantWithdrawalDocumentsCount,
+		lpaHasAppliedForCosts: lpaApplicationDocumentsCount > lpaWithdrawalDocumentsCount,
 		appellantDecisionHasAlreadyBeenIssued: appellantDecisionLetterExists,
 		lpaDecisionHasAlreadyBeenIssued: lpaDecisionLetterExists
 	};
+}
+
+/**
+ * @param {WebAppeal} currentAppeal
+ * @param {string} childAppealId
+ * @param {Request} request
+ * @returns {string}
+ */
+export function issueDecisionBackUrl(currentAppeal, childAppealId, request) {
+	const linkedAppealIndex =
+		childAppealId &&
+		currentAppeal.linkedAppeals.findIndex(
+			// @ts-ignore
+			(linkedAppeal) => linkedAppeal.appealId === Number(childAppealId)
+		);
+
+	// @ts-ignore
+	if (isNaN(linkedAppealIndex)) {
+		return getSavedBackUrl(request, 'issueDecision') || '';
+	}
+
+	if (linkedAppealIndex === 0) {
+		// This will be the issue decision page for the linked lead appeal
+		return `${baseUrl(currentAppeal)}/decision`;
+	}
+
+	// This will be the issue decision page for the previous linked child appeal
+	return `${baseUrl(currentAppeal)}/${
+		// @ts-ignore
+		currentAppeal.linkedAppeals[linkedAppealIndex - 1].appealId
+	}/decision`;
+}
+
+/**
+ * @param {WebAppeal} currentAppeal
+ * @param {string|undefined} [captionSuffix]
+ * @returns {string}
+ */
+export function preHeadingText(currentAppeal, captionSuffix = '') {
+	return `Appeal ${appealShortReference(currentAppeal.appealReference)}${
+		isLinkedAppeal(currentAppeal) ? ' (lead)' : ''
+	}${captionSuffix ? ' - ' + captionSuffix : ''}`;
 }
