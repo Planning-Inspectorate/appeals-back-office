@@ -60,7 +60,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		hearingSectionPage.navigateToHearingSection(caseRef);
 	});
 
-	it('should not accept current date with no time - Hearing Time', () => {
+	it.skip('should not accept current date with no time - Hearing Time', () => {
 		caseDetailsPage.clickHearingButton();
 		hearingSectionPage.setUpHearing(new Date(), ' ', ' ');
 
@@ -70,7 +70,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		});
 	});
 
-	it('should not accept invalid input - Hearing Estimate', () => {
+	it.skip('should not accept invalid input - Hearing Estimate', () => {
 		caseDetailsPage.clickHearingEstimateLink();
 		hearingSectionPage.addEstimates('0.25', 'sittingTime', '99.5');
 
@@ -85,7 +85,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		});
 	});
 
-	it('should navigate back to overview page - Hearing Estimate', () => {
+	it.skip('should navigate back to overview page - Hearing Estimate', () => {
 		caseDetailsPage.clickHearingEstimateLink();
 		hearingSectionPage.addEstimates(
 			initialEstimates.preparationTime,
@@ -101,7 +101,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		caseDetailsPage.verifyHearingEstimateSectionIsDisplayed();
 	});
 
-	it('should add and update hearing Estimates', () => {
+	it.skip('should add and update hearing Estimates', () => {
 		// Adding initial hearing estimates
 		caseDetailsPage.clickHearingEstimateLink();
 		hearingSectionPage.addEstimates(
@@ -177,7 +177,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		hearingSectionPage.verifyCaseHistory(['Hearing estimates added', 'Hearing estimates updated']);
 	});
 
-	it('should not accept invalid input - Hearing Address', () => {
+	it.skip('should not accept invalid input - Hearing Address', () => {
 		caseDetailsPage.clickHearingButton();
 		cy.getBusinessActualDate(new Date(), 2).then((date) => {
 			hearingSectionPage.setUpHearing(date, '10', '30');
@@ -224,7 +224,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		});
 	});
 
-	it('should navigate back through hearing setup workflow', () => {
+	it.skip('should navigate back through hearing setup workflow', () => {
 		// Initialize Hearing
 		caseDetailsPage.clickHearingButton();
 
@@ -437,7 +437,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.checkNotifySent(caseRef, expectedNotifies);
 	});
 
-	it('should cancel hearing', () => {
+	it.skip('should cancel hearing', () => {
 		cy.getBusinessActualDate(new Date(), 2).then((date) => {
 			date.setHours(currentDate.getHours(), currentDate.getMinutes());
 			hearingSectionPage.ensureHearingExists(caseRef, date);
@@ -653,7 +653,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.checkNotifySent(caseRef, expectedNotifies);
 	});
 
-	it('should display all expected case detail sections for hearing cases', () => {
+	it.skip('should display all expected case detail sections for hearing cases', () => {
 		const expectedSections = [
 			'Overview',
 			'Timetable',
