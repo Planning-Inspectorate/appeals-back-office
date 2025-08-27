@@ -3,6 +3,7 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { APPEAL_PROOF_OF_EVIDENCE_STATUS } from '@pins/appeals/constants/common.js';
+import { capitalize } from 'lodash-es';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapAppellantProofOfEvidence = ({ appealDetails, currentRoute, request }) => {
@@ -11,13 +12,12 @@ export const mapAppellantProofOfEvidence = ({ appealDetails, currentRoute, reque
 		return { id, display: {} };
 	}
 
+	const { status, receivedAt } = appealDetails.documentationSummary?.appellantProofOfEvidence ?? {};
+
 	const statusText =
-		appealDetails.documentationSummary?.appellantProofOfEvidence?.representationStatus?.toLowerCase() ===
-		APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
+		status && status.toLowerCase() === APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
 			? APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
 			: APPEAL_PROOF_OF_EVIDENCE_STATUS.AWAITING;
-
-	const { receivedAt } = appealDetails.documentationSummary?.appellantProofOfEvidence ?? {};
 
 	const receivedText =
 		statusText === APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
@@ -27,12 +27,11 @@ export const mapAppellantProofOfEvidence = ({ appealDetails, currentRoute, reque
 	return documentationFolderTableItem({
 		id,
 		text: 'Appellant proof of evidence and witness',
-		statusText,
+		statusText: capitalize(statusText),
 		receivedText,
 		actionHtml: mapRepresentationDocumentSummaryActionLink(
 			currentRoute,
-			appealDetails?.documentationSummary?.appellantProofOfEvidence?.representationStatus ||
-				undefined,
+			appealDetails?.documentationSummary?.appellantProofOfEvidence?.status || undefined,
 			appealDetails?.documentationSummary?.appellantProofOfEvidence?.representationStatus,
 			'appellant-proofs-evidence',
 			request

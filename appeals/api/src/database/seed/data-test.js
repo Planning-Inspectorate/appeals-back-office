@@ -1111,7 +1111,8 @@ export async function seedTestData(databaseConnector) {
 
 	const counters = {
 		finalComment: 0,
-		statements: 0
+		statements: 0,
+		proofOfEvidence: 0
 	};
 
 	for (const { appealTypeId, id, caseStartedDate, lpaId, appellantId } of appeals) {
@@ -1462,7 +1463,7 @@ async function addFinalComment(databaseConnector, id, source, sourceId) {
  * @param {Object<string, number>} counters
  */
 async function addProofOfEvidence(databaseConnector, id, appellantId, lpaId, counters) {
-	switch (counters.finalComment) {
+	switch (counters.proofOfEvidence) {
 		case 1:
 			await addProofsEvidence(databaseConnector, id, 'appellant', appellantId);
 			break;
@@ -1477,10 +1478,10 @@ async function addProofOfEvidence(databaseConnector, id, appellantId, lpaId, cou
 			break;
 	}
 
-	if (counters.finalComment > 2) {
-		counters.finalComment = 0;
+	if (counters.proofOfEvidence > 2) {
+		counters.proofOfEvidence = 0;
 	} else {
-		counters.finalComment++;
+		counters.proofOfEvidence++;
 	}
 }
 
