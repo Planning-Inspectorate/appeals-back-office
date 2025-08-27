@@ -140,6 +140,11 @@ export const savedFolder = {
 				version: 1,
 				documentId: '27d0fda4-8a9a-4f5a-a158-68eaea676158',
 				documentType: 'appellantCostApplication',
+				blobStoragePath: 'appeal/6000001/27d0fda4-8a9a-4f5a-a158-68eaea676158/v1/mydoc.pdf',
+				mime: 'application/pdf',
+				size: 14699,
+				receivedDate: '2024-06-11T19:42:22.713Z',
+				redactionStatusId: 1,
 				avScan: []
 			}
 		}
