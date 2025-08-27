@@ -3398,6 +3398,81 @@ describe('appeal-details', () => {
 					);
 				});
 			});
+
+			describe('Environmental services team review', () => {
+				const appealId = 3;
+				const testCase = [
+					{
+						name: 'LPA',
+						rowLabel: 'LPA final comments',
+						documentationSummaryKey: 'lpaFinalComments',
+						reviewPageRoute: 'final-comments/lpa',
+						cyAttribute: 'review-lpa-final-comments',
+						viewCyAttribute: 'view-lpa-final-comments',
+						actionLinkHiddenText: 'LPA final comments'
+					}
+				];
+
+				beforeEach(() => {
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				});
+
+				it('should not render an "Environmental services team review" row if the review is not required', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								[testCase.documentationSummaryKey]: {
+									status: 'received',
+									receivedAt: '2024-12-17T17:36:19.631Z',
+									representationStatus: 'valid'
+								}
+							},
+							eiaScreeningRequired: false
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Documentation</th>');
+					expect(unprettifiedHTML).not.toContain('Environmental services team review</th>');
+				});
+
+				it('should render exactly one "Environmental services team review" row if the review is required', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								[testCase.documentationSummaryKey]: {
+									status: 'received',
+									receivedAt: '2024-12-17T17:36:19.631Z',
+									representationStatus: 'valid'
+								}
+							},
+							eiaScreeningRequired: true
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Documentation</th>');
+					expect(
+						unprettifiedHTML.match(/Environmental services team review<\/th>/g) || []
+					).toHaveLength(1);
+				});
+			});
 		});
 
 		describe('Timetable', () => {
