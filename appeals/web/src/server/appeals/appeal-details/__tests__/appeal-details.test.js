@@ -2493,7 +2493,7 @@ describe('appeal-details', () => {
 				'<li>Decision issued on 4 August 2023 (updated on 11 October 2023)</li>'
 			);
 			expect(insetTextElementHTML).toContain(
-				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a></li>'
+				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a></li>'
 			);
 		});
 
@@ -2550,7 +2550,7 @@ describe('appeal-details', () => {
 			expect(insetTextElementHTML).toContain('<li>Decision: Dismissed</li>');
 			expect(insetTextElementHTML).toContain('<li>Decision issued on 25 December 2023</li>');
 			expect(insetTextElementHTML).toContain(
-				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a></li>'
+				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a></li>'
 			);
 		});
 
@@ -2583,7 +2583,7 @@ describe('appeal-details', () => {
 			expect(insetTextElementHTML).toContain('<li>Decision: Invalid</li>');
 			expect(insetTextElementHTML).toContain('<li>Decision issued on 25 December 2023</li>');
 			expect(insetTextElementHTML).toContain(
-				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a></li>'
+				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a></li>'
 			);
 		});
 
