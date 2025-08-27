@@ -20,10 +20,12 @@ import { mapCompletedStateList } from '#mappers/api/shared/map-completed-state-l
 import { mapInquiry } from './map-inquiry.js';
 import { mapInquiryEstimate } from './map-inquiry-estimate.js';
 import { mapAppealCostsDecision } from '#mappers/api/shared/map-appeal-costs-decision.js';
+import { mapAssignedTeam } from './map-assigned-team.js';
 
 export const apiSharedMappers = {
 	appealSummary: mapAppealSummary,
 	appealStatus: mapAppealStatus,
+	assignedTeam: mapAssignedTeam,
 	team: mapAppealTeam,
 	siteVisit: mapSiteVisit,
 	hearing: mapHearing,

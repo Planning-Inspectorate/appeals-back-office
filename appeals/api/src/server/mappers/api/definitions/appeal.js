@@ -9,6 +9,7 @@ import { AppealDecision } from './appeal-decision.js';
 import { AppealRelationship } from './appeal-relationship.js';
 import { SiteAccess } from './site-access.js';
 import { SiteSafety } from './site-safety.js';
+import { AssignedTeam } from './assigned-team.js';
 
 const appeal = {
 	type: 'object',
@@ -16,6 +17,7 @@ const appeal = {
 	properties: {
 		...AppealSummary.properties,
 		...Team.properties,
+		...AssignedTeam.properties,
 		allocation: {
 			...Allocation,
 			nullable: true

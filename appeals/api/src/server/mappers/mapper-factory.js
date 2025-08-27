@@ -124,6 +124,7 @@ function createDataLayout(caseMap, mappingRequest) {
 
 	const {
 		appealSummary,
+		assignedTeam,
 		team,
 		appealRelationships,
 		appellantCase,
@@ -157,6 +158,7 @@ function createDataLayout(caseMap, mappingRequest) {
 		default: {
 			return {
 				...appealSummary,
+				assignedTeam,
 				...team,
 				...appealRelationships,
 				...appealDetails,

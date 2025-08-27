@@ -23,6 +23,7 @@ import { ListedBuilding } from './listed-building.js';
 import { DesignatedSiteName } from './designated-site-name.js';
 import { Notifications } from './notification.js';
 import { AuditNotifications } from './audit-notification.js';
+import { AssignedTeam } from './assigned-team.js';
 
 const partials = {
 	Address,
@@ -30,6 +31,7 @@ const partials = {
 	NeighbouringSite,
 	Timetable,
 	TransferStatus,
+	AssignedTeam,
 	Team,
 	AppealSummary,
 	DocumentationSummary,
