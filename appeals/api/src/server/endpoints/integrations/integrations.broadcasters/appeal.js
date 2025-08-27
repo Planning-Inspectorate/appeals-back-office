@@ -148,7 +148,13 @@ export const broadcastAppeal = async (appealId, updateType = EventType.Update) =
  */
 function getSchemaForCaseType(caseType) {
 	//TODO: Align data model - currently defaulting to S78 schema
-	return caseType === APPEAL_CASE_TYPE.D ? schemas.events.appealHas : schemas.events.appealS78;
+	switch (caseType) {
+		case APPEAL_CASE_TYPE.D:
+		case APPEAL_CASE_TYPE.ZP:
+			return schemas.events.appealHas;
+		default:
+			return schemas.events.appealS78;
+	}
 }
 
 /**
@@ -157,5 +163,11 @@ function getSchemaForCaseType(caseType) {
  * @returns {string}
  */
 function getTopicForCaseType(caseType) {
-	return caseType === APPEAL_CASE_TYPE.D ? producers.boCaseData : producers.boCaseDataS78;
+	switch (caseType) {
+		case APPEAL_CASE_TYPE.D:
+		case APPEAL_CASE_TYPE.ZP:
+			return producers.boCaseData;
+		default:
+			return producers.boCaseDataS78;
+	}
 }

@@ -2175,6 +2175,7 @@ describe('/appeals/:id/reps', () => {
 					templateName: 'final-comments-done-appellant'
 				});
 			});
+
 			test('send notify lpa and appellant final comments S20 agent email', async () => {
 				mockS20Appeal.appellant.email = null;
 				mockS20Appeal.agent = {
@@ -2236,7 +2237,7 @@ describe('/appeals/:id/reps', () => {
 				});
 			});
 
-			test('send notify to LPA if no appellant final comments submitted', async () => {
+			test('send notify to lpa and appellant if no appellant final comments submitted', async () => {
 				const expectedSiteAddress = [
 					'addressLine1',
 					'addressLine2',
@@ -2284,9 +2285,9 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
-						user_type: 'appellant'
+						user_type: 'local planning authority'
 					},
-					recipientEmail: appealS78.lpa.email,
+					recipientEmail: mockS78Appeal.appellant.email,
 					templateName: 'final-comments-none'
 				});
 
@@ -2295,10 +2296,146 @@ describe('/appeals/:id/reps', () => {
 					notifyClient: expect.anything(),
 					personalisation: {
 						...expectedEmailPayload,
+						user_type: 'appellant'
+					},
+					recipientEmail: mockS78Appeal.lpa.email,
+					templateName: 'final-comments-none'
+				});
+			});
+
+			test('sends notify emails to LPA and appellant when only LPA final comments are received', async () => {
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockS20Appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: mockS20Appeal.applicationReference,
+					has_ip_comments: false,
+					has_statement: false,
+					appeal_reference_number: mockS20Appeal.reference,
+					final_comments_deadline: '',
+					site_address: expectedSiteAddress,
+					user_type: ''
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockS20Appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'lpa_final_comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'final_comments' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: ''
+					},
+					recipientEmail: appealS20.lpa.email,
+					templateName: 'final-comments-done-lpa'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						user_type: 'appellant',
+						what_happens_next: ''
+					},
+					recipientEmail: mockS78Appeal.lpa.email,
+					templateName: 'final-comments-none'
+				});
+			});
+
+			test('sends notify emails to LPA and appellant when only appellant final comments are received', async () => {
+				const expectedSiteAddress = [
+					'addressLine1',
+					'addressLine2',
+					'addressTown',
+					'addressCounty',
+					'postcode',
+					'addressCountry'
+				]
+					.map((key) => mockS20Appeal.address[key])
+					.filter((value) => value)
+					.join(', ');
+
+				const expectedEmailPayload = {
+					lpa_reference: mockS20Appeal.applicationReference,
+					has_ip_comments: false,
+					has_statement: false,
+					appeal_reference_number: mockS20Appeal.reference,
+					final_comments_deadline: '',
+					site_address: expectedSiteAddress,
+					user_type: ''
+				};
+
+				databaseConnector.appeal.findUnique.mockResolvedValue(mockS20Appeal);
+				databaseConnector.appealStatus.create.mockResolvedValue({});
+				databaseConnector.appealStatus.updateMany.mockResolvedValue([]);
+				databaseConnector.representation.findMany.mockResolvedValue([
+					{ representationType: 'appellant_final_comment' }
+				]);
+				databaseConnector.representation.updateMany.mockResolvedValue([]);
+				databaseConnector.documentRedactionStatus.findMany.mockResolvedValue([
+					{ key: APPEAL_REDACTED_STATUS.NO_REDACTION_REQUIRED }
+				]);
+				databaseConnector.documentVersion.findMany.mockResolvedValue([]);
+
+				const response = await request
+					.post('/appeals/1/reps/publish')
+					.query({ type: 'final_comments' })
+					.set('azureAdUserId', '732652365');
+
+				expect(response.status).toEqual(200);
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: '',
 						user_type: 'local planning authority'
 					},
-					recipientEmail: appealS78.appellant.email,
+					recipientEmail: mockS78Appeal.appellant.email,
 					templateName: 'final-comments-none'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: expect.anything(),
+					notifyClient: expect.anything(),
+					personalisation: {
+						...expectedEmailPayload,
+						what_happens_next: ''
+					},
+					recipientEmail: appealS20.appellant.email,
+					templateName: 'final-comments-done-appellant'
 				});
 			});
 		});
