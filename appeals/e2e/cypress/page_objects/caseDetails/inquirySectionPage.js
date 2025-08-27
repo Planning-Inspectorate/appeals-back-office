@@ -89,8 +89,6 @@ export class InquirySectionPage extends CaseDetailsPage {
 		caseDetailsPage.selectRadioButtonByValue('No');
 		caseDetailsPage.clickButtonByText('Continue');
 		//this.verifyDateChanges(7);
-
-		caseDetailsPage.clickButtonByText('Update Inquiry');
 	}
 
 	changeInquiryTime(date, newDate) {
@@ -106,8 +104,6 @@ export class InquirySectionPage extends CaseDetailsPage {
 		caseDetailsPage.selectRadioButtonByValue('No');
 		caseDetailsPage.clickButtonByText('Continue');
 		//this.verifyDateChanges(7);
-
-		caseDetailsPage.clickButtonByText('Update Inquiry');
 	}
 
 	changeInquiryEstimatedDays(days, changeLink, currentDaysKnown = true) {
@@ -126,8 +122,6 @@ export class InquirySectionPage extends CaseDetailsPage {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.selectRadioButtonByValue('No');
 		caseDetailsPage.clickButtonByText('Continue');
-
-		caseDetailsPage.clickButtonByText('Update Inquiry');
 	}
 
 	changeAddress(address) {
@@ -138,7 +132,6 @@ export class InquirySectionPage extends CaseDetailsPage {
 		addressSection.enterAddress(address);
 
 		caseDetailsPage.clickButtonByText('Continue');
-		//caseDetailsPage.clickButtonByText('Update Inquiry');
 	}
 
 	verifyFieldsUpdated(fieldValues) {
@@ -169,6 +162,10 @@ export class InquirySectionPage extends CaseDetailsPage {
 			.siblings('dd')
 			.should('be.visible')
 			.and('contain.text', expectedText);
+	}
+
+	updateInquiry() {
+		caseDetailsPage.clickButtonByText('Update Inquiry');
 	}
 
 	verifyDateChanges = (addedDays) => {

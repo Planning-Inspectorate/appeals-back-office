@@ -84,7 +84,7 @@ beforeEach(() => {
 	setupTestCase();
 });
 
-/*it('Can update inquiry date', () => {
+it('Can update inquiry date', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseRef, inquiryDate);
@@ -99,8 +99,13 @@ beforeEach(() => {
 			// change inquiry date
 			inquirySectionPage.changeInquiryDate(inquiryDate, newInquiryDate);
 
+			inquirySectionPage.updateInquiry();
+
 			const { date } = formatDateAndTime(newInquiryDate);
 			cy.log(`** new date - `, date);
+
+			// check success banner
+			caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
 
 			// check date has updated
 			inquirySectionPage.verifyFieldsUpdated([
@@ -129,8 +134,13 @@ it('Can update inquiry time', () => {
 		// change inquiry date
 		inquirySectionPage.changeInquiryTime(inquiryDate, newInquiryDate);
 
+		inquirySectionPage.updateInquiry();
+
 		const { time } = formatDateAndTime(newInquiryDate);
 		cy.log(`** new time - `, time);
+
+		// check success banner
+		caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
 
 		// check date has updated
 		inquirySectionPage.verifyFieldsUpdated([
@@ -156,6 +166,11 @@ it('Can update inquiry estimated days when already set - using do you know link'
 			newEstimatedDays,
 			inquirySectionPage.inquirySectionLinks.whetherEstimatedDaysKnown
 		);
+
+		inquirySectionPage.updateInquiry();
+
+		// check success banner
+		caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
 
 		// check estimated days fields are correct
 		inquirySectionPage.verifyFieldsUpdated([
@@ -186,6 +201,11 @@ it('Can update inquiry estimated days when already set - using estimated days li
 			inquirySectionPage.inquirySectionLinks.estimatedDays
 		);
 
+		inquirySectionPage.updateInquiry();
+
+		// check success banner
+		caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
+
 		// check estimated days fields are correct
 		inquirySectionPage.verifyFieldsUpdated([
 			{ field: inquirySectionPage.inquirySectionFields.doKnowEstimatedDays, value: 'Yes' },
@@ -200,7 +220,8 @@ it('Can update inquiry estimated days when already set - using estimated days li
 it('Can update inquiry estimated days when not already set', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-		cy.addInquiryViaApi(caseRef, inquiryDate);
+		// setting estimate days to '0' has effect of 'No' in inquiry UI
+		cy.addInquiryViaApi(caseRef, inquiryDate, { estimatedDays: '0' });
 
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
@@ -215,6 +236,11 @@ it('Can update inquiry estimated days when not already set', () => {
 			inquirySectionPage.inquirySectionLinks.whetherEstimatedDaysKnown,
 			false
 		);
+
+		inquirySectionPage.updateInquiry();
+
+		// check success banner
+		caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
 
 		// check estimated days fields are correct
 		inquirySectionPage.verifyFieldsUpdated([
@@ -239,9 +265,13 @@ it('Can update inquiry address', () => {
 
 		// change inquiry address
 		inquirySectionPage.changeAddress(inquiryAddress);
+		inquirySectionPage.updateInquiry();
 
 		const expectedAddress = formatAddress(inquiryAddress);
 		cy.log(`** expectedAddress - `, expectedAddress);
+
+		// check success banner
+		caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
 
 		// check address is correct
 		inquirySectionPage.verifyFieldsUpdated([
@@ -249,9 +279,9 @@ it('Can update inquiry address', () => {
 			{ field: inquirySectionPage.inquirySectionFields.address, value: expectedAddress }
 		]);
 	});
-});*/
+});
 
-it('Can update answer from CYA page', () => {
+it('Can update answer from CYA page - change address', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseRef, inquiryDate);
@@ -379,9 +409,9 @@ it('Can update answer from CYA page', () => {
 	caseDetailsPage.clickButtonByText('Continue');
 	verifyDateChanges(7);
 	caseDetailsPage.clickButtonByText('Continue');
-});
+});*/
 
-/*it('should not accept invalid input - inquiry Estimate', () => {
+it('should not accept invalid input - inquiry Estimate', () => {
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseRef, inquiryDate);
 	});
@@ -473,7 +503,7 @@ it('should add inquiry Estimates', () => {
 		expect(sittingTime).to.eq(updatedEstimates.sittingTime);
 		expect(reportingTime).to.eq(updatedEstimates.reportingTime);
 	});
-});*/
+});
 
 const verifyDateChanges = (addedDays) => {
 	const safeAddedDays = Math.max(addedDays, 1);

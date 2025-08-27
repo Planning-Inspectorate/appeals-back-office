@@ -343,7 +343,7 @@ export const appealsApiClient = {
 		}
 	},
 
-	async addInquiry(appealId, date) {
+	async addInquiry(appealId, date, overrides) {
 		try {
 			const requestBody = createApiSubmission(appealsApiRequests.inquiryDetails);
 			requestBody.inquiryStartTime = date.toISOString();
@@ -356,6 +356,13 @@ export const appealsApiClient = {
 			requestBody.proofOfEvidenceAndWitnessesDueDate = date.toISOString();
 			requestBody.planningObligationDueDate = date.toISOString();
 
+			const requestBodyWithOverrides = {
+				...requestBody,
+				...overrides
+			};
+
+			cy.log(`** requestBodyWithOverrides - `, JSON.stringify(requestBodyWithOverrides));
+
 			const url = `${baseUrl}appeals/${appealId}/inquiry`;
 			const response = await fetch(url, {
 				method: 'POST',
@@ -363,7 +370,7 @@ export const appealsApiClient = {
 					'Content-Type': 'application/json',
 					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
 				},
-				body: JSON.stringify(requestBody)
+				body: JSON.stringify(requestBodyWithOverrides)
 			});
 
 			expect(response.status).eq(201);
