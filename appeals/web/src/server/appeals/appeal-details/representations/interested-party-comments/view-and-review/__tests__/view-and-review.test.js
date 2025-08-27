@@ -44,6 +44,10 @@ describe('interested-party-comments', () => {
 			.get('/appeals/2/document-folders/1?repId=3670')
 			.reply(200, costsFolderInfoAppellantApplication)
 			.persist();
+
+		jest
+			.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+			.setSystemTime(new Date('2025-08-26'));
 	});
 
 	afterEach(teardown);
@@ -516,6 +520,151 @@ describe('interested-party-comments', () => {
 				'name="items[0][redactionStatus]" type="radio" value="no redaction required" checked>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+		});
+	});
+
+	describe('GET /add-document', () => {
+		beforeEach(() => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2,
+					appealStatus: 'statements'
+				});
+			nock('http://test/')
+				.get('/appeals/2/reps/5')
+				.twice()
+				.reply(200, interestedPartyCommentForReview);
+			nock('http://test/')
+				.get('/appeals/2/document-folders?path=representation/representationAttachments')
+				.reply(200, [{ folderId: 1234, path: 'representation/attachments' }]);
+			nock('http://test/')
+				.get('/appeals/2/document-folders/1?repId=3670')
+				.reply(200, costsFolderInfoAppellantApplication)
+				.persist();
+		});
+
+		describe('GET /add-document', () => {
+			it('should render the add document details page', async () => {
+				const response = await request.get(`${baseUrl}/2/interested-party-comments/5/add-document`);
+
+				expect(response.statusCode).toBe(200);
+
+				const page = parseHtml(response.text);
+				expect(page.innerHTML).toMatchSnapshot();
+
+				expect(page.querySelector('h1')?.textContent?.trim()).toBe('Upload supporting document');
+			});
+
+			it('should have the correct back link', async () => {
+				const response = await request.get(`${baseUrl}/2/interested-party-comments/5/add-document`);
+
+				expect(response.statusCode).toBe(200);
+
+				const page = parseHtml(response.text, { rootElement: 'body' });
+				expect(page.querySelector('.govuk-back-link')?.getAttribute('href')?.trim()).toBe(
+					`${baseUrl}/2/interested-party-comments/5`
+				);
+			});
+
+			it('should have the correct back link when editing', async () => {
+				const response = await request.get(
+					`${baseUrl}/2/interested-party-comments/5/add-document` +
+						`?editEntrypoint=${baseUrl}/2/interested-party-comments/5/add-document`
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const page = parseHtml(response.text, { rootElement: 'body' });
+				expect(page.querySelector('.govuk-back-link')?.getAttribute('href')?.trim()).toBe(
+					`${baseUrl}/2/interested-party-comments/5/add-document/check-your-answers`
+				);
+			});
+		});
+
+		describe('GET /add-document/redaction-status', () => {
+			it('should render the redaction status page', async () => {
+				const response = await request.get(
+					`${baseUrl}/2/interested-party-comments/5/add-document/redaction-status`
+				);
+				expect(response.statusCode).toBe(200);
+
+				const page = parseHtml(response.text);
+				expect(page.innerHTML).toMatchSnapshot();
+
+				expect(page.querySelector('h1')?.textContent?.trim()).toBe('Redaction status');
+			});
+
+			it('should have the correct back link', async () => {
+				const response = await request.get(
+					`${baseUrl}/2/interested-party-comments/5/add-document/redaction-status`
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const page = parseHtml(response.text, { rootElement: 'body' });
+				expect(page.querySelector('.govuk-back-link')?.getAttribute('href')?.trim()).toBe(
+					`${baseUrl}/2/interested-party-comments/5/add-document`
+				);
+			});
+
+			it('should have the correct back link when editing', async () => {
+				const response = await request.get(
+					`${baseUrl}/2/interested-party-comments/5/add-document/redaction-status` +
+						`?editEntrypoint=${baseUrl}/2/interested-party-comments/5/add-document/redaction-status`
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const page = parseHtml(response.text, { rootElement: 'body' });
+				expect(page.querySelector('.govuk-back-link')?.getAttribute('href')?.trim()).toBe(
+					`${baseUrl}/2/interested-party-comments/5/add-document/check-your-answers`
+				);
+			});
+		});
+
+		describe('GET /add-document/date-submitted', () => {
+			it('should render the date submitted page', async () => {
+				const response = await request.get(
+					`${baseUrl}/2/interested-party-comments/5/add-document/date-submitted`
+				);
+				expect(response.statusCode).toBe(200);
+
+				const page = parseHtml(response.text);
+				expect(page.innerHTML).toMatchSnapshot();
+
+				expect(page.querySelector('h1')?.textContent?.trim()).toBe(
+					'When was the supporting document submitted?'
+				);
+			});
+
+			it('should have the correct back link', async () => {
+				const response = await request.get(
+					`${baseUrl}/2/interested-party-comments/5/add-document/date-submitted`
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const page = parseHtml(response.text, { rootElement: 'body' });
+				expect(page.querySelector('.govuk-back-link')?.getAttribute('href')?.trim()).toBe(
+					`${baseUrl}/2/interested-party-comments/5/add-document/redaction-status`
+				);
+			});
+
+			it('should have the correct back link when editing', async () => {
+				const response = await request.get(
+					`${baseUrl}/2/interested-party-comments/5/add-document/date-submitted` +
+						`?editEntrypoint=${baseUrl}/2/interested-party-comments/5/add-document/date-submitted`
+				);
+
+				expect(response.statusCode).toBe(200);
+
+				const page = parseHtml(response.text, { rootElement: 'body' });
+				expect(page.querySelector('.govuk-back-link')?.getAttribute('href')?.trim()).toBe(
+					`${baseUrl}/2/interested-party-comments/5/add-document/check-your-answers`
+				);
+			});
 		});
 	});
 });

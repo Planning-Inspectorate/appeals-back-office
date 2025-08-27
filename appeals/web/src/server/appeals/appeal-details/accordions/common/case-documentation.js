@@ -1,4 +1,4 @@
-import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { isDefined } from '#lib/ts-utilities.js';
 
 /**
@@ -25,7 +25,6 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 							mappedData.appeal.ipComments.display.tableItem,
 							mappedData.appeal.appellantFinalComments.display.tableItem,
 							mappedData.appeal.lpaFinalComments.display.tableItem,
-							mappedData.appeal.environmentalAssessment.display.tableItem,
 							mappedData.appeal.appellantProofOfEvidence.display.tableItem,
 							mappedData.appeal.lpaProofOfEvidence.display.tableItem
 					  ]

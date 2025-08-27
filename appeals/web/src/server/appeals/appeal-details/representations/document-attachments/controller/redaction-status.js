@@ -1,10 +1,13 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/index.js';
+import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 /** @typedef {{ 'redactionStatus': string }} ReqBody */
+
+const getBackLinkUrl = backLinkGenerator('addDocument');
 
 export const statusFormatMap = {
 	[APPEAL_REDACTED_STATUS.REDACTED]: 'Redacted',
@@ -51,7 +54,11 @@ const mapper = (appealDetails, errors, value, backLinkUrl) => ({
 export const renderRedactionStatusFactory =
 	({ getValue }) =>
 	(request, response) => {
-		const backLinkUrl = request.baseUrl;
+		const backLinkUrl = getBackLinkUrl(
+			request,
+			request.baseUrl,
+			`${request.baseUrl}/check-your-answers`
+		);
 		const value = getValue(request);
 
 		const pageContent = mapper(request.currentAppeal, request.errors, value, backLinkUrl);

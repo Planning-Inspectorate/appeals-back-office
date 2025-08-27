@@ -11,7 +11,7 @@ import {
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import config from '#environment/config.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-child-appeal.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapDecision = ({ appealDetails, session, request }) => {

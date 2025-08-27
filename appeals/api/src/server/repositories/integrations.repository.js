@@ -5,6 +5,7 @@ import config from '#config/config.js';
 import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { getFolderIdFromDocumentType } from '#endpoints/integrations/integrations.utils.js';
 import { CASE_RELATIONSHIP_RELATED } from '@pins/appeals/constants/support.js';
+import { getTeamIdFromLpaCode } from './team.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -21,7 +22,7 @@ export const createAppeal = async (data, documents, relatedReferences) => {
 	const transaction = await databaseConnector.$transaction(async (tx) => {
 		let appeal = await tx.appeal.create({ data });
 		const reference = createAppealReference(appeal.id).toString();
-
+		const teamId = await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '');
 		appeal = await tx.appeal.update({
 			where: { id: appeal.id },
 			data: {
@@ -31,7 +32,8 @@ export const createAppeal = async (data, documents, relatedReferences) => {
 						status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
 						createdAt: new Date().toISOString()
 					}
-				}
+				},
+				assignedTeamId: teamId
 			}
 		});
 

@@ -24,11 +24,11 @@ export const getSessionValues = (request, sessionKey) => {
  * Adds an editEntrypoint query param to the URL pointing to itself, indicating that the
  * user has started editing at that point.
  * @param {string} baseUrl - The base URL path
- * @param {string} slug - The last part of the URL path
+ * @param {string} [slug] - The last part of the URL path
  * @returns {string}
  */
 export const editLink = (baseUrl, slug) => {
-	const url = `${baseUrl}/${slug}`;
+	const url = slug ? `${baseUrl}/${slug}` : baseUrl;
 	return addQueryParamsToUrl(url, { editEntrypoint: url });
 };
 
@@ -51,7 +51,7 @@ export const applyEdits = (request, sessionKey) => {
 
 /**
  * Deletes the /edit session key without copying anything.
- * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express').Request} request
  * @param {string} sessionKey
  */
 export const clearEdits = (request, sessionKey) => {

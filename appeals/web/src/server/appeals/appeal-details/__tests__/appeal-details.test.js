@@ -112,6 +112,47 @@ describe('appeal-details', () => {
 	});
 
 	describe('GET /:appealId', () => {
+		describe('Team section', () => {
+			it('should render the case-team section for appeal with team name and email displayed"', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'ready_to_start'
+					});
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+				const element = parseHtml(response.text, { rootElement: '.appeal-case-team' });
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Test Team');
+				expect(element.innerHTML).toContain('test@emai.com');
+			});
+
+			it('should render the case-team section for appeal with not assigned displayed when no team is assigned"', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'ready_to_start',
+						assignedTeam: {}
+					});
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+				const element = parseHtml(response.text, { rootElement: '.appeal-case-team' });
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('<li>Not assigned</li>');
+			});
+		});
 		describe('Notification banners', () => {
 			const notificationBannerElement = '.govuk-notification-banner';
 
@@ -156,7 +197,9 @@ describe('appeal-details', () => {
 							transferStatus: {
 								transferredAppealType: '(C) Enforcement notice appeal',
 								transferredAppealReference: '12345'
-							}
+							},
+							assignedTeamId: 1,
+							assignedTeam: {}
 						})
 						.persist();
 
@@ -3353,6 +3396,81 @@ describe('appeal-details', () => {
 					expect(unprettifiedHTML).toContain(
 						`<a href="/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-details?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}" data-cy="review-ip-comments" class="govuk-link">Add<span class="govuk-visually-hidden"> interested party comments</span></a>`
 					);
+				});
+			});
+
+			describe('Environmental services team review', () => {
+				const appealId = 3;
+				const testCase = [
+					{
+						name: 'LPA',
+						rowLabel: 'LPA final comments',
+						documentationSummaryKey: 'lpaFinalComments',
+						reviewPageRoute: 'final-comments/lpa',
+						cyAttribute: 'review-lpa-final-comments',
+						viewCyAttribute: 'view-lpa-final-comments',
+						actionLinkHiddenText: 'LPA final comments'
+					}
+				];
+
+				beforeEach(() => {
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				});
+
+				it('should not render an "Environmental services team review" row if the review is not required', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								[testCase.documentationSummaryKey]: {
+									status: 'received',
+									receivedAt: '2024-12-17T17:36:19.631Z',
+									representationStatus: 'valid'
+								}
+							},
+							eiaScreeningRequired: false
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Documentation</th>');
+					expect(unprettifiedHTML).not.toContain('Environmental services team review</th>');
+				});
+
+				it('should render exactly one "Environmental services team review" row if the review is required', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								[testCase.documentationSummaryKey]: {
+									status: 'received',
+									receivedAt: '2024-12-17T17:36:19.631Z',
+									representationStatus: 'valid'
+								}
+							},
+							eiaScreeningRequired: true
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Documentation</th>');
+					expect(
+						unprettifiedHTML.match(/Environmental services team review<\/th>/g) || []
+					).toHaveLength(1);
 				});
 			});
 		});
