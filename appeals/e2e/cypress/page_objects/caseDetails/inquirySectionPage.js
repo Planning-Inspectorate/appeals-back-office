@@ -138,7 +138,7 @@ export class InquirySectionPage extends CaseDetailsPage {
 		addressSection.enterAddress(address);
 
 		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.clickButtonByText('Update Inquiry');
+		//caseDetailsPage.clickButtonByText('Update Inquiry');
 	}
 
 	verifyFieldsUpdated(fieldValues) {

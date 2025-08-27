@@ -261,11 +261,14 @@ it('Can update answer from CYA page', () => {
 		listCasesPage.clickAppealByRef(caseRef);
 		caseDetailsPage.clickAccordionByButton('Inquiry');
 
-		// change inquiry address
-		inquirySectionPage.changeAddress(inquiryAddress);
+		// change inquiry address to reach cya page
+		const newAddress = {
+			...inquiryAddress,
+			line1: 'A new address line 1'
+		};
+		inquirySectionPage.changeAddress(newAddress);
 
-		const expectedAddress = formatAddress(inquiryAddress);
-		cy.log(`** expectedAddress - `, expectedAddress);
+		const expectedAddress = formatAddress(newAddress);
 
 		// check address is correct
 		inquirySectionPage.verifyFieldsUpdated([
