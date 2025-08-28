@@ -16,6 +16,14 @@ const dateTimeSection = new DateTimeSection();
 const listCasesPage = new ListCasesPage();
 const inquirySectionPage = new InquirySectionPage();
 
+const previousInquiryAddress = {
+	line1: '1 Grove Cottage',
+	line2: 'Shotesham Road',
+	town: 'Woodton',
+	county: 'Devon',
+	postcode: 'NR35 2ND'
+};
+
 const inquiryAddress = {
 	line1: 'e2e Inquiry Test Address',
 	line2: 'Inquiry Street',
@@ -88,6 +96,7 @@ beforeEach(() => {
 it('Can update inquiry date', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.log('** inquiryDate - ', inquiryDate.toString());
 		inquiryDate.setHours(14);
 		cy.addInquiryViaApi(caseRef, inquiryDate);
 
@@ -255,7 +264,7 @@ it('Can update inquiry estimated days when not already set', () => {
 	});
 });
 
-/*it('Can update inquiry address', () => {
+it('Can update inquiry address', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseRef, inquiryDate);
@@ -266,7 +275,7 @@ it('Can update inquiry estimated days when not already set', () => {
 		caseDetailsPage.clickAccordionByButton('Inquiry');
 
 		// change inquiry address
-		inquirySectionPage.changeAddress(inquiryAddress);
+		inquirySectionPage.changeAddress(inquiryAddress, previousInquiryAddress);
 		inquirySectionPage.updateInquiry();
 
 		const expectedAddress = formatAddress(inquiryAddress);
@@ -283,7 +292,7 @@ it('Can update inquiry estimated days when not already set', () => {
 	});
 });
 
-it('Can update answer from CYA page - change address', () => {
+/*it('Can update answer from CYA page - change address', () => {
 	// Setup: Add inquiry via API
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseRef, inquiryDate);

@@ -27,4 +27,38 @@ export class AddressSection extends CaseDetailsPage {
 		this.elements.county().clear().type(address.county);
 		this.elements.postcode().clear().type(address.postcode);
 	}
+
+	verifyPrepopulatedValues(expectedValues) {
+		// verify adddress fields
+		this.elements
+			.line1()
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(text).to.equal(expectedValues.line1);
+			});
+		this.elements
+			.line2()
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(text).to.equal(expectedValues.line2);
+			});
+		this.elements
+			.town()
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(text).to.equal(expectedValues.town);
+			});
+		this.elements
+			.county()
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(text).to.equal(expectedValues.county);
+			});
+		this.elements
+			.postcode()
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(text).to.equal(expectedValues.postcode);
+			});
+	}
 }

@@ -131,9 +131,12 @@ export class InquirySectionPage extends CaseDetailsPage {
 		caseDetailsPage.clickButtonByText('Continue');
 	}
 
-	changeAddress(address) {
+	changeAddress(address, previousAddress) {
 		this.clickRowChangeLink(this.inquirySectionLinks.address);
 		caseDetailsPage.clickButtonByText('Continue');
+
+		// verify that previous address is populated
+		addressSection.verifyPrepopulatedValues(previousAddress);
 
 		// enter new address
 		addressSection.enterAddress(address);
