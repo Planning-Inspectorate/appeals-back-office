@@ -97,7 +97,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 					linkedAppeals.map((appeal) => {
 						const validationOutcome = appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome;
 						if (validationOutcome) {
-							return transitionState(appeal.id, azureAdUserId, validationOutcome?.name);
+							return transitionState(appeal.id, azureAdUserId, validationOutcome.name);
 						}
 					})
 				);

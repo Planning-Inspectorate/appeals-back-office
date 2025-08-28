@@ -40,10 +40,15 @@ export const mapAppealRelationships = (data) => {
 
 	const linkedAppeals = [...parentAppeals, ...childAppeals];
 
-	const awaitingLinkedAppeal =
+	const awaitingLinkedAppeal = Boolean(
 		isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) &&
-		// @ts-ignore
-		isAwaitingLinkedAppeal(appeal, data.linkedAppeals);
+			data.linkedAppeals?.length &&
+			// @ts-ignore
+			isAwaitingLinkedAppeal(appeal, [
+				data.linkedAppeals[0].parent,
+				...data.linkedAppeals.map((linkedAppeal) => linkedAppeal.child)
+			])
+	);
 
 	const otherAppeals = appealRelationships.length
 		? appealRelationships

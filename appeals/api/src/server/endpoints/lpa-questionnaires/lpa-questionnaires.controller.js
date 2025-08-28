@@ -8,6 +8,8 @@ import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.j
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';
 import { contextEnum } from '#mappers/context-enum.js';
+import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
+import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -138,6 +140,16 @@ const updateLPAQuestionnaireById = async (req, res) => {
 		);
 
 		await broadcasters.broadcastAppeal(appeal.id);
+
+		const linkedAppeals = await buildListOfLinkedAppeals(appeal);
+		if (allLpaQuestionnaireOutcomesAreComplete(linkedAppeals)) {
+			// broadcast all linked appeals apart from the appeal already broadcast
+			await Promise.all(
+				linkedAppeals
+					.filter((linkedAppeal) => linkedAppeal.id !== appeal.id)
+					.map((linkedAppeal) => broadcasters.broadcastAppeal(linkedAppeal.id))
+			);
+		}
 	} catch (error) {
 		if (error) {
 			logger.error(error);
