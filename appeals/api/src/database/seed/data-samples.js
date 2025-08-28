@@ -2,17 +2,17 @@
  * Sample data used for development and testing
  */
 
-import { sub } from 'date-fns';
 import {
-	APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE,
-	APPEAL_EIA_DEVELOPMENT_DESCRIPTION,
-	APPEAL_LPA_PROCEDURE_PREFERENCE,
 	APPEAL_APPELLANT_PROCEDURE_PREFERENCE,
-	APPEAL_DEVELOPMENT_TYPE,
 	APPEAL_CASE_TYPE,
+	APPEAL_DEVELOPMENT_TYPE,
+	APPEAL_EIA_DEVELOPMENT_DESCRIPTION,
+	APPEAL_EIA_ENVIRONMENTAL_IMPACT_SCHEDULE,
+	APPEAL_LPA_PROCEDURE_PREFERENCE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
-import { randomBool, randomEnumValue, randomArrayValue } from './data-utilities.js';
+import { sub } from 'date-fns';
+import { randomArrayValue, randomBool, randomEnumValue } from './data-utilities.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Schema.LPAQuestionnaire} LPAQuestionnaire
@@ -460,7 +460,7 @@ export const appellantCaseList = {
 		applicationDecisionDate: sub(new Date(), { months: 1 }),
 		applicationDate: sub(new Date(), { weeks: 6 }),
 		developmentType: randomEnumValue(APPEAL_DEVELOPMENT_TYPE),
-		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.MINOR_COMMERCIAL_DEVELOPMENT
+		typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT
 	}
 };
 
