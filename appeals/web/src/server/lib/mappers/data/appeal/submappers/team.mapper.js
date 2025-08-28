@@ -16,7 +16,7 @@ export const mapCaseTeam = ({ appealDetails, currentRoute, userHasUpdateCasePerm
         </ul>
     `.trim();
 
-	const teamRoute = '/case-team';
+	const teamRoute = 'case-team';
 
 	return textSummaryListItem({
 		id: 'case-team',
@@ -24,7 +24,7 @@ export const mapCaseTeam = ({ appealDetails, currentRoute, userHasUpdateCasePerm
 		value: {
 			html: teamRowValue
 		},
-		link: `${currentRoute}/${teamRoute}`,
+		link: `${currentRoute}/${teamRoute}/edit`,
 		editable: userHasUpdateCasePermission,
 		classes: 'appeal-case-team',
 		actionText: teamAssigned ? 'Change' : 'Assign'

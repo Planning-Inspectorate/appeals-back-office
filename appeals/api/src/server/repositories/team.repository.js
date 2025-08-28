@@ -26,6 +26,21 @@ export const getAssignedTeam = (teamId) => {
 	return databaseConnector.team.findUnique({
 		where: { id: teamId },
 		select: {
+			id: true,
+			name: true,
+			email: true
+		}
+	});
+};
+
+/**
+ *
+ * @returns {Promise<{id: Number, name: string, email: string| null}[]>}
+ */
+export const getCaseTeams = () => {
+	return databaseConnector.team.findMany({
+		select: {
+			id: true,
 			name: true,
 			email: true
 		}

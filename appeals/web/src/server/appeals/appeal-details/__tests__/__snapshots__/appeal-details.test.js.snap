@@ -762,7 +762,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -1223,7 +1223,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -1615,7 +1615,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -2073,7 +2073,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -2542,7 +2542,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -3011,7 +3011,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -3471,7 +3471,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -3931,7 +3931,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -4405,7 +4405,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -4852,7 +4852,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -5316,7 +5316,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -5866,7 +5866,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -6325,7 +6325,7 @@ exports[`appeal-details GET /:appealId Team section should render the case-team 
             <li>Not assigned</li>
         </ul>
     </dd>
-    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
         data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
     </dd>
 </div>"
@@ -6339,7 +6339,7 @@ exports[`appeal-details GET /:appealId Team section should render the case-team 
             <li>test@emai.com</li>
         </ul>
     </dd>
-    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
         data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
     </dd>
 </div>"
@@ -6888,7 +6888,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -7342,7 +7342,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -7790,7 +7790,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -8251,7 +8251,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -8701,7 +8701,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -9162,7 +9162,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -9676,7 +9676,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                                     <li>test@emai.com</li>
                                                 </ul>
                                             </dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                                 data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                             </dd>
                                         </div>

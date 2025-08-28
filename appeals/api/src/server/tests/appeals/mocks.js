@@ -592,3 +592,21 @@ export const appealStatus = {
 	valid: true,
 	createdAt: new Date('2050-01-01T00:00:00.000Z')
 };
+
+export const caseTeams = [
+	{
+		id: 1,
+		email: 'temp@email.com',
+		name: 'temp'
+	},
+	{
+		id: 2,
+		email: 'temp2@email.com',
+		name: 'temp2'
+	},
+	{
+		id: 3,
+		email: 'temp3@email.com',
+		name: 'temp'
+	}
+];
