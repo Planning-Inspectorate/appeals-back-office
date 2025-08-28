@@ -165,6 +165,13 @@ export const spec = {
 				id: 1
 			}
 		],
+		CaseTeams: [
+			{
+				id: 1,
+				name: 'Ops Test',
+				email: 'opstest@email.com'
+			}
+		],
 		AllAppeals: {
 			itemCount: 57,
 			items: [

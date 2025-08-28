@@ -51,8 +51,10 @@ import { notifyPreviewRouter } from './notify-preview/notify-preview.routes.js';
 import { inquiryRoutes } from './Inquiry/inquiry.routes.js';
 import { inquiryEstimatesRoutes } from './inquiry-estimates/inquiry-estimates.routes.js';
 import { appealStatusRoutes } from './appeal-status/appeal-status.routes.js';
+import { caseTeamRouter } from './case-team/case-team.routes.js';
 
 const router = createRouter();
+router.use(caseTeamRouter);
 router.use(integrationsRoutes);
 router.use(businessDaysRoutes);
 router.use(historicEnglandRoutes);

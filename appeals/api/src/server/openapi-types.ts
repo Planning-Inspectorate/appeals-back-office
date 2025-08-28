@@ -826,6 +826,15 @@ export type AppealTypes = {
 	id?: number;
 }[];
 
+export type CaseTeams = {
+	/** @example 1 */
+	id?: number;
+	/** @example "Ops Test" */
+	name?: string;
+	/** @example "opstest@email.com" */
+	email?: string;
+}[];
+
 export interface AllAppeals {
 	/** @example 57 */
 	itemCount?: number;
@@ -2887,6 +2896,7 @@ export interface TransferStatus {
 }
 
 export interface AssignedTeam {
+	id?: number | null;
 	name?: string | null;
 	/** @format email */
 	email?: string | null;
@@ -11592,6 +11602,7 @@ export interface Appeal {
 	caseOfficer?: string | null;
 	/** @format uuid */
 	inspector?: string | null;
+	id?: number | null;
 	name?: string | null;
 	/** @format email */
 	email?: string | null;

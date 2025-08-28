@@ -50,6 +50,7 @@ import netResidenceRouter from './net-residence/net-residence.router.js';
 import cancelAppealRouter from './cancel/cancel.router.js';
 import invalidAppealRouter from './invalid-appeal/invalid-appeal.router.js';
 import changeAppealTypeMiddleware from './change-appeal-type.middleware.js';
+import updateCaseTeamRouter from './update-case-team/update-case-team.router.js';
 const router = createRouter();
 
 router
@@ -257,6 +258,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	changeAppealProcedureTypeRouter
+);
+router.use(
+	'/:appealId/case-team',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	updateCaseTeamRouter
 );
 
 router.use('/:appealId', validateAppeal, representationsRouter);

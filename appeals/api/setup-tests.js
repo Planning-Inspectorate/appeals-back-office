@@ -132,6 +132,7 @@ const mockLpaFindMany = jest.fn().mockResolvedValue({});
 const mockLpaFindUnique = jest.fn().mockResolvedValue({});
 const mockTeamFindUnique = jest.fn().mockResolvedValue({});
 const mockTeamFindFirst = jest.fn().mockResolvedValue({});
+const mockTeamFindMany = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
@@ -532,7 +533,8 @@ class MockPrismaClient {
 	get team() {
 		return {
 			findUnique: mockTeamFindUnique,
-			findFirst: mockTeamFindFirst
+			findFirst: mockTeamFindFirst,
+			findMany: mockTeamFindMany
 		};
 	}
 

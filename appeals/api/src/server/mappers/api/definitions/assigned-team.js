@@ -2,6 +2,10 @@ const assignedTeam = {
 	type: 'object',
 	required: [],
 	properties: {
+		id: {
+			type: 'Number',
+			nullable: true
+		},
 		name: {
 			type: 'string',
 			nullable: true

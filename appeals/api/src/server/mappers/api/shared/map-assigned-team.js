@@ -12,6 +12,7 @@ export const mapAssignedTeam = (data) => {
 	const { appeal } = data;
 
 	return {
+		id: appeal.assignedTeam?.id || null,
 		name: appeal.assignedTeam?.name || null,
 		email: appeal.assignedTeam?.email || null
 	};

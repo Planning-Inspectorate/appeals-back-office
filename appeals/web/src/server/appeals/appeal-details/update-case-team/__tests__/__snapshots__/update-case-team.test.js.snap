@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`update-case-team GET /case-team/edit should render the update case team page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update case team</span>
+            <h1             class="govuk-heading-l">Update case team</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Case team</legend>
+                                <div class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="case-team" name="case-team" type="radio"
+                                        value="1" aria-describedby="case-team-item-hint">
+                                        <label class="govuk-label govuk-radios__label" for="case-team">temp</label>
+                                        <div id="case-team-item-hint" class="govuk-hint govuk-radios__hint">temp@email.com</div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="case-team-2" name="case-team" type="radio"
+                                        value="2" aria-describedby="case-team-2-item-hint">
+                                        <label class="govuk-label govuk-radios__label" for="case-team-2">temp2</label>
+                                        <div id="case-team-2-item-hint" class="govuk-hint govuk-radios__hint">temp2@email.com</div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="case-team-3" name="case-team" type="radio"
+                                        value="3" aria-describedby="case-team-3-item-hint">
+                                        <label class="govuk-label govuk-radios__label" for="case-team-3">temp3</label>
+                                        <div id="case-team-3-item-hint" class="govuk-hint govuk-radios__hint">temp3@email.com</div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="case-team-4" name="case-team" type="radio"
+                                        value="0" aria-describedby="case-team-4-item-hint">
+                                        <label class="govuk-label govuk-radios__label" for="case-team-4">Unassign team</label>
+                                        <div id="case-team-4-item-hint" class="govuk-hint govuk-radios__hint">This will remove the current case team from the appeal</div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`update-case-team POST /case-team/edit should rerender the update case team page with when no case team selected 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#case-team">Select the case team</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update case team</span>
+            <h1             class="govuk-heading-l">Update case team</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <fieldset class="govuk-fieldset" aria-describedby="case-team-error">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Case team</legend>
+                                <p id="case-team-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select the case team</p>
+                                <div                                 class="govuk-radios" data-module="govuk-radios">
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="case-team" name="case-team" type="radio"
+                                        value="1" aria-describedby="case-team-item-hint">
+                                        <label class="govuk-label govuk-radios__label" for="case-team">temp</label>
+                                        <div id="case-team-item-hint" class="govuk-hint govuk-radios__hint">temp@email.com</div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="case-team-2" name="case-team" type="radio"
+                                        value="2" aria-describedby="case-team-2-item-hint">
+                                        <label class="govuk-label govuk-radios__label" for="case-team-2">temp2</label>
+                                        <div id="case-team-2-item-hint" class="govuk-hint govuk-radios__hint">temp2@email.com</div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="case-team-3" name="case-team" type="radio"
+                                        value="3" aria-describedby="case-team-3-item-hint">
+                                        <label class="govuk-label govuk-radios__label" for="case-team-3">temp3</label>
+                                        <div id="case-team-3-item-hint" class="govuk-hint govuk-radios__hint">temp3@email.com</div>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="case-team-4" name="case-team" type="radio"
+                                        value="0" aria-describedby="case-team-4-item-hint">
+                                        <label class="govuk-label govuk-radios__label" for="case-team-4">Unassign team</label>
+                                        <div id="case-team-4-item-hint" class="govuk-hint govuk-radios__hint">This will remove the current case team from the appeal</div>
+                                    </div>
+                        </div>
+                        </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;

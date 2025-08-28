@@ -59,6 +59,7 @@ const householdAppealDto = {
 		lpaQuestionnaireDueDate: householdAppeal.appealTimetable.lpaQuestionnaireDueDate.toISOString()
 	},
 	assignedTeam: {
+		id: 1,
 		email: 'temp@email.com',
 		name: 'temp'
 	},
@@ -163,6 +164,7 @@ const s78AppealDto = {
 	appealType: fullPlanningAppeal.appealType.type,
 	appellantCaseId: fullPlanningAppeal.appellantCase.id,
 	assignedTeam: {
+		id: 1,
 		email: 'temp@email.com',
 		name: 'temp'
 	},
