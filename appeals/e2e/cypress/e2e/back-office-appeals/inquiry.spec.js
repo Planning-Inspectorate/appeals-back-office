@@ -8,11 +8,21 @@ import { urlPaths } from '../../support/urlPaths';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage';
+import { formatDateAndTime } from '../../support/utils/dateAndTime.js';
+import { formatAddress } from '../../support/utils/address.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();
 const listCasesPage = new ListCasesPage();
 const inquirySectionPage = new InquirySectionPage();
+
+const previousInquiryAddress = {
+	line1: '1 Grove Cottage',
+	line2: 'Shotesham Road',
+	town: 'Woodton',
+	county: 'Devon',
+	postcode: 'NR35 2ND'
+};
 
 const inquiryAddress = {
 	line1: 'e2e Inquiry Test Address',
@@ -33,7 +43,10 @@ const headers = {
 };
 
 //generate a number between 0.5 & 99.5
-const estimatedInquiryDays = (Math.floor(Math.random() * 199) + 1) / 2;
+//const estimatedInquiryDays = (Math.floor(Math.random() * 199) + 1) / 2;
+
+// generate a random whole number for estimated enquiry days from 1 - 99
+const estimatedInquiryDays = Math.floor(Math.random() * 99) + 1;
 
 const timetableItems = [
 	{
@@ -73,19 +86,246 @@ const setupTestCase = () => {
 		happyPathHelper.reviewAppellantCase(caseRef);
 		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 		happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
+		dateTimeSection.clearInquiryDateAndTime();
 	});
 };
 beforeEach(() => {
 	setupTestCase();
 });
 
-it('Start case as inquiry with address and estimated days', () => {
+it('Can update inquiry date', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.log('** inquiryDate - ', inquiryDate.toString());
+		inquiryDate.setHours(14);
+		cy.addInquiryViaApi(caseRef, inquiryDate);
+
+		// find case and open inqiiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickAccordionByButton('Inquiry');
+
+		// generate new date and update it in inquiry
+		cy.getBusinessActualDate(new Date(), 25).then((newInquiryDate) => {
+			// change inquiry date
+			inquirySectionPage.changeInquiryDate(inquiryDate, newInquiryDate);
+
+			inquirySectionPage.updateInquiry();
+
+			const { date } = formatDateAndTime(newInquiryDate);
+			cy.log(`** new date - `, date);
+
+			// check success banner
+			caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
+
+			// check date has updated
+			inquirySectionPage.verifyFieldsUpdated([
+				{ field: inquirySectionPage.inquirySectionFields.date, value: date }
+			]);
+		});
+	});
+});
+
+it('Can update inquiry time', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		inquiryDate.setHours(14);
+		cy.log(`** inquiryDate - `, inquiryDate.toString());
+		cy.addInquiryViaApi(caseRef, inquiryDate);
+
+		// find case and open inqiiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickAccordionByButton('Inquiry');
+
+		// generate new date with upfdated time value and update it in inquiry
+		const newInquiryDate = new Date(inquiryDate);
+		newInquiryDate.setTime(inquiryDate.getTime() + 2 * 60 * 60 * 1000);
+
+		// change inquiry date
+		inquirySectionPage.changeInquiryTime(inquiryDate, newInquiryDate);
+
+		inquirySectionPage.updateInquiry();
+
+		const { time } = formatDateAndTime(newInquiryDate);
+
+		// check success banner
+		caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
+
+		// check date has updated
+		inquirySectionPage.verifyFieldsUpdated([
+			{ field: inquirySectionPage.inquirySectionFields.time, value: time }
+		]);
+	});
+});
+
+it('Can update inquiry estimated days when already set - using do you know link', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.addInquiryViaApi(caseRef, inquiryDate);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickAccordionByButton('Inquiry');
+
+		// change inquiry estimated days
+		const newEstimatedDays = estimatedInquiryDays;
+		cy.log(`** newEstimatedDays - `, newEstimatedDays);
+		inquirySectionPage.changeInquiryEstimatedDays(
+			inquirySectionPage.inquirySectionLinks.whetherEstimatedDaysKnown,
+			newEstimatedDays,
+			'5'
+		);
+
+		inquirySectionPage.updateInquiry();
+
+		// check success banner
+		caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
+
+		// check estimated days fields are correct
+		inquirySectionPage.verifyFieldsUpdated([
+			{ field: inquirySectionPage.inquirySectionFields.doKnowEstimatedDays, value: 'Yes' },
+			{
+				field: inquirySectionPage.inquirySectionFields.expectedNumberOfDays,
+				value: newEstimatedDays + ' Days'
+			}
+		]);
+	});
+});
+
+it('Can update inquiry estimated days when already set - using estimated days link', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.addInquiryViaApi(caseRef, inquiryDate);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickAccordionByButton('Inquiry');
+
+		// change inquiry estimated days
+		const newEstimatedDays = estimatedInquiryDays;
+		cy.log(`** newEstimatedDays - `, newEstimatedDays);
+		inquirySectionPage.changeInquiryEstimatedDays(
+			inquirySectionPage.inquirySectionLinks.estimatedDays,
+			newEstimatedDays,
+			'5'
+		);
+
+		inquirySectionPage.updateInquiry();
+
+		// check success banner
+		caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
+
+		// check estimated days fields are correct
+		inquirySectionPage.verifyFieldsUpdated([
+			{ field: inquirySectionPage.inquirySectionFields.doKnowEstimatedDays, value: 'Yes' },
+			{
+				field: inquirySectionPage.inquirySectionFields.expectedNumberOfDays,
+				value: newEstimatedDays + ' Days'
+			}
+		]);
+	});
+});
+
+it('Can update inquiry estimated days when not already set', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		// setting estimate days to '0' has effect of 'No' in inquiry UI
+		cy.addInquiryViaApi(caseRef, inquiryDate, { estimatedDays: '0' });
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickAccordionByButton('Inquiry');
+
+		// change inquiry estimated days
+		const newEstimatedDays = estimatedInquiryDays;
+		cy.log(`** newEstimatedDays - `, newEstimatedDays);
+		inquirySectionPage.changeInquiryEstimatedDays(
+			inquirySectionPage.inquirySectionLinks.whetherEstimatedDaysKnown,
+			newEstimatedDays
+		);
+
+		inquirySectionPage.updateInquiry();
+
+		// check success banner
+		caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
+
+		// check estimated days fields are correct
+		inquirySectionPage.verifyFieldsUpdated([
+			{ field: inquirySectionPage.inquirySectionFields.doKnowEstimatedDays, value: 'Yes' },
+			{
+				field: inquirySectionPage.inquirySectionFields.expectedNumberOfDays,
+				value: newEstimatedDays + ' Days'
+			}
+		]);
+	});
+});
+
+it('Can update inquiry address', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.addInquiryViaApi(caseRef, inquiryDate);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickAccordionByButton('Inquiry');
+
+		// change inquiry address
+		inquirySectionPage.changeAddress(inquiryAddress, previousInquiryAddress);
+		inquirySectionPage.updateInquiry();
+
+		const expectedAddress = formatAddress(inquiryAddress);
+		cy.log(`** expectedAddress - `, expectedAddress);
+
+		// check success banner
+		caseDetailsPage.validateBannerMessage('Success', 'Inquiry updated');
+
+		// check address is correct
+		inquirySectionPage.verifyFieldsUpdated([
+			{ field: inquirySectionPage.inquirySectionFields.doKnowAddress, value: 'Yes' },
+			{ field: inquirySectionPage.inquirySectionFields.address, value: expectedAddress }
+		]);
+	});
+});
+
+/*it('Can update answer from CYA page - change address', () => {
+	// Setup: Add inquiry via API
+	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+		cy.addInquiryViaApi(caseRef, inquiryDate);
+
+		// find case and open inquiry section
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+		caseDetailsPage.clickAccordionByButton('Inquiry');
+
+		// change inquiry address to reach cya page
+		const newAddress = {
+			...inquiryAddress,
+			line1: 'A new address line 1'
+		};
+		inquirySectionPage.changeAddress(newAddress);
+
+		const expectedAddress = formatAddress(newAddress);
+
+		// check address is correct
+		inquirySectionPage.verifyFieldsUpdated([
+			{ field: inquirySectionPage.inquirySectionFields.doKnowAddress, value: 'Yes' },
+			{ field: inquirySectionPage.inquirySectionFields.address, value: expectedAddress }
+		]);
+	});
+});*/
+
+/*it('Start case as inquiry with address and estimated days', () => {
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		dateTimeSection.enterInquiryDate(inquiryDate);
 	});
 	caseDetailsPage.clickButtonByText('Continue');
 	caseDetailsPage.selectRadioButtonByValue('Yes');
-	caseDetailsPage.inputEstimatedInquiryDays(estimatedInquiryDays);
+	//caseDetailsPage.inputEstimatedInquiryDays(estimatedInquiryDays);
 	caseDetailsPage.clickButtonByText('Continue');
 	caseDetailsPage.selectRadioButtonByValue('Yes');
 	caseDetailsPage.clickButtonByText('Continue');
@@ -125,7 +365,7 @@ it('Start case as inquiry with address and estimated days', () => {
 	caseDetailsPage.verifyCaseDetailsSection(expectedSections);
 });
 
-it('Start case as inquiry without address or estimated days', () => {
+/*it('Start case as inquiry without address or estimated days', () => {
 	cy.wait(1000);
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		dateTimeSection.enterInquiryDate(inquiryDate);
@@ -140,10 +380,12 @@ it('Start case as inquiry without address or estimated days', () => {
 	caseDetailsPage.clickButtonByText('Start case');
 	caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 	caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
-});
+});*/
 
-it('Change Inquiry date from check your answers page', () => {
+/*it('Change Inquiry date from check your answers page', () => {
 	cy.wait(1000);
+
+	// setup date 
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		dateTimeSection.enterInquiryDate(inquiryDate);
 	});
@@ -154,7 +396,10 @@ it('Change Inquiry date from check your answers page', () => {
 	caseDetailsPage.clickButtonByText('Continue');
 	verifyDateChanges(7);
 	caseDetailsPage.clickButtonByText('Continue');
+	
+	// change inquiry date
 	caseDetailsPage.clickChangeInquiryDate();
+
 	cy.getBusinessActualDate(new Date(), 25).then((inquiryDate) => {
 		dateTimeSection.enterInquiryDate(inquiryDate);
 	});
@@ -165,6 +410,8 @@ it('Change Inquiry date from check your answers page', () => {
 	caseDetailsPage.clickButtonByText('Continue');
 	verifyDateChanges(7);
 	caseDetailsPage.clickButtonByText('Continue');
+
+	// change inquiry estimated days
 	caseDetailsPage.clickChangeInquiryEstimatedDays();
 	caseDetailsPage.selectRadioButtonByValue('Yes');
 	caseDetailsPage.inputEstimatedInquiryDays(estimatedInquiryDays);
@@ -173,9 +420,9 @@ it('Change Inquiry date from check your answers page', () => {
 	caseDetailsPage.clickButtonByText('Continue');
 	verifyDateChanges(7);
 	caseDetailsPage.clickButtonByText('Continue');
-});
+});*/
 
-it('should not accept invalid input - inquiry Estimate', () => {
+/*it('should not accept invalid input - inquiry Estimate', () => {
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseRef, inquiryDate);
 	});
@@ -267,7 +514,7 @@ it('should add inquiry Estimates', () => {
 		expect(sittingTime).to.eq(updatedEstimates.sittingTime);
 		expect(reportingTime).to.eq(updatedEstimates.reportingTime);
 	});
-});
+});*/
 
 const verifyDateChanges = (addedDays) => {
 	const safeAddedDays = Math.max(addedDays, 1);

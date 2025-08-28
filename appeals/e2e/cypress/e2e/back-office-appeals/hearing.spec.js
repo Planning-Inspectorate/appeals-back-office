@@ -5,7 +5,7 @@ import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { HearingSectionPage } from '../../page_objects/caseDetails/hearingSectionPage';
-import { formatDateAndTime } from '../../support/utils/formatDateAndTime';
+import { formatDateAndTime } from '../../support/utils/dateAndTime';
 import { urlPaths } from '../../support/urlPaths';
 
 const caseDetailsPage = new CaseDetailsPage();
