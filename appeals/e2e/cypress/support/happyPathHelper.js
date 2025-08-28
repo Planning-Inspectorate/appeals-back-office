@@ -311,27 +311,6 @@ export const happyPathHelper = {
 		caseDetailsPage.checkStatusOfCase('Invalid', 0);
 	},
 
-	issueDecisionWithoutCosts(caseRef, decision) {
-		caseDetailsPage.clickIssueDecision();
-		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(decision));
-		caseDetailsPage.clickButtonByText('Continue');
-		fileUploader.uploadFiles(sampleFiles.pdf);
-		caseDetailsPage.clickButtonByText('Continue');
-
-		//Dont issue appellant & LPA costs
-		caseDetailsPage.selectRadioButtonByValue('No');
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.selectRadioButtonByValue('No');
-		caseDetailsPage.clickButtonByText('Continue');
-
-		//CYA
-		caseDetailsPage.clickButtonByText('Issue decision');
-
-		//Banner & inset text
-		caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
-		caseDetailsPage.checkDecisionOutcome(decision);
-	},
-
 	issueAppellantCostsDecision(caseRef) {
 		caseDetailsPage.clickIssueAppellantCostsDecision();
 		fileUploader.uploadFiles(sampleFiles.pdf);

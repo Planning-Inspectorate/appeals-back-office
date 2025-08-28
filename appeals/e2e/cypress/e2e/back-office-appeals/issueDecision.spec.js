@@ -104,8 +104,8 @@ describe('Issue decision', () => {
 				cy.reload();
 			});
 
-			//Issue decision
-			happyPathHelper.issueDecisionWithoutCosts(caseRef, 'Allowed');
+			//Issue decision without costs
+			happyPathHelper.issueDecision(caseRef, 'Allowed', false, false);
 
 			//Case details
 			caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
@@ -157,7 +157,7 @@ describe('Invalid decision', () => {
 	});
 });
 
-describe.only('Issue individual costs decision', () => {
+describe('Issue individual costs decision', () => {
 	it('Issue appellant costs separately', () => {
 		cy.createCase().then((caseRef) => {
 			cy.addLpaqSubmissionToCase(caseRef);
@@ -169,15 +169,17 @@ describe.only('Issue individual costs decision', () => {
 			cy.simulateSiteVisit(caseRef).then((caseRef) => {
 				cy.reload();
 			});
-			happyPathHelper.issueDecisionWithoutCosts(caseRef, 'Allowed');
 
-			//upload decision letter
+			//Issue decision without costs
+			happyPathHelper.issueDecision(caseRef, 'Allowed', false, false);
+
+			//Upload decision letter
 			caseDetailsPage.clickIssueAppellantCostsDecision();
 			fileUploader.uploadFiles(pdf);
 			fileUploader.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Issue appellant costs decision');
 
-			//verify case details updates
+			//Verify case details updates
 			caseDetailsPage.validateBannerMessage('Success', 'Appellant costs decision issued');
 			caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
 			caseDetailsPage.clickAccordionByText('Overview');
@@ -209,15 +211,17 @@ describe.only('Issue individual costs decision', () => {
 			cy.simulateSiteVisit(caseRef).then((caseRef) => {
 				cy.reload();
 			});
-			happyPathHelper.issueDecisionWithoutCosts(caseRef, 'Allowed');
 
-			//upload decision letter
+			//Issue decision without costs
+			happyPathHelper.issueDecision(caseRef, 'Allowed', false, false);
+
+			//Upload decision letter
 			caseDetailsPage.clickIssueLpaCostsDecision();
 			fileUploader.uploadFiles(pdf);
 			fileUploader.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Issue LPA costs decision');
 
-			//verify case details updates
+			//Verify case details updates
 			caseDetailsPage.validateBannerMessage('Success', 'LPA costs decision issued');
 			caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
 			caseDetailsPage.clickAccordionByText('Overview');
