@@ -12,6 +12,7 @@ import {
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_LPA_COSTS
 } from '@pins/appeals/constants/support.js';
+import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -21,6 +22,7 @@ router
 	.route('/decision')
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
+		saveBackUrl('issueDecision'),
 		asyncHandler(controller.renderIssueDecision)
 	)
 	.post(
@@ -155,6 +157,19 @@ router
 	.get(
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.renderViewDecision)
+	);
+
+router
+	.route('/:childAppealId/decision')
+	.get(
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(controller.renderIssueDecision)
+	)
+	.post(
+		validators.validateDecision,
+		validators.validateInvalidReason,
+		assertUserHasPermission(permissionNames.setCaseOutcome),
+		asyncHandler(controller.postIssueDecision)
 	);
 
 export default router;

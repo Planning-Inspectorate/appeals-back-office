@@ -2493,7 +2493,7 @@ describe('appeal-details', () => {
 				'<li>Decision issued on 4 August 2023 (updated on 11 October 2023)</li>'
 			);
 			expect(insetTextElementHTML).toContain(
-				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a></li>'
+				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a></li>'
 			);
 		});
 
@@ -2550,7 +2550,7 @@ describe('appeal-details', () => {
 			expect(insetTextElementHTML).toContain('<li>Decision: Dismissed</li>');
 			expect(insetTextElementHTML).toContain('<li>Decision issued on 25 December 2023</li>');
 			expect(insetTextElementHTML).toContain(
-				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a></li>'
+				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a></li>'
 			);
 		});
 
@@ -2583,7 +2583,7 @@ describe('appeal-details', () => {
 			expect(insetTextElementHTML).toContain('<li>Decision: Invalid</li>');
 			expect(insetTextElementHTML).toContain('<li>Decision issued on 25 December 2023</li>');
 			expect(insetTextElementHTML).toContain(
-				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a></li>'
+				'<li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a></li>'
 			);
 		});
 
@@ -3396,6 +3396,81 @@ describe('appeal-details', () => {
 					expect(unprettifiedHTML).toContain(
 						`<a href="/appeals-service/appeal-details/${appealId}/interested-party-comments/add/ip-details?backUrl=%2Fappeals-service%2Fappeal-details%2F${appealId}" data-cy="review-ip-comments" class="govuk-link">Add<span class="govuk-visually-hidden"> interested party comments</span></a>`
 					);
+				});
+			});
+
+			describe('Environmental services team review', () => {
+				const appealId = 3;
+				const testCase = [
+					{
+						name: 'LPA',
+						rowLabel: 'LPA final comments',
+						documentationSummaryKey: 'lpaFinalComments',
+						reviewPageRoute: 'final-comments/lpa',
+						cyAttribute: 'review-lpa-final-comments',
+						viewCyAttribute: 'view-lpa-final-comments',
+						actionLinkHiddenText: 'LPA final comments'
+					}
+				];
+
+				beforeEach(() => {
+					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				});
+
+				it('should not render an "Environmental services team review" row if the review is not required', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								[testCase.documentationSummaryKey]: {
+									status: 'received',
+									receivedAt: '2024-12-17T17:36:19.631Z',
+									representationStatus: 'valid'
+								}
+							},
+							eiaScreeningRequired: false
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Documentation</th>');
+					expect(unprettifiedHTML).not.toContain('Environmental services team review</th>');
+				});
+
+				it('should render exactly one "Environmental services team review" row if the review is required', async () => {
+					nock('http://test/')
+						.get(`/appeals/${appealId}`)
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId,
+							documentationSummary: {
+								...appealDataFullPlanning.documentationSummary,
+								[testCase.documentationSummaryKey]: {
+									status: 'received',
+									receivedAt: '2024-12-17T17:36:19.631Z',
+									representationStatus: 'valid'
+								}
+							},
+							eiaScreeningRequired: true
+						});
+
+					const response = await request.get(`${baseUrl}/${appealId}`);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHTML).toContain('Documentation</th>');
+					expect(
+						unprettifiedHTML.match(/Environmental services team review<\/th>/g) || []
+					).toHaveLength(1);
 				});
 			});
 		});

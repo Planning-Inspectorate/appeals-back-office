@@ -25,7 +25,6 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 							mappedData.appeal.ipComments.display.tableItem,
 							mappedData.appeal.appellantFinalComments.display.tableItem,
 							mappedData.appeal.lpaFinalComments.display.tableItem,
-							mappedData.appeal.environmentalAssessment.display.tableItem,
 							mappedData.appeal.appellantProofOfEvidence.display.tableItem,
 							mappedData.appeal.lpaProofOfEvidence.display.tableItem
 					  ]

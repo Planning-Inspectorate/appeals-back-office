@@ -6510,7 +6510,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         <ul class="govuk-list">
             <li>Decision: Dismissed</li>
             <li>Decision issued on 4 August 2023 (updated on 11 October 2023)</li>
-            <li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a>
+            <li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a>
             </li>
         </ul>
     </div>
@@ -6964,7 +6964,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         <ul class="govuk-list">
             <li>Decision: Dismissed</li>
             <li>Decision issued on 25 December 2023</li>
-            <li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a>
+            <li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a>
             </li>
         </ul>
     </div>
@@ -7418,7 +7418,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
         <ul class="govuk-list">
             <li>Decision: Invalid</li>
             <li>Decision issued on 25 December 2023</li>
-            <li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision">View decision</a>
+            <li><a class="govuk-link" href="/appeals-service/appeal-details/1/issue-decision/view-decision?backUrl=%2Fappeals-service%2Fappeal-details%2F2">View decision</a>
             </li>
         </ul>
     </div>

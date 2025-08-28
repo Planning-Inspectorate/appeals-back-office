@@ -12,9 +12,11 @@ import {
 } from '#appeals/appeal-details/representations/interested-party-comments/common/redaction-status.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { patchRepresentationAttachments } from '../../final-comments/final-comments.service.js';
+import { clearEdits, editLink } from '#lib/edit-utilities.js';
 
 /**
- * @type {import('@pins/express').RenderHandler<{}>}
+ * @param {import('@pins/express').Request} request
+ * @param {import('express').Response} response
  */
 export const renderCheckYourAnswers = (request, response) => {
 	const {
@@ -33,6 +35,8 @@ export const renderCheckYourAnswers = (request, response) => {
 		throw new Error('Received invalid redaction status');
 	}
 
+	clearEdits(request, 'addDocument');
+
 	return renderCheckYourAnswersComponent(
 		{
 			title: 'Check details and add document',
@@ -45,7 +49,7 @@ export const renderCheckYourAnswers = (request, response) => {
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
 					actions: {
 						Change: {
-							href: `${baseUrl}`,
+							href: editLink(baseUrl),
 							visuallyHiddenText: 'supporting document'
 						}
 					}
@@ -54,7 +58,7 @@ export const renderCheckYourAnswers = (request, response) => {
 					value: statusFormatMap[redactionStatus],
 					actions: {
 						Change: {
-							href: `${baseUrl}/redaction-status`,
+							href: editLink(baseUrl, 'redaction-status'),
 							visuallyHiddenText: 'redaction status'
 						}
 					}
@@ -63,7 +67,7 @@ export const renderCheckYourAnswers = (request, response) => {
 					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
 					actions: {
 						Change: {
-							href: `${baseUrl}/date-submitted`,
+							href: editLink(baseUrl, 'date-submitted'),
 							visuallyHiddenText: 'date submitted'
 						}
 					}
