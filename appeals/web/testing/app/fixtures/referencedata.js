@@ -1,17 +1,17 @@
-import {
-	APPEAL_REDACTED_STATUS,
-	APPEAL_VIRUS_CHECK_STATUS,
-	APPEAL_CASE_STATUS,
-	APPEAL_CASE_PROCEDURE,
-	APPEAL_TYPE_OF_PLANNING_APPLICATION
-} from '@planning-inspectorate/data-model';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import {
-	DOCUMENT_STATUS_RECEIVED,
 	DOCUMENT_STATUS_NOT_RECEIVED,
+	DOCUMENT_STATUS_RECEIVED,
 	VALIDATION_OUTCOME_INCOMPLETE
 	// @ts-ignore
 } from '@pins/appeals/constants/support.js';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_STATUS,
+	APPEAL_REDACTED_STATUS,
+	APPEAL_TYPE_OF_PLANNING_APPLICATION,
+	APPEAL_VIRUS_CHECK_STATUS
+} from '@planning-inspectorate/data-model';
 import { sample } from 'lodash-es';
 
 export const documentFileInfo = {
@@ -485,6 +485,10 @@ export const appealDataListedBuilding = {
 export const appealDataCasPlanning = {
 	...appealData,
 	appealType: 'CAS planning'
+};
+export const appealDataCasAdvert = {
+	...appealData,
+	appealType: 'CAS advert'
 };
 
 export const appellantCaseDataNotValidated = {
