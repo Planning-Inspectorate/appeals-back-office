@@ -1,6 +1,6 @@
 import { textSummaryListItem } from '#lib/mappers/components/index.js';
-import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from '@planning-inspectorate/data-model';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { APPEAL_TYPE_OF_PLANNING_APPLICATION } from '@planning-inspectorate/data-model';
 
 /**
  * @param {string | null | undefined } typeOfPlanningApplication
@@ -15,6 +15,8 @@ const applicationTypeText = (typeOfPlanningApplication) => {
 		// we are actually referring to the original planning application here
 		case APPEAL_TYPE_OF_PLANNING_APPLICATION.FULL_APPEAL:
 			return 'Full planning';
+		case APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT:
+			return 'Displaying an advertisement';
 		default:
 			return capitalizeFirstLetter(typeOfPlanningApplication.split('-').join(' '));
 	}
