@@ -631,6 +631,15 @@
 						"schema": {
 							"type": "string"
 						}
+					},
+					{
+						"name": "filterEnabled",
+						"in": "header",
+						"required": false,
+						"example": true,
+						"schema": {
+							"type": "string"
+						}
 					}
 				],
 				"responses": {
@@ -33388,6 +33397,26 @@
 					},
 					"numberOfResidencesNetChange": {
 						"type": "number",
+						"nullable": true
+					},
+					"highwayLand": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"advertInPosition": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"landownerPermission": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"siteGridReferenceEasting": {
+						"type": "string",
+						"nullable": true
+					},
+					"siteGridReferenceNorthing": {
+						"type": "string",
 						"nullable": true
 					}
 				}

@@ -1,10 +1,10 @@
-import { InvalidIncompleteReason } from './invalid-incomplete.js';
-import { Folder } from './folders-documents.js';
-import { AppealSummary } from './appeal-summary.js';
 import {
 	APPEAL_DEVELOPMENT_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
+import { AppealSummary } from './appeal-summary.js';
+import { Folder } from './folders-documents.js';
+import { InvalidIncompleteReason } from './invalid-incomplete.js';
 
 const updateableFields = {
 	applicationDate: {
@@ -337,6 +337,26 @@ export const AppellantCaseUpdateRequest = {
 		},
 		numberOfResidencesNetChange: {
 			type: 'number',
+			nullable: true
+		},
+		highwayLand: {
+			type: 'boolean',
+			nullable: true
+		},
+		advertInPosition: {
+			type: 'boolean',
+			nullable: true
+		},
+		landownerPermission: {
+			type: 'boolean',
+			nullable: true
+		},
+		siteGridReferenceEasting: {
+			type: 'string',
+			nullable: true
+		},
+		siteGridReferenceNorthing: {
+			type: 'string',
 			nullable: true
 		}
 	}
