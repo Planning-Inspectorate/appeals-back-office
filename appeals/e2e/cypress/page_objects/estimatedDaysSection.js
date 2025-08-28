@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { Page } from './basePage';
-import { formatDateAndTime } from '../support/utils/dateAndTime';
 import { CaseDetailsPage } from './caseDetailsPage.js';
+import { formatAsWholeNumber } from '../support/utils/format.js';
 
 export class EstimatedDaysSection extends CaseDetailsPage {
 	// S E L E C T O R S
@@ -26,5 +26,15 @@ export class EstimatedDaysSection extends CaseDetailsPage {
 
 	selectEstimatedDaysOption(option) {
 		this.elements.radioButton().contains(option, { matchCase: false }).click();
+	}
+
+	verifyPrepopulatedValue(expectedValue) {
+		// verify estimated days
+		this.elements
+			.inquiryEstimatedDaysInput()
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValue);
+			});
 	}
 }

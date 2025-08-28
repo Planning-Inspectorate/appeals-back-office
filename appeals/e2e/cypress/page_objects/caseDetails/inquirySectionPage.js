@@ -79,7 +79,9 @@ export class InquirySectionPage extends CaseDetailsPage {
 		this.clickRowChangeLink(this.inquirySectionLinks.date);
 		cy.wait(5000);
 
-		this.verifyPreviousDateAndTmePrepopulated(date);
+		// verify previous values are prepopulated
+		const dateAndTimeFromPrevious = getDateAndTimeValues(date);
+		dateTimeSection.verifyPrepopulatedInquiryValues(dateAndTimeFromPrevious);
 
 		dateTimeSection.enterInquiryDate(newDate);
 
@@ -88,13 +90,14 @@ export class InquirySectionPage extends CaseDetailsPage {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.selectRadioButtonByValue('No');
 		caseDetailsPage.clickButtonByText('Continue');
-		//this.verifyDateChanges(7);
 	}
 
 	changeInquiryTime(date, newDate) {
 		this.clickRowChangeLink(this.inquirySectionLinks.time);
 
-		this.verifyPreviousDateAndTmePrepopulated(date);
+		// verify previous values are prepopulated
+		const dateAndTimeFromPrevious = getDateAndTimeValues(date);
+		dateTimeSection.verifyPrepopulatedInquiryValues(dateAndTimeFromPrevious);
 
 		dateTimeSection.enterInquiryTime(newDate.getHours(), newDate.getMinutes());
 
@@ -103,17 +106,21 @@ export class InquirySectionPage extends CaseDetailsPage {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.selectRadioButtonByValue('No');
 		caseDetailsPage.clickButtonByText('Continue');
-		//this.verifyDateChanges(7);
 	}
 
-	changeInquiryEstimatedDays(days, changeLink, currentDaysKnown = true) {
+	changeInquiryEstimatedDays(changeLink, days, previousDays = 0) {
 		// are potentially two different links that can choose from to update estimated days
 		this.clickRowChangeLink(changeLink);
 
-		//this.verifyPreviousDateAndTmePrepopulated(date);
+		const hasPreviousDays = previousDays > 0;
 
-		// if current days not yet known need to select 'yes' first to enter estimated days
-		if (!currentDaysKnown) {
+		// if a previous value was set check that is prepopulated
+		if (hasPreviousDays) {
+			estimatedDaysSection.verifyPrepopulatedValue(previousDays);
+		}
+
+		// if current days not yet set need to select 'yes' first to enter estimated days
+		if (!hasPreviousDays) {
 			estimatedDaysSection.selectEstimatedDaysOption('Yes');
 		}
 
@@ -138,17 +145,6 @@ export class InquirySectionPage extends CaseDetailsPage {
 		fieldValues.forEach((fieldValue) =>
 			this.checkCorrectAnswerDisplays(fieldValue.field, fieldValue.value)
 		);
-	}
-
-	verifyPreviousDateAndTmePrepopulated(date) {
-		cy.log(`** in verifyPreviousDateAndTmePrepopulated`);
-		const dateandTimeFromForm = dateTimeSection.getDateAndTime('inquiry');
-		const dateAndTimeFromPrevious = getDateAndTimeValues(date);
-
-		cy.log(`** previous date - `, JSON.stringify(dateAndTimeFromPrevious));
-		cy.log(`** date from form - `, JSON.stringify(dateandTimeFromForm));
-
-		//expect(dateandTimeFromForm).equals(dateAndTimeFromPrevious).to.be.true();
 	}
 
 	verifyInquiryEstimate(estimateField, value) {

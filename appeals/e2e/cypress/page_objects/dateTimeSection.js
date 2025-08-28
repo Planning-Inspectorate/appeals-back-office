@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { Page } from './basePage';
-import { formatDateAndTime } from '../support/utils/dateAndTime';
+import { formatAsWholeNumber } from '../support/utils/format.js';
 
 export class DateTimeSection extends Page {
 	// S E L E C T O R S
@@ -139,19 +139,39 @@ export class DateTimeSection extends Page {
 		this.#set(this.elements.enterHearingTimeMinute(), minute);
 	}
 
-	getDateAndTime(dateSelectorPrefix) {
-		// get date
-		const day = this.#getElementValue(this.selectorPrefix[dateSelectorPrefix], '-date-day') + '';
-		const month =
-			+this.#getElementValue(this.selectorPrefix[dateSelectorPrefix], '-date-month') - 1 + ''; // month is 0 - 11
-		const year = this.#getElementValue(this.selectorPrefix[dateSelectorPrefix], '-date-year') + '';
+	verifyPrepopulatedInquiryValues(expectedValues) {
+		this.#verifyPrepopulatedValues(this.selectorPrefix.inquiry, expectedValues);
+	}
 
-		//get time
-		const hours = this.#getElementValue(this.selectorPrefix[dateSelectorPrefix], '-time-hour') + '';
-		const minutes =
-			this.#getElementValue(this.selectorPrefix[dateSelectorPrefix], '-time-minute') + '';
+	#verifyPrepopulatedValues(dateSelector, expectedValues) {
+		// verify date
+		cy.get(dateSelector + '-date-day')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.day);
+			});
+		cy.get(dateSelector + '-date-month')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.month);
+			});
+		cy.get(dateSelector + '-date-year')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.year);
+			});
 
-		return { day, month, year, hours, minutes };
+		// verify time
+		cy.get(dateSelector + '-time-hour')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.hours);
+			});
+		cy.get(dateSelector + '-time-minute')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.minutes);
+			});
 	}
 
 	// Private helper methods
@@ -184,29 +204,5 @@ export class DateTimeSection extends Page {
 
 	#getElement(dateSelectorPrefix, dateType) {
 		return cy.get(dateSelectorPrefix + dateType);
-	}
-
-	#getElementValue(dateSelectorPrefix, dateType) {
-		/*let value;
-		cy.get(dateSelectorPrefix + dateType).then(($element) => { 
-			value = $element;
-		});
-
-		cy.log(`** getElementValue - value is `, value);*/
-
-		let thevalue;
-		cy.get(dateSelectorPrefix + dateType)
-			/*.summaryListKey()
-			.contains(rowName)
-			.next()*/
-			.invoke('prop', 'value')
-			.then(async (value) => {
-				cy.log(`** getElementValue - value is `, value);
-				thevalue = await value;
-			});
-
-		cy.log(`** getElementValue - thevalue is `, thevalue);
-
-		return thevalue;
 	}
 }
