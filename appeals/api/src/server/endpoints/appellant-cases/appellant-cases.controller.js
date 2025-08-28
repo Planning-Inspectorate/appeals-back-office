@@ -1,13 +1,15 @@
-import * as CONSTANTS from '@pins/appeals/constants/support.js';
-import appellantCaseRepository from '#repositories/appellant-case.repository.js';
-import logger from '#utils/logger.js';
-import { updateAppellantCaseValidationOutcome } from './appellant-cases.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { appealDetailService } from '#endpoints/appeal-details/appeal-details.service.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { contextEnum } from '#mappers/context-enum.js';
-import { appealDetailService } from '#endpoints/appeal-details/appeal-details.service.js';
-import { renderAuditTrailDetail } from './appellant-cases.service.js';
+import appellantCaseRepository from '#repositories/appellant-case.repository.js';
+import logger from '#utils/logger.js';
+import * as CONSTANTS from '@pins/appeals/constants/support.js';
+import {
+	renderAuditTrailDetail,
+	updateAppellantCaseValidationOutcome
+} from './appellant-cases.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -63,7 +65,12 @@ const updateAppellantCaseById = async (req, res) => {
 			appellantProcedurePreferenceDuration,
 			appellantProcedurePreferenceWitnessCount,
 			developmentType,
-			numberOfResidencesNetChange
+			numberOfResidencesNetChange,
+			highwayLand,
+			advertInPosition,
+			landownerPermission,
+			siteGridReferenceEasting,
+			siteGridReferenceNorthing
 		},
 		params,
 		validationOutcome
@@ -135,7 +142,12 @@ const updateAppellantCaseById = async (req, res) => {
 					appellantProcedurePreferenceDuration,
 					appellantProcedurePreferenceWitnessCount,
 					developmentType,
-					numberOfResidencesNetChange
+					numberOfResidencesNetChange,
+					highwayLand,
+					advertInPosition,
+					landownerPermission,
+					siteGridReferenceEasting,
+					siteGridReferenceNorthing
 			  });
 
 		const auditTrailDetail = renderAuditTrailDetail(body);

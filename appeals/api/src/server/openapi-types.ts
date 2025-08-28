@@ -12192,6 +12192,11 @@ export interface AppellantCaseUpdateRequest {
 	originalDevelopmentDescription?: string | null;
 	changedDevelopmentDescription?: string | null;
 	numberOfResidencesNetChange?: number | null;
+	highwayLand?: boolean | null;
+	advertInPosition?: boolean | null;
+	landownerPermission?: boolean | null;
+	siteGridReferenceEasting?: string | null;
+	siteGridReferenceNorthing?: string | null;
 }
 
 export interface LpaQuestionnaireUpdateRequest {
