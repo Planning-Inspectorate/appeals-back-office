@@ -57,7 +57,6 @@ variable "apps_config" {
       featureFlagNetResidence           = bool
       featureFlagCancelCase             = bool
       featureFlagChangeProcedureType    = bool
-      featureFlagAdvertisement          = bool
     })
 
     logging = object({
@@ -156,6 +155,20 @@ variable "service_bus_config" {
     capacity                      = number
     public_network_access_enabled = bool
   })
+}
+
+variable "service_bus_staging" {
+  description = "Test service bus re-use for staging environment"
+  type = object({
+    name                = string
+    resource_group_name = string
+    use_sb_test         = optional(bool, false)
+  })
+  default = {
+    name                = ""
+    resource_group_name = ""
+    use_sb_test         = false
+  }
 }
 
 variable "sb_ttl" {

@@ -90,7 +90,7 @@ resource "azurerm_role_assignment" "app_api_secrets_user" {
 
 ## RBAC for service bus
 resource "azurerm_role_assignment" "app_api_service_bus" {
-  scope                = azurerm_servicebus_namespace.main.id
+  scope                = local.service_bus.id
   role_definition_name = "Azure Service Bus Data Sender"
   principal_id         = module.app_api.principal_id
 }
@@ -104,7 +104,7 @@ resource "azurerm_role_assignment" "app_api_staging_secrets_user" {
 
 ## RBAC for service bus (staging slot)
 resource "azurerm_role_assignment" "app_api_staging_service_bus" {
-  scope                = azurerm_servicebus_namespace.main.id
+  scope                = local.service_bus.id
   role_definition_name = "Azure Service Bus Data Sender"
   principal_id         = module.app_api.staging_principal_id
 }
