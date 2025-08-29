@@ -1,17 +1,17 @@
-import { body, param } from 'express-validator';
-import { validationErrorHandler } from '#middleware/error-handler.js';
-import { composeMiddleware } from '@pins/express';
-import validateIdParameter from '#common/validators/id-parameter.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
+import validateIdParameter from '#common/validators/id-parameter.js';
 import validateTimeRangeParameters from '#common/validators/time-range-parameters.js';
+import { validationErrorHandler } from '#middleware/error-handler.js';
 import {
 	ERROR_INVALID_SITE_VISIT_TYPE,
 	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED,
-	SITE_VISIT_TYPE_UNACCOMPANIED,
-	SITE_VISIT_TYPE_ACCOMPANIED,
+	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCOMPANIED,
 	SITE_VISIT_TYPE_ACCESS_REQUIRED,
-	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCOMPANIED
+	SITE_VISIT_TYPE_ACCOMPANIED,
+	SITE_VISIT_TYPE_UNACCOMPANIED
 } from '@pins/appeals/constants/support.js';
+import { composeMiddleware } from '@pins/express';
+import { body, param } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 

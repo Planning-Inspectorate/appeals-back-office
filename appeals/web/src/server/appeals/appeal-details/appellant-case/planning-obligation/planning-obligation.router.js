@@ -1,7 +1,7 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import * as controllers from './planning-obligation.controller.js';
+import { Router as createRouter } from 'express';
 import { validateAppeal } from '../../appeal-details.middleware.js';
+import * as controllers from './planning-obligation.controller.js';
 
 const router = createRouter({ mergeParams: true });
 

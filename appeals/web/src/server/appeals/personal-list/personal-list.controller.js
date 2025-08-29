@@ -1,9 +1,9 @@
 import logger from '#lib/logger.js';
+import { mapPagination } from '#lib/mappers/index.js';
+import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
+import { stripQueryString } from '#lib/url-utilities.js';
 import { personalListPage } from './personal-list.mapper.js';
 import { getAppealsAssignedToCurrentUser } from './personal-list.service.js';
-import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
-import { mapPagination } from '#lib/mappers/index.js';
-import { stripQueryString } from '#lib/url-utilities.js';
 
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 

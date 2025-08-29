@@ -1,5 +1,5 @@
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
 

@@ -1,12 +1,12 @@
-import { createValidator } from '@pins/express';
-import { body } from 'express-validator';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { createEmailInputValidator } from '#lib/validators/email-input.validator.js';
 import {
 	createTextInputOptionalValidator,
 	createTextInputValidator
 } from '#lib/validators/text-input-validator.js';
-import { createEmailInputValidator } from '#lib/validators/email-input.validator.js';
-import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import stringTokenReplacement from '@pins/appeals/utils/string-token-replacement.js';
+import { createValidator } from '@pins/express';
+import { body } from 'express-validator';
 
 export const validateChangeServiceUser = createValidator(
 	createTextInputValidator(

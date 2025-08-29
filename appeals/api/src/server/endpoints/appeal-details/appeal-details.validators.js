@@ -1,8 +1,8 @@
-import validateDateParameter from '#common/validators/date-parameter.js';
-import validateUuidParameter from '#common/validators/uuid-parameter.js';
-import validateIdParameter from '#common/validators/id-parameter.js';
 import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
+import validateDateParameter from '#common/validators/date-parameter.js';
+import validateIdParameter from '#common/validators/id-parameter.js';
 import { validateStringParameter } from '#common/validators/string-parameter.js';
+import validateUuidParameter from '#common/validators/uuid-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import { composeMiddleware } from '@pins/express';
 import { body } from 'express-validator';

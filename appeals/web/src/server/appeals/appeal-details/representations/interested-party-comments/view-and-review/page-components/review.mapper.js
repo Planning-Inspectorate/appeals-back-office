@@ -1,8 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
+import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { generateCommentSummaryList } from './common.js';
-import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
-import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */

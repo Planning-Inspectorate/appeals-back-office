@@ -1,5 +1,5 @@
-import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { formatServiceUserAsHtmlList } from '#lib/service-user-formatter.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapAppellant = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) =>

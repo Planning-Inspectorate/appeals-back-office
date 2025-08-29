@@ -1,15 +1,15 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import { getAppellantCaseById, updateAppellantCaseById } from './appellant-cases.controller.js';
+import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import checkLookupValueIsValidAndAddToRequest from '#middleware/check-lookup-value-is-valid-and-add-to-request.js';
 import checkLookupValuesAreValid from '#middleware/check-lookup-values-are-valid.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { ERROR_INVALID_APPELLANT_CASE_VALIDATION_OUTCOME } from '@pins/appeals/constants/support.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import { getAppellantCaseById, updateAppellantCaseById } from './appellant-cases.controller.js';
 import { checkAppellantCaseExists } from './appellant-cases.service.js';
 import {
 	getAppellantCaseValidator,
 	patchAppellantCaseValidator
 } from './appellant-cases.validators.js';
-import { ERROR_INVALID_APPELLANT_CASE_VALIDATION_OUTCOME } from '@pins/appeals/constants/support.js';
 
 const router = createRouter();
 

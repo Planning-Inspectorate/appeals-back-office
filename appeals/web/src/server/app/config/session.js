@@ -1,7 +1,7 @@
-import session from 'express-session';
 import config from '#environment/config.js';
 import logger from '#lib/logger.js';
 import redisClient from '#lib/redis.js';
+import session from 'express-session';
 
 /**
  * @returns {import('express-session').Store}

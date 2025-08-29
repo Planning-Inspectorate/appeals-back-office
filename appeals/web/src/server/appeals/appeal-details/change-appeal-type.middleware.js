@@ -1,6 +1,6 @@
-import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.router.js';
-import appealTypeChangeOldRouter from './change-appeal-type-old/change-appeal-type.router.js';
 import config from '#environment/config.js';
+import appealTypeChangeOldRouter from './change-appeal-type-old/change-appeal-type.router.js';
+import appealTypeChangeRouter from './change-appeal-type/change-appeal-type.router.js';
 
 /**
  * @type {import("express").RequestHandler}

@@ -1,9 +1,9 @@
 import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { HTTPError } from 'got';
 import { addNetResidence } from './net-residence.mapper.js';
 import { changeNumberOfResidencesNetChange } from './net-residence.service.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

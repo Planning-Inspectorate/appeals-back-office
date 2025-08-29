@@ -3,16 +3,16 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { HTTPError } from 'got';
 import { getAppellantCaseFromAppealId } from '../appellant-case.service.js';
 import {
-	changeProcedurePreferencePage,
+	changeInquiryNumberOfWitnessesPage,
 	changeProcedurePreferenceDetailsPage,
 	changeProcedurePreferenceDurationPage,
-	changeInquiryNumberOfWitnessesPage
+	changeProcedurePreferencePage
 } from './procedure-preference.mapper.js';
 import {
+	changeInquiryNumberOfWitnesses,
 	changeProcedurePreference,
 	changeProcedurePreferenceDetails,
-	changeProcedurePreferenceDuration,
-	changeInquiryNumberOfWitnesses
+	changeProcedurePreferenceDuration
 } from './procedure-preference.service.js';
 
 /**

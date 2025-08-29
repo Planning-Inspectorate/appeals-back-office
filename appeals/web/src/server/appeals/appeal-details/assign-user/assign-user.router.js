@@ -1,9 +1,9 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import { permissionNames } from '#environment/permissions.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import * as controller from './assign-user.controller.js';
 import * as validators from './assign-user.validator.js';
-import { permissionNames } from '#environment/permissions.js';
 
 const router = createRouter({ mergeParams: true });
 

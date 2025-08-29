@@ -1,10 +1,10 @@
 // @ts-nocheck
+import { appealStatus, householdAppeal } from '#tests/appeals/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import { jest } from '@jest/globals';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import supertest from 'supertest';
 import { app } from '../../../app-test.js';
-import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal, appealStatus } from '#tests/appeals/mocks.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { jest } from '@jest/globals';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const request = supertest(app);

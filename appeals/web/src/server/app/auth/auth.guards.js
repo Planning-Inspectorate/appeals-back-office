@@ -1,6 +1,6 @@
 import pino from '#lib/logger.js';
-import * as authService from './auth.service.js';
 import * as authSession from './auth-session.service.js';
+import * as authService from './auth.service.js';
 
 /**
  * Assert the user is authenticated. As the web application depends on external

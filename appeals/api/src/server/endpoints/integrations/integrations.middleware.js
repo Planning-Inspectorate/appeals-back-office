@@ -1,15 +1,15 @@
-import pino from '#utils/logger.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { schemas, validateFromSchema } from './integrations.validators.js';
+import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
+import pino from '#utils/logger.js';
 import {
-	ERROR_NOT_FOUND,
+	ERROR_INVALID_APPEAL_TYPE_REP,
 	ERROR_INVALID_APPELLANT_CASE_DATA,
 	ERROR_INVALID_LPAQ_DATA,
 	ERROR_INVALID_REP_DATA,
-	ERROR_INVALID_APPEAL_TYPE_REP
+	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import { schemas, validateFromSchema } from './integrations.validators.js';
 
 /**
  * @type {import("express").RequestHandler}

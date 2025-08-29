@@ -1,8 +1,8 @@
 // @ts-nocheck
 
+import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../caseDetailsPage';
 import { DateTimeSection } from '../dateTimeSection.js';
-import { users } from '../../fixtures/users';
 import { ListCasesPage } from '../listCasesPage';
 
 const listCasesPage = new ListCasesPage();

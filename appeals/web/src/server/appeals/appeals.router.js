@@ -1,10 +1,10 @@
+import { assertUserHasPermission } from '#app/auth/auth.guards.js';
+import { permissionNames } from '#environment/permissions.js';
 import { Router as createRouter } from 'express';
 import nationalListRouter from '../appeals/national-list/national-list.router.js';
 import personalListRouter from '../appeals/personal-list/personal-list.router.js';
-import errorRouter from './error/error.router.js';
 import appealDetailsRouter from './appeal-details/appeal-details.router.js';
-import { assertUserHasPermission } from '#app/auth/auth.guards.js';
-import { permissionNames } from '#environment/permissions.js';
+import errorRouter from './error/error.router.js';
 
 const router = createRouter();
 

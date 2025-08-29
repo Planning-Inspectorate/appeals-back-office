@@ -1,16 +1,16 @@
-import { Router as createRouter } from 'express';
+import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import {
-	updateServiceUserById,
+	removeServiceUserById,
 	updateServiceUserAddress,
-	removeServiceUserById
+	updateServiceUserById
 } from './service-user.controller.js';
 import {
-	updateServiceUserValidator,
 	patchAddressValidator,
-	removeServiceUserValidator
+	removeServiceUserValidator,
+	updateServiceUserValidator
 } from './service-user.validators.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 
 const router = createRouter();
 

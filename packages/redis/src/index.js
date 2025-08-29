@@ -1,7 +1,7 @@
-import { createClient } from 'redis';
-import RedisStore from 'connect-redis';
 import { DistributedCachePlugin } from '@azure/msal-node';
 import { parseRedisConnectionString } from '@pins/platform';
+import RedisStore from 'connect-redis';
+import { createClient } from 'redis';
 import { MSALCacheClient } from './msal-cache-client.js';
 import { PartitionManager } from './partition-manager.js';
 

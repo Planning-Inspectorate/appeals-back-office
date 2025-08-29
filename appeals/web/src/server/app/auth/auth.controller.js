@@ -1,10 +1,10 @@
+import config from '#environment/config.js';
+import getActiveDirectoryAccessToken from '#lib/active-directory-token.js';
+import pino from '#lib/logger.js';
 import * as msalNode from '@azure/msal-node';
 import { promisify } from 'node:util';
-import config from '#environment/config.js';
-import pino from '#lib/logger.js';
-import * as authService from './auth.service.js';
 import * as authSession from './auth-session.service.js';
-import getActiveDirectoryAccessToken from '#lib/active-directory-token.js';
+import * as authService from './auth.service.js';
 
 /**
  * Phase 1 – Navigate to external MSAL signin url

@@ -1,5 +1,5 @@
-import { jest } from '@jest/globals';
 import { notifySend } from '#notify/notify-send.js';
+import { jest } from '@jest/globals';
 
 test('should call notify sendEmail for appeal-withdrawn-appellant with the correct data', async () => {
 	const notifySendData = {

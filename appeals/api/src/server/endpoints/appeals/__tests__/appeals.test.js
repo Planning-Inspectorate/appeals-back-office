@@ -1,6 +1,9 @@
 // @ts-nocheck
+import { appealS78, fullPlanningAppeal, householdAppeal } from '#tests/appeals/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
-import { request } from '../../../app-test.js';
 import {
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
 	CASE_RELATIONSHIP_LINKED,
@@ -12,14 +15,11 @@ import {
 	ERROR_MUST_BE_VALID_APPEAL_STATE,
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
 } from '@pins/appeals/constants/support.js';
-import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal, fullPlanningAppeal, appealS78 } from '#tests/appeals/mocks.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { cloneDeep, omit } from 'lodash-es';
+import { request } from '../../../app-test.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.service.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
-import { cloneDeep, omit } from 'lodash-es';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const lpas = [

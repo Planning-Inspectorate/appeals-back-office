@@ -3,11 +3,7 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { urlPaths } from '../../support/urlPaths';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { createApiSubmission } from '../../support/appealsApiClient.js';
-import { appealsApiClient } from '../../support/appealsApiClient.js';
-import { appealsApiRequests } from '../../fixtures/appealsApiRequests.js';
 import { horizonTestAppeals } from '../../support/horizonTestAppeals.js';
 
 const caseDetailsPage = new CaseDetailsPage();

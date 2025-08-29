@@ -1,27 +1,27 @@
-import { countBy } from 'lodash-es';
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.service.js';
+import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import { currentStatus } from '#utils/current-status.js';
 import formatAddress from '#utils/format-address.js';
-import isFPA from '@pins/appeals/utils/is-fpa.js';
 import {
 	formatAppellantCaseDocumentationStatus,
 	formatLpaQuestionnaireDocumentationStatus,
 	formatLpaStatementStatus
 } from '#utils/format-documentation-status.js';
-import { add, addBusinessDays } from 'date-fns';
+import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import {
+	DOCUMENT_STATUS_NOT_RECEIVED,
+	DOCUMENT_STATUS_RECEIVED
+} from '@pins/appeals/constants/support.js';
+import isFPA from '@pins/appeals/utils/is-fpa.js';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_STATUS
 } from '@planning-inspectorate/data-model';
-import {
-	DOCUMENT_STATUS_NOT_RECEIVED,
-	DOCUMENT_STATUS_RECEIVED
-} from '@pins/appeals/constants/support.js';
-import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.service.js';
-import { currentStatus } from '#utils/current-status.js';
-import appealRepository from '#repositories/appeal.repository.js';
-import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
-import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
+import { add, addBusinessDays } from 'date-fns';
+import { countBy } from 'lodash-es';
 
 const approxStageCompletion = {
 	STATE_TARGET_READY_TO_START: 5,
@@ -433,8 +433,8 @@ const formatLinkedAppealData = async function (
 
 export {
 	formatAppeal,
-	formatMyAppeal,
-	getIdsOfReferencedAppeals,
+	formatCostsDecision,
 	formatLinkedAppealData,
-	formatCostsDecision
+	formatMyAppeal,
+	getIdsOfReferencedAppeals
 };

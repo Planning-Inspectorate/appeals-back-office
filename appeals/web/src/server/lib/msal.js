@@ -1,5 +1,5 @@
-import { LogLevel, ConfidentialClientApplication } from '@azure/msal-node';
 import config from '#environment/config.js';
+import { ConfidentialClientApplication, LogLevel } from '@azure/msal-node';
 import pino from './logger.js';
 import redisClient from './redis.js';
 

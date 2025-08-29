@@ -1,10 +1,10 @@
-import { appealShortReference } from '#lib/appeals-formatter.js';
-import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { wrapComponents, simpleHtmlComponent, buttonComponent } from '#lib/mappers/index.js';
 import { redactInput } from '#appeals/appeal-details/representations/common/components/redact-input.js';
-import { summaryList } from './components/summary-list.js';
 import { getAttachmentList } from '#appeals/appeal-details/representations/common/document-attachment-list.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { buttonComponent, simpleHtmlComponent, wrapComponents } from '#lib/mappers/index.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { findButtonText } from '#lib/revert-text.js';
+import { summaryList } from './components/summary-list.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */

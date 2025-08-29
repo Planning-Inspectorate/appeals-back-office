@@ -2,7 +2,6 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
-import { tag } from '../../support/tag';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { FileUploader } from '../../page_objects/shared.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';

@@ -1,7 +1,6 @@
 // @ts-nocheck
-import { users } from '../fixtures/users';
-import { assertType } from '../support/utils/assertType';
 import { urlPaths } from '../support/urlPaths.js';
+import { assertType } from '../support/utils/assertType';
 
 // @ts-nocheck
 export class Page {

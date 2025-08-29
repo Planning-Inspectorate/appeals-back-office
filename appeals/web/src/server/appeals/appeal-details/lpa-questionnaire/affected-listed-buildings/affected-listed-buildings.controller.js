@@ -11,8 +11,8 @@ import {
 } from './affected-listed-buildings.mapper.js';
 import {
 	addAffectedListedBuilding,
-	removeAffectedListedBuilding,
-	changeAffectedListedBuilding
+	changeAffectedListedBuilding,
+	removeAffectedListedBuilding
 } from './affected-listed-buildings.service.js';
 
 /**

@@ -1,7 +1,7 @@
 import {
-	createDateInputFieldsValidator,
+	createDateInputDateInFutureValidator,
 	createDateInputDateValidityValidator,
-	createDateInputDateInFutureValidator
+	createDateInputFieldsValidator
 } from '#lib/validators/date-input.validator.js';
 export const validateDueDateFields = createDateInputFieldsValidator('due-date');
 export const validateDueDateValid = createDateInputDateValidityValidator('due-date');

@@ -1,15 +1,15 @@
-import { AppealSummary } from './appeal-summary.js';
-import { Team } from './team.js';
 import { Allocation } from './allocation.js';
-import { NeighbouringSite } from './neighbouring-site.js';
-import { Timetable } from './timetable.js';
-import { TransferStatus } from './transfer-status.js';
-import { Folder } from './folders-documents.js';
 import { AppealDecision } from './appeal-decision.js';
 import { AppealRelationship } from './appeal-relationship.js';
+import { AppealSummary } from './appeal-summary.js';
+import { AssignedTeam } from './assigned-team.js';
+import { Folder } from './folders-documents.js';
+import { NeighbouringSite } from './neighbouring-site.js';
 import { SiteAccess } from './site-access.js';
 import { SiteSafety } from './site-safety.js';
-import { AssignedTeam } from './assigned-team.js';
+import { Team } from './team.js';
+import { Timetable } from './timetable.js';
+import { TransferStatus } from './transfer-status.js';
 
 const appeal = {
 	type: 'object',

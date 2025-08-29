@@ -83,4 +83,4 @@ const formatDocumentVersion = (latestDocumentVersion) => {
 	};
 };
 
-export { formatFolder, formatDocument };
+export { formatDocument, formatFolder };

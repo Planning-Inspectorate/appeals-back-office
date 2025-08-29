@@ -1,7 +1,7 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import * as controller from './cancel.controller.js';
+import { Router as createRouter } from 'express';
 import { validateAppeal } from '../appeal-details.middleware.js';
+import * as controller from './cancel.controller.js';
 import { validateCancelReason } from './cancel.validators.js';
 
 const router = createRouter({ mergeParams: true });

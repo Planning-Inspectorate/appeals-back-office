@@ -1,6 +1,6 @@
 import { EventType } from '@pins/event-client';
-import api from './back-office-api-client.js';
 import { HTTPError } from 'got';
+import api from './back-office-api-client.js';
 
 /**
  *

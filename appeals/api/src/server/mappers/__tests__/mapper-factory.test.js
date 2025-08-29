@@ -1,5 +1,5 @@
-import { mapCase } from '#mappers/mapper-factory.js';
 import { contextEnum } from '#mappers/context-enum.js';
+import { mapCase } from '#mappers/mapper-factory.js';
 import { mocks } from '#tests/appeals/index.js';
 
 describe('appeals api mappers', () => {

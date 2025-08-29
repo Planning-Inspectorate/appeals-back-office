@@ -1,14 +1,14 @@
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
-import { documentationFolderTableItem } from '#lib/mappers/index.js';
 import {
-	dateISOStringToDisplayDate,
 	dateISOStringToDayMonthYearHourMinute,
+	dateISOStringToDisplayDate,
 	dateIsInThePast
 } from '#lib/dates.js';
+import { documentationFolderTableItem } from '#lib/mappers/index.js';
 import {
-	mapRepresentationDocumentSummaryActionLink,
-	mapFinalCommentRepresentationStatusToLabelText
+	mapFinalCommentRepresentationStatusToLabelText,
+	mapRepresentationDocumentSummaryActionLink
 } from '#lib/representation-utilities.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /** @type {import('../mapper.js').SubMapper} */

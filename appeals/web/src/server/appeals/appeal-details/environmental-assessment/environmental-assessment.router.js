@@ -1,14 +1,14 @@
-import { Router as createRouter } from 'express';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
-import { permissionNames } from '#environment/permissions.js';
-import { asyncHandler } from '@pins/express';
 import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
+import * as controller from '#appeals/appeal-details/environmental-assessment/environmental-assessment.controller.js';
 import {
 	validateCaseDocumentId,
 	validateCaseFolderId
 } from '#appeals/appeal-documents/appeal-documents.middleware.js';
-import * as controller from '#appeals/appeal-details/environmental-assessment/environmental-assessment.controller.js';
 import * as documentsValidators from '#appeals/appeal-documents/appeal-documents.validators.js';
+import { permissionNames } from '#environment/permissions.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 
 const router = createRouter({ mergeParams: true });
 

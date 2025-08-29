@@ -1,10 +1,10 @@
+import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { startCase, updateAppealTimetable } from './appeal-timetables.service.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
-import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -109,4 +109,4 @@ const updateAppealTimetableById = async (req, res) => {
 	}
 };
 
-export { updateAppealTimetableById, startAppeal };
+export { startAppeal, updateAppealTimetableById };

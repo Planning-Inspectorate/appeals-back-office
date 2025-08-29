@@ -1,15 +1,15 @@
-import url from 'url';
-import { ipAddressPage } from '../interested-party-comments.mapper.js';
-import {
-	updateAddress,
-	unsetSiteVisitRequested,
-	patchInterestedPartyComment
-} from './edit-ip-comment.service.js';
-import { checkAddressPage, siteVisitRequestedPage } from './edit-ip-comment.mappers.js';
+import { applyEdits, clearEdits, getSessionValues } from '#lib/edit-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString, stripQueryString } from '#lib/url-utilities.js';
-import { applyEdits, clearEdits, getSessionValues } from '#lib/edit-utilities.js';
 import { isEmpty } from 'lodash-es';
+import url from 'url';
+import { ipAddressPage } from '../interested-party-comments.mapper.js';
+import { checkAddressPage, siteVisitRequestedPage } from './edit-ip-comment.mappers.js';
+import {
+	patchInterestedPartyComment,
+	unsetSiteVisitRequested,
+	updateAddress
+} from './edit-ip-comment.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

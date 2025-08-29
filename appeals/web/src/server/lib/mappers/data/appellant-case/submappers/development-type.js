@@ -1,6 +1,6 @@
-import { APPEAL_DEVELOPMENT_TYPES } from '@pins/appeals/constants/appellant-cases.constants.js';
 import { textSummaryListItem } from '#lib/mappers/components/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { APPEAL_DEVELOPMENT_TYPES } from '@pins/appeals/constants/appellant-cases.constants.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapDevelopmentType = ({ appellantCaseData, currentRoute, userHasUpdateCase }) => {

@@ -1,12 +1,12 @@
 import validateIdParameter from '#common/validators/id-parameter.js';
-import {
-	ERROR_REP_OUTCOME_MUST_BE_ONE_OF,
-	ERROR_MUST_BE_STRING,
-	ERROR_INVALID_EMAIL,
-	ERROR_MUST_BE_ARRAY_OF_STRINGS
-} from '@pins/appeals/constants/support.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import {
+	ERROR_INVALID_EMAIL,
+	ERROR_MUST_BE_ARRAY_OF_STRINGS,
+	ERROR_MUST_BE_STRING,
+	ERROR_REP_OUTCOME_MUST_BE_ONE_OF
+} from '@pins/appeals/constants/support.js';
 import { composeMiddleware } from '@pins/express';
 import { body } from 'express-validator';
 

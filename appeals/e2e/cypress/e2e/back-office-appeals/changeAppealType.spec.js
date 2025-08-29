@@ -4,8 +4,8 @@
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
-import { tag } from '../../support/tag';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();

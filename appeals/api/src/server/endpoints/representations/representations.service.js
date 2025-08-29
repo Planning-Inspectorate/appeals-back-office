@@ -1,31 +1,31 @@
+import config from '#config/config.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { notifySend } from '#notify/notify-send.js';
 import addressRepository from '#repositories/address.repository.js';
 import * as documentRepository from '#repositories/document.repository.js';
 import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
 import representationRepository from '#repositories/representation.repository.js';
 import serviceUserRepository from '#repositories/service-user.repository.js';
-import BackOfficeAppError from '#utils/app-error.js';
-import logger from '#utils/logger.js';
 import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
-import {
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
-	VALIDATION_OUTCOME_COMPLETE
-} from '@pins/appeals/constants/support.js';
-import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import BackOfficeAppError from '#utils/app-error.js';
+import { isCurrentStatus } from '#utils/current-status.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import logger from '#utils/logger.js';
+import { camelToScreamingSnake } from '#utils/string-utils.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE,
 	FEATURE_FLAG_NAMES
 } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { notifySend } from '#notify/notify-send.js';
-import { EventType } from '@pins/event-client';
-import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { isCurrentStatus } from '#utils/current-status.js';
-import config from '#config/config.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
-import { camelToScreamingSnake } from '#utils/string-utils.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
+import {
+	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
+	VALIDATION_OUTCOME_COMPLETE
+} from '@pins/appeals/constants/support.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { EventType } from '@pins/event-client';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */

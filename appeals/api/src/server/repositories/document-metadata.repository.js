@@ -1,7 +1,7 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { findPreviousVersion } from '#utils/find-previous-version.js';
-import { randomUUID } from 'node:crypto';
 import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
+import { randomUUID } from 'node:crypto';
 
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */

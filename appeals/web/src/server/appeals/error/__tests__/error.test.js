@@ -1,7 +1,7 @@
 import supertest from 'supertest';
 
-import { parseHtml } from '@pins/platform';
 import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
 
 const baseUrl = '/appeals-service/error';
 const { app } = createTestEnvironment();

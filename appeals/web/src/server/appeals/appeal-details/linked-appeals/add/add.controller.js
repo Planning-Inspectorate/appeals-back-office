@@ -1,14 +1,14 @@
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { HTTPError } from 'got';
-import { linkAppealToBackOfficeAppeal, linkAppealToLegacyAppeal } from './add.service.js';
 import {
-	addLinkedAppealPage,
 	addLinkedAppealCheckAndConfirmPage,
+	addLinkedAppealPage,
 	alreadyLinkedPage,
 	changeLeadAppealPage,
 	invalidCaseStatusPage
 } from './add.mapper.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { linkAppealToBackOfficeAppeal, linkAppealToLegacyAppeal } from './add.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

@@ -1,11 +1,11 @@
-import { Router as createRouter } from 'express';
+import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import {
 	addHearingEstimate,
-	updateHearingEstimate,
-	removeHearingEstimate
+	removeHearingEstimate,
+	updateHearingEstimate
 } from './hearing-estimates.controller.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import {
 	createHearingEstimateValidator,
 	updateHearingEstimateValidator

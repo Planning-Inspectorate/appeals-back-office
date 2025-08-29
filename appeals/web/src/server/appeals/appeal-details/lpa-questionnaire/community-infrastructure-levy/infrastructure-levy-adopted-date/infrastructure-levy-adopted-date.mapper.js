@@ -2,8 +2,8 @@
  * @typedef {import('../../../appeal-details.types.js').WebAppeal} Appeal
  */
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateInput } from '#lib/mappers/components/page-components/date.js';
 import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+import { dateInput } from '#lib/mappers/components/page-components/date.js';
 
 /**
  * @param {Appeal} appealData

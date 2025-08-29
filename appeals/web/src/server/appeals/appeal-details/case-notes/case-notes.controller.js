@@ -1,6 +1,6 @@
+import { viewAppealDetails } from '#appeals/appeal-details/appeal-details.controller.js';
 import { getOriginPathname } from '#lib/url-utilities.js';
 import { postAppealCaseNote } from './case-notes.service.js';
-import { viewAppealDetails } from '#appeals/appeal-details/appeal-details.controller.js';
 
 /**
  *

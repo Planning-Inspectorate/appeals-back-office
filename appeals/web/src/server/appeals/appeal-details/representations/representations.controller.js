@@ -1,10 +1,10 @@
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { statementAndCommentsSharePage, finalCommentsSharePage } from './representations.mapper.js';
-import { publishRepresentations } from './representations.service.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { finalCommentsSharePage, statementAndCommentsSharePage } from './representations.mapper.js';
+import { publishRepresentations } from './representations.service.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>} */
 export function renderShareRepresentations(request, response) {

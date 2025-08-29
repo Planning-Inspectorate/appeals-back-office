@@ -1,5 +1,5 @@
-import { RedisClient } from '@pins/redis';
 import config from '#environment/config.js';
+import { RedisClient } from '@pins/redis';
 import logger from './logger.js';
 
 /**

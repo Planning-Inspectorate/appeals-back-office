@@ -1,6 +1,6 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { timingsPage, checkDetailsPage } from './estimates.mapper.js';
+import { checkDetailsPage, timingsPage } from './estimates.mapper.js';
 import { createHearingEstimates, updateHearingEstimates } from './estimates.service.js';
 
 /**

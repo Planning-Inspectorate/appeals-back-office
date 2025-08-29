@@ -1,3 +1,9 @@
+import logger from '#lib/logger.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
+import { HTTPError } from 'got';
+import { postUnlinkRequest } from '../linked-appeals/linked-appeals.service.js';
 import {
 	addOtherAppealsPage,
 	confirmOtherAppealsPage,
@@ -5,12 +11,6 @@ import {
 	removeAppealRelationshipPage
 } from './other-appeals.mapper.js';
 import { postAssociateAppeal, postAssociateLegacyAppeal } from './other-appeals.service.js';
-import { postUnlinkRequest } from '../linked-appeals/linked-appeals.service.js';
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import logger from '#lib/logger.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { HTTPError } from 'got';
-import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

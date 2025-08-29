@@ -1,6 +1,6 @@
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
-import { body } from 'express-validator';
 import { createValidator } from '@pins/express';
+import { body } from 'express-validator';
 
 /**
  * Creates a validator middleware for checkbox text items.

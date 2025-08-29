@@ -1,8 +1,8 @@
-import dirname from './utils/dirname.js';
-import nunjucks from 'nunjucks';
-import path from 'node:path';
-import * as nunjucksFilters from './nunjucks-filters/index.js';
 import { createRequire } from 'node:module';
+import path from 'node:path';
+import nunjucks from 'nunjucks';
+import * as nunjucksFilters from './nunjucks-filters/index.js';
+import dirname from './utils/dirname.js';
 
 const __dirname = dirname(import.meta.url); // get the resolved path of the directory
 const viewDir = path.join(__dirname, '..', 'views');

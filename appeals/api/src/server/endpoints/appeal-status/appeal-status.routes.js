@@ -1,10 +1,10 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import * as controller from './appeal-status.controller.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import * as controller from './appeal-status.controller.js';
 import {
-	validateAppealStatusRollBackRequest,
-	getAppealStatusDateValidator
+	getAppealStatusDateValidator,
+	validateAppealStatusRollBackRequest
 } from './appeal-status.validators.js';
 
 const router = createRouter();

@@ -1,8 +1,8 @@
+import { appealData, appealTypesData } from '#testing/app/fixtures/referencedata.js';
+import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
-import { appealData, appealTypesData } from '#testing/app/fixtures/referencedata.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

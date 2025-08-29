@@ -1,7 +1,7 @@
-import { dateISOStringToDisplayDate, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
-import { capitalize } from 'lodash-es';
 import { appealShortReference } from '#lib/appeals-formatter.js';
+import { dateISOStringToDayMonthYearHourMinute, dateISOStringToDisplayDate } from '#lib/dates.js';
 import { dateInput } from '#lib/mappers/index.js';
+import { capitalize } from 'lodash-es';
 import { dueDateFieledName } from './appeal-timetable.constants.js';
 
 /**

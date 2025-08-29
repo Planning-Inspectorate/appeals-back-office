@@ -3,8 +3,8 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { tag } from '../../support/tag';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 import { formatDateAndTime } from '../../support/utils/formatDateAndTime';
 
 const caseDetailsPage = new CaseDetailsPage();

@@ -1,6 +1,6 @@
-import { body } from 'express-validator';
-import { ERROR_NUMBER_RANGE } from '@pins/appeals/constants/support.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { ERROR_NUMBER_RANGE } from '@pins/appeals/constants/support.js';
+import { body } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 

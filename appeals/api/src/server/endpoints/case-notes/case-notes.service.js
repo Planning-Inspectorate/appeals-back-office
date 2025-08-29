@@ -1,5 +1,5 @@
-import userRepository from '#repositories/user.repository.js';
 import * as caseNotesRepository from '#repositories/case-notes.repository.js';
+import userRepository from '#repositories/user.repository.js';
 import logger from '#utils/logger.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.CaseNote} CaseNote */

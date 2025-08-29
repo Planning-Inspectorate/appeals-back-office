@@ -12,8 +12,8 @@ and add any new arguments you might need to ServiceArgs
 */
 
 import {
-	APPEAL_REPRESENTATION_TYPE,
-	APPEAL_REPRESENTATION_STATUS
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
 
 import * as service from './services/index.js';

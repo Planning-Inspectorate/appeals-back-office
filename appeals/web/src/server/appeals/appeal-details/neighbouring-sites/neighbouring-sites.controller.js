@@ -1,4 +1,5 @@
 import logger from '#lib/logger.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getOriginPathname, isInternalUrl } from '#lib/url-utilities.js';
 import { HTTPError } from 'got';
@@ -10,7 +11,6 @@ import {
 	manageNeighbouringSitesPage,
 	removeNeighbouringSitePage
 } from './neighbouring-sites.mapper.js';
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
 	addNeighbouringSite,
 	changeNeighbouringSite,

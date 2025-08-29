@@ -1,9 +1,9 @@
 // @ts-nocheck
+import { emulateSendEmail, generateNotifyPreview } from '#notify/emulate-notify.js';
 import { jest } from '@jest/globals';
+import fs from 'fs';
 import mockFileSystem from 'mock-fs';
 import path from 'path';
-import { emulateSendEmail, generateNotifyPreview } from '#notify/emulate-notify.js';
-import fs from 'fs';
 
 const tempPath = path.join(process.cwd(), 'temp');
 

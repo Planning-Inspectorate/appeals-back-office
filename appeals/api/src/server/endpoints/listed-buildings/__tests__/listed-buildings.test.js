@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { request } from '#tests/../app-test.js';
-import { jest } from '@jest/globals';
-import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import { jest } from '@jest/globals';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 

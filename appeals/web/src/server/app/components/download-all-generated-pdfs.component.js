@@ -1,7 +1,7 @@
-import config from '#environment/config.js';
+import { getAppellantCaseFromAppealId } from '#appeals/appeal-details/appellant-case/appellant-case.service.js';
 import { getLpaQuestionnaireFromId } from '#appeals/appeal-details/lpa-questionnaire/lpa-questionnaire.service.js';
 import { getSingularRepresentationByType } from '#appeals/appeal-details/representations/representations.service.js';
-import { getAppellantCaseFromAppealId } from '#appeals/appeal-details/appellant-case/appellant-case.service.js';
+import config from '#environment/config.js';
 
 const pdfServiceGenerateUrl = config.pdfServiceHost + '/generate-pdf';
 const FETCH_TIMEOUT_MS = 30000;

@@ -1,12 +1,12 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
 import { householdAppeal } from '#tests/appeals/mocks.js';
+import {
+	horizonGetCaseNotFoundResponse,
+	horizonGetCaseSuccessResponse
+} from '#tests/horizon/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
-import {
-	horizonGetCaseSuccessResponse,
-	horizonGetCaseNotFoundResponse
-} from '#tests/horizon/mocks.js';
+import { jest } from '@jest/globals';
 
 jest.unstable_mockModule('#utils/feature-flags.js', () => ({
 	isFeatureActive: jest.fn(() => true),

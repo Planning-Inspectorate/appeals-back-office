@@ -1,5 +1,5 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import { getTransferredAppealStatusByCaseReference } from './transferred-appeal.controller.js';
 
 const router = createRouter();

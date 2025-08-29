@@ -1,8 +1,8 @@
+import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controllers from './lpa-reference.controller.js';
-import { asyncHandler } from '@pins/express';
-import * as validators from './lpa-reference.validators.js';
 import { ensureBeforeLpaq } from './lpa-reference.middleware.js';
+import * as validators from './lpa-reference.validators.js';
 const router = createRouter({ mergeParams: true });
 
 router

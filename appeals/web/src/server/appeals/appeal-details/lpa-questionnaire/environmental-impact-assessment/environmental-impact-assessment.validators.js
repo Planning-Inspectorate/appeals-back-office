@@ -1,5 +1,5 @@
-import { createTextareaConditionalValidator } from '#lib/validators/textarea-validator.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { createTextareaConditionalValidator } from '#lib/validators/textarea-validator.js';
 
 export const validateSensitiveAreaDetailsTextArea = createTextareaConditionalValidator(
 	'eiaSensitiveAreaDetails',

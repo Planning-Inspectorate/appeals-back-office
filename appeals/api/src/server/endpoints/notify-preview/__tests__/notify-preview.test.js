@@ -1,7 +1,7 @@
 // @ts-nocheck
+import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
 import { request } from '../../../app-test.js';
-import { azureAdUserId } from '#tests/shared/mocks.js';
 describe('notify preview tests', () => {
 	afterEach(() => {
 		jest.clearAllMocks();

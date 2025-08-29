@@ -1,5 +1,5 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import * as controller from './representation-rejection-reasons.controller.js';
 import { validateRepresentationType } from './representation-rejection-reasons.validators.js';
 

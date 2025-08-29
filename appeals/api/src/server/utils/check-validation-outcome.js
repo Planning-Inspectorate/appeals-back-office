@@ -1,6 +1,6 @@
 import {
-	VALIDATION_OUTCOME_INCOMPLETE,
 	VALIDATION_OUTCOME_COMPLETE,
+	VALIDATION_OUTCOME_INCOMPLETE,
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
@@ -34,4 +34,4 @@ const isOutcomeInvalid = (validationOutcome) =>
 const isOutcomeValid = (validationOutcome) =>
 	checkStringsMatch(validationOutcome, VALIDATION_OUTCOME_VALID);
 
-export { isOutcomeIncomplete, isOutcomeComplete, isOutcomeInvalid, isOutcomeValid };
+export { isOutcomeComplete, isOutcomeIncomplete, isOutcomeInvalid, isOutcomeValid };

@@ -1,13 +1,13 @@
-import { createValidator } from '@pins/express';
-import { body } from 'express-validator';
 import {
-	createDateInputFieldsValidator,
-	createDateInputDateValidityValidator
+	createDateInputDateValidityValidator,
+	createDateInputFieldsValidator
 } from '#lib/validators/date-input.validator.js';
 import {
-	createTimeInputValidator,
-	createStartTimeBeforeEndTimeValidator
+	createStartTimeBeforeEndTimeValidator,
+	createTimeInputValidator
 } from '#lib/validators/time-input.validator.js';
+import { createValidator } from '@pins/express';
+import { body } from 'express-validator';
 import { siteVisitDateField } from './site-visits.constants.js';
 
 export const validateSiteVisitType = createValidator(

@@ -1,18 +1,18 @@
 import config from '#config/config.js';
-import pino from '#utils/logger.js';
-import { databaseConnector } from '#utils/database-connector.js';
-import { EventType } from '@pins/event-client';
-import { mapCase } from '#mappers/mapper-factory.js';
-import { contextEnum } from '#mappers/context-enum.js';
-import { schemas, validateFromSchema } from '../integrations.validators.js';
-import { producers } from '#infrastructure/topics.js';
 import { eventClient } from '#infrastructure/event-client.js';
+import { producers } from '#infrastructure/topics.js';
+import { contextEnum } from '#mappers/context-enum.js';
+import { mapCase } from '#mappers/mapper-factory.js';
+import { databaseConnector } from '#utils/database-connector.js';
+import pino from '#utils/logger.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
 } from '@pins/appeals/constants/support.js';
+import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import { schemas, validateFromSchema } from '../integrations.validators.js';
 
 /**
  *

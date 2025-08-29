@@ -1,5 +1,5 @@
-import { get } from 'lodash-es';
 import { ensureArray } from '#lib/array-utilities.js';
+import { get } from 'lodash-es';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */

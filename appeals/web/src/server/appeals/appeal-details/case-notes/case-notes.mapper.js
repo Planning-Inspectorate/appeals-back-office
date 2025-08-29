@@ -1,7 +1,7 @@
 /** @typedef {import('@pins/appeals.api/src/server/endpoints/appeals').GetCaseNotesResponse} GetCaseNotesResponse */
 
-import { caseNotesWithMappedUsers } from './case-notes.formatter.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { caseNotesWithMappedUsers } from './case-notes.formatter.js';
 
 /**
  * @param {GetCaseNotesResponse} appealCaseNotes

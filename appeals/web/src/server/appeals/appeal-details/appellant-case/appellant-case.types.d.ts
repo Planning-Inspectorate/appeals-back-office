@@ -1,5 +1,4 @@
-import { Address } from '@pins/appeals';
-import { ReasonOption, NotValidReasonResponse } from '../appeal-details.types';
+import { NotValidReasonResponse } from '../appeal-details.types';
 
 export type AppellantCaseValidationOutcome = 'valid' | 'invalid' | 'incomplete';
 

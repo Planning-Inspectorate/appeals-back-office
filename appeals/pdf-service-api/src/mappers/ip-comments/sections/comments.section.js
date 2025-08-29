@@ -1,10 +1,10 @@
+import standardFilters from 'nunjucks/src/filters.js';
+import { formatDate } from '../../../lib/nunjucks-filters/format-date.js';
 import {
 	formatBulletedList,
 	formatDocumentData,
 	formatReason
 } from '../../../lib/nunjucks-filters/index.js';
-import { formatDate } from '../../../lib/nunjucks-filters/format-date.js';
-import standardFilters from 'nunjucks/src/filters.js';
 const { nl2br, safe } = standardFilters;
 
 function mapComment(ipComment) {

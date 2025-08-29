@@ -1,7 +1,7 @@
+import { timeIsBeforeTime } from '#lib/times.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { capitalize } from 'lodash-es';
-import { timeIsBeforeTime } from '#lib/times.js';
 
 /**
  * @typedef {import('express-validator').ValidationChain} ValidationChain

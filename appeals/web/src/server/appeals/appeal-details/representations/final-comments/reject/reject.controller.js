@@ -1,11 +1,11 @@
-import logger from '#lib/logger.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	mapRejectionReasonOptionsToCheckboxItemParameters,
 	mapRejectionReasonPayload
 } from '#appeals/appeal-details/representations/representations.mapper.js';
+import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { confirmRejectFinalCommentPage, rejectFinalCommentsPage } from './reject.mapper.js';
 import { getRepresentationRejectionReasonOptions, rejectFinalComment } from './reject.service.js';
-import { rejectFinalCommentsPage, confirmRejectFinalCommentPage } from './reject.mapper.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

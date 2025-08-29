@@ -1,12 +1,12 @@
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import addressRepository from '#repositories/address.repository.js';
 import logger from '#utils/logger.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	AUDIT_TRAIL_ADDRESS_UPDATED,
 	ERROR_FAILED_TO_SAVE_DATA
 } from '@pins/appeals/constants/support.js';
 import { formatAddress, formatAddressMultiline } from './addresses.formatter.js';
-import addressRepository from '#repositories/address.repository.js';
-import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

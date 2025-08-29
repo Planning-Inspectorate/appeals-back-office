@@ -6,9 +6,9 @@
  * code will the switching logic for you.
  */
 
-import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
 import { notifySend } from '#notify/notify-send.js';
 import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js';
+import { formatExtendedDeadline, formatReasons, formatSiteAddress } from './utils.js';
 
 /**
  * @typedef {object} ServiceArgs

@@ -1,14 +1,14 @@
+import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
+import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import { validateAppeal } from '../../appeal-details.middleware.js';
 import addIpCommentRouter from './add-ip-comment/add-ip-comment.router.js';
 import editIpCommentRouter from './edit-ip-comment/edit-ip-comment.router.js';
-import viewAndReviewIpCommentRouter from './view-and-review/view-and-review.router.js';
-import redactIpCommentRouter from './redact/redact.router.js';
 import * as controller from './interested-party-comments.controller.js';
 import { validateComment } from './interested-party-comments.middleware.js';
-import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
-import { saveBackUrl } from '#lib/middleware/save-back-url.js';
+import redactIpCommentRouter from './redact/redact.router.js';
+import viewAndReviewIpCommentRouter from './view-and-review/view-and-review.router.js';
 
 const router = createRouter({ mergeParams: true });
 

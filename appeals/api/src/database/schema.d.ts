@@ -1,6 +1,4 @@
-import { RedactionStatus } from '#repositories/document-metadata.repository';
 import * as schema from '#utils/db-client';
-import { CaseOfficer, Inspector } from '@pins/appeals';
 import { AssignedTeam } from '@pins/appeals.api';
 
 export interface Appeal extends schema.Appeal {

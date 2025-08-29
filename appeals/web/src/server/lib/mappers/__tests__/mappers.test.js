@@ -1,16 +1,16 @@
+import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
+import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
+import { createAccountInfo } from '#testing/app/app.js';
 import {
 	appealData,
 	lpaQuestionnaireDataIncompleteOutcome
 } from '#testing/app/fixtures/referencedata.js';
-import { createAccountInfo } from '#testing/app/app.js';
+import { areIdsDefinedAndUnique } from '#testing/lib/testMappers.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import { isEqual } from 'lodash-es';
 import { initialiseAndMapAppealData } from '../data/appeal/mapper.js';
 import { initialiseAndMapLPAQData } from '../data/lpa-questionnaire/mapper.js';
-import { areIdsDefinedAndUnique } from '#testing/lib/testMappers.js';
 import { mapPagination } from '../index.js';
-import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
-import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
-import { isEqual } from 'lodash-es';
 
 /** @typedef {import('../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 

@@ -1,7 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { yesNoInput, radiosInput } from '#lib/mappers/index.js';
-import { ensureArray } from '#lib/array-utilities.js';
-import { moveItemInArray } from '#lib/array-utilities.js';
+import { ensureArray, moveItemInArray } from '#lib/array-utilities.js';
+import { radiosInput, yesNoInput } from '#lib/mappers/index.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */

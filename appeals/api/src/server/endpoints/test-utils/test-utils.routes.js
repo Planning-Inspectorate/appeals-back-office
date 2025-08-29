@@ -1,11 +1,11 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import {
-	simulateSiteVisitElapsed,
-	simulateHearingElapsed,
-	simulateStatementsElapsed,
+	retrieveNotifyEmails,
 	simulateFinalCommentsElapsed,
-	retrieveNotifyEmails
+	simulateHearingElapsed,
+	simulateSiteVisitElapsed,
+	simulateStatementsElapsed
 } from './test-utils.controller.js';
 
 const router = createRouter();

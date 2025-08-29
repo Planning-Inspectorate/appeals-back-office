@@ -1,19 +1,19 @@
+import {
+	dateISOStringToDayMonthYearHourMinute,
+	dayMonthYearHourMinuteToISOString
+} from '#lib/dates.js';
+import { applyEdits, clearEdits, getSessionValues } from '#lib/edit-utilities.js';
+import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { preserveQueryString, stripQueryString } from '#lib/url-utilities.js';
+import { has, isEmpty, isEqual, pick } from 'lodash-es';
+import { createHearing, updateHearing } from './hearing.service.js';
 import {
 	addressDetailsPage,
 	addressKnownPage,
 	checkDetailsPage,
 	hearingDatePage
 } from './set-up-hearing.mapper.js';
-import logger from '#lib/logger.js';
-import { isEmpty, isEqual, has, pick } from 'lodash-es';
-import {
-	dateISOStringToDayMonthYearHourMinute,
-	dayMonthYearHourMinuteToISOString
-} from '#lib/dates.js';
-import { createHearing, updateHearing } from './hearing.service.js';
-import { preserveQueryString, stripQueryString } from '#lib/url-utilities.js';
-import { applyEdits, clearEdits, getSessionValues } from '#lib/edit-utilities.js';
 
 /**
  * @param {string} path

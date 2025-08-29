@@ -1,11 +1,31 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
-import { request } from '../../../app-test.js';
 import {
+	casPlanningAppeal,
+	casPlanningAppealLPAQuestionnaireIncomplete,
+	fullPlanningAppeal,
+	fullPlanningAppealLPAQuestionnaireIncomplete,
+	householdAppeal,
+	householdAppealLPAQuestionnaireComplete,
+	householdAppealLPAQuestionnaireIncomplete,
+	listedBuildingAppeal,
+	listedBuildingAppealLPAQuestionnaireIncomplete
+} from '#tests/appeals/mocks.js';
+import {
+	azureAdUserId,
+	lpaQuestionnaireIncompleteReasons,
+	lpaQuestionnaireValidationOutcomes
+} from '#tests/shared/mocks.js';
+import createManyToManyRelationData from '#utils/create-many-to-many-relation-data.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { jest } from '@jest/globals';
+import {
+	AUDIT_TRAIL_LPAQ_IS_CORRECT_APPEAL_TYPE_UPDATED,
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
+	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME,
 	ERROR_LPA_QUESTIONNAIRE_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED,
+	ERROR_MAX_LENGTH_CHARACTERS,
 	ERROR_MUST_BE_BOOLEAN,
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
 	ERROR_MUST_BE_INCOMPLETE_INVALID_REASON,
@@ -14,31 +34,11 @@ import {
 	ERROR_NOT_FOUND,
 	ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME,
 	LENGTH_10,
-	LENGTH_8,
-	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
-	AUDIT_TRAIL_LPAQ_IS_CORRECT_APPEAL_TYPE_UPDATED
+	LENGTH_8
 } from '@pins/appeals/constants/support.js';
-import {
-	lpaQuestionnaireIncompleteReasons,
-	lpaQuestionnaireValidationOutcomes,
-	azureAdUserId
-} from '#tests/shared/mocks.js';
-import {
-	fullPlanningAppeal,
-	fullPlanningAppealLPAQuestionnaireIncomplete,
-	householdAppeal,
-	householdAppealLPAQuestionnaireComplete,
-	householdAppealLPAQuestionnaireIncomplete,
-	casPlanningAppeal,
-	casPlanningAppealLPAQuestionnaireIncomplete,
-	listedBuildingAppeal,
-	listedBuildingAppealLPAQuestionnaireIncomplete
-} from '#tests/appeals/mocks.js';
-import createManyToManyRelationData from '#utils/create-many-to-many-relation-data.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-const { databaseConnector } = await import('#utils/database-connector.js');
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { ERROR_MAX_LENGTH_CHARACTERS } from '@pins/appeals/constants/support.js';
+import { request } from '../../../app-test.js';
+const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('lpa questionnaires routes', () => {
 	afterEach(() => {

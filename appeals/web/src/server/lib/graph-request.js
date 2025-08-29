@@ -1,5 +1,5 @@
-import { createHttpLoggerHooks } from '@pins/platform';
 import config from '@pins/appeals.web/environment/config.js';
+import { createHttpLoggerHooks } from '@pins/platform';
 import got from 'got';
 import pino from './logger.js';
 

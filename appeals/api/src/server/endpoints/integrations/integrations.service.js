@@ -1,12 +1,12 @@
-import { producers } from '#infrastructure/topics.js';
 import { eventClient } from '#infrastructure/event-client.js';
+import { producers } from '#infrastructure/topics.js';
 import {
 	createAppeal,
 	createOrUpdateLpaQuestionnaire,
 	createRepresentation
 } from '#repositories/integrations.repository.js';
-import { EventType } from '@pins/event-client';
 import BackOfficeAppError from '#utils/app-error.js';
+import { EventType } from '@pins/event-client';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */

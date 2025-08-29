@@ -1,11 +1,11 @@
-import pino from '#utils/logger.js';
 import config from '#config/config.js';
-import { producers } from '#infrastructure/topics.js';
 import { eventClient } from '#infrastructure/event-client.js';
-import { schemas, validateFromSchema } from '../integrations.validators.js';
-import { databaseConnector } from '#utils/database-connector.js';
-import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
+import { producers } from '#infrastructure/topics.js';
 import { mapRepresentationEntity } from '#mappers/integration/map-representation-entity.js';
+import { databaseConnector } from '#utils/database-connector.js';
+import pino from '#utils/logger.js';
+import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
+import { schemas, validateFromSchema } from '../integrations.validators.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 

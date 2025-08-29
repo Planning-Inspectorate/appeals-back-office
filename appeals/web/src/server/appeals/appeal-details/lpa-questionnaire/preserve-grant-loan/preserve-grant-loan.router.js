@@ -1,5 +1,5 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import * as controllers from './preserve-grant-loan.controller.js';
 import { validatePreserveGrantLoan } from './preserve-grant-loan.validator.js';
 

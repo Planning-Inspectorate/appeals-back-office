@@ -1,8 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
-	mapNotificationBannersFromSession,
 	createNotificationBanner,
+	mapNotificationBannersFromSession,
 	sortNotificationBanners
 } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';

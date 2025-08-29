@@ -1,21 +1,21 @@
 // @ts-nocheck
+import { request } from '#tests/../app-test.js';
+import {
+	appealS20,
+	appealS78,
+	fullPlanningAppeal,
+	householdAppeal,
+	listedBuildingAppeal
+} from '#tests/appeals/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import { jest } from '@jest/globals';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { request } from '#tests/../app-test.js';
-import {
-	householdAppeal,
-	appealS78,
-	appealS20,
-	fullPlanningAppeal,
-	listedBuildingAppeal
-} from '#tests/appeals/mocks.js';
-import { jest } from '@jest/globals';
-import { cloneDeep } from 'lodash-es';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
-import { azureAdUserId } from '#tests/shared/mocks.js';
+import { cloneDeep } from 'lodash-es';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 

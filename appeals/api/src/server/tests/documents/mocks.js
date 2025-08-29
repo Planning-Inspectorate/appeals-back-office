@@ -1,6 +1,6 @@
+import { mapCaseReferenceForStorageUrl } from '#endpoints/documents/documents.mapper.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { mapCaseReferenceForStorageUrl } from '#endpoints/documents/documents.mapper.js';
 
 const guid = '27d0fda4-8a9a-4f5a-a158-68eaea676158';
 const version = 1;

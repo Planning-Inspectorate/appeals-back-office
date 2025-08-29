@@ -1,5 +1,5 @@
-import { DATABASE_ORDER_BY_DESC } from '@pins/appeals/constants/support.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import { DATABASE_ORDER_BY_DESC } from '@pins/appeals/constants/support.js';
 
 /**
  * @typedef {import('#db-client').Prisma.PrismaPromise<T>} PrismaPromise

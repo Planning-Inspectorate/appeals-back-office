@@ -1,8 +1,8 @@
 import { Router as createRouter } from 'express';
-import setUpInquiryRouter from './setup/set-up-inquiry.router.js';
 import estimatesRouter from './estimates/estimates.router.js';
 import changeInquiryRouter from './setup/change-inquiry.router.js';
 import * as controller from './setup/set-up-inquiry.controller.js';
+import setUpInquiryRouter from './setup/set-up-inquiry.router.js';
 
 const router = createRouter({ mergeParams: true });
 

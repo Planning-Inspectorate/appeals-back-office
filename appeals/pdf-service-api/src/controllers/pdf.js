@@ -1,19 +1,19 @@
 // @ts-nocheck
+import * as fs from 'node:fs';
+import { createRequire } from 'node:module';
+import path from 'node:path';
+import { getBrowserInstance } from '../browser-instance.js';
+import config from '../config.js';
 import generatePdfLib from '../lib/generate-pdf.js';
 import logger from '../lib/logger.js';
-import config from '../config.js';
-import { getBrowserInstance } from '../browser-instance.js';
-import path from 'node:path';
-import { createRequire } from 'node:module';
-import * as fs from 'node:fs';
-import dirname from '../lib/utils/dirname.js';
 import nunjucksEnv from '../lib/nunjucks-environment.js';
-import mapQuestionnaireData from '../mappers/lpa-questionnaire/lpa-questionnaire.mapper.js';
+import dirname from '../lib/utils/dirname.js';
 import mapAppellantCaseData from '../mappers/appellant-case/appellant-case.mapper.js';
-import mapIpCommentsData from '../mappers/ip-comments/ip-comments.mapper.js';
-import { mapLpaStatement } from '../mappers/lpa-statement/lpa-statement.mapper.js';
-import { mapLpaFinalComments } from '../mappers/lpa-final-comments/lpa-final-comments.mapper.js';
 import { mapAppellantFinalComments } from '../mappers/appellant-final-comments/appellant-final-comments.mapper.js';
+import mapIpCommentsData from '../mappers/ip-comments/ip-comments.mapper.js';
+import { mapLpaFinalComments } from '../mappers/lpa-final-comments/lpa-final-comments.mapper.js';
+import mapQuestionnaireData from '../mappers/lpa-questionnaire/lpa-questionnaire.mapper.js';
+import { mapLpaStatement } from '../mappers/lpa-statement/lpa-statement.mapper.js';
 
 const __dirname = dirname(import.meta.url); // get the resolved path of the directory
 

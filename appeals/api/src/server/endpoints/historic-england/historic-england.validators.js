@@ -1,5 +1,5 @@
-import pino from '#utils/logger.js';
 import { schemas, validateFromSchema } from '#endpoints/integrations/integrations.validators.js';
+import pino from '#utils/logger.js';
 import { ERROR_INVALID_LISTED_BUILDING_DATA } from '@pins/appeals/constants/support.js';
 
 /**

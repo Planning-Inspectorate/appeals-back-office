@@ -1,9 +1,9 @@
-import { Router as createRouter } from 'express';
+import { getAppealValidator } from '#endpoints/appeal-details/appeal-details.validators.js';
 import { patchEiaScreeningRequired } from '#endpoints/environmental-impact-assessment/environmental-impact-assessment.controller.js';
+import { getEiaScreeningRequirementValidator } from '#endpoints/environmental-impact-assessment/environmental-impact-assessment.validator.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
-import { getEiaScreeningRequirementValidator } from '#endpoints/environmental-impact-assessment/environmental-impact-assessment.validator.js';
-import { getAppealValidator } from '#endpoints/appeal-details/appeal-details.validators.js';
+import { Router as createRouter } from 'express';
 
 const router = createRouter();
 

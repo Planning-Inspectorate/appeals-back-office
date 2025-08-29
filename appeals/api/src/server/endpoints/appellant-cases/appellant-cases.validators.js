@@ -1,28 +1,28 @@
-import { composeMiddleware } from '@pins/express';
-import { body } from 'express-validator';
+import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
+import validateDateParameter from '#common/validators/date-parameter.js';
+import validateEnumParameter from '#common/validators/enum-parameter.js';
+import validateIdParameter from '#common/validators/id-parameter.js';
+import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
+import { validateNumberParameter } from '#common/validators/number-parameter.js';
+import validateNumberRangeParameter from '#common/validators/number-range-parameter.js';
+import {
+	validateNullableTextAreaParameter,
+	validateOptionalTextAreaParameter,
+	validateStringParameter,
+	validateTextAreaParameter
+} from '#common/validators/string-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
+import { isOutcomeIncomplete, isOutcomeInvalid } from '#utils/check-validation-outcome.js';
 import {
 	ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME,
 	ERROR_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED
 } from '@pins/appeals/constants/support.js';
-import { isOutcomeIncomplete, isOutcomeInvalid } from '#utils/check-validation-outcome.js';
-import validateDateParameter from '#common/validators/date-parameter.js';
-import validateIdParameter from '#common/validators/id-parameter.js';
+import { composeMiddleware } from '@pins/express';
 import {
-	validateStringParameter,
-	validateTextAreaParameter,
-	validateOptionalTextAreaParameter,
-	validateNullableTextAreaParameter
-} from '#common/validators/string-parameter.js';
-import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
-import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
-import validateEnumParameter from '#common/validators/enum-parameter.js';
-import {
-	APPEAL_KNOWS_OTHER_OWNERS,
-	APPEAL_CASE_PROCEDURE
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_KNOWS_OTHER_OWNERS
 } from '@planning-inspectorate/data-model';
-import validateNumberRangeParameter from '#common/validators/number-range-parameter.js';
-import { validateNumberParameter } from '#common/validators/number-parameter.js';
+import { body } from 'express-validator';
 
 /** @typedef {import('express').RequestHandler} RequestHandler */
 

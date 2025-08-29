@@ -1,5 +1,5 @@
-import { acquireTokenSilent } from '../app/auth/auth.service.js';
 import { getAccount } from '../app/auth/auth-session.service.js';
+import { acquireTokenSilent } from '../app/auth/auth.service.js';
 
 /** @typedef {import('../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 /** @typedef {import('@azure/core-auth').AccessToken} AccessToken */

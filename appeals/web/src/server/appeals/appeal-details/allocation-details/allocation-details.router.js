@@ -1,10 +1,10 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import * as allocationDetailsController from './allocation-details.controller.js';
-import * as validators from './allocation-details.validators.js';
-import { validateAppeal } from '../appeal-details.middleware.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import { validateAppeal } from '../appeal-details.middleware.js';
+import * as allocationDetailsController from './allocation-details.controller.js';
+import * as validators from './allocation-details.validators.js';
 
 const router = createRouter({ mergeParams: true });
 
