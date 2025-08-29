@@ -244,6 +244,7 @@ export const spec = {
 			]
 		},
 		SingleAppealResponse: {
+			assignedTeamId: 1,
 			agent: {
 				serviceUserId: 199,
 				firstName: 'Some',

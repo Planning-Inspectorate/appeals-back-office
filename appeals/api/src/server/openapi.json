@@ -8186,6 +8186,10 @@
 			"SingleAppealResponse": {
 				"type": "object",
 				"properties": {
+					"assignedTeamId": {
+						"type": "number",
+						"example": 1
+					},
 					"agent": {
 						"type": "object",
 						"properties": {
