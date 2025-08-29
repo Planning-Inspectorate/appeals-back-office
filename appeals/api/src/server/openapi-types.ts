@@ -826,6 +826,15 @@ export type AppealTypes = {
 	id?: number;
 }[];
 
+export interface CaseTeam {
+	/** @example 1 */
+	id?: number;
+	/** @example "Ops Test" */
+	name?: string;
+	/** @example "opstest@email.com" */
+	email?: string;
+}
+
 export type CaseTeams = {
 	/** @example 1 */
 	id?: number;
@@ -2344,6 +2353,11 @@ export interface LPAChangeRequest {
 	newLpaId?: number;
 }
 
+export interface UpdateAsssignedTeamResponse {
+	/** @example 1 */
+	teamId?: number;
+}
+
 export interface SingleLinkableAppealSummaryResponse {
 	/**
 	 * ID in back-office or horizon
@@ -2838,6 +2852,11 @@ export interface InquiryEstimateResponse {
 export interface AppealStatusRollBackRequest {
 	/** @example "event" */
 	status?: string;
+}
+
+export interface UpdateAsssignedTeamRequest {
+	/** @example "1" */
+	teamId?: string;
 }
 
 export interface Address {
@@ -11602,10 +11621,13 @@ export interface Appeal {
 	caseOfficer?: string | null;
 	/** @format uuid */
 	inspector?: string | null;
-	id?: number | null;
-	name?: string | null;
-	/** @format email */
-	email?: string | null;
+	assignedTeamId?: number | null;
+	assignedTeam?: {
+		id?: number | null;
+		name?: string | null;
+		/** @format email */
+		email?: string | null;
+	};
 	allocation?: {
 		level: string;
 		band: number;

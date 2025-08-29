@@ -476,6 +476,22 @@ const getAppealsWithCompletedEvents = () =>
 		include: appealDetailsInclude
 	});
 
+/**
+ * @param {number} id
+ * @param {number|null} assignedTeamId
+ * @returns {PrismaPromise<import('#db-client').Appeal>}
+ */
+const setAssignedTeamId = (id, assignedTeamId) => {
+	return databaseConnector.appeal.update({
+		data: {
+			assignedTeamId
+		},
+		where: {
+			id
+		}
+	});
+};
+
 export default {
 	getLinkedAppeals,
 	getAppealById,
@@ -489,5 +505,6 @@ export default {
 	linkAppeal,
 	unlinkAppeal,
 	getAppealsByIds,
-	getAppealsWithCompletedEvents
+	getAppealsWithCompletedEvents,
+	setAssignedTeamId
 };
