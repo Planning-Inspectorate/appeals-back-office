@@ -1,6 +1,7 @@
 import logger from '#lib/logger.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { selectProcedurePage } from './change-procedure-selection.mapper.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getSelectProcedure = async (request, response) => {
@@ -15,14 +16,14 @@ export const getSelectProcedure = async (request, response) => {
 const renderSelectProcedure = async (request, response) => {
 	const {
 		currentAppeal: { appealReference },
-		session,
+		session: { changeProcedureType },
 		errors
 	} = request;
 
 	const mappedPageContent = selectProcedurePage(
 		appealReference,
 		request.query?.backUrl ? String(request.query?.backUrl) : '/',
-		session.appealProcedure,
+		changeProcedureType.appealProcedure,
 		errors ? errors['appealProcedure']?.msg : undefined
 	);
 
@@ -41,7 +42,7 @@ export const postChangeSelectProcedure = async (request, response) => {
 	try {
 		const {
 			errors,
-			session,
+			session: { changeProcedureType },
 			body: { appealProcedure },
 			params: { appealId }
 		} = request;
@@ -51,11 +52,18 @@ export const postChangeSelectProcedure = async (request, response) => {
 		}
 
 		if (
-			session.existingAppealProcedure.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN &&
-			appealProcedure === APPEAL_CASE_PROCEDURE.WRITTEN
+			(changeProcedureType.existingAppealProcedure.toLowerCase() ===
+				APPEAL_CASE_PROCEDURE.WRITTEN &&
+				appealProcedure === APPEAL_CASE_PROCEDURE.WRITTEN) ||
+			(changeProcedureType.existingAppealProcedure.toLowerCase() ===
+				APPEAL_CASE_PROCEDURE.WRITTEN &&
+				appealProcedure === APPEAL_CASE_PROCEDURE.HEARING)
 		) {
 			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/change-timetable`
+				preserveQueryString(
+					request,
+					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/change-timetable`
+				)
 			);
 		}
 
