@@ -1,12 +1,18 @@
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import {
-	getAppealTimetableTypes,
-	getTimetableTypeText
-} from '#appeals/appeal-details/timetable/timetable.mapper.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { appealProcedureToLabelText } from './check-and-confirm.mapper.js';
+import { getTimetableTypes } from '../change-appeal-timetable/change-appeal-timetable.mapper.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { getTimetableTypeText } from '#appeals/appeal-details/timetable/timetable.mapper.js';
+
+/**
+ * @typedef {import('../change-appeal-procedure-type.controller.js').AppealTimetable} AppealTimetable
+ */
+/**
+ * @typedef {import('../change-appeal-procedure-type.controller.js').ChangeProcedureType} ChangeProcedureTypeSession
+ */
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -20,15 +26,22 @@ export const getCheckAndConfirm = async (request, response) => {
 		params: { appealId }
 	} = request;
 
-	if (!objectContainsAllKeys(session, 'appealTimetable')) {
+	/** @type {ChangeProcedureTypeSession} */
+	const changeProcedureTypeSession = session.changeProcedureType;
+
+	if (!objectContainsAllKeys(changeProcedureTypeSession, 'appealTimetable')) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const appealTimetables = session.appealTimetable;
+	const appealTimetables = changeProcedureTypeSession.appealTimetable;
 
 	const { appellantCase } = request.locals;
 
-	const timeTableTypes = getAppealTimetableTypes(currentAppeal, appellantCase);
+	const timeTableTypes = getTimetableTypes(
+		currentAppeal.appealType,
+		appellantCase.planningObligation?.hasObligation,
+		changeProcedureTypeSession.appealProcedure
+	);
 
 	/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} */
 	let timetableResponses = {};
@@ -42,7 +55,7 @@ export const getCheckAndConfirm = async (request, response) => {
 					textSummaryListItem({
 						id: 'appeal-procedure',
 						text: 'Appeal procedure',
-						value: appealProcedureToLabelText(session.appealProcedure),
+						value: appealProcedureToLabelText(changeProcedureTypeSession.appealProcedure),
 						link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/change-selected-procedure-type`,
 						editable: true
 					})?.display.summaryListItem
@@ -75,6 +88,34 @@ export const getCheckAndConfirm = async (request, response) => {
 		}
 	});
 
+	/** @type {PageComponent[]} */
+	const afterParams = [];
+	if (
+		changeProcedureTypeSession.existingAppealProcedure === APPEAL_CASE_PROCEDURE.HEARING &&
+		changeProcedureTypeSession.appealProcedure !== APPEAL_CASE_PROCEDURE.HEARING
+	) {
+		afterParams.push(
+			simpleHtmlComponent(
+				'p',
+				{ class: 'govuk-body' },
+				`We’ll send an email to the appellant and LPA to tell them that:`
+			),
+			simpleHtmlComponent('li', { class: 'govuk-body' }, `we've changed the procedure`),
+			simpleHtmlComponent('li', { class: 'govuk-body' }, `we've cancelled the hearing`)
+		);
+	} else if (
+		changeProcedureTypeSession.existingAppealProcedure !==
+		changeProcedureTypeSession.appealProcedure
+	) {
+		afterParams.push(
+			simpleHtmlComponent(
+				'p',
+				{ class: 'govuk-body' },
+				`We’ll send an email to the appellant and LPA to tell them that we've changed the procedure.`
+			)
+		);
+	}
+
 	return renderCheckYourAnswersComponent(
 		{
 			title: 'Check details and update appeal procedure',
@@ -84,15 +125,7 @@ export const getCheckAndConfirm = async (request, response) => {
 			submitButtonText: 'Update appeal procedure',
 			before: responses,
 			responses: timetableResponses,
-			after: [
-				simpleHtmlComponent(
-					'p',
-					{ class: 'govuk-body' },
-					`We’ll send an email to the appellant and LPA to tell them that:`
-				),
-				simpleHtmlComponent('li', { class: 'govuk-body' }, `we've changed the procedure`),
-				simpleHtmlComponent('li', { class: 'govuk-body' }, `we've cancelled the hearing`)
-			]
+			after: afterParams
 		},
 		response,
 		errors
