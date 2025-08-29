@@ -40,6 +40,7 @@ describe('Issue decision', () => {
 				happyPathHelper.issueDecision(caseRef, issueDecision);
 
 				//Case details
+				caseDetailsPage.checkDecisionOutcome(`Decision: ${issueDecision}`);
 				caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
 				caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
 				caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
@@ -131,7 +132,7 @@ describe('Invalid decision', () => {
 			});
 
 			//Issue invalid decision
-			happyPathHelper.issueInvalidDecision(caseRef);
+			happyPathHelper.issueDecision(caseRef, 'Invalid');
 
 			//Case details inset text
 			caseDetailsPage.checkDecisionOutcome('Decision: Invalid');
