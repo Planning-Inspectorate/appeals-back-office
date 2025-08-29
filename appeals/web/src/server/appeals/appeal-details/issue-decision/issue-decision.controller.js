@@ -24,6 +24,7 @@ import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-uplo
 import { createNewDocument } from '#app/components/file-uploader.component.js';
 import { getOriginalAndLatestLetterDatesObject, getTodaysISOString } from '#lib/dates.js';
 import {
+	CASE_OUTCOME_INVALID,
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_INSPECTOR
 } from '@pins/appeals/constants/support.js';
@@ -116,7 +117,7 @@ export const postIssueDecision = async (request, response) => {
 		};
 	}
 
-	if (session.inspectorDecision.outcome === 'Invalid') {
+	if (session.inspectorDecision.outcome === CASE_OUTCOME_INVALID) {
 		const {
 			appellantHasAppliedForCosts,
 			lpaHasAppliedForCosts,
