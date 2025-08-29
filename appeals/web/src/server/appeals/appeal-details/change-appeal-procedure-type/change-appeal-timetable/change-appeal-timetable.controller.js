@@ -20,7 +20,7 @@ const renderChangeAppealTimetable = async (request, response) => {
 		locals: { appellantCase }
 	} = request;
 	const mappedPageContent = mapChangeTimetablePage(
-		session.appealTimetable,
+		session.changeProcedureType,
 		currentAppeal,
 		appellantCase,
 		request.body,

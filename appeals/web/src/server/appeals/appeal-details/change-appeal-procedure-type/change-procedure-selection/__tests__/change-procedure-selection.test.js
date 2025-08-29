@@ -196,4 +196,61 @@ describe('Change procedure type', () => {
 			);
 		});
 	});
+
+	describe('POST /change-appeal-procedure-type/change-selected-procedure-type Written to Hearing', () => {
+		it('should re-render the select procedure page with the expected error message if no radio option was selected', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request
+				.post(
+					'/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type'
+				)
+				.send({});
+
+			expect(response.statusCode).toBe(200);
+
+			const html = parseHtml(response.text).innerHTML;
+
+			expect(html).toMatchSnapshot();
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).toContain('Appeal procedure</h1>');
+
+			const unprettifiedErrorSummaryHtml = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '.govuk-error-summary'
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHtml).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHtml).toContain('Select the appeal procedure</a>');
+		});
+
+		it('should redirect to the timetable due page if a existing procedure is Written and change to Hearing', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request
+				.post(
+					'/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type'
+				)
+				.send({
+					appealProcedure: 'hearing'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-procedure-type/change-timetable'
+			);
+		});
+	});
 });
