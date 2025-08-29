@@ -701,6 +701,71 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/case-team": {
+			"patch": {
+				"tags": ["Case Team"],
+				"description": "Updates case team members for a single appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Updates the assignedTeaId by appeal id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateAsssignedTeamResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/UpdateAsssignedTeamResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal details to update",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateAsssignedTeamRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateAsssignedTeamRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/case-submission": {
 			"post": {
 				"tags": ["Integration"],
@@ -7854,6 +7919,26 @@
 					"name": "AppealTypes"
 				}
 			},
+			"CaseTeam": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "number",
+						"example": 1
+					},
+					"name": {
+						"type": "string",
+						"example": "Ops Test"
+					},
+					"email": {
+						"type": "string",
+						"example": "opstest@email.com"
+					}
+				},
+				"xml": {
+					"name": "CaseTeam"
+				}
+			},
 			"CaseTeams": {
 				"type": "array",
 				"items": {
@@ -11344,6 +11429,18 @@
 					"name": "LPAChangeRequest"
 				}
 			},
+			"UpdateAsssignedTeamResponse": {
+				"type": "object",
+				"properties": {
+					"teamId": {
+						"type": "number",
+						"example": 1
+					}
+				},
+				"xml": {
+					"name": "UpdateAsssignedTeamResponse"
+				}
+			},
 			"SingleLinkableAppealSummaryResponse": {
 				"type": "object",
 				"properties": {
@@ -12097,6 +12194,15 @@
 					"status": {
 						"type": "string",
 						"example": "event"
+					}
+				}
+			},
+			"UpdateAsssignedTeamRequest": {
+				"type": "object",
+				"properties": {
+					"teamId": {
+						"type": "string",
+						"example": "1"
 					}
 				}
 			},
@@ -27769,18 +27875,28 @@
 						"format": "uuid",
 						"nullable": true
 					},
-					"id": {
-						"type": "Number",
+					"assignedTeamId": {
+						"type": "number",
 						"nullable": true
 					},
-					"name": {
-						"type": "string",
-						"nullable": true
-					},
-					"email": {
-						"type": "string",
-						"format": "email",
-						"nullable": true
+					"assignedTeam": {
+						"type": "object",
+						"required": [],
+						"properties": {
+							"id": {
+								"type": "Number",
+								"nullable": true
+							},
+							"name": {
+								"type": "string",
+								"nullable": true
+							},
+							"email": {
+								"type": "string",
+								"format": "email",
+								"nullable": true
+							}
+						}
 					},
 					"allocation": {
 						"type": "object",
