@@ -15,14 +15,17 @@ export const getSelectProcedure = async (request, response) => {
 const renderSelectProcedure = async (request, response) => {
 	const {
 		currentAppeal: { appealReference },
-		session,
+		params: { appealId },
+		session: { changeProcedureType },
 		errors
 	} = request;
 
 	const mappedPageContent = selectProcedurePage(
 		appealReference,
-		request.query?.backUrl ? String(request.query?.backUrl) : '/',
-		session.appealProcedure,
+		request.query?.backUrl
+			? String(request.query?.backUrl)
+			: `/appeals-service/appeal-details/${appealId}`,
+		changeProcedureType.appealProcedure,
 		errors ? errors['appealProcedure']?.msg : undefined
 	);
 
@@ -41,7 +44,6 @@ export const postChangeSelectProcedure = async (request, response) => {
 	try {
 		const {
 			errors,
-			session,
 			body: { appealProcedure },
 			params: { appealId }
 		} = request;
@@ -51,15 +53,15 @@ export const postChangeSelectProcedure = async (request, response) => {
 		}
 
 		if (
-			session.existingAppealProcedure.toLowerCase() === APPEAL_CASE_PROCEDURE.WRITTEN &&
-			appealProcedure === APPEAL_CASE_PROCEDURE.WRITTEN
+			appealProcedure === APPEAL_CASE_PROCEDURE.WRITTEN ||
+			appealProcedure === APPEAL_CASE_PROCEDURE.HEARING
 		) {
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/change-timetable`
 			);
 		}
 
-		return response.redirect('');
+		return response.status(404).render('app/404.njk');
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
