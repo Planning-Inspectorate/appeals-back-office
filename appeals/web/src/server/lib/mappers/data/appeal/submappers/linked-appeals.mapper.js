@@ -1,9 +1,9 @@
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { permissionNames } from '#environment/permissions.js';
 import config from '#environment/config.js';
+import { permissionNames } from '#environment/permissions.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { mapActionComponent } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal

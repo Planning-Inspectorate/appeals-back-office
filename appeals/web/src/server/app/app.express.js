@@ -1,5 +1,5 @@
-import { installRequestLocalsMiddleware } from '@pins/express';
 import config from '@pins/appeals.web/environment/config.js';
+import { installRequestLocalsMiddleware } from '@pins/express';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
@@ -7,6 +7,7 @@ import cors from 'cors';
 import express from 'express';
 import requestID from 'express-request-id';
 import helmet from 'helmet';
+import crypto from 'node:crypto';
 import responseTime from 'response-time';
 import serveStatic from 'serve-static';
 import pino from '../lib/logger.js';
@@ -15,7 +16,6 @@ import appRouter from './app.router.js';
 import locals from './config/locals.js';
 import nunjucksEnvironment from './config/nunjucks.js';
 import session from './config/session.js';
-import crypto from 'node:crypto';
 
 // Create a new Express app.
 const app = express();

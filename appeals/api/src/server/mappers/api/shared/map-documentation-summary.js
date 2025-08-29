@@ -1,4 +1,3 @@
-import { countBy, maxBy } from 'lodash-es';
 import {
 	formatAppellantCaseDocumentationStatus,
 	formatLpaQuestionnaireDocumentationStatus
@@ -9,6 +8,7 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 import isFPA from '@pins/appeals/utils/is-fpa.js';
+import { countBy, maxBy } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Api.DocumentationSummary} DocumentationSummary */

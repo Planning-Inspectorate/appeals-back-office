@@ -1,10 +1,10 @@
+import {
+	createDateInputDateInPastOrTodayValidator,
+	createDateInputDateValidityValidator,
+	createDateInputFieldsValidator
+} from '#lib/validators/date-input.validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import {
-	createDateInputFieldsValidator,
-	createDateInputDateValidityValidator,
-	createDateInputDateInPastOrTodayValidator
-} from '#lib/validators/date-input.validator.js';
 
 export const validateWithdrawalRequestDate = createValidator(
 	body('withdrawal-request-date')

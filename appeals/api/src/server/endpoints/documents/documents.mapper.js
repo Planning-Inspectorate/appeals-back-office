@@ -1,6 +1,6 @@
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
-import { formatFolder } from './documents.formatter.js';
 import { randomUUID } from 'node:crypto';
+import { formatFolder } from './documents.formatter.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Folder} Folder */
 /** @typedef {import('@pins/appeals/index.js').MappedDocument} MappedDocument */

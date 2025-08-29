@@ -1,11 +1,11 @@
 ﻿// @ts-nocheck
 /// <reference types="cypress"/>
 
+import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 import { users } from '../../fixtures/users';
+import { AppellantCasePage } from '../../page_objects/caseDetails/appellantCasePage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
-import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
-import { AppellantCasePage } from '../../page_objects/caseDetails/appellantCasePage';
 
 const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();

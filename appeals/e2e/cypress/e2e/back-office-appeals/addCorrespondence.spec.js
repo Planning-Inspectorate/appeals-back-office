@@ -3,9 +3,8 @@
 
 import { users } from '../../fixtures/users.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { ListCasesPage } from '../../page_objects/listCasesPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection.js';
-import { urlPaths } from '../../support/urlPaths.js';
+import { ListCasesPage } from '../../page_objects/listCasesPage.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 
 const listCasesPage = new ListCasesPage();

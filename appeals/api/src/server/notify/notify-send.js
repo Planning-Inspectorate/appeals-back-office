@@ -1,18 +1,18 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
 import config from '#config/config.js';
+import { emulateSendEmail, generateNotifyPreview } from '#notify/emulate-notify.js';
+import logger from '#utils/logger.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
+	AUDIT_TRAIL_SYSTEM_UUID,
 	ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOTIFICATION_PERSONALISATION
 } from '@pins/appeals/constants/support.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { emulateSendEmail, generateNotifyPreview } from '#notify/emulate-notify.js';
-import logger from '#utils/logger.js';
-import nunjucks from 'nunjucks';
 import { EOL } from 'node:os';
-import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
+import nunjucks from 'nunjucks';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory

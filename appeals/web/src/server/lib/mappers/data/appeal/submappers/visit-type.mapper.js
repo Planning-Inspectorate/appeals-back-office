@@ -1,6 +1,5 @@
 import { permissionNames } from '#environment/permissions.js';
-import { textSummaryListItem } from '#lib/mappers/index.js';
-import { userHasPermission } from '#lib/mappers/index.js';
+import { textSummaryListItem, userHasPermission } from '#lib/mappers/index.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */

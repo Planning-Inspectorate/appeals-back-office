@@ -1,16 +1,16 @@
 // @ts-nocheck
-import { request } from '../../../app-test.js';
-import { jest } from '@jest/globals';
-import { azureAdUserId } from '#tests/shared/mocks.js';
 import {
-	householdAppeal,
 	casPlanningAppeal,
 	fullPlanningAppeal,
+	householdAppeal,
 	listedBuildingAppeal
 } from '#tests/appeals/mocks.js';
 import { documentCreated } from '#tests/documents/mocks.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import { jest } from '@jest/globals';
 import { ERROR_CANNOT_BE_EMPTY_STRING } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { request } from '../../../app-test.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 

@@ -1,10 +1,9 @@
 import { mapRepresentationEntity } from '#mappers/integration/map-representation-entity.js';
 import {
-	APPEAL_REPRESENTATION_TYPE,
-	APPEAL_REPRESENTATION_STATUS
+	APPEAL_REPRESENTATION_STATUS,
+	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
-import { schemas } from '../integrations.validators.js';
-import { validateFromSchema } from '../integrations.validators.js';
+import { schemas, validateFromSchema } from '../integrations.validators.js';
 
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealRepresentation} AppealRepresentation */
 

@@ -1,3 +1,4 @@
+import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
@@ -5,7 +6,6 @@ import { HTTPError } from 'got';
 import { getAppellantCaseFromAppealId } from '../appellant-case.service.js';
 import { changeApplicationSubmissionDatePage } from './application-submission-date.mapper.js';
 import { changeApplicationSubmissionDate } from './application-submission-date.service.js';
-import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

@@ -1,12 +1,12 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import * as controller from './integrations.controller.js';
 import {
 	validateAppellantCase,
-	validateLpaQuestionnaire,
 	validateCaseType,
+	validateLpaQuestionnaire,
 	validateRepresentation
 } from './integrations.middleware.js';
-import * as controller from './integrations.controller.js';
 
 const router = createRouter();
 

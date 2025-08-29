@@ -1,12 +1,12 @@
+import { ensureArray } from '#lib/array-utilities.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { ensureArray } from '#lib/array-utilities.js';
+import * as lpaQuestionnaireService from '../lpa-questionnaire.service.js';
 import { changeNotificationMethodsPage } from './notification-methods.mapper.js';
 import {
-	getLpaNotificationMethods,
-	changeNotificationMethods
+	changeNotificationMethods,
+	getLpaNotificationMethods
 } from './notification-methods.service.js';
-import * as lpaQuestionnaireService from '../lpa-questionnaire.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

@@ -1,15 +1,15 @@
 import * as api from '#lib/api/allocation-details.api.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 import { render } from '../../common/render.js';
-import { redactLpaStatementPage, redactConfirmPage } from './redact.mapper.js';
 import { redactAndAccept } from '../../representations.service.js';
 import {
 	allocationCheckPage,
 	allocationLevelPage,
 	allocationSpecialismsPage
 } from '../allocation/allocation.mapper.js';
-import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
+import { redactConfirmPage, redactLpaStatementPage } from './redact.mapper.js';
 
 export const renderRedact = render(redactLpaStatementPage, 'patterns/display-page.pattern.njk');
 

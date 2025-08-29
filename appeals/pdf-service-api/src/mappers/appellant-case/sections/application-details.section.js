@@ -1,5 +1,5 @@
-import { formatSentenceCase, formatYesNo } from '../../../lib/nunjucks-filters/index.js';
 import { formatDate } from '../../../lib/nunjucks-filters/format-date.js';
+import { formatSentenceCase, formatYesNo } from '../../../lib/nunjucks-filters/index.js';
 
 export function applicationDetailsSection(templateData) {
 	const {

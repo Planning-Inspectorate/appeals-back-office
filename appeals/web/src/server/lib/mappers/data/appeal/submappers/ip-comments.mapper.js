@@ -1,11 +1,11 @@
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import {
-	dateISOStringToDisplayDate,
 	dateISOStringToDayMonthYearHourMinute,
+	dateISOStringToDisplayDate,
 	dateIsInThePast
 } from '#lib/dates.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapIpComments = ({ appealDetails, currentRoute, request }) => {

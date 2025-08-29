@@ -1,4 +1,3 @@
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
 	getAppealTimetableTypes,
 	getTimetableTypeText
@@ -6,6 +5,7 @@ import {
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { appealProcedureToLabelText } from './check-and-confirm.mapper.js';
 
 /**

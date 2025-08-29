@@ -1,14 +1,14 @@
-import { composeMiddleware } from '@pins/express';
-import { body } from 'express-validator';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
-import { intersection } from 'lodash-es';
+import commonRepository from '#repositories/common.repository.js';
 import {
 	ERROR_APPEAL_ALLOCATION_LEVELS,
 	ERROR_APPEAL_ALLOCATION_SPECIALISMS,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import commonRepository from '#repositories/common.repository.js';
+import { composeMiddleware } from '@pins/express';
+import { body } from 'express-validator';
+import { intersection } from 'lodash-es';
 import config from '../../config/config.js';
 
 export const getAllocationValidator = composeMiddleware(

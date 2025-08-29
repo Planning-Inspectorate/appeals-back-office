@@ -1,9 +1,9 @@
 import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
 import {
-	isValidRedactionStatus,
-	isValidVirusCheckStatus,
 	isValidDocumentType,
-	isValidStage
+	isValidRedactionStatus,
+	isValidStage,
+	isValidVirusCheckStatus
 } from '#utils/mapping/map-enums.js';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 

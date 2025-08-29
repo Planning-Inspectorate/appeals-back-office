@@ -1,20 +1,20 @@
+import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import {
+	addHorizonReferencePage,
+	appealTypePage,
+	changeAppealFinalDatePage,
+	checkTransferPage,
+	resubmitAppealPage
+} from './change-appeal-type.mapper.js';
 import {
 	getAppealTypesFromId,
 	postAppealChangeRequest,
-	postAppealTransferRequest,
-	postAppealTransferConfirmation
+	postAppealTransferConfirmation,
+	postAppealTransferRequest
 } from './change-appeal-type.service.js';
-import {
-	appealTypePage,
-	changeAppealFinalDatePage,
-	resubmitAppealPage,
-	addHorizonReferencePage,
-	checkTransferPage
-} from './change-appeal-type.mapper.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

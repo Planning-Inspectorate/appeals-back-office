@@ -1,6 +1,6 @@
-import { userHasPermission } from '#lib/mappers/utils/permissions.mapper.js';
-import { documentSummaryListItem } from '#lib/mappers/components/instructions/document.js';
 import { permissionNames } from '#environment/permissions.js';
+import { documentSummaryListItem } from '#lib/mappers/components/instructions/document.js';
+import { userHasPermission } from '#lib/mappers/utils/permissions.mapper.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapMainPartyCorrespondence = ({ appealDetails, currentRoute, session }) =>

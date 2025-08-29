@@ -1,22 +1,23 @@
-import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
-import { notifySend } from '#notify/notify-send.js';
-import { ERROR_NO_RECIPIENT_EMAIL } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/date-formatter.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { EventType } from '@pins/event-client';
-import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
+import { notifySend } from '#notify/notify-send.js';
+import inquiryRepository from '#repositories/inquiry.repository.js';
+import transitionState from '#state/transition-state.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import { EVENT_TYPE, PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
+import {
+	AUDIT_TRAIL_SYSTEM_UUID,
+	ERROR_FAILED_TO_SAVE_DATA,
+	ERROR_NO_RECIPIENT_EMAIL,
+	ERROR_NOT_FOUND
+} from '@pins/appeals/constants/support.js';
 import {
 	recalculateDateIfNotBusinessDay,
 	setTimeInTimeZone
 } from '@pins/appeals/utils/business-days.js';
-import { PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
-import transitionState from '#state/transition-state.js';
-import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
+import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/date-formatter.js';
+import { EventType } from '@pins/event-client';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
-import inquiryRepository from '#repositories/inquiry.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */
@@ -250,4 +251,4 @@ const updateInquiry = async (updateInquiryData, appeal) => {
 	}
 };
 
-export { createInquiry, checkInquiryExists, updateInquiry };
+export { checkInquiryExists, createInquiry, updateInquiry };

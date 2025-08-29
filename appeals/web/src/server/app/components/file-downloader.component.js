@@ -1,15 +1,15 @@
-import archiver from 'archiver';
-import { BlobServiceClient } from '@azure/storage-blob';
-import { BlobStorageClient } from '@pins/blob-storage-client';
-import getActiveDirectoryAccessToken from '../../lib/active-directory-token.js';
-import config from '@pins/appeals.web/environment/config.js';
-import {
-	getFileInfo,
-	getFileVersionsInfo,
-	getAllCaseFolders
-} from '#appeals/appeal-documents/appeal.documents.service.js';
-import { APPEAL_CASE_STAGE, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import { generateAllPdfs } from '#app/components/download-all-generated-pdfs.component.js';
+import {
+	getAllCaseFolders,
+	getFileInfo,
+	getFileVersionsInfo
+} from '#appeals/appeal-documents/appeal.documents.service.js';
+import { BlobServiceClient } from '@azure/storage-blob';
+import config from '@pins/appeals.web/environment/config.js';
+import { BlobStorageClient } from '@pins/blob-storage-client';
+import { APPEAL_CASE_STAGE, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
+import archiver from 'archiver';
+import getActiveDirectoryAccessToken from '../../lib/active-directory-token.js';
 
 /** @typedef {import('../auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.d.ts').WebAppeal} WebAppeal */

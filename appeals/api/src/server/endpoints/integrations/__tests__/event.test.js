@@ -1,11 +1,11 @@
 // @ts-nocheck
-import { broadcastEvent } from '../integrations.broadcasters/event.js'; // adjust path if needed
-import { databaseConnector } from '#utils/database-connector.js';
+import config from '#config/config.js';
 import { eventClient } from '#infrastructure/event-client.js';
+import { databaseConnector } from '#utils/database-connector.js';
+import { jest } from '@jest/globals';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import { EventType } from '@pins/event-client';
-import { jest } from '@jest/globals';
-import config from '#config/config.js';
+import { broadcastEvent } from '../integrations.broadcasters/event.js'; // adjust path if needed
 
 // Mocks
 jest.mock('#utils/database-connector.js', () => ({

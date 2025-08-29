@@ -1,7 +1,7 @@
-import { getSkipValue } from '#utils/database-pagination.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { getSkipValue } from '#utils/database-pagination.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  * @typedef {Awaited<ReturnType<getAllAppeals>>} DBAppeals

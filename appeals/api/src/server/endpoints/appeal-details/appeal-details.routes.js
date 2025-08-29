@@ -1,15 +1,15 @@
-import { Router as createRouter } from 'express';
+import {
+	checkAppealExistsByCaseReferenceAndAddToRequest,
+	checkAppealExistsByIdAndAddToRequest
+} from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import { controller } from './appeal-details.controller.js';
 import {
 	getAppealRefValidator,
 	getAppealValidator,
 	patchAppealValidator
 } from './appeal-details.validators.js';
-import {
-	checkAppealExistsByIdAndAddToRequest,
-	checkAppealExistsByCaseReferenceAndAddToRequest
-} from '#middleware/check-appeal-exists-and-add-to-request.js';
 
 const router = createRouter();
 

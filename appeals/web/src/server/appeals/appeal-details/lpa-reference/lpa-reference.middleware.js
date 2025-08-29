@@ -1,6 +1,6 @@
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { permissionNames } from '#environment/permissions.js';
 import { userHasPermission } from '#lib/mappers/index.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 /**
  * @type {import("express").RequestHandler}
  * @returns {Promise<object|void>}§

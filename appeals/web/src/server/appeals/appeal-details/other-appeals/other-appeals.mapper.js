@@ -1,8 +1,8 @@
-import { addressToString } from '#lib/address-formatter.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
+import { addressToString } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { generateHorizonAppealUrl } from '#lib/display-page-formatter.js';
+import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal

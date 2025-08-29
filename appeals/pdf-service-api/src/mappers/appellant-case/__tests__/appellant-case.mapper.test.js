@@ -1,5 +1,5 @@
-import mapAppellantCaseData from '../appellant-case.mapper.js';
 import mockAppellantCaseData from '../../../mocks/mock-appellant-case-data.json';
+import mapAppellantCaseData from '../appellant-case.mapper.js';
 
 describe('mapAppellantCaseData', () => {
 	it('should map appellant case data', () => {

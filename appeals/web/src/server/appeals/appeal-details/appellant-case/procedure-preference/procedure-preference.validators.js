@@ -1,6 +1,6 @@
-import { createValidator } from '@pins/express';
-import { createTextareaOptionalValidator } from '#lib/validators/textarea-validator.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { createTextareaOptionalValidator } from '#lib/validators/textarea-validator.js';
+import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 
 export const validateProcedurePreferenceDetails = createTextareaOptionalValidator(

@@ -1,17 +1,17 @@
-import logger from '#lib/logger.js';
-import * as siteVisitService from './site-visit.service.js';
-import {
-	scheduleOrManageSiteVisitPage,
-	scheduleOrManageSiteVisitConfirmationPage,
-	stringIsSiteVisitConfirmationPageType,
-	siteVisitBookedPage,
-	mapPostScheduleOrManageSiteVisitCommonParameters as mapPostScheduleOrManageSiteVisitToUpdateOrCreateSiteVisitParameters,
-	getSiteVisitSuccessBannerTypeAndChangeType,
-	setPreviousVisitTypeIfChanged
-} from './site-visit.mapper.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import usersService from '#appeals/appeal-users/users-service.js';
+import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import {
+	getSiteVisitSuccessBannerTypeAndChangeType,
+	mapPostScheduleOrManageSiteVisitCommonParameters as mapPostScheduleOrManageSiteVisitToUpdateOrCreateSiteVisitParameters,
+	scheduleOrManageSiteVisitConfirmationPage,
+	scheduleOrManageSiteVisitPage,
+	setPreviousVisitTypeIfChanged,
+	siteVisitBookedPage,
+	stringIsSiteVisitConfirmationPageType
+} from './site-visit.mapper.js';
+import * as siteVisitService from './site-visit.service.js';
 
 /**
  *

@@ -1,7 +1,7 @@
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
-import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 const maxAddressLength = textInputCharacterLimits.defaultAddressInputLength;
 
 export const createPostcodeValidator = (

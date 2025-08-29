@@ -1,6 +1,6 @@
-import { COMMENT_STATUS, APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
-import { reviewLpaStatementPage, viewLpaStatementPage } from './lpa-statement.mapper.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { APPEAL_REPRESENTATION_STATUS, COMMENT_STATUS } from '@pins/appeals/constants/common.js';
+import { reviewLpaStatementPage, viewLpaStatementPage } from './lpa-statement.mapper.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

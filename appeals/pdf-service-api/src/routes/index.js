@@ -1,7 +1,7 @@
 import express from 'express';
 import config from '../config.js';
-import logger from '../lib/logger.js';
 import { postGeneratePdfController } from '../controllers/pdf.js';
+import logger from '../lib/logger.js';
 
 const router = express.Router();
 

@@ -1,9 +1,9 @@
-import logger from '#lib/logger.js';
-import { redactFinalCommentPage, confirmRedactFinalCommentPage } from './redact.mapper.js';
 import { redactAndAccept } from '#appeals/appeal-details/representations/representations.service.js';
+import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
+import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
+import { confirmRedactFinalCommentPage, redactFinalCommentPage } from './redact.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getRedactFinalComment = async (request, response) => {

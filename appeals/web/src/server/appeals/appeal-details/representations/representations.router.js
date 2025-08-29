@@ -1,11 +1,11 @@
-import { Router } from 'express';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { Router } from 'express';
 import lpaStatementRouter from './lpa-statement/lpa-statement.router.js';
-import { withSingularRepresentation } from './representations.middleware.js';
 import {
-	renderShareRepresentations,
-	postShareRepresentations
+	postShareRepresentations,
+	renderShareRepresentations
 } from './representations.controller.js';
+import { withSingularRepresentation } from './representations.middleware.js';
 import { validateReadyToShare } from './representations.validators.js';
 
 const router = Router({ mergeParams: true });

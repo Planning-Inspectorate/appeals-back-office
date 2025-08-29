@@ -1,15 +1,15 @@
 // @ts-nocheck
+import { jest } from '@jest/globals';
+import { JSDOM } from 'jsdom';
 import {
 	generateOnClick,
-	setAreaText,
-	isHTMLTextAreaElement,
+	initRedactButtons,
 	isHTMLButtonElement,
 	isHTMLDivElement,
-	initRedactButtons,
-	SELECTORS
+	isHTMLTextAreaElement,
+	SELECTORS,
+	setAreaText
 } from '../index.js';
-import { JSDOM } from 'jsdom';
-import { jest } from '@jest/globals';
 
 const setupJSDOMGlobals = () => {
 	const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>', {});

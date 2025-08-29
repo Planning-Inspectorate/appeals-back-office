@@ -1,6 +1,6 @@
+import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { addApiClientToRequest } from '../add-apiclient-to-request.js';
-import { createTestEnvironment } from '#testing/index.js';
 
 const { installMockApi, teardown } = createTestEnvironment();
 

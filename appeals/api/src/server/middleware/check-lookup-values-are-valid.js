@@ -1,5 +1,5 @@
-import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import commonRepository from '#repositories/common.repository.js';
+import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express').NextFunction} NextFunction */
 /** @typedef {import('express').Response} Response */

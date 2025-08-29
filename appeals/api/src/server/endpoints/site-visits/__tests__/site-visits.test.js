@@ -1,9 +1,10 @@
 // @ts-nocheck
 import { jest } from '@jest/globals';
-import { request } from '../../../app-test.js';
 import {
+	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
 	AUDIT_TRAIL_SITE_VISIT_ARRANGED,
 	AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+	CASE_RELATIONSHIP_LINKED,
 	DEFAULT_DATE_FORMAT_AUDIT_TRAIL,
 	ERROR_INVALID_SITE_VISIT_TYPE,
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
@@ -12,28 +13,30 @@ import {
 	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCESS_REQUIRED,
 	ERROR_SITE_VISIT_REQUIRED_FIELDS_ACCOMPANIED,
 	ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME,
-	SITE_VISIT_TYPE_UNACCOMPANIED,
-	SITE_VISIT_TYPE_ACCOMPANIED,
 	SITE_VISIT_TYPE_ACCESS_REQUIRED,
-	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
-	CASE_RELATIONSHIP_LINKED
+	SITE_VISIT_TYPE_ACCOMPANIED,
+	SITE_VISIT_TYPE_UNACCOMPANIED
 } from '@pins/appeals/constants/support.js';
+import { request } from '../../../app-test.js';
 
-import { appealS78, householdAppeal as householdAppealData } from '#tests/appeals/mocks.js';
-import { casPlanningAppeal as casPlanningAppealData } from '#tests/appeals/mocks.js';
-import { fullPlanningAppeal as fullPlanningAppealData } from '#tests/appeals/mocks.js';
-import { listedBuildingAppeal as listedBuildingAppealData } from '#tests/appeals/mocks.js';
+import {
+	appealS78,
+	casPlanningAppeal as casPlanningAppealData,
+	fullPlanningAppeal as fullPlanningAppealData,
+	householdAppeal as householdAppealData,
+	listedBuildingAppeal as listedBuildingAppealData
+} from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { dateISOStringToDisplayDate, formatTime } from '@pins/appeals/utils/date-formatter.js';
 import { format, parseISO } from 'date-fns';
-import { formatTime, dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
-
-const { databaseConnector } = await import('../../../utils/database-connector.js');
+import { cloneDeep } from 'lodash-es';
 import {
 	fetchRescheduleTemplateIds,
 	fetchSiteVisitScheduleTemplateIds
 } from '../site-visits.service.js';
-import { cloneDeep } from 'lodash-es';
+
+const { databaseConnector } = await import('../../../utils/database-connector.js');
 
 describe('site visit routes', () => {
 	/** @type {typeof householdAppealData} */

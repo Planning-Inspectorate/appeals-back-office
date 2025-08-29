@@ -2,12 +2,10 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
-import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { AppellantCasePage } from '../../page_objects/caseDetails/appellantCasePage.js';
 import { LpaqPage } from '../../page_objects/caseDetails/lpaqPage.js';
-import { urlPaths } from '../../support/urlPaths';
-import { tag } from '../../support/tag';
+import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { horizonTestAppeals } from '../../support/horizonTestAppeals.js';
 

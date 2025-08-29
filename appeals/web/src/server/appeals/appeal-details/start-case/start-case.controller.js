@@ -1,19 +1,18 @@
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import featureFlags from '#common/feature-flags.js';
+import { dateISOStringToDisplayDate, getTodaysISOString } from '#lib/dates.js';
 import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import {
-	startCasePage,
 	changeDatePage,
+	confirmProcedurePage,
 	selectProcedurePage,
-	confirmProcedurePage
+	startCasePage
 } from './start-case.mapper.js';
 import * as startCaseService from './start-case.service.js';
-import { getTodaysISOString } from '#lib/dates.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import featureFlags from '#common/feature-flags.js';
-import { FEATURE_FLAG_NAMES, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
-import { recalculateDateIfNotBusinessDay } from '@pins/appeals/utils/business-days.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getStartDate = async (request, response) => {

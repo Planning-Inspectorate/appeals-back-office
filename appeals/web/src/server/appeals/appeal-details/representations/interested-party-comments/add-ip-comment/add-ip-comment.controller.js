@@ -1,11 +1,17 @@
 import { createNewDocument } from '#app/components/file-uploader.component.js';
 import { postDocumentUpload } from '#appeals/appeal-documents/appeal-documents.controller.js';
+import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
+import { clearEdits, editLink, getSessionValues } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
+import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
+import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
+import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
 import {
 	postDateSubmittedFactory,
 	postRedactionStatusFactory,
@@ -20,18 +26,12 @@ import { ipAddressPage } from '../interested-party-comments.mapper.js';
 import { getAttachmentsFolder } from '../interested-party-comments.service.js';
 import {
 	checkAddressPage,
+	dateSubmitted,
 	ipDetailsPage,
 	mapSessionToRepresentationRequest,
 	uploadPage
 } from './add-ip-comment.mapper.js';
 import { postRepresentationComment } from './add-ip-comment.service.js';
-import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
-import { dateSubmitted } from './add-ip-comment.mapper.js';
-import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
-import { preserveQueryString } from '#lib/url-utilities.js';
-import { clearEdits, editLink, getSessionValues } from '#lib/edit-utilities.js';
-import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */

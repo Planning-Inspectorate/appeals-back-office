@@ -1,12 +1,12 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import { startAppeal, updateAppealTimetableById } from './appeal-timetables.controller.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import { startAppeal, updateAppealTimetableById } from './appeal-timetables.controller.js';
+import { checkAppealTimetableExists } from './appeal-timetables.service.js';
 import {
 	createAppealTimetableValidator,
 	patchAppealTimetableValidator
 } from './appeal-timetables.validators.js';
-import { checkAppealTimetableExists } from './appeal-timetables.service.js';
 
 const router = createRouter();
 

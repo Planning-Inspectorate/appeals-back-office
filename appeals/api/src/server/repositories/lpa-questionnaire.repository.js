@@ -1,5 +1,5 @@
-import { databaseConnector } from '#utils/database-connector.js';
 import appealTimetablesRepository from '#repositories/appeal-timetable.repository.js';
+import { databaseConnector } from '#utils/database-connector.js';
 import commonRepository from './common.repository.js';
 
 /** @typedef {import('@pins/appeals.api').Api.LpaQuestionnaireUpdateRequest} LpaQuestionnaireUpdateRequest */

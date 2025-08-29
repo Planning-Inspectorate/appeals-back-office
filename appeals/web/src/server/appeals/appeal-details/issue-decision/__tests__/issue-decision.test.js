@@ -1,8 +1,4 @@
 // @ts-nocheck
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
 import {
 	appealData,
 	documentFileInfo,
@@ -11,7 +7,11 @@ import {
 	fileUploadInfo,
 	inspectorDecisionData
 } from '#testing/appeals/appeals.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
 import { cloneDeep } from 'lodash-es';
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

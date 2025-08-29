@@ -1,9 +1,9 @@
+import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import {
 	interestedPartyCommentsPage,
 	sharedIpCommentsPage
 } from './interested-party-comments.mapper.js';
 import * as interestedPartyCommentsService from './interested-party-comments.service.js';
-import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 
 /**
  *

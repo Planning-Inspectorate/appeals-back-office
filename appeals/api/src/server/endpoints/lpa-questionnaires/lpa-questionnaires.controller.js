@@ -1,15 +1,15 @@
-import * as CONSTANTS from '@pins/appeals/constants/support.js';
-import { updateLPAQuestionnaireValidationOutcome } from './lpa-questionnaires.service.js';
-import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
-import logger from '#utils/logger.js';
-import { appealDetailService } from '#endpoints/appeal-details/appeal-details.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { appealDetailService } from '#endpoints/appeal-details/appeal-details.service.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { camelToScreamingSnake } from '#utils/string-utils.js';
 import { contextEnum } from '#mappers/context-enum.js';
+import lpaQuestionnaireRepository from '#repositories/lpa-questionnaire.repository.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
 import { allLpaQuestionnaireOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
+import logger from '#utils/logger.js';
+import { camelToScreamingSnake } from '#utils/string-utils.js';
+import * as CONSTANTS from '@pins/appeals/constants/support.js';
+import { updateLPAQuestionnaireValidationOutcome } from './lpa-questionnaires.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

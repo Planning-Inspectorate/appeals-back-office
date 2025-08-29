@@ -1,13 +1,13 @@
-import { randomUUID } from 'node:crypto';
-import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
+import { APPEAL_CASE_STAGE, SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
+import { randomUUID } from 'node:crypto';
 import { mapAddressIn, mapNeighbouringAddressIn } from './address.mapper.js';
-import { mapDocumentIn } from './document.mapper.js';
-import { mapServiceUserIn } from './service-user.mapper.js';
-import { mapAppellantCaseIn } from './appellant-case.mapper.js';
-import { mapQuestionnaireIn } from './questionnaire.mapper.js';
 import { mapAppealTypeIn } from './appeal-type.mapper.js';
+import { mapAppellantCaseIn } from './appellant-case.mapper.js';
+import { mapDocumentIn } from './document.mapper.js';
+import { mapQuestionnaireIn } from './questionnaire.mapper.js';
 import { mapRepresentationIn } from './representation.mapper.js';
+import { mapServiceUserIn } from './service-user.mapper.js';
 
 import { renameDuplicateDocuments } from '#endpoints/integrations/integrations.utils.js';
 

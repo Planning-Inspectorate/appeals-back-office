@@ -1,6 +1,6 @@
+import { formatBulletedList } from './format-bulleted-list.js';
 import { formatList } from './format-list.js';
 import { formatSentenceCase } from './format-sentence-case.js';
-import { formatBulletedList } from './format-bulleted-list.js';
 
 export function formatYesNoDetails(details) {
 	if (!details || !details.length) {

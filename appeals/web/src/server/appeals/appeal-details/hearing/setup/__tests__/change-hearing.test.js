@@ -1,11 +1,11 @@
 // @ts-nocheck
 import { appealData } from '#testing/app/fixtures/referencedata.js';
+import { behavesLikeAddressForm } from '#testing/app/shared-examples/address-form.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
+import { omit } from 'lodash-es';
 import nock from 'nock';
 import supertest from 'supertest';
-import { behavesLikeAddressForm } from '#testing/app/shared-examples/address-form.js';
-import { omit } from 'lodash-es';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

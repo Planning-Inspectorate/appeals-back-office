@@ -1,6 +1,6 @@
 import { notifySend } from '#notify/notify-send.js';
-import { jest } from '@jest/globals';
 import { householdAppeal } from '#tests/appeals/mocks.js';
+import { jest } from '@jest/globals';
 
 describe('decision-is-allowed-split-dismissed-lpa.md', () => {
 	test('should call notify sendEmail with the correct data', async () => {

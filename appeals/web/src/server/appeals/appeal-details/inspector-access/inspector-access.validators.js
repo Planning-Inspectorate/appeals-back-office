@@ -1,6 +1,6 @@
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 
 const charLimitForTextarea = textInputCharacterLimits.defaultTextareaLength;
 

@@ -1,5 +1,5 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import * as controllers from './extra-conditions.controller.js';
 import * as validators from './extra-conditions.validator.js';
 

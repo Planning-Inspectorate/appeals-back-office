@@ -1,8 +1,8 @@
-import { Router as createRouter } from 'express';
+import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import * as controller from './change-appeal-type.controller.js';
 import * as validators from './change-appeal-type.validators.js';
-import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 
 const router = createRouter({ mergeParams: true });

@@ -1,12 +1,12 @@
-import { Router as createRouter } from 'express';
 import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
-import viewAndReviewProofOfEvidenceRouter from './view-and-review/view-and-review.router.js';
+import { Router as createRouter } from 'express';
+import manageDocumentsRouter from '../document-attachments/manage-documents.router.js';
+import acceptProofOfEvidenceRouter from './accept/accept.router.js';
 import {
 	getRepresentationAttachmentsFolder,
 	withSingularRepresentation
 } from './proof-of-evidence.middleware.js';
-import manageDocumentsRouter from '../document-attachments/manage-documents.router.js';
-import acceptProofOfEvidenceRouter from './accept/accept.router.js';
+import viewAndReviewProofOfEvidenceRouter from './view-and-review/view-and-review.router.js';
 
 const router = createRouter({ mergeParams: true });
 

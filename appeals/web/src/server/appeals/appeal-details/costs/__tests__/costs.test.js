@@ -1,30 +1,30 @@
 // @ts-nocheck
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
-import { jest } from '@jest/globals';
-import { createTestEnvironment } from '#testing/index.js';
+import usersService from '#appeals/appeal-users/users-service.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
+	activeDirectoryUsersData,
 	appealData,
 	costsFolderInfoAppellantApplication,
-	costsFolderInfoAppellantWithdrawal,
 	costsFolderInfoAppellantCorrespondence,
-	costsFolderInfoLpaApplication,
-	costsFolderInfoLpaWithdrawal,
-	costsFolderInfoLpaCorrespondence,
+	costsFolderInfoAppellantWithdrawal,
 	costsFolderInfoDecision,
+	costsFolderInfoLpaApplication,
+	costsFolderInfoLpaCorrespondence,
+	costsFolderInfoLpaWithdrawal,
 	documentFileInfo,
-	documentRedactionStatuses,
-	activeDirectoryUsersData,
 	documentFileVersionsInfo,
+	documentFileVersionsInfoChecked,
 	documentFileVersionsInfoNotChecked,
 	documentFileVersionsInfoVirusFound,
-	documentFileVersionsInfoChecked,
+	documentRedactionStatuses,
 	fileUploadInfo
 } from '#testing/app/fixtures/referencedata.js';
-import usersService from '#appeals/appeal-users/users-service.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
+import { parseHtml } from '@pins/platform';
 import { capitalize, cloneDeep, upperCase } from 'lodash-es';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

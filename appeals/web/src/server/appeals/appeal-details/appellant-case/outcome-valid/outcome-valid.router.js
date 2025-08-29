@@ -1,8 +1,8 @@
+import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
+import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './outcome-valid.controller.js';
 import * as validators from './outcome-valid.validators.js';
-import { asyncHandler } from '@pins/express';
-import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 
 const router = createRouter({ mergeParams: true });
 

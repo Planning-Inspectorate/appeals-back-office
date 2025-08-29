@@ -1,11 +1,11 @@
-import logger from '#lib/logger.js';
-import { appealShortReference } from '#lib/appeals-formatter.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
-import { nameToString } from '#lib/person-name-formatter.js';
-import { getAppealTypesFromId } from './change-appeal-type.service.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import logger from '#lib/logger.js';
 import { dateInput } from '#lib/mappers/index.js';
-import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
+import { nameToString } from '#lib/person-name-formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { getAppealTypesFromId } from './change-appeal-type.service.js';
+import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal

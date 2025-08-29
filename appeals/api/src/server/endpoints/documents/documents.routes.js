@@ -1,18 +1,18 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
 import { getAppealValidator } from '#endpoints/appeal-details/appeal-details.validators.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import * as controller from './documents.controller.js';
 import { validateDocumentAndAddToRequest } from './documents.middleware.js';
 import {
-	getFolderIdValidator,
 	getDocumentIdValidator,
 	getDocumentValidator,
 	getDocumentsValidator,
-	patchDocumentsValidator,
+	getFolderIdValidator,
 	patchDocumentFileNameValidator,
-	patchDocumentsAvCheckValidator
+	patchDocumentsAvCheckValidator,
+	patchDocumentsValidator
 } from './documents.validators.js';
-import * as controller from './documents.controller.js';
 
 const router = createRouter();
 

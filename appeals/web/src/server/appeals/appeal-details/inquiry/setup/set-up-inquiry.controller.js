@@ -1,21 +1,21 @@
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import {
-	inquiryDatePage,
-	addressDetailsPage,
-	addressKnownPage,
-	inquiryDueDatesPage,
-	confirmInquiryPage,
-	confirmChangeInquiryPage
-} from './set-up-inquiry.mapper.js';
-import { inquiryEstimationPage } from './set-up-inquiry.mapper.js';
-import { isEmpty, isEqual, pick } from 'lodash-es';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dayMonthYearHourMinuteToISOString,
 	getTodaysISOString
 } from '#lib/dates.js';
 import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { isEmpty, isEqual, pick } from 'lodash-es';
 import { createInquiry, updateInquiry } from './inquiry.service.js';
+import {
+	addressDetailsPage,
+	addressKnownPage,
+	confirmChangeInquiryPage,
+	confirmInquiryPage,
+	inquiryDatePage,
+	inquiryDueDatesPage,
+	inquiryEstimationPage
+} from './set-up-inquiry.mapper.js';
 
 /** @typedef {import('express').NextFunction} NextFunction */
 

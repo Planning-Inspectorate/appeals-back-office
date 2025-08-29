@@ -1,7 +1,7 @@
-import logger from '#lib/logger.js';
-import { confirmAcceptFinalCommentPage } from './accept.mapper.js';
 import { setRepresentationStatus } from '#appeals/appeal-details/representations/representations.service.js';
+import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { confirmAcceptFinalCommentPage } from './accept.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getAcceptFinalComment = async (request, response) => {

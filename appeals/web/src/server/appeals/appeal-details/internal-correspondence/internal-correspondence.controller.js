@@ -1,26 +1,26 @@
 import {
-	renderDocumentUpload,
-	postDocumentUpload,
-	renderDocumentDetails,
+	postChangeDocumentDetails,
+	postChangeDocumentFileName,
+	postDeleteDocument,
 	postDocumentDetails,
-	renderUploadDocumentsCheckAndConfirm,
+	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm,
 	postUploadDocumentVersionCheckAndConfirm,
-	renderManageFolder,
-	renderManageDocument,
 	renderChangeDocumentDetails,
-	postChangeDocumentDetails,
+	renderChangeDocumentFileName,
 	renderDeleteDocument,
-	postDeleteDocument,
-	postChangeDocumentFileName,
-	renderChangeDocumentFileName
+	renderDocumentDetails,
+	renderDocumentUpload,
+	renderManageDocument,
+	renderManageFolder,
+	renderUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { capitalize } from 'lodash-es';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { capitalize } from 'lodash-es';
 import { documentNameFromCategory } from './internal-correspondence.service.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */

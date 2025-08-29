@@ -1,6 +1,6 @@
+import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controllers from './site-area.controller.js';
-import { asyncHandler } from '@pins/express';
 import * as validators from './site-area.validators.js';
 
 const router = createRouter({ mergeParams: true });

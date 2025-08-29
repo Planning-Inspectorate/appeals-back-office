@@ -1,5 +1,5 @@
-import { DATABASE_ORDER_BY_ASC } from '@pins/appeals/constants/support.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import { DATABASE_ORDER_BY_ASC } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.DocumentRedactionStatus} DocumentRedactionStatus */
 /**

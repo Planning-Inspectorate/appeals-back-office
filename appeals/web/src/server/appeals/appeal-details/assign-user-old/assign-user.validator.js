@@ -1,6 +1,6 @@
+import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
 
 export const validateSearchTerm = createValidator(
 	body('searchTerm')

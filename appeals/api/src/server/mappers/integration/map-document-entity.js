@@ -1,15 +1,17 @@
 import { mapDate } from '#utils/mapping/map-dates.js';
 
+import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
+import { isValidAppealType, isValidVirusCheckStatus } from '#utils/mapping/map-enums.js';
+import {
+	APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE,
+	ODW_SYSTEM_ID
+} from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_ORIGIN,
 	APPEAL_REDACTED_STATUS
 } from '@planning-inspectorate/data-model';
-import { getAvScanStatus } from '#endpoints/documents/documents.service.js';
-import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
-import { isValidAppealType, isValidVirusCheckStatus } from '#utils/mapping/map-enums.js';
-import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Document & {appeal:Appeal}} DocumentWithAppeal */

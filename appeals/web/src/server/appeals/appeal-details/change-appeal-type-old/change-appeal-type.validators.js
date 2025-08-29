@@ -1,11 +1,11 @@
+import {
+	createDateInputDateBusinessDayValidator,
+	createDateInputDateInFutureValidator,
+	createDateInputDateValidityValidator,
+	createDateInputFieldsValidator
+} from '#lib/validators/date-input.validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import {
-	createDateInputFieldsValidator,
-	createDateInputDateValidityValidator,
-	createDateInputDateInFutureValidator,
-	createDateInputDateBusinessDayValidator
-} from '#lib/validators/date-input.validator.js';
 import { checkAppealReferenceExistsInHorizon } from './change-appeal-type.service.js';
 import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 // @ts-nocheck
 import { jest } from '@jest/globals';
-import { mockPost, mockGet } from '../../../test/utils/mocks';
+import { mockGet, mockPost } from '../../../test/utils/mocks';
 
 describe('routes/index', () => {
 	let routerIndex;

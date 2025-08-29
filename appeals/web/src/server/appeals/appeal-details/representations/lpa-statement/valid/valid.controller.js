@@ -1,13 +1,13 @@
 import * as api from '#lib/api/allocation-details.api.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { ensureArray } from '#lib/array-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { acceptRepresentation } from '../../representations.service.js';
 import {
 	allocationCheckPage,
 	allocationLevelPage,
 	allocationSpecialismsPage
 } from '../allocation/allocation.mapper.js';
 import { confirmPage } from './valid.mapper.js';
-import { acceptRepresentation } from '../../representations.service.js';
 
 /**
  *

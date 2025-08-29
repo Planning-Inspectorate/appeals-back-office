@@ -1,5 +1,5 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import { getAuditTrailById } from './audit-trails.controller.js';
 import { getAuditTrailValidator } from './audit-trails.validators.js';
 

@@ -1,8 +1,8 @@
 import { loadEnvironment } from '@pins/platform';
-import schema from './schema.js';
-import { baseConfigFromEnvironment } from './base-config.js';
-import url from 'url';
 import path from 'path';
+import url from 'url';
+import { baseConfigFromEnvironment } from './base-config.js';
+import schema from './schema.js';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const webDir = path.join(__dirname, '..'); // web package root, where .env files live

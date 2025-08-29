@@ -1,6 +1,6 @@
-import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
-import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */

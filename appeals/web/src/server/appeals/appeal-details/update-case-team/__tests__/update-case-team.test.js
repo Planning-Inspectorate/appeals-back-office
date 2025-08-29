@@ -1,9 +1,9 @@
 // @ts-nocheck
-import { parseHtml } from '@pins/platform';
-import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
-import nock from 'nock';
 import { caseTeams } from '#testing/app/fixtures/referencedata.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
+import nock from 'nock';
+import supertest from 'supertest';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal

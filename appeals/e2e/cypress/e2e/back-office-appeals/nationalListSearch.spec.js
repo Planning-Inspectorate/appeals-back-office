@@ -3,8 +3,8 @@
 
 import { users } from '../../fixtures/users';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
-import { urlPaths } from '../../support/urlPaths';
 import { tag } from '../../support/tag';
+import { urlPaths } from '../../support/urlPaths';
 
 const listCasesPage = new ListCasesPage();
 

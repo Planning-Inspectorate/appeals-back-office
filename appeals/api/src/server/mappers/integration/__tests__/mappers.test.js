@@ -1,6 +1,6 @@
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { findStatusDate } from '#utils/mapping/map-dates.js';
 import { isCaseInvalid } from '#utils/case-invalid.js';
+import { findStatusDate } from '#utils/mapping/map-dates.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { mapDesignatedSiteNames } from '../shared/s20s78/questionnaire-fields.js';
 
 describe('appeals generic mappers', () => {

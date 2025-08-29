@@ -1,22 +1,22 @@
-import { composeMiddleware } from '@pins/express';
-import { body } from 'express-validator';
+import validateDateParameter from '#common/validators/date-parameter.js';
+import { validateFileNameParameter } from '#common/validators/filename-parameter.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
-import validateUuidParameter from '#common/validators/uuid-parameter.js';
 import { validateStringParameter } from '#common/validators/string-parameter.js';
+import validateUuidParameter from '#common/validators/uuid-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	ERROR_DOCUMENT_AV_RESULT_STATUSES_MUST_BE_ONE_OF,
+	ERROR_DOCUMENT_REDACTION_STATUSES_MUST_BE_ONE_OF,
 	ERROR_MUST_BE_STRING,
 	ERROR_MUST_BE_UUID,
-	ERROR_MUST_CONTAIN_AT_LEAST_1_VALUE,
 	ERROR_MUST_BE_VALID_FILEINFO,
-	ERROR_DOCUMENT_REDACTION_STATUSES_MUST_BE_ONE_OF
+	ERROR_MUST_CONTAIN_AT_LEAST_1_VALUE
 } from '@pins/appeals/constants/support.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import validateDateParameter from '#common/validators/date-parameter.js';
-import { getDocumentRedactionStatusIds } from './documents.service.js';
+import { composeMiddleware } from '@pins/express';
 import { APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
-import { validateFileNameParameter } from '#common/validators/filename-parameter.js';
+import { body } from 'express-validator';
+import { getDocumentRedactionStatusIds } from './documents.service.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateDocumentsRequest} UpdateDocumentsRequest */
 /** @typedef {import('@pins/appeals.api').Api.UpdateDocumentsAvCheckRequest} UpdateDocumentsAvCheckRequest */
@@ -119,7 +119,7 @@ export {
 	getDocumentsValidator,
 	getDocumentValidator,
 	getFolderIdValidator,
-	patchDocumentsValidator,
 	patchDocumentFileNameValidator,
-	patchDocumentsAvCheckValidator
+	patchDocumentsAvCheckValidator,
+	patchDocumentsValidator
 };

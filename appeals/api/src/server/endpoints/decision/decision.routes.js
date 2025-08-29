@@ -1,14 +1,14 @@
-import { Router as createRouter } from 'express';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import { postInspectorDecision } from './decision.controller.js';
 import {
-	getOutcomeValidator,
 	getDateValidator,
-	getDocumentValidator,
 	getDecisionTypeValidator,
-	getDecisionsValidator
+	getDecisionsValidator,
+	getDocumentValidator,
+	getOutcomeValidator
 } from './decision.validator.js';
-import { asyncHandler } from '@pins/express';
 
 const router = createRouter();
 

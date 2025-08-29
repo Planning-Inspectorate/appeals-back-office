@@ -1,5 +1,5 @@
-import { createTextareaValidator } from '#lib/validators/textarea-validator.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { createTextareaValidator } from '#lib/validators/textarea-validator.js';
 
 export const validateCaseNoteTextArea = createTextareaValidator(
 	'comment',

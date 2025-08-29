@@ -1,23 +1,21 @@
-import appealRepository from '#repositories/appeal.repository.js';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { notifySend } from '#notify/notify-send.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
+import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
 	AUDIT_TRAIL_APPEAL_LINK_REMOVED,
 	AUDIT_TRAIL_APPEAL_RELATION_ADDED,
-	AUDIT_TRAIL_APPEAL_RELATION_REMOVED
-} from '@pins/appeals/constants/support.js';
-import { canLinkAppeals, checkAppealsStatusBeforeLPAQ } from './link-appeals.service.js';
-import {
+	AUDIT_TRAIL_APPEAL_RELATION_REMOVED,
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED,
 	ERROR_LINKING_APPEALS
 } from '@pins/appeals/constants/support.js';
-import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
-import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { notifySend } from '#notify/notify-send.js';
-import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { canLinkAppeals, checkAppealsStatusBeforeLPAQ } from './link-appeals.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

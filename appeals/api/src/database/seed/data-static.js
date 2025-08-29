@@ -1,12 +1,12 @@
-import {
-	APPEAL_CASE_TYPE,
-	APPEAL_CASE_PROCEDURE,
-	APPEAL_REDACTED_STATUS,
-	APPEAL_KNOWS_OTHER_OWNERS,
-	APPEAL_EVENT_TYPE
-} from '@planning-inspectorate/data-model';
 import { APPEAL_TYPE, APPEAL_TYPE_CHANGE_APPEALS } from '@pins/appeals/constants/common.js';
 import { FOLDERS } from '@pins/appeals/constants/documents.js';
+import {
+	APPEAL_CASE_PROCEDURE,
+	APPEAL_CASE_TYPE,
+	APPEAL_EVENT_TYPE,
+	APPEAL_KNOWS_OTHER_OWNERS,
+	APPEAL_REDACTED_STATUS
+} from '@planning-inspectorate/data-model';
 import { importListedBuildingsDataset } from './seed-listed-buildings.js';
 /**
  * Static data required by the back-office service

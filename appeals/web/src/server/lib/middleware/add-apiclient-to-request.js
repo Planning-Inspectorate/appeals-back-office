@@ -1,8 +1,8 @@
-import { createHttpLoggerHooks, createHttpRetryParams } from '@pins/platform';
 import config from '@pins/appeals.web/environment/config.js';
+import { createHttpLoggerHooks, createHttpRetryParams } from '@pins/platform';
 import got from 'got';
-import pino from '../logger.js';
 import * as authSession from '../../app/auth/auth-session.service.js';
+import pino from '../logger.js';
 
 const [requestLogger, responseLogger, retryLogger] = createHttpLoggerHooks(
 	pino,

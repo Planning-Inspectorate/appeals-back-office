@@ -1,19 +1,19 @@
-import { getPageCount } from '#utils/database-pagination.js';
-import { sortAppeals } from '#utils/appeal-sorter.js';
-import appealRepository from '#repositories/appeal.repository.js';
+import config from '#config/config.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import { sortAppeals } from '#utils/appeal-sorter.js';
+import { getPageCount } from '#utils/database-pagination.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	DEFAULT_PAGE_NUMBER,
 	DEFAULT_PAGE_SIZE,
 	ERROR_CANNOT_BE_EMPTY_STRING
 } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { formatLinkedAppealData, formatMyAppeal } from './appeals.formatter.js';
 import { retrieveAppealListData, updateCompletedEvents } from './appeals.service.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import config from '#config/config.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

@@ -1,6 +1,6 @@
+import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './net-residence.controller.js';
-import { asyncHandler } from '@pins/express';
 import * as validators from './net-residence.validators.js';
 
 const router = createRouter({ mergeParams: true });

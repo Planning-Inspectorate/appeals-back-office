@@ -1,14 +1,14 @@
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
 import {
 	appealData,
 	documentFileInfo,
-	withdrawalRequestData,
 	documentRedactionStatuses,
-	fileUploadInfo
+	fileUploadInfo,
+	withdrawalRequestData
 } from '#testing/appeals/appeals.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
+import nock from 'nock';
+import supertest from 'supertest';
 import { appellantEmailTemplate, lpaEmailTemplate } from '../withdrawl-test-data.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();

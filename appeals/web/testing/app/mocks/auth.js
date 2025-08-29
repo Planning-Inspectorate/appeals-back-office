@@ -1,5 +1,5 @@
-import { createSessionMockMiddleware } from '@pins/express';
 import config from '@pins/appeals.web/environment/config.js';
+import { createSessionMockMiddleware } from '@pins/express';
 import { createAccountInfo } from '../factory/account-info.js';
 
 /**

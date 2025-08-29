@@ -1,8 +1,8 @@
 // @ts-nocheck
+import { householdAppeal as appeal } from '#tests/appeals/mocks.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { cloneDeep } from 'lodash-es';
 import { checkAppealsStatusBeforeLPAQ } from '../link-appeals.service.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { householdAppeal as appeal } from '#tests/appeals/mocks.js';
 
 describe('Link Appeals Service', () => {
 	describe('checkAppealsStatusBeforeLPAQ', () => {

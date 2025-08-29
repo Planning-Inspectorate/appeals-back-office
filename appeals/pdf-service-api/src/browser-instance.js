@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer-core';
-import logger from './lib/logger.js';
 import config from './config.js';
+import logger from './lib/logger.js';
 
 // @ts-ignore
 let browserInstance = null;
@@ -91,4 +91,4 @@ async function closeBrowser() {
 	}
 }
 
-export { launchBrowser, getBrowserInstance, closeBrowser };
+export { closeBrowser, getBrowserInstance, launchBrowser };

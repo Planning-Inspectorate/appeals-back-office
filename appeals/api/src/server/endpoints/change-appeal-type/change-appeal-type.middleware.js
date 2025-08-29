@@ -1,7 +1,7 @@
-import { ERROR_NOT_FOUND, ERROR_INVALID_APPEAL_STATE } from '@pins/appeals/constants/support.js';
 import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { currentStatus, isCurrentStatus } from '#utils/current-status.js';
+import { ERROR_INVALID_APPEAL_STATE, ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

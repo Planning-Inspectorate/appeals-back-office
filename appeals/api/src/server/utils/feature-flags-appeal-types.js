@@ -1,6 +1,6 @@
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { isFeatureActive } from './feature-flags.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
  *
