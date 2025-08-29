@@ -11,6 +11,7 @@ import {
 import { horizonGetCaseSuccessResponse } from '#tests/horizon/mocks.js';
 import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
 import { cloneDeep } from 'lodash-es';
+import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
@@ -132,6 +133,15 @@ describe('appeal linked appeals routes', () => {
 				databaseConnector.appeal.findUnique.mockResolvedValueOnce(childAppeal);
 				// @ts-ignore
 				databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+				// @ts-ignore
+				databaseConnector.folder.findMany.mockResolvedValue([savedFolder]);
+				databaseConnector.document.create = jest.fn().mockImplementation(() => {
+					return documentCreated;
+				});
+				databaseConnector.documentVersion.create = jest
+					.fn()
+					.mockResolvedValue(documentVersionCreated);
+
 				got.post.mockReturnValueOnce({
 					json: jest
 						.fn()
@@ -156,6 +166,39 @@ describe('appeal linked appeals routes', () => {
 						childId: childAppeal.id,
 						type: CASE_RELATIONSHIP_LINKED,
 						externalSource: false
+					}
+				});
+
+				expect(databaseConnector.document.create).toHaveBeenCalledWith({
+					data: {
+						caseId: 1,
+						folderId: 23,
+						guid: 'mock-uuid',
+						name: 'mydoc-4567654.pdf'
+					}
+				});
+
+				expect(databaseConnector.documentVersion.create).toHaveBeenCalledWith({
+					data: {
+						blobStorageContainer: 'document-service-uploads',
+						blobStoragePath: 'appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
+						dateReceived: expect.any(Date),
+						documentGuid: 'mock-uuid',
+						documentType: 'appellantCostApplication',
+						documentURI:
+							'https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf',
+						draft: false,
+						fileName: 'mydoc-4567654.pdf',
+						isLateEntry: false,
+						lastModified: expect.any(Date),
+						mime: 'application/pdf',
+						originalFilename: 'mydoc-4567654.pdf',
+						published: false,
+						redactionStatusId: 1,
+						size: 14699,
+						stage: 'costs',
+						version: 1,
+						virusCheckStatus: 'affected'
 					}
 				});
 

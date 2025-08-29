@@ -70,7 +70,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 		}
 	};
 
-	const caseCosts = getCaseCosts(mappedData);
+	const caseCosts = !isChildAppeal(appealDetails) && getCaseCosts(mappedData);
 
 	const caseContacts = getCaseContacts(mappedData);
 
@@ -125,10 +125,14 @@ export function generateAccordion(appealDetails, mappedData, session) {
 					heading: { text: 'Documentation' },
 					content: { html: '', pageComponents: [caseDocumentation] }
 				},
-				{
-					heading: { text: 'Costs' },
-					content: { html: '', pageComponents: [caseCosts] }
-				},
+				...(caseCosts
+					? [
+							{
+								heading: { text: 'Costs' },
+								content: { html: '', pageComponents: [caseCosts] }
+							}
+					  ]
+					: []),
 				{
 					heading: { text: 'Contacts' },
 					content: { html: '', pageComponents: [caseContacts] }

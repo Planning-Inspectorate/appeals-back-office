@@ -1,5 +1,14 @@
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 
+import {
+	addDocumentsToAppeal,
+	getFoldersForAppeal
+} from '#endpoints/documents/documents.service.js';
+import rhea from 'rhea';
+import { copyBlobs } from '#utils/blob-copy.js';
+
+const { generate_uuid } = rhea;
+
 /**
  * Checks if an appeal is linked to other appeals as a parent.
  * @param {{ childAppeals?: any[] }} appeal The appeal to check for linked appeals.
@@ -51,4 +60,72 @@ export const checkAppealsStatusBeforeLPAQ = (appeal, linkedAppeal, isCurrentAppe
 	}
 	const appealStatus = appeal.appealStatus?.[appeal.appealStatus.length - 1];
 	return appealStatus?.status !== 'lpa_questionnaire';
+};
+
+/**
+ * Duplicates the files from the source appeal to the destination appeal for a particular stage.
+ * @param {Appeal} sourceAppeal
+ * @param {Appeal} destinationAppeal
+ * @param {string} stage
+ * @returns {Promise<*>}
+ */
+export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage) => {
+	const sourceFolders = await getFoldersForAppeal(sourceAppeal.id, stage);
+	const destinationFolders = await getFoldersForAppeal(destinationAppeal.id, stage);
+	const copyList = sourceFolders
+		.map((sourceFolder) => {
+			const { id: destinationFolderId = null } =
+				destinationFolders.find(
+					(destinationFolder) => destinationFolder.path === sourceFolder.path
+				) || {};
+			return sourceFolder.documents
+				.filter((document) => {
+					return !document.isDeleted && document.latestDocumentVersion?.blobStoragePath;
+				})
+				.map((sourceDocument) => {
+					const destinationGuid = generate_uuid();
+					const fileExtension = '.' + sourceDocument.name.split('.').pop();
+					const destinationFileName = sourceDocument.name.replace(
+						fileExtension,
+						`-${sourceAppeal.reference}${fileExtension}`
+					);
+
+					const sourceBlobName = sourceDocument.latestDocumentVersion?.blobStoragePath;
+					const destinationBlobName = `appeal/${destinationAppeal.reference}/${destinationGuid}/v1/${destinationFileName}`;
+
+					const destinationDocument = {
+						GUID: destinationGuid,
+						caseId: destinationAppeal.id,
+						documentName: destinationFileName,
+						folderId: destinationFolderId,
+						mimeType: sourceDocument.latestDocumentVersion?.mime,
+						documentType: sourceDocument.latestDocumentVersion?.documentType,
+						documentSize: sourceDocument.latestDocumentVersion?.size,
+						stage,
+						blobStoragePath: destinationBlobName,
+						redactionStatusId: sourceDocument.latestDocumentVersion?.redactionStatusId,
+						receivedDate: sourceDocument.latestDocumentVersion?.dateReceived
+					};
+
+					return {
+						sourceBlobName,
+						destinationBlobName,
+						destinationDocument
+					};
+				});
+		})
+		.flat();
+	const copyBlobList = copyList.map(({ sourceBlobName, destinationBlobName }) => ({
+		sourceBlobName,
+		destinationBlobName
+	}));
+	await copyBlobs(copyBlobList);
+	await addDocumentsToAppeal(
+		{
+			// @ts-ignore
+			documents: copyList.map((copyDetails) => copyDetails.destinationDocument)
+		},
+		destinationAppeal,
+		true
+	);
 };

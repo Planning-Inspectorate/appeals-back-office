@@ -220,9 +220,10 @@ export const getFoldersForStage = (path) => {
 /**
  * @param {AddDocumentsRequest} upload
  * @param {Appeal} appeal
+ * @param {boolean} [skipBlobValidation]
  * @returns {Promise<AddDocumentsResponse>}}
  */
-export const addDocumentsToAppeal = async (upload, appeal) => {
+export const addDocumentsToAppeal = async (upload, appeal, skipBlobValidation = false) => {
 	const { blobStorageHost, blobStorageContainer, documents } = upload;
 	const documentsToSendToDatabase = mapDocumentsForDatabase(
 		appeal.id,
@@ -231,13 +232,15 @@ export const addDocumentsToAppeal = async (upload, appeal) => {
 		documents
 	);
 
-	const blobValidation = await validateBlobContents(
-		appeal.reference,
-		documentsToSendToDatabase.map((doc) => doc.blobStoragePath ?? '')
-	);
+	if (!skipBlobValidation) {
+		const blobValidation = await validateBlobContents(
+			appeal.reference,
+			documentsToSendToDatabase.map((doc) => doc.blobStoragePath ?? '')
+		);
 
-	if (!blobValidation) {
-		throw new Error(`Invalid blobs submitted`);
+		if (!blobValidation) {
+			throw new Error(`Invalid blobs submitted`);
+		}
 	}
 
 	const documentsCreated = await addDocumentAndVersion(appeal, documentsToSendToDatabase);
