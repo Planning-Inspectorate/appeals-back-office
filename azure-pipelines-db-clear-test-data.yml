@@ -64,6 +64,7 @@ jobs:
               parameters:
                 environmentVariables:
                   DATABASE_URL: $(appeals-bo-sql-admin-connection-string)
+                  QUERY_BATCH_SIZE: 2000
                 script: npm run db:seed:clear-test-data
                 workingDirectory: $(Build.Repository.LocalPath)/appeals/api
     workspace:
