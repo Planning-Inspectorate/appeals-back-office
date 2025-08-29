@@ -126,7 +126,9 @@ export const linkAppeal = async (req, res) => {
 		})
 	]);
 
-	await broadcasters.broadcastAppeal(currentAppeal.id);
+	await Promise.all(
+		[currentAppeal.id, linkedAppeal.id].map((id) => broadcasters.broadcastAppeal(id))
+	);
 	return res.status(201).send(result);
 };
 
