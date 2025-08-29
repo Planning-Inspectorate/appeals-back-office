@@ -17,7 +17,11 @@ const appeal = {
 	properties: {
 		...AppealSummary.properties,
 		...Team.properties,
-		...AssignedTeam.properties,
+		assignedTeamId: {
+			type: 'number',
+			nullable: true
+		},
+		assignedTeam: AssignedTeam,
 		allocation: {
 			...Allocation,
 			nullable: true

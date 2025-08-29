@@ -4,7 +4,11 @@ import { jest } from '@jest/globals';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { caseTeams } from '#tests/appeals/mocks.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
+import { mocks } from '#tests/appeals/index.js';
 
+const householdAppeal = mocks.householdAppeal;
+const teeamIdNumericErrorMessage = 'teamId must be a number equal to or greater than 0';
+const teamIdRequiredErrorMessage = 'teamId is required';
 describe('case team routes', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
@@ -31,6 +35,74 @@ describe('case team routes', () => {
 
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual(caseTeams);
+			});
+		});
+	});
+	describe('PATCH', () => {
+		describe(':appealId/case-team', () => {
+			it(`returns error message when teamId isn't present`, async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/case-team`)
+					.send({})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({ errors: { teamId: teamIdRequiredErrorMessage } });
+			});
+
+			it(`returns error message when teamId isn't is null`, async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/case-team`)
+					.send({ teamId: null })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({ errors: { teamId: teeamIdNumericErrorMessage } });
+			});
+
+			it(`returns error message when teamId isn't is a string`, async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/case-team`)
+					.send({ teamId: 'a string' })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({ errors: { teamId: teeamIdNumericErrorMessage } });
+			});
+
+			it(`returns error message when teamId is less than 0`, async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.update.mockResolvedValue({ teamId: 1 });
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/case-team`)
+					.send({ teamId: 1 })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({ teamId: 1 });
+			});
+			it(`returns teamId of null when 0 is provided`, async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.update.mockResolvedValue({ assignedTeamId: null });
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/case-team`)
+					.send({ teamId: 0 })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					where: { id: householdAppeal.id },
+					data: { assignedTeamId: null }
+				});
+				expect(response.body).toEqual({ assignedTeamId: null });
 			});
 		});
 	});
