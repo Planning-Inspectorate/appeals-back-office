@@ -49,6 +49,8 @@ export const mapCaseDates = (data) => {
 		lpaQuestionnairePublishedDate: lpaqValidationDate,
 		lpaQuestionnaireValidationOutcomeDate: lpaqValidationDate,
 		...representationDates,
+		statementOfCommonGroundDueDate: mapDate(appeal.appealTimetable?.statementOfCommonGroundDueDate),
+		planningObligationDueDate: mapDate(appeal.appealTimetable?.planningObligationDueDate),
 		//TODO:
 		lpaProofsSubmittedDate: null,
 		proofsOfEvidenceDueDate: null,
