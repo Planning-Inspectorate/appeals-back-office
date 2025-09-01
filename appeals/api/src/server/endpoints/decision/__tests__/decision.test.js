@@ -32,6 +32,7 @@ import {
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { AUDIT_TRAIL_CORRECTION_NOTICE_ADDED } from '@pins/appeals/constants/support.js';
 import { sendNewDecisionLetter } from '../decision.service';
+import { cloneDeep } from 'lodash-es';
 const { databaseConnector } = await import('#utils/database-connector.js');
 describe('decision routes', () => {
 	beforeEach(() => {
@@ -242,61 +243,9 @@ describe('decision routes', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			expect(mockNotifySend).toHaveBeenCalledTimes(6);
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
-				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-				notifyClient: expect.any(Object),
-				templateName: 'appellant-costs-decision-appellant',
-				personalisation: {
-					appeal_reference_number: appeal.reference,
-					lpa_reference: appeal.applicationReference,
-					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
-				},
-				recipientEmail: appeal.agent.email
-			});
-
-			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
-				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-				notifyClient: expect.any(Object),
-				personalisation: {
-					appeal_reference_number: appeal.reference,
-					lpa_reference: appeal.applicationReference,
-					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
-				},
-				templateName: 'lpa-costs-decision-appellant',
-				recipientEmail: appeal.agent.email
-			});
-
-			expect(mockNotifySend).toHaveBeenNthCalledWith(3, {
-				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-				notifyClient: expect.any(Object),
-				personalisation: {
-					appeal_reference_number: appeal.reference,
-					lpa_reference: appeal.applicationReference,
-					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
-				},
-				templateName: 'appellant-costs-decision-lpa',
-				recipientEmail: appeal.lpa.email
-			});
-
-			expect(mockNotifySend).toHaveBeenNthCalledWith(4, {
-				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
-				notifyClient: expect.any(Object),
-				personalisation: {
-					appeal_reference_number: appeal.reference,
-					lpa_reference: appeal.applicationReference,
-					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
-				},
-				templateName: 'lpa-costs-decision-lpa',
-				recipientEmail: appeal.lpa.email
-			});
-
-			expect(mockNotifySend).toHaveBeenNthCalledWith(5, {
 				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
 				personalisation: {
@@ -310,7 +259,7 @@ describe('decision routes', () => {
 				recipientEmail: appeal.agent.email
 			});
 
-			expect(mockNotifySend).toHaveBeenNthCalledWith(6, {
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.any(Object),
 				personalisation: {
@@ -359,6 +308,160 @@ describe('decision routes', () => {
 				data: {
 					appealId: appeal.id,
 					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
+					loggedAt: expect.any(Date),
+					userId: appeal.caseOfficer.id
+				}
+			});
+
+			expect(response.status).toEqual(201);
+		});
+
+		test('returns 200 when only issuing appellant costs decisions', async () => {
+			const appeal = cloneDeep(householdAppeal);
+			const correctAppealState = {
+				...appeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			// @ts-ignore
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			// @ts-ignore
+			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
+
+			const response = await request
+				.post(`/appeals/${appeal.id}/decision`)
+				.send({
+					decisions: [
+						{
+							decisionType: DECISION_TYPE_APPELLANT_COSTS,
+							documentDate: utcDate.toISOString(),
+							documentGuid: documentCreated.guid
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				templateName: 'appellant-costs-decision-appellant',
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+				},
+				recipientEmail: appeal.agent.email
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+				},
+				templateName: 'appellant-costs-decision-lpa',
+				recipientEmail: appeal.lpa.email
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+				data: {
+					appealId: appeal.id,
+					details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
+					loggedAt: expect.any(Date),
+					userId: appeal.caseOfficer.id
+				}
+			});
+
+			expect(response.status).toEqual(201);
+		});
+
+		test('returns 200 when only issuing lpa costs decisions', async () => {
+			const appeal = cloneDeep(householdAppeal);
+			const correctAppealState = {
+				...appeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+						valid: true
+					}
+				]
+			};
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(correctAppealState);
+			// @ts-ignore
+			databaseConnector.document.findUnique.mockResolvedValue(documentCreated);
+			// @ts-ignore
+			databaseConnector.inspectorDecision.create.mockResolvedValue({});
+
+			const tenDaysAgo = sub(new Date(), { days: 10 });
+			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
+			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
+
+			const response = await request
+				.post(`/appeals/${appeal.id}/decision`)
+				.send({
+					decisions: [
+						{
+							decisionType: DECISION_TYPE_LPA_COSTS,
+							documentDate: utcDate.toISOString(),
+							documentGuid: documentCreated.guid
+						}
+					]
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				templateName: 'lpa-costs-decision-appellant',
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+				},
+				recipientEmail: appeal.agent.email
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.any(Object),
+				personalisation: {
+					appeal_reference_number: appeal.reference,
+					lpa_reference: appeal.applicationReference,
+					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+					front_office_url: `https://appeal-planning-decision.service.gov.uk/appeals/${appeal.reference}`
+				},
+				templateName: 'lpa-costs-decision-lpa',
+				recipientEmail: appeal.lpa.email
+			});
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+
+			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+				data: {
+					appealId: appeal.id,
+					details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}
