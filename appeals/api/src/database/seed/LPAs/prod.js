@@ -166,16 +166,6 @@ export const localPlanningDepartmentList = [
 		email: 'appeals@lichfielddc.gov.uk'
 	},
 	{
-		lpaCode: 'R5510',
-		name: 'London Borough of Hillingdon',
-		email: 'PlanningAppeals@Hillingdon.gov.uk'
-	},
-	{
-		lpaCode: 'N5660',
-		name: 'London Borough of Lambeth',
-		email: 'planningappeals@lambeth.gov.uk'
-	},
-	{
 		lpaCode: 'J1860',
 		name: 'Malvern Hills District Council',
 		email: 'developmentcontrol@malvernhills.gov.uk'
