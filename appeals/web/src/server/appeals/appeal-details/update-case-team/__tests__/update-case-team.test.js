@@ -72,7 +72,7 @@ describe('update-case-team', () => {
 			expect(response.text).toBe(`Found. Redirecting to ${baseUrl}/1${siteVisitPath}/edit/check`);
 		});
 	});
-	describe('GET /case-team/edit/check', () => {
+	describe('/case-team/edit/check', () => {
 		beforeEach(async () => {
 			nock('http://test/').get('/appeals/case-teams').reply(200, caseTeams);
 			nock('http://test/').get('/appeals/1/case-team').reply(200, { assignedTeamId: 1 });
@@ -82,29 +82,31 @@ describe('update-case-team', () => {
 			});
 			renderSelectPage = await request.get(`${baseUrl}/1${siteVisitPath}/edit`);
 		});
+		describe('GET', () => {
+			it('should render the check your answers page', async () => {
+				expect(renderSelectPage.statusCode).toBe(500);
+				expect(selectTeamResponse.statusCode).toBe(302);
+				const response = await request.get(`${baseUrl}/1${siteVisitPath}/edit/check`);
+				const element = parseHtml(response.text);
 
-		it('should render the check your answers page', async () => {
-			expect(renderSelectPage.statusCode).toBe(500);
-			expect(selectTeamResponse.statusCode).toBe(302);
-			const response = await request.get(`${baseUrl}/1${siteVisitPath}/edit/check`);
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Case team</dt>');
-			expect(element.innerHTML).toContain('<br>temp@email.com</dd>');
-			expect(element.innerHTML).toContain('<dd class="govuk-summary-list__value">temp');
-			expect(element.innerHTML).toContain('Change team</span>');
-			expect(element.innerHTML).toContain('Update case team');
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Case team</dt>');
+				expect(element.innerHTML).toContain('<br>temp@email.com</dd>');
+				expect(element.innerHTML).toContain('<dd class="govuk-summary-list__value">temp');
+				expect(element.innerHTML).toContain('Change team</span>');
+				expect(element.innerHTML).toContain('Update case team');
+			});
 		});
+		describe('POST', () => {
+			it('should redirect to the appeal detail page', async () => {
+				nock('http://test/').patch('/appeals/1/case-team').reply(200, { assignedTeamId: 1 });
 
-		it('should redirect to the appeal detail page', async () => {
-			nock('http://test/').patch('/appeals/1/case-team').reply(200, { assignedTeamId: 1 });
-
-			expect(renderSelectPage.statusCode).toBe(500);
-			expect(selectTeamResponse.statusCode).toBe(302);
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/edit/check`);
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(`Found. Redirecting to ${baseUrl}/1`);
+				expect(renderSelectPage.statusCode).toBe(500);
+				expect(selectTeamResponse.statusCode).toBe(302);
+				const response = await request.post(`${baseUrl}/1${siteVisitPath}/edit/check`);
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(`Found. Redirecting to ${baseUrl}/1`);
+			});
 		});
 	});
 });

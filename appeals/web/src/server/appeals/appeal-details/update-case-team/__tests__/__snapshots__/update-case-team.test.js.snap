@@ -82,35 +82,6 @@ exports[`update-case-team GET /case-team/edit should render the update case team
 </main>"
 `;
 
-exports[`update-case-team GET /case-team/edit/check should render the check your answers page 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Check details and update case team</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case team</dt>
-                    <dd class="govuk-summary-list__value">temp
-                        <br>temp@email.com</dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit">Change<span class="govuk-visually-hidden"> Change team</span></a>
-                    </dd>
-                </div>
-            </dl>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate">
-                        <button type="submit" class="govuk-button" data-module="govuk-button">Update case team</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`update-case-team POST /case-team/edit should rerender the update case team page with when no case team selected 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

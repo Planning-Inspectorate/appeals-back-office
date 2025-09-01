@@ -941,8 +941,6 @@ export interface ManyAppeals {
 }
 
 export interface SingleAppealResponse {
-	/** @example 1 */
-	assignedTeamId?: number;
 	agent?: {
 		/** @example 199 */
 		serviceUserId?: number;
