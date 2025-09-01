@@ -1,6 +1,5 @@
 // @ts-nocheck
 const { defineConfig } = require('cypress');
-const { azureSignIn } = require('./cypress/support/login');
 const baseConfig = require('./cypress.config');
 
 require('dotenv').config();
