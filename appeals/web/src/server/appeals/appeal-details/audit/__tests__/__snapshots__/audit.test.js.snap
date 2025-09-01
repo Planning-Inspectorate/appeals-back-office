@@ -39,7 +39,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                                 this field to test the system&#39;s ability to handle long text entries
                                 without truncation or errors. - it should show the show more compoonent</div>
                         </td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
@@ -47,21 +47,21 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--yellow">Awaiting site visit</strong>
                         </td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:55</span>
                         </td>
                         <td class="govuk-table__cell">The site visit was arranged for Thursday 2 October</td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:55</span>
                         </td>
                         <td class="govuk-table__cell">Final comments shared</td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
@@ -69,28 +69,28 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Site visit ready to set up</strong>
                         </td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:55</span>
                         </td>
                         <td class="govuk-table__cell">LPA final comments accepted</td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:55</span>
                         </td>
                         <td class="govuk-table__cell">Appellant final comments accepted</td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:54</span>
                         </td>
                         <td class="govuk-table__cell">Statements and IP comments shared</td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
@@ -98,14 +98,14 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Final comments</strong>
                         </td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:52</span>
                         </td>
                         <td class="govuk-table__cell">LPA questionnaire updated</td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
@@ -113,7 +113,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Statements</strong>
                         </td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
@@ -121,21 +121,21 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:52</span>
                         </td>
                         <td class="govuk-table__cell">The case timeline was created</td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
                             <br><span>10:52</span>
                         </td>
                         <td class="govuk-table__cell">Case updated</td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
@@ -143,7 +143,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Ready to start</strong>
                         </td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">1 October 2024
@@ -151,7 +151,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                         </td>
                         <td class="govuk-table__cell">Case note added:
                             <br>A case note you should see.</td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">1 October 2024
@@ -159,7 +159,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                         </td>
                         <td class="govuk-table__cell">Case note added:
                             <br>A case note you should see.</td>
-                        <td class="govuk-table__cell">John.Smith@planninginspectorate.gov.uk</td>
+                        <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                 </tbody>
             </table>
