@@ -220,11 +220,12 @@ export function reviewLpaStatementPage(appealDetails, lpaStatement, session, bac
 					text: 'Accept statement',
 					checked: status === COMMENT_STATUS.VALID
 				},
-				{
-					value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
-					text: 'Redact and accept statement'
-				},
-
+				lpaStatement.originalRepresentation
+					? {
+							value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
+							text: 'Redact and accept statement'
+					  }
+					: undefined,
 				{
 					value: COMMENT_STATUS.INCOMPLETE,
 					text: 'Statement incomplete',

@@ -91,6 +91,23 @@ describe('final-comments', () => {
 			expect(partyKey?.textContent?.trim()).toBe('Final comments');
 			expect(finalCommentsValue?.textContent?.trim()).toBe('Awaiting final comments review');
 		});
+
+		it('should render review appellant final comments page with no redact & accept option when no representation text', async () => {
+			const testFinalComments = structuredClone(finalCommentsForReview);
+			testFinalComments.items[0].originalRepresentation = '';
+
+			nock('http://test/')
+				.get('/appeals/2/reps?type=appellant_final_comment')
+				.reply(200, testFinalComments);
+			const response = await request.get(`${baseUrl}/2/final-comments/appellant`);
+
+			expect(response.statusCode).toBe(200);
+
+			const dom = parseHtml(response.text);
+			const elementInnerHtml = dom.innerHTML;
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).not.toContain('Redact and accept final comments');
+		});
 	});
 
 	describe('POST /review-comments with data', () => {

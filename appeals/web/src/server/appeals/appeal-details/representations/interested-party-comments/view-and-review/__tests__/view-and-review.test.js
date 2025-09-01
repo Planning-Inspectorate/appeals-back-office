@@ -105,6 +105,32 @@ describe('interested-party-comments', () => {
 			expect(partyKey?.textContent?.trim()).toBe('Interested party');
 			expect(partyValue?.textContent?.trim()).toBe('Lee Thornton');
 		});
+
+		it('should render review comment page with redact and accept radio button hidden when no comment provided', async () => {
+			const testComment = structuredClone(interestedPartyCommentForReview);
+			testComment.originalRepresentation = '';
+
+			nock('http://test/').get('/appeals/2/reps/55').reply(200, testComment);
+			const response = await request.get(`${baseUrl}/2/interested-party-comments/55/review`);
+
+			expect(response.statusCode).toBe(200);
+
+			const dom = parseHtml(response.text);
+			const elementInnerHtml = dom.innerHTML;
+			expect(elementInnerHtml).toMatchSnapshot();
+			expect(elementInnerHtml).toContain('Review comment</h1>');
+
+			const interestedPartyRow = parseHtml(response.text, {
+				rootElement: '.govuk-summary-list__row:first-of-type'
+			});
+
+			expect(interestedPartyRow).not.toBeNull();
+			const partyKey = interestedPartyRow?.querySelector('.govuk-summary-list__key');
+			const partyValue = interestedPartyRow?.querySelector('.govuk-summary-list__value');
+			expect(partyKey?.textContent?.trim()).toBe('Interested party');
+			expect(partyValue?.textContent?.trim()).toBe('Lee Thornton');
+			expect(elementInnerHtml).not.toContain('Redact and accept comment');
+		});
 	});
 
 	describe('GET /review-comment with no data', () => {
