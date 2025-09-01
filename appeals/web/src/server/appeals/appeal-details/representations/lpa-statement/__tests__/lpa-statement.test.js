@@ -94,6 +94,34 @@ describe('lpa-statements', () => {
 			);
 		});
 
+		it('should render the review LPA statement page with no valid_requires_redaction option if no text in lpa statement', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=lpa_statement`)
+				.reply(200, {
+					...getAppealRepsResponse,
+					itemCount: 1,
+					items: [
+						{
+							...lpaStatementAwaitingReview,
+							originalRepresentation: ''
+						}
+					]
+				});
+
+			const response = await request.get(`${baseUrl}/${appealId}/lpa-statement`);
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).not.toContain(
+				'name="status" type="radio" value="valid_requires_redaction">'
+			);
+		});
+
 		it('should render the review LPA statement page with the expected content if the statement is incomplete', async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}/reps?type=lpa_statement`)

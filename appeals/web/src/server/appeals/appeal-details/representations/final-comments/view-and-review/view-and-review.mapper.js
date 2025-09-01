@@ -71,11 +71,13 @@ export function reviewFinalCommentsPage(
 						text: 'Accept final comments',
 						checked: comment?.status === COMMENT_STATUS.VALID
 					},
-					{
-						value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
-						text: 'Redact and accept final comments',
-						checked: false // This status isn't persisted so will always be unchecked
-					},
+					comment.originalRepresentation
+						? {
+								value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
+								text: 'Redact and accept final comments',
+								checked: false // This status isn't persisted so will always be unchecked
+						  }
+						: undefined,
 					{
 						value: COMMENT_STATUS.INVALID,
 						text: 'Reject final comments',

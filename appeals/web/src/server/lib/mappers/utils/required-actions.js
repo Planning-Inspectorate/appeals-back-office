@@ -168,7 +168,6 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE ||
 				(ipCommentsCounts?.valid && ipCommentsCounts?.valid > 0);
 
-			console.log(appealDetails);
 			if (
 				ipCommentsDueDatePassed &&
 				lpaStatementDueDatePassed &&
