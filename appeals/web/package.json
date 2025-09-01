@@ -31,7 +31,7 @@
     "@azure/msal-common": "6.3.0",
     "@azure/msal-node": "^2.9.2",
     "@azure/storage-blob": "^12.27.0",
-    "@hapi/boom": "10.0.0",
+    "@hapi/boom": "10.0.1",
     "@pins/blob-storage-client": "^0.0.0",
     "@pins/express": "^0.0.0",
     "@pins/platform": "^0.0.0",
