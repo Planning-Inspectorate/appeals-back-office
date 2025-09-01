@@ -244,11 +244,12 @@ export const happyPathHelper = {
 
 		if (decision === 'Invalid') {
 			caseDetailsPage.fillTextArea('The appeal is invalid because of X reason', 0);
+			caseDetailsPage.clickButtonByText('Continue');
+		} else {
+			caseDetailsPage.clickButtonByText('Continue');
+			fileUploader.uploadFiles(sampleFiles.pdf);
+			caseDetailsPage.clickButtonByText('Continue');
 		}
-
-		caseDetailsPage.clickButtonByText('Continue');
-		fileUploader.uploadFiles(sampleFiles.pdf);
-		caseDetailsPage.clickButtonByText('Continue');
 
 		//Appellant costs
 		if (appellantCostsBool) {
