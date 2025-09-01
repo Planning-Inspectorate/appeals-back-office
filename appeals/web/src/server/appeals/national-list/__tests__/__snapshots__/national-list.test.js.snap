@@ -92,6 +92,16 @@ exports[`national-list GET / should render national list - 10 pages - all page i
                             </select>
                         </div>
                         <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="case-team-filter">Case team</label>
+                            <select class="govuk-select" id="case-team-filter" name="caseTeamFilter"
+                            data-cy="filter-by-case-team">
+                                <option value="all">All</option>
+                                <option value="1">temp</option>
+                                <option value="2">temp2</option>
+                                <option value="3">temp3</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
                             <label class="govuk-label govuk-!-font-weight-bold" for="inspectorFilter">Inspector</label>
                             <select class="govuk-select" id="inspectorFilter" name="inspectorFilter"
                             data-cy="filter-by-inspector">
@@ -296,6 +306,16 @@ exports[`national-list GET / should render national list - 15 pages - pagination
                             </select>
                         </div>
                         <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="case-team-filter">Case team</label>
+                            <select class="govuk-select" id="case-team-filter" name="caseTeamFilter"
+                            data-cy="filter-by-case-team">
+                                <option value="all">All</option>
+                                <option value="1">temp</option>
+                                <option value="2">temp2</option>
+                                <option value="3">temp3</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
                             <label class="govuk-label govuk-!-font-weight-bold" for="inspectorFilter">Inspector</label>
                             <select class="govuk-select" id="inspectorFilter" name="inspectorFilter"
                             data-cy="filter-by-inspector">
@@ -477,6 +497,176 @@ exports[`national-list GET / should render national list - appeal type filter ap
                             </select>
                         </div>
                         <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="case-team-filter">Case team</label>
+                            <select class="govuk-select" id="case-team-filter" name="caseTeamFilter"
+                            data-cy="filter-by-case-team">
+                                <option value="all">All</option>
+                                <option value="1">temp</option>
+                                <option value="2">temp2</option>
+                                <option value="3">temp3</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="inspectorFilter">Inspector</label>
+                            <select class="govuk-select" id="inspectorFilter" name="inspectorFilter"
+                            data-cy="filter-by-inspector">
+                                <option value="all">All</option>
+                                <option value="0">Smith, John</option>
+                                <option value="1">Doe, Jane</option>
+                                <option value="2">Bloggs, Joe</option>
+                                <option value="3">Jenkins, Leeroy</option>
+                                <option value="4">McTest, George</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <div class="govuk-checkboxes govuk-checkboxes--small" data-cy="filter-by-green-belt"
+                            data-module="govuk-checkboxes">
+                                <div class="govuk-checkboxes__item">
+                                    <input class="govuk-checkboxes__input" id="greenBeltFilter" name="greenBeltFilter"
+                                    type="checkbox" value="yes">
+                                    <label class="govuk-label govuk-checkboxes__label" for="greenBeltFilter">Green belt</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </details>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <table class="govuk-table govuk-table--small-text-until-tablet govuk-table--case-list">
+                <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">Appeal reference</th>
+                        <th scope="col" class="govuk-table__header">Planning application reference</th>
+                        <th scope="col" class="govuk-table__header">Site address</th>
+                        <th scope="col" class="govuk-table__header">Local planning authority (LPA)</th>
+                        <th scope="col" class="govuk-table__header">Appeal type</th>
+                        <th scope="col" class="govuk-table__header">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                        <td class="govuk-table__cell"><a class="govuk-link" href="/appeals-service/appeal-details/1" aria-label="Appeal 9 4 3 2 4 5"
+                            data-cy="943245">943245</a>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third"> undefined</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Copthalls, Clevedon Road, West Hill, BS48 1PN</span>
+                        </td>
+                        <td class="govuk-table__cell"><span class="govuk-!-width-one-third">Wiltshire Council</span>
+                        </td>
+                        <td class="govuk-table__cell">Householder</td>
+                        <td class="govuk-table__cell"><strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`national-list GET / should render national list - case team filter applied 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l">Search all cases</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="GET">
+                <div class="govuk-form-group">
+                    <label class="govuk-label govuk-caption-m govuk-!-margin-bottom-3 colour--secondary"
+                    for="searchTerm">Enter the appeal reference, planning application reference or postcode
+                        (including spaces)</label>
+                    <input class="govuk-input" id="searchTerm" name="searchTerm"
+                    type="text" value="" data-cy="search-term">
+                </div>
+                <div class="govuk-button-group">
+                    <button type="submit" class="govuk-button govuk-button" data-module="govuk-button"
+                    id="filters-submit">Search</button>
+                </div>
+            </form>
+            <div class="govuk-section-break--visible govuk-!-margin-top-2 govuk-!-margin-bottom-6"></div>
+        </div>
+    </div>
+    <div class="govuk-grid-row govuk-!-padding-left-3">
+        <h2 class="govuk-heading-m">1 result (filters applied)</h2>
+    </div>
+    <div class="govuk-grid-row govuk-!-padding-left-3">
+        <div class="govuk-grid-column-full">
+            <details class="govuk-details">
+                <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Filters</span>
+                </summary>
+                <div class="govuk-details__text">
+                    <form method="GET">
+                        <h2 class="govuk-heading-m">Filter</h2>
+                        <div class="govuk-button-group">
+                            <button type="submit" class="govuk-button" data-module="govuk-button"
+                            data-cy="filter-submit" id="filters-submit">Apply filters</button><a class="govuk-link" href="/appeals-service/all-cases"
+                            data-cy="filter-clear">Clear filters</a>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="appeal-type-filter">Appeal type</label>
+                            <select class="govuk-select" id="appeal-type-filter"
+                            name="appealTypeFilter" data-cy="filter-by-appeal">
+                                <option value="all">All</option>
+                                <option value="66">Householder</option>
+                                <option value="75">Planning appeal</option>
+                                <option value="77">Planning listed building and conservation area appeal</option>
+                                <option                                 value="78">CAS advert</option>
+                                    <option value="79">CAS planning</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="appeal-status-filter">Case status</label>
+                            <select class="govuk-select" id="appeal-status-filter"
+                            name="appealStatusFilter" data-cy="filter-by-case-status">
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="inspector-status-filter">Inspector status</label>
+                            <select class="govuk-select" id="inspector-status-filter"
+                            name="inspectorStatusFilter" data-cy="filter-by-inspector-status">
+                                <option value="all">All</option>
+                                <option value="assigned">Assigned</option>
+                                <option value="unassigned">Unassigned</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="localPlanningAuthorityFilter">Local planning authority</label>
+                            <select class="govuk-select" id="localPlanningAuthorityFilter"
+                            name="localPlanningAuthorityFilter" data-cy="filter-by-local-planning-authority">
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="caseOfficerFilter">Case officer</label>
+                            <select class="govuk-select" id="caseOfficerFilter"
+                            name="caseOfficerFilter" data-cy="filter-by-case-officer">
+                                <option value="all">All</option>
+                                <option value="0">Smith, John</option>
+                                <option value="1">Doe, Jane</option>
+                                <option value="2">Bloggs, Joe</option>
+                                <option value="3">Jenkins, Leeroy</option>
+                                <option value="4">McTest, George</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="case-team-filter">Case team</label>
+                            <select class="govuk-select" id="case-team-filter" name="caseTeamFilter"
+                            data-cy="filter-by-case-team">
+                                <option value="all">All</option>
+                                <option value="1" selected>temp</option>
+                                <option value="2">temp2</option>
+                                <option value="3">temp3</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
                             <label class="govuk-label govuk-!-font-weight-bold" for="inspectorFilter">Inspector</label>
                             <select class="govuk-select" id="inspectorFilter" name="inspectorFilter"
                             data-cy="filter-by-inspector">
@@ -627,6 +817,16 @@ exports[`national-list GET / should render national list - no pagination 1`] = `
                             name="caseOfficerFilter" data-cy="filter-by-case-officer">
                                 <option value="all">All</option>
                                 <option value="1">Doe, Jane</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="case-team-filter">Case team</label>
+                            <select class="govuk-select" id="case-team-filter" name="caseTeamFilter"
+                            data-cy="filter-by-case-team">
+                                <option value="all">All</option>
+                                <option value="1">temp</option>
+                                <option value="2">temp2</option>
+                                <option value="3">temp3</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -799,6 +999,16 @@ exports[`national-list GET / should render national list - no search term - filt
                             </select>
                         </div>
                         <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="case-team-filter">Case team</label>
+                            <select class="govuk-select" id="case-team-filter" name="caseTeamFilter"
+                            data-cy="filter-by-case-team">
+                                <option value="all">All</option>
+                                <option value="1">temp</option>
+                                <option value="2">temp2</option>
+                                <option value="3">temp3</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
                             <label class="govuk-label govuk-!-font-weight-bold" for="inspectorFilter">Inspector</label>
                             <select class="govuk-select" id="inspectorFilter" name="inspectorFilter"
                             data-cy="filter-by-inspector">
@@ -960,6 +1170,16 @@ exports[`national-list GET / should render national list - search term - filter 
                             </select>
                         </div>
                         <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="case-team-filter">Case team</label>
+                            <select class="govuk-select" id="case-team-filter" name="caseTeamFilter"
+                            data-cy="filter-by-case-team">
+                                <option value="all">All</option>
+                                <option value="1">temp</option>
+                                <option value="2">temp2</option>
+                                <option value="3">temp3</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
                             <label class="govuk-label govuk-!-font-weight-bold" for="inspectorFilter">Inspector</label>
                             <select class="govuk-select" id="inspectorFilter" name="inspectorFilter"
                             data-cy="filter-by-inspector">
@@ -1112,6 +1332,16 @@ exports[`national-list GET / should render national list - search term - no resu
                             </select>
                         </div>
                         <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="case-team-filter">Case team</label>
+                            <select class="govuk-select" id="case-team-filter" name="caseTeamFilter"
+                            data-cy="filter-by-case-team">
+                                <option value="all">All</option>
+                                <option value="1">temp</option>
+                                <option value="2">temp2</option>
+                                <option value="3">temp3</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
                             <label class="govuk-label govuk-!-font-weight-bold" for="inspectorFilter">Inspector</label>
                             <select class="govuk-select" id="inspectorFilter" name="inspectorFilter"
                             data-cy="filter-by-inspector">
@@ -1235,6 +1465,16 @@ exports[`national-list GET / should render national list - search term 1`] = `
                             name="caseOfficerFilter" data-cy="filter-by-case-officer">
                                 <option value="all">All</option>
                                 <option value="1">Doe, Jane</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="case-team-filter">Case team</label>
+                            <select class="govuk-select" id="case-team-filter" name="caseTeamFilter"
+                            data-cy="filter-by-case-team">
+                                <option value="all">All</option>
+                                <option value="1">temp</option>
+                                <option value="2">temp2</option>
+                                <option value="3">temp3</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
@@ -1398,6 +1638,16 @@ exports[`national-list GET / should render the header with navigation containing
                             name="caseOfficerFilter" data-cy="filter-by-case-officer">
                                 <option value="all">All</option>
                                 <option value="1">Doe, Jane</option>
+                            </select>
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label govuk-!-font-weight-bold" for="case-team-filter">Case team</label>
+                            <select class="govuk-select" id="case-team-filter" name="caseTeamFilter"
+                            data-cy="filter-by-case-team">
+                                <option value="all">All</option>
+                                <option value="1">temp</option>
+                                <option value="2">temp2</option>
+                                <option value="3">temp3</option>
                             </select>
                         </div>
                         <div class="govuk-form-group">
