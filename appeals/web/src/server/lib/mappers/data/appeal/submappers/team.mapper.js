@@ -8,11 +8,13 @@ export const mapCaseTeam = ({ appealDetails, currentRoute, userHasUpdateCasePerm
 			: true;
 	const teamRowValue = `
         <ul class="govuk-list">
-            ${
-							appealDetails.assignedTeam?.name && appealDetails.assignedTeam?.email
-								? `<li>${appealDetails.assignedTeam.name}</li><li>${appealDetails.assignedTeam.email}</li>`
-								: `<li>Not assigned</li>`
-						}
+            ${appealDetails.assignedTeam?.name ? `<li>${appealDetails.assignedTeam.name}</li>` : ``}
+			${appealDetails.assignedTeam?.email ? `<li>${appealDetails.assignedTeam.email}</li>` : ``}
+			${
+				!appealDetails.assignedTeam?.email && !appealDetails.assignedTeam?.name
+					? `<li>Not assigned</li>`
+					: ``
+			}
         </ul>
     `.trim();
 

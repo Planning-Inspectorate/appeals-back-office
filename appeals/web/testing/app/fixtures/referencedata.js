@@ -192,6 +192,12 @@ export const appealsNationalList = {
 	lpas: [{ lpaCode: '1', name: 'Test LPA' }],
 	inspectors: [{ azureAdUserId: activeDirectoryUsersData[0].id, id: 0 }],
 	caseOfficers: [{ azureAdUserId: activeDirectoryUsersData[1].id, id: 1 }],
+	assignedTeamId: 1,
+	assignedTeam: {
+		id: 1,
+		name: 'test',
+		email: 'test@email.com'
+	},
 	page: 1,
 	pageCount: 1,
 	pageSize: 30
@@ -4370,5 +4376,10 @@ export const caseTeams = [
 		id: 3,
 		email: 'temp3@email.com',
 		name: 'temp3'
+	},
+	{
+		id: 4,
+		email: null,
+		name: 'temp4'
 	}
 ];

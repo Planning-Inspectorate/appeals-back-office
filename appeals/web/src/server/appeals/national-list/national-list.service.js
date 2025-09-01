@@ -12,6 +12,7 @@ import { paginationDefaultSettings } from '../appeal.constants.js';
  * @param {string|undefined} inspectorFilter
  * @param {string|undefined} greenBeltFilter
  * @param {string|undefined} appealTypeFilter
+ * @param {string|undefined} caseTeamFilter
  * @param {number} pageNumber
  * @param {number} pageSize
  * @returns {Promise<AppealList>}
@@ -26,6 +27,7 @@ export const getAppeals = (
 	inspectorFilter,
 	greenBeltFilter,
 	appealTypeFilter,
+	caseTeamFilter,
 	pageNumber = paginationDefaultSettings.firstPageNumber,
 	pageSize = paginationDefaultSettings.pageSize
 ) => {
@@ -65,6 +67,9 @@ export const getAppeals = (
 
 	if (appealTypeFilter && appealTypeFilter !== 'all') {
 		urlAppendix += `&appealTypeId=${appealTypeFilter}`;
+	}
+	if (caseTeamFilter && caseTeamFilter !== 'all') {
+		urlAppendix += `&assignedTeamId=${caseTeamFilter}`;
 	}
 
 	return apiClient

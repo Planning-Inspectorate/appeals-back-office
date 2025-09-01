@@ -73,16 +73,16 @@ describe('update-case-team', () => {
 		});
 	});
 	describe('/case-team/edit/check', () => {
-		beforeEach(async () => {
-			nock('http://test/').get('/appeals/case-teams').reply(200, caseTeams);
-			nock('http://test/').get('/appeals/1/case-team').reply(200, { assignedTeamId: 1 });
-			renderSelectPage = await request.get(`${baseUrl}/1${siteVisitPath}/edit`);
-			selectTeamResponse = await request.post(`${baseUrl}/1${siteVisitPath}/edit`).send({
-				'case-team': '1'
+		describe('GET name and email available', () => {
+			beforeEach(async () => {
+				nock('http://test/').get('/appeals/case-teams').reply(200, caseTeams);
+				nock('http://test/').get('/appeals/1/case-team').reply(200, { assignedTeamId: 1 });
+				renderSelectPage = await request.get(`${baseUrl}/1${siteVisitPath}/edit`);
+				selectTeamResponse = await request.post(`${baseUrl}/1${siteVisitPath}/edit`).send({
+					'case-team': '1'
+				});
+				renderSelectPage = await request.get(`${baseUrl}/1${siteVisitPath}/edit`);
 			});
-			renderSelectPage = await request.get(`${baseUrl}/1${siteVisitPath}/edit`);
-		});
-		describe('GET', () => {
 			it('should render the check your answers page', async () => {
 				expect(renderSelectPage.statusCode).toBe(500);
 				expect(selectTeamResponse.statusCode).toBe(302);
@@ -93,6 +93,28 @@ describe('update-case-team', () => {
 				expect(element.innerHTML).toContain('Case team</dt>');
 				expect(element.innerHTML).toContain('<br>temp@email.com</dd>');
 				expect(element.innerHTML).toContain('<dd class="govuk-summary-list__value">temp');
+				expect(element.innerHTML).toContain('Change team</span>');
+				expect(element.innerHTML).toContain('Update case team');
+			});
+		});
+		describe('GET name only available', () => {
+			beforeEach(async () => {
+				nock('http://test/').get('/appeals/case-teams').reply(200, caseTeams);
+				nock('http://test/').get('/appeals/1/case-team').reply(200, { assignedTeamId: 4 });
+				renderSelectPage = await request.get(`${baseUrl}/1${siteVisitPath}/edit`);
+				selectTeamResponse = await request.post(`${baseUrl}/1${siteVisitPath}/edit`).send({
+					'case-team': '4'
+				});
+				renderSelectPage = await request.get(`${baseUrl}/1${siteVisitPath}/edit`);
+			});
+			it('should render the check your answers page', async () => {
+				expect(renderSelectPage.statusCode).toBe(500);
+				expect(selectTeamResponse.statusCode).toBe(302);
+				const response = await request.get(`${baseUrl}/1${siteVisitPath}/edit/check`);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('temp4</dd>');
 				expect(element.innerHTML).toContain('Change team</span>');
 				expect(element.innerHTML).toContain('Update case team');
 			});
