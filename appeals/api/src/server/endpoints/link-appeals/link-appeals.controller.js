@@ -5,19 +5,22 @@ import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
 	AUDIT_TRAIL_APPEAL_LINK_REMOVED,
 	AUDIT_TRAIL_APPEAL_RELATION_ADDED,
-	AUDIT_TRAIL_APPEAL_RELATION_REMOVED
-} from '@pins/appeals/constants/support.js';
-import { canLinkAppeals, checkAppealsStatusBeforeLPAQ } from './link-appeals.service.js';
-import {
+	AUDIT_TRAIL_APPEAL_RELATION_REMOVED,
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED,
 	ERROR_LINKING_APPEALS
 } from '@pins/appeals/constants/support.js';
+import {
+	canLinkAppeals,
+	checkAppealsStatusBeforeLPAQ,
+	duplicateFiles
+} from './link-appeals.service.js';
 import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { notifySend } from '#notify/notify-send.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -55,25 +58,23 @@ export const linkAppeal = async (req, res) => {
 		});
 	}
 
-	const relationship = isCurrentAppealParent
-		? {
-				parentId: currentAppeal.id,
-				parentRef: currentAppeal.reference,
-				childId: linkedAppeal.id,
-				childRef: linkedAppeal.reference,
-				type: CASE_RELATIONSHIP_LINKED,
-				externalSource: false
-		  }
-		: {
-				parentId: linkedAppeal.id,
-				parentRef: linkedAppeal.reference,
-				childId: currentAppeal.id,
-				childRef: currentAppeal.reference,
-				type: CASE_RELATIONSHIP_LINKED,
-				externalSource: false
-		  };
+	const childAppeal = isCurrentAppealParent ? linkedAppeal : currentAppeal;
+	const parentAppeal = isCurrentAppealParent ? currentAppeal : linkedAppeal;
+
+	const relationship = {
+		parentId: parentAppeal.id,
+		parentRef: parentAppeal.reference,
+		childId: childAppeal.id,
+		childRef: childAppeal.reference,
+		type: CASE_RELATIONSHIP_LINKED,
+		externalSource: false
+	};
 
 	const result = await appealRepository.linkAppeal(relationship);
+
+	if (result) {
+		await duplicateFiles(childAppeal, parentAppeal, APPEAL_CASE_STAGE.COSTS);
+	}
 
 	const siteAddress = currentAppeal.address
 		? formatAddressSingleLine(currentAppeal.address)
@@ -126,7 +127,9 @@ export const linkAppeal = async (req, res) => {
 		})
 	]);
 
-	await broadcasters.broadcastAppeal(currentAppeal.id);
+	await Promise.all(
+		[currentAppeal.id, linkedAppeal.id].map((id) => broadcasters.broadcastAppeal(id))
+	);
 	return res.status(201).send(result);
 };
 

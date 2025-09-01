@@ -30,7 +30,7 @@ describe('application-submission-date', () => {
 		it('should re-direct to appellant-case if date is valid', async () => {
 			const validData = {
 				'application-submission-date-day': '11',
-				'application-submission-date-month': '06',
+				'application-submission-date-month': 'July',
 				'application-submission-date-year': '2021'
 			};
 
@@ -85,7 +85,10 @@ describe('application-submission-date', () => {
 		it('should re-render the Date page with an error message if the provided date month is invalid', async () => {
 			const testCases = [
 				{ value: '', expectedError: 'Date must include a month' },
-				{ value: 'a', expectedError: 'Date month must be a number' },
+				{
+					value: 'a',
+					expectedError: 'Date must be a real date'
+				},
 				{ value: '0', expectedError: 'Date month must be between 1 and 12' },
 				{ value: '13', expectedError: 'Date month must be between 1 and 12' }
 			];
@@ -123,13 +126,13 @@ describe('application-submission-date', () => {
 				{ value: '', expectedError: 'Date must include a year' },
 				{ value: 'a', expectedError: 'Date year must be a number' },
 				{ value: '202', expectedError: 'Date year must be 4 digits' },
-				{ value: '3000', expectedError: 'Date must be today or in the past' }
+				{ value: '3000', expectedError: 'The date must be today or in the past' }
 			];
 
 			for (const testCase of testCases) {
 				const invalidData = {
 					'application-submission-date-day': '1',
-					'application-submission-date-month': '11',
+					'application-submission-date-month': 'Jul',
 					'application-submission-date-year': testCase.value
 				};
 				nock('http://test/')

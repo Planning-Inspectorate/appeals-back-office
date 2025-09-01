@@ -149,12 +149,12 @@ const appealDetailsInclude = {
  * @param {number} id
  * @returns {Promise<Appeal|undefined>}
  */
-const getAppealById = async (id) => {
+const getAppealById = async (id, includeDetails = true) => {
 	const appeal = await databaseConnector.appeal.findUnique({
 		where: {
 			id
 		},
-		include: appealDetailsInclude
+		include: includeDetails ? appealDetailsInclude : null
 	});
 
 	if (appeal) {

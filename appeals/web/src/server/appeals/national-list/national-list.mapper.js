@@ -1,12 +1,12 @@
-import { appealShortReference } from '#lib/appeals-formatter.js';
-import { addressToString } from '#lib/address-formatter.js';
-import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
-import { mapStatusText, mapStatusFilterLabel } from '#lib/appeal-status.js';
-import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { isFeatureActive } from '#common/feature-flags.js';
+import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
+import { addressToString } from '#lib/address-formatter.js';
+import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
@@ -117,6 +117,7 @@ export function nationalListPage(
 	if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
 		enabledAppealTypes.push(APPEAL_CASE_TYPE.ZP);
 	}
+
 	const appealTypeFilterItemsArray = [
 		{
 			text: 'All',

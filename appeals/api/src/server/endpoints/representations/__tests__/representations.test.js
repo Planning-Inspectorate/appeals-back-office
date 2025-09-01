@@ -1975,8 +1975,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						what_happens_next: ''
 					},
-					recipientEmail: appealS78.lpa.email,
-					templateName: 'final-comments-done-lpa'
+					recipientEmail: appealS78.appellant.email,
+					templateName: 'final-comments-done-appellant'
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -1986,8 +1986,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						what_happens_next: ''
 					},
-					recipientEmail: appealS78.appellant.email,
-					templateName: 'final-comments-done-appellant'
+					recipientEmail: appealS78.lpa.email,
+					templateName: 'final-comments-done-lpa'
 				});
 			});
 
@@ -2054,8 +2054,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						what_happens_next: ''
 					},
-					recipientEmail: appealS78.lpa.email,
-					templateName: 'final-comments-done-lpa'
+					recipientEmail: appealS78.appellant.email,
+					templateName: 'final-comments-done-appellant'
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -2065,8 +2065,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						what_happens_next: ''
 					},
-					recipientEmail: appealS78.appellant.email,
-					templateName: 'final-comments-done-appellant'
+					recipientEmail: appealS78.lpa.email,
+					templateName: 'final-comments-done-lpa'
 				});
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(4);
@@ -2160,8 +2160,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						what_happens_next: ''
 					},
-					recipientEmail: appealS20.lpa.email,
-					templateName: 'final-comments-done-lpa'
+					recipientEmail: appealS20.appellant.email,
+					templateName: 'final-comments-done-appellant'
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -2171,8 +2171,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						what_happens_next: ''
 					},
-					recipientEmail: appealS20.appellant.email,
-					templateName: 'final-comments-done-appellant'
+					recipientEmail: appealS20.lpa.email,
+					templateName: 'final-comments-done-lpa'
 				});
 			});
 
@@ -2222,8 +2222,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						what_happens_next: ''
 					},
-					recipientEmail: appealS20.lpa.email,
-					templateName: 'final-comments-done-lpa'
+					recipientEmail: mockS20Appeal.agent.email,
+					templateName: 'final-comments-done-appellant'
 				});
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
 					azureAdUserId: expect.anything(),
@@ -2232,8 +2232,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						what_happens_next: ''
 					},
-					recipientEmail: mockS20Appeal.agent.email,
-					templateName: 'final-comments-done-appellant'
+					recipientEmail: mockS20Appeal.lpa.email,
+					templateName: 'final-comments-done-lpa'
 				});
 			});
 
@@ -2354,8 +2354,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						what_happens_next: ''
 					},
-					recipientEmail: appealS20.lpa.email,
-					templateName: 'final-comments-done-lpa'
+					recipientEmail: appealS20.appellant.email,
+					templateName: 'final-comments-done-appellant'
 				});
 
 				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -2434,8 +2434,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						what_happens_next: ''
 					},
-					recipientEmail: appealS20.appellant.email,
-					templateName: 'final-comments-done-appellant'
+					recipientEmail: appealS20.lpa.email,
+					templateName: 'final-comments-done-lpa'
 				});
 			});
 		});

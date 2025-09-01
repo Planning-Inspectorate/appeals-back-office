@@ -382,13 +382,13 @@ export async function publishFinalComments(appeal, azureAdUserId, notifyClient) 
 		);
 
 		if (hasLpaFinalComment) {
-			await notifyLpaFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
+			await notifyAppellantAboutLpaFinalComments(appeal, notifyClient, azureAdUserId);
 		} else {
 			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'local planning authority');
 		}
 
 		if (hasAppellantFinalComment) {
-			await notifyAppellantFinalCommentsPublished(appeal, notifyClient, azureAdUserId);
+			await notifyLpaAboutAppellantFinalComments(appeal, notifyClient, azureAdUserId);
 		} else {
 			await notifyNoFinalComments(appeal, notifyClient, azureAdUserId, 'appellant');
 		}
@@ -471,7 +471,7 @@ async function notifyPublished({
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
  * */
-function notifyLpaFinalCommentsPublished(appeal, notifyClient, azureAdUserId) {
+function notifyLpaAboutAppellantFinalComments(appeal, notifyClient, azureAdUserId) {
 	const recipientEmail = appeal.lpa?.email;
 	if (!recipientEmail) {
 		throw new Error(`${ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL}: no LPA email address in appeal`);
@@ -491,7 +491,7 @@ function notifyLpaFinalCommentsPublished(appeal, notifyClient, azureAdUserId) {
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
  * */
-function notifyAppellantFinalCommentsPublished(appeal, notifyClient, azureAdUserId) {
+function notifyAppellantAboutLpaFinalComments(appeal, notifyClient, azureAdUserId) {
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	if (!recipientEmail) {
 		throw new Error(

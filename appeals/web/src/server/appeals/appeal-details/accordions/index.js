@@ -1,8 +1,7 @@
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { isFeatureActive } from '#common/feature-flags.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { generateAccordion as generateHasAccordion } from './has.js';
 import { generateAccordion as generateS78Accordion } from './s78.js';
-import { isFeatureActive } from '#common/feature-flags.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /**
  *
@@ -18,6 +17,11 @@ export function generateAccordionItems(appealDetails, mappedData, session) {
 		case APPEAL_TYPE.CAS_PLANNING:
 			if (!isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
 				throw new Error('Feature flag inactive for CAS');
+			}
+			return generateHasAccordion(appealDetails, mappedData, session);
+		case APPEAL_TYPE.CAS_ADVERTISEMENT:
+			if (!isFeatureActive(FEATURE_FLAG_NAMES.CAS_ADVERT)) {
+				throw new Error('Feature flag inactive for CAS adverts');
 			}
 			return generateHasAccordion(appealDetails, mappedData, session);
 		case APPEAL_TYPE.S78: //TODO: Feature flag

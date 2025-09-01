@@ -3,8 +3,8 @@ import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { submaps as s78Submaps } from './s78.js';
 import { submaps as hasSubmaps } from './has.js';
+import { submaps as s78Submaps } from './s78.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
@@ -40,6 +40,7 @@ import { submaps as hasSubmaps } from './has.js';
 const submaps = {
 	[APPEAL_TYPE.HOUSEHOLDER]: hasSubmaps,
 	[APPEAL_TYPE.CAS_PLANNING]: hasSubmaps,
+	[APPEAL_TYPE.CAS_ADVERTISEMENT]: hasSubmaps,
 	[APPEAL_TYPE.S78]: s78Submaps,
 	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s78Submaps
 };

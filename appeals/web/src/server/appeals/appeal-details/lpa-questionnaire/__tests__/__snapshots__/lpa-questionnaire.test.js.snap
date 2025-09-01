@@ -6351,7 +6351,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#due-date-month">Date month must be a number</a>
+                            <li><a href="#due-date-month">Date must be a real date</a>
                             </li>
                         </ul>
                     </div>
@@ -6372,9 +6372,8 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
     <form method="post" novalidate="novalidate">
         <div class="govuk-form-group govuk-form-group--error">
             <div id="due-date-hint" class="govuk-hint">For example, 27 3 2023</div>
-            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date month must be a
-                number</p>
-            <div class="govuk-date-input" id="due-date">
+            <p id="due-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Date must be a real date</p>
+            <div             class="govuk-date-input" id="due-date">
                 <div class="govuk-date-input__item">
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-day">Day</label>
@@ -6386,7 +6385,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                     <div class="govuk-form-group">
                         <label class="govuk-label govuk-date-input__label" for="due-date-month">Month</label>
                         <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input govuk-input--error"
-                        id="due-date-month" name="due-date-month" type="text" value="dec" inputmode="numeric">
+                        id="due-date-month" name="due-date-month" type="text" value="decend" inputmode="numeric">
                     </div>
                 </div>
                 <div class="govuk-date-input__item">
@@ -6396,7 +6395,7 @@ exports[`LPA Questionnaire review POST /appeals-service/appeal-details/1/lpa-que
                         id="due-date-year" name="due-date-year" type="text" value="3000" inputmode="numeric">
                     </div>
                 </div>
-            </div>
+        </div>
         </div>
         <div class="govuk-button-group">
             <button type="submit" class="govuk-button" data-module="govuk-button">Save and continue</button>

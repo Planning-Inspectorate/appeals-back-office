@@ -20,7 +20,7 @@ describe('Change Appeal Type', () => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.clickChangeAppealType();
-			caseDetailsPage.selectRadioButtonByValue('(W) Planning appeal');
+			caseDetailsPage.selectRadioButtonByValue('Planning');
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('No');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -34,7 +34,7 @@ describe('Change Appeal Type', () => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.clickChangeAppealType();
-			caseDetailsPage.selectRadioButtonByValue('(Q) Planning obligation appeal');
+			caseDetailsPage.selectRadioButtonByValue('Planning obligation');
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');

@@ -59,7 +59,7 @@ describe('Progress S20 to decision', () => {
 			cy.reload();
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Share final comments');
-			caseDetailsPage.checkStatusOfCase('Event', 0);
+			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
 
 			happyPathHelper.setupSiteVisitFromBanner(caseRef);
 			cy.simulateSiteVisit(caseRef).then((caseRef) => {

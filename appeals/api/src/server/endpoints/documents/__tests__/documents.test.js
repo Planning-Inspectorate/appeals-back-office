@@ -22,6 +22,8 @@ import { request } from '../../../app-test.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
 
+const savedDocument = savedFolder.documents[0];
+
 describe('/appeals/:appealId/document-folders/:folderId', () => {
 	beforeEach(() => {
 		// @ts-ignore
@@ -41,13 +43,14 @@ describe('/appeals/:appealId/document-folders/:folderId', () => {
 				.set('azureAdUserId', azureAdUserId);
 
 			expect(response.status).toEqual(200);
+
 			expect(response.body).toEqual({
 				folderId: savedFolder.id,
 				path: savedFolder.path,
 				caseId: savedFolder.caseId.toString(),
 				documents: [
 					{
-						id: savedFolder.documents[0].guid,
+						id: savedDocument.guid,
 						caseId: savedFolder.caseId,
 						folderId: savedFolder.id,
 						createdAt: expect.any(String),
@@ -55,11 +58,11 @@ describe('/appeals/:appealId/document-folders/:folderId', () => {
 						latestDocumentVersion: {
 							version: 1,
 							blobStorageContainer: '',
-							blobStoragePath: '',
+							blobStoragePath: savedDocument.latestDocumentVersion.blobStoragePath,
 							documentURI: '',
 							dateReceived: '',
-							size: '',
-							mime: '',
+							size: savedDocument.latestDocumentVersion.size.toString(),
+							mime: savedDocument.latestDocumentVersion.mime,
 							fileName: '',
 							originalFilename: '',
 							redactionStatus: '',
@@ -67,7 +70,7 @@ describe('/appeals/:appealId/document-folders/:folderId', () => {
 							stage: '',
 							virusCheckStatus: 'not_scanned'
 						},
-						name: savedFolder.documents[0].name,
+						name: savedDocument.name,
 						versionAudit: []
 					}
 				]
@@ -88,7 +91,7 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 
 			expect(response.status).toEqual(200);
 			expect(response.body).toEqual({
-				id: savedFolder.documents[0].guid,
+				id: savedDocument.guid,
 				caseId: savedFolder.caseId,
 				folderId: savedFolder.id,
 				createdAt: expect.any(String),
@@ -96,11 +99,11 @@ describe('/appeals/:appealId/documents/:documentId', () => {
 				latestDocumentVersion: {
 					version: 1,
 					blobStorageContainer: '',
-					blobStoragePath: '',
+					blobStoragePath: savedDocument.latestDocumentVersion.blobStoragePath,
 					documentURI: '',
 					dateReceived: '',
-					size: '',
-					mime: '',
+					size: savedDocument.latestDocumentVersion.size.toString(),
+					mime: savedDocument.latestDocumentVersion.mime,
 					fileName: '',
 					originalFilename: '',
 					redactionStatus: '',

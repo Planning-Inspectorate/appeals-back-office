@@ -631,87 +631,9 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-4"> Costs</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-4"> Contacts</span></h2>
                     </div>
                     <div id="accordion-default2-content-4" class="govuk-accordion__section-content">
-                        <table class="govuk-table">
-                            <thead class="govuk-table__head">
-                                <tr class="govuk-table__row">
-                                    <th scope="col" class="govuk-table__header">Documentation</th>
-                                    <th scope="col" class="govuk-table__header">Status</th>
-                                    <th scope="col" class="govuk-table__header govuk-!-text-align-right">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="govuk-table__body">
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                    <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/2/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                    <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/2/costs/appellant/withdrawal/upload-documents/2">Add<span class="govuk-visually-hidden"> Appellant withdrawal</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                    <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/2/costs/appellant/correspondence/upload-documents/3">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                    <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-lpa-application-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/2/costs/lpa/application/upload-documents/4">Add<span class="govuk-visually-hidden"> LPA application</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                    <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/2/costs/lpa/withdrawal/upload-documents/5">Add<span class="govuk-visually-hidden"> LPA withdrawal</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                    <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/2/costs/lpa/correspondence/upload-documents/6">Add<span class="govuk-visually-hidden"> LPA correspondence</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="govuk-accordion__section">
-                    <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-5"> Contacts</span></h2>
-                    </div>
-                    <div id="accordion-default2-content-5" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
                                 <dd class="govuk-summary-list__value">
@@ -751,9 +673,9 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-6"> Team</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-5"> Team</span></h2>
                     </div>
-                    <div id="accordion-default2-content-6" class="govuk-accordion__section-content">
+                    <div id="accordion-default2-content-5" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
                                 <dd class="govuk-summary-list__value">
@@ -762,7 +684,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -787,9 +709,9 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-7"> Case management</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-6"> Case management</span></h2>
                     </div>
-                    <div id="accordion-default2-content-7" class="govuk-accordion__section-content">
+                    <div id="accordion-default2-content-6" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
@@ -1223,7 +1145,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -1484,87 +1406,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Costs</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-4"> Contacts</span></h2>
                     </div>
                     <div id="accordion-default1-content-4" class="govuk-accordion__section-content">
-                        <table class="govuk-table">
-                            <thead class="govuk-table__head">
-                                <tr class="govuk-table__row">
-                                    <th scope="col" class="govuk-table__header">Documentation</th>
-                                    <th scope="col" class="govuk-table__header">Status</th>
-                                    <th scope="col" class="govuk-table__header govuk-!-text-align-right">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="govuk-table__body">
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-application-documentation">Appellant application</th>
-                                    <td class="govuk-table__cell appeal-costs-appellant-application-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-appellant-application-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-application" href="/appeals-service/appeal-details/1/costs/appellant/application/upload-documents/1">Add<span class="govuk-visually-hidden"> Appellant application</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-withdrawal-documentation">Appellant withdrawal</th>
-                                    <td class="govuk-table__cell appeal-costs-appellant-withdrawal-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-appellant-withdrawal-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-withdrawal" href="/appeals-service/appeal-details/1/costs/appellant/withdrawal/upload-documents/2">Add<span class="govuk-visually-hidden"> Appellant withdrawal</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-appellant-correspondence-documentation">Appellant correspondence</th>
-                                    <td class="govuk-table__cell appeal-costs-appellant-correspondence-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-appellant-correspondence-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-appellant-correspondence" href="/appeals-service/appeal-details/1/costs/appellant/correspondence/upload-documents/3">Add<span class="govuk-visually-hidden"> Appellant correspondence</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-lpa-application-documentation">LPA application</th>
-                                    <td class="govuk-table__cell appeal-costs-lpa-application-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-lpa-application-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-application" href="/appeals-service/appeal-details/1/costs/lpa/application/upload-documents/4">Add<span class="govuk-visually-hidden"> LPA application</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-lpa-withdrawal-documentation">LPA withdrawal</th>
-                                    <td class="govuk-table__cell appeal-costs-lpa-withdrawal-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-lpa-withdrawal-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-withdrawal" href="/appeals-service/appeal-details/1/costs/lpa/withdrawal/upload-documents/5">Add<span class="govuk-visually-hidden"> LPA withdrawal</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr class="govuk-table__row">
-                                    <th scope="row" class="govuk-table__header appeal-costs-lpa-correspondence-documentation">LPA correspondence</th>
-                                    <td class="govuk-table__cell appeal-costs-lpa-correspondence-status">No documents available</td>
-                                    <td class="govuk-table__cell appeal-costs-lpa-correspondence-actions govuk-!-text-align-right">
-                                        <ul class="govuk-summary-list__actions-list">
-                                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" data-cy="add-costs-lpa-correspondence" href="/appeals-service/appeal-details/1/costs/lpa/correspondence/upload-documents/6">Add<span class="govuk-visually-hidden"> LPA correspondence</span></a>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="govuk-accordion__section">
-                    <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Contacts</span></h2>
-                    </div>
-                    <div id="accordion-default1-content-5" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row appeal-appellant"><dt class="govuk-summary-list__key"> Appellant</dt>
                                 <dd class="govuk-summary-list__value">
@@ -1604,9 +1448,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Team</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Team</span></h2>
                     </div>
-                    <div id="accordion-default1-content-6" class="govuk-accordion__section-content">
+                    <div id="accordion-default1-content-5" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
                                 <dd class="govuk-summary-list__value">
@@ -1615,7 +1459,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -1640,9 +1484,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-7"> Case management</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case management</span></h2>
                     </div>
-                    <div id="accordion-default1-content-7" class="govuk-accordion__section-content">
+                    <div id="accordion-default1-content-6" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
@@ -2073,7 +1917,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -2542,7 +2386,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -3011,7 +2855,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -3471,7 +3315,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -3931,7 +3775,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -4405,7 +4249,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -4852,7 +4696,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -5316,7 +5160,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -5866,7 +5710,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -6325,7 +6169,7 @@ exports[`appeal-details GET /:appealId Team section should render the case-team 
             <li>Not assigned</li>
         </ul>
     </dd>
-    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
         data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
     </dd>
 </div>"
@@ -6339,7 +6183,7 @@ exports[`appeal-details GET /:appealId Team section should render the case-team 
             <li>test@emai.com</li>
         </ul>
     </dd>
-    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
         data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
     </dd>
 </div>"
@@ -6888,7 +6732,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -7342,7 +7186,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -7790,7 +7634,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -8251,7 +8095,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -8701,7 +8545,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -9162,7 +9006,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
                                         <li>test@emai.com</li>
                                     </ul>
                                 </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                     data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                 </dd>
                             </div>
@@ -9676,7 +9520,7 @@ exports[`appeal-details should not render a back button 1`] = `
                                                     <li>test@emai.com</li>
                                                 </ul>
                                             </dd>
-                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2//case-team"
+                                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
                                                 data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
                                             </dd>
                                         </div>

@@ -4359,3 +4359,21 @@ export const template = {
 		`</div>`
 	].join('\n')
 };
+
+export const caseTeams = [
+	{
+		id: 1,
+		email: 'temp@email.com',
+		name: 'temp'
+	},
+	{
+		id: 2,
+		email: 'temp2@email.com',
+		name: 'temp2'
+	},
+	{
+		id: 3,
+		email: 'temp3@email.com',
+		name: 'temp3'
+	}
+];

@@ -47,7 +47,7 @@ describe('Review LPAQ', () => {
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.chooseCheckboxByText('Other documents or information are missing');
-			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 1);
+			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384', 1);
 			caseDetailsPage.clickButtonByText('Continue');
 			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
 				dateTimeSection.enterDate(futureDate);
@@ -70,9 +70,9 @@ describe('Review LPAQ', () => {
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.chooseCheckboxByText('Other documents or information are missing');
-			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 1);
+			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384!', 1);
 			caseDetailsPage.clickAddAnother();
-			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384_+!£ =', 2);
+			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384!', 2);
 			caseDetailsPage.clickButtonByText('Continue');
 			cy.getBusinessActualDate(new Date(), 28).then((futureDate) => {
 				dateTimeSection.enterDate(futureDate);

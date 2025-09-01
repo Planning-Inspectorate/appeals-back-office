@@ -47,28 +47,31 @@ describe('infrastructure-levy-adopted-date', () => {
 	});
 
 	describe('POST /change', () => {
-		it('should re-direct to the LPA Questionnaire page if the date is valid', async () => {
-			const validData = {
-				'levy-adopted-date-day': '11',
-				'levy-adopted-date-month': '06',
-				'levy-adopted-date-year': '2021'
-			};
+		it('should navigate to the LPA Questionnaire page when a valid levy adoption date is provided', async () => {
+			const monthVariants = ['06', 'Jun', 'June'];
+			for (const month of monthVariants) {
+				const validData = {
+					'levy-adopted-date-day': '11',
+					'levy-adopted-date-month': month,
+					'levy-adopted-date-year': '2021'
+				};
 
-			nock('http://test/')
-				.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
-				.reply(200, lpaQuestionnaireDataNotValidated);
-			nock('http://test/')
-				.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
-				.reply(200, {});
+				nock('http://test/')
+					.get(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+					.reply(200, lpaQuestionnaireDataNotValidated);
+				nock('http://test/')
+					.patch(`/appeals/${appealId}/lpa-questionnaires/${lpaQuestionnaireId}`)
+					.reply(200, {});
 
-			const response = await request
-				.post(`${baseUrl}/infrastructure-levy-adopted-date/change`)
-				.send(validData);
+				const response = await request
+					.post(`${baseUrl}/infrastructure-levy-adopted-date/change`)
+					.send(validData);
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				`Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/${lpaQuestionnaireId}`
-			);
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					`Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/${lpaQuestionnaireId}`
+				);
+			}
 		});
 
 		it('should re-render the levy adoption date change page if day is not valid', async () => {
@@ -117,7 +120,10 @@ describe('infrastructure-levy-adopted-date', () => {
 		it('should re-render the levy adoption date change page with an error message if the provided date month is invalid', async () => {
 			const testCases = [
 				{ value: '', expectedError: 'Date must include a month' },
-				{ value: 'a', expectedError: 'Date month must be a number' },
+				{
+					value: 'a',
+					expectedError: 'Date must be a real date'
+				},
 				{ value: '0', expectedError: 'Date month must be between 1 and 12' },
 				{ value: '13', expectedError: 'Date month must be between 1 and 12' }
 			];

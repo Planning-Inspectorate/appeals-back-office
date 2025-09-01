@@ -1,10 +1,16 @@
 /**
  *
  * @param {import('got').Got} apiClient
+ * @param {boolean} filterEnabled
  * @returns {Promise<import('#appeals/appeals.types.js').AppealType[]>}
  */
-export function getAppealTypes(apiClient) {
-	return apiClient.get(`appeals/appeal-types`).json();
+export function getAppealTypes(apiClient, filterEnabled = false) {
+	let url = 'appeals/appeal-types';
+	if (filterEnabled) {
+		url = url.concat('?filterEnabled=true');
+	}
+
+	return apiClient.get(url).json();
 }
 
 /**
@@ -79,4 +85,23 @@ export async function postAppealTransferConfirmation(
  */
 export async function checkAppealReferenceExistsInHorizon(apiClient, horizonReference) {
 	return await apiClient.get(`appeals/transferred-appeal/${horizonReference}`).json();
+}
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {string} appealTypeId
+ * @param {string} appealId
+ * @returns {Promise<string>}
+ */
+export async function getNoResubmitAppealRequestRedirectUrl(apiClient, appealTypeId, appealId) {
+	const appealTypes = await getAppealTypes(apiClient, true);
+
+	const appealTypeActive = appealTypes.some(
+		(appealType) => appealType.id === parseInt(appealTypeId)
+	);
+
+	if (appealTypeActive) {
+		return `/appeals-service/appeal-details/${appealId}/change-appeal-type/update-appeal`;
+	}
+	return `/appeals-service/appeal-details/${appealId}/change-appeal-type/transfer-appeal`;
 }

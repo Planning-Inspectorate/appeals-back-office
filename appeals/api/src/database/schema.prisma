@@ -313,6 +313,11 @@ model AppellantCase {
   siteGridReferenceEasting                 String?
   siteGridReferenceNorthing                String?
   typeOfPlanningApplication                String?
+
+  //Cas adverts fields
+  highwayLand         Boolean?
+  advertInPosition    Boolean?
+  landownerPermission Boolean?
 }
 
 /// AppellantCaseValidationOutcome model

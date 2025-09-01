@@ -12,6 +12,12 @@ import {
 	inspectorDecisionData
 } from '#testing/appeals/appeals.js';
 import { cloneDeep } from 'lodash-es';
+import {
+	CASE_OUTCOME_ALLOWED,
+	CASE_OUTCOME_DISMISSED,
+	CASE_OUTCOME_INVALID,
+	CASE_OUTCOME_SPLIT_DECISION
+} from '@pins/appeals/constants/support.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -137,7 +143,7 @@ describe('issue-decision', () => {
 				it(`should render the 'decision' page for the child with the expected content`, async () => {
 					issueDecisionLeadResponse = await request
 						.post(`${baseUrl}/3/issue-decision/decision`)
-						.send({ decision: 'allowed' });
+						.send({ decision: CASE_OUTCOME_ALLOWED });
 
 					const response = await request.get(`${baseUrl}/3${issueDecisionPath}/4${decisionPath}`);
 					const element = parseHtml(response.text);
@@ -186,7 +192,7 @@ describe('issue-decision', () => {
 		it(`should redirect to the decision letter upload page, if the decision is 'Allowed'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: 'Allowed' })
+				.send({ decision: CASE_OUTCOME_ALLOWED })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
@@ -197,7 +203,7 @@ describe('issue-decision', () => {
 		it(`should redirect to the decision letter upload page, if the decision is 'Dismissed'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: 'Dismissed' })
+				.send({ decision: CASE_OUTCOME_DISMISSED })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
@@ -208,7 +214,7 @@ describe('issue-decision', () => {
 		it(`should redirect to the decision letter upload page, if the decision is 'Split'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: 'Split' })
+				.send({ decision: CASE_OUTCOME_SPLIT_DECISION })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
@@ -219,7 +225,7 @@ describe('issue-decision', () => {
 		it(`should send the decision details for invalid, and redirect to the invalid reason page, if the decision is 'Invalid'`, async () => {
 			const response = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: 'Invalid', invalidReason: 'my invalid reason' })
+				.send({ decision: CASE_OUTCOME_INVALID, invalidReason: 'my invalid reason' })
 				.expect(302);
 
 			expect(response.headers.location).toBe(
@@ -655,7 +661,7 @@ describe('issue-decision', () => {
 
 				issueDecisionResponse = await request
 					.post(`${baseUrl}/1/issue-decision/decision`)
-					.send({ decision: 'Allowed' });
+					.send({ decision: CASE_OUTCOME_ALLOWED });
 
 				uploadDecisionLetterResponse = await request
 					.post(`${baseUrl}/1${issueDecisionPath}/${decisionLetterUploadPath}`)
@@ -747,7 +753,7 @@ describe('issue-decision', () => {
 
 				issueDecisionLeadResponse = await request
 					.post(`${baseUrl}/1/issue-decision/decision`)
-					.send({ decision: 'allowed' });
+					.send({ decision: CASE_OUTCOME_ALLOWED });
 
 				issueDecisionChildResponse = await request
 					.post(`${baseUrl}/1/issue-decision/2/decision`)
@@ -848,7 +854,7 @@ describe('issue-decision', () => {
 
 			issueDecisionResponse = await request
 				.post(`${baseUrl}/1/issue-decision/decision`)
-				.send({ decision: 'Allowed' });
+				.send({ decision: CASE_OUTCOME_ALLOWED });
 		});
 		afterEach(teardown);
 

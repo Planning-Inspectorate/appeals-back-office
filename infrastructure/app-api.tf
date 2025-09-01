@@ -72,6 +72,7 @@ module "app_api" {
     FEATURE_FLAG_CAS            = var.apps_config.featureFlags.featureFlagCAS
     FEATURE_FLAG_CAS_ADVERT     = var.apps_config.featureFlags.featureFlagCasAdvert
     FEATURE_FLAG_NET_RESIDENCE  = var.apps_config.featureFlags.featureFlagNetResidence
+    FEATURE_FLAG_ADVERTISEMENT  = var.apps_config.featureFlags.featureFlagAdvertisement
   }
 
   providers = {

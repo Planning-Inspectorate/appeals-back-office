@@ -108,6 +108,7 @@ export default {
 		addressId: null
 	},
 	assignedTeam: {
+		id: 1,
 		email: 'temp@email.com',
 		name: 'temp'
 	},
