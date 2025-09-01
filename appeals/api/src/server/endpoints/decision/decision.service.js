@@ -141,6 +141,7 @@ export const publishChildDecision = async (appealId, outcome, documentDate, azur
  * @param {string} siteAddress
  * @param {string} azureAdUserId
  * @param {string} decisionType
+ * @param {boolean}skipNotifies
  * @returns
  */
 export const publishCostsDecision = async (
@@ -148,41 +149,44 @@ export const publishCostsDecision = async (
 	notifyClient,
 	siteAddress,
 	azureAdUserId,
-	decisionType
+	decisionType,
+	skipNotifies
 ) => {
-	const personalisation = {
-		appeal_reference_number: appeal.reference,
-		site_address: siteAddress,
-		lpa_reference: appeal.applicationReference || '',
-		front_office_url: environment.FRONT_OFFICE_URL || ''
-	};
-	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-	const lpaEmail = appeal.lpa?.email || '';
-
 	const costDecisionDetails = getCostDecisionDetails(decisionType);
 	if (!costDecisionDetails) {
 		throw new Error('Unable to parse decision type for cost decision details.');
 	}
 	const { recipientEmailTemplate, lpaEmailTemplate, auditTrailDetails } = costDecisionDetails;
 
-	if (recipientEmail) {
-		await notifySend({
-			azureAdUserId,
-			templateName: recipientEmailTemplate,
-			notifyClient,
-			recipientEmail,
-			personalisation
-		});
-	}
+	if (!skipNotifies) {
+		const personalisation = {
+			appeal_reference_number: appeal.reference,
+			site_address: siteAddress,
+			lpa_reference: appeal.applicationReference || '',
+			front_office_url: environment.FRONT_OFFICE_URL || ''
+		};
+		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+		const lpaEmail = appeal.lpa?.email || '';
 
-	if (lpaEmail) {
-		await notifySend({
-			azureAdUserId,
-			templateName: lpaEmailTemplate,
-			notifyClient,
-			recipientEmail: lpaEmail,
-			personalisation
-		});
+		if (recipientEmail) {
+			await notifySend({
+				azureAdUserId,
+				templateName: recipientEmailTemplate,
+				notifyClient,
+				recipientEmail,
+				personalisation
+			});
+		}
+
+		if (lpaEmail) {
+			await notifySend({
+				azureAdUserId,
+				templateName: lpaEmailTemplate,
+				notifyClient,
+				recipientEmail: lpaEmail,
+				personalisation
+			});
+		}
 	}
 
 	await createAuditTrail({
