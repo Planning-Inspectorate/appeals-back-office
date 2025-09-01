@@ -238,52 +238,52 @@ export const happyPathHelper = {
 		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
 	},
 
-	issueDecision(caseRef, decision) {
+	issueDecision(caseRef, decision, appellantCostsBool = true, lpaCostsBool = true) {
 		caseDetailsPage.clickIssueDecision();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(decision));
-		caseDetailsPage.clickButtonByText('Continue');
-		fileUploader.uploadFiles(sampleFiles.pdf);
-		caseDetailsPage.clickButtonByText('Continue');
+
+		if (decision === 'Invalid') {
+			caseDetailsPage.fillTextArea('The appeal is invalid because of X reason', 0);
+			caseDetailsPage.clickButtonByText('Continue');
+		} else {
+			caseDetailsPage.clickButtonByText('Continue');
+			fileUploader.uploadFiles(sampleFiles.pdf);
+			caseDetailsPage.clickButtonByText('Continue');
+		}
 
 		//Appellant costs
-		caseDetailsPage.selectRadioButtonByValue('Yes');
-		caseDetailsPage.clickButtonByText('Continue');
-		fileUploader.uploadFiles(sampleFiles.pdf);
-		caseDetailsPage.clickButtonByText('Continue');
+		if (appellantCostsBool) {
+			caseDetailsPage.selectRadioButtonByValue('Yes');
+			caseDetailsPage.clickButtonByText('Continue');
+			fileUploader.uploadFiles(sampleFiles.pdf);
+			caseDetailsPage.clickButtonByText('Continue');
+		} else {
+			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+		}
 
 		//LPA costs
-		caseDetailsPage.selectRadioButtonByValue('Yes');
-		caseDetailsPage.clickButtonByText('Continue');
-		fileUploader.uploadFiles(sampleFiles.pdf);
-		caseDetailsPage.clickButtonByText('Continue');
+		if (lpaCostsBool) {
+			caseDetailsPage.selectRadioButtonByValue('Yes');
+			caseDetailsPage.clickButtonByText('Continue');
+			fileUploader.uploadFiles(sampleFiles.pdf);
+			caseDetailsPage.clickButtonByText('Continue');
+		} else {
+			caseDetailsPage.selectRadioButtonByValue('No');
+			caseDetailsPage.clickButtonByText('Continue');
+		}
 
 		//CYA
 		caseDetailsPage.clickButtonByText('Issue decision');
 
 		//Banner & inset text
-		caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
-		caseDetailsPage.checkStatusOfCase('Complete', 0);
-	},
-
-	issueDecisionWithoutCosts(caseRef, decision) {
-		caseDetailsPage.clickIssueDecision();
-		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(decision));
-		caseDetailsPage.clickButtonByText('Continue');
-		fileUploader.uploadFiles(sampleFiles.pdf);
-		caseDetailsPage.clickButtonByText('Continue');
-
-		//Dont issue appellant & LPA costs
-		caseDetailsPage.selectRadioButtonByValue('No');
-		caseDetailsPage.clickButtonByText('Continue');
-		caseDetailsPage.selectRadioButtonByValue('No');
-		caseDetailsPage.clickButtonByText('Continue');
-
-		//CYA
-		caseDetailsPage.clickButtonByText('Issue decision');
-
-		//Banner & inset text
-		caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
-		caseDetailsPage.checkDecisionOutcome(decision);
+		if (decision === 'Invalid') {
+			caseDetailsPage.validateBannerMessage('Success', 'Appeal marked as invalid');
+			caseDetailsPage.checkStatusOfCase('Invalid', 0);
+		} else {
+			caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
+			caseDetailsPage.checkStatusOfCase('Complete', 0);
+		}
 	},
 
 	issueAppellantCostsDecision(caseRef) {
