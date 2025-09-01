@@ -1603,6 +1603,24 @@ export const appealTypesData = [
 	}
 ];
 
+export const procedureTypesData = [
+	{
+		id: 1,
+		name: 'Written',
+		key: 'written'
+	},
+	{
+		id: 2,
+		name: 'Hearing',
+		key: 'hearing'
+	},
+	{
+		id: 3,
+		name: 'Inquiry',
+		key: 'inquiry'
+	}
+];
+
 export const inspectorDecisionData = {
 	outcome: 'dismissed',
 	documentId: 'e1e90a49-fab3-44b8-a21a-bb73af089f6b',

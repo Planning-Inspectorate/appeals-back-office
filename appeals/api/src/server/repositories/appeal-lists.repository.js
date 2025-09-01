@@ -21,6 +21,7 @@ import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
+ * @param {number} procedureTypeId
  * @param {number} [pageNumber]
  * @param {number} [pageSize]
  */
@@ -34,6 +35,7 @@ const getAllAppeals = async (
 	isGreenBelt,
 	appealTypeId,
 	assignedTeamId,
+	procedureTypeId,
 	pageNumber,
 	pageSize
 ) => {
@@ -56,6 +58,7 @@ const getAllAppeals = async (
 		isGreenBelt,
 		appealTypeId,
 		assignedTeamId
+		procedureTypeId
 	);
 
 	const appeals = await databaseConnector.appeal.findMany({
@@ -105,6 +108,7 @@ const getAllAppeals = async (
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
+ * @param {number} procedureTypeId
  */
 const getAllAppealsCount = async (
 	searchTerm,
@@ -115,7 +119,8 @@ const getAllAppealsCount = async (
 	caseOfficerId,
 	isGreenBelt,
 	appealTypeId,
-	assignedTeamId
+	assignedTeamId,
+	procedureTypeId
 ) => {
 	const where = buildAllAppealsWhereClause(
 		searchTerm,
@@ -126,7 +131,8 @@ const getAllAppealsCount = async (
 		caseOfficerId,
 		isGreenBelt,
 		appealTypeId,
-		assignedTeamId
+		assignedTeamId,
+		procedureTypeId
 	);
 
 	const count = await databaseConnector.appeal.count({ where });
@@ -144,6 +150,7 @@ const getAllAppealsCount = async (
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
+ * @param {number} procedureTypeId
  */
 const getAppealsWithoutIncludes = async (
 	searchTerm,
@@ -155,6 +162,7 @@ const getAppealsWithoutIncludes = async (
 	isGreenBelt,
 	appealTypeId,
 	assignedTeamId
+	procedureTypeId
 ) => {
 	const where = buildAllAppealsWhereClause(
 		searchTerm,
@@ -166,6 +174,7 @@ const getAppealsWithoutIncludes = async (
 		isGreenBelt,
 		appealTypeId,
 		assignedTeamId
+		procedureTypeId
 	);
 
 	return databaseConnector.appeal.findMany({ where });
@@ -181,6 +190,7 @@ const getAppealsWithoutIncludes = async (
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
  * @param {number} assignedTeamId
+ * @param {number} procedureTypeId
  */
 const buildAllAppealsWhereClause = (
 	searchTerm,
@@ -192,6 +202,7 @@ const buildAllAppealsWhereClause = (
 	isGreenBelt,
 	appealTypeId,
 	assignedTeamId
+	procedureTypeId
 ) => {
 	return {
 		appealStatus: {
@@ -253,6 +264,9 @@ const buildAllAppealsWhereClause = (
 		}),
 		...(!!assignedTeamId && {
 			assignedTeamId
+		}),
+		...(!!procedureTypeId && {
+			procedureTypeId
 		})
 	};
 };

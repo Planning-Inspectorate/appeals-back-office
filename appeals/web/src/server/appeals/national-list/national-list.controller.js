@@ -2,7 +2,7 @@ import logger from '#lib/logger.js';
 import config from '#environment/config.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { nationalListPage } from './national-list.mapper.js';
-import { getAppeals, getAppealTypes } from './national-list.service.js';
+import { getAppealProcedureTypes, getAppeals, getAppealTypes } from './national-list.service.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { mapPagination } from '#lib/mappers/index.js';
 import { stripQueryString } from '#lib/url-utilities.js';
@@ -41,6 +41,7 @@ export const viewNationalList = async (request, response) => {
 	const greenBeltFilter = query.greenBeltFilter && String(query.greenBeltFilter);
 	const appealTypeFilter = query.appealTypeFilter && String(query.appealTypeFilter);
 	const caseTeamFilter = query.caseTeamFilter && String(query.caseTeamFilter);
+	const appealProcedureFilter = query.appealProcedureFilter && String(query.appealProcedureFilter);
 	let searchTerm = query?.searchTerm ? String(query.searchTerm).trim() : '';
 	let searchTermError = '';
 
@@ -51,6 +52,7 @@ export const viewNationalList = async (request, response) => {
 	}
 
 	const appealTypes = await getAppealTypes(request.apiClient);
+	const appealProcedureTypes = await getAppealProcedureTypes(request.apiClient);
 
 	const urlWithoutQuery = stripQueryString(originalUrl);
 	const paginationParameters = getPaginationParametersFromQuery(query);
@@ -65,6 +67,7 @@ export const viewNationalList = async (request, response) => {
 		greenBeltFilter,
 		appealTypeFilter,
 		caseTeamFilter,
+		appealProcedureFilter,
 		paginationParameters.pageNumber,
 		paginationParameters.pageSize
 	).catch((error) => logger.error(error));
@@ -89,6 +92,7 @@ export const viewNationalList = async (request, response) => {
 		appeals,
 		appealTypes,
 		caseTeams,
+		appealProcedureTypes,
 		urlWithoutQuery,
 		searchTerm,
 		searchTermError,
@@ -99,6 +103,7 @@ export const viewNationalList = async (request, response) => {
 		inspectorFilter,
 		appealTypeFilter,
 		caseTeamFilter,
+		appealProcedureFilter,
 		greenBeltFilter
 	);
 
