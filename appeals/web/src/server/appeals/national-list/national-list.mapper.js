@@ -16,6 +16,7 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
  * @param {{azureAdUserId: string, id: number, name: string}[]} users
  * @param {AppealList|void} appeals
  * @param {AppealType[]} appealTypes
+ * @param {import('@pins/appeals.api').Api.CaseTeams} caseTeams
  * @param {string} urlWithoutQuery
  * @param {string|undefined} searchTerm
  * @param {string|undefined} searchTermError
@@ -25,6 +26,7 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
  * @param {string|undefined} caseOfficerFilter
  * @param {string|undefined} inspectorFilter
  * @param {string|undefined} appealTypeFilter
+ * @param {string|undefined} caseTeamFilter
  * @param {string|undefined} greenBeltFilter
  * @returns {PageContent}
  */
@@ -33,6 +35,7 @@ export function nationalListPage(
 	users,
 	appeals,
 	appealTypes,
+	caseTeams,
 	urlWithoutQuery,
 	searchTerm,
 	searchTermError,
@@ -42,11 +45,13 @@ export function nationalListPage(
 	caseOfficerFilter,
 	inspectorFilter,
 	appealTypeFilter,
+	caseTeamFilter,
 	greenBeltFilter
 ) {
 	const filtersApplied =
 		greenBeltFilter ||
 		appealTypeFilter ||
+		caseTeamFilter ||
 		[
 			appealStatusFilter,
 			inspectorStatusFilter,
@@ -131,6 +136,19 @@ export function nationalListPage(
 				value: id.toString(),
 				selected: appealTypeFilter === id.toString()
 			}))
+	];
+
+	const caseTeamFilterItemsArray = [
+		{
+			text: 'All',
+			value: 'all',
+			selected: caseTeamFilter === 'all'
+		},
+		...caseTeams.map(({ name, id }) => ({
+			text: name,
+			value: id,
+			selected: caseTeamFilter === id?.toString()
+		}))
 	];
 
 	let searchResultsHeader = '';
@@ -353,6 +371,20 @@ export function nationalListPage(
 							value: 'all',
 							items: caseOfficerFilterItemsArray,
 							attributes: { 'data-cy': 'filter-by-case-officer' }
+						}
+					},
+					{
+						type: 'select',
+						parameters: {
+							name: 'caseTeamFilter',
+							id: 'case-team-filter',
+							label: {
+								classes: 'govuk-!-font-weight-bold',
+								text: 'Case team'
+							},
+							value: 'all',
+							items: caseTeamFilterItemsArray,
+							attributes: { 'data-cy': 'filter-by-case-team' }
 						}
 					},
 					{

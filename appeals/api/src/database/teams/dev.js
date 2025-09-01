@@ -2,16 +2,16 @@ export const teamsToCreate = [
 	{ id: 1, name: 'Ops Test', email: 'opstest@planninginspectorate.co.uk' },
 	{ id: 2, name: 'DevTeam1', email: 'devteam1@planninginspectorate.gov.uk' },
 	{ id: 3, name: 'DevTeam2', email: 'devteam2@planninginspectorate.gov.uk' },
-	{ id: 6, name: 'Major Casework Officer', email: 'majorcasework@planninginspectorate.gov.uk' },
+	{ id: 6, name: 'Major Casework Officer', email: 'ECAT@planninginspectorate.gov.uk' },
 	{
 		id: 7,
 		name: 'Enforcement Appeals Officer',
-		email: 'enforcementappeals@planninginspectorate.gov.uk'
+		email: null
 	}
 ];
 
 /**
- * @type {Record<string, number>}
+ * @type {Record<string, number|null>}
  */
 export const lpaTeamAssignments = {
 	// Ops Test
@@ -20,7 +20,7 @@ export const lpaTeamAssignments = {
 
 	// DevTeam1
 	MAID: 2,
-	BARN: 2,
+	BARN: null,
 	WORT: 2,
 	DORS: 2,
 

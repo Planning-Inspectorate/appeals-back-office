@@ -104,9 +104,9 @@ export function checkAndConfirmPage(appealId, team, appealReference) {
 }
 
 /**
- *
  * @param {(import('@pins/appeals.api').Api.CaseTeam)} team
+ * @returns {string} The formatted team name and email.
  */
 export const mapTeamText = (team) => {
-	return `${team.name}<br>${team.email}`;
+	return team.email ? `${team.name}<br>${team.email}` : `${team.name}`;
 };

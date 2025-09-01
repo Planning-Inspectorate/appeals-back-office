@@ -131,6 +131,7 @@ const mapAppeals = (appeals) =>
  * @param {number} caseOfficerId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
+ * @param {number} assignedTeamId
  * @returns {Promise<{mappedStatuses: string[], statusesInNationalList: string[], mappedLPAs: any[], mappedInspectors: any[], mappedCaseOfficers: any[], mappedAppeals: any[], itemCount: number}>}
  */
 const retrieveAppealListData = async (
@@ -143,9 +144,10 @@ const retrieveAppealListData = async (
 	inspectorId,
 	caseOfficerId,
 	isGreenBelt,
-	appealTypeId
+	appealTypeId,
+	assignedTeamId
 ) => {
-	/** @type {[string, string, string, string, number, number, boolean, number]} */
+	/** @type {[string, string, string, string, number, number, boolean, number,number]} */
 	const appealFilters = [
 		searchTerm,
 		status,
@@ -154,7 +156,8 @@ const retrieveAppealListData = async (
 		inspectorId ? Number(inspectorId) : 0,
 		caseOfficerId ? Number(caseOfficerId) : 0,
 		isGreenBelt,
-		appealTypeId || 0
+		appealTypeId || 0,
+		assignedTeamId || 0
 	];
 	const appeals = await appealListRepository.getAllAppeals(...appealFilters, pageNumber, pageSize);
 	const allAppeals = await appealListRepository.getAppealsWithoutIncludes(...appealFilters);

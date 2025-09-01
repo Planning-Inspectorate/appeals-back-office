@@ -6175,6 +6175,19 @@ exports[`appeal-details GET /:appealId Team section should render the case-team 
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Team section should render the case-team section for appeal with not assigned displayed when only team name exists" 1`] = `
+"<div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
+    <dd class="govuk-summary-list__value">
+        <ul class="govuk-list">
+            <li>Just a name</li>
+        </ul>
+    </dd>
+    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
+        data-cy="assign-case-team">Assign<span class="govuk-visually-hidden"> Case team</span></a>
+    </dd>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Team section should render the case-team section for appeal with team name and email displayed" 1`] = `
 "<div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
     <dd class="govuk-summary-list__value">

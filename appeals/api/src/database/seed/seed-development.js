@@ -1,5 +1,6 @@
 import { databaseConnector } from '../../server/utils/database-connector.js';
 import { lpaTeamAssignments, teamsToCreate } from '../teams/dev.js';
+import { addAssignedTeamIdToAppeal } from './add-assigned-team-id.js';
 import { seedStaticData } from './data-static.js';
 import { seedTestData } from './data-test.js';
 import { localPlanningDepartmentList } from './LPAs/dev.js';
@@ -22,6 +23,7 @@ const seedDevelopment = async () => {
 		await seedTeams(databaseConnector, teamsToCreate);
 		const mappedLPAs = mapLpasToTeams(localPlanningDepartmentList, lpaTeamAssignments);
 		await seedLPAs(databaseConnector, mappedLPAs);
+		await addAssignedTeamIdToAppeal(databaseConnector);
 	} catch (error) {
 		console.error(error);
 		throw error;
