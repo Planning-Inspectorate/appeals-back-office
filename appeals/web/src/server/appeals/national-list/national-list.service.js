@@ -13,6 +13,7 @@ import { paginationDefaultSettings } from '../appeal.constants.js';
  * @param {string|undefined} greenBeltFilter
  * @param {string|undefined} appealTypeFilter
  * @param {string|undefined} caseTeamFilter
+ * @param {string|undefined} appealProcedureFilter
  * @param {number} pageNumber
  * @param {number} pageSize
  * @returns {Promise<AppealList>}
@@ -28,6 +29,7 @@ export const getAppeals = (
 	greenBeltFilter,
 	appealTypeFilter,
 	caseTeamFilter,
+	appealProcedureFilter,
 	pageNumber = paginationDefaultSettings.firstPageNumber,
 	pageSize = paginationDefaultSettings.pageSize
 ) => {
@@ -72,6 +74,10 @@ export const getAppeals = (
 		urlAppendix += `&assignedTeamId=${caseTeamFilter}`;
 	}
 
+	if (appealProcedureFilter && appealProcedureFilter !== 'all') {
+		urlAppendix += `&procedureTypeId=${appealProcedureFilter}`;
+	}
+
 	return apiClient
 		.get(`appeals?pageNumber=${pageNumber}&pageSize=${pageSize}${urlAppendix}`)
 		.json();
@@ -84,4 +90,13 @@ export const getAppeals = (
  */
 export function getAppealTypes(apiClient) {
 	return apiClient.get(`appeals/appeal-types`).json();
+}
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @returns {Promise<any[]>}
+ */
+export function getAppealProcedureTypes(apiClient) {
+	return apiClient.get(`appeals/procedure-types`).json();
 }

@@ -5,7 +5,8 @@ import {
 	activeDirectoryUsersData,
 	appealsNationalList,
 	appealTypesData,
-	caseTeams
+	caseTeams,
+	procedureTypesData
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import usersService from '#appeals/appeal-users/users-service.js';
@@ -52,6 +53,7 @@ describe('national-list', () => {
 
 		nock('http://test/').get('/appeals/appeal-types').reply(200, appealTypesData);
 		nock('http://test/').get('/appeals/case-teams').reply(200, caseTeams);
+		nock('http://test/').get('/appeals/procedure-types').reply(200, procedureTypesData);
 
 		// @ts-ignore
 		usersService.getUserById = jest
@@ -131,6 +133,17 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('temp</option>');
 			expect(unprettifiedElement.innerHTML).toContain('temp2</option>');
 			expect(unprettifiedElement.innerHTML).toContain('temp3</option>');
+		});
+
+		it('should render correct appeal procedure dropdown in filters', async () => {
+			nock('http://test/').get('/appeals?pageNumber=1&pageSize=30').reply(200, appealsNationalList);
+
+			const response = await request.get(baseUrl);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Hearing</option>');
+			expect(unprettifiedElement.innerHTML).toContain('Inquiry</option>');
+			expect(unprettifiedElement.innerHTML).toContain('Written</option>');
 		});
 
 		it('should render national list - search term', async () => {
@@ -356,7 +369,6 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Apply filters</button>');
 			expect(unprettifiedElement.innerHTML).toContain('Clear filters</a>');
 		});
-
 		it('should render national list - case team filter applied', async () => {
 			nock('http://test/')
 				.get('/appeals?pageNumber=1&pageSize=30&assignedTeamId=1')
@@ -384,6 +396,39 @@ describe('national-list', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Case team</label>');
 			expect(unprettifiedElement.innerHTML).toContain(
 				'<select class="govuk-select" id="case-team-filter" name="caseTeamFilter" data-cy="filter-by-case-team">'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('<option value="1" selected');
+			expect(unprettifiedElement.innerHTML).toContain('Apply filters</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Clear filters</a>');
+		});
+
+		it('should render national list - appeal procedure type filter applied', async () => {
+			nock('http://test/')
+				.get('/appeals?pageNumber=1&pageSize=30&procedureTypeId=1')
+				.reply(200, {
+					itemCount: 1,
+					items: [appealsNationalList.items[0]],
+					statuses,
+					lpas,
+					inspectors,
+					caseOfficers,
+					page: 1,
+					pageCount: 0,
+					pageSize: 30
+				});
+
+			const response = await request.get(`${baseUrl}?appealProcedureFilter=1`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Search all cases</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('1 result (filters applied)</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal procedure</label>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<select class="govuk-select" id="appeal-procedure-filter" name="appealProcedureFilter"'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('<option value="1" selected');
 			expect(unprettifiedElement.innerHTML).toContain('Apply filters</button>');
