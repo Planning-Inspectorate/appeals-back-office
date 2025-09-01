@@ -1,21 +1,21 @@
 // @ts-nocheck
 const { defineConfig } = require('cypress');
-const { azureSignIn } = require('./cypress/support/login');
 const baseConfig = require('./cypress.config');
 
 require('dotenv').config();
 
-const app = process.env.APP;
+// use backoffice defaults if not set
+if (!baseConfig.e2e.baseUrl) {
+	baseConfig.e2e.baseUrl = 'https://localhost:8080/';
+}
 
-const e2eOverride = {
-	baseUrl: 'https://localhost:8080/',
-	apiBaseUrl: 'http://localhost:3000/'
-};
+if (!baseConfig.e2e.apiBaseUrl) {
+	baseConfig.e2e.apiBaseUrl = 'http://localhost:3000/';
+}
 
 module.exports = defineConfig({
 	e2e: {
-		...baseConfig.e2e,
-		...e2eOverride
+		...baseConfig.e2e
 	},
 	env: {
 		...baseConfig.env
