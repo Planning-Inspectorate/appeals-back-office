@@ -237,7 +237,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
             class="govuk-back-link">Back</a>
             <main class="govuk-main-wrapper" id="main-content">
                 <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 1234567</span>
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 1234765</span>
                         <h1 class="govuk-heading-l">Check details and add linked appeal</h1>
                     </div>
                 </div>
@@ -253,7 +253,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                                 </dd>
                             </div>
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which is the lead appeal?</dt>
-                                <dd                                 class="govuk-summary-list__value"><span>1234567</span>
+                                <dd                                 class="govuk-summary-list__value"><span>1234765</span>
                                     <br><span class="govuk-hint">21 The Pavement</span>
                                     <br><span class="govuk-hint">Householder</span>
                                     </dd>
@@ -261,7 +261,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
                                     </dd>
                             </div>
                         </dl>
-                        <p class="govuk-body">1234567 will be the lead appeal of TEST-12345</p>
+                        <p class="govuk-body">1234765 will be the lead appeal of TEST-12345</p>
                         <div class="govuk-grid-row">
                             <div class="govuk-grid-column-full">
                                 <form method="post" novalidate="novalidate">
