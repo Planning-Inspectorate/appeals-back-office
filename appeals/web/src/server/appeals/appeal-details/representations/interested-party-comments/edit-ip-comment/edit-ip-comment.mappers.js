@@ -12,12 +12,12 @@ import { yesNoInput } from '#lib/mappers/components/index.js';
  * @returns {PageContent}
  * */
 export const checkAddressPage = (appealDetails, commentId, address) => {
-	const editBaseUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${commentId}/edit/address`;
-	const editPageUrl = `${editBaseUrl}?editEntrypoint=${editBaseUrl}`;
+	const backUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${commentId}/edit/address`;
+	const editPageUrl = `${backUrl}?editEntrypoint=${backUrl}`;
 
 	return {
 		title: 'Check your answers',
-		backLinkUrl: editPageUrl,
+		backLinkUrl: backUrl,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 		heading: 'Check your answers',
 		pageComponents: [
