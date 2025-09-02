@@ -53,14 +53,14 @@ export function reviewProofOfEvidencePage(
 			items: [
 				{
 					value: APPEAL_PROOF_OF_EVIDENCE_STATUS.VALID,
-					text: 'Accept proof of evidence and witnesses',
+					text: 'Complete',
 					checked:
 						proofOfEvidence?.status === APPEAL_PROOF_OF_EVIDENCE_STATUS.VALID ||
 						session.reviewProofOfEvidence?.status === APPEAL_PROOF_OF_EVIDENCE_STATUS.VALID
 				},
 				{
 					value: APPEAL_PROOF_OF_EVIDENCE_STATUS.INVALID,
-					text: 'Reject proof of evidence and witnesses',
+					text: 'Mark as incomplete',
 					checked:
 						proofOfEvidence?.status === APPEAL_PROOF_OF_EVIDENCE_STATUS.INVALID ||
 						proofOfEvidence?.status === APPEAL_PROOF_OF_EVIDENCE_STATUS.AWAITING_REVIEW ||

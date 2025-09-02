@@ -1,0 +1,63 @@
+import { getRepresentationRejectionReasonOptions } from '../../representations.service.js';
+import { mapRejectionReasonOptionsToCheckboxItemParameters } from '../../common/render-select-rejection-reasons.js';
+import { incompleteProofOfEvidencePage } from './incomplete.mapper.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
+
+/**
+ * @param {string} path
+ * @param {string} sessionKey
+ * @returns {import('@pins/express/types/express.js').RequestHandler<any>}
+ */
+export const redirectAndClearSession = (path, sessionKey) => (request, response) => {
+	delete request.session[sessionKey];
+
+	response.redirect(preserveQueryString(request, `${request.baseUrl}${path}`));
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ **/
+export async function renderReasons(request, response) {
+	const { params, currentAppeal, currentRepresentation, apiClient, session, errors } = request;
+
+	const rejectionReasons = await getRepresentationRejectionReasonOptions(
+		apiClient,
+		currentRepresentation.representationType
+	);
+
+	const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
+		currentRepresentation,
+		rejectionReasons,
+		session,
+		['proofOfEvidence', params.appealId],
+		errors
+	);
+
+	const pageContent = incompleteProofOfEvidencePage(currentAppeal);
+
+	return response.status(200).render('appeals/appeal/reject-representation.njk', {
+		errors,
+		pageContent,
+		rejectionReasons: mappedRejectionReasons
+	});
+}
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postReasons = async (request, response) => {
+	const {
+		params: { appealId },
+		errors
+	} = request;
+
+	if (errors) {
+		return renderReasons(request, response);
+	}
+
+	return response
+		.status(200)
+		.redirect(`/appeals-service/appeal-details/${appealId}/proof-of-evidence/incomplete/confirm`);
+};

@@ -1,0 +1,86 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`incomplete proof of evidence GET /reasons should render the incomplete appellant proof of evidence page with the expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <form method="post" novalidate="novalidate">
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset" aria-describedby="rejection-reason-hint">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                            <h1 class="govuk-fieldset__heading"> Why are the proof of evidence and witnesses incomplete?</h1>
+                        </legend>
+                        <div id="rejection-reason-hint" class="govuk-hint">Select all that apply.</div>
+                        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="rejection-reason" name="rejectionReason"
+                                type="checkbox" value="1">
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason">Received after deadline</label>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="rejection-reason-2" name="rejectionReason"
+                                type="checkbox" value="2">
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason-2">Includes personal and/or medical information</label>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="rejection-reason-3" name="rejectionReason"
+                                type="checkbox" value="3">
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason-3">Includes inflammatory content</label>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="rejection-reason-4" name="rejectionReason"
+                                type="checkbox" value="4">
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason-4">Duplicated comment</label>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="rejection-reason-5" name="rejectionReason"
+                                type="checkbox" value="5">
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason-5">Not relevant to this appeal</label>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="rejection-reason-6" name="rejectionReason"
+                                type="checkbox" value="6">
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason-6">Contains links to web pages</label>
+                            </div>
+                            <div class="govuk-checkboxes__item">
+                                <input class="govuk-checkboxes__input" id="rejection-reason-7" name="rejectionReason"
+                                type="checkbox" value="7" data-aria-controls="conditional-rejection-reason-7">
+                                <label class="govuk-label govuk-checkboxes__label" for="rejection-reason-7">Other</label>
+                            </div>
+                            <div class="govuk-checkboxes__conditional govuk-checkboxes__conditional--hidden"
+                            id="conditional-rejection-reason-7">
+                                <div class="pins-add-another" aria-live="polite" data-max-item-count="10">
+                                    <div class="pins-add-another__item govuk-!-margin-top-6">
+                                        <div class="govuk-grid-row">
+                                            <div class="govuk-grid-column-full flex-row space-between">
+                                                <label for="rejection-reason-7-1" class="govuk-label govuk-!-margin-bottom-4">Enter a reason</label>
+                                                <div class="pins-add-another__remove-button-container"></div>
+                                            </div>
+                                        </div>
+                                        <div class="govuk-grid-row">
+                                            <div class="govuk-grid-column-full">
+                                                <div class="govuk-form-group">
+                                                    <input class="govuk-input pins-add-another__item-input govuk-!-margin-0"
+                                                    id="rejection-reason-7-1" name="rejectionReason-7" type="text" value="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="govuk-button pins-add-another__add-button govuk-button--secondary govuk-!-margin-top-4 govuk-!-margin-bottom-0"
+                                    data-module="govuk-button">Add another</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;

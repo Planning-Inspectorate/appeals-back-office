@@ -536,22 +536,7 @@ export const representationRejectionReasons = [
 		hasText: true
 	},
 	{
-		name: 'Includes personal or medical information',
-		representationType: 'appellant_proofs_evidence',
-		hasText: false
-	},
-	{
-		name: 'Includes inflammatory content',
-		representationType: 'appellant_proofs_evidence',
-		hasText: false
-	},
-	{
-		name: 'Not relevant to this appeal',
-		representationType: 'appellant_proofs_evidence',
-		hasText: false
-	},
-	{
-		name: 'Contains links to web pages',
+		name: 'Supporting documents missing',
 		representationType: 'appellant_proofs_evidence',
 		hasText: false
 	},
