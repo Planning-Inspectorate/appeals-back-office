@@ -103,6 +103,7 @@ export const duplicateFiles = async (sourceAppeal, destinationAppeal, stage) => 
 						documentSize: sourceDocument.latestDocumentVersion?.size,
 						stage,
 						blobStoragePath: destinationBlobName,
+						virusCheckStatus: sourceDocument.latestDocumentVersion?.virusCheckStatus,
 						redactionStatusId: sourceDocument.latestDocumentVersion?.redactionStatusId,
 						receivedDate: sourceDocument.latestDocumentVersion?.dateReceived
 					};

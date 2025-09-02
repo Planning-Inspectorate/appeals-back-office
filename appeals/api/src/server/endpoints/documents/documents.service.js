@@ -286,6 +286,7 @@ const addDocumentAndVersion = async (appeal, documents) => {
 					blobStoragePath: d.blobStoragePath,
 					documentURI: d.documentURI,
 					dateReceived: d.dateReceived,
+					virusCheckStatus: d.virusCheckStatus,
 					redactionStatusId: d.redactionStatusId,
 					isLateEntry: await isLateEntry(d.stage, appeal)
 				},
