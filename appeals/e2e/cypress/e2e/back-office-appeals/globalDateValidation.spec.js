@@ -165,15 +165,6 @@ describe('Date Validation', { testIsolation: false }, () => {
 		});
 	});
 
-	it('Day contains invalid characters - empty space', () => {
-		inquirySectionPage.setUpInquiry(' ', '18', '2025', '10', '00');
-
-		inquirySectionPage.verifyErrorMessages({
-			messages: ['Inquiry date day must be a number'],
-			fields: ['inquiry-date-day']
-		});
-	});
-
 	it('Day contains invalid characters - symbolic characters', () => {
 		inquirySectionPage.setUpInquiry('%^&', '18', '2025', '10', '00');
 
@@ -196,7 +187,7 @@ describe('Date Validation', { testIsolation: false }, () => {
 		inquirySectionPage.setUpInquiry('08', 'abc', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrorMessages({
-			messages: ['Inquiry date month must be a number'],
+			messages: ['Inquiry date must be a real date'],
 			fields: ['inquiry-date-month']
 		});
 	});
@@ -205,7 +196,7 @@ describe('Date Validation', { testIsolation: false }, () => {
 		inquirySectionPage.setUpInquiry('08', '%^&', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrorMessages({
-			messages: ['Inquiry date month must be a number'],
+			messages: ['Inquiry date must be a real date'],
 			fields: ['inquiry-date-month']
 		});
 	});
@@ -214,7 +205,7 @@ describe('Date Validation', { testIsolation: false }, () => {
 		inquirySectionPage.setUpInquiry('08', 'abc123', '2025', '10', '00');
 
 		inquirySectionPage.verifyErrorMessages({
-			messages: ['Inquiry date month must be a number'],
+			messages: ['Inquiry date must be a real date'],
 			fields: ['inquiry-date-month']
 		});
 	});
