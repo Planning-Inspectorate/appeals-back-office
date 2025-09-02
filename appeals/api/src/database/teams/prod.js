@@ -10,7 +10,13 @@ export const teamsToCreate = [
 	{ id: 9, name: 'North1', email: 'north1@planninginspectorate.gov.uk' },
 	{ id: 10, name: 'North2', email: 'north2@planninginspectorate.gov.uk' },
 	{ id: 11, name: 'North3', email: 'north3@planninginspectorate.gov.uk' },
-	{ id: 12, name: 'North4', email: 'north4@planninginspectorate.gov.uk' }
+	{ id: 12, name: 'North4', email: 'north4@planninginspectorate.gov.uk' },
+	{ id: 13, name: 'Major Casework Officer', email: null },
+	{
+		id: 14,
+		name: 'Enforcement Appeals Officer',
+		email: null
+	}
 ];
 
 export const lpaTeamAssignments = {
