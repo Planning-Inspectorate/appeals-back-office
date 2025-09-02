@@ -1,4 +1,4 @@
-import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 import { isFeatureActive } from './feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
@@ -52,4 +52,20 @@ export const getEnabledAppealTypes = () => {
 	}
 
 	return enabledAppeals;
+};
+
+export const getEnabledAppealProcedureTypes = () => {
+	let enabledAppealProcedures = [];
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
+		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.WRITTEN);
+	}
+	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_HEARING)) {
+		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.HEARING);
+	}
+	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_INQUIRY)) {
+		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.INQUIRY);
+	}
+
+	return enabledAppealProcedures;
 };
