@@ -19,7 +19,7 @@ export const isAwaitingLinkedAppeal = (appeal, linkedAppeals) => {
 			if (validationOutcome !== 'valid') {
 				return false;
 			}
-			return !allValidationOutcomesAreComplete(linkedAppeals);
+			return !allAppellantCaseOutcomesAreValid(linkedAppeals);
 		}
 		case APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE: {
 			const validationOutcome =
@@ -38,9 +38,15 @@ export const isAwaitingLinkedAppeal = (appeal, linkedAppeals) => {
 /**
  *
  * @param {*[]} linkedAppeals
+ * @param {number|undefined} [currentAppealId]
+ * @param {*} [validationOutcome]
  * @returns {*|boolean}
  */
-export const allLpaQuestionnaireOutcomesAreComplete = (linkedAppeals) => {
+export const allLpaQuestionnaireOutcomesAreComplete = (
+	linkedAppeals,
+	currentAppealId,
+	validationOutcome
+) => {
 	if (!linkedAppeals.length) {
 		return true;
 	}
@@ -48,18 +54,31 @@ export const allLpaQuestionnaireOutcomesAreComplete = (linkedAppeals) => {
 	return linkedAppeals.every((linkedAppeal) => {
 		// Make sure the linked appeal is the actual appeal and not a wrapper
 		const appeal = linkedAppeal.appeal || linkedAppeal;
-		const validationOutcome =
-			appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome?.name?.toLowerCase();
-		return validationOutcome === 'complete';
+		if (currentAppealId && appeal.id === currentAppealId) {
+			// Make sure the current linked appeal tests the latest validation outcome
+			if (!appeal.lpaQuestionnaire) {
+				appeal.lpaQuestionnaire = {};
+			}
+			appeal.lpaQuestionnaire.lpaQuestionnaireValidationOutcome = validationOutcome;
+		}
+		return (
+			appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome?.name?.toLowerCase() === 'complete'
+		);
 	});
 };
 
 /**
  *
  * @param {*[]} linkedAppeals
+ * @param {number|undefined} [currentAppealId]
+ * @param {*} [validationOutcome]
  * @returns {*|boolean}
  */
-export const allValidationOutcomesAreComplete = (linkedAppeals) => {
+export const allAppellantCaseOutcomesAreValid = (
+	linkedAppeals,
+	currentAppealId,
+	validationOutcome
+) => {
 	if (!linkedAppeals.length) {
 		return true;
 	}
@@ -67,9 +86,14 @@ export const allValidationOutcomesAreComplete = (linkedAppeals) => {
 	return linkedAppeals.every((linkedAppeal) => {
 		// Make sure the linked appeal is the actual appeal and not a wrapper
 		const appeal = linkedAppeal.appeal || linkedAppeal;
-		const validationOutcome =
-			appeal.appellantCase?.appellantCaseValidationOutcome?.name?.toLowerCase();
-		return validationOutcome === 'valid';
+		if (currentAppealId && appeal.id === currentAppealId) {
+			// Make sure the current linked appeal tests the latest validation outcome
+			if (!appeal.appellantCase) {
+				appeal.appellantCase = {};
+			}
+			appeal.appellantCase.appellantCaseValidationOutcome = validationOutcome;
+		}
+		return appeal.appellantCase?.appellantCaseValidationOutcome?.name?.toLowerCase() === 'valid';
 	});
 };
 
