@@ -17,7 +17,10 @@ import { householdAppeal, fullPlanningAppeal, appealS78 } from '#tests/appeals/m
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.service.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
+import {
+	getEnabledAppealTypes,
+	getEnabledAppealProcedureTypes
+} from '#utils/feature-flags-appeal-types.js';
 import { cloneDeep, omit } from 'lodash-es';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -213,7 +216,10 @@ describe('appeals list routes', () => {
 				const expectedQuery = {
 					where: {
 						appealStatus: { some: { valid: true } },
-						appealType: { key: { in: ['D', 'W', 'Y', 'ZP', 'ZA', 'H'] } }
+						appealType: { key: { in: ['D', 'W', 'Y', 'ZP', 'ZA', 'H'] } },
+						procedureType: {
+							key: { in: getEnabledAppealProcedureTypes() }
+						}
 					},
 					include: {
 						address: true,
@@ -344,6 +350,9 @@ describe('appeals list routes', () => {
 							appealType: {
 								key: { in: getEnabledAppealTypes() }
 							},
+							procedureType: {
+								key: { in: getEnabledAppealProcedureTypes() }
+							},
 							OR: [
 								{
 									reference: {
@@ -459,6 +468,9 @@ describe('appeals list routes', () => {
 							appealType: {
 								key: { in: getEnabledAppealTypes() }
 							},
+							procedureType: {
+								key: { in: getEnabledAppealProcedureTypes() }
+							},
 							OR: [
 								{
 									reference: {
@@ -573,6 +585,9 @@ describe('appeals list routes', () => {
 						where: {
 							appealType: {
 								key: { in: getEnabledAppealTypes() }
+							},
+							procedureType: {
+								key: { in: getEnabledAppealProcedureTypes() }
 							},
 							OR: [
 								{
@@ -694,6 +709,9 @@ describe('appeals list routes', () => {
 									status: 'assign_case_officer',
 									valid: true
 								}
+							},
+							procedureType: {
+								key: { in: getEnabledAppealProcedureTypes() }
 							}
 						}
 					})
@@ -793,6 +811,9 @@ describe('appeals list routes', () => {
 							},
 							inspectorUserId: {
 								not: null
+							},
+							procedureType: {
+								key: { in: getEnabledAppealProcedureTypes() }
 							}
 						}
 					})
@@ -890,7 +911,10 @@ describe('appeals list routes', () => {
 									valid: true
 								}
 							},
-							inspectorUserId: null
+							inspectorUserId: null,
+							procedureType: {
+								key: { in: getEnabledAppealProcedureTypes() }
+							}
 						}
 					})
 				);
@@ -1114,6 +1138,13 @@ test('gets appeals when given a appealTypeId param', async () => {
 	databaseConnector.appeal.findMany
 		.mockResolvedValueOnce([householdAppeal])
 		.mockResolvedValueOnce(allAppeals);
+	databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+	databaseConnector.appealStatus.findMany.mockResolvedValue(
+		statusesInNationalList.map((status) => ({ status }))
+	);
+	databaseConnector.lPA.findMany.mockResolvedValue(lpas);
+	databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
+	databaseConnector.appeal.count.mockResolvedValue(1);
 
 	const response = await request.get('/appeals?appealTypeId=1').set('azureAdUserId', azureAdUserId);
 
@@ -1128,7 +1159,117 @@ test('gets appeals when given a appealTypeId param', async () => {
 						valid: true
 					}
 				},
-				appealTypeId: 1
+				appealTypeId: 1,
+				procedureType: {
+					key: { in: getEnabledAppealProcedureTypes() }
+				}
+			}
+		})
+	);
+	expect(response.status).toEqual(200);
+	expect(response.body).toEqual({
+		itemCount: 1,
+		items: [
+			{
+				appealId: householdAppeal.id,
+				appealReference: householdAppeal.reference,
+				appealSite: {
+					addressLine1: householdAppeal.address.addressLine1,
+					addressLine2: householdAppeal.address.addressLine2,
+					town: householdAppeal.address.addressTown,
+					county: householdAppeal.address.addressCounty,
+					postCode: householdAppeal.address.postcode
+				},
+				appealStatus: householdAppeal.appealStatus[0].status,
+				appealType: householdAppeal.appealType.type,
+				awaitingLinkedAppeal: null,
+				createdAt: householdAppeal.caseCreatedDate.toISOString(),
+				localPlanningDepartment: householdAppeal.lpa.name,
+				dueDate: null,
+				documentationSummary: {
+					appellantCase: {
+						receivedAt: '2024-03-25T23:59:59.999Z',
+						status: 'received'
+					},
+					ipComments: {
+						status: 'not_received',
+						counts: {},
+						isRedacted: false
+					},
+					lpaQuestionnaire: {
+						receivedAt: '2024-06-24T00:00:00.000Z',
+						status: 'received'
+					},
+					lpaStatement: {
+						status: 'not_received',
+						representationStatus: null,
+						isRedacted: false
+					},
+					lpaFinalComments: {
+						receivedAt: null,
+						representationStatus: null,
+						status: 'not_received',
+						isRedacted: false
+					},
+					appellantFinalComments: {
+						receivedAt: null,
+						representationStatus: null,
+						status: 'not_received',
+						isRedacted: false
+					}
+				},
+				isParentAppeal: false,
+				isChildAppeal: false,
+				planningApplicationReference: householdAppeal.applicationReference,
+				procedureType: 'Written',
+				hasHearingAddress: true,
+				isHearingSetup: true,
+				numberOfResidencesNetChange: 5
+			}
+		],
+		lpas,
+		caseOfficers,
+		inspectors,
+		page: 1,
+		pageCount: 1,
+		pageSize: 30,
+		statuses: ['assign_case_officer'],
+		statusesInNationalList
+	});
+});
+
+test('gets appeals when given a procedure type id param', async () => {
+	databaseConnector.appeal.findMany
+		.mockResolvedValueOnce([householdAppeal])
+		.mockResolvedValueOnce(allAppeals);
+
+	databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+	databaseConnector.appealStatus.findMany.mockResolvedValue(
+		statusesInNationalList.map((status) => ({ status }))
+	);
+	databaseConnector.lPA.findMany.mockResolvedValue(lpas);
+	databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
+	databaseConnector.appeal.count.mockResolvedValue(1);
+
+	const response = await request
+		.get('/appeals?procedureTypeId=1')
+		.set('azureAdUserId', azureAdUserId);
+
+	expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
+		expect.objectContaining({
+			where: {
+				appealType: {
+					key: { in: getEnabledAppealTypes() }
+				},
+				appealStatus: {
+					some: {
+						valid: true
+					}
+				},
+				procedureTypeId: 1,
+				procedureType: {
+					key: { in: getEnabledAppealProcedureTypes() }
+				}
 			}
 		})
 	);
