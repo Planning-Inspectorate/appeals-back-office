@@ -30,7 +30,7 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
 import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
 import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
-import { allValidationOutcomesAreComplete } from '#utils/is-awaiting-linked-appeal.js';
+import { allAppellantCaseOutcomesAreValid } from '#utils/is-awaiting-linked-appeal.js';
 import { AUDIT_TRAIL_SUBMISSION_INVALID } from '@pins/appeals/constants/support.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 
@@ -85,7 +85,7 @@ export const updateAppellantCaseValidationOutcome = async (
 		} else {
 			// @ts-ignore
 			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
-			if (allValidationOutcomesAreComplete(linkedAppeals)) {
+			if (allAppellantCaseOutcomesAreValid(linkedAppeals, appealId, validationOutcome)) {
 				await Promise.all(
 					linkedAppeals.map((appeal) => {
 						const validationOutcome = appeal.appellantCase?.appellantCaseValidationOutcome;

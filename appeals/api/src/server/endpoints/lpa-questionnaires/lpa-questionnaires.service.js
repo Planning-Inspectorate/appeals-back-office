@@ -92,7 +92,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 			await transitionState(appealId, azureAdUserId, validationOutcome.name);
 		} else {
 			const linkedAppeals = await buildListOfLinkedAppeals(appeal);
-			if (allLpaQuestionnaireOutcomesAreComplete(linkedAppeals)) {
+			if (allLpaQuestionnaireOutcomesAreComplete(linkedAppeals, appealId, validationOutcome)) {
 				await Promise.all(
 					linkedAppeals.map((appeal) => {
 						const validationOutcome = appeal.lpaQuestionnaire?.lpaQuestionnaireValidationOutcome;
