@@ -11,8 +11,8 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
-import featureFlags from '@pins/appeals.web/src/common/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
 
 /**
  * @type {import("express").RequestHandler}
@@ -125,7 +125,7 @@ export const validateRepresentation = async (req, res, next) => {
 		});
 	}
 
-	const useLeadAppealIfLinked = featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS);
+	const useLeadAppealIfLinked = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS);
 	const referenceData = await loadReferenceData(body?.caseReference, useLeadAppealIfLinked);
 	if (!referenceData?.appeal) {
 		pino.error(
