@@ -1,68 +1,95 @@
 parameters:
-    - name: Environment
-      type: string
-      default: 'dev'
-      values:
-          - 'dev'
-          - 'test'
+  - name: Environment
+    type: string
+    default: 'dev'
+    values: ['dev', 'test']
 
 variables:
-    - name: APP
-      value: 'appeals'
-    - group: e2e-${{ parameters.Environment }}
+  - name: APP
+    value: 'appeals'
+  - group: e2e-${{ parameters.Environment }}
 
 pr: none
-
 trigger: none
 
 schedules:
-    - cron: "0 2 * * 1-5"
-      displayName: Weekday test run
-      branches:
-          include:
-              - main
-      always: true
+  - cron: "0 2 * * 1-5"
+    displayName: Weekday test run
+    branches:
+      include: [main]
+    always: true
 
 jobs:
-    - job: Run_Cypress_Tests_For_Appeals
-      timeoutInMinutes: 90
-      pool: pins-odt-agent-pool-tests
+  - job: Run_Cypress_Tests_For_Appeals
+    timeoutInMinutes: 90
+    pool: pins-odt-agent-pool-tests
 
-      steps:
-          - task: NodeTool@0
-            inputs:
-                versionSpec: "22.x"
-            displayName: "Install Node.js"
+    strategy:
+      matrix:
+        group1:
+          SPEC: cypress/e2e/back-office-appeals/addCorrespondence.spec.js,cypress/e2e/back-office-appeals/addCostDecisionRedacted.spec.js,cypress/e2e/back-office-appeals/appellantCase.spec.js,cypress/e2e/back-office-appeals/assignUserToCase.spec.js,cypress/e2e/back-office-appeals/caseHistory.spec.js,cypress/e2e/back-office-appeals/caseNotes.spec.js,cypress/e2e/back-office-appeals/changeAppealType.spec.js,cypress/e2e/back-office-appeals/changeContact.spec.js
+        group2:
+          SPEC: cypress/e2e/back-office-appeals/changeSiteVisit.spec.js,cypress/e2e/back-office-appeals/changeStartDate.spec.js,cypress/e2e/back-office-appeals/globalDateValidation.spec.js,cypress/e2e/back-office-appeals/hearing.spec.js,cypress/e2e/back-office-appeals/inquiry.spec.js,cypress/e2e/back-office-appeals/issueDecision.spec.js,cypress/e2e/back-office-appeals/issueDecisionInvalid.spec.js
+        group3:
+          SPEC: cypress/e2e/back-office-appeals/linkAppeals.spec.js,cypress/e2e/back-office-appeals/lpaStatement.spec.js,cypress/e2e/back-office-appeals/manageCorrespondence.spec.js,cypress/e2e/back-office-appeals/manageDocsAppellantCase.spec.js,cypress/e2e/back-office-appeals/manageDocsLpaq.spec.js,cypress/e2e/back-office-appeals/manageDocsSupporting.spec.js,cypress/e2e/back-office-appeals/nationalListSearch.spec.js,cypress/e2e/back-office-appeals/progressS20ToDecision.spec.js
+        group4:
+          SPEC: cypress/e2e/back-office-appeals/progressS78ToDecision.spec.js,cypress/e2e/back-office-appeals/relatedAppeals.spec.js,cypress/e2e/back-office-appeals/reviewAppellantCase.spec.js,cypress/e2e/back-office-appeals/reviewLpaq.spec.js,cypress/e2e/back-office-appeals/s78ChangeTimetable.spec.js,cypress/e2e/back-office-appeals/scheduleSiteVisit.spec.js,cypress/e2e/back-office-appeals/startCase.spec.js,cypress/e2e/back-office-appeals/unlinkAppeals.spec.js,cypress/e2e/back-office-appeals/unrelateAppeals.spec.js,cypress/e2e/back-office-appeals/updateLpaqDueDate.spec.js,cypress/e2e/back-office-appeals/uploadDocsAppellantCase.spec.js,cypress/e2e/back-office-appeals/withdrawAppeal.spec.js
 
-          - task: ShellScript@2
-            inputs:
-                scriptPath: 'appeals/e2e/install-chromium.sh'
-            displayName: 'Install Chromium'
-            condition: eq(variables['agent.os'], 'Linux')
+    steps:
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "22.x"
+        displayName: "Install Node.js"
 
-          - task: Npm@1
-            inputs:
-                command: "install"
-                workingDir: $(System.DefaultWorkingDirectory)/appeals/e2e
-            displayName: "Install Dependencies"
+      - task: ShellScript@2
+        inputs:
+          scriptPath: 'appeals/e2e/install-chromium.sh'
+        displayName: 'Install Chromium'
+        condition: eq(variables['agent.os'], 'Linux')
 
-          - task: ShellScript@2
-            inputs:
-                scriptPath: 'appeals/e2e/run-tests.sh'
-            env:
-                TZ: 'Europe/London' 
-                BASE_URL: $(APPEALS_BASE_URL)
-                CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
-                CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)
-                INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
-                VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
-                USER_PASSWORD: $(USER_PASSWORD)
-                HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
-            displayName: "Run Cypress Tests"
+      - task: Npm@1
+        inputs:
+          command: "install"
+          workingDir: $(System.DefaultWorkingDirectory)/appeals/e2e
+        displayName: "Install Dependencies"
 
-          - task: PublishBuildArtifacts@1
-            inputs:
-                pathToPublish: 'appeals/e2e/cypress/screenshots'
-                artifactName: 'FailedTests'
-            displayName: "Publish Failed Tests Artifacts"
-            condition: failed()
+      - script: |
+          echo "Checking connectivity to back-office-appeals-dev..."
+          curl -I https://back-office-appeals-dev.planninginspectorate.gov.uk/appeals-service/all-cases || echo "❌ curl failed"
+        displayName: "Check app availability before Cypress"
+
+      - script: |
+          echo "Assigning per-worker index and jitter..."
+          # ADO is 1-based; convert to 0-based
+          export CYPRESS_WORKER_INDEX=$(( $(System.JobPositionInPhase) - 1 ))
+          export LOGIN_JITTER_MS=2000
+
+          echo "Worker index: $CYPRESS_WORKER_INDEX"
+          echo "Login jitter (ms): $LOGIN_JITTER_MS"
+
+          echo "Running specs:"
+          for spec in $(echo "${SPEC}" | tr ',' ' '); do
+            echo "- $spec"
+          done
+
+          npx cypress run --spec "${SPEC}"
+        workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
+        env:
+          TZ: 'Europe/London'
+          BASE_URL: $(APPEALS_BASE_URL)
+          CASE_TEAM_EMAIL: $(CASE_TEAM_APPEALS_EMAIL)
+          CASE_ADMIN_EMAIL: $(CASE_ADMIN_APPEALS_EMAIL)
+          INSPECTOR_EMAIL: $(INSPECTOR_APPEALS_EMAIL)
+          VALIDATION_OFFICER_EMAIL: $(VALIDATION_OFFICER_EMAIL)
+          USER_PASSWORD: $(USER_PASSWORD)
+          HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
+          CYPRESS_WORKER_INDEX: $(CYPRESS_WORKER_INDEX)
+          LOGIN_JITTER_MS: $(LOGIN_JITTER_MS)
+        displayName: "Run Cypress Tests (per-worker index + jitter)"
+
+      - task: PublishBuildArtifacts@1
+        condition: failed()
+        inputs:
+          pathToPublish: 'appeals/e2e/cypress/screenshots'
+          artifactName: 'FailedTests'
+        displayName: "Publish Failed Tests Artifacts"
