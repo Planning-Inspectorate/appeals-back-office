@@ -34,12 +34,12 @@ exports[`proof-of-evidence GET /review-proof-of-evidence with data should render
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="status" name="status" type="radio"
                                 value="valid">
-                                <label class="govuk-label govuk-radios__label" for="status">Accept proof of evidence and witnesses</label>
+                                <label class="govuk-label govuk-radios__label" for="status">Complete</label>
                             </div>
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="status-2" name="status" type="radio"
                                 value="invalid">
-                                <label class="govuk-label govuk-radios__label" for="status-2">Reject proof of evidence and witnesses</label>
+                                <label class="govuk-label govuk-radios__label" for="status-2">Mark as incomplete</label>
                             </div>
                         </div>
                     </fieldset>
@@ -79,12 +79,12 @@ exports[`proof-of-evidence GET /review-proof-of-evidence with data should render
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="status" name="status" type="radio"
                                 value="valid">
-                                <label class="govuk-label govuk-radios__label" for="status">Accept proof of evidence and witnesses</label>
+                                <label class="govuk-label govuk-radios__label" for="status">Complete</label>
                             </div>
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="status-2" name="status" type="radio"
                                 value="invalid">
-                                <label class="govuk-label govuk-radios__label" for="status-2">Reject proof of evidence and witnesses</label>
+                                <label class="govuk-label govuk-radios__label" for="status-2">Mark as incomplete</label>
                             </div>
                         </div>
                     </fieldset>
@@ -145,12 +145,12 @@ exports[`proof-of-evidence POST /review-proof-of-evidence with data should rende
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="status" name="status" type="radio"
                                 value="valid">
-                                <label class="govuk-label govuk-radios__label" for="status">Accept proof of evidence and witnesses</label>
+                                <label class="govuk-label govuk-radios__label" for="status">Complete</label>
                             </div>
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="status-2" name="status" type="radio"
                                 value="invalid">
-                                <label class="govuk-label govuk-radios__label" for="status-2">Reject proof of evidence and witnesses</label>
+                                <label class="govuk-label govuk-radios__label" for="status-2">Mark as incomplete</label>
                             </div>
                         </div>
                     </fieldset>
