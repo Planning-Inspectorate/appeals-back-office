@@ -5,7 +5,9 @@ import config from '#config/config.js';
 import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { getFolderIdFromDocumentType } from '#endpoints/integrations/integrations.utils.js';
 import { CASE_RELATIONSHIP_RELATED } from '@pins/appeals/constants/support.js';
-import { getTeamIdFromLpaCode } from './team.repository.js';
+import { getTeamIdFromLpaCode, getTeamIdFromName } from './team.repository.js';
+import { PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
+import { TEAM_NAME_MAP } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */
@@ -16,13 +18,28 @@ import { getTeamIdFromLpaCode } from './team.repository.js';
  * @param {import('#db-client').Prisma.AppealCreateInput} data
  * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
  * @param {string[]} relatedReferences
+ * @param {string} appellantProcedurePreference
  * @returns {Promise<{appeal: Appeal, documentVersions: DocumentVersion[]}>}
  */
-export const createAppeal = async (data, documents, relatedReferences) => {
+export const createAppeal = async (
+	data,
+	documents,
+	relatedReferences,
+	appellantProcedurePreference
+) => {
 	const transaction = await databaseConnector.$transaction(async (tx) => {
 		let appeal = await tx.appeal.create({ data });
 		const reference = createAppealReference(appeal.id).toString();
-		const teamId = await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '');
+
+		const inquiryProcedureTypeId = PROCEDURE_TYPE_ID_MAP['inquiry'];
+		const appellantSelectedProcedureType =
+			PROCEDURE_TYPE_ID_MAP[appellantProcedurePreference || 'written'];
+
+		const teamId =
+			appellantSelectedProcedureType == inquiryProcedureTypeId
+				? await getTeamIdFromName(TEAM_NAME_MAP.MAJOR_CASEWORK)
+				: await getTeamIdFromLpaCode(data.lpa.connect?.lpaCode || '');
+
 		appeal = await tx.appeal.update({
 			where: { id: appeal.id },
 			data: {

@@ -99,6 +99,10 @@ export const COMMENT_STATUS = Object.freeze({
 	INCOMPLETE: 'incomplete'
 });
 
+export const TEAM_NAME_MAP = Object.freeze({
+	MAJOR_CASEWORK: 'Major Casework Officer'
+});
+
 export const REVERT_BUTTON_TEXT = Object.freeze({
 	LPA_STATEMENT: 'Revert to original LPA statement',
 	LPA_FINAL_COMMENT: 'Revert to original LPA final comments',

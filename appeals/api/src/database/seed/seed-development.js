@@ -1,5 +1,5 @@
 import { databaseConnector } from '../../server/utils/database-connector.js';
-import { lpaTeamAssignments, teamsToCreate } from '../teams/dev.js';
+import { lpaTeamAssignments, teamsToCreate } from './teams/dev.js';
 import { addAssignedTeamIdToAppeal } from './add-assigned-team-id.js';
 import { seedStaticData } from './data-static.js';
 import { seedTestData } from './data-test.js';
