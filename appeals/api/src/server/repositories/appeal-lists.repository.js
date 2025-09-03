@@ -60,7 +60,7 @@ const getAllAppeals = async (
 		caseOfficerId,
 		isGreenBelt,
 		appealTypeId,
-		assignedTeamId
+		assignedTeamId,
 		procedureTypeId
 	);
 
@@ -164,7 +164,7 @@ const getAppealsWithoutIncludes = async (
 	caseOfficerId,
 	isGreenBelt,
 	appealTypeId,
-	assignedTeamId
+	assignedTeamId,
 	procedureTypeId
 ) => {
 	const where = buildAllAppealsWhereClause(
@@ -176,7 +176,7 @@ const getAppealsWithoutIncludes = async (
 		caseOfficerId,
 		isGreenBelt,
 		appealTypeId,
-		assignedTeamId
+		assignedTeamId,
 		procedureTypeId
 	);
 
@@ -204,7 +204,7 @@ const buildAllAppealsWhereClause = (
 	caseOfficerId,
 	isGreenBelt,
 	appealTypeId,
-	assignedTeamId
+	assignedTeamId,
 	procedureTypeId
 ) => {
 	return {
