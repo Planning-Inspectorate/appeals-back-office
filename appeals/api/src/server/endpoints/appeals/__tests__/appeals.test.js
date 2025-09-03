@@ -17,10 +17,7 @@ import { householdAppeal, fullPlanningAppeal, appealS78 } from '#tests/appeals/m
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.service.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import {
-	getEnabledAppealTypes,
-	getEnabledAppealProcedureTypes
-} from '#utils/feature-flags-appeal-types.js';
+import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { cloneDeep, omit } from 'lodash-es';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -216,10 +213,7 @@ describe('appeals list routes', () => {
 				const expectedQuery = {
 					where: {
 						appealStatus: { some: { valid: true } },
-						appealType: { key: { in: ['D', 'W', 'Y', 'ZP', 'ZA', 'H'] } },
-						procedureType: {
-							key: { in: getEnabledAppealProcedureTypes() }
-						}
+						appealType: { key: { in: ['D', 'W', 'Y', 'ZP', 'ZA', 'H'] } }
 					},
 					include: {
 						address: true,
@@ -350,9 +344,6 @@ describe('appeals list routes', () => {
 							appealType: {
 								key: { in: getEnabledAppealTypes() }
 							},
-							procedureType: {
-								key: { in: getEnabledAppealProcedureTypes() }
-							},
 							OR: [
 								{
 									reference: {
@@ -468,9 +459,6 @@ describe('appeals list routes', () => {
 							appealType: {
 								key: { in: getEnabledAppealTypes() }
 							},
-							procedureType: {
-								key: { in: getEnabledAppealProcedureTypes() }
-							},
 							OR: [
 								{
 									reference: {
@@ -585,9 +573,6 @@ describe('appeals list routes', () => {
 						where: {
 							appealType: {
 								key: { in: getEnabledAppealTypes() }
-							},
-							procedureType: {
-								key: { in: getEnabledAppealProcedureTypes() }
 							},
 							OR: [
 								{
@@ -709,9 +694,6 @@ describe('appeals list routes', () => {
 									status: 'assign_case_officer',
 									valid: true
 								}
-							},
-							procedureType: {
-								key: { in: getEnabledAppealProcedureTypes() }
 							}
 						}
 					})
@@ -811,9 +793,6 @@ describe('appeals list routes', () => {
 							},
 							inspectorUserId: {
 								not: null
-							},
-							procedureType: {
-								key: { in: getEnabledAppealProcedureTypes() }
 							}
 						}
 					})
@@ -911,10 +890,7 @@ describe('appeals list routes', () => {
 									valid: true
 								}
 							},
-							inspectorUserId: null,
-							procedureType: {
-								key: { in: getEnabledAppealProcedureTypes() }
-							}
+							inspectorUserId: null
 						}
 					})
 				);
@@ -1159,10 +1135,7 @@ test('gets appeals when given a appealTypeId param', async () => {
 						valid: true
 					}
 				},
-				appealTypeId: 1,
-				procedureType: {
-					key: { in: getEnabledAppealProcedureTypes() }
-				}
+				appealTypeId: 1
 			}
 		})
 	);
@@ -1266,10 +1239,7 @@ test('gets appeals when given a procedure type id param', async () => {
 						valid: true
 					}
 				},
-				procedureTypeId: 1,
-				procedureType: {
-					key: { in: getEnabledAppealProcedureTypes() }
-				}
+				procedureTypeId: 1
 			}
 		})
 	);
