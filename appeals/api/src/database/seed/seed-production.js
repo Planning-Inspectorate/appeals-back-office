@@ -3,7 +3,7 @@ import { seedStaticData } from './data-static.js';
 import { seedLPAs } from './seed-lpas.js';
 import { localPlanningDepartmentList } from './LPAs/prod.js';
 import { seedTeams } from './seed-teams.js';
-import { teamsToCreate, lpaTeamAssignments } from '../teams/prod.js';
+import { teamsToCreate, lpaTeamAssignments } from './teams/prod.js';
 import { mapLpasToTeams } from './map-lpa-and-teams.js';
 
 /**

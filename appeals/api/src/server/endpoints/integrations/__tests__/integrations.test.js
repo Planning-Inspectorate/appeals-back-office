@@ -3,7 +3,9 @@ import {
 	appealIngestionInput,
 	appealIngestionInputCasPlanning,
 	appealIngestionInputS20,
+	appealIngestionInputS20Written,
 	appealIngestionInputS78,
+	appealIngestionInputS78Written,
 	docIngestionInput,
 	validAppellantCase,
 	validAppellantCaseCASPlanning,
@@ -102,16 +104,15 @@ describe('/appeals/case-submission', () => {
 			expect(response.status).toEqual(400);
 		});
 	});
-
 	describe('POST successful appeal gets ingested', () => {
 		test.each([
-			['HAS', appealIngestionInput, validAppellantCase],
-			['CAS_PLANNING', appealIngestionInputCasPlanning, validAppellantCaseCASPlanning],
-			['S78', appealIngestionInputS78, validAppellantCaseS78],
-			['S20', appealIngestionInputS20, validAppellantCaseS20]
+			['HAS', appealIngestionInput, validAppellantCase, { id: 1 }],
+			['CAS_PLANNING', appealIngestionInputCasPlanning, validAppellantCaseCASPlanning, { id: 1 }],
+			['S78', appealIngestionInputS78, validAppellantCaseS78, { name: 'Major Casework Officer' }],
+			['S20', appealIngestionInputS20, validAppellantCaseS20, { name: 'Major Casework Officer' }]
 		])(
 			'POST valid %s appellant case payload and create appeal',
-			async (_, appealIngestionInput, validAppellantCase) => {
+			async (_, appealIngestionInput, validAppellantCase, expectedTeamQueryParam) => {
 				const result = createIntegrationMocks(appealIngestionInput);
 				const payload = validAppellantCase;
 				const response = await request.post('/appeals/case-submission').send(payload);
@@ -136,6 +137,11 @@ describe('/appeals/case-submission', () => {
 						assignedTeamId: 1
 					}
 				});
+				expect(databaseConnector.team.findUnique).toHaveBeenCalledWith(
+					expect.objectContaining({
+						where: expectedTeamQueryParam
+					})
+				);
 
 				expect(databaseConnector.document.createMany).toHaveBeenCalled();
 				expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
@@ -147,6 +153,128 @@ describe('/appeals/case-submission', () => {
 			}
 		);
 	});
+});
+
+describe('POST successful appeal gets ingested assignedTeamVaries when caseType is inquiry', () => {
+	test.each([
+		[
+			'S78 - inquiry',
+			appealIngestionInputS78,
+			validAppellantCaseS78,
+			{ name: 'Major Casework Officer' }
+		],
+		[
+			'S20 - inquiry',
+			appealIngestionInputS20,
+			validAppellantCaseS20,
+			{ name: 'Major Casework Officer' }
+		]
+	])(
+		'POST valid %s appellant case payload and create appeal',
+		async (_, appealIngestionInput, validAppellantCase, expectedTeamQueryParam) => {
+			const result = createIntegrationMocks(appealIngestionInput);
+			const payload = validAppellantCase;
+			const response = await request.post('/appeals/case-submission').send(payload);
+
+			expect(databaseConnector.appeal.create).toHaveBeenCalledWith({
+				data: {
+					reference: expect.any(String),
+					submissionId: expect.any(String),
+					...appealIngestionInput
+				}
+			});
+			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+				where: { id: 100 },
+				data: {
+					reference: expect.any(String),
+					appealStatus: {
+						create: {
+							status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+							createdAt: expect.any(String)
+						}
+					},
+					assignedTeamId: 1
+				}
+			});
+			expect(databaseConnector.team.findUnique).toHaveBeenCalledWith(
+				expect.objectContaining({
+					where: expectedTeamQueryParam
+				})
+			);
+
+			expect(databaseConnector.document.createMany).toHaveBeenCalled();
+			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
+			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
+
+			expect(databaseConnector.appeal.findUnique).toHaveBeenCalled();
+			expect(response.status).toEqual(201);
+			expect(response.body).toEqual(result);
+		}
+	);
+});
+
+describe('POST successful appeal gets ingested assignedTeamVaries when casseType is written', () => {
+	test.each([
+		[
+			'S78 - written',
+			appealIngestionInputS78Written,
+			{
+				...validAppellantCaseS78,
+				casedata: { ...validAppellantCaseS78.casedata, appellantProcedurePreference: 'written' }
+			},
+			{ lpaCode: validAppellantCaseS78.casedata.lpaCode }
+		],
+		[
+			'S20 - written',
+			appealIngestionInputS20Written,
+			{
+				...validAppellantCaseS20,
+				casedata: { ...validAppellantCaseS20.casedata, appellantProcedurePreference: 'written' }
+			},
+			{ lpaCode: validAppellantCaseS20.casedata.lpaCode }
+		]
+	])(
+		'POST valid %s appellant case payload and create appeal',
+		async (_, appealIngestionInput, validAppellantCase, expectedTeamQueryParam) => {
+			const result = createIntegrationMocks(appealIngestionInput);
+			const payload = validAppellantCase;
+			const response = await request.post('/appeals/case-submission').send(payload);
+
+			expect(databaseConnector.appeal.create).toHaveBeenCalledWith({
+				data: {
+					reference: expect.any(String),
+					submissionId: expect.any(String),
+					...appealIngestionInput
+				}
+			});
+			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+				where: { id: 100 },
+				data: {
+					reference: expect.any(String),
+					appealStatus: {
+						create: {
+							status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+							createdAt: expect.any(String)
+						}
+					},
+					assignedTeamId: 1
+				}
+			});
+			expect(databaseConnector.lPA.findUnique).toHaveBeenCalledWith(
+				expect.objectContaining({
+					where: expectedTeamQueryParam
+				})
+			);
+
+			expect(databaseConnector.document.createMany).toHaveBeenCalled();
+			expect(databaseConnector.documentVersion.createMany).toHaveBeenCalled();
+			expect(databaseConnector.documentVersion.findMany).toHaveBeenCalled();
+
+			expect(databaseConnector.appeal.findUnique).toHaveBeenCalled();
+			expect(response.status).toEqual(201);
+			expect(response.body).toEqual(result);
+		}
+	);
 });
 
 describe('/appeals/lpaq-submission', () => {

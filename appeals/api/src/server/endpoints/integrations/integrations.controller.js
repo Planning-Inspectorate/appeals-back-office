@@ -34,10 +34,16 @@ import { getAssignedTeam } from '#repositories/team.repository.js';
 export const importAppeal = async (req, res) => {
 	const { appeal, documents, relatedReferences } = commandMappers.mapAppealSubmission(req.body);
 
+	let appellantProcedurePreference = 'written';
+
+	if (req.body.casedata.caseType === 'W' || req.body.casedata.caseType === 'Y') {
+		appellantProcedurePreference = req.body.casedata.appellantProcedurePreference || 'written';
+	}
 	const casedata = await integrationService.importAppellantCase(
 		appeal,
 		documents,
-		relatedReferences
+		relatedReferences,
+		appellantProcedurePreference
 	);
 
 	const { documentVersions } = casedata;
