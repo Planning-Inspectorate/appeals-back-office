@@ -6,6 +6,7 @@ import { getAppealTypesFromId } from './change-appeal-type.service.js';
 import { dateInput } from '#lib/mappers/index.js';
 import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { getExampleDateHint } from '#lib/dates.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
@@ -398,7 +399,7 @@ export function changeAppealFinalDatePage(
 			year: changeYear || ''
 		},
 		legendText: 'Deadline to resubmit appeal',
-		hint: 'For example, 31 3 2026',
+		hint: `For example, ${getExampleDateHint(45)}`,
 		errors: errors
 	});
 
