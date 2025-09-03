@@ -298,5 +298,21 @@ export const happyPathHelper = {
 		fileUploader.uploadFiles(sampleFiles.pdf);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Issue lpa costs decision');
+	},
+
+	addLinkedAppeal(leadCaseRef, childCaseRef) {
+		caseDetailsPage.clickAddLinkedAppeal();
+		caseDetailsPage.fillInput(childCaseRef);
+		caseDetailsPage.clickButtonByText('Continue');
+
+		//select lead appeal
+		caseDetailsPage.selectRadioButtonByValue(leadCaseRef);
+		caseDetailsPage.clickButtonByText('Continue');
+
+		//CYA
+		caseDetailsPage.clickButtonByText('Add linked appeal');
+
+		//case details
+		caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
 	}
 };
