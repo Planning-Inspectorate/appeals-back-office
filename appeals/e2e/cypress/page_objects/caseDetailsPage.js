@@ -334,7 +334,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickAddLinkedAppeal() {
-		this.elements.addLinkedAppeal().click();
+		this.elements.addLinkedAppeal().click({ force: true });
 	}
 
 	clickManageLinkedAppeals() {

@@ -301,13 +301,12 @@ export const happyPathHelper = {
 	},
 
 	addLinkedAppeal(leadCaseRef, childCaseRef) {
-		caseDetailsPage.clickAccordionByButton('Overview');
 		caseDetailsPage.clickAddLinkedAppeal();
-		caseDetailsPage.fillInput(childCase);
+		caseDetailsPage.fillInput(childCaseRef);
 		caseDetailsPage.clickButtonByText('Continue');
 
 		//select lead appeal
-		caseDetailsPage.selectRadioButtonByValue(leadCase);
+		caseDetailsPage.selectRadioButtonByValue(leadCaseRef);
 		caseDetailsPage.clickButtonByText('Continue');
 
 		//CYA
