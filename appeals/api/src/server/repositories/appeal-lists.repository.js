@@ -1,10 +1,7 @@
 import { getSkipValue } from '#utils/database-pagination.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import {
-	getEnabledAppealProcedureTypes,
-	getEnabledAppealTypes
-} from '#utils/feature-flags-appeal-types.js';
+import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 
 /**
  * @typedef {Awaited<ReturnType<getAllAppeals>>} DBAppeals
@@ -216,9 +213,6 @@ const buildAllAppealsWhereClause = (
 		},
 		appealType: {
 			key: { in: getEnabledAppealTypes() }
-		},
-		procedureType: {
-			key: { in: getEnabledAppealProcedureTypes() }
 		},
 		...(String(searchTerm) !== 'undefined' && {
 			OR: [
