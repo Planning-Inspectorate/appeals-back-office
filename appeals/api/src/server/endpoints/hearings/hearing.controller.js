@@ -28,6 +28,7 @@ import { VALIDATION_OUTCOME_INCOMPLETE } from '@pins/appeals/constants/support.j
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
+/** @typedef {import('@pins/appeals.api').Schema.Hearing} Hearing */
 
 /**
  * @param {Request} req
@@ -122,7 +123,9 @@ export const rearrangeHearing = async (req, res) => {
 	const hearingId = Number(params.hearingId);
 
 	try {
+		/** @type {Hearing | undefined} */
 		const currentHearing = await hearingRepository.getHearingById(hearingId);
+		const existingAddressId = currentHearing?.addressId;
 
 		await updateHearing(
 			{
@@ -137,7 +140,8 @@ export const rearrangeHearing = async (req, res) => {
 			},
 			appeal,
 			req.notifyClient,
-			azureAdUserId
+			azureAdUserId,
+			existingAddressId
 		);
 
 		if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
