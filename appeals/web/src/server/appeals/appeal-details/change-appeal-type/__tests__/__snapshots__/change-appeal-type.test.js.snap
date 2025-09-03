@@ -354,7 +354,7 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
 exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date should render the final date page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -364,9 +364,9 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 27 3 2023</div>
+                                class="govuk-hint">For example, 31 3 2026</div>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -395,10 +395,8 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                            type</div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
@@ -846,7 +844,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -856,9 +854,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 27 3 2023</div>
+                                class="govuk-hint">For example, 31 3 2026</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
                                     the appeal must be a real date</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
@@ -889,10 +887,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                            type</div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
@@ -919,7 +915,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -929,9 +925,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 27 3 2023</div>
+                                class="govuk-hint">For example, 31 3 2026</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the deadline to
                                     resubmit the appeal</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
@@ -962,10 +958,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                            type</div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
@@ -992,7 +986,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1002,9 +996,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 27 3 2023</div>
+                                class="govuk-hint">For example, 31 3 2026</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
                                     the appeal day must be between 1 and 31</p>
                                 <div class="govuk-date-input"
@@ -1036,10 +1030,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                            type</div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
@@ -1066,7 +1058,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1076,9 +1068,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 27 3 2023</div>
+                                class="govuk-hint">For example, 31 3 2026</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be a business
                                     day</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
@@ -1109,10 +1101,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                            type</div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
@@ -1139,7 +1129,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1149,9 +1139,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 27 3 2023</div>
+                                class="govuk-hint">For example, 31 3 2026</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be a business
                                     day</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
@@ -1182,10 +1172,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                            type</div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
@@ -1212,7 +1200,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1222,9 +1210,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 27 3 2023</div>
+                                class="govuk-hint">For example, 31 3 2026</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be a business
                                     day</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
@@ -1255,10 +1243,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                            type</div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
@@ -1285,7 +1271,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1295,9 +1281,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 27 3 2023</div>
+                                class="govuk-hint">For example, 31 3 2026</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
                                     the appeal month must be between 1 and 12</p>
                                 <div class="govuk-date-input"
@@ -1329,10 +1315,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                            type</div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>
@@ -1359,7 +1343,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1369,9 +1353,9 @@ exports[`change-appeal-type should re-render the final date page with an error m
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
-                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">What is the final date the appellant must resubmit by?</legend>
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 27 3 2023</div>
+                                class="govuk-hint">For example, 31 3 2026</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
                                     the appeal year must be a number</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
@@ -1402,10 +1386,8 @@ exports[`change-appeal-type should re-render the final date page with an error m
                                 </div>
                             </fieldset>
                         </div>
-                        <div class="govuk-inset-text">Confirming will ask the appellant to resubmit using the correct appeal
-                            type</div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        data-module="govuk-button">Continue</button>
                     </form>
                 </div>
             </div>

@@ -397,28 +397,20 @@ export function changeAppealFinalDatePage(
 			month: changeMonth || '',
 			year: changeYear || ''
 		},
-		legendText: 'What is the final date the appellant must resubmit by?',
-		hint: 'For example, 27 3 2023',
+		legendText: 'Deadline to resubmit appeal',
+		hint: 'For example, 31 3 2026',
 		errors: errors
 	});
-
-	/** @type {PageComponent} */
-	const insetTextComponent = {
-		type: 'inset-text',
-		parameters: {
-			text: 'Confirming will ask the appellant to resubmit using the correct appeal type'
-		}
-	};
 
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `What is the final date the appellant must resubmit by? - ${shortAppealReference}`,
+		title: `Deadline to resubmit appeal - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
-		preHeading: `Appeal ${shortAppealReference}`,
-		pageComponents: [selectDateComponent, insetTextComponent],
-		submitButtonText: 'Confirm'
+		preHeading: `Appeal ${shortAppealReference} - change appeal type`,
+		pageComponents: [selectDateComponent],
+		submitButtonText: 'Continue'
 	};
 
 	return pageContent;
