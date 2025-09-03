@@ -13,13 +13,13 @@ const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('Withdraw an Appeal', () => {
+describe('Cancel an Appeal', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
-	it('withdraw appeal', () => {
+	it('Withdraw appeal', () => {
 		const withdrawalDate = new Date();
 
 		cy.createCase().then((caseRef) => {
@@ -37,7 +37,7 @@ describe('Withdraw an Appeal', () => {
 		});
 	});
 
-	it('invalid appeal', () => {
+	it('Invalid appeal', () => {
 		const withdrawalDate = new Date();
 
 		cy.createCase().then((caseRef) => {
