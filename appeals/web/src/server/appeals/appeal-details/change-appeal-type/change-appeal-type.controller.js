@@ -3,7 +3,9 @@ import {
 	getAppealTypes,
 	postAppealChangeRequest,
 	postAppealTransferConfirmation,
-	getNoResubmitAppealRequestRedirectUrl
+	getNoResubmitAppealRequestRedirectUrl,
+	postAppealTransferRequest,
+	changeAppealTransferAppealPage
 } from './change-appeal-type.service.js';
 import {
 	appealTypePage,
@@ -273,10 +275,16 @@ export const getAddHorizonReference = async (request, response) => {
  */
 const renderAddHorizonReference = async (request, response) => {
 	const { errors } = request;
-
 	const appealData = request.currentAppeal;
+	const horizonReference =
+		appealData.transferStatus?.transferredAppealReference ||
+		request.session.changeAppealType?.transferredAppealHorizonReference;
 
-	const mappedPageContent = addHorizonReferencePage(appealData, getBackLinkUrlFromQuery(request));
+	const mappedPageContent = addHorizonReferencePage(
+		appealData,
+		getBackLinkUrlFromQuery(request),
+		horizonReference
+	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -353,7 +361,6 @@ const renderCheckTransfer = async (request, response) => {
 
 	const appealData = request.currentAppeal;
 	const mappedPageContent = await checkTransferPage(
-		request.apiClient,
 		appealData,
 		request.session.changeAppealType.transferredAppealHorizonReference
 	);
@@ -397,7 +404,7 @@ export const postCheckTransfer = async (request, response) => {
 
 		addNotificationBannerToSession({
 			session: request.session,
-			bannerDefinitionKey: 'horizonReferenceAdded',
+			bannerDefinitionKey: 'appealMarkedAsTransferred',
 			appealId
 		});
 
@@ -412,7 +419,7 @@ export const postCheckTransfer = async (request, response) => {
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const markAppealInvalid = async (request, response) => {
+export const getMarkAppealInvalid = async (request, response) => {
 	const {
 		errors,
 		params: { appealId },
@@ -451,6 +458,42 @@ export const postMarkAppealInvalid = (request, response) => {
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/change-appeal-type/change-appeal-final-date`
 		);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getTransferAppeal = async (request, response) => {
+	const {
+		errors,
+		params: { appealId }
+	} = request;
+
+	const mappedPageContent = changeAppealTransferAppealPage(appealId);
+
+	return response.status(200).render('patterns/change-page.pattern.njk', {
+		pageContent: mappedPageContent,
+		errors
+	});
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postTransferAppeal = async (request, response) => {
+	try {
+		const { appealId } = request.params;
+		const appealTypeId = parseInt(request.session.changeAppealType.appealTypeId, 10);
+
+		await postAppealTransferRequest(request.apiClient, appealId, appealTypeId);
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');

@@ -69,12 +69,3 @@ export const validateHorizonReference = createValidator(
 		})
 		.withMessage('Enter a valid Horizon appeal reference')
 );
-
-export const validateCheckTransfer = createValidator(
-	body('confirm')
-		.notEmpty()
-		.withMessage('Confirmation must be provided')
-		.bail()
-		.equals('yes')
-		.withMessage('Something went wrong')
-);

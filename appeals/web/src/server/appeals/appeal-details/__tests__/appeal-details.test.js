@@ -203,72 +203,6 @@ describe('appeal-details', () => {
 					expect(notificationBannerElementHTML).toContain('Assign case officer</a>');
 				});
 
-				it('should render a "Horizon reference added" success notification banner, a "Transferred" status tag, and an inset text component with the appeal type and horizon link for the transferred appeal, when the appeal was successfully transferred to horizon', async () => {
-					//nock.cleanAll();
-
-					const appealId = 2;
-
-					nock('http://test/')
-						.get(`/appeals/${appealId}`)
-						.reply(200, {
-							...appealData,
-							appealId: appealId,
-							appealStatus: 'transferred',
-							transferStatus: {
-								transferredAppealType: '(C) Enforcement notice appeal',
-								transferredAppealReference: '12345'
-							},
-							assignedTeamId: 1,
-							assignedTeam: {}
-						})
-						.persist();
-
-					nock('http://test/').get('/appeals/transferred-appeal/123').reply(200, {
-						caseFound: true
-					});
-					nock('http://test/')
-						.post(`/appeals/${appealId}/appeal-transfer-confirmation`)
-						.reply(200, { success: true });
-					nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
-
-					await request
-						.post(`${baseUrl}/${appealId}/change-appeal-type/add-horizon-reference`)
-						.send({
-							'horizon-reference': '123'
-						});
-
-					await request.post(`${baseUrl}/${appealId}/change-appeal-type/check-transfer`).send({
-						confirm: 'yes'
-					});
-
-					const response = await request.get(`${baseUrl}/${appealId}`);
-
-					expect(response.statusCode).toBe(200);
-					const notificationBannerElementHTML = parseHtml(response.text, {
-						rootElement: notificationBannerElement
-					}).innerHTML;
-					const statusTagElementHTML = parseHtml(response.text, {
-						rootElement: '.govuk-tag--grey'
-					}).innerHTML;
-					const insetTextElementHTML = parseHtml(response.text, {
-						rootElement: '.govuk-inset-text'
-					}).innerHTML;
-
-					expect(notificationBannerElementHTML).toMatchSnapshot();
-					expect(notificationBannerElementHTML).toContain('Success</h3>');
-					expect(notificationBannerElementHTML).toMatch('Horizon reference added</p>');
-
-					//TODO: Move the tag test to it's own test
-					expect(statusTagElementHTML).toMatchSnapshot();
-					expect(statusTagElementHTML).toMatch('Transferred');
-
-					expect(insetTextElementHTML).toMatchSnapshot();
-					expect(insetTextElementHTML).toMatch('This appeal needed to change to a');
-					expect(insetTextElementHTML).toMatch(
-						'It has been transferred to Horizon with the reference'
-					);
-				});
-
 				it('should render a "Address added" success notification banner when an inspector/3rd party neighbouring site was added', async () => {
 					const appealReference = '1';
 					const appealId = appealData.appealId;
@@ -1234,7 +1168,7 @@ describe('appeal-details', () => {
 			});
 
 			describe('Important banners', () => {
-				it('should render a "This appeal is awaiting transfer" important notification banner with a link to add the Horizon reference of the transferred appeal when the appeal is awaiting transfer', async () => {
+				it('should render a "Mark as transferred" important notification banner with a link to add the Horizon reference of the transferred appeal when the appeal is awaiting transfer', async () => {
 					const appealId = 2;
 
 					nock('http://test/')
@@ -1250,7 +1184,7 @@ describe('appeal-details', () => {
 					}).innerHTML;
 					expect(notificationBannerElementHTML).toMatchSnapshot();
 					expect(notificationBannerElementHTML).toContain('Important</h3>');
-					expect(notificationBannerElementHTML).toContain('This appeal is awaiting transfer</p>');
+					expect(notificationBannerElementHTML).toContain('Mark as transferred</a>');
 					expect(notificationBannerElementHTML).toContain(
 						'href="/appeals-service/appeal-details/2/change-appeal-type/add-horizon-reference'
 					);
@@ -2086,7 +2020,7 @@ describe('appeal-details', () => {
 					statusTagContent: 'Awaiting transfer',
 					statusTagColour: 'green'
 				},
-				{ appealStatus: 'transferred', statusTagContent: 'Transferred', statusTagColour: 'grey' }
+				{ appealStatus: 'transferred', statusTagContent: 'Transferred', statusTagColour: 'blue' }
 			];
 
 			for (const testCase of testCases) {
