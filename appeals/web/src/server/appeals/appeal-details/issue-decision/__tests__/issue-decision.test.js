@@ -1353,7 +1353,6 @@ describe('issue-decision', () => {
 				}
 			];
 			nock.cleanAll();
-			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
 			nock('http://test/').get('/appeals/1/documents/1').reply(200, documentFileInfo);
 			nock('http://test/').post(`/appeals/validate-business-date`).reply(200, { result: true });
 			nock('http://test/')
@@ -1365,6 +1364,7 @@ describe('issue-decision', () => {
 		afterEach(teardown);
 
 		it('should render the view decision page', async () => {
+			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
 			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${viewDecisionPath}`);
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
@@ -1387,6 +1387,7 @@ describe('issue-decision', () => {
 		});
 
 		it('should render the view decision page with re issued decision', async () => {
+			nock('http://test/').get('/appeals/1').reply(200, issueDecisionAppealData).persist();
 			nock('http://test/')
 				.get('/appeals/1/documents/e1e90a49-fab3-44b8-a21a-bb73af089f6b/versions')
 				.reply(200, documentFileVersionInfo);
@@ -1411,6 +1412,69 @@ describe('issue-decision', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'4 August 2023 (reissued on 11 October 2023)'
 			);
+		});
+
+		it('should render the view decision page for a linked lead appeal', async () => {
+			const issueDecisionLinkedLeadAppealData = cloneDeep(issueDecisionAppealData);
+			issueDecisionLinkedLeadAppealData.isParentAppeal = true;
+			issueDecisionLinkedLeadAppealData.linkedAppeals = [
+				{ isChildAppeal: true, appealReference: 260153, inspectorDecision: 'Split decision' }
+			];
+
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, issueDecisionLinkedLeadAppealData)
+				.persist();
+
+			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${viewDecisionPath}`);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 (lead)</span>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision</h1>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision for lead appeal 351062</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Allowed</dd>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision for child appeal 260153</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Split decision</dd>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('decision-letter.pdf</a>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant costs decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('appellant-costs-decision-letter.pdf</a>');
+
+			expect(unprettifiedElement.innerHTML).toContain('LPA costs decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('lpa-costs-decision-letter.pdf</a>');
+			expect(unprettifiedElement.innerHTML).toContain('25 December 2023');
+		});
+
+		it('should render the view decision page for a linked child appeal', async () => {
+			const issueDecisionLinkedChildAppealData = cloneDeep(appealData);
+			issueDecisionLinkedChildAppealData.isChildAppeal = true;
+			issueDecisionLinkedChildAppealData.linkedAppeals = [{ isParentAppeal: true, appealId: 2 }];
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, issueDecisionLinkedChildAppealData)
+				.persist();
+			nock('http://test/')
+				.get('/appeals/2/document-folders?path=appeal-decision/caseDecisionLetter')
+				.reply(200, [{ caseId: 2, documents: [{ name: 'case-decision-letter.pdf', id: '1234' }] }])
+				.persist();
+			const response = await request.get(`${baseUrl}/1${issueDecisionPath}/${viewDecisionPath}`);
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appeal 351062 (child)</span>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision</h1>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision for child appeal 351062</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('Dismissed</dd>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Decision letter</dt>');
+			expect(unprettifiedElement.innerHTML).toContain('decision-letter.pdf</a>');
+			expect(unprettifiedElement.innerHTML).toContain('25 December 2023');
 		});
 	});
 });
