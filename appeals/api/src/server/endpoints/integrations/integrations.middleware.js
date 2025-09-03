@@ -6,10 +6,13 @@ import {
 	ERROR_INVALID_APPELLANT_CASE_DATA,
 	ERROR_INVALID_LPAQ_DATA,
 	ERROR_INVALID_REP_DATA,
-	ERROR_INVALID_APPEAL_TYPE_REP
+	ERROR_INVALID_APPEAL_TYPE_REP,
+	CASE_RELATIONSHIP_LINKED
 } from '@pins/appeals/constants/support.js';
 import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
 
 /**
  * @type {import("express").RequestHandler}
@@ -122,7 +125,8 @@ export const validateRepresentation = async (req, res, next) => {
 		});
 	}
 
-	const referenceData = await loadReferenceData(body?.caseReference);
+	const useLeadAppealIfLinked = isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS);
+	const referenceData = await loadReferenceData(body?.caseReference, useLeadAppealIfLinked);
 	if (!referenceData?.appeal) {
 		pino.error(
 			`Error associating representation to an existing appeal with reference '${body?.caseReference}'`
@@ -159,21 +163,38 @@ export const validateRepresentation = async (req, res, next) => {
 	next();
 };
 
-const loadReferenceData = async (/** @type {string|undefined} */ reference) => {
-	if (reference) {
-		const result = await databaseConnector.$transaction([
-			databaseConnector.appeal.findUnique({
-				where: { reference },
-				include: {
-					appealStatus: true,
-					appealType: true
+/**
+ * Loads reference data for an appeal
+ * @param {string|undefined} reference
+ * @param {boolean} [useLeadAppealIfLinked]
+ * @returns {Promise<*|null>}
+ */
+const loadReferenceData = async (reference, useLeadAppealIfLinked = false) => {
+	if (!reference) {
+		return null;
+	}
+	return databaseConnector.$transaction(async (tx) => {
+		if (useLeadAppealIfLinked) {
+			const linkedAppeal = await tx.appealRelationship.findFirst({
+				where: {
+					childRef: reference,
+					type: CASE_RELATIONSHIP_LINKED
 				}
-			}),
-			databaseConnector.designatedSite.findMany()
-		]);
+			});
+			if (linkedAppeal?.parentRef) {
+				reference = linkedAppeal.parentRef;
+			}
+		}
 
-		const appeal = result[0];
-		const designatedSites = result[1];
+		let appeal = await tx.appeal.findUnique({
+			where: { reference },
+			include: {
+				appealStatus: true,
+				appealType: true
+			}
+		});
+
+		const designatedSites = await tx.designatedSite.findMany();
 
 		if (appeal && designatedSites) {
 			return {
@@ -181,7 +202,5 @@ const loadReferenceData = async (/** @type {string|undefined} */ reference) => {
 				designatedSites
 			};
 		}
-	}
-
-	return null;
+	});
 };

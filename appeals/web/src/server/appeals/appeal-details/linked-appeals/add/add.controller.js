@@ -9,6 +9,7 @@ import {
 } from './add.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -47,7 +48,7 @@ export const postAddLinkedAppeal = (request, response) => {
 		params: { appealId }
 	} = request;
 
-	if (request.body.linkConflict) {
+	if (request.body.linkConflict || request.body.linkSelf) {
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/linked-appeals/add/already-linked`
 		);
@@ -73,7 +74,10 @@ export const postAddLinkedAppeal = (request, response) => {
 	}
 
 	const proposedLinkableAppealIsLead = Boolean(
-		session.linkableAppeal.linkableAppealSummary?.childAppeals?.length
+		session.linkableAppeal.linkableAppealSummary?.childAppeals?.some(
+			// @ts-ignore
+			(childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED
+		)
 	);
 
 	if (proposedLinkableAppealIsLead && currentAppeal.isParentAppeal) {

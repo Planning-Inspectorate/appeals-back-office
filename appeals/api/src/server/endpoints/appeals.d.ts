@@ -766,6 +766,12 @@ interface UpdateAppealRequest {
 	caseOfficer?: number | null;
 	inspector?: number | null;
 }
+interface UpdateAsssignedTeamRequest {
+	teamId: string;
+}
+interface UpdateAsssignedTeamResponse {
+	teamId: number;
+}
 
 interface SetAppealDecisionRequest {
 	documentDate: Date;
@@ -1069,5 +1075,7 @@ export {
 	CreateInquiry,
 	InquiryAddress,
 	UpdateAppealDecisionRequest,
-	UpdateInquiry
+	UpdateInquiry,
+	UpdateAsssignedTeamRequest,
+	UpdateAsssignedTeamResponse
 };

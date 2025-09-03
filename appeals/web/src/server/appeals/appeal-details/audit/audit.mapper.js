@@ -56,7 +56,7 @@ export const tryMapUsers = async (log, session) => {
 
 	const user = await usersService.getUserById(uuid[2], session);
 
-	return result.replace(uuid[2], user?.email || 'User not found!');
+	return result.replace(uuid[2], user?.name || 'User not found!');
 };
 
 /**

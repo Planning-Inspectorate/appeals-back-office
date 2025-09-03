@@ -98,6 +98,7 @@ export const appealS20 = {
 export const householdAppeal = {
 	caseCreatedDate: new Date('2024-03-25T23:59:59.999Z'),
 	id: 1,
+	assignedTeamId: 1,
 	reference: '1345264',
 	procedureType: {
 		id: 1,

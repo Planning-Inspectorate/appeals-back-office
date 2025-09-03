@@ -1,5 +1,114 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`GET /change-appeal-procedure-type/check-and-confirm should render the check details page with the expected content for hearing procedure type with planning obligation if an appeal procedure is found in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
+            <h1 class="govuk-heading-l">Check details and update appeal procedure</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+                    <dd class="govuk-summary-list__value">Hearing</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type"
+                        data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <h3 class="govuk-heading-m">Timetable due dates</h3>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
+                    <dd class="govuk-summary-list__value">11 October 2023</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statements due</dt>
+                    <dd class="govuk-summary-list__value">14 October 2023</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statements due date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
+                    <dd                     class="govuk-summary-list__value">13 October 2023</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Interested party comments due date</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement of common ground due</dt>
+                    <dd                     class="govuk-summary-list__value">15 October 2023</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statement of common ground due date</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Planning obligation due</dt>
+                    <dd class="govuk-summary-list__value">16 October 2023</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Planning obligation due date</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Update appeal procedure</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`GET /change-appeal-procedure-type/check-and-confirm should render the check details page with the expected content for hearing procedure type without planning obligation if an appeal procedure is found in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
+            <h1 class="govuk-heading-l">Check details and update appeal procedure</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+                    <dd class="govuk-summary-list__value">Hearing</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type"
+                        data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <h3 class="govuk-heading-m">Timetable due dates</h3>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
+                    <dd class="govuk-summary-list__value">11 October 2023</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statements due</dt>
+                    <dd class="govuk-summary-list__value">14 October 2023</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statements due date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Interested party comments due</dt>
+                    <dd                     class="govuk-summary-list__value">13 October 2023</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Interested party comments due date</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement of common ground due</dt>
+                    <dd                     class="govuk-summary-list__value">15 October 2023</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="change-timetable">Change <span class="govuk-visually-hidden">Statement of common ground due date</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Update appeal procedure</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`GET /change-appeal-procedure-type/check-and-confirm should render the check details page with the expected content for written procedure type if an appeal procedure is found in the session 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -40,16 +149,13 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm should render the c
                     </dd>
                 </div>
             </dl>
-            <p class="govuk-body">We’ll send an email to the appellant and LPA to tell them that:</p>
-            <li             class="govuk-body">we've changed the procedure</li>
-                <li class="govuk-body">we've cancelled the hearing</li>
-                <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-full">
-                        <form method="post" novalidate="novalidate">
-                            <button type="submit" class="govuk-button" data-module="govuk-button">Update appeal procedure</button>
-                        </form>
-                    </div>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Update appeal procedure</button>
+                    </form>
                 </div>
+            </div>
         </div>
     </div>
 </main>"

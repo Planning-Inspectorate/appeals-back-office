@@ -1,5 +1,9 @@
 // @ts-nocheck
-import { isAwaitingLinkedAppeal } from '#utils/is-awaiting-linked-appeal.js';
+import {
+	allAppellantCaseOutcomesAreValid,
+	allLpaQuestionnaireOutcomesAreComplete,
+	isAwaitingLinkedAppeal
+} from '#utils/is-awaiting-linked-appeal.js';
 
 describe('isAwaitingLinkedAppeal', () => {
 	let appeal;
@@ -88,5 +92,107 @@ describe('isAwaitingLinkedAppeal', () => {
 				])
 			).toBe(false);
 		});
+	});
+});
+
+describe('allLpaQuestionnaireOutcomesAreComplete', () => {
+	test('returns true when there are no linked appeals', () => {
+		expect(allLpaQuestionnaireOutcomesAreComplete([])).toBe(true);
+	});
+
+	test('returns true when all the linked appeals are complete', () => {
+		expect(
+			allLpaQuestionnaireOutcomesAreComplete([
+				{
+					id: 1,
+					lpaQuestionnaire: { lpaQuestionnaireValidationOutcome: { name: 'complete' } }
+				},
+				{
+					id: 2,
+					lpaQuestionnaire: { lpaQuestionnaireValidationOutcome: { name: 'complete' } }
+				}
+			])
+		).toBe(true);
+	});
+
+	test('returns false when at least one of the linked appeals is not complete', () => {
+		expect(
+			allLpaQuestionnaireOutcomesAreComplete([
+				{
+					id: 1
+				},
+				{
+					id: 2,
+					lpaQuestionnaire: { lpaQuestionnaireValidationOutcome: { name: 'complete' } }
+				}
+			])
+		).toBe(false);
+	});
+
+	test('returns true when all the linked appeals are complete, making sure the current linked appeal is updated with the latest outcome', () => {
+		const linkedAppeals = [
+			{
+				id: 1
+			},
+			{
+				id: 2,
+				lpaQuestionnaire: { lpaQuestionnaireValidationOutcome: { name: 'complete' } }
+			}
+		];
+		expect(allLpaQuestionnaireOutcomesAreComplete(linkedAppeals, 1, { name: 'complete' })).toBe(
+			true
+		);
+		expect(linkedAppeals[0].lpaQuestionnaire.lpaQuestionnaireValidationOutcome.name).toBe(
+			'complete'
+		);
+	});
+});
+
+describe('allAppellantCaseOutcomesAreComplete', () => {
+	test('returns true when there are no linked appeals', () => {
+		expect(allAppellantCaseOutcomesAreValid([])).toBe(true);
+	});
+
+	test('returns true when all the linked appeals are valid', () => {
+		expect(
+			allAppellantCaseOutcomesAreValid([
+				{
+					id: 1,
+					appellantCase: { appellantCaseValidationOutcome: { name: 'valid' } }
+				},
+				{
+					id: 2,
+					appellantCase: { appellantCaseValidationOutcome: { name: 'valid' } }
+				}
+			])
+		).toBe(true);
+	});
+
+	test('returns false when at least one of the linked appeals is not valid', () => {
+		expect(
+			allAppellantCaseOutcomesAreValid([
+				{
+					id: 1
+				},
+				{
+					id: 2,
+					appellantCase: { appellantCaseValidationOutcome: { name: 'valid' } }
+				}
+			])
+		).toBe(false);
+	});
+
+	test('returns true when all the linked appeals are valid, making sure the current linked appeal is updated with the latest outcome', () => {
+		const linkedAppeals = [
+			{
+				id: 1
+			},
+			{
+				id: 2,
+				appellantCase: { appellantCaseValidationOutcome: { name: 'valid' } }
+			}
+		];
+		expect(allAppellantCaseOutcomesAreValid(linkedAppeals, 1, { name: 'valid' })).toBe(true);
+		expect(linkedAppeals[0].appellantCase.appellantCaseValidationOutcome.name).toBe('valid');
 	});
 });

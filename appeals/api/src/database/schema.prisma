@@ -724,7 +724,7 @@ model AuditTrail {
   appealId Int
   userId   Int
   loggedAt DateTime
-  details  String
+  details  String                @db.NVarChar(Max)
   appeal   Appeal                @relation(fields: [appealId], references: [id])
   user     User                  @relation(fields: [userId], references: [id])
   doc      DocumentVersionAudit? @relation("auditTrails")

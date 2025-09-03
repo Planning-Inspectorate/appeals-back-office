@@ -19,6 +19,15 @@ router
 		asyncHandler(controller.postSelectCaseTeam)
 	);
 
-router.route('/edit/check').get().post();
+router
+	.route('/edit/check')
+	.get(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.getCheckYourAnswers)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.updateCase),
+		asyncHandler(controller.postCheckYourAnswers)
+	);
 
 export default router;

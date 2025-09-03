@@ -1,5 +1,62 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`update-case-team /case-team/edit/check GET name and email available should render the check your answers page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and update case team</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case team</dt>
+                    <dd class="govuk-summary-list__value">temp
+                        <br>temp@email.com</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit">Change<span class="govuk-visually-hidden"> Change team</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Update case team</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`update-case-team /case-team/edit/check GET name only available should render the check your answers page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and update case team</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Case team</dt>
+                    <dd class="govuk-summary-list__value">temp4</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit">Change<span class="govuk-visually-hidden"> Change team</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Update case team</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`update-case-team GET /case-team/edit should render the update case team page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -36,9 +93,14 @@ exports[`update-case-team GET /case-team/edit should render the update case team
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="case-team-4" name="case-team" type="radio"
-                                        value="0" aria-describedby="case-team-4-item-hint">
-                                        <label class="govuk-label govuk-radios__label" for="case-team-4">Unassign team</label>
-                                        <div id="case-team-4-item-hint" class="govuk-hint govuk-radios__hint">This will remove the current case team from the appeal</div>
+                                        value="4">
+                                        <label class="govuk-label govuk-radios__label" for="case-team-4">temp4</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="case-team-5" name="case-team" type="radio"
+                                        value="0" aria-describedby="case-team-5-item-hint">
+                                        <label class="govuk-label govuk-radios__label" for="case-team-5">Unassign team</label>
+                                        <div id="case-team-5-item-hint" class="govuk-hint govuk-radios__hint">This will remove the current case team from the appeal</div>
                                     </div>
                                 </div>
                             </fieldset>
@@ -105,9 +167,14 @@ exports[`update-case-team POST /case-team/edit should rerender the update case t
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="case-team-4" name="case-team" type="radio"
-                                        value="0" aria-describedby="case-team-4-item-hint">
-                                        <label class="govuk-label govuk-radios__label" for="case-team-4">Unassign team</label>
-                                        <div id="case-team-4-item-hint" class="govuk-hint govuk-radios__hint">This will remove the current case team from the appeal</div>
+                                        value="4">
+                                        <label class="govuk-label govuk-radios__label" for="case-team-4">temp4</label>
+                                    </div>
+                                    <div class="govuk-radios__item">
+                                        <input class="govuk-radios__input" id="case-team-5" name="case-team" type="radio"
+                                        value="0" aria-describedby="case-team-5-item-hint">
+                                        <label class="govuk-label govuk-radios__label" for="case-team-5">Unassign team</label>
+                                        <div id="case-team-5-item-hint" class="govuk-hint govuk-radios__hint">This will remove the current case team from the appeal</div>
                                     </div>
                         </div>
                         </fieldset>

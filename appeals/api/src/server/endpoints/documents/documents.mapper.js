@@ -40,7 +40,8 @@ export const mapDocumentsForDatabase = (
 			blobStoragePath: document.blobStoragePath,
 			documentURI: `${storageHost}/${blobStorageContainer}/${document.blobStoragePath}`,
 			redactionStatusId: document.redactionStatusId,
-			dateReceived: new Date(document.receivedDate)
+			dateReceived: new Date(document.receivedDate),
+			virusCheckStatus: document.virusCheckStatus
 		};
 	});
 };

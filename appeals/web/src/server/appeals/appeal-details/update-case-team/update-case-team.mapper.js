@@ -16,11 +16,6 @@ export async function updateCaseTeam(appealDetails, teamList, caseTeamId, errors
 		text: team.name,
 		hint: { text: team.email }
 	}));
-	mappedTeamList.push({
-		value: 0,
-		text: 'Unassign team',
-		hint: { text: 'This will remove the current case team from the appeal' }
-	});
 
 	/** @type {PageComponent} */
 	const selectVisitTypeComponent = {
@@ -54,3 +49,64 @@ export async function updateCaseTeam(appealDetails, teamList, caseTeamId, errors
 
 	return pageContent;
 }
+
+/**
+ *
+ * @param {number} appealId
+ * @param {(import('@pins/appeals.api').Api.CaseTeam)} team
+ * @param {string} appealReference
+ * @returns {PageContent}
+ */
+export function checkAndConfirmPage(appealId, team, appealReference) {
+	const mappedTeam = mapTeamText(team);
+
+	/** @type {PageComponent} */
+
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: {
+						text: 'Case team'
+					},
+					value: {
+						html: mappedTeam
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appealId}/case-team/edit`,
+								visuallyHiddenText: 'Change team'
+							}
+						]
+					}
+				}
+			]
+		}
+	};
+
+	/** @type {PageContent} */
+	const pageContent = {
+		title: 'Check answers',
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}/case-team/edit`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		heading: 'Check details and update case team',
+		submitButtonProperties: {
+			text: 'Update case team',
+			type: 'submit'
+		},
+		pageComponents: [summaryListComponent]
+	};
+
+	return pageContent;
+}
+
+/**
+ * @param {(import('@pins/appeals.api').Api.CaseTeam)} team
+ * @returns {string} The formatted team name and email.
+ */
+export const mapTeamText = (team) => {
+	return team.email ? `${team.name}<br>${team.email}` : `${team.name}`;
+};

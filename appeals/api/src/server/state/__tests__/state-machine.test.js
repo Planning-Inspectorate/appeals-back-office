@@ -86,6 +86,14 @@ describe('State Machine Transitions', () => {
 				APPEAL_CASE_STATUS.WITHDRAWN,
 				APPEAL_CASE_STATUS.WITHDRAWN,
 				APPEAL_CASE_STATUS.WITHDRAWN
+			],
+			[
+				APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+				VALIDATION_OUTCOME_INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID,
+				APPEAL_CASE_STATUS.INVALID
 			]
 		])(
 			'correctly transitions from %s state on %s event to %s state',

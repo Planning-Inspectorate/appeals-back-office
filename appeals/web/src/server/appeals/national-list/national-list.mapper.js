@@ -6,16 +6,19 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 /** @typedef {import('../../app/auth/auth.service').AccountInfo} AccountInfo */
 /** @typedef {import('#appeals/appeals.types.js').AppealType} AppealType */
+/** @typedef {import('#appeals/appeals.types.js').AppealProcedureType} AppealProcedureType */
 /**
  * @param {{azureAdUserId: string, id: number, name: string}[]} users
  * @param {AppealList|void} appeals
  * @param {AppealType[]} appealTypes
+ * @param {import('@pins/appeals.api').Api.CaseTeams} caseTeams
+ * @param {AppealProcedureType[]} appealProcedureTypes
  * @param {string} urlWithoutQuery
  * @param {string|undefined} searchTerm
  * @param {string|undefined} searchTermError
@@ -25,6 +28,8 @@ import { APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
  * @param {string|undefined} caseOfficerFilter
  * @param {string|undefined} inspectorFilter
  * @param {string|undefined} appealTypeFilter
+ * @param {string|undefined} caseTeamFilter
+ * @param {string|undefined} appealProcedureFilter
  * @param {string|undefined} greenBeltFilter
  * @returns {PageContent}
  */
@@ -33,6 +38,8 @@ export function nationalListPage(
 	users,
 	appeals,
 	appealTypes,
+	caseTeams,
+	appealProcedureTypes,
 	urlWithoutQuery,
 	searchTerm,
 	searchTermError,
@@ -42,11 +49,15 @@ export function nationalListPage(
 	caseOfficerFilter,
 	inspectorFilter,
 	appealTypeFilter,
+	caseTeamFilter,
+	appealProcedureFilter,
 	greenBeltFilter
 ) {
 	const filtersApplied =
 		greenBeltFilter ||
 		appealTypeFilter ||
+		caseTeamFilter ||
+		appealProcedureFilter ||
 		[
 			appealStatusFilter,
 			inspectorStatusFilter,
@@ -118,6 +129,18 @@ export function nationalListPage(
 		enabledAppealTypes.push(APPEAL_CASE_TYPE.ZP);
 	}
 
+	let enabledAppealProcedures = [];
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
+		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.WRITTEN);
+	}
+	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_HEARING)) {
+		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.HEARING);
+	}
+	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78_INQUIRY)) {
+		enabledAppealProcedures.push(APPEAL_CASE_PROCEDURE.INQUIRY);
+	}
+
 	const appealTypeFilterItemsArray = [
 		{
 			text: 'All',
@@ -130,6 +153,34 @@ export function nationalListPage(
 				text: type,
 				value: id.toString(),
 				selected: appealTypeFilter === id.toString()
+			}))
+	];
+
+	const caseTeamFilterItemsArray = [
+		{
+			text: 'All',
+			value: 'all',
+			selected: caseTeamFilter === 'all'
+		},
+		...caseTeams.map(({ name, id }) => ({
+			text: name,
+			value: id,
+			selected: caseTeamFilter === id?.toString()
+		}))
+	];
+
+	const appealProcedureFilterItemsArray = [
+		{
+			text: 'All',
+			value: 'all',
+			selected: appealProcedureFilter === 'all'
+		},
+		...appealProcedureTypes
+			.filter(({ key }) => enabledAppealProcedures.includes(key))
+			.map(({ name, id }) => ({
+				text: name,
+				value: id.toString(),
+				selected: appealProcedureFilter === id.toString()
 			}))
 	];
 
@@ -304,6 +355,20 @@ export function nationalListPage(
 					{
 						type: 'select',
 						parameters: {
+							name: 'appealProcedureFilter',
+							id: 'appeal-procedure-filter',
+							label: {
+								classes: 'govuk-!-font-weight-bold',
+								text: 'Appeal procedure'
+							},
+							value: 'all',
+							items: appealProcedureFilterItemsArray,
+							attributes: { 'data-cy': 'filter-by-appeal-procedure' }
+						}
+					},
+					{
+						type: 'select',
+						parameters: {
 							name: 'appealStatusFilter',
 							id: 'appeal-status-filter',
 							label: {
@@ -353,6 +418,20 @@ export function nationalListPage(
 							value: 'all',
 							items: caseOfficerFilterItemsArray,
 							attributes: { 'data-cy': 'filter-by-case-officer' }
+						}
+					},
+					{
+						type: 'select',
+						parameters: {
+							name: 'caseTeamFilter',
+							id: 'case-team-filter',
+							label: {
+								classes: 'govuk-!-font-weight-bold',
+								text: 'Case team'
+							},
+							value: 'all',
+							items: caseTeamFilterItemsArray,
+							attributes: { 'data-cy': 'filter-by-case-team' }
 						}
 					},
 					{

@@ -85,8 +85,8 @@ export const AUDIT_TRAIL_DOCUMENT_NAME_CHANGED =
 export const AUDIT_TRAIL_LPAQ_IMPORT_MSG = 'The LPA questionnaire was received';
 export const AUDIT_TRAIL_REP_IMPORT_MSG = '{replacement0} was received';
 export const AUDIT_TRAIL_PROGRESSED_TO_STATUS = 'Case progressed to {replacement0}';
-export const AUDIT_TRAIL_SUBMISSION_INCOMPLETE = 'The {replacement0} was marked as incomplete';
-export const AUDIT_TRAIL_SUBMISSION_INVALID = 'Appeal marked as invalid:';
+export const AUDIT_TRAIL_SUBMISSION_INCOMPLETE = '{replacement0} marked as incomplete';
+export const AUDIT_TRAIL_SUBMISSION_INVALID = 'Appeal reviewed as invalid';
 export const AUDIT_TRAIL_REMOVED_CASE_OFFICER =
 	'The case officer {replacement0} was removed from the team';
 export const AUDIT_TRAIL_REMOVED_INSPECTOR =
@@ -213,6 +213,7 @@ export const AUDIT_TRAIL_CORRECTION_NOTICE_ADDED = 'Correction notice added: {re
 export const AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED = 'Appellant costs decision issued';
 export const AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED = 'LPA costs decision issued';
 
+export const AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED = 'Case team updated';
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';

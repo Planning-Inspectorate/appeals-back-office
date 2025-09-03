@@ -7,6 +7,7 @@ import {
 } from './proof-of-evidence.middleware.js';
 import manageDocumentsRouter from '../document-attachments/manage-documents.router.js';
 import acceptProofOfEvidenceRouter from './accept/accept.router.js';
+import incompleteProofOfEvidenceRouter from './incomplete/incomplete.router.js';
 
 const router = createRouter({ mergeParams: true });
 
@@ -29,6 +30,13 @@ router.use(
 	validateAppeal,
 	withSingularRepresentation,
 	acceptProofOfEvidenceRouter
+);
+
+router.use(
+	'/:proofOfEvidenceType/incomplete',
+	validateAppeal,
+	withSingularRepresentation,
+	incompleteProofOfEvidenceRouter
 );
 
 export default router;

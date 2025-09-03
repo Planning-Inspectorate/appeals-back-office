@@ -3,7 +3,7 @@
 /**
  *
  * @param {LPA[]} localPlanningDepartmentList
- * @param {Record<string, number>} lpaTeamAssignments
+ * @param {Record<string, number|null>} lpaTeamAssignments
  * @return {LPA[]}
  */
 export const mapLpasToTeams = (localPlanningDepartmentList, lpaTeamAssignments) => {

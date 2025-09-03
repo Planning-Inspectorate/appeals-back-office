@@ -349,6 +349,56 @@ exports[`final-comments GET /review-comments with data should render review LPA 
 </main>"
 `;
 
+exports[`final-comments GET /review-comments with data should render review appellant final comments page with no redact & accept option when no representation text 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Review appellant final comments</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Final comments</dt>
+                    <dd class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="text"></div>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">No documents</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Review decision</legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status" name="status" type="radio"
+                                value="valid">
+                                <label class="govuk-label govuk-radios__label" for="status">Accept final comments</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-3" name="status" type="radio"
+                                value="invalid">
+                                <label class="govuk-label govuk-radios__label" for="status-3">Reject final comments</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Continue</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`final-comments GET /review-comments with data should render review appellant final comments page with the provided comments details 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

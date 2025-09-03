@@ -45,6 +45,12 @@ export interface AppealType {
 	changeAppealType: string;
 }
 
+export interface AppealProcedureType {
+	id: number;
+	name: string;
+	key: string;
+}
+
 declare global {
 	namespace Express {
 		interface Request {

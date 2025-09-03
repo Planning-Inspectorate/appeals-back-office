@@ -44,7 +44,7 @@ const checkHearingExists = async (req, res, next) => {
  * @param {string} templateName
  * @param {Appeal} appeal
  * @param {string | Date} hearingStartTime
- * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'>} address
+ * @param {Omit<import('@pins/appeals.api').Schema.Address, 'id'> | null} address
  * @param {string} azureAdUserId
  * @returns {Promise<void>}
  */
@@ -63,7 +63,7 @@ const sendHearingDetailsNotifications = async (
 		hearing_time: formatTime12h(
 			typeof hearingStartTime === 'string' ? new Date(hearingStartTime) : hearingStartTime
 		),
-		hearing_address: formatAddressSingleLine({ ...address, id: 0 })
+		hearing_address: address ? formatAddressSingleLine({ ...address, id: 0 }) : ''
 	};
 	await sendHearingNotifications(
 		notifyClient,
@@ -153,8 +153,15 @@ const createHearing = async (createHearingData, appeal, notifyClient, azureAdUse
  * @param {Appeal} appeal
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
  * @param {string} azureAdUserId
+ * @param {number | null | undefined} existingAddressId
  */
-const updateHearing = async (updateHearingData, appeal, notifyClient, azureAdUserId) => {
+const updateHearing = async (
+	updateHearingData,
+	appeal,
+	notifyClient,
+	azureAdUserId,
+	existingAddressId
+) => {
 	try {
 		const appealId = updateHearingData.appealId;
 		const hearingId = Number(updateHearingData.hearingId);
@@ -175,7 +182,7 @@ const updateHearing = async (updateHearingData, appeal, notifyClient, azureAdUse
 		const result = await hearingRepository.updateHearingById(hearingId, updateData);
 
 		// @ts-ignore
-		if (result.address) {
+		if (result.address || existingAddressId) {
 			await broadcasters.broadcastEvent(updateData.hearingId, EVENT_TYPE.HEARING, EventType.Update);
 			await sendHearingDetailsNotifications(
 				notifyClient,

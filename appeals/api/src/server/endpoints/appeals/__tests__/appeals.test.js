@@ -1114,6 +1114,13 @@ test('gets appeals when given a appealTypeId param', async () => {
 	databaseConnector.appeal.findMany
 		.mockResolvedValueOnce([householdAppeal])
 		.mockResolvedValueOnce(allAppeals);
+	databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+	databaseConnector.appealStatus.findMany.mockResolvedValue(
+		statusesInNationalList.map((status) => ({ status }))
+	);
+	databaseConnector.lPA.findMany.mockResolvedValue(lpas);
+	databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
+	databaseConnector.appeal.count.mockResolvedValue(1);
 
 	const response = await request.get('/appeals?appealTypeId=1').set('azureAdUserId', azureAdUserId);
 
@@ -1204,6 +1211,197 @@ test('gets appeals when given a appealTypeId param', async () => {
 	});
 });
 
+test('gets appeals when given a procedure type id param', async () => {
+	databaseConnector.appeal.findMany
+		.mockResolvedValueOnce([householdAppeal])
+		.mockResolvedValueOnce(allAppeals);
+
+	databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+	databaseConnector.appealStatus.findMany.mockResolvedValue(
+		statusesInNationalList.map((status) => ({ status }))
+	);
+	databaseConnector.lPA.findMany.mockResolvedValue(lpas);
+	databaseConnector.user.findMany.mockResolvedValue(inspectors.concat(caseOfficers));
+	databaseConnector.appeal.count.mockResolvedValue(1);
+
+	const response = await request
+		.get('/appeals?procedureTypeId=1')
+		.set('azureAdUserId', azureAdUserId);
+
+	expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
+		expect.objectContaining({
+			where: {
+				appealType: {
+					key: { in: getEnabledAppealTypes() }
+				},
+				appealStatus: {
+					some: {
+						valid: true
+					}
+				},
+				procedureTypeId: 1
+			}
+		})
+	);
+	expect(response.status).toEqual(200);
+	expect(response.body).toEqual({
+		itemCount: 1,
+		items: [
+			{
+				appealId: householdAppeal.id,
+				appealReference: householdAppeal.reference,
+				appealSite: {
+					addressLine1: householdAppeal.address.addressLine1,
+					addressLine2: householdAppeal.address.addressLine2,
+					town: householdAppeal.address.addressTown,
+					county: householdAppeal.address.addressCounty,
+					postCode: householdAppeal.address.postcode
+				},
+				appealStatus: householdAppeal.appealStatus[0].status,
+				appealType: householdAppeal.appealType.type,
+				awaitingLinkedAppeal: null,
+				createdAt: householdAppeal.caseCreatedDate.toISOString(),
+				localPlanningDepartment: householdAppeal.lpa.name,
+				dueDate: null,
+				documentationSummary: {
+					appellantCase: {
+						receivedAt: '2024-03-25T23:59:59.999Z',
+						status: 'received'
+					},
+					ipComments: {
+						status: 'not_received',
+						counts: {},
+						isRedacted: false
+					},
+					lpaQuestionnaire: {
+						receivedAt: '2024-06-24T00:00:00.000Z',
+						status: 'received'
+					},
+					lpaStatement: {
+						status: 'not_received',
+						representationStatus: null,
+						isRedacted: false
+					},
+					lpaFinalComments: {
+						receivedAt: null,
+						representationStatus: null,
+						status: 'not_received',
+						isRedacted: false
+					},
+					appellantFinalComments: {
+						receivedAt: null,
+						representationStatus: null,
+						status: 'not_received',
+						isRedacted: false
+					}
+				},
+				isParentAppeal: false,
+				isChildAppeal: false,
+				planningApplicationReference: householdAppeal.applicationReference,
+				procedureType: 'Written',
+				hasHearingAddress: true,
+				isHearingSetup: true,
+				numberOfResidencesNetChange: 5
+			}
+		],
+		lpas,
+		caseOfficers,
+		inspectors,
+		page: 1,
+		pageCount: 1,
+		pageSize: 30,
+		statuses: ['assign_case_officer'],
+		statusesInNationalList
+	});
+});
+
+test('gets appeals when given a assignedTeamId param', async () => {
+	databaseConnector.appeal.findMany
+		.mockResolvedValueOnce([householdAppeal])
+		.mockResolvedValueOnce(allAppeals);
+
+	const response = await request
+		.get('/appeals?assignedTeamId=1')
+		.set('azureAdUserId', azureAdUserId);
+
+	expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
+		expect.objectContaining({
+			where: expect.objectContaining({
+				assignedTeamId: 1
+			})
+		})
+	);
+	expect(response.status).toEqual(200);
+	expect(response.body).toEqual({
+		itemCount: 1,
+		items: [
+			{
+				appealId: householdAppeal.id,
+				appealReference: householdAppeal.reference,
+				appealSite: {
+					addressLine1: householdAppeal.address.addressLine1,
+					addressLine2: householdAppeal.address.addressLine2,
+					town: householdAppeal.address.addressTown,
+					county: householdAppeal.address.addressCounty,
+					postCode: householdAppeal.address.postcode
+				},
+				appealStatus: householdAppeal.appealStatus[0].status,
+				appealType: householdAppeal.appealType.type,
+				awaitingLinkedAppeal: null,
+				createdAt: householdAppeal.caseCreatedDate.toISOString(),
+				localPlanningDepartment: householdAppeal.lpa.name,
+				dueDate: null,
+				documentationSummary: {
+					appellantCase: {
+						receivedAt: '2024-03-25T23:59:59.999Z',
+						status: 'received'
+					},
+					ipComments: {
+						status: 'not_received',
+						counts: {},
+						isRedacted: false
+					},
+					lpaQuestionnaire: {
+						receivedAt: '2024-06-24T00:00:00.000Z',
+						status: 'received'
+					},
+					lpaStatement: {
+						status: 'not_received',
+						representationStatus: null,
+						isRedacted: false
+					},
+					lpaFinalComments: {
+						receivedAt: null,
+						representationStatus: null,
+						status: 'not_received',
+						isRedacted: false
+					},
+					appellantFinalComments: {
+						receivedAt: null,
+						representationStatus: null,
+						status: 'not_received',
+						isRedacted: false
+					}
+				},
+				isParentAppeal: false,
+				isChildAppeal: false,
+				planningApplicationReference: householdAppeal.applicationReference,
+				procedureType: 'Written',
+				hasHearingAddress: true,
+				isHearingSetup: true,
+				numberOfResidencesNetChange: 5
+			}
+		],
+		lpas,
+		caseOfficers,
+		inspectors,
+		page: 1,
+		pageCount: 1,
+		pageSize: 30,
+		statuses: ['assign_case_officer'],
+		statusesInNationalList
+	});
+});
 describe('mapAppealToDueDate Tests', () => {
 	let mockAppeal = {
 		appealType: null,

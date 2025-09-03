@@ -6,7 +6,7 @@ import {
 	extractAndProcessDateErrors,
 	createDateInputDateInFutureOfDateValidator
 } from '#lib/validators/date-input.validator.js';
-import { getAppealTimetableTypes, getIdText } from './timetable.mapper.js';
+import { getIdText } from './timetable.mapper.js';
 
 /**
  *
@@ -26,15 +26,14 @@ export const createTimetableValidators = (fieldName, label, fieldNameToCompare, 
 
 /**
  * @param {import('express').Request} req
+ * @param {import('./timetable.mapper.js').AppealTimetableType[]} timetableTypes
+ * @param {any} session
  * @returns {import('express').RequestHandler[]}
  */
-export const selectTimetableValidators = (req) => {
-	const { currentAppeal, session } = req || {};
+export const selectTimetableValidators = (req, timetableTypes, session) => {
+	const { currentAppeal } = req || {};
 	/** @type {import('express').RequestHandler[]} */
 	const validatorsList = [];
-	const { appellantCase } = req.locals;
-
-	let timetableTypes = getAppealTimetableTypes(currentAppeal, appellantCase);
 
 	const originalTimetable = currentAppeal.appealTimetable || {};
 	session.appealTimetable = session.appealTimetable || {};

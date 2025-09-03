@@ -42,7 +42,8 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					},
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
-					}
+					},
+					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID }
 				},
 				meta: {
 					validAppealTypes: [APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA],
@@ -265,6 +266,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
 						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER
 					},
+					[APPEAL_CASE_STATUS.INVALID]: { target: APPEAL_CASE_STATUS.INVALID },
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID },
 					[APPEAL_CASE_STATUS.INVALID]: { target: APPEAL_CASE_STATUS.INVALID },
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {

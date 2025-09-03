@@ -165,6 +165,11 @@ export const spec = {
 				id: 1
 			}
 		],
+		CaseTeam: {
+			id: 1,
+			name: 'Ops Test',
+			email: 'opstest@email.com'
+		},
 		CaseTeams: [
 			{
 				id: 1,
@@ -964,6 +969,10 @@ export const spec = {
 		],
 		LPAChangeRequest: {
 			newLpaId: 2
+		},
+
+		UpdateAsssignedTeamResponse: {
+			teamId: 1
 		}
 	},
 	'@definitions': {
@@ -1724,6 +1733,15 @@ export const spec = {
 				status: {
 					type: 'string',
 					example: 'event'
+				}
+			}
+		},
+		UpdateAsssignedTeamRequest: {
+			type: 'object',
+			properties: {
+				teamId: {
+					type: 'string',
+					example: '1'
 				}
 			}
 		},

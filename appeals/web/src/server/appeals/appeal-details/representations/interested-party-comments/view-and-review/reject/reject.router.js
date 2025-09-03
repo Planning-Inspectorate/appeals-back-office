@@ -17,7 +17,7 @@ router
 	.route('/select-reason')
 	.get(asyncHandler(controller.renderSelectReason))
 	.post(
-		validateRejectReason,
+		validateRejectReason(),
 		validateRejectionReasonTextItems,
 		saveBodyToSession('rejectIpComment'),
 		asyncHandler(controller.postRejectReason)

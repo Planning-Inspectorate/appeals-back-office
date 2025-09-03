@@ -30,19 +30,21 @@ export const addDocument = async (metadata, context) => {
 		metadata.documentGuid = guid;
 		metadata.version = 1;
 		metadata.fileName = name || metadata.originalFilename;
-		const scanStatus = await tx.documentVersionAvScan.findUnique({
-			where: {
-				documentGuid_version: {
-					documentGuid: guid,
-					version: metadata.version
+		if (!metadata.virusCheckStatus) {
+			const scanStatus = await tx.documentVersionAvScan.findUnique({
+				where: {
+					documentGuid_version: {
+						documentGuid: guid,
+						version: metadata.version
+					}
 				}
+			});
+			if (scanStatus) {
+				metadata.virusCheckStatus =
+					scanStatus.avScanSuccess === true
+						? APPEAL_VIRUS_CHECK_STATUS.SCANNED
+						: APPEAL_VIRUS_CHECK_STATUS.AFFECTED;
 			}
-		});
-		if (scanStatus) {
-			metadata.virusCheckStatus =
-				scanStatus.avScanSuccess === true
-					? APPEAL_VIRUS_CHECK_STATUS.SCANNED
-					: APPEAL_VIRUS_CHECK_STATUS.AFFECTED;
 		}
 
 		delete metadata.GUID;

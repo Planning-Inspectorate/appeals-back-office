@@ -59,7 +59,7 @@ export function reviewInterestedPartyCommentPage(appealDetails, comment, session
 					checked: comment?.status === COMMENT_STATUS.VALID
 				},
 				...[
-					comment.source === 'citizen'
+					comment.source === 'citizen' && comment.originalRepresentation
 						? {
 								value: COMMENT_STATUS.VALID_REQUIRES_REDACTION,
 								text: 'Redact and accept comment',

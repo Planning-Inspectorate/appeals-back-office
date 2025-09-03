@@ -152,6 +152,25 @@ describe('appeal-details', () => {
 				expect(element.innerHTML).toMatchSnapshot();
 				expect(element.innerHTML).toContain('<li>Not assigned</li>');
 			});
+			it('should render the case-team section for appeal with not assigned displayed when only team name exists"', async () => {
+				const appealId = 2;
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealStatus: 'ready_to_start',
+						assignedTeam: { id: 4, name: 'Just a name', email: null }
+					});
+				nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+				const response = await request.get(`${baseUrl}/${appealId}`);
+
+				expect(response.statusCode).toBe(200);
+				const element = parseHtml(response.text, { rootElement: '.appeal-case-team' });
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Just a name');
+			});
 		});
 		describe('Notification banners', () => {
 			const notificationBannerElement = '.govuk-notification-banner';

@@ -2,10 +2,11 @@ import logger from '#lib/logger.js';
 import config from '#environment/config.js';
 import usersService from '#appeals/appeal-users/users-service.js';
 import { nationalListPage } from './national-list.mapper.js';
-import { getAppeals, getAppealTypes } from './national-list.service.js';
+import { getAppealProcedureTypes, getAppeals, getAppealTypes } from './national-list.service.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
 import { mapPagination } from '#lib/mappers/index.js';
 import { stripQueryString } from '#lib/url-utilities.js';
+import { getTeamList } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
 
@@ -39,6 +40,8 @@ export const viewNationalList = async (request, response) => {
 	const inspectorFilter = query.inspectorFilter && String(query.inspectorFilter);
 	const greenBeltFilter = query.greenBeltFilter && String(query.greenBeltFilter);
 	const appealTypeFilter = query.appealTypeFilter && String(query.appealTypeFilter);
+	const caseTeamFilter = query.caseTeamFilter && String(query.caseTeamFilter);
+	const appealProcedureFilter = query.appealProcedureFilter && String(query.appealProcedureFilter);
 	let searchTerm = query?.searchTerm ? String(query.searchTerm).trim() : '';
 	let searchTermError = '';
 
@@ -49,6 +52,7 @@ export const viewNationalList = async (request, response) => {
 	}
 
 	const appealTypes = await getAppealTypes(request.apiClient);
+	const appealProcedureTypes = await getAppealProcedureTypes(request.apiClient);
 
 	const urlWithoutQuery = stripQueryString(originalUrl);
 	const paginationParameters = getPaginationParametersFromQuery(query);
@@ -62,6 +66,8 @@ export const viewNationalList = async (request, response) => {
 		inspectorFilter,
 		greenBeltFilter,
 		appealTypeFilter,
+		caseTeamFilter,
+		appealProcedureFilter,
 		paginationParameters.pageNumber,
 		paginationParameters.pageSize
 	).catch((error) => logger.error(error));
@@ -80,11 +86,13 @@ export const viewNationalList = async (request, response) => {
 			};
 		})
 	);
-
+	const caseTeams = await getTeamList(request.apiClient);
 	const mappedPageContent = nationalListPage(
 		users,
 		appeals,
 		appealTypes,
+		caseTeams,
+		appealProcedureTypes,
 		urlWithoutQuery,
 		searchTerm,
 		searchTermError,
@@ -94,6 +102,8 @@ export const viewNationalList = async (request, response) => {
 		caseOfficerFilter,
 		inspectorFilter,
 		appealTypeFilter,
+		caseTeamFilter,
+		appealProcedureFilter,
 		greenBeltFilter
 	);
 

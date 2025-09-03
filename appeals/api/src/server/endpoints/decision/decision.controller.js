@@ -71,12 +71,18 @@ export const postInspectorDecision = async (req, res) => {
 					}
 					case DECISION_TYPE_APPELLANT_COSTS:
 					case DECISION_TYPE_LPA_COSTS: {
+						// If the decisions are part of the full issue decision flow (including the inspector decision), we don't want to send the costs decision notifies.
+						const skipNotifies = decisions.some(
+							/** @param {Decision} decision **/
+							(decision) => decision.decisionType === DECISION_TYPE_INSPECTOR
+						);
 						return publishCostsDecision(
 							appeal,
 							notifyClient,
 							siteAddress,
 							azureAdUserId,
-							decisionType
+							decisionType,
+							skipNotifies
 						);
 					}
 				}

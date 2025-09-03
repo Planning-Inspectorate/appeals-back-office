@@ -13,6 +13,7 @@ const mockRepUpdateMany = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipAdd = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipRemove = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipFindMany = jest.fn().mockResolvedValue({});
+const mockAppealRelationshipFindFirst = jest.fn().mockResolvedValue({});
 const mockAppealRelationshipCreateMany = jest.fn().mockResolvedValue({});
 const mockAppealDecision = jest.fn().mockResolvedValue({});
 const mockAppealFindUnique = jest.fn().mockResolvedValue({});
@@ -200,6 +201,7 @@ class MockPrismaClient {
 	get appealRelationship() {
 		return {
 			findMany: mockAppealRelationshipFindMany,
+			findFirst: mockAppealRelationshipFindFirst,
 			delete: mockAppealRelationshipRemove,
 			create: mockAppealRelationshipAdd,
 			createMany: mockAppealRelationshipCreateMany

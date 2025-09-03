@@ -192,6 +192,12 @@ export const appealsNationalList = {
 	lpas: [{ lpaCode: '1', name: 'Test LPA' }],
 	inspectors: [{ azureAdUserId: activeDirectoryUsersData[0].id, id: 0 }],
 	caseOfficers: [{ azureAdUserId: activeDirectoryUsersData[1].id, id: 1 }],
+	assignedTeamId: 1,
+	assignedTeam: {
+		id: 1,
+		name: 'test',
+		email: 'test@email.com'
+	},
 	page: 1,
 	pageCount: 1,
 	pageSize: 30
@@ -1594,6 +1600,24 @@ export const appealTypesData = [
 		type: 'CAS planning',
 		key: 'ZP',
 		enabled: false
+	}
+];
+
+export const procedureTypesData = [
+	{
+		id: 1,
+		name: 'Written',
+		key: 'written'
+	},
+	{
+		id: 2,
+		name: 'Hearing',
+		key: 'hearing'
+	},
+	{
+		id: 3,
+		name: 'Inquiry',
+		key: 'inquiry'
 	}
 ];
 
@@ -3121,7 +3145,7 @@ export const interestedPartyCommentsAwaitingReview = {
 	items: [
 		{
 			id: 3812,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Eva Sharma',
 			status: 'awaiting_review',
 			originalRepresentation: 'Awaiting review comment 1',
@@ -3132,7 +3156,7 @@ export const interestedPartyCommentsAwaitingReview = {
 		},
 		{
 			id: 3811,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Roger Simmons',
 			status: 'awaiting_review',
 			originalRepresentation: 'Awaiting review comment 2',
@@ -3143,7 +3167,7 @@ export const interestedPartyCommentsAwaitingReview = {
 		},
 		{
 			id: 3810,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Roger Simmons',
 			status: 'awaiting_review',
 			originalRepresentation: 'Awaiting review comment 3',
@@ -3163,7 +3187,7 @@ export const interestedPartyCommentsValid = {
 	items: [
 		{
 			id: 3852,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Roger Simmons',
 			status: 'valid',
 			originalRepresentation: 'Valid comment 1',
@@ -3174,7 +3198,7 @@ export const interestedPartyCommentsValid = {
 		},
 		{
 			id: 3851,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Roger Simmons',
 			status: 'valid',
 			originalRepresentation: 'Valid comment 2',
@@ -3185,7 +3209,7 @@ export const interestedPartyCommentsValid = {
 		},
 		{
 			id: 3850,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Haley Eland',
 			status: 'valid',
 			originalRepresentation: 'Valid comment 3',
@@ -3205,7 +3229,7 @@ export const interestedPartyCommentsInvalid = {
 	items: [
 		{
 			id: 3872,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Ryan Marshall',
 			status: 'invalid',
 			originalRepresentation: 'Invalid comment 1',
@@ -3216,7 +3240,7 @@ export const interestedPartyCommentsInvalid = {
 		},
 		{
 			id: 3871,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Ryan Marshall',
 			status: 'invalid',
 			originalRepresentation: 'Invalid comment 2',
@@ -3227,7 +3251,7 @@ export const interestedPartyCommentsInvalid = {
 		},
 		{
 			id: 3870,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Eva Sharma',
 			status: 'invalid',
 			originalRepresentation: 'Invalid comment 3',
@@ -3247,7 +3271,7 @@ export const interestedPartyCommentsForReview = {
 	items: [
 		{
 			id: 3670,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Lee Thornton',
 			status: 'awaiting_review',
 			originalRepresentation: 'Awaiting final comment',
@@ -3278,7 +3302,7 @@ export const interestedPartyCommentsForView = {
 	items: [
 		{
 			id: 3670,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Lee Thornton',
 			status: 'valid',
 			originalRepresentation: 'Awaiting review final comment',
@@ -3306,7 +3330,7 @@ export const interestedPartyCommentsForView = {
 
 export const interestedPartyCommentForReview = {
 	id: 3670,
-	origin: 'citizen',
+	source: 'citizen',
 	author: 'Lee Thornton',
 	status: 'awaiting_review',
 	originalRepresentation: 'Awaiting review comment 47',
@@ -3332,7 +3356,7 @@ export const interestedPartyCommentsPublished = {
 	items: [
 		{
 			id: 5001,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Alice Wonderland',
 			status: 'published',
 			originalRepresentation: 'Comment 1',
@@ -3352,7 +3376,7 @@ export const interestedPartyCommentsPublished = {
 		},
 		{
 			id: 5002,
-			origin: 'organisation',
+			source: 'organisation',
 			author: 'Cheshire Cat Council',
 			status: 'published',
 			originalRepresentation: 'Comment 2',
@@ -3392,7 +3416,7 @@ export const finalCommentsForReview = {
 	items: [
 		{
 			id: 3670,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Lee Thornton',
 			status: 'awaiting_review',
 			originalRepresentation: 'Awaiting final comments review',
@@ -3423,7 +3447,7 @@ export const finalCommentsForReviewWithAttachments = {
 	items: [
 		{
 			id: 3670,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Lee Thornton',
 			status: 'awaiting_review',
 			originalRepresentation: 'Awaiting final comments review',
@@ -3477,7 +3501,6 @@ export const appellantFinalCommentsAwaitingReview = {
 	items: [
 		{
 			id: 46419,
-			origin: 'citizen',
 			author: 'Eva Sharma',
 			status: 'awaiting_review',
 			originalRepresentation:
@@ -3511,7 +3534,7 @@ export const lpaFinalCommentsAwaitingReview = {
 	items: [
 		{
 			id: 46420,
-			origin: 'lpa',
+			source: 'lpa',
 			author: 'Worthing Borough Council',
 			status: 'awaiting_review',
 			originalRepresentation:
@@ -3522,7 +3545,6 @@ export const lpaFinalCommentsAwaitingReview = {
 			attachments: [],
 			representationType: 'lpa_final_comment',
 			siteVisitRequested: false,
-			source: 'citizen',
 			rejectionReasons: []
 		}
 	],
@@ -3533,7 +3555,7 @@ export const lpaFinalCommentsAwaitingReview = {
 
 export const lpaStatementAwaitingReview = {
 	id: 66816,
-	origin: 'lpa',
+	source: 'lpa',
 	author: 'Wiltshire Council',
 	status: 'awaiting_review',
 	originalRepresentation: `Every single thing in the world has its own personality - and it is up to you to make friends with the little rascals. Steve wants reflections, so let's give him eflections It's amazing what you can do with a little love in your heart. Clouds are free they come and go as they please.\n\nThe secret to doing anything is believing that you can do it. Anything hatyou believe you can do strong enough, you can do. Anything. As long as you believe. It looks so good, I might as well not stop. This present moment is perfect simply due to the fact you're xperiencingit. Making all those little fluffies that live in the clouds.\n\nYou don't want to kill all your dark areas they are very important. I will take some magic white, and a little bit of andykebrown and a little touch of yellow. Anyone can paint. Each highlight must have it's own private shadow. Don't fiddle with it all day.`,
@@ -3543,7 +3565,6 @@ export const lpaStatementAwaitingReview = {
 	attachments: [],
 	representationType: 'lpa_statement',
 	siteVisitRequested: false,
-	source: 'lpa',
 	rejectionReasons: []
 };
 
@@ -3552,7 +3573,7 @@ export const proofOfEvidenceForReview = {
 	items: [
 		{
 			id: 3670,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Lee Thornton',
 			status: 'awaiting_review',
 			originalRepresentation: 'Awaiting proof of evidence review',
@@ -3583,7 +3604,7 @@ export const proofOfEvidenceForReviewWithAttachments = {
 	items: [
 		{
 			id: 3670,
-			origin: 'citizen',
+			source: 'citizen',
 			author: 'Lee Thornton',
 			status: 'awaiting_review',
 			originalRepresentation: 'Awaiting proof of evidence review',
@@ -3637,7 +3658,6 @@ export const appellantProofOfEvidenceAwaitingReview = {
 	items: [
 		{
 			id: 46419,
-			origin: 'citizen',
 			author: 'Eva Sharma',
 			status: 'awaiting_review',
 			redactedRepresentation: '',
@@ -3669,7 +3689,7 @@ export const lpaProofOfEvidenceAwaitingReview = {
 	items: [
 		{
 			id: 46420,
-			origin: 'lpa',
+			source: 'lpa',
 			author: 'Worthing Borough Council',
 			status: 'awaiting_review',
 			redactedRepresentation: '',
@@ -3678,7 +3698,6 @@ export const lpaProofOfEvidenceAwaitingReview = {
 			attachments: [],
 			representationType: 'lpa_proofs_evidence',
 			siteVisitRequested: false,
-			source: 'citizen',
 			rejectionReasons: []
 		}
 	],
@@ -3697,7 +3716,7 @@ export const getAppealRepsResponse = {
 
 export const interestedPartyCommentForView = {
 	id: 3670,
-	origin: 'citizen',
+	source: 'citizen',
 	author: 'Lee Thornton',
 	status: 'valid',
 	originalRepresentation: 'Awaiting review comment 47',
@@ -4375,5 +4394,10 @@ export const caseTeams = [
 		id: 3,
 		email: 'temp3@email.com',
 		name: 'temp3'
+	},
+	{
+		id: 4,
+		email: null,
+		name: 'temp4'
 	}
 ];

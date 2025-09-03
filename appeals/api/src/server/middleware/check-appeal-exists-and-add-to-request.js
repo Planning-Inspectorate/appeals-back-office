@@ -1,6 +1,7 @@
 import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { isAppealTypeEnabled } from '#utils/feature-flags-appeal-types.js';
+import { getAppealTypeByTypeId } from '#repositories/appeal-type.repository.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -60,8 +61,11 @@ export const checkAppealExistsById = async (req, res, next) => {
 	} = req;
 
 	const appeal = await appealRepository.getAppealById(Number(appealId), false);
+	const appealType = appeal?.appealType?.key
+		? appeal?.appealType?.key
+		: (await getAppealTypeByTypeId(Number(appeal?.appealTypeId)))?.key;
 
-	if (!appeal || !isAppealTypeEnabled(appeal.appealType?.key || '')) {
+	if (!appeal || !isAppealTypeEnabled(appealType || '')) {
 		return res.status(404).send({ errors: { appealId: ERROR_NOT_FOUND } });
 	}
 

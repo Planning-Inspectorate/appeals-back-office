@@ -2,6 +2,7 @@ import logger from '#lib/logger.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { getLinkableAppealByReference } from './add.service.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
 
 export const validateAddLinkedAppealReference = createValidator(
 	body('appeal-reference')
@@ -13,6 +14,11 @@ export const validateAddLinkedAppealReference = createValidator(
 		.withMessage('Appeal reference must be 7 digits')
 		.bail()
 		.custom(async (reference, { req }) => {
+			if (reference === appealShortReference(req.currentAppeal.appealReference)) {
+				req.body.linkSelf = true;
+				req.session.linkableAppeal = { linkableAppealSummary: { appealReference: reference } };
+				return Promise.resolve();
+			}
 			try {
 				const linkableAppealSummary = await getLinkableAppealByReference(
 					req.apiClient,

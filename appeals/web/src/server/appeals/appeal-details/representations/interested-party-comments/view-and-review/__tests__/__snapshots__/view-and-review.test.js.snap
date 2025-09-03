@@ -530,6 +530,82 @@ exports[`interested-party-comments GET /review-comment with data should render r
                             </div>
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="status-2" name="status" type="radio"
+                                value="valid_requires_redaction">
+                                <label class="govuk-label govuk-radios__label" for="status-2">Redact and accept comment</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-3" name="status" type="radio"
+                                value="invalid">
+                                <label class="govuk-label govuk-radios__label" for="status-3">Reject comment</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <button type="submit" class="govuk-button" data-module="govuk-button">Confirm</button>
+            </form>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`interested-party-comments GET /review-comment with data should render review comment page with redact and accept radio button hidden when no comment provided 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Review comment</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Interested party</dt>
+                    <dd class="govuk-summary-list__value">Lee Thornton</dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Email</dt>
+                    <dd class="govuk-summary-list__value">test1@example.com</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Address</dt>
+                    <dd class="govuk-summary-list__value">Not provided</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/edit/address?review=true&amp;editAddress=false">Add<span class="govuk-visually-hidden"> address</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> When did the interested party submit the comment?</dt>
+                    <dd                     class="govuk-summary-list__value">9 October 2024</dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Comment</dt>
+                    <dd class="govuk-summary-list__value"></dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
+                    <dd class="govuk-summary-list__value">No documents</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/add-document">Add<span class="govuk-visually-hidden"> supporting documents</span></a>
+                    </dd>
+                </div>
+            </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form action="" method="POST" novalidate>
+                <div class="govuk-form-group">
+                    <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                            <input class="govuk-checkboxes__input" id="site-visit-request" name="site-visit-request"
+                            type="checkbox" value="site-visit">
+                            <label class="govuk-label govuk-checkboxes__label" for="site-visit-request">Comment includes a site visit request</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="govuk-form-group">
+                    <fieldset class="govuk-fieldset">
+                        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Review decision</legend>
+                        <div class="govuk-radios" data-module="govuk-radios">
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status" name="status" type="radio"
+                                value="valid">
+                                <label class="govuk-label govuk-radios__label" for="status">Accept comment</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-2" name="status" type="radio"
                                 value="invalid">
                                 <label class="govuk-label govuk-radios__label" for="status-2">Reject comment</label>
                             </div>
@@ -601,8 +677,13 @@ exports[`interested-party-comments GET /review-comment with data should render r
                             </div>
                             <div class="govuk-radios__item">
                                 <input class="govuk-radios__input" id="status-2" name="status" type="radio"
+                                value="valid_requires_redaction">
+                                <label class="govuk-label govuk-radios__label" for="status-2">Redact and accept comment</label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="status-3" name="status" type="radio"
                                 value="invalid">
-                                <label class="govuk-label govuk-radios__label" for="status-2">Reject comment</label>
+                                <label class="govuk-label govuk-radios__label" for="status-3">Reject comment</label>
                             </div>
                         </div>
                     </fieldset>

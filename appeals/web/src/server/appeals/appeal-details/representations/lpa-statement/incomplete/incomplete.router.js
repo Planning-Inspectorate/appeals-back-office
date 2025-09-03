@@ -18,7 +18,7 @@ const router = Router({ mergeParams: true });
 router
 	.route('/reasons')
 	.get(renderReasons)
-	.post(validateRejectReason, validateRejectionReasonTextItems, postReasons);
+	.post(validateRejectReason(), validateRejectionReasonTextItems, postReasons);
 
 router.route('/date').get(renderSetNewDate).post(validateSetNewDate, postSetNewDate);
 

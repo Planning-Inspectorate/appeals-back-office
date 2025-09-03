@@ -1,4 +1,5 @@
 import { getAppellantCaseFromAppealId } from '../appellant-case/appellant-case.service.js';
+import { getAppealTimetableTypes } from './timetable.mapper.js';
 import { selectTimetableValidators } from './timetable.validators.js';
 
 /**
@@ -22,7 +23,10 @@ export const addAppellantCaseToLocals = async (req, _res, next) => {
  * @type {import('express').RequestHandler}
  */
 export const runTimetableValidators = async (req, res, next) => {
-	const validators = selectTimetableValidators(req);
+	const { currentAppeal } = req || {};
+	const { appellantCase } = req.locals;
+	let timetableTypes = getAppealTimetableTypes(currentAppeal, appellantCase);
+	const validators = selectTimetableValidators(req, timetableTypes, req.session);
 	let index = 0;
 
 	// @ts-ignore

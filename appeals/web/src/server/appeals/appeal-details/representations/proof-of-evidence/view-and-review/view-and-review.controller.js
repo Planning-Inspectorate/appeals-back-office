@@ -64,7 +64,7 @@ export const postReviewProofOfEvidence = async (request, response, next) => {
 		if (status === APPEAL_PROOF_OF_EVIDENCE_STATUS.INVALID) {
 			request.session.reviewProofOfEvidence.status = APPEAL_PROOF_OF_EVIDENCE_STATUS.INVALID;
 			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}/reject`
+				`/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}/incomplete`
 			);
 		}
 

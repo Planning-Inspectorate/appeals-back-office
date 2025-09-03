@@ -32,6 +32,7 @@ import {
 	listedBuildingAppealAppellantCaseIncomplete,
 	listedBuildingAppealAppellantCaseInvalid
 } from '#tests/appeals/mocks.js';
+import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
 
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 
@@ -298,11 +299,16 @@ describe('appellant cases routes', () => {
 					}
 				});
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
-
+				const details = `${stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, [
+					'Appeal'
+				])}\n${formatReasonsToHtmlList([
+					'The original application form is incomplete',
+					'Other: Appellant contact information is incorrect or missing'
+				])}`;
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppealAppellantCaseIncomplete.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['appellant case']),
+						details: details,
 						loggedAt: expect.any(Date),
 						userId: householdAppealAppellantCaseIncomplete.caseOfficer.id
 					}
@@ -438,6 +444,28 @@ describe('appellant cases routes', () => {
 					.patch(`/appeals/${id}/appellant-cases/${appellantCase.id}`)
 					.send(body)
 					.set('azureAdUserId', azureAdUserId);
+				const reasons = [
+					{
+						appellantCaseId: appellantCase.id,
+						appellantCaseIncompleteReasonId: 1,
+						text: 'Reason Text 1'
+					},
+					{
+						appellantCaseId: appellantCase.id,
+						appellantCaseIncompleteReasonId: 1,
+						text: 'Reason Text 2'
+					},
+					{
+						appellantCaseId: appellantCase.id,
+						appellantCaseIncompleteReasonId: 2,
+						text: 'Reason Text 3'
+					},
+					{
+						appellantCaseId: appellantCase.id,
+						appellantCaseIncompleteReasonId: 2,
+						text: 'Reason Text 4'
+					}
+				];
 
 				expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
 					where: { id: appellantCase.id },
@@ -449,34 +477,21 @@ describe('appellant cases routes', () => {
 				expect(databaseConnector.appellantCaseIncompleteReasonText.deleteMany).toHaveBeenCalled();
 				expect(databaseConnector.appellantCaseIncompleteReasonText.createMany).toHaveBeenCalledWith(
 					{
-						data: [
-							{
-								appellantCaseId: appellantCase.id,
-								appellantCaseIncompleteReasonId: 1,
-								text: 'Reason Text 1'
-							},
-							{
-								appellantCaseId: appellantCase.id,
-								appellantCaseIncompleteReasonId: 1,
-								text: 'Reason Text 2'
-							},
-							{
-								appellantCaseId: appellantCase.id,
-								appellantCaseIncompleteReasonId: 2,
-								text: 'Reason Text 3'
-							},
-							{
-								appellantCaseId: appellantCase.id,
-								appellantCaseIncompleteReasonId: 2,
-								text: 'Reason Text 4'
-							}
-						]
+						data: reasons
 					}
 				);
+
+				const details = `${stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, [
+					'Appeal'
+				])}\n${formatReasonsToHtmlList([
+					'The original application form is incomplete',
+					'Other: Appellant contact information is incorrect or missing'
+				])}`;
+
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppealAppellantCaseIncomplete.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['appellant case']),
+						details: details,
 						loggedAt: expect.any(Date),
 						userId: householdAppealAppellantCaseIncomplete.caseOfficer.id
 					}
@@ -543,10 +558,16 @@ describe('appellant cases routes', () => {
 						})
 					}
 				);
+				const details = `${stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, [
+					'Appeal'
+				])}\n${formatReasonsToHtmlList([
+					'The original application form is incomplete',
+					'Other: Appellant contact information is incorrect or missing'
+				])}`;
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppealAppellantCaseIncomplete.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['appellant case']),
+						details: details,
 						loggedAt: expect.any(Date),
 						userId: householdAppealAppellantCaseIncomplete.caseOfficer.id
 					}

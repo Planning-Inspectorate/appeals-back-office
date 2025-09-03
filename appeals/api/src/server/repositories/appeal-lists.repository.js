@@ -20,6 +20,8 @@ import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
  * @param {number} caseOfficerId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
+ * @param {number} assignedTeamId
+ * @param {number} procedureTypeId
  * @param {number} [pageNumber]
  * @param {number} [pageSize]
  */
@@ -32,6 +34,8 @@ const getAllAppeals = async (
 	caseOfficerId,
 	isGreenBelt,
 	appealTypeId,
+	assignedTeamId,
+	procedureTypeId,
 	pageNumber,
 	pageSize
 ) => {
@@ -52,7 +56,9 @@ const getAllAppeals = async (
 		inspectorId,
 		caseOfficerId,
 		isGreenBelt,
-		appealTypeId
+		appealTypeId,
+		assignedTeamId,
+		procedureTypeId
 	);
 
 	const appeals = await databaseConnector.appeal.findMany({
@@ -101,6 +107,8 @@ const getAllAppeals = async (
  * @param {number} caseOfficerId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
+ * @param {number} assignedTeamId
+ * @param {number} procedureTypeId
  */
 const getAllAppealsCount = async (
 	searchTerm,
@@ -110,7 +118,9 @@ const getAllAppealsCount = async (
 	inspectorId,
 	caseOfficerId,
 	isGreenBelt,
-	appealTypeId
+	appealTypeId,
+	assignedTeamId,
+	procedureTypeId
 ) => {
 	const where = buildAllAppealsWhereClause(
 		searchTerm,
@@ -120,7 +130,9 @@ const getAllAppealsCount = async (
 		inspectorId,
 		caseOfficerId,
 		isGreenBelt,
-		appealTypeId
+		appealTypeId,
+		assignedTeamId,
+		procedureTypeId
 	);
 
 	const count = await databaseConnector.appeal.count({ where });
@@ -137,6 +149,8 @@ const getAllAppealsCount = async (
  * @param {number} caseOfficerId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
+ * @param {number} assignedTeamId
+ * @param {number} procedureTypeId
  */
 const getAppealsWithoutIncludes = async (
 	searchTerm,
@@ -146,7 +160,9 @@ const getAppealsWithoutIncludes = async (
 	inspectorId,
 	caseOfficerId,
 	isGreenBelt,
-	appealTypeId
+	appealTypeId,
+	assignedTeamId,
+	procedureTypeId
 ) => {
 	const where = buildAllAppealsWhereClause(
 		searchTerm,
@@ -156,7 +172,9 @@ const getAppealsWithoutIncludes = async (
 		inspectorId,
 		caseOfficerId,
 		isGreenBelt,
-		appealTypeId
+		appealTypeId,
+		assignedTeamId,
+		procedureTypeId
 	);
 
 	return databaseConnector.appeal.findMany({ where });
@@ -171,6 +189,8 @@ const getAppealsWithoutIncludes = async (
  * @param {number} caseOfficerId
  * @param {boolean} isGreenBelt
  * @param {number} appealTypeId
+ * @param {number} assignedTeamId
+ * @param {number} procedureTypeId
  */
 const buildAllAppealsWhereClause = (
 	searchTerm,
@@ -180,7 +200,9 @@ const buildAllAppealsWhereClause = (
 	inspectorId,
 	caseOfficerId,
 	isGreenBelt,
-	appealTypeId
+	appealTypeId,
+	assignedTeamId,
+	procedureTypeId
 ) => {
 	return {
 		appealStatus: {
@@ -239,6 +261,12 @@ const buildAllAppealsWhereClause = (
 		}),
 		...(!!appealTypeId && {
 			appealTypeId
+		}),
+		...(!!assignedTeamId && {
+			assignedTeamId
+		}),
+		...(!!procedureTypeId && {
+			procedureTypeId
 		})
 	};
 };

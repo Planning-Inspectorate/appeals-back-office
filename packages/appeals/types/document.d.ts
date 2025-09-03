@@ -12,6 +12,7 @@ export interface AddDocumentVersionRequest {
 }
 
 export interface MappedDocument {
+	virusCheckStatus?: string | null;
 	blobStorageHost?: string | null;
 	blobStorageContainer?: string | null;
 	blobStoragePath?: string | null;
