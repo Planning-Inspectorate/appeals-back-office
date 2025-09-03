@@ -556,7 +556,7 @@ export function checkAndConfirmPage(appealData, request) {
 }
 
 /**
- * @param {Appeal} appealData
+ * @param {Appeal & {leadDecisionLetter : { caseId: string, documents : *[] }}} appealData
  * @param {Request} request
  * @param {string|undefined} latestDecsionDocumentText
  * @returns {PageRow}[]
@@ -589,19 +589,23 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 		if (decisionOutcome) {
 			rows.push({
 				// @ts-ignore
-				key: appealData.isParentAppeal
-					? `Decision for lead appeal ${appealData.appealReference}`
+				key: appealData.linkedAppeals?.length
+					? `Decision for ${
+							appealData.isParentAppeal ? 'lead' : 'child'
+					  } appeal ${appealShortReference(appealData.appealReference)}`
 					: 'Decision',
 				html: `${toSentenceCase(decisionOutcome)}${
 					invalidReasonHtml ? `<br><br>${invalidReasonHtml}` : ''
 				}`
 			});
 		}
-		if (appealData.linkedAppeals?.length) {
+		if (appealData.isParentAppeal && appealData.linkedAppeals?.length) {
 			appealData.linkedAppeals.forEach((linkedAppeal) => {
 				if (linkedAppeal.inspectorDecision) {
 					rows.push({
-						key: `Decision for child appeal ${linkedAppeal.appealReference}`,
+						key: `Decision for ${linkedAppeal.isParentAppeal ? 'lead' : 'child'} appeal ${
+							linkedAppeal.appealReference
+						}`,
 						html: toSentenceCase(linkedAppeal.inspectorDecision)
 					});
 				}
@@ -613,7 +617,17 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 				value: latestDecsionDocumentText || dateISOStringToDisplayDate(letterDate)
 			});
 		}
-		if (documentName) {
+		// @ts-ignore
+		if (appealData.leadDecisionLetter) {
+			const { caseId, documents } = appealData.leadDecisionLetter;
+			const documentId = documents[0]?.id;
+			const documentName = documents[0]?.name;
+			rows.push({
+				key: 'Decision letter',
+				value: documentName,
+				href: mapDocumentDownloadUrl(caseId, documentId || '', documentName || '')
+			});
+		} else if (documentName) {
 			rows.push({
 				key: 'Decision letter',
 				value: decision.documentName,
@@ -679,7 +693,7 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 }
 
 /**
- * @param {Appeal} appealData
+ * @param {Appeal & {leadDecisionLetter : { caseId: string, documents : *[] }}} appealData
  * @param {Request} request
  * @param {string|undefined} latestDecsionDocumentText
  * @returns {PageContent}

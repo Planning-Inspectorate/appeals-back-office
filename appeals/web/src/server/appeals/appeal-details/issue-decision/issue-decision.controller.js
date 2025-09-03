@@ -38,6 +38,7 @@ import {
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { getAttachmentsFolder } from '#appeals/appeal-documents/appeal.documents.service.js';
 
 /**
  * @typedef {import('../../../appeals/appeal-documents/appeal-documents.types.js').FileUploadInfoItem} FileUploadInfoItem
@@ -694,14 +695,14 @@ export const renderCostsCheckDecision = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderViewDecision = async (request, response) => {
-	const { currentAppeal } = request;
+	const { currentAppeal, apiClient } = request;
 
 	if (!currentAppeal) {
 		return response.status(404).render('app/404.njk');
 	}
 
 	let letterDateObject = await getOriginalAndLatestLetterDatesObject(
-		request.apiClient,
+		apiClient,
 		currentAppeal.appealId.toString(),
 		currentAppeal.decision.documentId || '',
 		currentAppeal
@@ -713,6 +714,18 @@ export const renderViewDecision = async (request, response) => {
 			letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
 				? `${letterDateObject.originalLetterDate} (reissued on ${letterDateObject.latestLetterDate})`
 				: `${letterDateObject.originalLetterDate}`;
+	}
+
+	if (currentAppeal.isChildAppeal) {
+		const parentAppeal = currentAppeal.linkedAppeals.find(
+			// @ts-ignore
+			(linkedAppeal) => linkedAppeal.isParentAppeal
+		);
+		currentAppeal.leadDecisionLetter = await getAttachmentsFolder(
+			apiClient,
+			parentAppeal.appealId,
+			`${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`
+		);
 	}
 
 	const mappedPageContent = viewDecisionPage(currentAppeal, request, latestDecsionDocumentText);
