@@ -131,6 +131,7 @@ function createDataLayout(caseMap, mappingRequest) {
 		lpaQuestionnaire,
 		representations,
 		folders,
+		appealTransferStatus,
 		...appealDetails
 	} = Object.fromEntries(caseMap);
 
@@ -140,6 +141,7 @@ function createDataLayout(caseMap, mappingRequest) {
 				appellantCaseId: appeal.appellantCase?.id,
 				...appealSummary,
 				...appellantCase,
+				transferStatus: appealTransferStatus,
 				...createFoldersLayout(folders, contextEnum.appellantCase)
 			};
 		case contextEnum.lpaQuestionnaire:
@@ -147,12 +149,14 @@ function createDataLayout(caseMap, mappingRequest) {
 				lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
 				...appealSummary,
 				...lpaQuestionnaire,
+				transferStatus: appealTransferStatus,
 				...createFoldersLayout(folders, contextEnum.lpaQuestionnaire)
 			};
 		case contextEnum.representations:
 			return {
 				...appealSummary,
 				...representations,
+				transferStatus: appealTransferStatus,
 				...createFoldersLayout(folders, contextEnum.representations)
 			};
 		default: {
@@ -174,6 +178,7 @@ function createDataLayout(caseMap, mappingRequest) {
 				},
 				eiaScreeningRequired: appeal.eiaScreeningRequired,
 				lpaEmailAddress: appeal.lpa?.email,
+				transferStatus: appealTransferStatus,
 				...createFoldersLayout(folders, contextEnum.appealDetails)
 			};
 		}

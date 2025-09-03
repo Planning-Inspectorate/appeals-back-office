@@ -24,6 +24,7 @@ import { mapNetResidenceChange } from './submappers/net-residence-change.mapper.
 import { mapNetResidenceGainOrLoss } from './submappers/net-residence-gain-or-less.mapper.js';
 import { mapAppellantProofOfEvidence } from '#lib/mappers/data/appeal/submappers/appellant-proof-of-evidence-and-witness.mapper.js';
 import { mapLPAProofOfEvidence } from '#lib/mappers/data/appeal/submappers/lpa-proof-of-evidence-and-witness.mapper.js';
+import { mapHorizonReference } from './submappers/horizon-reference.mapper.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -52,5 +53,6 @@ export const submaps = {
 	netResidenceChange: mapNetResidenceChange,
 	netResidenceGainOrLoss: mapNetResidenceGainOrLoss,
 	appellantProofOfEvidence: mapAppellantProofOfEvidence,
-	lpaProofOfEvidence: mapLPAProofOfEvidence
+	lpaProofOfEvidence: mapLPAProofOfEvidence,
+	horizonReference: mapHorizonReference
 };

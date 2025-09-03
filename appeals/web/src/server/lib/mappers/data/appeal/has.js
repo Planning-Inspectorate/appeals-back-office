@@ -49,6 +49,7 @@ import { mapLpaHealthAndSafety } from './submappers/lpa-health-and-safety.mapper
 import { mapAppellantHealthAndSafety } from './submappers/appellant-health-and-safety.mapper.js';
 import { mapLpaNeighbouringSites } from './submappers/lpa-neighbouring-sites.mapper.js';
 import { mapCaseTeam } from './submappers/team.mapper.js';
+import { mapHorizonReference } from './submappers/horizon-reference.mapper.js';
 
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
@@ -100,5 +101,6 @@ export const submaps = {
 	downloadCaseFiles: mapDownloadCaseFiles,
 	lpaHealthAndSafety: mapLpaHealthAndSafety,
 	appellantHealthAndSafety: mapAppellantHealthAndSafety,
-	lpaNeighbouringSites: mapLpaNeighbouringSites
+	lpaNeighbouringSites: mapLpaNeighbouringSites,
+	horizonReference: mapHorizonReference
 };

@@ -10,8 +10,7 @@ describe('mapStatusDependentNotifications', () => {
 		{
 			bannerKey: 'appealAwaitingTransfer',
 			requiredAction: 'addHorizonReference',
-			expectedContainedHtml:
-				'<p class="govuk-notification-banner__heading">This appeal is awaiting transfer</p>'
+			expectedContainedHtml: `<p class="govuk-notification-banner__heading"><a class="govuk-link" data-cy="awaiting-transfer" href="/appeals-service/appeal-details/${mockAppealData.appealId}/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Mark as transferred</a></p>`
 		},
 		{
 			bannerKey: 'readyForSetUpSiteVisit',

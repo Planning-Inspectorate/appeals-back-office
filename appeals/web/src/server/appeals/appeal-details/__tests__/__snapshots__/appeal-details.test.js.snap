@@ -5283,6 +5283,20 @@ data-index="0">
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Notification banners Important banners should render a "Mark as transferred" important notification banner with a link to add the Horizon reference of the transferred appeal when the appeal is awaiting transfer 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading"><a class="govuk-link" data-cy="awaiting-transfer" href="/appeals-service/appeal-details/2/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Mark as transferred</a>
+        </p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Notification banners Important banners should render a "Site visit ready to set up" important notification banner with a link to schedule the site visit when the appeal status is "event" 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
 aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
@@ -5295,21 +5309,6 @@ data-index="0">
         <p><a class="govuk-notification-banner__link" data-cy="set-up-site-visit-banner"
             href="/appeals-service/appeal-details/2/site-visit/schedule-visit?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Set up site visit</a>
         </p>
-    </div>
-</div>"
-`;
-
-exports[`appeal-details GET /:appealId Notification banners Important banners should render a "This appeal is awaiting transfer" important notification banner with a link to add the Horizon reference of the transferred appeal when the appeal is awaiting transfer 1`] = `
-"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
-aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
-data-index="0">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">This appeal is awaiting transfer</p>
-        <p class="govuk-body">The appeal must be transferred to Horizon. When this is done, <a class="govuk-link"
-            data-cy="awaiting-transfer" href="/appeals-service/appeal-details/2/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fappeal-details%2F2">update the appeal with the new horizon reference</a>.</p>
     </div>
 </div>"
 `;
@@ -5849,28 +5848,6 @@ data-index="0">
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners Success banners should render a "Horizon reference added" success notification banner, a "Transferred" status tag, and an inset text component with the appeal type and horizon link for the transferred appeal, when the appeal was successfully transferred to horizon 1`] = `
-"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
-role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
-data-index="0">
-    <div class="govuk-notification-banner__header">
-        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
-    </div>
-    <div class="govuk-notification-banner__content">
-        <p class="govuk-notification-banner__heading">Horizon reference added</p>
-    </div>
-</div>"
-`;
-
-exports[`appeal-details GET /:appealId Notification banners Success banners should render a "Horizon reference added" success notification banner, a "Transferred" status tag, and an inset text component with the appeal type and horizon link for the transferred appeal, when the appeal was successfully transferred to horizon 2`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Transferred</strong>"`;
-
-exports[`appeal-details GET /:appealId Notification banners Success banners should render a "Horizon reference added" success notification banner, a "Transferred" status tag, and an inset text component with the appeal type and horizon link for the transferred appeal, when the appeal was successfully transferred to horizon 3`] = `
-"<div class="govuk-inset-text govuk-!-margin-top-0">
-    <p class="govuk-body">This appeal needed to change to a (C) Enforcement notice appeal</p>
-    <p     class="govuk-body">It has been transferred to Horizon with the reference 12345</p>
-</div>"
-`;
-
 exports[`appeal-details GET /:appealId Notification banners Success banners should render a "Linked appeal added" success notification banner when the appeal was successfully linked as the lead of a back-office appeal 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
@@ -6186,7 +6163,7 @@ exports[`appeal-details GET /:appealId Status tags should render a status tag wi
 
 exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Statements" and a green modifier class if appeal status is statements 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Statements</strong>"`;
 
-exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Transferred" and a grey modifier class if appeal status is transferred 1`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Transferred</strong>"`;
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Transferred" and a blue modifier class if appeal status is transferred 1`] = `"<strong class="govuk-tag govuk-tag--blue pins-status-tag--full-width">Transferred</strong>"`;
 
 exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Validation" and a green modifier class if appeal status is validation 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Validation</strong>"`;
 

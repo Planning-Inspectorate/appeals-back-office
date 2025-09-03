@@ -1,9 +1,12 @@
+import { isFeatureActive } from '#utils/feature-flags.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import transitionState from '#state/transition-state.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { changeAppealType } from './change-appeal-type.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { addDays } from '@pins/appeals/utils/business-days.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -61,13 +64,25 @@ export const requestTransferOfAppeal = async (req, res) => {
 	const azureAdUserId = String(req.get('azureAdUserId'));
 	const { newAppealTypeId } = req.body;
 
+	/** @type {Partial<import('#db-client').Prisma.AppealUpdateInput>} data */
+	let data = {
+		caseResubmittedTypeId: newAppealTypeId,
+		caseUpdatedDate: new Date()
+	};
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_APPEAL_TYPE)) {
+		const currentDate = new Date();
+		const caseExtensionDate = await addDays(currentDate, 5);
+		data = {
+			...data,
+			caseExtensionDate
+		};
+	}
+
 	Promise.all([
 		await databaseConnector.appeal.update({
 			where: { id: appeal.id },
-			data: {
-				caseResubmittedTypeId: newAppealTypeId,
-				caseUpdatedDate: new Date()
-			}
+			data
 		}),
 		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.AWAITING_TRANSFER),
 		await broadcasters.broadcastAppeal(appeal.id)

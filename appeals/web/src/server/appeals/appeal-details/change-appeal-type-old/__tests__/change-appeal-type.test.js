@@ -468,6 +468,7 @@ describe('change-appeal-type', () => {
 
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({
 					'horizon-reference': '123'
 				});
@@ -505,7 +506,9 @@ describe('change-appeal-type', () => {
 
 			expect(addHorizonReferencePostResponse.statusCode).toBe(302);
 
-			const response = await request.get(`${baseUrl}/1${changeAppealTypePath}${checkTransferPath}`);
+			const response = await request
+				.get(`${baseUrl}/1${changeAppealTypePath}${checkTransferPath}`)
+				.set('Appeal-Change-Type', 'true');
 
 			expect(response.statusCode).toBe(200);
 
@@ -549,6 +552,7 @@ describe('change-appeal-type', () => {
 
 			const addHorizonReferencePostResponse = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({
 					'horizon-reference': '123'
 				});
@@ -557,6 +561,7 @@ describe('change-appeal-type', () => {
 
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${checkTransferPath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({});
 
 			expect(response.statusCode).toBe(200);

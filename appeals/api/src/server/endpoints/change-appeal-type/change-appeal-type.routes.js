@@ -1,9 +1,6 @@
 import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import {
-	checkAppealExistsByIdAndAddToRequest,
-	checkAppealExistsById
-} from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import {
 	loadAllAppealTypesAndAddToRequest,
 	validateAppealType,
@@ -42,7 +39,7 @@ router.get(
 		#swagger.responses[400] = {}
 	 */
 	loadAllAppealTypesAndAddToRequest,
-	checkAppealExistsById,
+	checkAppealExistsByIdAndAddToRequest,
 	asyncHandler(getAppealTypes)
 );
 
