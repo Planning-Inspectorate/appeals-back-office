@@ -1,21 +1,21 @@
-import { interpret } from 'xstate';
-import createStateMachine from './create-state-machine.js';
-import logger from '#utils/logger.js';
-import appealRepository from '#repositories/appeal.repository.js';
-import appealStatusRepository from '#repositories/appeal-status.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { mapCompletedStateList } from '#mappers/api/shared/map-completed-state-list.js';
+import appealStatusRepository from '#repositories/appeal-status.repository.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import { currentStatus } from '#utils/current-status.js';
+import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
-	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
-	APPEAL_TYPE_SHORTHAND_HAS,
 	APPEAL_TYPE_SHORTHAND_FPA,
-	VALIDATION_OUTCOME_COMPLETE,
-	CASE_RELATIONSHIP_LINKED
+	APPEAL_TYPE_SHORTHAND_HAS,
+	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
+	CASE_RELATIONSHIP_LINKED,
+	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import isFPA from '@pins/appeals/utils/is-fpa.js';
-import { currentStatus } from '#utils/current-status.js';
-import { mapCompletedStateList } from '#mappers/api/shared/map-completed-state-list.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { interpret } from 'xstate';
+import createStateMachine from './create-state-machine.js';
 
 /** @typedef {import('#db-client').AppealType} AppealType */
 /** @typedef {import('#db-client').AppealStatus} AppealStatus */
@@ -83,8 +83,8 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 	if (
 		newState === APPEAL_CASE_STATUS.EVENT &&
 		[APPEAL_TYPE_SHORTHAND_HAS, APPEAL_TYPE_SHORTHAND_FPA].includes(appealTypeKey) &&
-		((appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.WRITTEN && appeal.siteVisit) ||
-			(appeal.procedureType?.key === APPEAL_CASE_PROCEDURE.HEARING &&
+		((procedureKey === APPEAL_CASE_PROCEDURE.WRITTEN && appeal.siteVisit) ||
+			(procedureKey === APPEAL_CASE_PROCEDURE.HEARING &&
 				appeal.hearing &&
 				appeal.hearing?.addressId))
 	) {
