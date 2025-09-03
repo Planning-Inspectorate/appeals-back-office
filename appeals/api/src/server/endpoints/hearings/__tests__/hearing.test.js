@@ -433,7 +433,7 @@ describe('hearing routes', () => {
 					data: { valid: true }
 				});
 
-				expect(mockNotifySend).not.toHaveBeenCalled();
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
 				expect(response.status).toEqual(201);
 			});
