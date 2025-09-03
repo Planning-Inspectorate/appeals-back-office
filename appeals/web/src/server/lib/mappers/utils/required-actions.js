@@ -1,15 +1,14 @@
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import config from '#environment/config.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
-	DOCUMENT_STATUS_RECEIVED,
 	DOCUMENT_STATUS_NOT_RECEIVED,
+	DOCUMENT_STATUS_RECEIVED,
 	VALIDATION_OUTCOME_INCOMPLETE
 	// @ts-ignore
 } from '@pins/appeals/constants/support.js';
-import config from '#environment/config.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'} AppealRequiredAction */
 
@@ -185,7 +184,6 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 					appealDetails.hearing?.addressId
 				) {
 					actions.push('progressHearingCaseWithNoRepsAndHearingSetUpFromStatements');
-					console.log(actions);
 				} else if (appealDetails.procedureType === 'Hearing') {
 					actions.push('progressHearingCaseWithNoRepsFromStatements');
 				} else {
