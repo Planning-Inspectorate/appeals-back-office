@@ -1,6 +1,5 @@
 // @ts-nocheck
 import { Page } from './basePage';
-import { formatDateAndTime } from '../support/utils/dateAndTime';
 import { CaseDetailsPage } from './caseDetailsPage.js';
 
 export class AddressSection extends CaseDetailsPage {

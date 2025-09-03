@@ -2,7 +2,7 @@
 
 import { Page } from './basePage';
 import { DateTimeSection } from './dateTimeSection.js';
-import { formatDateAndTime } from '../support/utils/dateAndTime';
+import { formatDateAndTime } from '../support/utils/dateAndTime.js';
 import { forEach } from 'lodash';
 
 const dateTimeSection = new DateTimeSection();
@@ -582,7 +582,6 @@ export class CaseDetailsPage extends Page {
 
 	inputEstimatedInquiryDays(estimatedInquiryDays) {
 		this.elements.inquiryEstimatedDaysInput().type(estimatedInquiryDays.toString());
-		x;
 	}
 
 	inputCorrectionNotice(correctionNotice) {

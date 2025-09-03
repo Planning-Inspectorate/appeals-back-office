@@ -76,7 +76,6 @@ export class InquirySectionPage extends CaseDetailsPage {
 	}
 
 	changeInquiryDate(date, newDate) {
-		this.clickRowChangeLink(this.inquirySectionLinks.date);
 		cy.wait(5000);
 
 		// verify previous values are prepopulated
@@ -93,8 +92,6 @@ export class InquirySectionPage extends CaseDetailsPage {
 	}
 
 	changeInquiryTime(date, newDate) {
-		this.clickRowChangeLink(this.inquirySectionLinks.time);
-
 		// verify previous values are prepopulated
 		const dateAndTimeFromPrevious = getDateAndTimeValues(date);
 		dateTimeSection.verifyPrepopulatedInquiryValues(dateAndTimeFromPrevious);
@@ -108,10 +105,7 @@ export class InquirySectionPage extends CaseDetailsPage {
 		caseDetailsPage.clickButtonByText('Continue');
 	}
 
-	changeInquiryEstimatedDays(changeLink, days, previousDays = 0) {
-		// are potentially two different links that can choose from to update estimated days
-		this.clickRowChangeLink(changeLink);
-
+	changeInquiryEstimatedDays(days, previousDays = 0) {
 		const hasPreviousDays = previousDays > 0;
 
 		// if a previous value was set check that is prepopulated
@@ -131,9 +125,11 @@ export class InquirySectionPage extends CaseDetailsPage {
 		caseDetailsPage.clickButtonByText('Continue');
 	}
 
-	changeAddress(address, previousAddress) {
-		this.clickRowChangeLink(this.inquirySectionLinks.address);
-		caseDetailsPage.clickButtonByText('Continue');
+	changeAddress(address, previousAddress, doYouKnow = false) {
+		// if required pass through do you know address screen
+		if (doYouKnow) {
+			caseDetailsPage.clickButtonByText('Continue');
+		}
 
 		// verify that previous address is populated
 		addressSection.verifyPrepopulatedValues(previousAddress);
@@ -163,16 +159,15 @@ export class InquirySectionPage extends CaseDetailsPage {
 			.and('contain.text', expectedText);
 	}
 
+	enterTimetableDueDates(timetableItems, startDate) {
+		caseDetailsPage.enterTimeTableDueDatesCaseStart(timetableItems, startDate, 7);
+	}
+
+	clickChangeLink(link) {
+		this.clickRowChangeLink(link);
+	}
+
 	updateInquiry() {
 		caseDetailsPage.clickButtonByText('Update Inquiry');
 	}
-
-	verifyDateChanges = (addedDays) => {
-		const safeAddedDays = Math.max(addedDays, 1);
-
-		// Get the future business date using Cypress task/helper
-		cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-			caseDetailsPage.enterTimeTableDueDatesCaseStart(this.timetableItems, startDate, 7);
-		});
-	};
 }
