@@ -149,7 +149,7 @@ const retrieveAppealListData = async (
 	assignedTeamId,
 	procedureTypeId
 ) => {
-	/** @type {[string, string, string, string, number, number, boolean, number,number]} */
+	/** @type {[string, string, string, string, number, number, boolean, number,number, number]} */
 	const appealFilters = [
 		searchTerm,
 		status,
