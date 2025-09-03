@@ -44,6 +44,7 @@ describe('change-appeal-type', () => {
 		it('should redirect to the resubmit page if all required field is populated', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({
 					appealType: 1
 				});
@@ -149,9 +150,9 @@ describe('change-appeal-type', () => {
 
 	describe('GET /change-appeal-type/change-appeal-final-date', () => {
 		it('should render the final date page', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`
-			);
+			const response = await request
+				.get(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+				.set('Appeal-Change-Type', 'true');
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -195,6 +196,7 @@ describe('change-appeal-type', () => {
 
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({
 					'change-appeal-final-date-day': 11,
 					'change-appeal-final-date-month': 11,
@@ -208,6 +210,7 @@ describe('change-appeal-type', () => {
 	it('should re-render the final date page with an error message if required field is missing', async () => {
 		const response = await request
 			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+			.set('Appeal-Change-Type', 'true')
 			.send({});
 
 		expect(response.statusCode).toBe(200);
@@ -228,6 +231,7 @@ describe('change-appeal-type', () => {
 	it('should re-render the final date page with an error message if the provided date day is invalid', async () => {
 		const response = await request
 			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+			.set('Appeal-Change-Type', 'true')
 			.send({
 				'change-appeal-final-date-day': 32,
 				'change-appeal-final-date-month': 11,
@@ -254,6 +258,7 @@ describe('change-appeal-type', () => {
 	it('should re-render the final date page with an error message if the provided date month is invalid', async () => {
 		const response = await request
 			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+			.set('Appeal-Change-Type', 'true')
 			.send({
 				'change-appeal-final-date-day': 1,
 				'change-appeal-final-date-month': 13,
@@ -280,6 +285,7 @@ describe('change-appeal-type', () => {
 	it('should re-render the final date page with an error message if the provided date year is invalid', async () => {
 		const response = await request
 			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+			.set('Appeal-Change-Type', 'true')
 			.send({
 				'change-appeal-final-date-day': 11,
 				'change-appeal-final-date-month': 11,
@@ -306,6 +312,7 @@ describe('change-appeal-type', () => {
 	it('should re-render the final date page with an error message if an invalid date was provided', async () => {
 		const response = await request
 			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+			.set('Appeal-Change-Type', 'true')
 			.send({
 				'change-appeal-final-date-day': 29,
 				'change-appeal-final-date-month': 2,
@@ -339,6 +346,7 @@ describe('change-appeal-type', () => {
 		for (const variant of monthVariants) {
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({
 					'change-appeal-final-date-day': 4,
 					'change-appeal-final-date-month': variant.value,
@@ -363,9 +371,9 @@ describe('change-appeal-type', () => {
 
 	describe('GET /change-appeal-type/add-horizon-reference', () => {
 		it('should render the add horizon reference page', async () => {
-			const response = await request.get(
-				`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`
-			);
+			const response = await request
+				.get(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
+				.set('Appeal-Change-Type', 'true');
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
@@ -384,6 +392,7 @@ describe('change-appeal-type', () => {
 		it('should re-render the add horizon reference page with an error message if no horizon reference was provided', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({
 					'horizon-reference': ''
 				});
@@ -413,6 +422,7 @@ describe('change-appeal-type', () => {
 
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({
 					'horizon-reference': '123'
 				});
@@ -440,6 +450,7 @@ describe('change-appeal-type', () => {
 
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({
 					'horizon-reference': '123'
 				});
@@ -470,7 +481,9 @@ describe('change-appeal-type', () => {
 
 	describe('GET /change-appeal-type/check-transfer', () => {
 		it('should render a 500 error page if the required data is not present in the session', async () => {
-			const response = await request.get(`${baseUrl}/1${changeAppealTypePath}${checkTransferPath}`);
+			const response = await request
+				.get(`${baseUrl}/1${changeAppealTypePath}${checkTransferPath}`)
+				.set('Appeal-Change-Type', 'true');
 
 			expect(response.statusCode).toBe(500);
 			const element = parseHtml(response.text);
@@ -485,6 +498,7 @@ describe('change-appeal-type', () => {
 
 			const addHorizonReferencePostResponse = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({
 					'horizon-reference': '123'
 				});
