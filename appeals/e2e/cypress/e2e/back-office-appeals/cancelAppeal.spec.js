@@ -13,7 +13,7 @@ const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('Cancel an Appeal', () => {
+describe('Cancel an appeal', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
