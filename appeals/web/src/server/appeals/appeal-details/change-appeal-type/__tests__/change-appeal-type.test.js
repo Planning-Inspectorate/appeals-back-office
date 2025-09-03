@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -32,6 +33,8 @@ describe('change-appeal-type', () => {
 		installMockApi();
 		nock('http://test/').get('/appeals/1').reply(200, appealData);
 		nock('http://test/').get('/appeals/appeal-types').reply(200, appealTypesData);
+		//mocking the for example date for snapshots
+		Date.now = jest.fn(() => new Date(Date.UTC(2024, 8, 14)).valueOf());
 	});
 	afterEach(teardown);
 

@@ -366,7 +366,7 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 31 3 2026</div>
+                                class="govuk-hint">For example, 29 10 2024</div>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
                                     <div class="govuk-date-input__item">
                                         <div class="govuk-form-group">
@@ -856,7 +856,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 31 3 2026</div>
+                                class="govuk-hint">For example, 29 10 2024</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
                                     the appeal must be a real date</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
@@ -927,7 +927,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 31 3 2026</div>
+                                class="govuk-hint">For example, 29 10 2024</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter the deadline to
                                     resubmit the appeal</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
@@ -998,7 +998,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 31 3 2026</div>
+                                class="govuk-hint">For example, 29 10 2024</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
                                     the appeal day must be between 1 and 31</p>
                                 <div class="govuk-date-input"
@@ -1070,7 +1070,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 31 3 2026</div>
+                                class="govuk-hint">For example, 29 10 2024</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be a business
                                     day</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
@@ -1141,7 +1141,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 31 3 2026</div>
+                                class="govuk-hint">For example, 29 10 2024</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be a business
                                     day</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
@@ -1212,7 +1212,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 31 3 2026</div>
+                                class="govuk-hint">For example, 29 10 2024</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> The date must be a business
                                     day</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
@@ -1283,7 +1283,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 31 3 2026</div>
+                                class="govuk-hint">For example, 29 10 2024</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
                                     the appeal month must be between 1 and 12</p>
                                 <div class="govuk-date-input"
@@ -1355,7 +1355,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
                             <fieldset class="govuk-fieldset" role="group" aria-describedby="change-appeal-final-date-hint change-appeal-final-date-error">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">Deadline to resubmit appeal</legend>
                                 <div id="change-appeal-final-date-hint"
-                                class="govuk-hint">For example, 31 3 2026</div>
+                                class="govuk-hint">For example, 29 10 2024</div>
                                 <p id="change-appeal-final-date-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Deadline to resubmit
                                     the appeal year must be a number</p>
                                 <div class="govuk-date-input" id="change-appeal-final-date">
