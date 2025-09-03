@@ -21,19 +21,7 @@ describe('link appeals', () => {
 
 				//link appeal
 				caseDetailsPage.clickAccordionByButton('Overview');
-				caseDetailsPage.clickAddLinkedAppeal();
-				caseDetailsPage.fillInput(childCase);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//select lead appeal
-				caseDetailsPage.selectRadioButtonByValue(leadCase);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//CYA
-				caseDetailsPage.clickButtonByText('Add linked appeal');
-
-				//case details
-				caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+				happyPathHelper.addLinkedAppeal(leadCase, childCase);
 				caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 				//Notify
@@ -60,19 +48,7 @@ describe('link appeals', () => {
 
 				//link appeal
 				caseDetailsPage.clickAccordionByButton('Overview');
-				caseDetailsPage.clickAddLinkedAppeal();
-				caseDetailsPage.fillInput(leadCase);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//select lead appeal
-				caseDetailsPage.selectRadioButtonByValue(leadCase);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//CYA
-				caseDetailsPage.clickButtonByText('Add linked appeal');
-
-				//case details
-				caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+				happyPathHelper.addLinkedAppeal(leadCase, childCase);
 				caseDetailsPage.checkStatusOfCase('Child', 1);
 
 				//Notify
@@ -97,21 +73,7 @@ describe('link appeals', () => {
 			cy.createCase().then((childCase) => {
 				happyPathHelper.assignCaseOfficer(leadCase);
 				caseDetailsPage.clickAccordionByButton('Overview');
-
-				//link appeal
-				caseDetailsPage.clickAddLinkedAppeal();
-				caseDetailsPage.fillInput(childCase);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//select lead appeal
-				caseDetailsPage.selectRadioButtonByValue(leadCase);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//CYA
-				caseDetailsPage.clickButtonByText('Add linked appeal');
-
-				//case details
-				caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+				happyPathHelper.addLinkedAppeal(leadCase, childCase);
 				caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 				//child appeal
