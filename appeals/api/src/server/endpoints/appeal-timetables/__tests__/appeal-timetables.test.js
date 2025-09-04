@@ -3,6 +3,8 @@ import { request } from '../../../app-test.js';
 import { jest } from '@jest/globals';
 import { mapValues } from 'lodash-es';
 import {
+	CASE_RELATIONSHIP_LINKED,
+	CASE_RELATIONSHIP_RELATED,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_MUST_BE_BUSINESS_DAY,
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
@@ -1212,6 +1214,122 @@ describe('appeal timetables routes', () => {
 						},
 						recipientEmail: appeal.lpa.email,
 						templateName: 'appeal-start-date-change-lpa'
+					});
+				});
+
+				test(`start an appeal timetable for a lead appeal`, async () => {
+					databaseConnector.appeal.findUnique.mockResolvedValue({
+						...appeal,
+						childAppeals: [
+							{ type: CASE_RELATIONSHIP_LINKED, childRef: '1111111' },
+							{ type: CASE_RELATIONSHIP_RELATED, childRef: '2222222' },
+							{ type: CASE_RELATIONSHIP_LINKED, childRef: '3333333' }
+						]
+					});
+					// @ts-ignore
+					databaseConnector.user.upsert.mockResolvedValue({
+						id: 1,
+						azureAdUserId
+					});
+
+					const s78timetableDto = {
+						appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+						finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+						ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+						lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+						lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+						s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
+						statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+					};
+					const s78timetable = mapValues(s78timetableDto, (date) => new Date(date));
+
+					const { id } = appeal;
+					const response = await request
+						.post(`/appeals/${id}/appeal-timetables/`)
+						.send({ procedureType: 'hearing' })
+						.set('azureAdUserId', azureAdUserId);
+
+					expect(response.status).toEqual(201);
+					expect(response.body).toEqual(s78timetableDto);
+
+					expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
+						create: { ...s78timetable, appealId: id },
+						update: { ...s78timetable },
+						where: { appealId: id },
+						include: { appeal: true }
+					});
+
+					const auditDetails =
+						appealType === 'fullPlanning'
+							? ['The case timeline was created', 'Appeal started\nAppeal procedure: hearing']
+							: ['The case timeline was created'];
+
+					auditDetails.forEach((details) => {
+						expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+							data: {
+								appealId: id,
+								details,
+								loggedAt: expect.any(Date),
+								userId: 1
+							}
+						});
+					});
+
+					expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							child_appeals: ['1111111', '3333333'],
+							comment_deadline: '',
+							due_date: '12 June 2024',
+							final_comments_deadline: '24 July 2024',
+							ip_comments_deadline: '10 July 2024',
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: '10 July 2024',
+							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+							questionnaire_due_date: '12 June 2024',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							we_will_email_when: [
+								'to let you know when you can view information from other parties in the appeals service',
+								'when we set up your hearing'
+							],
+							site_visit: false,
+							costs_info: false
+						},
+						recipientEmail: appeal.appellant.email,
+						templateName: 'appeal-valid-start-case-s78-appellant'
+					});
+
+					expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+						azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+						notifyClient: expect.anything(),
+						personalisation: {
+							appeal_reference_number: appeal.reference,
+							appeal_type: appeal.appealType.type,
+							appellant_email_address: appeal.appellant.email,
+							child_appeals: ['1111111', '3333333'],
+							comment_deadline: '',
+							due_date: '12 June 2024',
+							final_comments_deadline: '24 July 2024',
+							ip_comments_deadline: '10 July 2024',
+							local_planning_authority: appeal.lpa.name,
+							lpa_reference: appeal.applicationReference,
+							lpa_statement_deadline: '10 July 2024',
+							procedure_type: PROCEDURE_TYPE_MAP[appeal.procedureType.key],
+							questionnaire_due_date: '12 June 2024',
+							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
+							start_date: '5 June 2024',
+							...personalisation
+						},
+						recipientEmail: appeal.lpa.email,
+						templateName: 'appeal-valid-start-case-s78-lpa'
 					});
 				});
 			});

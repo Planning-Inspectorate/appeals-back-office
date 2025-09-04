@@ -11,26 +11,29 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
  * @returns {Promise<PageContent>}
  */
 export async function updateCaseTeam(appealDetails, teamList, caseTeamId, errors) {
-	const mappedTeamList = teamList.map((team) => ({
-		value: team.id,
-		text: team.name,
-		hint: { text: team.email }
-	}));
+	const mappedTeamList = [
+		{ value: '', text: '' },
+		...teamList.map((team) => ({
+			value: team.id,
+			text: team.email ? `${team.name} (${team.email})` : team.name
+		}))
+	];
 
 	/** @type {PageComponent} */
-	const selectVisitTypeComponent = {
-		type: 'radios',
+	const selectSearchPageComponent = {
+		type: 'select',
 		parameters: {
 			name: 'case-team',
-			idPrefix: 'case-team',
-			fieldset: {
-				legend: {
-					text: 'Case team',
-					classes: 'govuk-fieldset__legend--m'
-				}
+			id: 'case-team',
+			label: {
+				classes: 'govuk-fieldset__legend--l',
+				text: `Case team`,
+				isPageHeading: true
 			},
-			value: caseTeamId,
+			value: '',
 			items: mappedTeamList,
+			attributes: { 'data-cy': 'search-case-team' },
+			classes: 'accessible-autocomplete',
 			errorMessage: errors && errors['case-team']?.msg && { text: errors['case-team']?.msg }
 		}
 	};
@@ -42,9 +45,8 @@ export async function updateCaseTeam(appealDetails, teamList, caseTeamId, errors
 		title: `Update case team - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference} - update case team`,
-		heading: `Update case team`,
 		submitButtonText: 'Continue',
-		pageComponents: [selectVisitTypeComponent]
+		pageComponents: [selectSearchPageComponent]
 	};
 
 	return pageContent;

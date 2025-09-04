@@ -17,7 +17,7 @@ export const validateResubmitAppeal = createValidator(
 	body('appealResubmit')
 		.trim()
 		.notEmpty()
-		.withMessage('Select yes if the appellant should be asked to resubmit the appeal')
+		.withMessage('Select yes if the appellant needs to resubmit the appeal')
 );
 
 export const validateChangeAppealFinalDate = createValidator(
