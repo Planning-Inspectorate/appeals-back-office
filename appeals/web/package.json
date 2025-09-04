@@ -36,7 +36,7 @@
     "@pins/express": "^0.0.0",
     "@pins/platform": "^0.0.0",
     "@types/archiver": "^6.0.3",
-    "accessible-autocomplete": "2.0.4",
+    "accessible-autocomplete": "^3.0.1",
     "applicationinsights": "^2.9.1",
     "archiver": "^7.0.1",
     "body-parser": "1.20.3",

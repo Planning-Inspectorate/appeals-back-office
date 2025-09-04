@@ -13,7 +13,7 @@ import { caseTeams } from '#testing/app/fixtures/referencedata.js';
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
-const siteVisitPath = '/case-team';
+const caseTeamPath = '/case-team';
 
 describe('update-case-team', () => {
 	/**
@@ -26,67 +26,63 @@ describe('update-case-team', () => {
 	let renderSelectPage;
 	beforeEach(() => {
 		installMockApi();
+		nock('http://test/').get('/appeals/case-teams').reply(200, caseTeams);
 	});
 	afterEach(teardown);
 
 	describe('GET /case-team/edit', () => {
 		it('should render the update case team page', async () => {
-			nock('http://test/').get('/appeals/case-teams').reply(200, caseTeams);
-
-			const response = await request.get(`${baseUrl}/1${siteVisitPath}/edit`);
+			const response = await request.get(`${baseUrl}/1${caseTeamPath}/edit`);
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
 
 			expect(element.innerHTML).toContain('Appeal 351062 - update case team');
 			expect(element.innerHTML).toContain('Case team');
-			expect(element.innerHTML).toContain('temp@email.com');
-			expect(element.innerHTML).toContain('temp2@email.com');
-			expect(element.innerHTML).toContain('temp3@email.com');
-			expect(element.innerHTML).toContain('Unassign team');
-			expect(element.innerHTML).toContain('This will remove the current case team from the appeal');
+			expect(element.innerHTML).toContain('temp (temp@email.com)');
+			expect(element.innerHTML).toContain('temp2 (temp2@email.com)');
+			expect(element.innerHTML).toContain('temp3 (temp3@email.com)');
+			expect(element.innerHTML).toContain('temp3');
 			expect(element.innerHTML).toContain('Continue</button>');
 		});
 	});
 
 	describe('POST /case-team/edit', () => {
 		it('should rerender the update case team page with when no case team selected', async () => {
-			nock('http://test/').get('/appeals/case-teams').reply(200, caseTeams);
-
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/edit`).send({
+			const response = await request.post(`${baseUrl}/1${caseTeamPath}/edit`).send({
 				'case-team': ''
 			});
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('<a href="#case-team">Select the case team</a>');
+			expect(element.innerHTML).toContain(
+				'<a href="#case-team">Enter a team name or team email address</a>'
+			);
 			expect(element.innerHTML).toContain('There is a problem');
 		});
 		it('should submit the update case team page', async () => {
-			nock('http://test/').get('/appeals/case-teams').reply(200, caseTeams);
-
-			const response = await request.post(`${baseUrl}/1${siteVisitPath}/edit`).send({
+			const response = await request.post(`${baseUrl}/1${caseTeamPath}/edit`).send({
 				'case-team': '1'
 			});
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(`Found. Redirecting to ${baseUrl}/1${siteVisitPath}/edit/check`);
+			expect(response.text).toBe(`Found. Redirecting to ${baseUrl}/1${caseTeamPath}/edit/check`);
 		});
 	});
+
 	describe('/case-team/edit/check', () => {
 		describe('GET name and email available', () => {
 			beforeEach(async () => {
-				nock('http://test/').get('/appeals/case-teams').reply(200, caseTeams);
 				nock('http://test/').get('/appeals/1/case-team').reply(200, { assignedTeamId: 1 });
-				renderSelectPage = await request.get(`${baseUrl}/1${siteVisitPath}/edit`);
-				selectTeamResponse = await request.post(`${baseUrl}/1${siteVisitPath}/edit`).send({
+				renderSelectPage = await request.get(`${baseUrl}/1${caseTeamPath}/edit`);
+				selectTeamResponse = await request.post(`${baseUrl}/1${caseTeamPath}/edit`).send({
 					'case-team': '1'
 				});
-				renderSelectPage = await request.get(`${baseUrl}/1${siteVisitPath}/edit`);
+				renderSelectPage = await request.get(`${baseUrl}/1${caseTeamPath}/edit`);
 			});
 			it('should render the check your answers page', async () => {
 				expect(renderSelectPage.statusCode).toBe(500);
 				expect(selectTeamResponse.statusCode).toBe(302);
-				const response = await request.get(`${baseUrl}/1${siteVisitPath}/edit/check`);
+				const response = await request.get(`${baseUrl}/1${caseTeamPath}/edit/check`);
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
@@ -99,18 +95,17 @@ describe('update-case-team', () => {
 		});
 		describe('GET name only available', () => {
 			beforeEach(async () => {
-				nock('http://test/').get('/appeals/case-teams').reply(200, caseTeams);
 				nock('http://test/').get('/appeals/1/case-team').reply(200, { assignedTeamId: 4 });
-				renderSelectPage = await request.get(`${baseUrl}/1${siteVisitPath}/edit`);
-				selectTeamResponse = await request.post(`${baseUrl}/1${siteVisitPath}/edit`).send({
+				renderSelectPage = await request.get(`${baseUrl}/1${caseTeamPath}/edit`);
+				selectTeamResponse = await request.post(`${baseUrl}/1${caseTeamPath}/edit`).send({
 					'case-team': '4'
 				});
-				renderSelectPage = await request.get(`${baseUrl}/1${siteVisitPath}/edit`);
+				renderSelectPage = await request.get(`${baseUrl}/1${caseTeamPath}/edit`);
 			});
 			it('should render the check your answers page', async () => {
 				expect(renderSelectPage.statusCode).toBe(500);
 				expect(selectTeamResponse.statusCode).toBe(302);
-				const response = await request.get(`${baseUrl}/1${siteVisitPath}/edit/check`);
+				const response = await request.get(`${baseUrl}/1${caseTeamPath}/edit/check`);
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
@@ -125,7 +120,7 @@ describe('update-case-team', () => {
 
 				expect(renderSelectPage.statusCode).toBe(500);
 				expect(selectTeamResponse.statusCode).toBe(302);
-				const response = await request.post(`${baseUrl}/1${siteVisitPath}/edit/check`);
+				const response = await request.post(`${baseUrl}/1${caseTeamPath}/edit/check`);
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(`Found. Redirecting to ${baseUrl}/1`);
 			});
