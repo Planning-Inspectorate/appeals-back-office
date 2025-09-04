@@ -2,6 +2,7 @@ import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documen
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
+import { newLine2LineBreak } from '#lib/string-utilities.js';
 
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
@@ -73,7 +74,7 @@ export function generateCommentsSummaryList(appealId, comment, isReview = false)
 							{
 								type: 'show-more',
 								parameters: {
-									text: comment.originalRepresentation,
+									html: newLine2LineBreak(comment.originalRepresentation),
 									labelText: 'Read more'
 								}
 							}
@@ -102,7 +103,7 @@ export function generateCommentsSummaryList(appealId, comment, isReview = false)
 								{
 									type: 'show-more',
 									parameters: {
-										text: comment.redactedRepresentation,
+										html: newLine2LineBreak(comment.redactedRepresentation),
 										labelText: 'Read more'
 									}
 								}

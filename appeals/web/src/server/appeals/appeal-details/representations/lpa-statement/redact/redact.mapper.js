@@ -6,6 +6,7 @@ import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 import { REVERT_BUTTON_TEXT } from '@pins/appeals/constants/common.js';
 import { redactInput } from '../../../representations/common/components/redact-input.js';
 import { getAttachmentList } from '../../common/document-attachment-list.js';
+import { newLine2LineBreak } from '#lib/string-utilities.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -38,7 +39,7 @@ export function redactLpaStatementPage(appealDetails, lpaStatement, session) {
 				{
 					type: 'inset-text',
 					parameters: {
-						text: lpaStatement.originalRepresentation,
+						html: newLine2LineBreak(lpaStatement.originalRepresentation),
 						id: 'original-comment',
 						classes: 'govuk-!-margin-top-2'
 					}
@@ -129,7 +130,7 @@ export function redactConfirmPage(appealDetails, lpaStatement, specialismData, s
 								{
 									type: 'show-more',
 									parameters: {
-										text: lpaStatement.originalRepresentation
+										html: newLine2LineBreak(lpaStatement.originalRepresentation)
 									}
 								}
 							]
