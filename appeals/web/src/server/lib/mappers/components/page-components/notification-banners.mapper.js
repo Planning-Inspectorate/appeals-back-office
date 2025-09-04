@@ -542,6 +542,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['appealDetails'],
 		text: 'Case team updated'
+	},
+	progressedToAwaitingHearing: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Progressed to awaiting hearing'
 	}
 };
 

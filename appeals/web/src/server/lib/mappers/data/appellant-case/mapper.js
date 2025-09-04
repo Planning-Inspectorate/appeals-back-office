@@ -1,6 +1,7 @@
 import { permissionNames } from '#environment/permissions.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { userHasPermission } from '../../utils/permissions.mapper.js';
+import { submaps as casAdvertSubmaps } from './cas-advert.js';
 import { submaps as casSubmaps } from './cas.js';
 import { submaps as hasSubmaps } from './has.js';
 import { submaps as s20Submaps } from './s20.js';
@@ -24,7 +25,7 @@ const submaps = {
 	[APPEAL_TYPE.S78]: s78Submaps,
 	[APPEAL_TYPE.PLANNED_LISTED_BUILDING]: s20Submaps,
 	[APPEAL_TYPE.CAS_PLANNING]: casSubmaps,
-	[APPEAL_TYPE.CAS_ADVERTISEMENT]: hasSubmaps
+	[APPEAL_TYPE.CAS_ADVERTISEMENT]: casAdvertSubmaps
 };
 
 /**
@@ -59,6 +60,10 @@ export function initialiseAndMapData(appellantCaseData, appealDetails, currentRo
 	};
 	/** @type {Record<string, SubMapper>} */
 	const submappers = submaps[appealDetails.appealType];
+
+	if (!submappers) {
+		throw new Error(`No submappers found for appeal type ${appealDetails.appealType}`);
+	}
 
 	/** @type {MappedInstructions} */
 	const mappedData = {};

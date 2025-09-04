@@ -40,6 +40,23 @@ export const getFolder = async (apiClient, appealId, folderId, repId) => {
 
 /**
  * @param {import('got').Got} apiClient
+ * @param {string|number} appealId
+ * @param {string} folderPath
+ * @returns {Promise<FolderInfo|undefined>}
+ * */
+export const getAttachmentsFolder = async (apiClient, appealId, folderPath) => {
+	const folders = await apiClient
+		.get(`appeals/${appealId}/document-folders?path=${folderPath}`)
+		.json();
+	if (!(folders && folders.length > 0)) {
+		throw new Error(`failed to find folder for appeal ID ${appealId}`);
+	}
+
+	return folders[0];
+};
+
+/**
+ * @param {import('got').Got} apiClient
  * @param {string} appealId
  * @param {string} fileGuid
  * @returns {Promise<DocumentInfo|undefined>}

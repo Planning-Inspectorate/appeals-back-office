@@ -21,19 +21,7 @@ describe('link appeals', () => {
 
 				//link appeal
 				caseDetailsPage.clickAccordionByButton('Overview');
-				caseDetailsPage.clickAddLinkedAppeal();
-				caseDetailsPage.fillInput(childCase);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//select lead appeal
-				caseDetailsPage.selectRadioButtonByValue(leadCase);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//CYA
-				caseDetailsPage.clickButtonByText('Add linked appeal');
-
-				//case details
-				caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+				happyPathHelper.addLinkedAppeal(leadCase, childCase);
 				caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 				//Notify
@@ -60,19 +48,7 @@ describe('link appeals', () => {
 
 				//link appeal
 				caseDetailsPage.clickAccordionByButton('Overview');
-				caseDetailsPage.clickAddLinkedAppeal();
-				caseDetailsPage.fillInput(leadCase);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//select lead appeal
-				caseDetailsPage.selectRadioButtonByValue(leadCase);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//CYA
-				caseDetailsPage.clickButtonByText('Add linked appeal');
-
-				//case details
-				caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+				happyPathHelper.addLinkedAppeal(leadCase, leadCase);
 				caseDetailsPage.checkStatusOfCase('Child', 1);
 
 				//Notify
@@ -99,19 +75,7 @@ describe('link appeals', () => {
 				caseDetailsPage.clickAccordionByButton('Overview');
 
 				//link appeal
-				caseDetailsPage.clickAddLinkedAppeal();
-				caseDetailsPage.fillInput(childCase);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//select lead appeal
-				caseDetailsPage.selectRadioButtonByValue(leadCase);
-				caseDetailsPage.clickButtonByText('Continue');
-
-				//CYA
-				caseDetailsPage.clickButtonByText('Add linked appeal');
-
-				//case details
-				caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+				happyPathHelper.addLinkedAppeal(leadCase, childCase);
 				caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 				//child appeal
@@ -128,20 +92,7 @@ describe('link appeals', () => {
 					happyPathHelper.assignCaseOfficer(leadCase);
 					caseDetailsPage.clickAccordionByButton('Overview');
 
-					//link appeal
-					caseDetailsPage.clickAddLinkedAppeal();
-					caseDetailsPage.fillInput(childCase1);
-					caseDetailsPage.clickButtonByText('Continue');
-
-					//select lead appeal
-					caseDetailsPage.selectRadioButtonByValue(leadCase);
-					caseDetailsPage.clickButtonByText('Continue');
-
-					//CYA
-					caseDetailsPage.clickButtonByText('Add linked appeal');
-
-					//case details
-					caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+					happyPathHelper.addLinkedAppeal(leadCase, childCase1);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 					//link appeal
@@ -170,20 +121,7 @@ describe('link appeals', () => {
 					happyPathHelper.assignCaseOfficer(leadCase1);
 					caseDetailsPage.clickAccordionByButton('Overview');
 
-					//link appeal
-					caseDetailsPage.clickAddLinkedAppeal();
-					caseDetailsPage.fillInput(childCase);
-					caseDetailsPage.clickButtonByText('Continue');
-
-					//select lead appeal
-					caseDetailsPage.selectRadioButtonByValue(leadCase1);
-					caseDetailsPage.clickButtonByText('Continue');
-
-					//CYA
-					caseDetailsPage.clickButtonByText('Add linked appeal');
-
-					//case details
-					caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+					happyPathHelper.addLinkedAppeal(leadCase1, childCase);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 					//2nd lead case
@@ -208,40 +146,14 @@ describe('link appeals', () => {
 						happyPathHelper.assignCaseOfficer(leadCase1);
 						caseDetailsPage.clickAccordionByButton('Overview');
 
-						//link appeal
-						caseDetailsPage.clickAddLinkedAppeal();
-						caseDetailsPage.fillInput(childCase1);
-						caseDetailsPage.clickButtonByText('Continue');
-
-						//select lead appeal
-						caseDetailsPage.selectRadioButtonByValue(leadCase1);
-						caseDetailsPage.clickButtonByText('Continue');
-
-						//CYA
-						caseDetailsPage.clickButtonByText('Add linked appeal');
-
-						//case details
-						caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+						happyPathHelper.addLinkedAppeal(leadCase1, childCase1);
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						//2nd lead case
 						happyPathHelper.assignCaseOfficer(leadCase2);
 						caseDetailsPage.clickAccordionByButton('Overview');
 
-						//link appeal
-						caseDetailsPage.clickAddLinkedAppeal();
-						caseDetailsPage.fillInput(childCase2);
-						caseDetailsPage.clickButtonByText('Continue');
-
-						//select lead appeal
-						caseDetailsPage.selectRadioButtonByValue(leadCase2);
-						caseDetailsPage.clickButtonByText('Continue');
-
-						//CYA
-						caseDetailsPage.clickButtonByText('Add linked appeal');
-
-						//case details
-						caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+						happyPathHelper.addLinkedAppeal(leadCase2, childCase2);
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						//link lead appeals together
@@ -265,40 +177,13 @@ describe('link appeals', () => {
 						happyPathHelper.assignCaseOfficer(leadCase1);
 						caseDetailsPage.clickAccordionByButton('Overview');
 
-						//link appeal
-						caseDetailsPage.clickAddLinkedAppeal();
-						caseDetailsPage.fillInput(childCase1);
-						caseDetailsPage.clickButtonByText('Continue');
-
-						//select lead appeal
-						caseDetailsPage.selectRadioButtonByValue(leadCase1);
-						caseDetailsPage.clickButtonByText('Continue');
-
-						//CYA
-						caseDetailsPage.clickButtonByText('Add linked appeal');
-
-						//case details
-						caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+						happyPathHelper.addLinkedAppeal(leadCase1, childCase1);
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						//2nd lead case
 						happyPathHelper.assignCaseOfficer(leadCase2);
 						caseDetailsPage.clickAccordionByButton('Overview');
-
-						//link appeal
-						caseDetailsPage.clickAddLinkedAppeal();
-						caseDetailsPage.fillInput(childCase2);
-						caseDetailsPage.clickButtonByText('Continue');
-
-						//select lead appeal
-						caseDetailsPage.selectRadioButtonByValue(leadCase2);
-						caseDetailsPage.clickButtonByText('Continue');
-
-						//CYA
-						caseDetailsPage.clickButtonByText('Add linked appeal');
-
-						//case details
-						caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
+						happyPathHelper.addLinkedAppeal(leadCase2, childCase2);
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						//attempt to add a child appeal from a child appeal

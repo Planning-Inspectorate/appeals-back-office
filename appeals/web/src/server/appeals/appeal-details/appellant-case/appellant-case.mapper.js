@@ -31,6 +31,7 @@ import {
 	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
 import { capitalize } from 'lodash-es';
+import { generateCASAdvertComponents } from './page-components/cas-advert.mapper.js';
 import { generateCASComponents } from './page-components/cas.mapper.js';
 import { generateHASComponents } from './page-components/has.mapper.js';
 import { generateS20Components } from './page-components/s20.mapper.js';
@@ -745,12 +746,7 @@ function generateCaseTypeSpecificComponents(
 			}
 		case APPEAL_TYPE.CAS_ADVERTISEMENT:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS_ADVERT)) {
-				return generateHASComponents(
-					appealDetails,
-					appellantCaseData,
-					mappedAppellantCaseData,
-					userHasUpdateCasePermission
-				);
+				return generateCASAdvertComponents(appealDetails, mappedAppellantCaseData);
 			} else {
 				throw new Error('Feature flag inactive for CAS adverts');
 			}

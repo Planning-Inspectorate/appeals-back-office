@@ -9,7 +9,6 @@ import config from '#environment/config.js';
 import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
 import { getInvalidStatusCreatedDate } from '../invalid-appeal/invalid-appeal.service.js';
 import { toSentenceCase } from '#lib/string-utilities.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /**
@@ -112,14 +111,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 
 		if (appealDetails.decision?.outcome || hasCostsAppellantDecision || hasCostsLpaDecision) {
 			if (config.featureFlags.featureFlagIssueDecision) {
-				let appealId = appealDetails.appealId;
-				if (isChildAppeal(appealDetails)) {
-					// @ts-ignore
-					appealId = appealDetails.linkedAppeals.find(
-						(appealDetails) => appealDetails.isParentAppeal
-					)?.appealId;
-				}
-				insetTextRows.push(getViewDecisionLink(appealId, request));
+				insetTextRows.push(getViewDecisionLink(appealDetails.appealId, request));
 			} else {
 				insetTextRows.push(getViewDecisionLinkOld(appealDetails));
 			}

@@ -1,48 +1,49 @@
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
-import { jest } from '@jest/globals';
-import { createTestEnvironment } from '#testing/index.js';
-import {
-	appellantCaseDataNotValidated,
-	appellantCaseDataIncompleteOutcome,
-	appellantCaseDataValidOutcome,
-	appellantCaseInvalidReasons,
-	appellantCaseIncompleteReasons,
-	documentFolderInfo,
-	documentFileInfo,
-	additionalDocumentsFolderInfo,
-	documentRedactionStatuses,
-	documentFileVersionsInfo,
-	documentFileVersionsInfoNotChecked,
-	documentFileVersionsInfoVirusFound,
-	documentFileVersionsInfoChecked,
-	documentFileMultipleVersionsInfoWithLatestAsLateEntry,
-	activeDirectoryUsersData,
-	appealData,
-	appealDataFullPlanning,
-	appellantCaseDataInvalidOutcome,
-	fileUploadInfo,
-	text300Characters,
-	text301Characters,
-	appealDataListedBuilding,
-	appealDataCasPlanning
-} from '#testing/app/fixtures/referencedata.js';
-import { cloneDeep } from 'lodash-es';
-import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import {
+	calculateIncompleteDueDate,
 	dateISOStringToDayMonthYearHourMinute,
 	dateISOStringToDisplayDate,
-	calculateIncompleteDueDate,
 	oneMonthBefore
 } from '#lib/dates.js';
 import {
-	APPEAL_CASE_STATUS,
+	activeDirectoryUsersData,
+	additionalDocumentsFolderInfo,
+	appealData,
+	appealDataCasAdvert,
+	appealDataCasPlanning,
+	appealDataFullPlanning,
+	appealDataListedBuilding,
+	appellantCaseDataIncompleteOutcome,
+	appellantCaseDataInvalidOutcome,
+	appellantCaseDataNotValidated,
+	appellantCaseDataValidOutcome,
+	appellantCaseIncompleteReasons,
+	appellantCaseInvalidReasons,
+	documentFileInfo,
+	documentFileMultipleVersionsInfoWithLatestAsLateEntry,
+	documentFileVersionsInfo,
+	documentFileVersionsInfoChecked,
+	documentFileVersionsInfoNotChecked,
+	documentFileVersionsInfoVirusFound,
+	documentFolderInfo,
+	documentRedactionStatuses,
+	fileUploadInfo,
+	text300Characters,
+	text301Characters
+} from '#testing/app/fixtures/referencedata.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
+import { parseHtml } from '@pins/platform';
+import {
 	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
+import { cloneDeep } from 'lodash-es';
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -299,6 +300,78 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Decision letter from the local planning authority</dt>'
 			);
+		});
+
+		it('should render the appellant case page with the expected content (CAS advert)', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataCasAdvert,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/appellant-cases/0')
+				.reply(200, {
+					...appellantCaseDataNotValidated,
+					typeOfPlanningApplication: APPEAL_TYPE_OF_PLANNING_APPLICATION.ADVERTISEMENT
+				});
+
+			const response = await request.get(`${baseUrl}/2${appellantCasePagePath}`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('Appellant case</h1>');
+			expect(unprettifiedElement.innerHTML).toContain('1. Appellant details</h2>');
+
+			expect(unprettifiedElement.innerHTML).toContain('2. Site details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('What is the address of the appeal site?');
+			expect(unprettifiedElement.innerHTML).toContain('Is the appeal site in a green belt?');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Does the appellant own all of the land involved in the appeal?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Does the appellant know who owns the land involved in the appeal?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Will an inspector need to access your land or property?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there any health and safety issues on the appeal site?'
+			);
+
+			expect(unprettifiedElement.innerHTML).toContain('3. Application details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Which local planning authority (LPA) do you want to appeal against?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('What is the application reference number?');
+			expect(unprettifiedElement.innerHTML).toContain('What date did you submit your application?');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Are there other appeals linked to your development?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Was your application granted or refused?');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What’s the date on the decision letter from the local planning authority?​'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
+				'Decision letter from the local planning authority'
+			);
+
+			expect(unprettifiedElement.innerHTML).toContain('4. Appeal details</h2>');
+			expect(unprettifiedElement.innerHTML).toContain(
+				'What type of application is your appeal about?'
+			);
+			expect(unprettifiedElement.innerHTML).toContain('Displaying an advertisement');
+
+			expect(unprettifiedElement.innerHTML).toContain('5. Upload documents</h2>');
+			expect(unprettifiedElement.innerHTML).toContain('Application form');
+			expect(unprettifiedElement.innerHTML).toContain('Appeal statement');
+			expect(unprettifiedElement.innerHTML).toContain('Application for an award of appeal costs');
+			expect(unprettifiedElement.innerHTML).toContain('Plans, drawings and list of plans');
+
+			expect(unprettifiedElement.innerHTML).not.toContain('Additional documents</h2>');
 		});
 
 		it('should render review outcome form fields and controls when the appeal is in "validation" status', async () => {

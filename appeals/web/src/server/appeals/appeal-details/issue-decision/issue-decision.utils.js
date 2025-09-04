@@ -4,7 +4,7 @@ import {
 	DECISION_TYPE_LPA_COSTS
 } from '@pins/appeals/constants/support.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import isLinkedAppeal from '#lib/mappers/utils/is-linked-appeal.js';
+import isLinkedAppeal, { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 
 /**
@@ -139,6 +139,6 @@ export function issueDecisionBackUrl(currentAppeal, childAppealId, request) {
  */
 export function preHeadingText(currentAppeal, captionSuffix = '') {
 	return `Appeal ${appealShortReference(currentAppeal.appealReference)}${
-		isLinkedAppeal(currentAppeal) ? ' (lead)' : ''
+		isLinkedAppeal(currentAppeal) ? (isChildAppeal(currentAppeal) ? ' (child)' : ' (lead)') : ''
 	}${captionSuffix ? ' - ' + captionSuffix : ''}`;
 }
