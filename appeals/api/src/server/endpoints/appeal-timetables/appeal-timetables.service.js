@@ -11,7 +11,8 @@ import {
 	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
 	AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED,
 	AUDIT_TRAIL_SYSTEM_UUID,
-	ERROR_NOT_FOUND
+	ERROR_NOT_FOUND,
+	CASE_RELATIONSHIP_LINKED
 } from '@pins/appeals/constants/support.js';
 import transitionState from '#state/transition-state.js';
 import formatDate, { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
@@ -126,7 +127,10 @@ const sendStartCaseNotifies = async (
 		lpa_statement_deadline: formatDate(new Date(timetable.lpaStatementDueDate || ''), false),
 		ip_comments_deadline: formatDate(new Date(timetable.ipCommentsDueDate || ''), false),
 		final_comments_deadline: formatDate(new Date(timetable.finalCommentsDueDate || ''), false),
-		child_appeals: appeal.childAppeals?.map((appeal) => appeal.childRef) || []
+		child_appeals:
+			appeal.childAppeals
+				?.filter((appeal) => appeal.type === CASE_RELATIONSHIP_LINKED)
+				.map((appeal) => appeal.childRef) || []
 	};
 
 	if (appellantEmail) {
