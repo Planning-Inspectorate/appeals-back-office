@@ -11,7 +11,6 @@ import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectio
 import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { formatDateAndTime } from '../../support/utils/dateAndTime.js';
-import { formatAddress } from '../../support/utils/address.js';
 import { formatObjectAsString } from '../../support/utils/format.js';
 
 const caseDetailsPage = new CaseDetailsPage();
@@ -52,6 +51,39 @@ const estimatedInquiryDays = Math.floor(Math.random() * 99) + 1;
 
 const safeAddedDays = 7;
 
+const timeTableRows = [
+	'Valid date',
+	'Start date',
+	'LPA questionnaire due',
+	'LPA statement due',
+	'Interested party comments due',
+	'Statement of common ground due',
+	'Planning obligation due',
+	'Proof of evidence and witness due',
+	'Inquiry'
+];
+
+const overviewDetails = {
+	appealType: 'Planning appeal',
+	applicationReference: '123',
+	appealProcedure: 'Inquiry',
+	allocationLevel: 'No allocation level for this appeal',
+	linkedAppeals: 'No linked appeals',
+	relatedAppeals: '1000000',
+	netGainResidential: 'Not provided'
+}
+
+const expectedCaseDetailsSections = [
+	'Overview',
+	'Timetable',
+	'Inquiry',
+	'Documentation',
+	'Costs',
+	'Contacts',
+	'Team',
+	'Case management'
+];
+
 const timetableItems = [
 	{
 		row: 'lpa-questionnaire-due-date',
@@ -78,6 +110,7 @@ const timetableItems = [
 		editable: true
 	}
 ];
+
 let caseRef;
 
 const setupTestCase = () => {
@@ -123,45 +156,14 @@ it('Can start case as inquiry with address and estimated days', () => {
 	caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 
 	// Verify timetable rows
-	const timeTableRows = [
-		'Valid date',
-		'Start date',
-		'LPA questionnaire due',
-		'LPA statement due',
-		'Interested party comments due',
-		'Statement of common ground due',
-		'Planning obligation due',
-		'Proof of evidence and witness due',
-		'Inquiry'
-	];
 	caseDetailsPage.verifyTimeTableRows(timeTableRows);
 
-	// Verify overview rows
-	const overviewRows = [
-		'Planning application refereance',
-		'Appeal Type',
-		'Appeal procedure',
-		'Allocation level',
-		'Linked appeals',
-		'Related appeals',
-		'Is there a net gain or loss of residential units?'
-	];
-	caseDetailsPage.verifyCaseDetailRows(timeTableRows);
-
-	//const overviewValues
+	// Verify overview details
+	caseDetailsPage.clickAccordionByButton('Overview');
+	overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
 
 	// Verify order of sections
-	const expectedSections = [
-		'Overview',
-		'Timetable',
-		'Inquiry',
-		'Documentation',
-		'Costs',
-		'Contacts',
-		'Team',
-		'Case management'
-	];
-	caseDetailsPage.verifyCaseDetailsSection(expectedSections);
+	caseDetailsPage.verifyCaseDetailsSection(expectedCaseDetailsSections);
 });
 
 it('Can start case as inquiry without address or estimated days', () => {
