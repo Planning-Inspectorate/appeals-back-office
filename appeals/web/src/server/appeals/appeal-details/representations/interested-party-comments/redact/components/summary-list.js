@@ -2,6 +2,7 @@
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
 
 import { getAttachmentList } from '#appeals/appeal-details/representations/common/document-attachment-list.js';
+import { editLink } from '#lib/edit-utilities.js';
 
 /**
  * @param {Appeal} appealDetails
@@ -40,7 +41,9 @@ export const summaryList = (appealDetails, comment, session, redactMatching) => 
 									items: [
 										{
 											text: 'Change',
-											href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/redact`,
+											href: editLink(
+												`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/redact`
+											),
 											visuallyHiddenText: 'redacted comment'
 										}
 									]

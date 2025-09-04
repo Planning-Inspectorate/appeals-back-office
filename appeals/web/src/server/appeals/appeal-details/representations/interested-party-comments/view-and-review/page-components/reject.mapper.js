@@ -5,6 +5,7 @@ import { rejectionReasonHtml } from '#appeals/appeal-details/representations/com
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { getAttachmentList } from '../../../common/document-attachment-list.js';
 import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js';
+import { editLink } from '#lib/edit-utilities.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -14,15 +15,15 @@ import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js'
 
 /**
  * @param {Appeal} appealDetails
- * @param {Representation} comment
+ * @param {string} backLinkUrl
  * @returns {PageContent}
  */
-export function rejectInterestedPartyCommentPage(appealDetails, comment) {
+export function rejectInterestedPartyCommentPage(appealDetails, backLinkUrl) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	const pageContent = {
 		heading: 'Why are you rejecting the comment?',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/review`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortReference}`,
 		hint: 'Select all that apply.'
 	};
@@ -31,13 +32,13 @@ export function rejectInterestedPartyCommentPage(appealDetails, comment) {
 }
 
 /**
- * @param {import('got').Got} apiClient
  * @param {Appeal} appealDetails
  * @param {Representation} comment
+ * @param {string} backLinkUrl
  * @param {import('@pins/express').Session} [session]
  * @returns {Promise<PageContent>}
  * */
-export async function rejectAllowResubmitPage(apiClient, appealDetails, comment, session) {
+export async function rejectAllowResubmitPage(appealDetails, comment, backLinkUrl, session) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 	const { ipCommentsDueDate = null } = appealDetails.appealTimetable || {};
 	const dueDate = ipCommentsDueDate ? new Date(ipCommentsDueDate) : null;
@@ -53,7 +54,7 @@ export async function rejectAllowResubmitPage(apiClient, appealDetails, comment,
 
 	/** @type {PageContent} */
 	const pageContent = {
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/select-reason`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortReference}`,
 		submitButtonProperties: {
 			text: 'Continue'
@@ -186,7 +187,9 @@ export function rejectCheckYourAnswersPage(
 						items: [
 							{
 								text: 'Change',
-								href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/select-reason`,
+								href: editLink(
+									`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/select-reason`
+								),
 								visuallyHiddenText: 'why you are rejecting the comment'
 							}
 						]
@@ -205,7 +208,9 @@ export function rejectCheckYourAnswersPage(
 									items: [
 										{
 											text: 'Change',
-											href: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/allow-resubmit`,
+											href: editLink(
+												`/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/reject/allow-resubmit`
+											),
 											visuallyHiddenText:
 												'if you want to allow the interested party to resubmit a comment'
 										}

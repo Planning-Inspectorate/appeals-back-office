@@ -7,8 +7,13 @@ import {
 } from './edit-ip-comment.service.js';
 import { checkAddressPage, siteVisitRequestedPage } from './edit-ip-comment.mappers.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { preserveQueryString, stripQueryString } from '#lib/url-utilities.js';
-import { applyEdits, clearEdits, getSessionValues } from '#lib/edit-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
+import {
+	applyEdits,
+	clearEdits,
+	getSessionValues,
+	isAtEditEntrypoint
+} from '#lib/edit-utilities.js';
 import { isEmpty } from 'lodash-es';
 
 /**
@@ -25,10 +30,9 @@ export async function renderEditAddress(request, response) {
 	const backLinkUrl = review === 'true' ? 'review' : 'view';
 	const operationType = editAddress === 'true' ? 'update' : 'add';
 	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}`;
-	const backUrl =
-		stripQueryString(String(request.query.editEntrypoint)) === stripQueryString(request.originalUrl)
-			? `${baseUrl}/edit/check/address`
-			: `${baseUrl}/${backLinkUrl}`;
+	const backUrl = isAtEditEntrypoint(request)
+		? `${baseUrl}/edit/check/address`
+		: `${baseUrl}/${backLinkUrl}`;
 	const editIpComment = getSessionValues(request, 'editIpComment');
 	const address = isEmpty(editIpComment)
 		? currentRepresentation?.represented?.address
