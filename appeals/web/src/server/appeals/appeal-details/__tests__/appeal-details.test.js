@@ -33,6 +33,7 @@ import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { omit } from 'lodash-es';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -1126,6 +1127,110 @@ describe('appeal-details', () => {
 					expect(notificationBannerElementHTML).toContain('Success</h3>');
 					expect(notificationBannerElementHTML).toContain('Main party correspondence added</p>');
 				});
+
+				it('should render a success notification banner when a hearing is setup', async () => {
+					const appealId = 1;
+					const dateValues = {
+						'hearing-date-day': '01',
+						'hearing-date-month': '02',
+						'hearing-date-year': '3025',
+						'hearing-time-hour': '12',
+						'hearing-time-minute': '00'
+					};
+					const addressValues = {
+						addressLine1: 'Flat 9',
+						addressLine2: '123 Gerbil Drive',
+						town: 'Blarberton',
+						county: 'Slabshire',
+						postCode: 'X25 3YZ'
+					};
+					nock('http://test/')
+						.post(`/appeals/${appealId}/hearing`, {
+							hearingStartTime: '3025-02-01T12:00:00.000Z',
+							address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode }
+						})
+						.reply(201, { hearingId: 1 });
+
+					// set session data with post requests to previous pages
+					await request.post(`${baseUrl}/${appealId}/hearing/setup/date`).send(dateValues);
+					await request
+						.post(`${baseUrl}/${appealId}/hearing/setup/address`)
+						.send({ addressKnown: 'yes' });
+					await request
+						.post(`${baseUrl}/${appealId}/hearing/setup/address-details`)
+						.send(addressValues);
+
+					const postCheckAndConfirmResponse = await request
+						.post(`${baseUrl}/1/hearing/setup/check-details`)
+						.send({});
+
+					expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+					expect(postCheckAndConfirmResponse.text).toBe(
+						'Found. Redirecting to /appeals-service/appeal-details/1'
+					);
+
+					const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+					const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+						rootElement: notificationBannerElement
+					}).innerHTML;
+
+					expect(notificationBannerElementHTML).toMatchSnapshot();
+					expect(notificationBannerElementHTML).toContain('Success</h3>');
+					expect(notificationBannerElementHTML).toContain('Hearing set up</p>');
+				});
+
+				it('should render a success notification banner when a hearing is changed', async () => {
+					const appealId = 1;
+					const dateValues = {
+						'hearing-date-day': '01',
+						'hearing-date-month': '02',
+						'hearing-date-year': '3025',
+						'hearing-time-hour': '12',
+						'hearing-time-minute': '00'
+					};
+					const addressValues = {
+						addressLine1: 'Flat 9',
+						addressLine2: '123 Gerbil Drive',
+						town: 'Blarberton',
+						county: 'Slabshire',
+						postCode: 'X25 3YZ'
+					};
+					nock('http://test/')
+						.patch(`/appeals/${appealId}/hearing/0`, {
+							hearingStartTime: '3025-02-01T12:00:00.000Z',
+							address: { ...omit(addressValues, 'postCode'), postcode: addressValues.postCode }
+						})
+						.reply(201, { hearingId: 1 });
+
+					// set session data with post requests to previous pages
+					await request.post(`${baseUrl}/${appealId}/hearing/change/date`).send(dateValues);
+					await request
+						.post(`${baseUrl}/${appealId}/hearing/change/address`)
+						.send({ addressKnown: 'yes' });
+					await request
+						.post(`${baseUrl}/${appealId}/hearing/change/address-details`)
+						.send(addressValues);
+
+					const postCheckAndConfirmResponse = await request
+						.post(`${baseUrl}/1/hearing/change/check-details`)
+						.send({});
+
+					expect(postCheckAndConfirmResponse.statusCode).toBe(302);
+					expect(postCheckAndConfirmResponse.text).toBe(
+						'Found. Redirecting to /appeals-service/appeal-details/1'
+					);
+
+					const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+					const notificationBannerElementHTML = parseHtml(caseDetailsResponse.text, {
+						rootElement: notificationBannerElement
+					}).innerHTML;
+
+					expect(notificationBannerElementHTML).toMatchSnapshot();
+					expect(notificationBannerElementHTML).toContain('Success</h3>');
+					expect(notificationBannerElementHTML).toContain('Hearing updated</p>');
+				});
 			});
 
 			describe('Important banners', () => {
@@ -1942,6 +2047,16 @@ describe('appeal-details', () => {
 					appealStatus: 'hearing_ready_to_set_up',
 					statusTagContent: 'Hearing ready to set up',
 					statusTagColour: 'green'
+				},
+				{
+					appealStatus: 'hearing_set_up',
+					statusTagContent: 'Hearing set up',
+					statusTagColour: 'grey'
+				},
+				{
+					appealStatus: 'hearing_updated',
+					statusTagContent: 'Hearing updated',
+					statusTagColour: 'grey'
 				},
 				{
 					appealStatus: 'awaiting_hearing',

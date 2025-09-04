@@ -5923,6 +5923,32 @@ data-index="0">
 </div>"
 `;
 
+exports[`appeal-details GET /:appealId Notification banners Success banners should render a success notification banner when a hearing is changed 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Hearing updated</p>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Notification banners Success banners should render a success notification banner when a hearing is setup 1`] = `
+"<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
+role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Success</h3>
+    </div>
+    <div class="govuk-notification-banner__content">
+        <p class="govuk-notification-banner__heading">Hearing set up</p>
+    </div>
+</div>"
+`;
+
 exports[`appeal-details GET /:appealId Notification banners Success banners should render a success notification banner when a main party correspondence document was uploaded 1`] = `
 "<div class="govuk-notification-banner govuk-notification-banner--success govuk-!-margin-bottom-5"
 role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
@@ -6141,6 +6167,10 @@ exports[`appeal-details GET /:appealId Status tags should render a status tag wi
 exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Final comments" and a green modifier class if appeal status is final_comments 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Final comments</strong>"`;
 
 exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Hearing ready to set up" and a green modifier class if appeal status is hearing_ready_to_set_up 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Hearing ready to set up</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Hearing set up" and a grey modifier class if appeal status is hearing_set_up 1`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Hearing set up</strong>"`;
+
+exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Hearing updated" and a grey modifier class if appeal status is hearing_updated 1`] = `"<strong class="govuk-tag govuk-tag--grey pins-status-tag--full-width">Hearing updated</strong>"`;
 
 exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Inquiry ready to set up" and a green modifier class if appeal status is inquiry_ready_to_set_up 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Inquiry ready to set up</strong>"`;
 
