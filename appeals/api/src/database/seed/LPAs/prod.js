@@ -298,7 +298,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'C3240',
 		name: 'Telford and Wrekin Council',
-		email: 'planning.control@telford.gov.uk'
+		email: 'planningappeals@telford.gov.uk'
 	},
 	{
 		lpaCode: 'C1760',
