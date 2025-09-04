@@ -8,6 +8,7 @@ import { urlPaths } from '../../support/urlPaths';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage';
+import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { formatDateAndTime } from '../../support/utils/dateAndTime.js';
 import { formatAddress } from '../../support/utils/address.js';
@@ -17,6 +18,7 @@ const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();
 const listCasesPage = new ListCasesPage();
 const inquirySectionPage = new InquirySectionPage();
+const overviewSectionPage = new OverviewSectionPage();
 const cyaSection = new CYASection();
 
 const previousInquiryAddress = {
@@ -120,7 +122,7 @@ it('Can start case as inquiry with address and estimated days', () => {
 	caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 	caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 
-	// Verify timetable row
+	// Verify timetable rows
 	const timeTableRows = [
 		'Valid date',
 		'Start date',
@@ -133,6 +135,20 @@ it('Can start case as inquiry with address and estimated days', () => {
 		'Inquiry'
 	];
 	caseDetailsPage.verifyTimeTableRows(timeTableRows);
+
+	// Verify overview rows
+	const overviewRows = [
+		'Planning application refereance',
+		'Appeal Type',
+		'Appeal procedure',
+		'Allocation level',
+		'Linked appeals',
+		'Related appeals',
+		'Is there a net gain or loss of residential units?'
+	];
+	caseDetailsPage.verifyCaseDetailRows(timeTableRows);
+
+	//const overviewValues
 
 	// Verify order of sections
 	const expectedSections = [
