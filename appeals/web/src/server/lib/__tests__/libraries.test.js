@@ -13,7 +13,7 @@ import { stringIsValidPostcodeFormat } from '#lib/postcode.js';
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
 import { addInvisibleSpacesAfterRedactionCharacters } from '#lib/redaction-string-formatter.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { stringContainsDigitsOnly } from '#lib/string-utilities.js';
+import { newLine2LineBreak, stringContainsDigitsOnly } from '#lib/string-utilities.js';
 import { is24HourTimeValid, timeIsBeforeTime } from '#lib/times.js';
 import {
 	addBackLinkQueryToUrl,
@@ -1058,6 +1058,19 @@ describe('Libraries', () => {
 				expect(stringContainsDigitsOnly('1!')).toBe(false);
 				expect(stringContainsDigitsOnly('2a')).toBe(false);
 				expect(stringContainsDigitsOnly('1 2')).toBe(false);
+			});
+		});
+
+		describe('newLine2LineBreak', () => {
+			it('should return text with line break', () => {
+				expect(newLine2LineBreak('This is a test.\nThis is a new line.')).toBe(
+					'This is a test.<br>This is a new line.'
+				);
+			});
+			it('should not return text with line break', () => {
+				expect(newLine2LineBreak('This is a test. This is a new line.')).toBe(
+					'This is a test. This is a new line.'
+				);
 			});
 		});
 	});

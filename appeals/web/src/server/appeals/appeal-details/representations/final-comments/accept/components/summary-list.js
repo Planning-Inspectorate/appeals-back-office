@@ -1,6 +1,8 @@
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
 
+import { newLine2LineBreak } from '#lib/string-utilities.js';
+
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} comment
@@ -20,7 +22,7 @@ export const summaryList = (appealDetails, comment, finalCommentsType, attachmen
 					{
 						type: 'show-more',
 						parameters: {
-							text: comment.originalRepresentation,
+							html: newLine2LineBreak(comment.originalRepresentation),
 							labelText: 'Read more'
 						}
 					}

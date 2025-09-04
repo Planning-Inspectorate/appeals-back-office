@@ -4,6 +4,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { buttonComponent, simpleHtmlComponent, wrapComponents } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { findButtonText } from '#lib/revert-text.js';
+import { newLine2LineBreak } from '#lib/string-utilities.js';
 import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
 import { summaryList } from './components/summary-list.js';
 
@@ -42,7 +43,7 @@ export const redactFinalCommentPage = (appealDetails, comment, finalCommentsType
 							{
 								type: 'show-more',
 								parameters: {
-									text: comment.originalRepresentation,
+									html: newLine2LineBreak(comment.originalRepresentation),
 									labelText: 'Read more'
 								}
 							}

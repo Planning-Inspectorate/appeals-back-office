@@ -12,7 +12,7 @@ exports[`final-comments GET / should render the accept appellant final comments 
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original final comments</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">Awaiting final comments review</div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/appellant/redact?backUrl=/final-comments/appellant/accept">Redact<span class="govuk-visually-hidden"> Redact statement</span></a>
                     </dd>
@@ -109,7 +109,7 @@ exports[`final-comments GET / should render the accept lpa final comments page w
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original final comments</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">Awaiting final comments review</div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact?backUrl=/final-comments/lpa/accept">Redact<span class="govuk-visually-hidden"> Redact statement</span></a>
                     </dd>

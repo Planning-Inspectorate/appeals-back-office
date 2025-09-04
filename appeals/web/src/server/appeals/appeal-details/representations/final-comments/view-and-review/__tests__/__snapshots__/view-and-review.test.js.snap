@@ -294,7 +294,7 @@ exports[`final-comments GET /review-comments with data should render review LPA 
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Final comments</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">Awaiting final comments review</div>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -411,7 +411,7 @@ exports[`final-comments GET /review-comments with data should render review appe
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Final comments</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">Awaiting final comments review</div>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -466,12 +466,12 @@ exports[`final-comments GET /review-comments with redacted comment should render
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Original final comments</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">Awaiting final comments review</div>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redacted comment</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Read more" data-mode="text">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
                     </dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/final-comments/lpa/redact">Change<span class="govuk-visually-hidden"> final comments</span></a>
                     </dd>
@@ -650,7 +650,7 @@ exports[`final-comments POST /review-comments with data should render review LPA
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Final comments</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">Awaiting final comments review</div>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
