@@ -188,7 +188,7 @@ export function resubmitAppealPage(appealDetails, changeAppeal, errorMessage) {
 	const pageContent = {
 		title: 'Does the appellant need to resubmit the appeal?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/appeal-type`,
-		preHeading: `Appeal ${shortAppealReference} - change appeal type`,
+		preHeading: `Appeal ${shortAppealReference} - update appeal type`,
 		pageComponents: [selectResubmitAppealComponent]
 	};
 
