@@ -22,7 +22,8 @@ import {
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
 	DECISION_TYPE_INSPECTOR,
 	DECISION_TYPE_APPELLANT_COSTS,
-	DECISION_TYPE_LPA_COSTS
+	DECISION_TYPE_LPA_COSTS,
+	CASE_RELATIONSHIP_LINKED
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
@@ -250,6 +251,7 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					appeal_reference_number: appeal.reference,
+					child_appeals: [],
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
@@ -264,6 +266,7 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					appeal_reference_number: appeal.reference,
+					child_appeals: [],
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
@@ -475,7 +478,12 @@ describe('decision routes', () => {
 			const withoutWeekends = await recalculateDateIfNotBusinessDay(tenDaysAgo.toISOString());
 			const utcDate = setTimeInTimeZone(withoutWeekends, 0, 0);
 			const outcome = 'allowed';
-			const linkedAppeal = { appealId: 4, inspectorDecision: outcome };
+			const childAppeal = {
+				appealId: 4,
+				childRef: 'CHILD123',
+				inspectorDecision: outcome,
+				type: CASE_RELATIONSHIP_LINKED
+			};
 			const appeal = {
 				...fullPlanningAppeal,
 				isChildAppeal: true,
@@ -485,7 +493,7 @@ describe('decision routes', () => {
 						valid: true
 					}
 				],
-				linkedAppeals: [linkedAppeal]
+				childAppeals: [childAppeal]
 			};
 
 			// @ts-ignore
@@ -506,7 +514,7 @@ describe('decision routes', () => {
 							documentGuid: documentCreated.guid
 						},
 						{
-							appealId: linkedAppeal.appealId,
+							appealId: childAppeal.appealId,
 							decisionType: DECISION_TYPE_INSPECTOR,
 							outcome,
 							documentDate: utcDate.toISOString(),
@@ -524,6 +532,7 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					appeal_reference_number: appeal.reference,
+					child_appeals: [childAppeal.childRef],
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
@@ -538,6 +547,7 @@ describe('decision routes', () => {
 				notifyClient: expect.any(Object),
 				personalisation: {
 					appeal_reference_number: appeal.reference,
+					child_appeals: [childAppeal.childRef],
 					lpa_reference: appeal.applicationReference,
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					decision_date: formatDate(utcDate, false),
@@ -551,7 +561,7 @@ describe('decision routes', () => {
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 				data: {
-					appealId: linkedAppeal.appealId,
+					appealId: childAppeal.appealId,
 					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
 						outcome[0].toUpperCase() + outcome.slice(1)
 					]),
@@ -562,7 +572,7 @@ describe('decision routes', () => {
 
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 				data: {
-					appealId: linkedAppeal.appealId,
+					appealId: childAppeal.appealId,
 					details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['complete']),
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
