@@ -16,10 +16,21 @@ import BackOfficeAppError from '#utils/app-error.js';
  * @param {import('#db-client').Prisma.AppealCreateInput} data
  * @param {import('#db-client').Prisma.DocumentVersionCreateInput[]} documents
  * @param {string[] | null} relatedReferences
+ * @param {string} appellantProcedurePreference
  * @returns
  */
-const importAppellantCase = async (data, documents, relatedReferences) => {
-	const result = await createAppeal(data, documents, relatedReferences || []);
+const importAppellantCase = async (
+	data,
+	documents,
+	relatedReferences,
+	appellantProcedurePreference
+) => {
+	const result = await createAppeal(
+		data,
+		documents,
+		relatedReferences || [],
+		appellantProcedurePreference
+	);
 
 	if (!result?.appeal) {
 		throw new BackOfficeAppError(`Failure importing appellant case. Appeal could not be created.`);
