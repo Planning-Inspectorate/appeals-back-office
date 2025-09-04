@@ -228,7 +228,7 @@ describe('change-appeal-type', () => {
 
 			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedErrorSummaryHTML).toContain(
-				'Select yes if the appellant should be asked to resubmit the appeal</a>'
+				'Select yes if the appellant needs to resubmit the appeal</a>'
 			);
 		});
 	});

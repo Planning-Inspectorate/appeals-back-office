@@ -480,7 +480,7 @@ exports[`change-appeal-type GET /change-appeal-type/check-transfer should render
 exports[`change-appeal-type GET /change-appeal-type/resubmit should render the resubmit page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -778,7 +778,7 @@ exports[`change-appeal-type POST /change-appeal-type/resubmit should re-render t
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#appeal-resubmit">Select yes if the appellant should be asked to resubmit the appeal</a>
+                            <li><a href="#appeal-resubmit">Select yes if the appellant needs to resubmit the appeal</a>
                             </li>
                         </ul>
                     </div>
@@ -787,7 +787,7 @@ exports[`change-appeal-type POST /change-appeal-type/resubmit should re-render t
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -801,7 +801,7 @@ exports[`change-appeal-type POST /change-appeal-type/resubmit should re-render t
                                     <h1 class="govuk-fieldset__heading"> Does the appellant need to resubmit the appeal?</h1>
                                 </legend>
                                 <p id="appeal-resubmit-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select yes if the appellant
-                                    should be asked to resubmit the appeal</p>
+                                    needs to resubmit the appeal</p>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-resubmit" name="appealResubmit"
