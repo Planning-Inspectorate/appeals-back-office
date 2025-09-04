@@ -18,7 +18,7 @@ exports[`redact renders the confirm redaction page 1`] = `
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Redacted comment</dt>
                     <dd class="govuk-summary-list__value"></dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact">Change<span class="govuk-visually-hidden"> redacted comment</span></a>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/interested-party-comments/3670/redact?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F2%2Finterested-party-comments%2F3670%2Fredact">Change<span class="govuk-visually-hidden"> redacted comment</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>

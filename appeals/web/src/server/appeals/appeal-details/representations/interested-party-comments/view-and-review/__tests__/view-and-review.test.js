@@ -225,7 +225,7 @@ describe('interested-party-comments', () => {
 				.get('/appeals/2/reps?type=comment')
 				.reply(200, interestedPartyCommentsForReview);
 		});
-		afterEach(teardown);
+
 		it('should render reject comment page', async () => {
 			const response = await request.get(
 				`${baseUrl}/2/interested-party-comments/5/reject/select-reason`
@@ -237,6 +237,33 @@ describe('interested-party-comments', () => {
 			const elementInnerHtml = dom.innerHTML;
 			expect(elementInnerHtml).toMatchSnapshot();
 			expect(elementInnerHtml).toContain('Why are you rejecting the comment?</h1>');
+		});
+
+		it('should render the correct back link', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/interested-party-comments/5/reject/select-reason`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const page = parseHtml(response.text, { rootElement: 'body' });
+			expect(page.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/2/interested-party-comments/3670/review`
+			);
+		});
+
+		it('should render the correct back link when editing', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/interested-party-comments/5/reject/select-reason` +
+					`?editEntrypoint=${baseUrl}/2/interested-party-comments/5/reject/select-reason`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const page = parseHtml(response.text, { rootElement: 'body' });
+			expect(page.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/2/interested-party-comments/3670/reject/check-your-answers`
+			);
 		});
 	});
 
@@ -264,6 +291,33 @@ describe('interested-party-comments', () => {
 
 			expect(unprettifiedElement.innerHTML).toContain(
 				'Do you want to allow the interested party to resubmit a comment?</h1>'
+			);
+		});
+
+		it('should render the correct back link', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/interested-party-comments/5/reject/allow-resubmit`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const page = parseHtml(response.text, { rootElement: 'body' });
+			expect(page.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/2/interested-party-comments/3670/reject/select-reason`
+			);
+		});
+
+		it('should render the correct back link when editing', async () => {
+			const response = await request.get(
+				`${baseUrl}/2/interested-party-comments/5/reject/allow-resubmit` +
+					`?editEntrypoint=${baseUrl}/2/interested-party-comments/5/reject/allow-resubmit`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const page = parseHtml(response.text, { rootElement: 'body' });
+			expect(page.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/2/interested-party-comments/3670/reject/check-your-answers`
 			);
 		});
 	});

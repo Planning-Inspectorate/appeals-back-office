@@ -1,4 +1,4 @@
-import { addQueryParamsToUrl } from './url-utilities.js';
+import { addQueryParamsToUrl, stripQueryString } from './url-utilities.js';
 
 /**
  * Returns the session values for the given key, or the /edit key if editing.
@@ -57,4 +57,15 @@ export const applyEdits = (request, sessionKey) => {
 export const clearEdits = (request, sessionKey) => {
 	const editKey = `${sessionKey}/edit`;
 	delete request.session[editKey];
+};
+
+/**
+ * Checks if we are at the point where we started editing.
+ * @param {import('@pins/express').Request} request
+ * @returns {boolean}
+ */
+export const isAtEditEntrypoint = (request) => {
+	return (
+		stripQueryString(String(request.query.editEntrypoint)) === stripQueryString(request.originalUrl)
+	);
 };

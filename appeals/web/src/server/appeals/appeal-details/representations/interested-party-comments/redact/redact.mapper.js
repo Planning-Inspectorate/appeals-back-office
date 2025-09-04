@@ -10,10 +10,11 @@ import { REVERT_BUTTON_TEXT } from '@pins/appeals/constants/common.js';
 /**
  * @param {Appeal} appealDetails
  * @param {Representation} comment
+ * @param {string} backLinkUrl
  * @param {import('express-session').Session & Record<string, string>} [session]
  * @returns {PageContent}
  */
-export const redactInterestedPartyCommentPage = (appealDetails, comment, session) => {
+export const redactInterestedPartyCommentPage = (appealDetails, comment, backLinkUrl, session) => {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageComponent[]} */
@@ -65,7 +66,7 @@ export const redactInterestedPartyCommentPage = (appealDetails, comment, session
 	/** @type {PageContent} */
 	const pageContent = {
 		title: 'Redact comment',
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/${comment.id}/review`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortReference}`,
 		heading: 'Check details and redact comment',
 		pageComponents
