@@ -11,6 +11,7 @@ import {
 import { updateRejectionReasons } from '#appeals/appeal-details/representations/representations.service.js';
 import { rejectInterestedPartyComment } from './reject.service.js';
 import { prepareRejectionReasons } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
+import { applyEdits, clearEdits, isAtEditEntrypoint } from '#lib/edit-utilities.js';
 
 /** @type {import('express').Handler} */
 export async function renderSelectReason(request, response) {
@@ -29,7 +30,12 @@ export async function renderSelectReason(request, response) {
 		errors
 	);
 
-	const pageContent = rejectInterestedPartyCommentPage(currentAppeal, currentRepresentation);
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}`;
+	const backLinkUrl = isAtEditEntrypoint(request)
+		? `${baseUrl}/reject/check-your-answers`
+		: `${baseUrl}/review`;
+
+	const pageContent = rejectInterestedPartyCommentPage(currentAppeal, backLinkUrl);
 
 	return response.status(200).render('appeals/appeal/reject-representation.njk', {
 		errors,
@@ -114,11 +120,16 @@ export const renderAllowResubmit = async (request, response) => {
 		return response.status(404).render('app/404.njk');
 	}
 
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}`;
+	const backLinkUrl = isAtEditEntrypoint(request)
+		? `${baseUrl}/reject/check-your-answers`
+		: `${baseUrl}/reject/select-reason`;
+
 	try {
 		const pageContent = await rejectAllowResubmitPage(
-			request.apiClient,
 			currentAppeal,
 			currentRepresentation,
+			backLinkUrl,
 			session
 		);
 
@@ -146,6 +157,8 @@ export const postAllowResubmit = async (request, response) => {
 		return renderAllowResubmit(request, response);
 	}
 
+	applyEdits(request, 'rejectIpComment');
+
 	return response.redirect(
 		`/appeals-service/appeal-details/${appealId}/interested-party-comments/${commentId}/reject/check-your-answers`
 	);
@@ -156,6 +169,8 @@ export const postAllowResubmit = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderCheckYourAnswers = async (request, response) => {
+	clearEdits(request, 'rejectIpComment');
+
 	const { currentAppeal, currentRepresentation, currentFolder, errors, session } = request;
 
 	const reasonOptions = await getRepresentationRejectionReasonOptions(

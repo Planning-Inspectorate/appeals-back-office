@@ -1,4 +1,5 @@
-import { preserveQueryString, stripQueryString } from '#lib/url-utilities.js';
+import { isAtEditEntrypoint } from '#lib/edit-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
 
 /**
  * Store the backUrl query param the session, scoped using a specific
@@ -66,10 +67,9 @@ export const getSavedBackUrl = (request, sessionKey) => {
 export function backLinkGenerator(sessionKey) {
 	return (request, prevPageUrl, cyaUrl, defaultUrl) => {
 		defaultUrl = defaultUrl || `/appeals-service/appeal-details/${request.currentAppeal.appealId}`;
-		const editEntrypoint = String(request.query.editEntrypoint);
 		const flowEntrypoint = String(getSavedBackUrl(request, sessionKey) || defaultUrl);
 
-		return stripQueryString(editEntrypoint) === stripQueryString(request.originalUrl)
+		return isAtEditEntrypoint(request)
 			? preserveQueryString(request, cyaUrl, { exclude: ['editEntrypoint'] })
 			: prevPageUrl
 			? preserveQueryString(request, prevPageUrl)

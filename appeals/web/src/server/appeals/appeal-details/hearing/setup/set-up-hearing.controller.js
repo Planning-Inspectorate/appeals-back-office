@@ -12,8 +12,13 @@ import {
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
 import { createHearing, updateHearing } from './hearing.service.js';
-import { preserveQueryString, stripQueryString } from '#lib/url-utilities.js';
-import { applyEdits, clearEdits, getSessionValues } from '#lib/edit-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
+import {
+	applyEdits,
+	clearEdits,
+	getSessionValues,
+	isAtEditEntrypoint
+} from '#lib/edit-utilities.js';
 
 /**
  * @param {string} path
@@ -49,12 +54,11 @@ const sessionValuesToDateTime = (sessionValues = {}) => {
  * @returns {string}
  */
 const getBackLinkUrl = (request, prevPageUrl, cyaUrl) => {
-	const editEntrypoint = String(request.query.editEntrypoint);
 	const flowEntrypoint = String(
 		request.query.backUrl || `/appeals-service/appeal-details/${request.currentAppeal.appealId}`
 	);
 
-	return stripQueryString(editEntrypoint) === stripQueryString(request.originalUrl)
+	return isAtEditEntrypoint(request)
 		? preserveQueryString(request, cyaUrl, { exclude: ['editEntrypoint'] })
 		: prevPageUrl
 		? preserveQueryString(request, prevPageUrl)
