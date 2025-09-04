@@ -17,7 +17,7 @@ export const mapDecision = ({ appealDetails, session, request }) => {
 	const { appealId, appealStatus, decision } = appealDetails;
 
 	if (
-		isChildAppeal(appealDetails) ||
+		(isChildAppeal(appealDetails) && !decision?.outcome) ||
 		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT)
 	) {
 		return { id: 'decision', display: {} };
