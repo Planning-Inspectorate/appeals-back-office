@@ -18,43 +18,44 @@ const fileUploader = new FileUploader();
 const document = fileUploader.sampleFiles.document;
 const withdrawalDate = new Date();
 
+let caseRef;
+
+const setupTestCase = () => {
+	cy.login(users.appeals.caseAdmin);
+	cy.createCase().then((ref) => {
+		caseRef = ref;
+		happyPathHelper.assignCaseOfficer(caseRef);
+		happyPathHelper.reviewAppellantCase(caseRef);
+		happyPathHelper.startCase(caseRef);
+	});
+};
+
 describe('Cancel an appeal', () => {
 	beforeEach(() => {
-		cy.login(users.appeals.caseAdmin);
+		setupTestCase();
 	});
 
-	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('Withdraw appeal', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			caseDetailsPage.clickLinkByText('Cancel appeal');
-			caseDetailsPage.selectRadioButtonByValue('Request to withdraw appeal');
-			caseDetailsPage.clickButtonByText('Continue');
-			fileUploader.uploadFiles(document);
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.clickButtonByText('Withdraw appeal');
-			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal withdrawn');
-			caseDetailsPage.checkStatusOfCase('Withdrawn', 0);
-		});
+		caseDetailsPage.clickLinkByText('Cancel appeal');
+		caseDetailsPage.selectRadioButtonByValue('Request to withdraw appeal');
+		caseDetailsPage.clickButtonByText('Continue');
+		fileUploader.uploadFiles(document);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Withdraw appeal');
+		caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal withdrawn');
+		caseDetailsPage.checkStatusOfCase('Withdrawn', 0);
 	});
 
 	it('Invalid appeal', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			caseDetailsPage.clickLinkByText('Cancel appeal');
-			caseDetailsPage.selectRadioButtonByValue('Appeal invalid');
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.chooseCheckboxByText('Documents have not been submitted on time');
-			caseDetailsPage.chooseCheckboxByText('Other reason');
-			caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384!', 0);
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.clickButtonByText('Mark appeal as invalid');
-			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal marked as invalid');
-			caseDetailsPage.checkStatusOfCase('Invalid', 0);
-		});
+		caseDetailsPage.clickLinkByText('Cancel appeal');
+		caseDetailsPage.selectRadioButtonByValue('Appeal invalid');
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.chooseCheckboxByText('Documents have not been submitted on time');
+		caseDetailsPage.chooseCheckboxByText('Other reason');
+		caseDetailsPage.fillInput('Hello here is some extra info, have a nice day 7384!', 0);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Mark appeal as invalid');
+		caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal marked as invalid');
+		caseDetailsPage.checkStatusOfCase('Invalid', 0);
 	});
 });
