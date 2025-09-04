@@ -5,6 +5,7 @@ import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
+import { FileUploader } from '../../page_objects/shared.js';
 import { urlPaths } from '../../support/urlPaths.js';
 import { tag } from '../../support/tag';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
@@ -12,6 +13,10 @@ import { happyPathHelper } from '../../support/happyPathHelper.js';
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
+const fileUploader = new FileUploader();
+
+const document = fileUploader.sampleFiles.document;
+const withdrawalDate = new Date();
 
 describe('Cancel an appeal', () => {
 	beforeEach(() => {
@@ -20,8 +25,6 @@ describe('Cancel an appeal', () => {
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('Withdraw appeal', () => {
-		const withdrawalDate = new Date();
-
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
@@ -29,7 +32,7 @@ describe('Cancel an appeal', () => {
 			caseDetailsPage.clickLinkByText('Cancel appeal');
 			caseDetailsPage.selectRadioButtonByValue('Request to withdraw appeal');
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.uploadSampleFile(sampleFiles.document);
+			fileUploader.uploadFiles(document);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Withdraw appeal');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal withdrawn');
@@ -38,8 +41,6 @@ describe('Cancel an appeal', () => {
 	});
 
 	it('Invalid appeal', () => {
-		const withdrawalDate = new Date();
-
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
