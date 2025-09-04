@@ -41,7 +41,7 @@ describe('appeal-invalid-lpa.md', () => {
 			'',
 			'# Feedback',
 			'',
-			'This is a new service. Help us improve it and [give your feedback](http://link%20to%20feedback%20form/).',
+			'This is a new service. Help us improve it and [give your feedback](https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u).',
 			'',
 			'The Planning Inspectorate',
 			'',
