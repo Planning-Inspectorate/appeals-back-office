@@ -26,7 +26,7 @@ import {
 import { mapReasonsToReasonsListHtml } from '#lib/reasons-formatter.js';
 import { timeIsBeforeTime, is24HourTimeValid } from '#lib/times.js';
 import { appellantCaseInvalidReasons, baseSession } from '#testing/app/fixtures/referencedata.js';
-import { stringContainsDigitsOnly } from '#lib/string-utilities.js';
+import { stringContainsDigitsOnly, newLine2LineBreak } from '#lib/string-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { paginationDefaultSettings } from '#appeals/appeal.constants.js';
 import { getPaginationParametersFromQuery } from '#lib/pagination-utilities.js';
@@ -1058,6 +1058,19 @@ describe('Libraries', () => {
 				expect(stringContainsDigitsOnly('1!')).toBe(false);
 				expect(stringContainsDigitsOnly('2a')).toBe(false);
 				expect(stringContainsDigitsOnly('1 2')).toBe(false);
+			});
+		});
+
+		describe('newLine2LineBreak', () => {
+			it('should return text with line break', () => {
+				expect(newLine2LineBreak('This is a test.\nThis is a new line.')).toBe(
+					'This is a test.<br>This is a new line.'
+				);
+			});
+			it('should not return text with line break', () => {
+				expect(newLine2LineBreak('This is a test. This is a new line.')).toBe(
+					'This is a test. This is a new line.'
+				);
 			});
 		});
 	});

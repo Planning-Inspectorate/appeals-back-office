@@ -70,7 +70,7 @@ describe('final-comments', () => {
 				expect(unprettifiedHTML).toContain(`Redact ${finalCommentsType.label} final comments</h1>`);
 				expect(unprettifiedHTML).toContain('Original final comments:</p>');
 				expect(unprettifiedHTML).toContain(
-					`id="original-comment" class="govuk-inset-text govuk-!-margin-top-2"><div class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div></div>`
+					`id="original-comment" class="govuk-inset-text govuk-!-margin-top-2"><div class="pins-show-more" data-label="Read more" data-mode="html">Awaiting final comments review</div></div>`
 				);
 				expect(unprettifiedHTML).toContain('Awaiting final comments review</textarea>');
 				expect(unprettifiedHTML).toContain('Redact selected text</button>');
@@ -151,11 +151,11 @@ describe('final-comments', () => {
 				);
 				expect(unprettifiedHTML).toContain('Original final comments</dt>');
 				expect(unprettifiedHTML).toContain(
-					'class="pins-show-more" data-label="Read more" data-mode="text">Awaiting final comments review</div>'
+					'class="pins-show-more" data-label="Read more" data-mode="html">Awaiting final comments review</div>'
 				);
 				expect(unprettifiedHTML).toContain('Redacted final comments</dt>');
 				expect(unprettifiedHTML).toContain(
-					`class="pins-show-more" data-label="Read more" data-mode="text">${redactedRepresentation}</div>`
+					`class="pins-show-more" data-label="Read more" data-mode="html">${redactedRepresentation}</div>`
 				);
 				expect(unprettifiedHTML).toContain(
 					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}/redact?backUrl=/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}/redact/confirm">Change<span class="govuk-visually-hidden"> redacted final comments</span></a></dd>`

@@ -5,6 +5,7 @@ import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
+import { newLine2LineBreak } from '#lib/string-utilities.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -58,7 +59,7 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 										{
 											type: 'show-more',
 											parameters: {
-												text: lpaStatement.originalRepresentation,
+												html: newLine2LineBreak(lpaStatement.originalRepresentation),
 												labelText: 'Original statement'
 											}
 										}
@@ -74,7 +75,7 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 										{
 											type: 'show-more',
 											parameters: {
-												text: lpaStatement.redactedRepresentation,
+												html: newLine2LineBreak(lpaStatement.redactedRepresentation),
 												labelText: 'Redacted statement'
 											}
 										}
@@ -105,7 +106,7 @@ export function baseSummaryList(appealId, lpaStatement, { isReview }) {
 										{
 											type: 'show-more',
 											parameters: {
-												text: lpaStatement.originalRepresentation,
+												html: newLine2LineBreak(lpaStatement.originalRepresentation),
 												labelText: 'Statement'
 											}
 										}

@@ -1,6 +1,7 @@
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
 
+import { newLine2LineBreak } from '#lib/string-utilities.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 
 /**
@@ -38,7 +39,7 @@ export const summaryList = (
 							{
 								type: 'show-more',
 								parameters: {
-									text: comment.originalRepresentation,
+									html: newLine2LineBreak(comment.originalRepresentation),
 									labelText: 'Read more'
 								}
 							}
@@ -66,7 +67,7 @@ export const summaryList = (
 										{
 											type: 'show-more',
 											parameters: {
-												text: session?.redactedRepresentation,
+												html: newLine2LineBreak(session?.redactedRepresentation),
 												labelText: 'Read more'
 											}
 										}
