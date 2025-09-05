@@ -5,6 +5,7 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
+import { cloneDeep } from 'lodash-es';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -80,6 +81,39 @@ describe('final-comments', () => {
 				);
 				expect(unprettifiedHTML).toContain(
 					`Accept ${finalCommentsType.label} final comments</button>`
+				);
+			});
+
+			it(`should render the accept ${finalCommentsType.type} final comments page with the expected content when no comment`, async () => {
+				const finalComments = cloneDeep({ ...finalCommentsForReviewWithAttachments });
+				finalComments.items[0].originalRepresentation = '';
+				nock('http://test/')
+					.get(`/appeals/2/reps?type=${finalCommentsType.type}_final_comment`)
+					.reply(200, finalComments)
+					.persist();
+
+				const response = await request.get(
+					`${baseUrl}/2/final-comments/${finalCommentsType.type}/accept`
+				);
+
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+
+				const unprettifiedHTML = parseHtml(response.text, {
+					skipPrettyPrint: true,
+					rootElement: 'body'
+				}).innerHTML;
+
+				expect(unprettifiedHTML).not.toContain('Original final comments</dt>');
+				expect(unprettifiedHTML).toContain('Supporting documents</dt>');
+				expect(unprettifiedHTML).toContain(
+					`href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf" target="_blank">blank copy 5.pdf</a>`
+				);
+				expect(unprettifiedHTML).toContain('Review decisions</dt>');
+				expect(unprettifiedHTML).toContain('Accept final comments</dd>');
+				expect(unprettifiedHTML).toContain(
+					`href="/appeals-service/appeal-details/2/final-comments/${finalCommentsType.type}`
 				);
 			});
 		}
