@@ -158,7 +158,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'P2114',
 		name: 'Isle of Wight Council',
-		email: 'planningappeals@iow.gov.uk'
+		email: 'planning.appeals@iow.gov.uk'
 	},
 	{
 		lpaCode: 'K3415',
