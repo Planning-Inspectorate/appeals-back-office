@@ -280,9 +280,9 @@ export async function checkTransferPage(appealDetails, transferredAppealHorizonR
 /**
  *
  * @param {Appeal} appealDetails
- * @param { number } changeDay
- * @param { number } changeMonth
- * @param { number } changeYear,
+ * @param { string | undefined } changeDay
+ * @param { string | undefined } changeMonth
+ * @param { string | undefined } changeYear,
  * @param {import('@pins/express').ValidationErrors|undefined}  errors
  * @returns {PageContent}
  */
@@ -314,7 +314,7 @@ export function changeAppealFinalDatePage(
 	const pageContent = {
 		title: `Deadline to resubmit appeal - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
-		preHeading: `Appeal ${shortAppealReference} - change appeal type`,
+		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [selectDateComponent],
 		submitButtonText: 'Continue'
 	};
