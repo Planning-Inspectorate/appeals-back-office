@@ -343,7 +343,7 @@ export const appealsApiClient = {
 		}
 	},
 
-	async addInquiry(appealId, date, overrides) {
+	async addInquiry(appealId, date, propertyOverrides) {
 		try {
 			const requestBody = createApiSubmission(appealsApiRequests.inquiryDetails);
 			requestBody.inquiryStartTime = date.toISOString();
@@ -359,7 +359,7 @@ export const appealsApiClient = {
 			// apply any overrides to payload
 			const requestBodyWithOverrides = {
 				...requestBody,
-				...overrides
+				...propertyOverrides
 			};
 
 			cy.log(`** requestBodyWithOverrides - `, JSON.stringify(requestBodyWithOverrides));
