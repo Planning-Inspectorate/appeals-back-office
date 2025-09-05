@@ -4,8 +4,8 @@
 			"name": "registerSubscription",
 			"type": "serviceBusTrigger",
 			"direction": "in",
-			"topicName": "appeal-fo-lpa-questionnaire-submission",
-			"subscriptionName": "appeal-fo-lpa-questionnaire-submission-bo-sub",
+			"topicName": "%SB_TOPIC_NAME_APPEAL_FO_LPA_QUESTIONNAIRE_SUBMISSION%",
+			"subscriptionName": "%SB_SUBSCRIPTION_NAME_APPEAL_FO_LPA_QUESTIONNAIRE_SUBMISSION%",
 			"connection": "ServiceBusConnection"
 		}
 	]

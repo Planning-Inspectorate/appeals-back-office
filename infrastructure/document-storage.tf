@@ -77,10 +77,11 @@ removed {
   }
 }
 
-import {
-  to = azurerm_security_center_storage_defender.malware_scanning
-  id = azurerm_storage_account.documents.id
-}
+# Not needed anymore as id is directly imported in the resource block
+# import {
+#   to = azurerm_security_center_storage_defender.malware_scanning
+#   id = azurerm_storage_account.documents.id
+# }
 
 resource "azurerm_security_center_storage_defender" "malware_scanning" {
   storage_account_id = azurerm_storage_account.documents.id

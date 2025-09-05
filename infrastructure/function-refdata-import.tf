@@ -35,6 +35,12 @@ module "function_refdata_import" {
     ServiceBusConnection__fullyQualifiedNamespace = local.service_bus_hostname
     # Function env variables
     API_HOST = module.app_api.default_site_hostname
+
+    # Service bus topic
+    SB_TOPIC_NAME_LISTED_BUILDING = azurerm_servicebus_topic.listed_building.name
+
+    # service bus subscriptions
+    SB_SUBSCRIPTION_NAME_LISTED_BUILDING = azurerm_servicebus_subscription.odw_listed_building_sub.name
   }
 }
 
