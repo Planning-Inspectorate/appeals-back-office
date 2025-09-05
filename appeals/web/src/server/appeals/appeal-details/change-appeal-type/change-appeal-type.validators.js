@@ -17,7 +17,7 @@ export const validateResubmitAppeal = createValidator(
 	body('appealResubmit')
 		.trim()
 		.notEmpty()
-		.withMessage('Select yes if the appellant should be asked to resubmit the appeal')
+		.withMessage('Select yes if the appellant needs to resubmit the appeal')
 );
 
 export const validateChangeAppealFinalDate = createValidator(
@@ -68,13 +68,4 @@ export const validateHorizonReference = createValidator(
 			return Promise.reject();
 		})
 		.withMessage('Enter a valid Horizon appeal reference')
-);
-
-export const validateCheckTransfer = createValidator(
-	body('confirm')
-		.notEmpty()
-		.withMessage('Confirmation must be provided')
-		.bail()
-		.equals('yes')
-		.withMessage('Something went wrong')
 );

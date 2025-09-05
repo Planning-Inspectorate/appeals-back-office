@@ -506,6 +506,68 @@ export const appealIngestionInputS78 = {
 	}
 };
 
+export const appealIngestionInputS78Written = {
+	...appealIngestionInput,
+	appealType: {
+		connect: {
+			key: 'W'
+		}
+	},
+	appellantCase: {
+		create: {
+			...appealIngestionInput.appellantCase.create,
+			appellantProcedurePreference: 'written',
+			appellantProcedurePreferenceDetails: 'Reason for preference',
+			appellantProcedurePreferenceDuration: 3,
+			appellantProcedurePreferenceWitnessCount: 2,
+			agriculturalHolding: false,
+			caseworkReason: undefined,
+			developmentType: 'minor-dwellings',
+			informedTenantsAgriculturalHolding: null,
+			planningObligation: false,
+			statusPlanningObligation: null,
+			siteViewableFromRoad: undefined,
+			siteGridReferenceEasting: undefined,
+			siteGridReferenceNorthing: undefined,
+			numberOfResidencesNetChange: undefined,
+			otherTenantsAgriculturalHolding: null,
+			tenantAgriculturalHolding: null,
+			typeOfPlanningApplication: undefined
+		}
+	}
+};
+
+export const appealIngestionInputS78AssignedTeamId = {
+	...appealIngestionInput,
+	appealType: {
+		connect: {
+			key: 'W'
+		}
+	},
+	appellantCase: {
+		create: {
+			...appealIngestionInput.appellantCase.create,
+			appellantProcedurePreference: 'inquiry',
+			appellantProcedurePreferenceDetails: 'Reason for preference',
+			appellantProcedurePreferenceDuration: 3,
+			appellantProcedurePreferenceWitnessCount: 2,
+			agriculturalHolding: false,
+			caseworkReason: undefined,
+			developmentType: 'minor-dwellings',
+			informedTenantsAgriculturalHolding: null,
+			planningObligation: false,
+			statusPlanningObligation: null,
+			siteViewableFromRoad: undefined,
+			siteGridReferenceEasting: undefined,
+			siteGridReferenceNorthing: undefined,
+			numberOfResidencesNetChange: undefined,
+			otherTenantsAgriculturalHolding: null,
+			tenantAgriculturalHolding: null,
+			typeOfPlanningApplication: undefined
+		}
+	}
+};
+
 export const appealIngestionInputS20 = {
 	...appealIngestionInput,
 	appealType: {
@@ -517,6 +579,33 @@ export const appealIngestionInputS20 = {
 		create: {
 			...appealIngestionInput.appellantCase.create,
 			appellantProcedurePreference: 'inquiry',
+			appellantProcedurePreferenceDetails: 'Reason for preference',
+			appellantProcedurePreferenceDuration: 3,
+			appellantProcedurePreferenceWitnessCount: 2,
+			caseworkReason: undefined,
+			developmentType: 'minor-dwellings',
+			planningObligation: false,
+			statusPlanningObligation: null,
+			siteViewableFromRoad: undefined,
+			siteGridReferenceEasting: undefined,
+			siteGridReferenceNorthing: undefined,
+			numberOfResidencesNetChange: undefined,
+			typeOfPlanningApplication: undefined
+		}
+	}
+};
+
+export const appealIngestionInputS20Written = {
+	...appealIngestionInput,
+	appealType: {
+		connect: {
+			key: 'Y'
+		}
+	},
+	appellantCase: {
+		create: {
+			...appealIngestionInput.appellantCase.create,
+			appellantProcedurePreference: 'written',
 			appellantProcedurePreferenceDetails: 'Reason for preference',
 			appellantProcedurePreferenceDuration: 3,
 			appellantProcedurePreferenceWitnessCount: 2,

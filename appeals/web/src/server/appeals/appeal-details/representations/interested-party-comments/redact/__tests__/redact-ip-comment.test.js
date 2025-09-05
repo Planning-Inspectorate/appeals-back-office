@@ -45,6 +45,31 @@ describe('redact', () => {
 		expect(innerHTML).toContain('Awaiting review comment 47');
 	});
 
+	it('should render the correct back link', async () => {
+		const response = await request.get(`${baseUrl}/2/interested-party-comments/5/redact`);
+
+		expect(response.statusCode).toBe(200);
+
+		const page = parseHtml(response.text, { rootElement: 'body' });
+		expect(page.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+			`${baseUrl}/2/interested-party-comments/3670/review`
+		);
+	});
+
+	it('should render the correct back link when editing', async () => {
+		const response = await request.get(
+			`${baseUrl}/2/interested-party-comments/5/redact` +
+				`?editEntrypoint=${baseUrl}/2/interested-party-comments/5/redact`
+		);
+
+		expect(response.statusCode).toBe(200);
+
+		const page = parseHtml(response.text, { rootElement: 'body' });
+		expect(page.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+			`${baseUrl}/2/interested-party-comments/3670/redact/confirm`
+		);
+	});
+
 	it('renders the confirm redaction page', async () => {
 		const response = await request.get(`${baseUrl}/2/interested-party-comments/5/redact/confirm`);
 

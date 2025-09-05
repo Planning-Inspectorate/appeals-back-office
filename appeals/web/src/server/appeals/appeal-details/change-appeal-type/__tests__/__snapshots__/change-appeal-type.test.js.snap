@@ -12,7 +12,7 @@ exports[`change-appeal-type GET /change-appeal-type/add-horizon-reference should
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> What is the reference of the new appeal on Horizon?</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> Horizon reference</label></h1>
                             <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
                             name="horizon-reference" type="text">
                         </div>
@@ -426,49 +426,22 @@ exports[`change-appeal-type GET /change-appeal-type/check-transfer should render
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the transferred appeal</h1>
+            <h1 class="govuk-heading-l">Check details and mark case as transferred</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Horizon reference</dt>
                     <dd class="govuk-summary-list__value">123</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Shell</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/add-horizon-reference">Change<span class="govuk-visually-hidden"> level</span></a>
+                    </dd>
                 </div>
             </dl>
-            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You must email the appellant
-                    to let them know the appeal type has been changed.</strong>
-            </div>
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="post" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                                <div class="govuk-checkboxes__item">
-                                    <input class="govuk-checkboxes__input" id="confirm" name="confirm" type="checkbox"
-                                    value="yes">
-                                    <label class="govuk-label govuk-checkboxes__label" for="confirm">I have emailed the appellant about their change of appeal type</label>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Mark case as transferred</button>
                     </form>
                 </div>
             </div>
@@ -480,7 +453,7 @@ exports[`change-appeal-type GET /change-appeal-type/check-transfer should render
 exports[`change-appeal-type GET /change-appeal-type/resubmit should render the resubmit page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -544,7 +517,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> What is the reference of the new appeal on Horizon?</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> Horizon reference</label></h1>
                             <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
                             name="horizon-reference" type="text">
                         </div>
@@ -585,7 +558,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
                         <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> What is the reference of the new appeal on Horizon?</label></h1>
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> Horizon reference</label></h1>
                             <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
                             name="horizon-reference" type="text">
                         </div>
@@ -682,76 +655,6 @@ exports[`change-appeal-type POST /change-appeal-type/appeal-type should re-rende
 </main>"
 `;
 
-exports[`change-appeal-type POST /change-appeal-type/check-transfer should re-render the check transfer page with an error message if the required data is present in the session, but the confirmation checkbox was not checked 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#confirm">Confirmation must be provided</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Details of the transferred appeal</h1>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <dl class="govuk-summary-list">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal reference</dt>
-                    <dd class="govuk-summary-list__value">123</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
-                    <dd class="govuk-summary-list__value"></dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
-                    <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority (LPA)</dt>
-                    <dd                     class="govuk-summary-list__value">Wiltshire Council</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appellant name</dt>
-                    <dd class="govuk-summary-list__value">Roger Simmons</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agent name</dt>
-                    <dd class="govuk-summary-list__value">Fiona Shell</dd>
-                </div>
-            </dl>
-            <div class="govuk-warning-text"><span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong                 class="govuk-warning-text__text"><span class="govuk-visually-hidden">Warning</span> You must email the appellant
-                    to let them know the appeal type has been changed.</strong>
-            </div>
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="post" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
-                                <div class="govuk-checkboxes__item">
-                                    <input class="govuk-checkboxes__input" id="confirm" name="confirm" type="checkbox"
-                                    value="yes">
-                                    <label class="govuk-label govuk-checkboxes__label" for="confirm">I have emailed the appellant about their change of appeal type</label>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Confirm</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`change-appeal-type POST /change-appeal-type/check-transfer should render a 500 error page if the required data is not present in the session 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -778,7 +681,7 @@ exports[`change-appeal-type POST /change-appeal-type/resubmit should re-render t
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#appeal-resubmit">Select yes if the appellant should be asked to resubmit the appeal</a>
+                            <li><a href="#appeal-resubmit">Select yes if the appellant needs to resubmit the appeal</a>
                             </li>
                         </ul>
                     </div>
@@ -787,7 +690,7 @@ exports[`change-appeal-type POST /change-appeal-type/resubmit should re-render t
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -801,7 +704,7 @@ exports[`change-appeal-type POST /change-appeal-type/resubmit should re-render t
                                     <h1 class="govuk-fieldset__heading"> Does the appellant need to resubmit the appeal?</h1>
                                 </legend>
                                 <p id="appeal-resubmit-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Select yes if the appellant
-                                    should be asked to resubmit the appeal</p>
+                                    needs to resubmit the appeal</p>
                                 <div class="govuk-radios" data-module="govuk-radios">
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-resubmit" name="appealResubmit"

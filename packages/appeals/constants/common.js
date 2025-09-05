@@ -15,7 +15,8 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	CAS_ADVERT: 'featureFlagCasAdvert',
 	LINKED_APPEALS: 'featureFlagLinkedAppeals',
 	CHANGE_PROCEDURE_TYPE: 'featureFlagChangeProcedureType',
-	ADVERTISEMENT: 'featureFlagAdvertisement'
+	ADVERTISEMENT: 'featureFlagAdvertisement',
+	CHANGE_APPEAL_TYPE: 'featureFlagChangeAppealType'
 });
 
 export const APPEAL_TYPE = Object.freeze({
@@ -97,6 +98,10 @@ export const COMMENT_STATUS = Object.freeze({
 	INVALID: 'invalid',
 	VALID_REQUIRES_REDACTION: 'valid_requires_redaction',
 	INCOMPLETE: 'incomplete'
+});
+
+export const TEAM_NAME_MAP = Object.freeze({
+	MAJOR_CASEWORK: 'Major Casework Officer'
 });
 
 export const REVERT_BUTTON_TEXT = Object.freeze({

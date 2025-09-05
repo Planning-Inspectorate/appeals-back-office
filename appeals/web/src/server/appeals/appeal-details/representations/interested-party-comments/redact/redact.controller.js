@@ -4,14 +4,39 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { redactAndAcceptComment } from './redact.service.js';
 import { render } from '#appeals/appeal-details/representations/common/render.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
+import logger from '#lib/logger.js';
+import { isAtEditEntrypoint } from '#lib/edit-utilities.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
-export const renderRedactInterestedPartyComment = render(
-	redactInterestedPartyCommentPage,
-	'patterns/display-page.pattern.njk'
-);
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderRedactInterestedPartyComment = (request, response) => {
+	const { errors, currentRepresentation, currentAppeal, session } = request;
+
+	if (!currentRepresentation || !currentAppeal) {
+		logger.warn('No representation or appeal found in session');
+		return response.status(404).render('app/404.njk');
+	}
+
+	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/interested-party-comments/${currentRepresentation.id}`;
+	const backUrl = `${baseUrl}/${isAtEditEntrypoint(request) ? 'redact/confirm' : 'review'}`;
+
+	const pageContent = redactInterestedPartyCommentPage(
+		currentAppeal,
+		currentRepresentation,
+		backUrl,
+		session
+	);
+
+	return response.status(200).render('patterns/display-page.pattern.njk', {
+		errors,
+		pageContent
+	});
+};
 
 export const renderConfirmRedactInterestedPartyComment = render(
 	confirmRedactInterestedPartyCommentPage,

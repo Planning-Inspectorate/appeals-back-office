@@ -1,8 +1,4 @@
-import logger from '#lib/logger.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { appealSiteToAddressString } from '#lib/address-formatter.js';
-import { nameToString } from '#lib/person-name-formatter.js';
-import { getAppealTypesFromId } from './change-appeal-type.service.js';
 import { dateInput } from '#lib/mappers/index.js';
 import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -188,7 +184,7 @@ export function resubmitAppealPage(appealDetails, changeAppeal, errorMessage) {
 	const pageContent = {
 		title: 'Does the appellant need to resubmit the appeal?',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/appeal-type`,
-		preHeading: `Appeal ${shortAppealReference} - change appeal type`,
+		preHeading: `Appeal ${shortAppealReference} - update appeal type`,
 		pageComponents: [selectResubmitAppealComponent]
 	};
 
@@ -198,14 +194,15 @@ export function resubmitAppealPage(appealDetails, changeAppeal, errorMessage) {
 /**
  * @param {Appeal} appealDetails
  * @param {string|undefined} backUrl
+ * @param {string|undefined} horizonReference
  * @returns {PageContent}
  */
-export function addHorizonReferencePage(appealDetails, backUrl) {
+export function addHorizonReferencePage(appealDetails, backUrl, horizonReference) {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `What is the reference of the new appeal on Horizon? - ${shortAppealReference}`,
+		title: `Horizon reference - ${shortAppealReference}`,
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [
@@ -217,10 +214,11 @@ export function addHorizonReferencePage(appealDetails, backUrl) {
 					type: 'text',
 					classes: 'govuk-input govuk-input--width-10',
 					label: {
-						text: 'What is the reference of the new appeal on Horizon?',
+						text: 'Horizon reference',
 						isPageHeading: true,
 						classes: 'govuk-label--l'
-					}
+					},
+					value: horizonReference
 				}
 			}
 		]
@@ -230,24 +228,20 @@ export function addHorizonReferencePage(appealDetails, backUrl) {
 }
 
 /**
- * @param {import('got').Got} apiClient
  * @param {Appeal} appealDetails
  * @param {string} transferredAppealHorizonReference
  * @returns {Promise<PageContent>}
  */
-export async function checkTransferPage(
-	apiClient,
-	appealDetails,
-	transferredAppealHorizonReference
-) {
+export async function checkTransferPage(appealDetails, transferredAppealHorizonReference) {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+	const backLinkUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/add-horizon-reference`;
 
 	/** @type {PageContent} */
 	const pageContent = {
-		title: `Details of the transferred appeal - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/add-horizon-reference`,
+		title: `Check details and mark case as transferred`,
+		backLinkUrl,
 		preHeading: `Appeal ${shortAppealReference}`,
-		heading: 'Details of the transferred appeal',
+		heading: 'Check details and mark case as transferred',
 		pageComponents: [
 			{
 				type: 'summary-list',
@@ -255,121 +249,32 @@ export async function checkTransferPage(
 					rows: [
 						{
 							key: {
-								text: 'Appeal reference'
+								text: 'Horizon reference'
 							},
 							value: {
 								text: transferredAppealHorizonReference || ''
-							}
-						},
-						{
-							key: {
-								text: 'Appeal type'
 							},
-							value: {
-								text: await mapAppealResubmitTypeIdToAppealType(apiClient, appealDetails)
+							actions: {
+								items: [
+									{
+										href: backLinkUrl,
+										text: 'Change',
+										visuallyHiddenText: 'level'
+									}
+								]
 							}
-						},
-						{
-							key: {
-								text: 'Site address'
-							},
-							value: {
-								text: appealSiteToAddressString(appealDetails.appealSite)
-							}
-						},
-						{
-							key: {
-								text: 'Local planning authority (LPA)'
-							},
-							value: {
-								text: appealDetails.localPlanningDepartment
-							}
-						},
-						{
-							key: {
-								text: 'Appellant name'
-							},
-							value: {
-								text: nameToString({
-									firstName: appealDetails.appellant?.firstName || '',
-									lastName: appealDetails.appellant?.lastName || ''
-								})
-							}
-						},
-						{
-							key: {
-								text: 'Agent name'
-							},
-							value: {
-								text: nameToString({
-									firstName: appealDetails.agent?.firstName || '',
-									lastName: appealDetails.agent?.lastName || ''
-								})
-							}
-						}
-					]
-				}
-			},
-			{
-				type: 'warning-text',
-				parameters: {
-					text: 'You must email the appellant to let them know the appeal type has been changed.'
-				}
-			},
-			{
-				type: 'checkboxes',
-				parameters: {
-					name: 'confirm',
-					idPrefix: 'confirm',
-					classes: 'govuk-checkboxes--small',
-					items: [
-						{
-							text: 'I have emailed the appellant about their change of appeal type',
-							value: 'yes',
-							checked: false
 						}
 					]
 				}
 			}
-		]
+		],
+		submitButtonProperties: {
+			text: 'Mark case as transferred',
+			type: 'submit'
+		}
 	};
 
 	return pageContent;
-}
-
-/**
- * @param {import('got').Got} apiClient
- * @param {Appeal} appealDetails
- * @returns {Promise<string>}
- */
-async function mapAppealResubmitTypeIdToAppealType(apiClient, appealDetails) {
-	if (!('resubmitTypeId' in appealDetails)) {
-		return '';
-	}
-
-	try {
-		const appealTypes = await getAppealTypesFromId(apiClient, appealDetails.appealId);
-		const appealType = appealTypes.find(
-			(appealType) => appealType.id === appealDetails.resubmitTypeId
-		);
-
-		if (appealType) {
-			return mapAppealTypeToDisplayText(appealType);
-		}
-
-		return '';
-	} catch (error) {
-		logger.error(error);
-		return '';
-	}
-}
-
-/**
- * @param {AppealType} appealType
- * @returns
- */
-function mapAppealTypeToDisplayText(appealType) {
-	return `(${appealType.key}) ${appealType.type}`;
 }
 
 /**

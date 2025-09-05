@@ -48,7 +48,10 @@ const { value, error } = schema.validate({
 		featureFlagNetResidence:
 			environment.FEATURE_FLAG_NET_RESIDENCE && environment.FEATURE_FLAG_NET_RESIDENCE === 'true',
 		featureFlagAdvertisement:
-			environment.FEATURE_FLAG_ADVERTISEMENT && environment.FEATURE_FLAG_ADVERTISEMENT === 'true'
+			environment.FEATURE_FLAG_ADVERTISEMENT && environment.FEATURE_FLAG_ADVERTISEMENT === 'true',
+		featureFlagChangeAppealType:
+			environment.FEATURE_FLAG_CHANGE_APPEAL_TYPE &&
+			environment.FEATURE_FLAG_CHANGE_APPEAL_TYPE === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:

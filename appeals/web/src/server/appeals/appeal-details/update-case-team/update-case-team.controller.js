@@ -35,8 +35,7 @@ const renderSelectTeam = async (request, response) => {
 	const teamList = await getTeamList(request.apiClient);
 	teamList.push({
 		id: 0,
-		name: 'Unassign team',
-		email: 'This will remove the current case team from the appeal'
+		name: 'Unassign team'
 	});
 	request.session.teamList = teamList;
 

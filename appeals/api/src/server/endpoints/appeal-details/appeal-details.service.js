@@ -162,7 +162,7 @@ const loadAppealTypes = async () => {
 	const cacheKey = 'appealTypesCache';
 	const value = getCache(cacheKey);
 
-	if (value !== null) {
+	if (value !== null && value !== undefined) {
 		return value;
 	}
 
