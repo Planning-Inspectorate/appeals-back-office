@@ -50,16 +50,47 @@ exports[`appellant-case GET /appellant-case notification banners should render a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
-                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
+                    </dd>
                 </div>
             </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> Before you start</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -161,15 +192,6 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
-                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
-                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
@@ -189,18 +211,6 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Are there other appeals linked to your development? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
-                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Application details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter from the local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
@@ -216,48 +226,32 @@ exports[`appellant-case GET /appellant-case notification banners should render a
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 4. Appeal details</h2>
-                </div>
-                <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list" id="appeal-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <div class="govuk-summary-card">
-                <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 5. Upload documents</h2>
+                    <h2 class="govuk-summary-card__title"> 4. Upload documents</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="uploaded-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (5. Upload documents)</span></a>
+                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (5. Upload documents)</span></a>
+                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
-                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (5. Upload documents)</span></a>
+                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application for an award of appeal costs</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (5. Upload documents)</span></a>
+                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -334,16 +328,47 @@ exports[`appellant-case GET /appellant-case notification banners should render a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
-                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
+                    </dd>
                 </div>
             </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> Before you start</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -445,18 +470,6 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
-                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
-                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/lpa-reference/change"
-                                    data-cy="change-application-reference">Change<span class="govuk-visually-hidden"> What is the application reference number? (3. Application details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
@@ -476,18 +489,6 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Are there other appeals linked to your development? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
-                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Application details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter from the local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
@@ -503,48 +504,32 @@ exports[`appellant-case GET /appellant-case notification banners should render a
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 4. Appeal details</h2>
-                </div>
-                <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list" id="appeal-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <div class="govuk-summary-card">
-                <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 5. Upload documents</h2>
+                    <h2 class="govuk-summary-card__title"> 4. Upload documents</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="uploaded-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (5. Upload documents)</span></a>
+                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (5. Upload documents)</span></a>
+                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
-                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (5. Upload documents)</span></a>
+                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application for an award of appeal costs</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (5. Upload documents)</span></a>
+                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -660,16 +645,47 @@ exports[`appellant-case GET /appellant-case notification banners should render a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
-                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
+                    </dd>
                 </div>
             </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> Before you start</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -771,15 +787,6 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
-                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
-                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
@@ -799,18 +806,6 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Are there other appeals linked to your development? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
-                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Application details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter from the local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
@@ -826,48 +821,32 @@ exports[`appellant-case GET /appellant-case notification banners should render a
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 4. Appeal details</h2>
-                </div>
-                <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list" id="appeal-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <div class="govuk-summary-card">
-                <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 5. Upload documents</h2>
+                    <h2 class="govuk-summary-card__title"> 4. Upload documents</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="uploaded-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (5. Upload documents)</span></a>
+                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (5. Upload documents)</span></a>
+                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
-                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (5. Upload documents)</span></a>
+                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application for an award of appeal costs</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (5. Upload documents)</span></a>
+                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -957,16 +936,47 @@ exports[`appellant-case GET /appellant-case notification banners should render a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
-                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
+                    </dd>
                 </div>
             </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> Before you start</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1068,15 +1078,6 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
-                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
-                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
@@ -1096,18 +1097,6 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Are there other appeals linked to your development? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
-                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Application details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter from the local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
@@ -1123,48 +1112,32 @@ exports[`appellant-case GET /appellant-case notification banners should render a
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 4. Appeal details</h2>
-                </div>
-                <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list" id="appeal-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <div class="govuk-summary-card">
-                <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 5. Upload documents</h2>
+                    <h2 class="govuk-summary-card__title"> 4. Upload documents</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="uploaded-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (5. Upload documents)</span></a>
+                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (5. Upload documents)</span></a>
+                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
-                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (5. Upload documents)</span></a>
+                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application for an award of appeal costs</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (5. Upload documents)</span></a>
+                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -1325,16 +1298,47 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
-                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
+                    </dd>
                 </div>
             </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> Before you start</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1436,15 +1440,6 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
-                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
-                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-date/change"
@@ -1464,18 +1459,6 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Are there other appeals linked to your development? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-outcome/change"
-                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Application details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter from the local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
@@ -1491,48 +1474,32 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 4. Appeal details</h2>
-                </div>
-                <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list" id="appeal-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <div class="govuk-summary-card">
-                <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 5. Upload documents</h2>
+                    <h2 class="govuk-summary-card__title"> 4. Upload documents</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="uploaded-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (5. Upload documents)</span></a>
+                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (5. Upload documents)</span></a>
+                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
-                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (5. Upload documents)</span></a>
+                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application for an award of appeal costs</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (5. Upload documents)</span></a>
+                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -1621,14 +1588,11 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
-                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
+                    </dd>
                 </div>
             </dl>
         </div>
@@ -1780,7 +1744,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="appeal-summary">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Displaying an advertisement</dd>
+                            <dd                             class="govuk-summary-list__value"></dd>
                         </div>
                     </dl>
                 </div>
@@ -1836,14 +1800,11 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
-                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
+                    </dd>
                 </div>
             </dl>
         </div>
@@ -2074,16 +2035,47 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
-                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
+                    </dd>
                 </div>
             </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> Before you start</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Full planning</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2200,15 +2192,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
-                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
-                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-date/change"
@@ -2228,63 +2211,11 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Are there other appeals linked to your development? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-outcome/change"
-                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Application details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development type</dt>
                             <dd class="govuk-summary-list__value">Not provided</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/application-development-type/change"
                                 data-cy="change-development-type">Change<span class="govuk-visually-hidden"> Development type (3. Application details)</span></a>
                             </dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <div class="govuk-summary-card">
-                <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 4. Appeal details</h2>
-                </div>
-                <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list" id="appeal-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Full planning</dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How would you prefer us to decide your appeal?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/change"
-                                    data-cy="change-procedure-preference">Change<span class="govuk-visually-hidden"> How would you prefer us to decide your appeal? (4. Appeal details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why would you prefer this appeal procedure?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/details/change"
-                                    data-cy="change-procedure-preference-details">Change<span class="govuk-visually-hidden"> Why would you prefer this appeal procedure? (4. Appeal details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How many days would you expect the inquiry to last?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/duration/change"
-                                    data-cy="change-procedure-preference-duration">Change<span class="govuk-visually-hidden"> How many days would you expect the inquiry to last? (4. Appeal details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How many witnesses would you expect to give evidence at the inquiry?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/procedure-preference/inquiry/witnesses/change"
-                                    data-cy="change-inquiry-number-of-witnesses">Change<span class="govuk-visually-hidden"> How many witnesses would you expect to give evidence at the inquiry? (4. Appeal details)</span></a>
-                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -2418,16 +2349,47 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
-                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
+                    </dd>
                 </div>
             </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> Before you start</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2529,15 +2491,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
-                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
-                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
@@ -2557,18 +2510,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Are there other appeals linked to your development? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
-                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Application details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter from the local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
@@ -2584,48 +2525,32 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 4. Appeal details</h2>
-                </div>
-                <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list" id="appeal-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <div class="govuk-summary-card">
-                <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 5. Upload documents</h2>
+                    <h2 class="govuk-summary-card__title"> 4. Upload documents</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="uploaded-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (5. Upload documents)</span></a>
+                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (5. Upload documents)</span></a>
+                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
-                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (5. Upload documents)</span></a>
+                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application for an award of appeal costs</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (5. Upload documents)</span></a>
+                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                     </dl>
@@ -2675,16 +2600,47 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/change-appeal-details/local-planning-authority"
-                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
+                    </dd>
                 </div>
             </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> Before you start</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Listed building</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -2786,15 +2742,6 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
-                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
-                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/application-date/change"
@@ -2814,63 +2761,11 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Are there other appeals linked to your development? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/application-outcome/change"
-                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Application details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Development type</dt>
                             <dd class="govuk-summary-list__value">Not provided</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/application-development-type/change"
                                 data-cy="change-development-type">Change<span class="govuk-visually-hidden"> Development type (3. Application details)</span></a>
                             </dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <div class="govuk-summary-card">
-                <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 4. Appeal details</h2>
-                </div>
-                <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list" id="appeal-summary">
-                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Listed building</dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How would you prefer us to decide your appeal?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/procedure-preference/change"
-                                    data-cy="change-procedure-preference">Change<span class="govuk-visually-hidden"> How would you prefer us to decide your appeal? (4. Appeal details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Why would you prefer this appeal procedure?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/procedure-preference/details/change"
-                                    data-cy="change-procedure-preference-details">Change<span class="govuk-visually-hidden"> Why would you prefer this appeal procedure? (4. Appeal details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How many days would you expect the inquiry to last?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/procedure-preference/duration/change"
-                                    data-cy="change-procedure-preference-duration">Change<span class="govuk-visually-hidden"> How many days would you expect the inquiry to last? (4. Appeal details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> How many witnesses would you expect to give evidence at the inquiry?</dt>
-                            <dd                             class="govuk-summary-list__value">Not answered</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/procedure-preference/inquiry/witnesses/change"
-                                    data-cy="change-inquiry-number-of-witnesses">Change<span class="govuk-visually-hidden"> How many witnesses would you expect to give evidence at the inquiry? (4. Appeal details)</span></a>
-                                </dd>
                         </div>
                     </dl>
                 </div>
@@ -5194,16 +5089,47 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
-                </div>
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
-                    <dd                     class="govuk-summary-list__value">Worthing Borough Council</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
-                            data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against?</span></a>
-                        </dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
+                        data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
+                    </dd>
                 </div>
             </dl>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-summary-card">
+                <div class="govuk-summary-card__title-wrapper">
+                    <h2 class="govuk-summary-card__title"> Before you start</h2>
+                </div>
+                <div class="govuk-summary-card__content">
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Local planning authority</dt>
+                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
+                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (Before you start)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
+                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Are you claiming costs as part of your appeal?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                        </div>
+                        <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
+                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -5305,15 +5231,6 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="application-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Which local planning authority (LPA) do you want to appeal against?</dt>
-                            <dd                             class="govuk-summary-list__value">Worthing Borough Council</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/change-appeal-details/local-planning-authority"
-                                    data-cy="change-local-planning-authority">Change<span class="govuk-visually-hidden"> Which local planning authority (LPA) do you want to appeal against? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the application reference number?</dt>
-                            <dd                             class="govuk-summary-list__value">48269/APP/2021/1482</dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What date did you submit your application?</dt>
                             <dd                             class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-date/change"
@@ -5333,18 +5250,6 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                                     data-cy="add-related-appeals">Add<span class="govuk-visually-hidden"> Are there other appeals linked to your development? (3. Application details)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Was your application granted or refused?</dt>
-                            <dd                             class="govuk-summary-list__value"></dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-outcome/change"
-                                    data-cy="change-application-decision">Change<span class="govuk-visually-hidden"> Was your application granted or refused? (3. Application details)</span></a>
-                                </dd>
-                        </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What’s the date on the decision letter from the local planning authority?​</dt>
-                            <dd                             class="govuk-summary-list__value">No data</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/application-decision-date/change"
-                                    data-cy="change-application-decision-date">Change<span class="govuk-visually-hidden"> What’s the date on the decision letter from the local planning authority?​ (3. Application details)</span></a>
-                                </dd>
-                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Decision letter from the local planning authority</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70458"
@@ -5360,48 +5265,32 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
         <div class="govuk-grid-column-full">
             <div class="govuk-summary-card">
                 <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 4. Appeal details</h2>
-                </div>
-                <div class="govuk-summary-card__content">
-                    <dl class="govuk-summary-list" id="appeal-summary">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What type of application is your appeal about?</dt>
-                            <dd                             class="govuk-summary-list__value">Householder planning</dd>
-                        </div>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <div class="govuk-summary-card">
-                <div class="govuk-summary-card__title-wrapper">
-                    <h2 class="govuk-summary-card__title"> 5. Upload documents</h2>
+                    <h2 class="govuk-summary-card__title"> 4. Upload documents</h2>
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="uploaded-documents">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application form</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70457"
-                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (5. Upload documents)</span></a>
+                                data-cy="add-application-form">Add<span class="govuk-visually-hidden"> Application form (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of development</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"
-                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (5. Upload documents)</span></a>
+                                    data-cy="add-agreement-to-change-description-evidence">Add<span class="govuk-visually-hidden"> Agreement to change the description of development (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal statement</dt>
                             <dd class="govuk-summary-list__value">No documents</dd>
                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70456"
-                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (5. Upload documents)</span></a>
+                                data-cy="add-appeal-statement">Add<span class="govuk-visually-hidden"> Appeal statement (4. Upload documents)</span></a>
                             </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Application for an award of appeal costs</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/1"
-                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (5. Upload documents)</span></a>
+                                    data-cy="add-costs-document">Add<span class="govuk-visually-hidden"> Application for an award of appeal costs (4. Upload documents)</span></a>
                                 </dd>
                         </div>
                     </dl>

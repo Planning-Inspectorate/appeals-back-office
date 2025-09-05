@@ -1,4 +1,3 @@
-import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { generateHASComponents } from './has.mapper.js';
 
 /**
@@ -93,13 +92,9 @@ export function generateS20Components(
 					}
 				},
 				rows: [
-					mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
-					mappedAppellantCaseData.applicationReference.display.summaryListItem,
 					mappedAppellantCaseData.applicationDate.display.summaryListItem,
 					mappedAppellantCaseData.developmentDescription.display.summaryListItem,
 					mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
-					mappedAppellantCaseData.applicationDecision.display.summaryListItem,
-					mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
 					mappedAppellantCaseData.developmentType.display.summaryListItem
 				]
 			}
@@ -133,7 +128,6 @@ export function generateS20Components(
 					}
 				},
 				rows: [
-					removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem),
 					mappedAppellantCaseData.procedurePreference.display.summaryListItem,
 					mappedAppellantCaseData.procedurePreferenceDetails.display.summaryListItem,
 					mappedAppellantCaseData.procedurePreferenceDuration.display.summaryListItem,

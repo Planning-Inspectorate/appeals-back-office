@@ -75,8 +75,6 @@ export async function appellantCasePage(
 		session
 	);
 
-	const lpaText = 'Local planning authority';
-
 	/**
 	 * @type {PageComponent}
 	 */
@@ -98,25 +96,10 @@ export async function appellantCasePage(
 								}
 							}
 					  ]
-					: []),
-				...(mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
-					? [
-							{
-								...mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
-								key: {
-									text: lpaText
-								}
-							}
-					  ]
 					: [])
 			]
 		}
 	};
-
-	appellantCaseSummary.parameters.rows = appellantCaseSummary.parameters.rows.map(
-		(/** @type {SummaryListRowProperties} */ row) =>
-			row.key.text === lpaText ? row : removeSummaryListActions(row)
-	);
 
 	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
 	const appealTypeSpecificComponents = generateCaseTypeSpecificComponents(

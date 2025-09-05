@@ -5,6 +5,7 @@ import {
 } from '#lib/mappers/data/appellant-case/common.js';
 import { isFolderInfo } from '#lib/ts-utilities.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
+import { convertFromBooleanToYesNo } from '#lib/boolean-formatter.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
@@ -25,6 +26,53 @@ export function generateHASComponents(
 	mappedAppellantCaseData,
 	userHasUpdateCasePermission
 ) {
+	const lpaText = 'Local planning authority';
+
+	/**
+	 * @type {PageComponent}
+	 */
+	const beforeYouStartSectionSummary = {
+		type: 'summary-list',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			card: {
+				title: {
+					text: 'Before you start'
+				}
+			},
+			rows: [
+				...(mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
+					? [
+							{
+								...mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
+								key: {
+									text: lpaText
+								}
+							}
+					  ]
+					: []),
+				removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem),
+				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
+				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
+				{
+					key: { text: 'Are you claiming costs as part of your appeal?' },
+					value: {
+						text: convertFromBooleanToYesNo(appellantCaseData.appellantCostsAppliedFor, 'No data')
+					}
+				},
+				mappedAppellantCaseData.applicationReference.display.summaryListItem
+			]
+		}
+	};
+
+	beforeYouStartSectionSummary.parameters.rows = beforeYouStartSectionSummary.parameters.rows.map(
+		(/** @type {SummaryListRowProperties} */ row) =>
+			row.key.text === lpaText ? row : removeSummaryListActions(row)
+	);
+
 	/**
 	 * @type {PageComponent}
 	 */
@@ -96,38 +144,10 @@ export function generateHASComponents(
 				}
 			},
 			rows: [
-				mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
-				mappedAppellantCaseData.applicationReference.display.summaryListItem,
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,
 				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
 				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
-				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
-				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
 				mappedAppellantCaseData.decisionLetter.display.summaryListItem
-			]
-		}
-	};
-
-	/**
-	 * @type {PageComponent}
-	 */
-	const appealSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			attributes: {
-				id: 'appeal-summary'
-			},
-			card: {
-				title: {
-					text: '4. Appeal details'
-				}
-			},
-			rows: [
-				removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem)
 			]
 		}
 	};
@@ -147,7 +167,7 @@ export function generateHASComponents(
 			},
 			card: {
 				title: {
-					text: '5. Upload documents'
+					text: '4. Upload documents'
 				}
 			},
 			rows: [
@@ -224,10 +244,10 @@ export function generateHASComponents(
 	};
 
 	return [
+		beforeYouStartSectionSummary,
 		appellantSummary,
 		appealSiteSummary,
 		applicationSummary,
-		appealSummary,
 		uploadedDocuments,
 		additionalDocumentsSummary
 	];
