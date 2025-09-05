@@ -19,6 +19,7 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { representationIncomplete } from '../../representations.service.js';
 import { mapRejectionReasonPayload } from '../../representations.mapper.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { newLine2LineBreak } from '#lib/string-utilities.js';
 
 const statusFormatMap = {
 	[COMMENT_STATUS.INCOMPLETE]: 'Statement incomplete'
@@ -173,7 +174,7 @@ export const renderCheckYourAnswers = async (
 						{
 							type: 'show-more',
 							parameters: {
-								text: currentRepresentation.originalRepresentation,
+								html: newLine2LineBreak(currentRepresentation.originalRepresentation),
 								labelText: 'Statement'
 							}
 						}

@@ -6,6 +6,7 @@ import { summaryList } from './components/summary-list.js';
 import { formatFinalCommentsTypeText } from '../view-and-review/view-and-review.mapper.js';
 import { getAttachmentList } from '#appeals/appeal-details/representations/common/document-attachment-list.js';
 import { findButtonText } from '#lib/revert-text.js';
+import { newLine2LineBreak } from '#lib/string-utilities.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
@@ -42,7 +43,7 @@ export const redactFinalCommentPage = (appealDetails, comment, finalCommentsType
 							{
 								type: 'show-more',
 								parameters: {
-									text: comment.originalRepresentation,
+									html: newLine2LineBreak(comment.originalRepresentation),
 									labelText: 'Read more'
 								}
 							}
