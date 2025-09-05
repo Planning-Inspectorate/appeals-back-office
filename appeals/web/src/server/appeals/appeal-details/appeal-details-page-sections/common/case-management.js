@@ -14,5 +14,9 @@ export const getCaseManagement = (mappedData) => ({
 			mappedData.appeal.caseHistory.display.summaryListItem,
 			mappedData.appeal.appealWithdrawal.display.summaryListItem
 		].filter(isDefined)
+	},
+	wrapperHtml: {
+		opening: '<h1 class="govuk-heading-l">Case management</h1>',
+		closing: ''
 	}
 });
