@@ -4754,7 +4754,7 @@ describe('appeal-details', () => {
 						expect(unprettifiedHTML).not.toContain('Site</span></h2>');
 					} else {
 						// eslint-disable-next-line jest/no-conditional-expect
-						expect(unprettifiedHTML).toContain('Site</span></h2>');
+						expect(unprettifiedHTML).toContain('Site</h1>');
 					}
 				})
 			);
@@ -4817,7 +4817,7 @@ describe('appeal-details', () => {
 						expect(unprettifiedHTML).not.toContain('Site</span></h2>');
 					} else {
 						// eslint-disable-next-line jest/no-conditional-expect
-						expect(unprettifiedHTML).toContain('Site</span></h2>');
+						expect(unprettifiedHTML).toContain('Site</h1>');
 					}
 				})
 			);
@@ -4862,7 +4862,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -4907,7 +4907,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -4970,7 +4970,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5073,7 +5073,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5153,7 +5153,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5207,7 +5207,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5248,7 +5248,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-hearing-section">');
-				expect(unprettifiedHTML).toContain('Hearing</span></h2>');
+				expect(unprettifiedHTML).toContain('Hearing</h1>');
 
 				const hearingSectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-hearing-section'
@@ -5552,7 +5552,7 @@ describe('appeal-details', () => {
 				const unprettifiedHTML = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
-				expect(unprettifiedHTML).toContain('Site</span></h2>');
+				expect(unprettifiedHTML).toContain('Site</h1>');
 			});
 
 			for (const procedureType of [APPEAL_CASE_PROCEDURE.WRITTEN, APPEAL_CASE_PROCEDURE.HEARING]) {
@@ -5616,7 +5616,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</span></h2>');
+				expect(unprettifiedHTML).toContain('Inquiry</h1>');
 
 				const inquirySectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-inquiry-section'
@@ -5671,7 +5671,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</span></h2>');
+				expect(unprettifiedHTML).toContain('Inquiry</h1>');
 
 				const inquirySectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-inquiry-section'
@@ -5763,7 +5763,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</span></h2>');
+				expect(unprettifiedHTML).toContain('Inquiry</h1>');
 
 				const inquirySectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-inquiry-section'
@@ -5829,7 +5829,7 @@ describe('appeal-details', () => {
 
 				expect(unprettifiedHTML).toContain('Case details</h1>');
 				expect(unprettifiedHTML).toContain('<div id="case-details-inquiry-section">');
-				expect(unprettifiedHTML).toContain('Inquiry</span></h2>');
+				expect(unprettifiedHTML).toContain('Inquiry</h1>');
 
 				const inquirySectionHtml = parseHtml(response.text, {
 					rootElement: '#case-details-inquiry-section'
