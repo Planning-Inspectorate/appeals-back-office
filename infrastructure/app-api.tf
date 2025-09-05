@@ -74,6 +74,7 @@ module "app_api" {
     FEATURE_FLAG_NET_RESIDENCE      = var.apps_config.featureFlags.featureFlagNetResidence
     FEATURE_FLAG_ADVERTISEMENT      = var.apps_config.featureFlags.featureFlagAdvertisement
     FEATURE_FLAG_CHANGE_APPEAL_TYPE = var.apps_config.featureFlags.featureFlagChangeAppealType
+    FEATURE_FLAG_HEARING_POST_MVP   = var.apps_config.featureFlags.featureFlagHearingPostMvp
   }
 
   providers = {
