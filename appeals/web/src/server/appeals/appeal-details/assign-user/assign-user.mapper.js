@@ -1,7 +1,7 @@
-import usersService from '../../appeal-users/users-service.js';
 import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { capitalize } from 'lodash-es';
+import usersService from '../../appeal-users/users-service.js';
 
 /** @typedef {import('../../../app/auth/auth-session.service.js').SessionWithAuth} SessionWithAuth */
 

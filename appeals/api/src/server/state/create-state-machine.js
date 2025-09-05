@@ -1,15 +1,15 @@
-import { createMachine } from 'xstate';
-import { APPEAL_CASE_STATUS, APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import {
-	APPEAL_TYPE_SHORTHAND_HAS,
 	APPEAL_TYPE_SHORTHAND_FPA,
+	APPEAL_TYPE_SHORTHAND_HAS,
 	STATE_TYPE_FINAL,
+	VALIDATION_OUTCOME_CANCEL,
 	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INCOMPLETE,
 	VALIDATION_OUTCOME_INVALID,
 	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
-import { VALIDATION_OUTCOME_CANCEL } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { createMachine } from 'xstate';
 
 /**
  * @typedef {import('@planning-inspectorate/data-model').APPEAL_CASE_TYPE} AppealType

@@ -1,8 +1,8 @@
-import { Router as createRouter } from 'express';
+import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import * as controller from './change-appeal-type.controller.js';
 import * as validators from './change-appeal-type.validators.js';
-import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 
 const router = createRouter({ mergeParams: true });
@@ -19,7 +19,7 @@ router
 
 router
 	.route('/mark-appeal-invalid')
-	.get(asyncHandler(controller.markAppealInvalid))
+	.get(asyncHandler(controller.getMarkAppealInvalid))
 	.post(asyncHandler(controller.postMarkAppealInvalid));
 
 router
@@ -42,6 +42,11 @@ router
 router
 	.route('/check-transfer')
 	.get(asyncHandler(controller.getCheckTransfer))
-	.post(validators.validateCheckTransfer, asyncHandler(controller.postCheckTransfer));
+	.post(asyncHandler(controller.postCheckTransfer));
+
+router
+	.route('/transfer-appeal')
+	.get(asyncHandler(controller.getTransferAppeal))
+	.post(asyncHandler(controller.postTransferAppeal));
 
 export default router;

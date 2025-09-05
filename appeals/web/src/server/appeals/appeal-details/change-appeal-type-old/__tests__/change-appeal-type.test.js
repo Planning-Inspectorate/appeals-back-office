@@ -1,8 +1,8 @@
+import { appealData, appealTypesData } from '#testing/app/fixtures/referencedata.js';
+import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
-import { appealData, appealTypesData } from '#testing/app/fixtures/referencedata.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -468,6 +468,7 @@ describe('change-appeal-type', () => {
 
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({
 					'horizon-reference': '123'
 				});
@@ -505,7 +506,9 @@ describe('change-appeal-type', () => {
 
 			expect(addHorizonReferencePostResponse.statusCode).toBe(302);
 
-			const response = await request.get(`${baseUrl}/1${changeAppealTypePath}${checkTransferPath}`);
+			const response = await request
+				.get(`${baseUrl}/1${changeAppealTypePath}${checkTransferPath}`)
+				.set('Appeal-Change-Type', 'true');
 
 			expect(response.statusCode).toBe(200);
 
@@ -549,6 +552,7 @@ describe('change-appeal-type', () => {
 
 			const addHorizonReferencePostResponse = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({
 					'horizon-reference': '123'
 				});
@@ -557,6 +561,7 @@ describe('change-appeal-type', () => {
 
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${checkTransferPath}`)
+				.set('Appeal-Change-Type', 'true')
 				.send({});
 
 			expect(response.statusCode).toBe(200);

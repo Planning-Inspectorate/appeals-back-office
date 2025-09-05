@@ -33,7 +33,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'V1260',
 		name: 'Bournemouth, Christchurch and Poole',
-		email: 'planning.bournemouth@bcpcouncil.gov.uk'
+		email: 'planning.appeals@bcpcouncil.gov.uk'
 	},
 	{
 		lpaCode: 'G5180',

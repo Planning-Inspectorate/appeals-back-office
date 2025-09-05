@@ -45,11 +45,11 @@ jest.doMock('express', () => ({
 }));
 
 export {
-	mockGet,
-	mockPost,
 	mockDelete,
-	mockUse,
+	mockGet,
+	mockNext,
+	mockPost,
 	mockReq,
 	mockRes, // Export the function that creates the mock
-	mockNext
+	mockUse
 };

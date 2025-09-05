@@ -1,6 +1,6 @@
+import { getChangedListedBuilding } from '#appeals/appeal-details/lpa-questionnaire/changed-listed-buildings/changed-listed-buildings.service.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { getChangedListedBuilding } from '#appeals/appeal-details/lpa-questionnaire/changed-listed-buildings/changed-listed-buildings.service.js';
 
 export const validateChangedListedBuilding = createValidator(
 	body('changedListedBuilding')

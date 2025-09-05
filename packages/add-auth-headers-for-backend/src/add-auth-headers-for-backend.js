@@ -1,5 +1,5 @@
-import { fetchApiKey } from './fetch-api-key.js';
 import { fetchFromCache, storeInCache } from './cache-handler.js';
+import { fetchApiKey } from './fetch-api-key.js';
 
 /**
  * @typedef {Object} ApiKeyParameters

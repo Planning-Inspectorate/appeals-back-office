@@ -1,6 +1,6 @@
 import {
-	dateISOStringToDisplayDate,
 	dateISOStringToDayMonthYearHourMinute,
+	dateISOStringToDisplayDate,
 	dateIsInThePast
 } from '#lib/dates.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';

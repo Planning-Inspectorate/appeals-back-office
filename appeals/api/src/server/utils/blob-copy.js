@@ -1,7 +1,7 @@
 import config from '#config/config.js';
-import { BlobStorageClient } from '@pins/blob-storage-client';
-import { BlobServiceClient } from '@azure/storage-blob';
 import logger from '#utils/logger.js';
+import { BlobServiceClient } from '@azure/storage-blob';
+import { BlobStorageClient } from '@pins/blob-storage-client';
 
 /**
  * Copies blobs from one location to another

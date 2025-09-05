@@ -1,9 +1,9 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import { patchInquiry, postInquiry } from './inquiry.controller.js';
-import { patchInquiryValidator, postInquiryValidator } from './inquiry.validator.js';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import { patchInquiry, postInquiry } from './inquiry.controller.js';
 import { checkInquiryExists } from './inquiry.service.js';
+import { patchInquiryValidator, postInquiryValidator } from './inquiry.validator.js';
 
 const router = createRouter();
 

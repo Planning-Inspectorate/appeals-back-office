@@ -3,16 +3,16 @@ import {
 	APPEAL_TYPE_SHORTHAND_HAS
 } from '@pins/appeals/constants/support.js';
 import has from './has.js';
-import s78 from './s78.js';
 import s20 from './s20.js';
+import s78 from './s78.js';
 
 import {
 	azureAdUserId,
-	validAppellantCaseOutcome,
-	incompleteAppellantCaseOutcome,
-	invalidAppellantCaseOutcome,
 	completeLPAQuestionnaireOutcome,
-	incompleteLPAQuestionnaireOutcome
+	incompleteAppellantCaseOutcome,
+	incompleteLPAQuestionnaireOutcome,
+	invalidAppellantCaseOutcome,
+	validAppellantCaseOutcome
 } from '#tests/shared/mocks.js';
 import {
 	APPEAL_CASE_STATUS,

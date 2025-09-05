@@ -2,16 +2,16 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
+import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
-import { happyPathHelper } from '../../support/happyPathHelper';
-import { urlPaths } from '../../support/urlPaths';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
-import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage';
 import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
 import { CYASection } from '../../page_objects/cyaSection.js';
 import { formatDateAndTime } from '../../support/utils/dateAndTime.js';
 import { formatObjectAsString } from '../../support/utils/format.js';
+import { happyPathHelper } from '../../support/happyPathHelper';
+import { urlPaths } from '../../support/urlPaths';
 
 const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();

@@ -1,12 +1,12 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
-import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
 import {
-	horizonGetCaseSuccessResponse,
 	horizonGetCaseNotFoundResponse,
-	horizonGetCaseNotPublishedResponse
+	horizonGetCaseNotPublishedResponse,
+	horizonGetCaseSuccessResponse
 } from '#tests/horizon/mocks.js';
 import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
+import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
+import { jest } from '@jest/globals';
 const { default: got } = await import('got');
 
 describe('Horizon gateway', () => {

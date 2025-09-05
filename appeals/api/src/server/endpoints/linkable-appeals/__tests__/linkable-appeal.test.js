@@ -1,30 +1,25 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
 import { householdAppeal } from '#tests/appeals/mocks.js';
+import {
+	horizonGetCaseNotFoundResponse,
+	horizonGetCaseSuccessResponse
+} from '#tests/horizon/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { parseHorizonGetCaseResponse } from '#utils/mapping/map-horizon.js';
-import {
-	horizonGetCaseSuccessResponse,
-	horizonGetCaseNotFoundResponse
-} from '#tests/horizon/mocks.js';
+import { jest } from '@jest/globals';
 
-jest.unstable_mockModule('#utils/feature-flags.js', () => ({
-	isFeatureActive: jest.fn(() => true),
-	FEATURE_FLAG_NAMES: {
-		LINKED_APPEALS: 'LINKED_APPEALS'
-	}
+jest.mock('#utils/feature-flags.js', () => ({
+	isFeatureActive: jest.fn().mockReturnValue(true)
 }));
 
 const { request } = await import('../../../app-test.js');
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
-const featureFlags = await import('#utils/feature-flags.js');
 
 describe('/appeals/linkable-appeal/:appealReference/:linkableType', () => {
 	describe('GET', () => {
-		beforeEach(() => {
+		afterEach(() => {
 			jest.resetAllMocks();
-			featureFlags.isFeatureActive.mockReturnValue(true);
 		});
 		test('gets a back office linkable appeal summary when the appeal exists in back office', async () => {
 			databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
@@ -110,7 +105,6 @@ describe('/appeals/linkable-appeal/:appealReference/:linkableType', () => {
 			expect(response.status).toEqual(409);
 		});
 		test('responds with a 432 if the linked cases cannot be linked as the case status is statements or beyond', async () => {
-			jest.spyOn(featureFlags, 'isFeatureActive').mockReturnValue(true);
 			databaseConnector.appeal.findUnique.mockResolvedValueOnce({
 				...householdAppeal,
 				appealStatus: [{ status: 'statements' }],

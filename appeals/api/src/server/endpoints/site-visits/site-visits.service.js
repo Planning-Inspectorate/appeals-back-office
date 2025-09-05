@@ -1,22 +1,22 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import siteVisitRepository from '#repositories/site-visit.repository.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_SITE_VISIT_ARRANGED,
-	DEFAULT_DATE_FORMAT_AUDIT_TRAIL,
 	AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+	DEFAULT_DATE_FORMAT_AUDIT_TRAIL,
 	ERROR_FAILED_TO_SAVE_DATA,
-	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL
+	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
+	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
 import formatDate, { formatTime } from '@pins/appeals/utils/date-formatter.js';
-import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
-import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 // eslint-disable-next-line no-unused-vars
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { EventType } from '@pins/event-client';
-import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
-import { formatInTimeZone } from 'date-fns-tz';
 import { notifySend } from '#notify/notify-send.js';
+import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
+import { EventType } from '@pins/event-client';
+import { formatInTimeZone } from 'date-fns-tz';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateSiteVisitData} UpdateSiteVisitData */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateSiteVisitData} CreateSiteVisitData */
@@ -319,7 +319,7 @@ const fetchSiteVisitScheduleTemplateIds = (visitTypeName) => {
 
 export {
 	checkSiteVisitExists,
-	updateSiteVisit,
 	fetchRescheduleTemplateIds,
-	fetchSiteVisitScheduleTemplateIds
+	fetchSiteVisitScheduleTemplateIds,
+	updateSiteVisit
 };

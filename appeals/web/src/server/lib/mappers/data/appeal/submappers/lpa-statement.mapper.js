@@ -1,9 +1,9 @@
-import { documentationFolderTableItem } from '#lib/mappers/index.js';
 import {
-	dateISOStringToDisplayDate,
 	dateISOStringToDayMonthYearHourMinute,
+	dateISOStringToDisplayDate,
 	dateIsInThePast
 } from '#lib/dates.js';
+import { documentationFolderTableItem } from '#lib/mappers/index.js';
 import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */

@@ -1,8 +1,8 @@
+import { appealShortReference } from '#lib/appeals-formatter.js';
 import logger from '#lib/logger.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { getLinkableAppealByReference } from './add.service.js';
-import { appealShortReference } from '#lib/appeals-formatter.js';
 
 export const validateAddLinkedAppealReference = createValidator(
 	body('appeal-reference')

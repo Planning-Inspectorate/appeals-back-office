@@ -1,10 +1,10 @@
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 
-import { dateIsValid, dateIsTodayOrInThePast } from '#lib/dates.js';
 import { folderPathToFolderNameText } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import { lowerCase } from 'lodash-es';
+import { dateIsTodayOrInThePast, dateIsValid } from '#lib/dates.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { lowerCase } from 'lodash-es';
 
 export const validateDocumentNameBodyFormat = createValidator(
 	body()

@@ -1,5 +1,5 @@
-import { textSummaryListItem } from '#lib/mappers/index.js';
 import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
+import { textSummaryListItem } from '#lib/mappers/index.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapSiteVisitDate = ({ appealDetails, userHasUpdateCasePermission }) =>

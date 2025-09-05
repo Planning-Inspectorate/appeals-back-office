@@ -1,5 +1,5 @@
-import { appealTypePage } from '../change-appeal-type.mapper.js';
 import { appealData } from '#testing/app/fixtures/referencedata.js';
+import { appealTypePage } from '../change-appeal-type.mapper.js';
 
 const appealTypes = [
 	{

@@ -1,8 +1,8 @@
 import { canLinkAppeals } from '#endpoints/link-appeals/link-appeals.service.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { getLinkableAppealSummaryByCaseReference } from './linkable-appeal.service.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
+import { getLinkableAppealSummaryByCaseReference } from './linkable-appeal.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

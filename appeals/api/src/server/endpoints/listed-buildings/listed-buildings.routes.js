@@ -1,6 +1,6 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import {
 	addListedBuilding,
 	removeListedBuilding,
@@ -8,8 +8,8 @@ import {
 } from './listed-buildings.controller.js';
 import {
 	createListedBuildingValidator,
-	updateListedBuildingValidator,
-	removeListedBuildingValidator
+	removeListedBuildingValidator,
+	updateListedBuildingValidator
 } from './listed-buildings.validators.js';
 const router = createRouter();
 

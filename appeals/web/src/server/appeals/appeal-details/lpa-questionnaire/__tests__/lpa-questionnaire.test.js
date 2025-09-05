@@ -1,44 +1,44 @@
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
-import { jest } from '@jest/globals';
-import {
-	lpaQuestionnaireDataNotValidated,
-	lpaQuestionnaireDataIncompleteOutcome,
-	lpaQuestionnaireDataCompleteOutcome,
-	lpaQuestionnaireIncompleteReasons,
-	documentFolderInfo,
-	additionalDocumentsFolderInfo,
-	documentFileInfo,
-	documentFileVersionsInfo,
-	documentFileVersionsInfoNotChecked,
-	documentFileVersionsInfoVirusFound,
-	documentFileVersionsInfoChecked,
-	documentFileMultipleVersionsInfoWithLatestAsLateEntry,
-	documentRedactionStatuses,
-	activeDirectoryUsersData,
-	appealData,
-	notCheckedDocumentFolderInfoDocuments,
-	lpaQuestionnaireData,
-	fileUploadInfo,
-	lpaNotificationMethodsData,
-	text300Characters,
-	text301Characters,
-	designatedSiteNames,
-	lpaDesignatedSites
-} from '#testing/app/fixtures/referencedata.js';
-import { createTestEnvironment } from '#testing/index.js';
-import { textInputCharacterLimits } from '../../../appeal.constants.js';
 import usersService from '#appeals/appeal-users/users-service.js';
-import { cloneDeep } from 'lodash-es';
-import { addDays } from 'date-fns';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
-	APPEAL_VIRUS_CHECK_STATUS,
-	APPEAL_CASE_STATUS,
+	activeDirectoryUsersData,
+	additionalDocumentsFolderInfo,
+	appealData,
+	designatedSiteNames,
+	documentFileInfo,
+	documentFileMultipleVersionsInfoWithLatestAsLateEntry,
+	documentFileVersionsInfo,
+	documentFileVersionsInfoChecked,
+	documentFileVersionsInfoNotChecked,
+	documentFileVersionsInfoVirusFound,
+	documentFolderInfo,
+	documentRedactionStatuses,
+	fileUploadInfo,
+	lpaDesignatedSites,
+	lpaNotificationMethodsData,
+	lpaQuestionnaireData,
+	lpaQuestionnaireDataCompleteOutcome,
+	lpaQuestionnaireDataIncompleteOutcome,
+	lpaQuestionnaireDataNotValidated,
+	lpaQuestionnaireIncompleteReasons,
+	notCheckedDocumentFolderInfoDocuments,
+	text300Characters,
+	text301Characters
+} from '#testing/app/fixtures/referencedata.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
+import { parseHtml } from '@pins/platform';
+import {
 	APPEAL_CASE_STAGE,
-	APPEAL_DOCUMENT_TYPE
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
+import { addDays } from 'date-fns';
+import { cloneDeep } from 'lodash-es';
+import nock from 'nock';
+import supertest from 'supertest';
+import { textInputCharacterLimits } from '../../../appeal.constants.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

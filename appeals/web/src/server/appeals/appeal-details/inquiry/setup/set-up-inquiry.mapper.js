@@ -1,8 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateInput } from '#lib/mappers/components/page-components/date.js';
+import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { timeInput } from '#lib/mappers/components/page-components/time.js';
 import { addressInputs } from '#lib/mappers/index.js';
-import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
 import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 
 import { addressToString } from '#lib/address-formatter.js';
@@ -11,11 +11,10 @@ import {
 	dateISOStringToDisplayTime12hr,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
-import { textSummaryListItem } from '#lib/mappers/index.js';
-import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
-import { capitalize, pick } from 'lodash-es';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { capitalize, pick } from 'lodash-es';
 
 /**
  * @typedef {import('../../appeal-details.types.js').WebAppeal} Appeal

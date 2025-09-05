@@ -1,14 +1,14 @@
 // @ts-nocheck
-import { parseHtml } from '@pins/platform';
-import supertest from 'supertest';
 import {
 	appealDataFullPlanning,
-	lpaQuestionnaireDataNotValidated,
+	designatedSiteNames,
 	lpaDesignatedSites,
-	designatedSiteNames
+	lpaQuestionnaireDataNotValidated
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
 import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

@@ -1,6 +1,6 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import { getAuditNotifications, getNotifications } from './notification.controller.js';
 
 const router = createRouter();

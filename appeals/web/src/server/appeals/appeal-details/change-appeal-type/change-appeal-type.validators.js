@@ -1,11 +1,11 @@
+import {
+	createDateInputDateBusinessDayValidator,
+	createDateInputDateInFutureValidator,
+	createDateInputDateValidityValidator,
+	createDateInputFieldsValidator
+} from '#lib/validators/date-input.validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import {
-	createDateInputFieldsValidator,
-	createDateInputDateValidityValidator,
-	createDateInputDateInFutureValidator,
-	createDateInputDateBusinessDayValidator
-} from '#lib/validators/date-input.validator.js';
 import { checkAppealReferenceExistsInHorizon } from './change-appeal-type.service.js';
 import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 
@@ -68,13 +68,4 @@ export const validateHorizonReference = createValidator(
 			return Promise.reject();
 		})
 		.withMessage('Enter a valid Horizon appeal reference')
-);
-
-export const validateCheckTransfer = createValidator(
-	body('confirm')
-		.notEmpty()
-		.withMessage('Confirmation must be provided')
-		.bail()
-		.equals('yes')
-		.withMessage('Something went wrong')
 );

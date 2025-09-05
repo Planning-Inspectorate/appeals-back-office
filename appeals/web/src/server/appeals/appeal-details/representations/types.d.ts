@@ -1,6 +1,4 @@
 import { Address } from '@pins/appeals';
-import { ReasonOption, NotValidReasonResponse } from '../appeal-details.types';
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 
 export type RepresentationStatus = 'awaiting_review' | 'valid' | 'invalid';
 export type RedactionStatus = 'redacted' | 'unredacted' | 'not-required';

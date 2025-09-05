@@ -1,13 +1,15 @@
-import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
-import hearingRepository from '#repositories/hearing.repository.js';
-import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
-import { notifySend } from '#notify/notify-send.js';
-import { ERROR_NO_RECIPIENT_EMAIL } from '@pins/appeals/constants/support.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/date-formatter.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { EventType } from '@pins/event-client';
+import { notifySend } from '#notify/notify-send.js';
+import hearingRepository from '#repositories/hearing.repository.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
+import {
+	ERROR_FAILED_TO_SAVE_DATA,
+	ERROR_NO_RECIPIENT_EMAIL,
+	ERROR_NOT_FOUND
+} from '@pins/appeals/constants/support.js';
+import { dateISOStringToDisplayDate, formatTime12h } from '@pins/appeals/utils/date-formatter.js';
+import { EventType } from '@pins/event-client';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Hearing} Hearing */
@@ -226,4 +228,4 @@ const deleteHearing = async (deleteHearingData, notifyClient, appeal, azureAdUse
 	}
 };
 
-export { checkHearingExists, createHearing, updateHearing, deleteHearing };
+export { checkHearingExists, createHearing, deleteHearing, updateHearing };

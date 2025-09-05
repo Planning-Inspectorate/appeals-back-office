@@ -1,27 +1,27 @@
 import {
+	addDocumentsRequest,
+	addDocumentVersionRequest,
+	auditTrailUserInfo,
+	blobInfo,
+	documentDetails,
+	documentVersionAuditEntry,
+	documentVersionDetails,
+	folder,
+	folderWithDocs
+} from '#tests/documents/mocks.js';
+import {
 	validAppellantCase,
 	validLpaQuestionnaire,
 	validRepresentationIp
 } from '#tests/integrations/mocks.js';
-import { createRepRequest, repUpdateRequest, repResponse } from '#tests/representations/mocks.js';
 import {
-	folder,
-	addDocumentsRequest,
-	addDocumentVersionRequest,
-	blobInfo,
-	documentVersionDetails,
-	documentDetails,
-	auditTrailUserInfo,
-	documentVersionAuditEntry,
-	folderWithDocs
-} from '#tests/documents/mocks.js';
-import {
-	linkedAppealRequest,
 	linkedAppealLegacyRequest,
-	relatedAppealRequest,
+	linkedAppealRequest,
 	relatedAppealLegacyRequest,
+	relatedAppealRequest,
 	unlinkAppealRequest
 } from '#tests/linked-appeals/mocks.js';
+import { createRepRequest, repResponse, repUpdateRequest } from '#tests/representations/mocks.js';
 import {
 	SITE_VISIT_TYPE_ACCESS_REQUIRED,
 	SITE_VISIT_TYPE_ACCOMPANIED,

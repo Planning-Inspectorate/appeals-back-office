@@ -1,25 +1,26 @@
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import { getRepresentations } from '#endpoints/representations/representations.service.js';
+import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
-import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import {
+	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
+	AUDIT_TRAIL_CORRECTION_NOTICE_ADDED,
+	AUDIT_TRAIL_DECISION_ISSUED,
+	AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
+	CASE_RELATIONSHIP_LINKED,
+	DECISION_TYPE_APPELLANT_COSTS,
+	DECISION_TYPE_LPA_COSTS
+} from '@pins/appeals/constants/support.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { loadEnvironment } from '@pins/platform';
 import {
 	APPEAL_CASE_DECISION_OUTCOME,
 	APPEAL_CASE_STATUS
 } from '@planning-inspectorate/data-model';
-import { notifySend } from '#notify/notify-send.js';
-import { loadEnvironment } from '@pins/platform';
-import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import {
-	AUDIT_TRAIL_DECISION_ISSUED,
-	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
-	AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
-	DECISION_TYPE_APPELLANT_COSTS,
-	DECISION_TYPE_LPA_COSTS
-} from '@pins/appeals/constants/support.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { AUDIT_TRAIL_CORRECTION_NOTICE_ADDED } from '@pins/appeals/constants/support.js';
-import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { getRepresentations } from '#endpoints/representations/representations.service.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} Decision */
@@ -60,7 +61,11 @@ export const publishDecision = async (
 			lpa_reference: appeal.applicationReference || '',
 			site_address: siteAddress,
 			front_office_url: environment.FRONT_OFFICE_URL || '',
-			decision_date: formatDate(new Date(documentDate || ''), false)
+			decision_date: formatDate(new Date(documentDate || ''), false),
+			child_appeals:
+				appeal.childAppeals
+					?.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+					.map((childAppeal) => childAppeal.childRef) || []
 		};
 		const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 		const lpaEmail = appeal.lpa?.email || '';

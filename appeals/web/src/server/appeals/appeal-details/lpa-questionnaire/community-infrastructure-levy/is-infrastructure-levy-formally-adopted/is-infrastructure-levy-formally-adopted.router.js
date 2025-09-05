@@ -1,6 +1,6 @@
+import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controllers from './is-infrastructure-levy-formally-adopted.controller.js';
-import { asyncHandler } from '@pins/express';
 import { validateChangeIsCommunityInfrastructureLevyFormallyAdopted } from './is-infrastructure-levy-formally-adopted.validator.js';
 
 const router = createRouter({ mergeParams: true });

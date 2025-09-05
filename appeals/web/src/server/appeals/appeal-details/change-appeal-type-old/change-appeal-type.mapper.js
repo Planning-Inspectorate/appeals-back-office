@@ -1,6 +1,6 @@
-import logger from '#lib/logger.js';
-import { appealShortReference } from '#lib/appeals-formatter.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import logger from '#lib/logger.js';
 import { nameToString } from '#lib/person-name-formatter.js';
 import { getAppealTypesFromId } from './change-appeal-type.service.js';
 

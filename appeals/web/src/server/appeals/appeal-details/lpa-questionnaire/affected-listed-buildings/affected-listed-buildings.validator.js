@@ -1,6 +1,6 @@
+import { getAffectedListedBuilding } from '#appeals/appeal-details/lpa-questionnaire/affected-listed-buildings/affected-listed-buildings.service.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { getAffectedListedBuilding } from '#appeals/appeal-details/lpa-questionnaire/affected-listed-buildings/affected-listed-buildings.service.js';
 
 export const validateAffectedListedBuilding = createValidator(
 	body('affectedListedBuilding')

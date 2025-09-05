@@ -10,8 +10,8 @@ import {
 } from './changed-listed-buildings.mapper.js';
 import {
 	addChangedListedBuilding,
-	removeChangedListedBuilding,
-	changeChangedListedBuilding
+	changeChangedListedBuilding,
+	removeChangedListedBuilding
 } from './changed-listed-buildings.service.js';
 
 /**

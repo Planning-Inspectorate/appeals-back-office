@@ -1,7 +1,15 @@
-import { postWithdrawalRequest } from './withdrawal.service.js';
+import { addressToString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { getEventType } from '@pins/appeals/utils/event-type.js';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE
+} from '@planning-inspectorate/data-model';
 import {
 	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm,
@@ -9,13 +17,8 @@ import {
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { addDocumentDetailsFormDataToFileUploadInfo } from '../../appeal-documents/appeal-documents.mapper.js';
 import { getDocumentRedactionStatuses } from '../../appeal-documents/appeal.documents.service.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { checkAndConfirmPage, manageWithdrawalRequestFolderPage } from './withdrawal.mapper.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
-import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { addressToString } from '#lib/address-formatter.js';
-import { getEventType } from '@pins/appeals/utils/event-type.js';
+import { postWithdrawalRequest } from './withdrawal.service.js';
 
 const UNREDACTED_REDACTION_STATUS_ID = '2';
 

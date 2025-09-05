@@ -1,3 +1,4 @@
+import { render } from '#appeals/appeal-details/representations/common/render.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import {
@@ -5,7 +6,6 @@ import {
 	viewInterestedPartyCommentPage
 } from './view-and-review.mapper.js';
 import { patchInterestedPartyCommentStatus } from './view-and-review.service.js';
-import { render } from '#appeals/appeal-details/representations/common/render.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */

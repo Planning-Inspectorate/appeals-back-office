@@ -1,12 +1,12 @@
 // @ts-nocheck
 import { mapLpaQuestionnaireDueDate } from '#lib/mappers/data/appeal/submappers/lpa-questionnaire-due-date.mapper.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common';
 import {
-	DOCUMENT_STATUS_RECEIVED,
-	DOCUMENT_STATUS_NOT_RECEIVED
+	DOCUMENT_STATUS_NOT_RECEIVED,
 	// @ts-ignore
+	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common';
 
 describe.each([APPEAL_TYPE.S78, APPEAL_TYPE.PLANNED_LISTED_BUILDING])(
 	'lpa-questionnaire-due-date.mapper - S78 and S20',

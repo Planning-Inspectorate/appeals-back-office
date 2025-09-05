@@ -1,7 +1,15 @@
-import { postWithdrawalRequest } from './withdrawal.service.js';
+import {
+	dateISOStringToDayMonthYearHourMinute,
+	dayMonthYearHourMinuteToISOString
+} from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE
+} from '@planning-inspectorate/data-model';
 import {
 	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm,
@@ -9,18 +17,13 @@ import {
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { addDocumentDetailsFormDataToFileUploadInfo } from '../../appeal-documents/appeal-documents.mapper.js';
 import { getDocumentRedactionStatuses } from '../../appeal-documents/appeal.documents.service.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
 	checkAndConfirmPage,
 	dateWithdrawalRequestPage,
 	manageWithdrawalRequestFolderPage,
 	withdrawalDocumentRedactionStatusPage
 } from './withdrawal.mapper.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import {
-	dayMonthYearHourMinuteToISOString,
-	dateISOStringToDayMonthYearHourMinute
-} from '#lib/dates.js';
+import { postWithdrawalRequest } from './withdrawal.service.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getViewWithdrawalDocumentFolder = async (request, response) => {

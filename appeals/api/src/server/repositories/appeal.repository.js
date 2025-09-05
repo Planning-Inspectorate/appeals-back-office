@@ -1,8 +1,8 @@
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { databaseConnector } from '#utils/database-connector.js';
-import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
+import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} InspectorDecision */

@@ -1,9 +1,5 @@
 // @ts-nocheck
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
-import { jest } from '@jest/globals';
-import { createTestEnvironment } from '#testing/index.js';
+import usersService from '#appeals/appeal-users/users-service.js';
 import {
 	activeDirectoryUsersData,
 	appealData,
@@ -12,7 +8,11 @@ import {
 	documentFolderInfo,
 	fileUploadInfo
 } from '#testing/app/fixtures/referencedata.js';
-import usersService from '#appeals/appeal-users/users-service.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
+import { parseHtml } from '@pins/platform';
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

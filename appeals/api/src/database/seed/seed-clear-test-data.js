@@ -1,5 +1,5 @@
-import { localPlanningDepartmentList } from './LPAs/training.js';
 import { databaseConnector } from '../../server/utils/database-connector.js';
+import { localPlanningDepartmentList } from './LPAs/training.js';
 
 /**
  * @typedef {import('../../server/utils/db-client/index.js').PrismaClient} DatabaseConnector

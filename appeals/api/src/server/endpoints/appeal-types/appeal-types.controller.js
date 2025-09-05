@@ -1,5 +1,5 @@
 import logger from '#utils/logger.js';
-import { ERROR_NOT_FOUND, ERROR_FAILED_TO_GET_DATA } from '@pins/appeals/constants/support.js';
+import { ERROR_FAILED_TO_GET_DATA, ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import { getAppealTypesReq } from './appeal-types.service.js';
 
 /**

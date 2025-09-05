@@ -1,16 +1,16 @@
 // @ts-nocheck
+import usersService from '#appeals/appeal-users/users-service.js';
+import {
+	activeDirectoryUsersData,
+	appealData,
+	siteVisitData
+} from '#testing/app/fixtures/referencedata.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
-import {
-	siteVisitData,
-	appealData,
-	activeDirectoryUsersData
-} from '#testing/app/fixtures/referencedata.js';
 import { getSiteVisitSuccessBannerTypeAndChangeType } from '../site-visit.mapper.js';
-import usersService from '#appeals/appeal-users/users-service.js';
-import { jest } from '@jest/globals';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal

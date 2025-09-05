@@ -1,9 +1,11 @@
 import featureFlags from '#common/feature-flags.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@planning-inspectorate/data-model';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_CASE_STATUS,
+	APPEAL_REPRESENTATION_STATUS
+} from '@planning-inspectorate/data-model';
 
 /**
  * @param {{appeal: MappedInstructions}} mappedData
@@ -15,6 +17,9 @@ export const getCaseOverview = (mappedData, appealDetails) => ({
 	parameters: {
 		rows: [
 			removeSummaryListActions(mappedData.appeal?.lpaReference?.display.summaryListItem),
+			displayHorizonReference(appealDetails)
+				? mappedData.appeal?.horizonReference?.display.summaryListItem
+				: undefined,
 			mappedData.appeal.appealType.display.summaryListItem,
 
 			displayProcedureChangeLink(appealDetails)
@@ -63,4 +68,16 @@ const displayProcedureChangeLink = (appealDetails) => {
 		return false;
 
 	return true;
+};
+
+/**
+ * @param {import('#lib/appeal-status.js').WebAppeal} appealDetails
+ * @returns {boolean}
+ */
+const displayHorizonReference = (appealDetails) => {
+	const featureActive = featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_APPEAL_TYPE);
+	const appealCaseStatusTransfer =
+		appealDetails.appealStatus === APPEAL_CASE_STATUS.AWAITING_TRANSFER ||
+		appealDetails.appealStatus === APPEAL_CASE_STATUS.TRANSFERRED;
+	return featureActive && appealCaseStatusTransfer;
 };

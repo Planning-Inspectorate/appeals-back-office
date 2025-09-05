@@ -1,8 +1,8 @@
-import { body } from 'express-validator';
 import {
 	ERROR_MUST_BE_ARRAY_OF_NUMBERS,
 	ERROR_MUST_CONTAIN_AT_LEAST_1_VALUE
 } from '@pins/appeals/constants/support.js';
+import { body } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 

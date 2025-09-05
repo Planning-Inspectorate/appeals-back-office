@@ -1,18 +1,18 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import {
-	AUDIT_TRAIL_SERVICE_USER_REMOVED,
-	AUDIT_TRAIL_SERVICE_USER_UPDATED,
-	AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED,
-	ERROR_NOT_FOUND
-} from '@pins/appeals/constants/support.js';
-import { SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import serviceUserRepository from '#repositories/service-user.repository.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { capitalizeFirstLetter } from '#utils/string-utils.js';
-import serviceUserRepository from '#repositories/service-user.repository.js';
-import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import {
+	AUDIT_TRAIL_SERVICE_USER_ADDRESS_UPDATED,
+	AUDIT_TRAIL_SERVICE_USER_REMOVED,
+	AUDIT_TRAIL_SERVICE_USER_UPDATED,
+	ERROR_NOT_FOUND
+} from '@pins/appeals/constants/support.js';
 import { EventType } from '@pins/event-client';
-import { upsertServiceUserAddress, formatServiceUser } from './service-user.service.js';
-import appealRepository from '#repositories/appeal.repository.js';
+import { SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
+import { formatServiceUser, upsertServiceUserAddress } from './service-user.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

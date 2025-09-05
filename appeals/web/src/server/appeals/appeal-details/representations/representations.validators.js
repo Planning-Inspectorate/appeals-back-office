@@ -1,8 +1,8 @@
-import { createValidator } from '@pins/express';
-import { body } from 'express-validator';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import { createValidator } from '@pins/express';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { body } from 'express-validator';
 
 /** @type {import('@pins/express').RequestHandler<{}>} */
 export function validateReadyToShare(request, response, next) {

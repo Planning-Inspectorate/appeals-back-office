@@ -1,16 +1,16 @@
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
+import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import logger from '#utils/logger.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_FAILED_TO_SAVE_DATA,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
-import logger from '#utils/logger.js';
-import { arrayOfStatusesContainsString } from '#utils/array-of-statuses-contains-string.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { formatSiteVisit } from './site-visits.formatter.js';
 import { createSiteVisit, updateSiteVisit } from './site-visits.service.js';
-import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import transitionState, { transitionLinkedChildAppealsState } from '#state/transition-state.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -163,4 +163,4 @@ const rearrangeSiteVisit = async (req, res) => {
 	}
 };
 
-export { postSiteVisit, getSiteVisitById, rearrangeSiteVisit };
+export { getSiteVisitById, postSiteVisit, rearrangeSiteVisit };

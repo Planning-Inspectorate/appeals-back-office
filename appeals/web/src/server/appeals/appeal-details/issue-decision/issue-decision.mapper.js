@@ -1,15 +1,25 @@
-import { appealShortReference } from '#lib/appeals-formatter.js';
-import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import {
-	preRenderPageComponents,
-	renderPageComponentsToHtml
-} from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
+	baseUrl,
+	buildIssueDecisionLogicData,
+	preHeadingText
+} from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import {
 	mapDocumentDownloadUrl,
 	mapUncommittedDocumentDownloadUrl
 } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import config from '#environment/config.js';
+import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
+import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
+import isLinkedAppeal, { isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import {
+	preRenderPageComponents,
+	renderPageComponentsToHtml
+} from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { toSentenceCase } from '#lib/string-utilities.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import {
 	CASE_OUTCOME_ALLOWED,
@@ -20,16 +30,6 @@ import {
 	DECISION_TYPE_LPA_COSTS,
 	LENGTH_300
 } from '@pins/appeals/constants/support.js';
-import {
-	baseUrl,
-	buildIssueDecisionLogicData,
-	preHeadingText
-} from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import config from '#environment/config.js';
-import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
-import isLinkedAppeal, { isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
-import { toSentenceCase } from '#lib/string-utilities.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal

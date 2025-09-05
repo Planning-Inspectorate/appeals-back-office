@@ -1,39 +1,39 @@
-import * as lpaQuestionnaireService from './lpa-questionnaire.service.js';
-import {
-	lpaQuestionnairePage,
-	checkAndConfirmPage,
-	mapWebValidationOutcomeToApiValidationOutcome,
-	getValidationOutcomeFromLpaQuestionnaire,
-	environmentServiceTeamReviewCasePage
-} from './lpa-questionnaire.mapper.js';
-import logger from '#lib/logger.js';
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
-import {
-	renderDocumentUpload,
-	renderDocumentDetails,
-	postDocumentUpload,
-	postDocumentDetails,
-	renderUploadDocumentsCheckAndConfirm,
-	postUploadDocumentsCheckAndConfirm,
-	postUploadDocumentVersionCheckAndConfirm,
-	renderManageFolder,
-	renderManageDocument,
-	renderDeleteDocument,
-	renderChangeDocumentDetails,
-	postChangeDocumentDetails,
-	postDeleteDocument,
-	renderChangeDocumentFileName,
-	postChangeDocumentFileName
-} from '../../appeal-documents/appeal-documents.controller.js';
+import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
 import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
+import logger from '#lib/logger.js';
+import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
+import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
-import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
-import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
-import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
-import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import {
+	postChangeDocumentDetails,
+	postChangeDocumentFileName,
+	postDeleteDocument,
+	postDocumentDetails,
+	postDocumentUpload,
+	postUploadDocumentsCheckAndConfirm,
+	postUploadDocumentVersionCheckAndConfirm,
+	renderChangeDocumentDetails,
+	renderChangeDocumentFileName,
+	renderDeleteDocument,
+	renderDocumentDetails,
+	renderDocumentUpload,
+	renderManageDocument,
+	renderManageFolder,
+	renderUploadDocumentsCheckAndConfirm
+} from '../../appeal-documents/appeal-documents.controller.js';
+import {
+	checkAndConfirmPage,
+	environmentServiceTeamReviewCasePage,
+	getValidationOutcomeFromLpaQuestionnaire,
+	lpaQuestionnairePage,
+	mapWebValidationOutcomeToApiValidationOutcome
+} from './lpa-questionnaire.mapper.js';
+import * as lpaQuestionnaireService from './lpa-questionnaire.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

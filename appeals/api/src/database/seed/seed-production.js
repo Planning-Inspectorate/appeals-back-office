@@ -1,10 +1,10 @@
 import { databaseConnector } from '../../server/utils/database-connector.js';
 import { seedStaticData } from './data-static.js';
-import { seedLPAs } from './seed-lpas.js';
 import { localPlanningDepartmentList } from './LPAs/prod.js';
-import { seedTeams } from './seed-teams.js';
-import { teamsToCreate, lpaTeamAssignments } from './teams/prod.js';
 import { mapLpasToTeams } from './map-lpa-and-teams.js';
+import { seedLPAs } from './seed-lpas.js';
+import { seedTeams } from './seed-teams.js';
+import { lpaTeamAssignments, teamsToCreate } from './teams/prod.js';
 
 /**
  * Seed the production database with the required static data

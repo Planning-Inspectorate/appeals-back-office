@@ -1,15 +1,15 @@
-import { Router as createRouter } from 'express';
+import { validateRepresentationsToPublish } from '#endpoints/representations/representations.middleware.js';
+import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { checkRepresentationExistsById } from '#middleware/check-representation-exists.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import * as controller from './representations.controller.js';
 import {
 	createRepresentationValidator,
 	getRepresentationRouteValidator,
 	getRepresentationUpdateValidator,
 	validateRejectionReasonsPayload
 } from './representations.validators.js';
-import * as controller from './representations.controller.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
-import { checkRepresentationExistsById } from '#middleware/check-representation-exists.js';
-import { validateRepresentationsToPublish } from '#endpoints/representations/representations.middleware.js';
 
 const router = createRouter();
 

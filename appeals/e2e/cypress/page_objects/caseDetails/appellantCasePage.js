@@ -1,8 +1,8 @@
 // @ts-nocheck
 
+import { Page } from '../basePage';
 import { CaseDetailsPage } from '../caseDetailsPage';
 import { ListCasesPage } from '../listCasesPage';
-import { Page } from '../basePage';
 
 const caseDetailsPage = new CaseDetailsPage();
 const listCasesPage = new ListCasesPage();

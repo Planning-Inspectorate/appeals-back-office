@@ -1,10 +1,10 @@
-import logger from '#lib/logger.js';
-import config from '#environment/config.js';
-import { appealShortReference } from './nunjucks-filters/appeals.js';
 import { mapDocumentInfoVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import config from '#environment/config.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
 import { SHOW_MORE_MAXIMUM_ROWS_BEFORE_HIDING } from '#lib/constants.js';
+import logger from '#lib/logger.js';
+import { appealSiteToMultilineAddressStringHtml } from './address-formatter.js';
+import { appealShortReference } from './nunjucks-filters/appeals.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Schema.Folder} Folder

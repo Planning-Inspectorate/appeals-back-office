@@ -1,13 +1,13 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
 import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 
-import { postReasons, redirectAndClearSession, renderReasons } from './incomplete.controller.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import {
 	validateRejectionReasonTextItems,
 	validateRejectReason
 } from '../../common/validators/reject.validators.js';
+import { postReasons, redirectAndClearSession, renderReasons } from './incomplete.controller.js';
 
 const router = createRouter({ mergeParams: true });
 

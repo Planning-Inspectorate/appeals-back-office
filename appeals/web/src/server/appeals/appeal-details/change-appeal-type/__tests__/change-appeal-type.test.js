@@ -1,10 +1,10 @@
+import { appealData, appealTypesData } from '#testing/app/fixtures/referencedata.js';
+import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
-import { appealData, appealTypesData } from '#testing/app/fixtures/referencedata.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);
@@ -452,9 +452,7 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'What is the reference of the new appeal on Horizon?</label></h1>'
-			);
+			expect(element.innerHTML).toContain('Horizon reference</label></h1>');
 
 			const unprettifiedElement = parseHtml(element.innerHTML, { skipPrettyPrint: true });
 
@@ -476,9 +474,7 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'What is the reference of the new appeal on Horizon?</label></h1>'
-			);
+			expect(element.innerHTML).toContain('Horizon reference</label></h1>');
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -505,9 +501,7 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain(
-				'What is the reference of the new appeal on Horizon?</label></h1>'
-			);
+			expect(element.innerHTML).toContain('Horizon reference</label></h1>');
 
 			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
 				rootElement: '.govuk-error-summary',
@@ -581,20 +575,14 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Details of the transferred appeal</h1>');
+			expect(element.innerHTML).toContain('Check details and mark case as transferred</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Appeal reference</dt><dd class="govuk-summary-list__value"> 123</dd>'
+				'<dt class="govuk-summary-list__key"> Horizon reference</dt><dd class="govuk-summary-list__value"> 123</dd>'
 			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'You must email the appellant to let them know the appeal type has been changed.</strong>'
-			);
-			expect(unprettifiedElement.innerHTML).toContain(
-				'name="confirm" type="checkbox" value="yes">'
-			);
-			expect(unprettifiedElement.innerHTML).toContain('Confirm</button>');
+			expect(unprettifiedElement.innerHTML).toContain('Mark case as transferred</button>');
 		});
 	});
 
@@ -609,39 +597,6 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
-		});
-
-		it('should re-render the check transfer page with an error message if the required data is present in the session, but the confirmation checkbox was not checked', async () => {
-			nock('http://test/').get('/appeals/transferred-appeal/123').reply(200, {
-				caseFound: true
-			});
-
-			const addHorizonReferencePostResponse = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
-				.send({
-					'horizon-reference': '123'
-				});
-
-			expect(addHorizonReferencePostResponse.statusCode).toBe(302);
-
-			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}${checkTransferPath}`)
-				.send({});
-
-			expect(response.statusCode).toBe(200);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Details of the transferred appeal</h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Confirmation must be provided</a>');
 		});
 
 		it('should redirect to the case details page if the required data is present in the session and the confirmation checkbox was checked', async () => {

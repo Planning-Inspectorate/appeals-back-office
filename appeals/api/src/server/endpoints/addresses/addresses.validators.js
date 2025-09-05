@@ -1,11 +1,11 @@
-import { composeMiddleware } from '@pins/express';
-import { validationErrorHandler } from '#middleware/error-handler.js';
 import validateIdParameter from '#common/validators/id-parameter.js';
 import {
 	validateStringParameter,
 	validateStringParameterAllowingEmpty
 } from '#common/validators/string-parameter.js';
-import { LENGTH_8, LENGTH_250 } from '@pins/appeals/constants/support.js';
+import { validationErrorHandler } from '#middleware/error-handler.js';
+import { LENGTH_250, LENGTH_8 } from '@pins/appeals/constants/support.js';
+import { composeMiddleware } from '@pins/express';
 
 const getAddressValidator = composeMiddleware(
 	validateIdParameter('appealId'),

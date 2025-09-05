@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { teamsToCreate, lpaTeamAssignments } from '../teams/prod.js';
+import { lpaTeamAssignments, teamsToCreate } from '../teams/prod.js';
 /**
  *
  * @param {number} id

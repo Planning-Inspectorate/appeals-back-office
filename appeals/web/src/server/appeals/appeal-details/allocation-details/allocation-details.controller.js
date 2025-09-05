@@ -1,13 +1,13 @@
-import {
-	allocationDetailsLevelPage,
-	allocationDetailsSpecialismPage,
-	allocationDetailsCheckAnswersPage
-} from './allocation-details.mapper.js';
+import * as api from '#lib/api/allocation-details.api.js';
+import { moveItemInArray } from '#lib/array-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import logger from '../../../lib/logger.js';
 import { objectContainsAllKeys } from '../../../lib/object-utilities.js';
-import * as api from '#lib/api/allocation-details.api.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { moveItemInArray } from '#lib/array-utilities.js';
+import {
+	allocationDetailsCheckAnswersPage,
+	allocationDetailsLevelPage,
+	allocationDetailsSpecialismPage
+} from './allocation-details.mapper.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

@@ -1,7 +1,7 @@
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { createTextareaConditionalValidator } from '#lib/validators/textarea-validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { createTextareaConditionalValidator } from '#lib/validators/textarea-validator.js';
-import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 
 export const validateDecision = createValidator(
 	body('decision').trim().notEmpty().withMessage('Select the decision')

@@ -1,5 +1,5 @@
-import logger from '../logger.js';
 import { formatInTimeZone } from 'date-fns-tz';
+import logger from '../logger.js';
 const UK_TIMEZONE = 'Europe/London';
 
 /**

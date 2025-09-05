@@ -1,11 +1,11 @@
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
-import createStateMachine from './create-state-machine.js';
 import logger from '#utils/logger.js';
 import {
-	APPEAL_TYPE_SHORTHAND_HAS,
-	APPEAL_TYPE_SHORTHAND_FPA
+	APPEAL_TYPE_SHORTHAND_FPA,
+	APPEAL_TYPE_SHORTHAND_HAS
 } from '@pins/appeals/constants/support.js';
 import isFPA from '@pins/appeals/utils/is-fpa.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import createStateMachine from './create-state-machine.js';
 
 /** @typedef {import('#db-client').AppealType} AppealType */
 /** @typedef {import('#db-client').ProcedureType} ProcedureType */

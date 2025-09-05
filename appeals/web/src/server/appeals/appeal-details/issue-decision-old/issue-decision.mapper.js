@@ -1,10 +1,10 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import * as displayPageFormatter from '#lib/display-page-formatter.js';
-import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import * as displayPageFormatter from '#lib/display-page-formatter.js';
+import { dateInput } from '#lib/mappers/index.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { logger } from '@azure/storage-blob';
 import { issueDecisionDateField } from './issue-decision.constants.js';
-import { dateInput } from '#lib/mappers/index.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal

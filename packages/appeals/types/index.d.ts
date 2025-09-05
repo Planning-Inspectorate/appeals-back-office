@@ -4,4 +4,4 @@ import * as Validation from './validation';
 
 export * from './appeal';
 export * from './document';
-export { Inspector, CaseOfficer, Validation };
+export { CaseOfficer, Inspector, Validation };

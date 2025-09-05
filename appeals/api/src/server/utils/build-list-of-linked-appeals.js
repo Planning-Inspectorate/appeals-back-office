@@ -1,6 +1,6 @@
 import appealRepository from '#repositories/appeal.repository.js';
-import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
+import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 

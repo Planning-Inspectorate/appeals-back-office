@@ -1,24 +1,24 @@
-import { composeMiddleware } from '@pins/express';
-import { body } from 'express-validator';
-import { validationErrorHandler } from '#middleware/error-handler.js';
-import {
-	ERROR_LPA_QUESTIONNAIRE_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED,
-	ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME
-} from '@pins/appeals/constants/support.js';
-import { isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
-import validateDateParameter from '#common/validators/date-parameter.js';
-import validateIdParameter from '#common/validators/id-parameter.js';
 import { validateBooleanParameter } from '#common/validators/boolean-parameter.js';
-import {
-	validateOptionalTextAreaParameter,
-	validateNullableTextAreaParameter
-} from '#common/validators/string-parameter.js';
-import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
+import validateDateParameter from '#common/validators/date-parameter.js';
 import validateEnumParameter from '#common/validators/enum-parameter.js';
+import validateIdParameter from '#common/validators/id-parameter.js';
+import validateIncompleteInvalidReasonParameter from '#common/validators/incomplete-invalid-reason-parameter.js';
 import validateNumberParameter from '#common/validators/number-parameter.js';
 import validateNumberRangeParameter from '#common/validators/number-range-parameter.js';
+import {
+	validateNullableTextAreaParameter,
+	validateOptionalTextAreaParameter
+} from '#common/validators/string-parameter.js';
+import { validationErrorHandler } from '#middleware/error-handler.js';
+import { isOutcomeIncomplete } from '#utils/check-validation-outcome.js';
+import {
+	ERROR_LPA_QUESTIONNAIRE_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED,
+	ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME,
+	LENGTH_8000
+} from '@pins/appeals/constants/support.js';
+import { composeMiddleware } from '@pins/express';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
-import { LENGTH_8000 } from '@pins/appeals/constants/support.js';
+import { body } from 'express-validator';
 
 const getLPAQuestionnaireValidator = composeMiddleware(
 	validateIdParameter('appealId'),

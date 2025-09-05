@@ -1,10 +1,10 @@
 // @ts-nocheck
 import { request } from '#tests/../app-test.js';
-import { jest } from '@jest/globals';
-import { azureAdUserId } from '#tests/shared/mocks.js';
-import { caseTeams } from '#tests/appeals/mocks.js';
-const { databaseConnector } = await import('#utils/database-connector.js');
 import { mocks } from '#tests/appeals/index.js';
+import { caseTeams } from '#tests/appeals/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import { jest } from '@jest/globals';
+const { databaseConnector } = await import('#utils/database-connector.js');
 
 const householdAppeal = mocks.householdAppeal;
 const teeamIdNumericErrorMessage = 'teamId must be a number equal to or greater than 0';

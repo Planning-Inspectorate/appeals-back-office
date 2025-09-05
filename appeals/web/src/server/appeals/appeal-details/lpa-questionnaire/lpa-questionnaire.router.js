@@ -1,45 +1,45 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import * as controller from './lpa-questionnaire.controller.js';
-import * as validators from './lpa-questionnaire.validators.js';
-import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
-import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
-import { validateAppeal } from '../appeal-details.middleware.js';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
+import { validateAppeal } from '../appeal-details.middleware.js';
+import * as controller from './lpa-questionnaire.controller.js';
+import * as validators from './lpa-questionnaire.validators.js';
+import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
 
+import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
 import {
-	validateCaseFolderId,
+	clearUncommittedFilesFromSession,
 	validateCaseDocumentId,
-	clearUncommittedFilesFromSession
+	validateCaseFolderId
 } from '../../appeal-documents/appeal-documents.middleware.js';
+import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
+import greenBeltRouter from '../green-belt/green-belt.router.js';
 import inspectorAccessRouter from '../inspector-access/inspector-access.router.js';
 import neighbouringSitesRouter from '../neighbouring-sites/neighbouring-sites.router.js';
-import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
-import correctAppealTypeRouter from './correct-appeal-type/correct-appeal-type.router.js';
 import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
-import greenBeltRouter from '../green-belt/green-belt.router.js';
-import extraConditionsRouter from './extra-conditions/extra-conditions.router.js';
-import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
+import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import affectedListedBuildingsRouter from './affected-listed-buildings/affected-listed-buildings.router.js';
-import changedListedBuildingsRouter from './changed-listed-buildings/changed-listed-buildings.router.js';
-import environmentalAssessmentRouter from './environmental-impact-assessment/environmental-impact-assessment.router.js';
-import hasProtectedSpeciesRouter from './has-protected-species/has-protected-species.router.js';
 import affectsScheduledMonumentRouter from './affects-scheduled-monument/affects-scheduled-monument.router.js';
-import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
-import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
+import changedListedBuildingsRouter from './changed-listed-buildings/changed-listed-buildings.router.js';
 import hasCommunityInfrastructureLevyRouter from './community-infrastructure-levy/has-community-infrastructure-levy/has-community-infrastructure-levy.router.js';
-import isInfrastructureLevyFormallyAdoptedRouter from './community-infrastructure-levy/is-infrastructure-levy-formally-adopted/is-infrastructure-levy-formally-adopted.router.js';
 import infrastructureLevyAdoptedDateRouter from './community-infrastructure-levy/infrastructure-levy-adopted-date/infrastructure-levy-adopted-date.router.js';
 import infrastructureLevyExpectedDateRouter from './community-infrastructure-levy/infrastructure-levy-expected-date/infrastructure-levy-expected-date.router.js';
-import eiaEnvironmentalImpactScheduleRouter from './environmental-impact-assessment/eia-environmental-impact-schedule/eia-environmental-impact-schedule.router.js';
-import eiaDevelopmentDescriptionRouter from './environmental-impact-assessment/eia-development-description/eia-development-description.router.js';
-import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
-import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
+import isInfrastructureLevyFormallyAdoptedRouter from './community-infrastructure-levy/is-infrastructure-levy-formally-adopted/is-infrastructure-levy-formally-adopted.router.js';
+import correctAppealTypeRouter from './correct-appeal-type/correct-appeal-type.router.js';
 import designatedSitesRouter from './designated-sites/designated-sites.router.js';
+import eiaDevelopmentDescriptionRouter from './environmental-impact-assessment/eia-development-description/eia-development-description.router.js';
+import eiaEnvironmentalImpactScheduleRouter from './environmental-impact-assessment/eia-environmental-impact-schedule/eia-environmental-impact-schedule.router.js';
+import environmentalAssessmentRouter from './environmental-impact-assessment/environmental-impact-assessment.router.js';
+import extraConditionsRouter from './extra-conditions/extra-conditions.router.js';
+import hasProtectedSpeciesRouter from './has-protected-species/has-protected-species.router.js';
+import isAonbNationalLandscapeRouter from './is-aonb-national-landscape/is-aonb-national-landscape.router.js';
+import isGypsyOrTravellerSiteRouter from './is-gypsy-or-traveller-site/is-gypsy-or-traveller-site.router.js';
+import neighbouringSiteAccessRouter from './neighbouring-site-access/neighbouring-site-access.router.js';
+import notificationMethodsRouter from './notification-methods/notification-methods.router.js';
 import preserveGrantLoanRouter from './preserve-grant-loan/preserve-grant-loan.router.js';
-import changeLpaRouter from '../change-appeal-details/local-planning-authority/local-planning-authority.router.js';
-import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
+import procedurePreferenceRouter from './procedure-preference/procedure-preference.router.js';
 
 const router = createRouter({ mergeParams: true });
 

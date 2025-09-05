@@ -1,12 +1,12 @@
-import { apiMappers } from './api/index.js';
-import { integrationMappers } from './integration/index.js';
-import { contextEnum } from './context-enum.js';
+import mergeMaps from '#utils/merge-maps.js';
 import {
 	APPEAL_CASE_STAGE,
 	APPEAL_CASE_TYPE,
 	APPEAL_DOCUMENT_TYPE
 } from '@planning-inspectorate/data-model';
-import mergeMaps from '#utils/merge-maps.js';
+import { apiMappers } from './api/index.js';
+import { contextEnum } from './context-enum.js';
+import { integrationMappers } from './integration/index.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
@@ -131,6 +131,7 @@ function createDataLayout(caseMap, mappingRequest) {
 		lpaQuestionnaire,
 		representations,
 		folders,
+		appealTransferStatus,
 		...appealDetails
 	} = Object.fromEntries(caseMap);
 
@@ -140,6 +141,7 @@ function createDataLayout(caseMap, mappingRequest) {
 				appellantCaseId: appeal.appellantCase?.id,
 				...appealSummary,
 				...appellantCase,
+				transferStatus: appealTransferStatus,
 				...createFoldersLayout(folders, contextEnum.appellantCase)
 			};
 		case contextEnum.lpaQuestionnaire:
@@ -147,12 +149,14 @@ function createDataLayout(caseMap, mappingRequest) {
 				lpaQuestionnaireId: appeal.lpaQuestionnaire?.id,
 				...appealSummary,
 				...lpaQuestionnaire,
+				transferStatus: appealTransferStatus,
 				...createFoldersLayout(folders, contextEnum.lpaQuestionnaire)
 			};
 		case contextEnum.representations:
 			return {
 				...appealSummary,
 				...representations,
+				transferStatus: appealTransferStatus,
 				...createFoldersLayout(folders, contextEnum.representations)
 			};
 		default: {
@@ -174,6 +178,7 @@ function createDataLayout(caseMap, mappingRequest) {
 				},
 				eiaScreeningRequired: appeal.eiaScreeningRequired,
 				lpaEmailAddress: appeal.lpa?.email,
+				transferStatus: appealTransferStatus,
 				...createFoldersLayout(folders, contextEnum.appealDetails)
 			};
 		}

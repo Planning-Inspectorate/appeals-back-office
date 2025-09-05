@@ -5,14 +5,14 @@
 /** @typedef {Omit<import('#db-client').Prisma.RepresentationCreateInput, 'appeal'> & {represented?: ServiceUserConnectInput|undefined}} RepresentationCreateInput */
 /** @typedef {import('#db-client').Prisma.DocumentVersionCreateInput} DocumentVersionCreateInput */
 
+import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
+import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@planning-inspectorate/data-model';
-import { APPEAL_REPRESENTATION_TYPE as INTERNAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
 import { mapDocumentIn } from './document.mapper.js';
 import { mapServiceUserIn } from './service-user.mapper.js';
-import { serviceUserIdStartRange } from '#mappers/integration/map-service-user-entity.js';
 
 /**
  *

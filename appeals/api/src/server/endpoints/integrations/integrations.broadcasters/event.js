@@ -1,12 +1,12 @@
-import pino from '#utils/logger.js';
 import config from '#config/config.js';
-import { producers } from '#infrastructure/topics.js';
 import { eventClient } from '#infrastructure/event-client.js';
-import { schemas, validateFromSchema } from '../integrations.validators.js';
+import { producers } from '#infrastructure/topics.js';
+import { mapHearingEntity, mapSiteVisitEntity } from '#mappers/integration/map-event-entity.js';
 import { databaseConnector } from '#utils/database-connector.js';
-import { ODW_SYSTEM_ID, EVENT_TYPE } from '@pins/appeals/constants/common.js';
-import { mapSiteVisitEntity, mapHearingEntity } from '#mappers/integration/map-event-entity.js';
+import pino from '#utils/logger.js';
+import { EVENT_TYPE, ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
 import { EventType } from '@pins/event-client';
+import { schemas, validateFromSchema } from '../integrations.validators.js';
 /** @typedef {import('@planning-inspectorate/data-model').Schemas.AppealEvent} AppealEvent */
 /** @typedef {import('@pins/appeals.api').Schema.Hearing} Hearing */
 /** @typedef {import('@pins/appeals.api').Schema.Inquiry} Inquiry */

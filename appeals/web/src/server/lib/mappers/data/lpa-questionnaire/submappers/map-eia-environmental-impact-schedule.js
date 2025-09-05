@@ -1,5 +1,5 @@
 import { textSummaryListItem } from '#lib/mappers/index.js';
-import { snakeCaseToSpaceSeparated, capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { capitalizeFirstLetter, snakeCaseToSpaceSeparated } from '#lib/string-utilities.js';
 
 /** @type {import("../mapper.js").SubMapper} */
 export const mapEiaEnvironmentalImpactSchedule = ({

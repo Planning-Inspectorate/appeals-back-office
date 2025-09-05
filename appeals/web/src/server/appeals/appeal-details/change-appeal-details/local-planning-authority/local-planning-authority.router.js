@@ -1,7 +1,7 @@
+import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controllers from './local-planning-authority.controller.js';
 import * as validators from './local-planning-authority.validators.js';
-import { asyncHandler } from '@pins/express';
 
 const router = createRouter({ mergeParams: true });
 

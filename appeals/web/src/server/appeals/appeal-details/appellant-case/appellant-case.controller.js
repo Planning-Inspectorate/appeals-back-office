@@ -1,38 +1,38 @@
+import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import logger from '#lib/logger.js';
-import * as appellantCaseService from './appellant-case.service.js';
-import {
-	appellantCasePage,
-	mapWebReviewOutcomeToApiReviewOutcome,
-	checkAndConfirmPage,
-	getValidationOutcomeFromAppellantCase,
-	getPageHeadingTextOverrideForFolder,
-	getPageHeadingTextOverrideForAddDocuments,
-	getDocumentNameFromFolder
-} from './appellant-case.mapper.js';
+import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
+import { capitalize } from 'lodash-es';
 import {
 	postChangeDocumentDetails,
+	postChangeDocumentFileName,
 	postDeleteDocument,
 	postDocumentDetails,
-	renderUploadDocumentsCheckAndConfirm,
+	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm,
 	postUploadDocumentVersionCheckAndConfirm,
 	renderChangeDocumentDetails,
+	renderChangeDocumentFileName,
 	renderDeleteDocument,
 	renderDocumentDetails,
 	renderDocumentUpload,
-	postDocumentUpload,
 	renderManageDocument,
 	renderManageFolder,
-	renderChangeDocumentFileName,
-	postChangeDocumentFileName
+	renderUploadDocumentsCheckAndConfirm
 } from '../../appeal-documents/appeal-documents.controller.js';
-import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { capitalize } from 'lodash-es';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
-import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import {
+	appellantCasePage,
+	checkAndConfirmPage,
+	getDocumentNameFromFolder,
+	getPageHeadingTextOverrideForAddDocuments,
+	getPageHeadingTextOverrideForFolder,
+	getValidationOutcomeFromAppellantCase,
+	mapWebReviewOutcomeToApiReviewOutcome
+} from './appellant-case.mapper.js';
+import * as appellantCaseService from './appellant-case.service.js';
 
 /**
  *

@@ -1,3 +1,4 @@
+import { patchRepresentationAttachments } from '#appeals/appeal-details/representations/final-comments/final-comments.service.js';
 import {
 	postChangeDocumentDetails,
 	postChangeDocumentFileName,
@@ -16,7 +17,6 @@ import {
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
 import logger from '#lib/logger.js';
-import { patchRepresentationAttachments } from '#appeals/appeal-details/representations/final-comments/final-comments.service.js';
 import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */

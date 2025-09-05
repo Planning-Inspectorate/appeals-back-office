@@ -1,9 +1,9 @@
 import { isStatePassed } from '#lib/appeal-status.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapFinalCommentDueDate = ({

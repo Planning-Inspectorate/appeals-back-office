@@ -4,8 +4,8 @@ import { databaseConnector } from '../../server/utils/database-connector.js';
 // json streaming
 import { chain } from 'stream-chain';
 import Parser from 'stream-json';
-import Pick from 'stream-json/filters/Pick.js';
 import Ignore from 'stream-json/filters/Ignore.js';
+import Pick from 'stream-json/filters/Pick.js';
 import StreamArray from 'stream-json/streamers/StreamArray.js';
 
 /**

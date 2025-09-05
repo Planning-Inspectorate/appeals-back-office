@@ -15,7 +15,8 @@ export const FEATURE_FLAG_NAMES = Object.freeze({
 	CAS_ADVERT: 'featureFlagCasAdvert',
 	LINKED_APPEALS: 'featureFlagLinkedAppeals',
 	CHANGE_PROCEDURE_TYPE: 'featureFlagChangeProcedureType',
-	ADVERTISEMENT: 'featureFlagAdvertisement'
+	ADVERTISEMENT: 'featureFlagAdvertisement',
+	CHANGE_APPEAL_TYPE: 'featureFlagChangeAppealType'
 });
 
 export const APPEAL_TYPE = Object.freeze({

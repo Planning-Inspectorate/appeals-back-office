@@ -1,8 +1,9 @@
 import { request } from '#tests/../app-test.js';
 import { mocks } from '#tests/appeals/index.js';
-import { jest } from '@jest/globals';
-import { azureAdUserId } from '#tests/shared/mocks.js';
 import { savedFolder } from '#tests/documents/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { jest } from '@jest/globals';
 import {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
 	AUDIT_TRAIL_ASSIGNED_INSPECTOR,
@@ -16,7 +17,6 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const householdAppeal = mocks.householdAppeal;

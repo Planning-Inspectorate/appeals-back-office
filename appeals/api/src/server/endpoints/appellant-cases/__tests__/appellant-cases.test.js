@@ -1,43 +1,43 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
-import { request } from '../../../app-test.js';
 import {
-	ERROR_MUST_BE_NUMBER,
-	ERROR_NOT_FOUND,
-	LENGTH_8,
-	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
-	AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED
-} from '@pins/appeals/constants/support.js';
+	casPlanningAppeal,
+	casPlanningAppealAppellantCaseIncomplete,
+	casPlanningAppealAppellantCaseInvalid,
+	casPlanningAppealAppellantCaseValid,
+	fullPlanningAppeal,
+	fullPlanningAppealAppellantCaseIncomplete,
+	fullPlanningAppealAppellantCaseInvalid,
+	fullPlanningAppealCaseValid,
+	householdAppeal,
+	householdAppealAppellantCaseIncomplete,
+	householdAppealAppellantCaseInvalid,
+	householdAppealAppellantCaseValid,
+	listedBuildingAppeal,
+	listedBuildingAppealAppellantCaseIncomplete,
+	listedBuildingAppealAppellantCaseInvalid,
+	listedBuildingAppealAppellantCaseValid
+} from '#tests/appeals/mocks.js';
 import {
 	appellantCaseIncompleteReasons,
 	appellantCaseInvalidReasons,
 	appellantCaseValidationOutcomes,
 	azureAdUserId
 } from '#tests/shared/mocks.js';
-import {
-	householdAppeal,
-	householdAppealAppellantCaseValid,
-	householdAppealAppellantCaseIncomplete,
-	householdAppealAppellantCaseInvalid,
-	casPlanningAppeal,
-	casPlanningAppealAppellantCaseValid,
-	casPlanningAppealAppellantCaseIncomplete,
-	casPlanningAppealAppellantCaseInvalid,
-	fullPlanningAppeal,
-	fullPlanningAppealCaseValid,
-	fullPlanningAppealAppellantCaseIncomplete,
-	fullPlanningAppealAppellantCaseInvalid,
-	listedBuildingAppeal,
-	listedBuildingAppealAppellantCaseValid,
-	listedBuildingAppealAppellantCaseIncomplete,
-	listedBuildingAppealAppellantCaseInvalid
-} from '#tests/appeals/mocks.js';
 import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
+import { jest } from '@jest/globals';
+import {
+	AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED,
+	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
+	ERROR_MUST_BE_NUMBER,
+	ERROR_NOT_FOUND,
+	LENGTH_8
+} from '@pins/appeals/constants/support.js';
+import { request } from '../../../app-test.js';
 
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 const { databaseConnector } = await import('../../../utils/database-connector.js');
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 describe('appellant cases routes', () => {
 	beforeEach(() => {

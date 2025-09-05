@@ -1,27 +1,27 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
+import usersService from '#appeals/appeal-users/users-service.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import {
-	appealData,
-	documentRedactionStatuses,
-	fileUploadInfo,
-	documentFileInfo,
-	folderInfoCrossTeamCorrespondence,
-	folderInfoInspectorCorrespondence,
 	activeDirectoryUsersData,
+	appealData,
+	documentFileInfo,
 	documentFileVersionsInfo,
-	documentFileVersionsInfoNotChecked,
 	documentFileVersionsInfoChecked,
+	documentFileVersionsInfoNotChecked,
 	documentFileVersionsInfoVirusFound,
 	documentFolderInfo,
+	documentRedactionStatuses,
+	fileUploadInfo,
+	folderInfoCrossTeamCorrespondence,
+	folderInfoInspectorCorrespondence,
 	folderInfoMainPartyCorrespondence
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
-import usersService from '#appeals/appeal-users/users-service.js';
-import { cloneDeep, capitalize } from 'lodash-es';
+import { jest } from '@jest/globals';
+import { parseHtml } from '@pins/platform';
+import { capitalize, cloneDeep } from 'lodash-es';
+import nock from 'nock';
+import supertest from 'supertest';
 import { documentNameFromCategory } from '../internal-correspondence.service';
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

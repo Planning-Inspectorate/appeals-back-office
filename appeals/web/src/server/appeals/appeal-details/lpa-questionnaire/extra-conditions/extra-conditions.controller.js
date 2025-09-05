@@ -1,9 +1,9 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { HTTPError } from 'got';
+import * as lpaQuestionnaireService from '../lpa-questionnaire.service.js';
 import { changeExtraConditionsPage } from './extra-conditions.mapper.js';
 import { changeExtraConditions } from './extra-conditions.service.js';
-import * as lpaQuestionnaireService from '../lpa-questionnaire.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

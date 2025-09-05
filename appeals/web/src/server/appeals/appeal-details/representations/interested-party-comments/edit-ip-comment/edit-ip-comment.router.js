@@ -1,9 +1,9 @@
+import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
+import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import { createYesNoRadioValidator } from '#lib/validators/radio.validator.js';
-import * as controller from './edit-ip-comment.controller.js';
 import { validateInterestedPartyAddress } from '../common/validators.js';
-import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
+import * as controller from './edit-ip-comment.controller.js';
 
 const router = createRouter({ mergeParams: true });
 

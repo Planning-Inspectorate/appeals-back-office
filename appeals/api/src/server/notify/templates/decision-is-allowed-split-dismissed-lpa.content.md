@@ -2,7 +2,17 @@
 
 # Appeal decision
 
+{%- if child_appeals.length > 1 %}
+
+We have made a decision on the following appeals:
+- {{ appeal_reference_number }}
+{%- for child_appeal in child_appeals %}
+- {{ child_appeal }}
+{%- endfor %}
+{%- else %}
+
 We have made a decision on this appeal.
+{%- endif %}
 
 [Sign in to our service]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}) to view the decision letter dated {{decision_date}}.
 

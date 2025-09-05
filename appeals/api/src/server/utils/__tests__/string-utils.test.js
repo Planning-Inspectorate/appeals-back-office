@@ -1,4 +1,4 @@
-import { toCamelCase, camelToScreamingSnake } from '#utils/string-utils.js';
+import { camelToScreamingSnake, toCamelCase } from '#utils/string-utils.js';
 
 describe('toCamelCase', () => {
 	test('converts a single word to lowercase', () => {

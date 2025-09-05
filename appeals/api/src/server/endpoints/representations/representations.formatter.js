@@ -1,6 +1,6 @@
-import { APPEAL_ORIGIN } from '@planning-inspectorate/data-model';
 import formatAddress from '#utils/format-address.js';
 import { formatName } from '#utils/format-name.js';
+import { APPEAL_ORIGIN } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('./representations.service.js').DBRepresentation} Representation */
 /** @typedef {import('./representations.service.js').UpdatedDBRepresentation} UpdatedRepresentation */

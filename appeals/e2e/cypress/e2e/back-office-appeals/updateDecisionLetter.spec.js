@@ -1,11 +1,11 @@
 // @ts-nocheck
 /// <reference types="cypress"/>
 
+import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { formatDateAndTime } from '../../support/utils/dateAndTime';
-import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
 
 const caseDetailsPage = new CaseDetailsPage();
 
