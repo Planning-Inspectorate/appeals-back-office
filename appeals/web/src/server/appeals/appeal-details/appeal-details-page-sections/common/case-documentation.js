@@ -32,6 +32,10 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 				mappedData.appeal.environmentalAssessment.display.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true
+		},
+		wrapperHtml: {
+			opening: '<h1 class="govuk-heading-l">Documentation</h1>',
+			closing: ''
 		}
 	};
 };

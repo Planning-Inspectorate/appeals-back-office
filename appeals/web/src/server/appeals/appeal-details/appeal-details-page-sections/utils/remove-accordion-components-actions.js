@@ -6,7 +6,7 @@ const caseDocumentationTableActionColumnIndex = 3;
  * @param {PageComponent[]} accordionComponents
  * @returns {void}
  */
-export function removeAccordionComponentsActions(accordionComponents) {
+export function removeAppealDetailsSectionComponentsActions(accordionComponents) {
 	accordionComponents.forEach((component) => {
 		switch (component.type) {
 			case 'summary-list':
