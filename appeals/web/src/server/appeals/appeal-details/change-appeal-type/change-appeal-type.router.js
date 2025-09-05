@@ -49,4 +49,16 @@ router
 	.get(asyncHandler(controller.getTransferAppeal))
 	.post(asyncHandler(controller.postTransferAppeal));
 
+router
+	.route('/check-change-appeal-final-date')
+	.get(asyncHandler(controller.getCheckChangeAppealFinalDate))
+	.post(
+		validators.validateChangeAppealFinalDateFields,
+		validators.validateChangeAppealFinalDateValid,
+		validators.validateChangeAppealFinalDateIsBusinessDay,
+		validators.validateChangeAppealFinalDateInFuture,
+		extractAndProcessDateErrors({ fieldNamePrefix: changeAppealTypeDateField }),
+		asyncHandler(controller.postCheckChangeAppealFinalDate)
+	);
+
 export default router;
