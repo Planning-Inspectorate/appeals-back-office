@@ -14,7 +14,7 @@ resource "azurerm_application_insights" "main" {
   resource_group_name  = azurerm_resource_group.primary.name
   workspace_id         = azurerm_log_analytics_workspace.main.id
   application_type     = "web" # should this be Node.JS, or general?
-  daily_data_cap_in_gb = 0.1
+  daily_data_cap_in_gb = 10
 
   tags = local.tags
 }
