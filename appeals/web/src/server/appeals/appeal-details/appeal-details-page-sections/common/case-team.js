@@ -12,5 +12,9 @@ export const getCaseTeam = (mappedData) => ({
 			mappedData.appeal.caseOfficer.display.summaryListItem,
 			mappedData.appeal.inspector.display.summaryListItem
 		].filter(isDefined)
+	},
+	wrapperHtml: {
+		opening: '<h1 class="govuk-heading-l">Team</h1>',
+		closing: ''
 	}
 });
