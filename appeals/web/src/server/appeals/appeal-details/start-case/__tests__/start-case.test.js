@@ -280,46 +280,58 @@ describe('start-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
 		});
 
-		it('should render the select procedure page with the expected radio option preselected if an appeal procedure is found in the session', async () => {
-			nock('http://test/')
-				.get('/appeals/1')
-				.reply(200, {
-					...appealDataWithoutStartDate,
-					appealType: 'Planning appeal'
+		[
+			['false', 'select-procedure/check-and-confirm'],
+			['true', 'hearing']
+		].forEach(([featureFlag, redirectPath]) => {
+			describe(`with featureFlagHearingPostMvp set to ${featureFlag}`, () => {
+				it('should render the select procedure page with the expected radio option preselected if an appeal procedure is found in the session', async () => {
+					nock('http://test/')
+						.get('/appeals/1')
+						.reply(200, {
+							...appealDataWithoutStartDate,
+							appealType: 'Planning appeal'
+						});
+
+					const selectProcedurePostResponse = await request
+						.post('/appeals-service/appeal-details/1/start-case/select-procedure')
+						.set('x-feature-flag-hearing-post-mvp', featureFlag)
+						.send({
+							appealProcedure: 'hearing'
+						});
+
+					expect(selectProcedurePostResponse.statusCode).toBe(302);
+					expect(selectProcedurePostResponse.text).toBe(
+						`Found. Redirecting to /appeals-service/appeal-details/1/start-case/${redirectPath}`
+					);
+
+					nock('http://test/')
+						.get('/appeals/1')
+						.reply(200, {
+							...appealDataWithoutStartDate,
+							appealType: 'Planning appeal'
+						});
+
+					const response = await request.get(
+						'/appeals-service/appeal-details/1/start-case/select-procedure'
+					);
+
+					expect(response.statusCode).toBe(200);
+
+					const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+					expect(unprettifiedHtml).toContain('Appeal procedure</h1>');
+					expect(unprettifiedHtml).toContain(
+						'name="appealProcedure" type="radio" value="written">'
+					);
+					expect(unprettifiedHtml).toContain(
+						'name="appealProcedure" type="radio" value="hearing" checked>'
+					);
+					expect(unprettifiedHtml).toContain(
+						'name="appealProcedure" type="radio" value="inquiry">'
+					);
 				});
-
-			const selectProcedurePostResponse = await request
-				.post('/appeals-service/appeal-details/1/start-case/select-procedure')
-				.send({
-					appealProcedure: 'hearing'
-				});
-
-			expect(selectProcedurePostResponse.statusCode).toBe(302);
-			expect(selectProcedurePostResponse.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
-			);
-
-			nock('http://test/')
-				.get('/appeals/1')
-				.reply(200, {
-					...appealDataWithoutStartDate,
-					appealType: 'Planning appeal'
-				});
-
-			const response = await request.get(
-				'/appeals-service/appeal-details/1/start-case/select-procedure'
-			);
-
-			expect(response.statusCode).toBe(200);
-
-			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
-
-			expect(unprettifiedHtml).toContain('Appeal procedure</h1>');
-			expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="written">');
-			expect(unprettifiedHtml).toContain(
-				'name="appealProcedure" type="radio" value="hearing" checked>'
-			);
-			expect(unprettifiedHtml).toContain('name="appealProcedure" type="radio" value="inquiry">');
+			});
 		});
 
 		it('should render the select procedure page with no option preselected if the flow was restarted after submitting the select procedure page with an option selected', async () => {
@@ -414,24 +426,32 @@ describe('start-case', () => {
 			expect(unprettifiedErrorSummaryHtml).toContain('Select the appeal procedure</a>');
 		});
 
-		it('should redirect to the check and confirm page if a radio option was selected', async () => {
-			nock('http://test/')
-				.get('/appeals/1')
-				.reply(200, {
-					...appealDataWithoutStartDate,
-					appealType: 'Planning appeal'
-				});
+		[
+			['false', 'select-procedure/check-and-confirm'],
+			['true', 'hearing']
+		].forEach(([featureFlag, redirectPath]) => {
+			describe(`with featureFlagHearingPostMvp set to ${featureFlag}`, () => {
+				it(`should redirect to ${redirectPath} if a radio option was selected`, async () => {
+					nock('http://test/')
+						.get('/appeals/1')
+						.reply(200, {
+							...appealDataWithoutStartDate,
+							appealType: 'Planning appeal'
+						});
 
-			const response = await request
-				.post('/appeals-service/appeal-details/1/start-case/select-procedure')
-				.send({
-					appealProcedure: 'hearing'
-				});
+					const response = await request
+						.post('/appeals-service/appeal-details/1/start-case/select-procedure')
+						.set('x-feature-flag-hearing-post-mvp', featureFlag)
+						.send({
+							appealProcedure: 'hearing'
+						});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/start-case/select-procedure/check-and-confirm'
-			);
+					expect(response.statusCode).toBe(302);
+					expect(response.text).toBe(
+						`Found. Redirecting to /appeals-service/appeal-details/1/start-case/${redirectPath}`
+					);
+				});
+			});
 		});
 	});
 

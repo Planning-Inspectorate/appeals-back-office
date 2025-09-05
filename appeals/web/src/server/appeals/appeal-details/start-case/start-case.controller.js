@@ -198,16 +198,7 @@ export const postSelectProcedure = async (request, response) => {
 			return response.status(500).render('app/500.njk');
 		}
 
-		if (
-			session.startCaseAppealProcedure?.[appealId]?.appealProcedure ===
-			APPEAL_CASE_PROCEDURE.INQUIRY
-		) {
-			return response.redirect(`/appeals-service/appeal-details/${appealId}/inquiry/setup/date`);
-		}
-
-		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/start-case/select-procedure/check-and-confirm`
-		);
+		return response.redirect(redirectionTarget(request));
 	} catch (error) {
 		logger.error(
 			error,
@@ -218,6 +209,46 @@ export const postSelectProcedure = async (request, response) => {
 
 		return response.status(500).render('app/500.njk');
 	}
+};
+
+/**
+ * @param {import('@pins/express').Request} request
+ */
+const useNewHearingRoute = (request) => {
+	const featureFlagOverrideForTests =
+		process.env.NODE_ENV === 'test' && request.headers['x-feature-flag-hearing-post-mvp'];
+
+	if (featureFlagOverrideForTests) {
+		return featureFlagOverrideForTests === 'true';
+	}
+
+	return featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.HEARING_POST_MVP);
+};
+
+/**
+ * @param {import('@pins/express').Request} request
+ */
+const redirectionTarget = (request) => {
+	const {
+		currentAppeal: { appealId },
+		session
+	} = request;
+
+	if (
+		session.startCaseAppealProcedure?.[appealId]?.appealProcedure === APPEAL_CASE_PROCEDURE.INQUIRY
+	) {
+		return `/appeals-service/appeal-details/${appealId}/inquiry/setup/date`;
+	}
+
+	if (
+		session.startCaseAppealProcedure?.[appealId]?.appealProcedure ===
+			APPEAL_CASE_PROCEDURE.HEARING &&
+		useNewHearingRoute(request)
+	) {
+		return `/appeals-service/appeal-details/${appealId}/start-case/hearing`;
+	}
+
+	return `/appeals-service/appeal-details/${appealId}/start-case/select-procedure/check-and-confirm`;
 };
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
