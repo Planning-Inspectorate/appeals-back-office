@@ -1,8 +1,9 @@
 // @ts-nocheck
 
-import { formatDateAndTime } from '../support/utils/formatDateAndTime';
 import { Page } from './basePage';
 import { DateTimeSection } from './dateTimeSection.js';
+import { formatDateAndTime } from '../support/utils/dateAndTime.js';
+import { forEach } from 'lodash';
 
 const dateTimeSection = new DateTimeSection();
 export class CaseDetailsPage extends Page {
