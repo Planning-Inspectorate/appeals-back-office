@@ -1,6 +1,6 @@
 import {
-	rejectionReasonHtml,
-	buildRejectionReasons
+	buildRejectionReasons,
+	rejectionReasonHtml
 } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 
 /**

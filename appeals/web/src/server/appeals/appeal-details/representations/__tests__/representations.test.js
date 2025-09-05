@@ -1,17 +1,17 @@
-import { parseHtml } from '@pins/platform';
+import usersService from '#appeals/appeal-users/users-service.js';
+import {
+	activeDirectoryUsersData,
+	appealData,
+	appellantFinalCommentsAwaitingReview,
+	caseNotes,
+	lpaFinalCommentsAwaitingReview,
+	shareRepsResponseFinalComment
+} from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
-import supertest from 'supertest';
+import { parseHtml } from '@pins/platform';
 import nock from 'nock';
-import {
-	appealData,
-	shareRepsResponseFinalComment,
-	appellantFinalCommentsAwaitingReview,
-	lpaFinalCommentsAwaitingReview,
-	caseNotes,
-	activeDirectoryUsersData
-} from '#testing/app/fixtures/referencedata.js';
-import usersService from '#appeals/appeal-users/users-service.js';
+import supertest from 'supertest';
 
 const { app, teardown } = createTestEnvironment();
 const request = supertest(app);

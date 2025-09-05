@@ -1,7 +1,7 @@
-import { composeMiddleware } from '@pins/express';
-import { body } from 'express-validator';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import { ERROR_MUST_BE_UUID } from '@pins/appeals/constants/support.js';
+import { composeMiddleware } from '@pins/express';
+import { body } from 'express-validator';
 
 import validateDateParameter from '#common/validators/date-parameter.js';
 

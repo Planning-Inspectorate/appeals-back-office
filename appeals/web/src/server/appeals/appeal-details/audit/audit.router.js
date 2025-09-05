@@ -1,5 +1,5 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import { renderAudit } from './audit.controller.js';
 
 const auditRouter = createRouter({ mergeParams: true });

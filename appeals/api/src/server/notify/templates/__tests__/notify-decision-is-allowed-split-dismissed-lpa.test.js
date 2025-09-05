@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { notifySend } from '#notify/notify-send.js';
-import { jest } from '@jest/globals';
 import { householdAppeal } from '#tests/appeals/mocks.js';
+import { jest } from '@jest/globals';
 import { cloneDeep } from 'lodash-es';
 
 const genericNotifySendData = {

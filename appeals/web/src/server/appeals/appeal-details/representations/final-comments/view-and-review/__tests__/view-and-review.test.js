@@ -1,22 +1,22 @@
-import { jest } from '@jest/globals';
+import usersService from '#appeals/appeal-users/users-service.js';
 import {
+	activeDirectoryUsersData,
 	appealDataFullPlanning,
 	costsFolderInfoAppellantApplication,
 	documentFileInfo,
 	documentFileVersionsInfo,
+	documentFileVersionsInfoChecked,
 	documentFolderInfo,
 	documentRedactionStatuses,
 	finalCommentsForReview,
-	interestedPartyCommentForReview,
-	activeDirectoryUsersData,
-	documentFileVersionsInfoChecked,
-	finalCommentsForReviewWithAttachments
+	finalCommentsForReviewWithAttachments,
+	interestedPartyCommentForReview
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
-import usersService from '#appeals/appeal-users/users-service.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

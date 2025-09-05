@@ -1,12 +1,12 @@
-import { createValidator } from '@pins/express';
-import { createTextInputOptionalValidator } from '#lib/validators/text-input-validator.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import {
-	createPostcodeValidator,
 	createAddressLine1Validator,
 	createAddressLine2Validator,
+	createPostcodeValidator,
 	createTownValidator
 } from '#lib/validators/address.validator.js';
-import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { createTextInputOptionalValidator } from '#lib/validators/text-input-validator.js';
+import { createValidator } from '@pins/express';
 
 const maxLength = textInputCharacterLimits.defaultAddressInputLength;
 

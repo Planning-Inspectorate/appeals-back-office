@@ -1,5 +1,5 @@
-import { textSummaryListItem } from '#lib/mappers/index.js';
 import { formatListOfNotificationMethodsToHtml } from '#lib/display-page-formatter.js';
+import { textSummaryListItem } from '#lib/mappers/index.js';
 
 /** @type {import("../mapper.js").SubMapper} */
 export const mapNotificationMethods = ({ lpaQuestionnaireData, currentRoute, userHasUpdateCase }) =>

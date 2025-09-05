@@ -3,14 +3,14 @@ import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { HTTPError } from 'got';
 import { getAppellantCaseFromAppealId } from '../appellant-case.service.js';
 import {
+	changeOtherTenantsOfAgriculturalHoldingPage,
 	changePartOfAgriculturalHoldingPage,
-	changeTenantOfAgriculturalHoldingPage,
-	changeOtherTenantsOfAgriculturalHoldingPage
+	changeTenantOfAgriculturalHoldingPage
 } from './agricultural-holding.mapper.js';
 import {
+	changeOtherTenantsOfAgriculturalHolding,
 	changePartOfAgriculturalHolding,
-	changeTenantOfAgriculturalHolding,
-	changeOtherTenantsOfAgriculturalHolding
+	changeTenantOfAgriculturalHolding
 } from './agricultural-holding.service.js';
 
 /**

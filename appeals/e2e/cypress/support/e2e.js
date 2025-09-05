@@ -17,10 +17,8 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import { users } from '../fixtures/users';
-import './commands';
-import { isCI } from './utils/isCI';
 import registerCypressGrep from '@cypress/grep';
+import './commands';
 registerCypressGrep();
 
 after(() => {

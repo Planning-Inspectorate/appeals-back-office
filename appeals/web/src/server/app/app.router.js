@@ -1,29 +1,28 @@
+import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
+import { deleteUncommittedDocumentFromSession } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import config from '#environment/config.js';
-import { assertGroupAccess } from './auth/auth.guards.js';
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import authRouter from './auth/auth.router.js';
-import appealsRouter from '../appeals/appeals.router.js';
+import logger from '#lib/logger.js';
 import { installAuthMock } from '#testing/app/mocks/auth.js';
+import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import appealsRouter from '../appeals/appeals.router.js';
+import { addApiClientToRequest } from '../lib/middleware/add-apiclient-to-request.js';
 import {
-	handleHeathCheck,
 	handleHeadHealthCheck,
+	handleHeathCheck,
 	viewHomepage,
 	viewUnauthenticatedError
 } from './app.controller.js';
 import { handleSignout } from './auth/auth.controller.js';
-import { assertIsAuthenticated } from './auth/auth.guards.js';
+import { assertGroupAccess, assertIsAuthenticated } from './auth/auth.guards.js';
+import authRouter from './auth/auth.router.js';
 import {
+	getBulkDocumentDownload,
 	getDocumentDownload,
 	getDocumentDownloadByVersion,
-	getUncommittedDocumentDownload,
-	getBulkDocumentDownload
+	getUncommittedDocumentDownload
 } from './components/file-downloader.component.js';
-import { addApiClientToRequest } from '../lib/middleware/add-apiclient-to-request.js';
-import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
-import logger from '#lib/logger.js';
-import { deleteUncommittedDocumentFromSession } from '#appeals/appeal-documents/appeal-documents.controller.js';
-import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 
 const router = createRouter();
 

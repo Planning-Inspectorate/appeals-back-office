@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { appealDataToGetRequiredActions } from '#testing/appeals/appeals.js';
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
+import { appealDataToGetRequiredActions } from '#testing/appeals/appeals.js';
 
 describe('mapStatusDependentNotifications', () => {
 	const mockAppealData = {

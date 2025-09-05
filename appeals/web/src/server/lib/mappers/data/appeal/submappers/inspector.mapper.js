@@ -1,6 +1,6 @@
-import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
-import { textSummaryListItem } from '#lib/mappers/index.js';
 import config from '#environment/config.js';
+import { textSummaryListItem } from '#lib/mappers/index.js';
+import { surnameFirstToFullName } from '#lib/person-name-formatter.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapInspector = ({

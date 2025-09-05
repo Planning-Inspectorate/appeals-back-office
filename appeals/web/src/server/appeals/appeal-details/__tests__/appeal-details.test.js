@@ -1,39 +1,38 @@
 // @ts-nocheck
-import { jest } from '@jest/globals';
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
+import usersService from '#appeals/appeal-users/users-service.js';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import {
+	activeDirectoryUsersData,
 	appealData,
 	appealDataFullPlanning,
-	linkedAppeals,
-	linkableAppealSummaryBackOffice,
-	linkableAppealSummaryHorizon,
+	appellantFinalCommentsAwaitingReview,
+	caseNotes,
 	costsFolderInfoAppellantApplication,
-	costsFolderInfoLpaApplication,
 	costsFolderInfoDecision,
+	costsFolderInfoLpaApplication,
+	documentFileInfo,
+	documentFileVersionInfo,
+	documentRedactionStatuses,
+	fileUploadInfo,
+	finalCommentsForReview,
 	folderInfoCrossTeamCorrespondence,
 	folderInfoInspectorCorrespondence,
-	documentRedactionStatuses,
-	linkedAppealsWithExternalLead,
-	fileUploadInfo,
-	caseNotes,
-	activeDirectoryUsersData,
-	finalCommentsForReview,
-	appellantFinalCommentsAwaitingReview,
-	lpaFinalCommentsAwaitingReview,
 	folderInfoMainPartyCorrespondence,
-	documentFileVersionInfo,
-	documentFileInfo
+	linkableAppealSummaryBackOffice,
+	linkableAppealSummaryHorizon,
+	linkedAppeals,
+	linkedAppealsWithExternalLead,
+	lpaFinalCommentsAwaitingReview
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
-import usersService from '#appeals/appeal-users/users-service.js';
+import { jest } from '@jest/globals';
+import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { parseHtml } from '@pins/platform';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { dateISOStringToDisplayTime12hr } from '#lib/dates.js';
-import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { omit } from 'lodash-es';
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

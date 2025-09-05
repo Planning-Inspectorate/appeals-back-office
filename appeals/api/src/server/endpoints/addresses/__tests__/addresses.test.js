@@ -1,4 +1,6 @@
-import { request } from '../../../app-test.js';
+import { householdAppeal } from '#tests/appeals/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
 import {
 	AUDIT_TRAIL_ADDRESS_UPDATED,
@@ -11,10 +13,8 @@ import {
 	LENGTH_250,
 	LENGTH_8
 } from '@pins/appeals/constants/support.js';
-import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal } from '#tests/appeals/mocks.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { formatAddressSingleLine, formatAddressMultiline } from '../addresses.formatter.js';
+import { request } from '../../../app-test.js';
+import { formatAddressMultiline, formatAddressSingleLine } from '../addresses.formatter.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 

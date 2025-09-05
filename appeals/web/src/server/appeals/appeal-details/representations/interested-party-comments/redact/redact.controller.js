@@ -1,11 +1,11 @@
-import { redactInterestedPartyCommentPage } from './redact.mapper.js';
-import { confirmRedactInterestedPartyCommentPage } from './confirm.mapper.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { redactAndAcceptComment } from './redact.service.js';
 import { render } from '#appeals/appeal-details/representations/common/render.js';
-import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
-import logger from '#lib/logger.js';
 import { isAtEditEntrypoint } from '#lib/edit-utilities.js';
+import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
+import { confirmRedactInterestedPartyCommentPage } from './confirm.mapper.js';
+import { redactInterestedPartyCommentPage } from './redact.mapper.js';
+import { redactAndAcceptComment } from './redact.service.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */

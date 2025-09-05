@@ -1,3 +1,5 @@
+import config from '#config/config.js';
+import { databaseConnector } from '#utils/database-connector.js';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import express from 'express';
@@ -7,8 +9,6 @@ import { appealsRoutes } from './endpoints/appeals.routes.js';
 import { defaultErrorHandler, stateMachineErrorHandler } from './middleware/error-handler.js';
 import versionRoutes from './middleware/version-routes.js';
 import BackOfficeAppError from './utils/app-error.js';
-import { databaseConnector } from '#utils/database-connector.js';
-import config from '#config/config.js';
 
 // The purpose of this is to allow the jest environment to create an instance of the app without loading Swagger
 // We have to use a HOF (i.e. we can't just conditionally register swagger UI) because Jest doesn't care about our conditionals and loads all of the modules based on the top-level imports

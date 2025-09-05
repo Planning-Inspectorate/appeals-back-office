@@ -1,18 +1,18 @@
-import { composeMiddleware } from '@pins/express';
-import { body } from 'express-validator';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import {
 	CASE_OUTCOME_ALLOWED,
 	CASE_OUTCOME_DISMISSED,
 	CASE_OUTCOME_SPLIT_DECISION,
-	ERROR_MUST_BE_STRING,
-	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
-	ERROR_MUST_BE_UUID,
-	DECISION_TYPE_INSPECTOR,
 	DECISION_TYPE_APPELLANT_COSTS,
+	DECISION_TYPE_INSPECTOR,
 	DECISION_TYPE_LPA_COSTS,
+	ERROR_CASE_OUTCOME_MUST_BE_ONE_OF,
+	ERROR_MUST_BE_STRING,
+	ERROR_MUST_BE_UUID,
 	ERROR_MUST_CONTAIN_AT_LEAST_1_VALUE
 } from '@pins/appeals/constants/support.js';
+import { composeMiddleware } from '@pins/express';
+import { body } from 'express-validator';
 
 import validateDateParameter from '#common/validators/date-parameter.js';
 
@@ -50,9 +50,9 @@ const getDocumentValidator = composeMiddleware(
 );
 
 export {
+	getDateValidator,
 	getDecisionsValidator,
 	getDecisionTypeValidator,
-	getOutcomeValidator,
-	getDateValidator,
-	getDocumentValidator
+	getDocumentValidator,
+	getOutcomeValidator
 };

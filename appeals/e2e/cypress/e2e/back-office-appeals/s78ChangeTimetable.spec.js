@@ -3,8 +3,8 @@
 
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
-import { happyPathHelper } from '../../support/happyPathHelper';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
+import { happyPathHelper } from '../../support/happyPathHelper';
 
 const listCasesPage = new ListCasesPage();
 const caseDetailsPage = new CaseDetailsPage();

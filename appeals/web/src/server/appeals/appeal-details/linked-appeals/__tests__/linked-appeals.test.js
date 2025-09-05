@@ -1,7 +1,3 @@
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
 import {
 	appealData,
 	documentFileInfo,
@@ -9,6 +5,10 @@ import {
 	linkableAppealSummaryBackOffice,
 	linkableAppealSummaryHorizon
 } from '#testing/appeals/appeals.js';
+import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, teardown } = createTestEnvironment();
 const request = supertest(app);

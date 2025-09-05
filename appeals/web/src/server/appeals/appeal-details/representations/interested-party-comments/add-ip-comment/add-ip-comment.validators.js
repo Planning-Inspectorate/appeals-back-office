@@ -1,8 +1,8 @@
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import { createEmailInputOptionalValidator } from '#lib/validators/email-input.validator.js';
+import { createTextInputValidator } from '#lib/validators/text-input-validator.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import { createTextInputValidator } from '#lib/validators/text-input-validator.js';
-import { createEmailInputOptionalValidator } from '#lib/validators/email-input.validator.js';
-import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 const maxLength = textInputCharacterLimits.defaultAddressInputLength;
 
 export const validateCheckAddress = createValidator(

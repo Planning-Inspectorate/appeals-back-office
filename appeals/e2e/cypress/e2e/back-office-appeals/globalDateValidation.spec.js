@@ -2,10 +2,9 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
-import { happyPathHelper } from '../../support/happyPathHelper';
-import { tag } from '../../support/tag';
-import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage.js';
+import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { happyPathHelper } from '../../support/happyPathHelper';
 
 const caseDetailsPage = new CaseDetailsPage();
 const inquirySectionPage = new InquirySectionPage();

@@ -1,12 +1,12 @@
 // @ts-nocheck
 
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { findStatusDate } from '#utils/mapping/map-dates.js';
-import { isCaseInvalid } from '#utils/case-invalid.js';
-import { mapDesignatedSiteNames } from '../shared/s20s78/questionnaire-fields.js';
 import { fullPlanningAppeal } from '#tests/appeals/mocks.js';
-import { mapCaseDates } from '../shared/s20s78/map-case-dates.js';
+import { isCaseInvalid } from '#utils/case-invalid.js';
+import { findStatusDate } from '#utils/mapping/map-dates.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { mapCaseDates } from '../shared/s20s78/map-case-dates.js';
+import { mapDesignatedSiteNames } from '../shared/s20s78/questionnaire-fields.js';
 
 describe('appeals generic mappers', () => {
 	test('map case validation date on invalid appeal', async () => {

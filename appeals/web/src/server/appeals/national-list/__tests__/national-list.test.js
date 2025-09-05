@@ -1,6 +1,4 @@
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
+import usersService from '#appeals/appeal-users/users-service.js';
 import {
 	activeDirectoryUsersData,
 	appealsNationalList,
@@ -9,8 +7,10 @@ import {
 	procedureTypesData
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
-import usersService from '#appeals/appeal-users/users-service.js';
 import { jest } from '@jest/globals';
+import { parseHtml } from '@pins/platform';
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

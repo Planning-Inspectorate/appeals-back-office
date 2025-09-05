@@ -1,5 +1,3 @@
-import { composeMiddleware } from '@pins/express';
-import { query } from 'express-validator';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import {
 	ERROR_LENGTH_BETWEEN_MIN_AND_MAX_CHARACTERS,
@@ -7,6 +5,8 @@ import {
 	ERROR_MUST_BE_NUMBER,
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
 } from '@pins/appeals/constants/support.js';
+import { composeMiddleware } from '@pins/express';
+import { query } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 /** @typedef {import('express').Request} Request */

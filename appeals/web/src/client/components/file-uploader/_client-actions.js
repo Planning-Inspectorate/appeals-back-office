@@ -1,9 +1,9 @@
-import { showErrors, hideErrors } from './_errors.js';
+import { hideErrors, showErrors } from './_errors.js';
 import {
-	buildStagedFileListItem,
 	buildErrorListItem,
-	showProgressMessage,
-	hideProgressMessage
+	buildStagedFileListItem,
+	hideProgressMessage,
+	showProgressMessage
 } from './_html.js';
 import serverActions from './_server-actions.js';
 

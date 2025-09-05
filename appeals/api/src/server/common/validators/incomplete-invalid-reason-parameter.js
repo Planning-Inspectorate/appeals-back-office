@@ -1,3 +1,4 @@
+import { isOutcomeIncomplete, isOutcomeInvalid } from '#utils/check-validation-outcome.js';
 import {
 	ERROR_MUST_BE_INCOMPLETE_INVALID_REASON,
 	ERROR_ONLY_FOR_INCOMPLETE_VALIDATION_OUTCOME,
@@ -5,7 +6,6 @@ import {
 	LENGTH_1,
 	LENGTH_10
 } from '@pins/appeals/constants/support.js';
-import { isOutcomeIncomplete, isOutcomeInvalid } from '#utils/check-validation-outcome.js';
 import { body } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */

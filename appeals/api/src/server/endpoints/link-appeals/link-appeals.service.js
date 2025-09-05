@@ -4,8 +4,8 @@ import {
 	addDocumentsToAppeal,
 	getFoldersForAppeal
 } from '#endpoints/documents/documents.service.js';
-import rhea from 'rhea';
 import { copyBlobs } from '#utils/blob-copy.js';
+import rhea from 'rhea';
 
 const { generate_uuid } = rhea;
 

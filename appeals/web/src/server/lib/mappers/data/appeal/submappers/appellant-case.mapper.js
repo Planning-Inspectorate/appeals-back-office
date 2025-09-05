@@ -1,6 +1,6 @@
-import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
+import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapAppellantCase = ({ appealDetails, currentRoute, request }) => {

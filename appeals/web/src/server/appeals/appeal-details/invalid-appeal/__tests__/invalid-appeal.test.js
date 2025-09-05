@@ -1,14 +1,14 @@
-import { parseHtml } from '@pins/platform';
-import supertest from 'supertest';
+import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
 import {
 	appealData,
+	appellantCaseDataInvalidOutcome,
 	appellantCaseDataNotValidated,
-	appellantCaseInvalidReasons,
-	appellantCaseDataInvalidOutcome
+	appellantCaseInvalidReasons
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
 import nock from 'nock';
-import { textInputCharacterLimits } from '#appeals/appeal.constants.js';
+import supertest from 'supertest';
 import { appellantEmailTemplate, lpaEmailTemplate } from '../invalid-appeal-data.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();

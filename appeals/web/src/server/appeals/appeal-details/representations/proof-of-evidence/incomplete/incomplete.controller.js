@@ -1,7 +1,7 @@
-import { getRepresentationRejectionReasonOptions } from '../../representations.service.js';
-import { mapRejectionReasonOptionsToCheckboxItemParameters } from '../../common/render-select-rejection-reasons.js';
-import { incompleteProofOfEvidencePage } from './incomplete.mapper.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
+import { mapRejectionReasonOptionsToCheckboxItemParameters } from '../../common/render-select-rejection-reasons.js';
+import { getRepresentationRejectionReasonOptions } from '../../representations.service.js';
+import { incompleteProofOfEvidencePage } from './incomplete.mapper.js';
 
 /**
  * @param {string} path

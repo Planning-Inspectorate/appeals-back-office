@@ -1,25 +1,25 @@
-import logger from '#lib/logger.js';
-import {
-	getAppealTypes,
-	postAppealChangeRequest,
-	postAppealTransferConfirmation,
-	getNoResubmitAppealRequestRedirectUrl,
-	postAppealTransferRequest,
-	changeAppealTransferAppealPage
-} from './change-appeal-type.service.js';
-import {
-	appealTypePage,
-	changeAppealFinalDatePage,
-	resubmitAppealPage,
-	addHorizonReferencePage,
-	checkTransferPage,
-	invalidChangeAppealType,
-	changeAppealMarkAppealInvalidPage
-} from './change-appeal-type.mapper.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { dayMonthYearHourMinuteToISOString } from '#lib/dates.js';
+import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	addHorizonReferencePage,
+	appealTypePage,
+	changeAppealFinalDatePage,
+	changeAppealMarkAppealInvalidPage,
+	checkTransferPage,
+	invalidChangeAppealType,
+	resubmitAppealPage
+} from './change-appeal-type.mapper.js';
+import {
+	changeAppealTransferAppealPage,
+	getAppealTypes,
+	getNoResubmitAppealRequestRedirectUrl,
+	postAppealChangeRequest,
+	postAppealTransferConfirmation,
+	postAppealTransferRequest
+} from './change-appeal-type.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

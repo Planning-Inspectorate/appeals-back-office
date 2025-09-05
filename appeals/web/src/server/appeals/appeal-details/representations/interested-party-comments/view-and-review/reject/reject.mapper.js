@@ -1,5 +1,5 @@
 export {
-	rejectInterestedPartyCommentPage,
 	rejectAllowResubmitPage,
-	rejectCheckYourAnswersPage
+	rejectCheckYourAnswersPage,
+	rejectInterestedPartyCommentPage
 } from '../page-components/reject.mapper.js';

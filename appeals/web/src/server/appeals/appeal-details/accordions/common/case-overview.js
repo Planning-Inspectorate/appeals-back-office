@@ -1,8 +1,7 @@
 import featureFlags from '#common/feature-flags.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_CASE_STATUS,
 	APPEAL_REPRESENTATION_STATUS

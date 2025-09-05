@@ -2,11 +2,11 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
+import { HearingSectionPage } from '../../page_objects/caseDetails/hearingSectionPage';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
-import { HearingSectionPage } from '../../page_objects/caseDetails/hearingSectionPage';
-import { formatDateAndTime } from '../../support/utils/formatDateAndTime';
 import { urlPaths } from '../../support/urlPaths';
+import { formatDateAndTime } from '../../support/utils/formatDateAndTime';
 
 const caseDetailsPage = new CaseDetailsPage();
 const hearingSectionPage = new HearingSectionPage();

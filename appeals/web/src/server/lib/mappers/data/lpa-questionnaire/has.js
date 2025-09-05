@@ -1,6 +1,7 @@
 import { mapAdditionalDocumentsContents } from './submappers/map-additional-documents-contents.js';
 import { mapAdditionalDocuments } from './submappers/map-additional-documents.js';
 import { mapAffectsListedBuildingDetails } from './submappers/map-affects-listed-building-details.js';
+import { mapAppealNotification } from './submappers/map-appeal-notification.js';
 import { mapConservationAreaMap } from './submappers/map-conservation-area-map.js';
 import { mapDevelopmentPlanPolicies } from './submappers/map-development-plan-policies.js';
 import { mapEmergingPlan } from './submappers/map-emerging-plan.js';
@@ -20,7 +21,6 @@ import { mapSiteAccess } from './submappers/map-site-access.js';
 import { mapSiteNotice } from './submappers/map-site-notice.js';
 import { mapSiteWithinGreenBelt } from './submappers/map-site-within-green-belt.js';
 import { mapSupplementaryPlanning } from './submappers/map-supplementary-planning.js';
-import { mapAppealNotification } from './submappers/map-appeal-notification.js';
 
 export const submaps = {
 	affectsListedBuildingDetails: mapAffectsListedBuildingDetails,

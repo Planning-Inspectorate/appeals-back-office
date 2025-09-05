@@ -1,11 +1,11 @@
+import { currentStatus } from '#utils/current-status.js';
 import { dateIsPast } from '#utils/date-comparison.js';
-import { ERROR_REP_PUBLISH_BLOCKED } from '@pins/appeals/constants/support.js';
 import {
 	APPEAL_REPRESENTATION_STATUS,
 	APPEAL_REPRESENTATION_TYPE
 } from '@pins/appeals/constants/common.js';
+import { ERROR_REP_PUBLISH_BLOCKED } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { currentStatus } from '#utils/current-status.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 

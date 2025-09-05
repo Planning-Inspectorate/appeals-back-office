@@ -1,14 +1,14 @@
 // @ts-nocheck
 /// <reference types="cypress"/>
 
-import { users } from '../../fixtures/users';
-import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { ListCasesPage } from '../../page_objects/listCasesPage';
-import { DateTimeSection } from '../../page_objects/dateTimeSection';
-import { tag } from '../../support/tag';
-import { happyPathHelper } from '../../support/happyPathHelper.js';
-import { LpaqPage } from '../../page_objects/caseDetails/lpaqPage.js';
 import { appealsApiRequests } from '../../fixtures/appealsApiRequests';
+import { users } from '../../fixtures/users';
+import { LpaqPage } from '../../page_objects/caseDetails/lpaqPage.js';
+import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
+import { DateTimeSection } from '../../page_objects/dateTimeSection';
+import { ListCasesPage } from '../../page_objects/listCasesPage';
+import { happyPathHelper } from '../../support/happyPathHelper.js';
+import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();

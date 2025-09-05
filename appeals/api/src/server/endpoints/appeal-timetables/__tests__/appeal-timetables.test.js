@@ -1,7 +1,15 @@
 // @ts-nocheck
-import { request } from '../../../app-test.js';
+import {
+	casPlanningAppeal,
+	fullPlanningAppeal,
+	householdAppeal,
+	listedBuildingAppeal
+} from '#tests/appeals/mocks.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
-import { mapValues } from 'lodash-es';
+import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED,
@@ -12,23 +20,14 @@ import {
 	ERROR_MUST_NOT_HAVE_TIMETABLE_DATE,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import { azureAdUserId } from '#tests/shared/mocks.js';
-import {
-	householdAppeal,
-	casPlanningAppeal,
-	fullPlanningAppeal,
-	listedBuildingAppeal
-} from '#tests/appeals/mocks.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { add } from 'date-fns';
 import {
 	recalculateDateIfNotBusinessDay,
 	setTimeInTimeZone
 } from '@pins/appeals/utils/business-days.js';
-import { DEADLINE_HOUR } from '@pins/appeals/constants/dates.js';
-import { DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
-import { PROCEDURE_TYPE_MAP } from '@pins/appeals/constants/common.js';
 import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
+import { add } from 'date-fns';
+import { mapValues } from 'lodash-es';
+import { request } from '../../../app-test.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 

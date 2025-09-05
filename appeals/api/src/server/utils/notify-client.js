@@ -1,11 +1,11 @@
-import { NotifyClient as GovNotify } from 'notifications-node-client';
 import config from '#config/config.js';
-import logger from './logger.js';
 import {
-	ERROR_GOV_NOTIFY_CONNECTIVITY,
 	ERROR_GOV_NOTIFY_API_KEY_NOT_SET,
+	ERROR_GOV_NOTIFY_CONNECTIVITY,
 	NODE_ENV_PRODUCTION
 } from '@pins/appeals/constants/support.js';
+import { NotifyClient as GovNotify } from 'notifications-node-client';
+import logger from './logger.js';
 import stringTokenReplacement from './string-token-replacement.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.NotifyTemplate} NotifyTemplate */

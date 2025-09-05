@@ -1,7 +1,7 @@
 import {
+	Request as ExpressRequest,
 	NextFunction,
 	ParamsDictionary,
-	Request as ExpressRequest,
 	Response
 } from 'express-serve-static-core';
 import { ValidationError } from 'express-validator';

@@ -1,8 +1,8 @@
-import { Router as createRouter } from 'express';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import { postWithdrawal } from './withdrawal.controller.js';
 import { getDateValidator } from './withdrawal.validator.js';
-import { asyncHandler } from '@pins/express';
 
 const router = createRouter();
 

@@ -1,30 +1,30 @@
-import { PromisePool } from '@supercharge/promise-pool/dist/promise-pool.js';
-import logger from '#utils/logger.js';
 import config from '#config/config.js';
-import { mapDocumentsForDatabase, mapDocumentsForAuditTrail } from './documents.mapper.js';
-import { getByCaseId, getByCaseIdAndPaths, getById } from '#repositories/folder.repository.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import {
 	addDocument,
 	addDocumentVersion,
-	deleteDocumentVersion,
-	addDocumentVersionAudit
+	addDocumentVersionAudit,
+	deleteDocumentVersion
 } from '#repositories/document-metadata.repository.js';
-import { formatFolder } from './documents.formatter.js';
 import documentRedactionStatusRepository from '#repositories/document-redaction-status.repository.js';
+import { getByCaseId, getByCaseIdAndPaths, getById } from '#repositories/folder.repository.js';
+import { validateBlobContents } from '#utils/blob-validation.js';
+import logger from '#utils/logger.js';
 import {
 	ERROR_NOT_FOUND,
-	VALIDATION_OUTCOME_VALID,
+	VALIDATION_OUTCOME_COMPLETE,
 	VALIDATION_OUTCOME_INVALID,
-	VALIDATION_OUTCOME_COMPLETE
+	VALIDATION_OUTCOME_VALID
 } from '@pins/appeals/constants/support.js';
-import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { EventType } from '@pins/event-client';
 import {
 	APPEAL_CASE_STAGE,
-	APPEAL_VIRUS_CHECK_STATUS,
-	APPEAL_DOCUMENT_TYPE
+	APPEAL_DOCUMENT_TYPE,
+	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
-import { validateBlobContents } from '#utils/blob-validation.js';
+import { PromisePool } from '@supercharge/promise-pool/dist/promise-pool.js';
+import { formatFolder } from './documents.formatter.js';
+import { mapDocumentsForAuditTrail, mapDocumentsForDatabase } from './documents.mapper.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Document} Document */

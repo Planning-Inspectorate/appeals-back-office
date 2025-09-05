@@ -1,17 +1,17 @@
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { HTTPError } from 'got';
+import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
 import {
-	changeProcedurePreferencePage,
 	changeProcedurePreferenceDetailsPage,
-	changeProcedurePreferenceDurationPage
+	changeProcedurePreferenceDurationPage,
+	changeProcedurePreferencePage
 } from './procedure-preference.mapper.js';
 import {
 	changeProcedurePreference,
 	changeProcedurePreferenceDetails,
 	changeProcedurePreferenceDuration
 } from './procedure-preference.service.js';
-import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

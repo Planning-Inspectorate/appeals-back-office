@@ -1,10 +1,9 @@
 import { request } from '#tests/../app-test.js';
-import { jest } from '@jest/globals';
-import { azureAdUserId } from '#tests/shared/mocks.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
-import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
+import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { AUDIT_TRAIL_LPA_UPDATED } from '@pins/appeals/constants/support.js';
+import { jest } from '@jest/globals';
+import { AUDIT_TRAIL_LPA_UPDATED, ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 

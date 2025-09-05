@@ -1,15 +1,14 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import {
-	completeMsalAuthentication,
-	startMsalAuthentication,
-	getAccessToken
-} from './auth.controller.js';
-import { assertIsUnauthenticated } from './auth.guards.js';
-import { clearAuthenticationData, registerAuthLocals } from './auth.pipes.js';
-import { assertGroupAccess } from './auth.guards.js';
 import config from '#environment/config.js';
 import { addApiClientToRequest } from '#lib/middleware/add-apiclient-to-request.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import {
+	completeMsalAuthentication,
+	getAccessToken,
+	startMsalAuthentication
+} from './auth.controller.js';
+import { assertGroupAccess, assertIsUnauthenticated } from './auth.guards.js';
+import { clearAuthenticationData, registerAuthLocals } from './auth.pipes.js';
 
 const router = createRouter();
 

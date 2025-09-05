@@ -1,8 +1,8 @@
-import supertest from 'supertest';
-import { jest } from '@jest/globals';
-import { app } from '../../../app-test.js';
+import { auditTrails, householdAppeal } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
-import { householdAppeal, auditTrails } from '#tests/appeals/mocks.js';
+import { jest } from '@jest/globals';
+import supertest from 'supertest';
+import { app } from '../../../app-test.js';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const request = supertest(app);

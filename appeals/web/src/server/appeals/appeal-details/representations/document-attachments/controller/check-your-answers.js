@@ -1,18 +1,18 @@
 import { createNewDocument } from '#app/components/file-uploader.component.js';
-import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
-import logger from '#lib/logger.js';
-import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import config from '@pins/appeals.web/environment/config.js';
 import {
 	isValidRedactionStatus,
 	name as redactionStatusFieldName,
 	statusFormatMap
 } from '#appeals/appeal-details/representations/interested-party-comments/common/redaction-status.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { patchRepresentationAttachments } from '../../final-comments/final-comments.service.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { dayMonthYearHourMinuteToDisplayDate } from '#lib/dates.js';
 import { clearEdits, editLink } from '#lib/edit-utilities.js';
+import logger from '#lib/logger.js';
+import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import config from '@pins/appeals.web/environment/config.js';
+import { patchRepresentationAttachments } from '../../final-comments/final-comments.service.js';
 
 /**
  * @param {import('@pins/express').Request} request
