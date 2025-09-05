@@ -114,6 +114,28 @@ describe('update-case-team', () => {
 				expect(element.innerHTML).toContain('Update case team');
 			});
 		});
+
+		describe('GET Unassig team', () => {
+			beforeEach(async () => {
+				nock('http://test/').get('/appeals/1/case-team').reply(200, { assignedTeamId: 4 });
+				renderSelectPage = await request.get(`${baseUrl}/1${caseTeamPath}/edit`);
+				selectTeamResponse = await request.post(`${baseUrl}/1${caseTeamPath}/edit`).send({
+					'case-team': '0'
+				});
+				renderSelectPage = await request.get(`${baseUrl}/1${caseTeamPath}/edit`);
+			});
+			it('should display not assigned when unassign team is selected', async () => {
+				expect(renderSelectPage.statusCode).toBe(500);
+				expect(selectTeamResponse.statusCode).toBe(302);
+				const response = await request.get(`${baseUrl}/1${caseTeamPath}/edit/check`);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Not assigned</dd>');
+				expect(element.innerHTML).toContain('Change team</span>');
+				expect(element.innerHTML).toContain('Update case team');
+			});
+		});
 		describe('POST', () => {
 			it('should redirect to the appeal detail page', async () => {
 				nock('http://test/').patch('/appeals/1/case-team').reply(200, { assignedTeamId: 1 });
