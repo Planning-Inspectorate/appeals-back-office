@@ -1,14 +1,14 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
-import { validateAppeal } from '../appeal-details.middleware.js';
 import { permissionNames } from '#environment/permissions.js';
-import * as updateDecisionLetterController from './update-decision-letter.controller.js';
-import { updateCorrectionNoticeValidator } from './update-decision-letter.validator.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import { validateAppeal } from '../appeal-details.middleware.js';
 import {
 	postDecisionLetterUpload,
 	renderDecisionLetterUpload
 } from '../issue-decision/issue-decision.controller.js';
+import * as updateDecisionLetterController from './update-decision-letter.controller.js';
+import { updateCorrectionNoticeValidator } from './update-decision-letter.validator.js';
 
 const router = createRouter({ mergeParams: true });
 

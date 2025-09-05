@@ -1,8 +1,8 @@
-import { composeMiddleware } from '@pins/express';
-import { validationErrorHandler } from '#middleware/error-handler.js';
-import validateIdParameter from '#common/validators/id-parameter.js';
 import validateDateParameter from '#common/validators/date-parameter.js';
+import validateIdParameter from '#common/validators/id-parameter.js';
 import { validateStringParameter } from '#common/validators/string-parameter.js';
+import { validationErrorHandler } from '#middleware/error-handler.js';
+import { composeMiddleware } from '@pins/express';
 
 const postAppealTypeChangeValidator = composeMiddleware(
 	validateIdParameter('appealId'),
@@ -27,6 +27,6 @@ const postAppealTypeTransferConfirmationValidator = composeMiddleware(
 
 export {
 	postAppealTypeChangeValidator,
-	postAppealTypeTransferValidator,
-	postAppealTypeTransferConfirmationValidator
+	postAppealTypeTransferConfirmationValidator,
+	postAppealTypeTransferValidator
 };

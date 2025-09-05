@@ -1,6 +1,6 @@
 import config from '#environment/config.js';
-import humps from 'humps';
 import { getMsalClient } from '#lib/msal.js';
+import humps from 'humps';
 
 /** @typedef {import('@azure/msal-node').AuthenticationResult} OriginalAuthenticationResult */
 /** @typedef {import('@pins/platform').PlanningInspectorAccountInfo} AccountInfo */

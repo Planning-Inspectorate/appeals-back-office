@@ -1,6 +1,6 @@
+import { closeBrowser, launchBrowser } from './browser-instance.js';
 import logger from './lib/logger.js';
 import server from './server.js';
-import { launchBrowser, closeBrowser } from './browser-instance.js';
 
 const main = async () => {
 	try {

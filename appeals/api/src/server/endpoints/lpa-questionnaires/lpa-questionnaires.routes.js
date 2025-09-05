@@ -1,18 +1,18 @@
-import { Router as createRouter } from 'express';
+import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import checkLookupValueIsValidAndAddToRequest from '#middleware/check-lookup-value-is-valid-and-add-to-request.js';
+import checkLookupValuesAreValid from '#middleware/check-lookup-values-are-valid.js';
+import { ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME } from '@pins/appeals/constants/support.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import {
 	getLpaQuestionnaireById,
 	updateLPAQuestionnaireById
 } from './lpa-questionnaires.controller.js';
-import checkLookupValueIsValidAndAddToRequest from '#middleware/check-lookup-value-is-valid-and-add-to-request.js';
-import checkLookupValuesAreValid from '#middleware/check-lookup-values-are-valid.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { checkLPAQuestionnaireExists } from './lpa-questionnaires.service.js';
 import {
 	getLPAQuestionnaireValidator,
 	patchLPAQuestionnaireValidator
 } from './lpa-questionnaires.validators.js';
-import { ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME } from '@pins/appeals/constants/support.js';
 
 const router = createRouter();
 

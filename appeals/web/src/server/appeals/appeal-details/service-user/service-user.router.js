@@ -1,8 +1,8 @@
-import { Router as createRouter } from 'express';
+import { validateAction } from '#appeals/appeal-details/service-user/service-user.middleware.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import * as controller from './service-user.controller.js';
 import * as validators from './service-user.validators.js';
-import { validateAction } from '#appeals/appeal-details/service-user/service-user.middleware.js';
 
 const router = createRouter({ mergeParams: true });
 

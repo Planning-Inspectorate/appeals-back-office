@@ -1,22 +1,22 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
-import {
-	loadAllAppealTypesAndAddToRequest,
-	validateAppealType,
-	validateAppealStatus,
-	validateAppealStatusForTransfer
-} from './change-appeal-type.middleware.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import {
 	getAppealTypes,
 	requestChangeOfAppealType,
-	requestTransferOfAppeal,
-	requestConfirmationTransferOfAppeal
+	requestConfirmationTransferOfAppeal,
+	requestTransferOfAppeal
 } from './change-appeal-type.controller.js';
 import {
+	loadAllAppealTypesAndAddToRequest,
+	validateAppealStatus,
+	validateAppealStatusForTransfer,
+	validateAppealType
+} from './change-appeal-type.middleware.js';
+import {
 	postAppealTypeChangeValidator,
-	postAppealTypeTransferValidator,
-	postAppealTypeTransferConfirmationValidator
+	postAppealTypeTransferConfirmationValidator,
+	postAppealTypeTransferValidator
 } from './change-appeal-type.validators.js';
 
 const router = createRouter();

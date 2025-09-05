@@ -1,11 +1,11 @@
 import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getLpaQuestionnaireFromId } from '../../lpa-questionnaire.service.js';
 import {
 	changeEiaEnvironmentalImpactSchedulePage,
 	mapEiaEnvironmentalImpactScheduleRadioValueForService
 } from './eia-environmental-impact-schedule.mapper.js';
 import { changeEiaEnvironmentalImpactSchedule } from './eia-environmental-impact-schedule.service.js';
-import { getLpaQuestionnaireFromId } from '../../lpa-questionnaire.service.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

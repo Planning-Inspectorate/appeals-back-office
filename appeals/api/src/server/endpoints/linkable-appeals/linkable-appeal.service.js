@@ -1,13 +1,13 @@
-import logger from '#utils/logger.js';
 import appealRepository from '#repositories/appeal.repository.js';
-import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
-import { formatLinkableAppealSummary } from './linkable-appeal.formatter.js';
-import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { currentStatus } from '#utils/current-status.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
+import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
+import logger from '#utils/logger.js';
+import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { formatLinkableAppealSummary } from './linkable-appeal.formatter.js';
 
 const linkableCaseStatuses = [
 	APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,

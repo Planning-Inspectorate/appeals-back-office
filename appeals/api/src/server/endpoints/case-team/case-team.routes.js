@@ -1,7 +1,7 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
-import * as controller from './case-team.controller.js';
 import { checkAppealExistsById } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import * as controller from './case-team.controller.js';
 import { updateAssignedCaseIdValidator } from './case-team.validators.js';
 
 const router = createRouter();

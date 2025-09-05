@@ -1,18 +1,18 @@
 // @ts-nocheck
+import { tryMapDocument } from '#appeals/appeal-details/audit/audit.mapper.js';
+import { statusFormatMap } from '#appeals/appeal-details/representations/document-attachments/controller/redaction-status.js';
+import usersService from '#appeals/appeal-users/users-service.js';
+import {
+	activeDirectoryUsersData,
+	appealData,
+	caseAuditLog,
+	caseNotificationAuditLog
+} from '#testing/app/fixtures/referencedata.js';
+import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
-import {
-	activeDirectoryUsersData,
-	caseAuditLog,
-	caseNotificationAuditLog,
-	appealData
-} from '#testing/app/fixtures/referencedata.js';
-import usersService from '#appeals/appeal-users/users-service.js';
-import { createTestEnvironment } from '#testing/index.js';
-import { tryMapDocument } from '#appeals/appeal-details/audit/audit.mapper.js';
-import { statusFormatMap } from '#appeals/appeal-details/representations/document-attachments/controller/redaction-status.js';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

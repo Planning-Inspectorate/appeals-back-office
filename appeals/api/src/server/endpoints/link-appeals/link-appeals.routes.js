@@ -1,17 +1,17 @@
-import { Router as createRouter } from 'express';
-import { asyncHandler } from '@pins/express';
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
+import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
+import {
+	associateAppeal,
+	associateExternalAppeal,
+	linkAppeal,
+	linkExternalAppeal,
+	unlinkAppeal
+} from './link-appeals.controller.js';
 import {
 	postLinkAppealValidator,
 	postLinkLegacyAppealValidator
 } from './link-appeals.validators.js';
-import {
-	linkAppeal,
-	linkExternalAppeal,
-	associateAppeal,
-	associateExternalAppeal,
-	unlinkAppeal
-} from './link-appeals.controller.js';
 
 const router = createRouter();
 

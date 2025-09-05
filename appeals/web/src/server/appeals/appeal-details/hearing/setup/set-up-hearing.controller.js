@@ -1,24 +1,24 @@
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import {
-	addressDetailsPage,
-	addressKnownPage,
-	checkDetailsPage,
-	hearingDatePage
-} from './set-up-hearing.mapper.js';
-import logger from '#lib/logger.js';
-import { isEmpty, isEqual, has, pick } from 'lodash-es';
 import {
 	dateISOStringToDayMonthYearHourMinute,
 	dayMonthYearHourMinuteToISOString
 } from '#lib/dates.js';
-import { createHearing, updateHearing } from './hearing.service.js';
-import { preserveQueryString } from '#lib/url-utilities.js';
 import {
 	applyEdits,
 	clearEdits,
 	getSessionValues,
 	isAtEditEntrypoint
 } from '#lib/edit-utilities.js';
+import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
+import { has, isEmpty, isEqual, pick } from 'lodash-es';
+import { createHearing, updateHearing } from './hearing.service.js';
+import {
+	addressDetailsPage,
+	addressKnownPage,
+	checkDetailsPage,
+	hearingDatePage
+} from './set-up-hearing.mapper.js';
 
 /**
  * @param {string} path

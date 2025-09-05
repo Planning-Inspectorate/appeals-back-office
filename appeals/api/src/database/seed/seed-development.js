@@ -1,5 +1,4 @@
 import { databaseConnector } from '../../server/utils/database-connector.js';
-import { lpaTeamAssignments, teamsToCreate } from './teams/dev.js';
 import { addAssignedTeamIdToAppeal } from './add-assigned-team-id.js';
 import { seedStaticData } from './data-static.js';
 import { seedTestData } from './data-test.js';
@@ -8,6 +7,7 @@ import { mapLpasToTeams } from './map-lpa-and-teams.js';
 import { deleteAllRecords } from './seed-clear.js';
 import { seedLPAs } from './seed-lpas.js';
 import { seedTeams } from './seed-teams.js';
+import { lpaTeamAssignments, teamsToCreate } from './teams/dev.js';
 
 /**
  * Clear the dev database, then add in the static and test data

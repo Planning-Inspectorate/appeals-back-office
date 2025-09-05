@@ -1,38 +1,38 @@
+import {
+	isOutcomeIncomplete,
+	isOutcomeInvalid,
+	isOutcomeValid
+} from '#utils/check-validation-outcome.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
 	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import {
-	isOutcomeIncomplete,
-	isOutcomeInvalid,
-	isOutcomeValid
-} from '#utils/check-validation-outcome.js';
 
-import appellantCaseRepository from '#repositories/appellant-case.repository.js';
-import transitionState from '../../state/transition-state.js';
-import appealRepository from '#repositories/appeal.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { getFormattedReasons } from '#utils/email-formatter.js';
-import { camelToScreamingSnake, capitalizeFirstLetter } from '#utils/string-utils.js';
-import * as documentRepository from '#repositories/document.repository.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { EventType } from '@pins/event-client';
 import { notifySend } from '#notify/notify-send.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import appellantCaseRepository from '#repositories/appellant-case.repository.js';
+import * as documentRepository from '#repositories/document.repository.js';
+import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
+import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
+import { getFormattedReasons } from '#utils/email-formatter.js';
+import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
+import { allAppellantCaseOutcomesAreValid } from '#utils/is-awaiting-linked-appeal.js';
+import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { camelToScreamingSnake, capitalizeFirstLetter } from '#utils/string-utils.js';
 import {
 	APPEAL_DEVELOPMENT_TYPES,
 	PLANNING_OBLIGATION_STATUSES
 } from '@pins/appeals/constants/appellant-cases.constants.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import auditApplicationDecisionMapper from '#utils/audit-application-decision-mapper.js';
-import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
-import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js';
-import { allAppellantCaseOutcomesAreValid } from '#utils/is-awaiting-linked-appeal.js';
 import { AUDIT_TRAIL_SUBMISSION_INVALID } from '@pins/appeals/constants/support.js';
-import { formatReasonsToHtmlList } from '#utils/format-reasons-to-html-list.js';
+import formatDate from '@pins/appeals/utils/date-formatter.js';
+import { EventType } from '@pins/event-client';
+import transitionState from '../../state/transition-state.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateAppellantCaseValidationOutcomeParams} UpdateAppellantCaseValidationOutcomeParams */
 /** @typedef {import('express').Request} Request */

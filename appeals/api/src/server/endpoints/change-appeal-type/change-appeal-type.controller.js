@@ -1,12 +1,12 @@
-import { isFeatureActive } from '#utils/feature-flags.js';
-import { databaseConnector } from '#utils/database-connector.js';
-import transitionState from '#state/transition-state.js';
-import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { changeAppealType } from './change-appeal-type.service.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import transitionState from '#state/transition-state.js';
+import { databaseConnector } from '#utils/database-connector.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { addDays } from '@pins/appeals/utils/business-days.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { changeAppealType } from './change-appeal-type.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

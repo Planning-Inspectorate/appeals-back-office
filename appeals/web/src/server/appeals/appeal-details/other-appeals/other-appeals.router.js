@@ -1,7 +1,7 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
-import * as validators from './other-appeals.validators.js';
+import { Router as createRouter } from 'express';
 import * as controller from './other-appeals.controller.js';
+import * as validators from './other-appeals.validators.js';
 
 const router = createRouter({ mergeParams: true });
 

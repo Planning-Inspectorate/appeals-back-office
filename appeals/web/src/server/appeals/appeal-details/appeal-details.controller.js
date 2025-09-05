@@ -1,10 +1,9 @@
-import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_TYPE, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { appealDetailsPage } from './appeal-details.mapper.js';
+import { getAppellantCaseFromAppealId } from './appellant-case/appellant-case.service.js';
 import { getAppealCaseNotes } from './case-notes/case-notes.service.js';
 import { getSingularRepresentationByType } from './representations/representations.service.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
-import { getAppellantCaseFromAppealId } from './appellant-case/appellant-case.service.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

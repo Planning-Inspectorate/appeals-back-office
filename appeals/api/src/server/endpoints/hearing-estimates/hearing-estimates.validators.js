@@ -1,13 +1,13 @@
-import { composeMiddleware } from '@pins/express';
 import { validationErrorHandler } from '#middleware/error-handler.js';
-import { body } from 'express-validator';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_MUST_BE_NUMBER,
-	ERROR_NUMBER_RANGE,
-	ERROR_NUMBER_INCREMENTS
+	ERROR_NUMBER_INCREMENTS,
+	ERROR_NUMBER_RANGE
 } from '@pins/appeals/constants/support.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { composeMiddleware } from '@pins/express';
+import { body } from 'express-validator';
 
 /**
  * @param {string} paramName

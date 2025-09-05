@@ -1,11 +1,11 @@
-import { appealShortReference } from '#lib/appeals-formatter.js';
-import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
-import { simpleHtmlComponent } from '#lib/mappers/components/page-components/html.js';
 import { rejectionReasonHtml } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
-import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { getAttachmentList } from '../../../common/document-attachment-list.js';
-import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js';
+import { appealShortReference } from '#lib/appeals-formatter.js';
 import { editLink } from '#lib/edit-utilities.js';
+import { simpleHtmlComponent } from '#lib/mappers/components/page-components/html.js';
+import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { getDetailsForCommentResubmission } from '@pins/appeals/utils/notify.js';
+import { getAttachmentList } from '../../../common/document-attachment-list.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */

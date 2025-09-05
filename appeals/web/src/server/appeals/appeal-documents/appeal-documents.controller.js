@@ -1,40 +1,40 @@
-import logger from '#lib/logger.js';
-import {
-	getDocumentRedactionStatuses,
-	updateDocuments,
-	getFileVersionsInfo,
-	getFileInfo,
-	deleteDocument,
-	updateDocument
-} from './appeal.documents.service.js';
-import {
-	mapDocumentDetailsFormDataToAPIRequest,
-	addDocumentDetailsFormDataToFileUploadInfo,
-	addDocumentDetailsPage,
-	addDocumentsCheckAndConfirmPage,
-	manageFolderPage,
-	manageDocumentPage,
-	changeDocumentDetailsPage,
-	changeDocumentFileNamePage,
-	deleteDocumentPage,
-	documentUploadPage,
-	mapDocumentFileNameFormDataToAPIRequest
-} from './appeal-documents.mapper.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import {
 	createNewDocument,
 	createNewDocumentVersion
 } from '#app/components/file-uploader.component.js';
-import config from '@pins/appeals.web/environment/config.js';
-import { isFileUploadInfoItemArray } from '#lib/ts-utilities.js';
+import { permissionNames } from '#environment/permissions.js';
 import { getTodaysISOString } from '#lib/dates.js';
 import { folderIsAdditionalDocuments } from '#lib/documents.js';
-import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import logger from '#lib/logger.js';
 import { userHasPermission } from '#lib/mappers/index.js';
-import { permissionNames } from '#environment/permissions.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { isFileUploadInfoItemArray } from '#lib/ts-utilities.js';
+import { isInternalUrl, safeRedirect } from '#lib/url-utilities.js';
+import config from '@pins/appeals.web/environment/config.js';
+import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import {
+	addDocumentDetailsFormDataToFileUploadInfo,
+	addDocumentDetailsPage,
+	addDocumentsCheckAndConfirmPage,
+	changeDocumentDetailsPage,
+	changeDocumentFileNamePage,
+	deleteDocumentPage,
+	documentUploadPage,
+	manageDocumentPage,
+	manageFolderPage,
+	mapDocumentDetailsFormDataToAPIRequest,
+	mapDocumentFileNameFormDataToAPIRequest
+} from './appeal-documents.mapper.js';
+import {
+	deleteDocument,
+	getDocumentRedactionStatuses,
+	getFileInfo,
+	getFileVersionsInfo,
+	updateDocument,
+	updateDocuments
+} from './appeal.documents.service.js';
 
 /** @typedef {'all-fields-day' | 'day-month' | 'month-year' | 'day-year' | 'day' | 'month' | 'year'} DateFieldKey */
 

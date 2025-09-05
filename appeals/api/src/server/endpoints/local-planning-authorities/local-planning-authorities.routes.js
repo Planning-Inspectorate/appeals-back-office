@@ -1,10 +1,10 @@
-import { Router as createRouter } from 'express';
+import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import { getLookupData } from '../../common/controllers/lookup-data.controller.js';
 import { controller } from './local-planning-authorities.controller.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
-import { postLpaValidator } from './local-planning-authorities.validators.js';
 import { checkLpaIdExists } from './local-planning-authorities.middleware.js';
+import { postLpaValidator } from './local-planning-authorities.validators.js';
 
 const router = createRouter();
 

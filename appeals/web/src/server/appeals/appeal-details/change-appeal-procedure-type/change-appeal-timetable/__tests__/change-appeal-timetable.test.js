@@ -1,11 +1,11 @@
-import { jest } from '@jest/globals';
-import { parseHtml } from '@pins/platform';
-import nock from 'nock';
-import supertest from 'supertest';
 import { appealData as baseAppealData } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common';
+import { parseHtml } from '@pins/platform';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, teardown } = createTestEnvironment();
 const request = supertest(app);

@@ -1,31 +1,31 @@
-import { decisionCheckAndConfirmPage } from './costs.mapper.js';
 import {
-	renderDocumentUpload,
-	postDocumentUpload,
-	renderDocumentDetails,
-	postDocumentDetails,
-	renderManageFolder,
-	renderManageDocument,
-	renderDeleteDocument,
+	postChangeDocumentDetails,
+	postChangeDocumentFileName,
 	postDeleteDocument,
-	renderUploadDocumentsCheckAndConfirm,
+	postDocumentDetails,
+	postDocumentUpload,
 	postUploadDocumentsCheckAndConfirm,
 	postUploadDocumentVersionCheckAndConfirm,
 	renderChangeDocumentDetails,
-	postChangeDocumentDetails,
 	renderChangeDocumentFileName,
-	postChangeDocumentFileName
+	renderDeleteDocument,
+	renderDocumentDetails,
+	renderDocumentUpload,
+	renderManageDocument,
+	renderManageFolder,
+	renderUploadDocumentsCheckAndConfirm
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
 import {
+	getDocumentFileType,
 	getDocumentRedactionStatuses,
-	getFileInfo,
-	getDocumentFileType
+	getFileInfo
 } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { capitalize, upperCase } from 'lodash-es';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { capitalizeFirstLetter } from '#lib/string-utilities.js';
+import { capitalize, upperCase } from 'lodash-es';
+import { decisionCheckAndConfirmPage } from './costs.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getDocumentUpload = async (request, response) => {

@@ -1,5 +1,5 @@
 import { Address } from '@pins/appeals';
-import { LPAQuestionnaireValidationOutcomeResponse } from './lpa-questionnaire/lpa-questionnaire.types';
+import { SiteVisit } from '@pins/appeals.api/src/database/schema';
 import {
 	AppealTimetable,
 	DocumentationSummary,
@@ -7,7 +7,7 @@ import {
 	FolderInfo,
 	SingleAppealDetailsResponse
 } from '@pins/appeals.api/src/server/endpoints/appeals';
-import { SiteVisit } from '@pins/appeals.api/src/database/schema';
+import { LPAQuestionnaireValidationOutcomeResponse } from './lpa-questionnaire/lpa-questionnaire.types';
 
 export interface AppealHealthAndSafetyEntry {
 	details: string | null;

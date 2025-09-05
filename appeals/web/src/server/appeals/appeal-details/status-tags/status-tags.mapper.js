@@ -1,14 +1,14 @@
 import { mapVirusCheckStatus } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import { dateISOStringToDisplayDate, getOriginalAndLatestLetterDatesObject } from '#lib/dates.js';
-import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
-import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
-import { isStatePassed } from '#lib/appeal-status.js';
-import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import config from '#environment/config.js';
+import { isStatePassed } from '#lib/appeal-status.js';
+import { dateISOStringToDisplayDate, getOriginalAndLatestLetterDatesObject } from '#lib/dates.js';
 import { generateDecisionDocumentDownloadHtml } from '#lib/mappers/data/appeal/common.js';
-import { getInvalidStatusCreatedDate } from '../invalid-appeal/invalid-appeal.service.js';
+import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { toSentenceCase } from '#lib/string-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { APPEAL_CASE_STATUS, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
+import { getAppealTypesFromId } from '../change-appeal-type/change-appeal-type.service.js';
+import { getInvalidStatusCreatedDate } from '../invalid-appeal/invalid-appeal.service.js';
 
 /**
  * @param {{ appeal: MappedInstructions }} mappedData

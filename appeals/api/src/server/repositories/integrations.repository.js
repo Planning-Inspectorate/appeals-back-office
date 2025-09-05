@@ -1,13 +1,12 @@
-import { databaseConnector } from '#utils/database-connector.js';
-import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
-import { createAppealReference } from '#utils/appeal-reference.js';
 import config from '#config/config.js';
-import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { mapBlobPath } from '#endpoints/documents/documents.mapper.js';
 import { getFolderIdFromDocumentType } from '#endpoints/integrations/integrations.utils.js';
+import { createAppealReference } from '#utils/appeal-reference.js';
+import { databaseConnector } from '#utils/database-connector.js';
+import { PROCEDURE_TYPE_ID_MAP, TEAM_NAME_MAP } from '@pins/appeals/constants/common.js';
 import { CASE_RELATIONSHIP_RELATED } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { getTeamIdFromLpaCode, getTeamIdFromName } from './team.repository.js';
-import { PROCEDURE_TYPE_ID_MAP } from '@pins/appeals/constants/common.js';
-import { TEAM_NAME_MAP } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.Representation} Representation */

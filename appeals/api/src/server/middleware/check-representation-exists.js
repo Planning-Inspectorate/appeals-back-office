@@ -1,5 +1,5 @@
-import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import representationRepository from '#repositories/representation.repository.js';
+import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

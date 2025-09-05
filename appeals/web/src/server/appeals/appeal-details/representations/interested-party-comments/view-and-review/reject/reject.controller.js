@@ -1,6 +1,11 @@
-import { mapRejectionReasonPayload } from '#appeals/appeal-details/representations/representations.mapper.js';
+import { prepareRejectionReasons } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
 import { mapRejectionReasonOptionsToCheckboxItemParameters } from '#appeals/appeal-details/representations/common/render-select-rejection-reasons.js';
-import { getRepresentationRejectionReasonOptions } from '#appeals/appeal-details/representations/representations.service.js';
+import { mapRejectionReasonPayload } from '#appeals/appeal-details/representations/representations.mapper.js';
+import {
+	getRepresentationRejectionReasonOptions,
+	updateRejectionReasons
+} from '#appeals/appeal-details/representations/representations.service.js';
+import { applyEdits, clearEdits, isAtEditEntrypoint } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import {
@@ -8,10 +13,7 @@ import {
 	rejectCheckYourAnswersPage,
 	rejectInterestedPartyCommentPage
 } from './reject.mapper.js';
-import { updateRejectionReasons } from '#appeals/appeal-details/representations/representations.service.js';
 import { rejectInterestedPartyComment } from './reject.service.js';
-import { prepareRejectionReasons } from '#appeals/appeal-details/representations/common/components/reject-reasons.js';
-import { applyEdits, clearEdits, isAtEditEntrypoint } from '#lib/edit-utilities.js';
 
 /** @type {import('express').Handler} */
 export async function renderSelectReason(request, response) {

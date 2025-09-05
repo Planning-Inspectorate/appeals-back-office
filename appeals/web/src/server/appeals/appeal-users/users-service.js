@@ -1,8 +1,7 @@
-import { getData } from '#lib/graph-request.js';
-import { fetchFromCache, storeInCache } from '#lib/cache-handler.js';
-import getActiveDirectoryAccessToken from '#lib/active-directory-token.js';
 import config from '#environment/config.js';
-import { prefixUrl } from '#lib/graph-request.js';
+import getActiveDirectoryAccessToken from '#lib/active-directory-token.js';
+import { fetchFromCache, storeInCache } from '#lib/cache-handler.js';
+import { getData, prefixUrl } from '#lib/graph-request.js';
 
 /** @typedef {import('#app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 

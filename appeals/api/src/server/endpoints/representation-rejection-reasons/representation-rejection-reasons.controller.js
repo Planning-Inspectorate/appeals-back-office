@@ -1,6 +1,6 @@
-import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
-import representationRejectionReasonRepository from '#repositories/representation-rejection-reason.repository.js';
 import commonRepository from '#repositories/common.repository.js';
+import representationRejectionReasonRepository from '#repositories/representation-rejection-reason.repository.js';
+import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

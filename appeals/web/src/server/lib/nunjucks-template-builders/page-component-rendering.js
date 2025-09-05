@@ -1,6 +1,6 @@
-import nunjucks from 'nunjucks';
-import { isObjectLiteral } from '#lib/object-utilities.js';
 import logger from '#lib/logger.js';
+import { isObjectLiteral } from '#lib/object-utilities.js';
+import nunjucks from 'nunjucks';
 
 /**
  * Recursively renders any PageComponents found in HtmlPropertys of the supplied pageComponents.

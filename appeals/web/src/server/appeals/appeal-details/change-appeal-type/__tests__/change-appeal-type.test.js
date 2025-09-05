@@ -1,10 +1,10 @@
+import { appealData, appealTypesData } from '#testing/app/fixtures/referencedata.js';
+import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import nock from 'nock';
 import supertest from 'supertest';
-import { createTestEnvironment } from '#testing/index.js';
-import { appealData, appealTypesData } from '#testing/app/fixtures/referencedata.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

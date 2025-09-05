@@ -1,20 +1,20 @@
-import { commandMappers } from '#mappers/integration/commands/index.js';
-import { broadcasters } from './integrations.broadcasters.js';
-import { integrationService } from './integrations.service.js';
-import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { EventType } from '@pins/event-client';
+import { addDocumentAudit } from '#endpoints/documents/documents.service.js';
+import { commandMappers } from '#mappers/integration/commands/index.js';
+import { getAssignedTeam } from '#repositories/team.repository.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	AUDIT_TRAIL_APPELLANT_IMPORT_MSG,
-	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_DOCUMENT_IMPORTED,
-	AUDIT_TRAIL_SYSTEM_UUID,
+	AUDIT_TRAIL_LPAQ_IMPORT_MSG,
 	AUDIT_TRAIL_REP_IMPORT_MSG,
+	AUDIT_TRAIL_SYSTEM_UUID,
 	AUDIT_TRAIL_TEAM_ASSIGNED
 } from '@pins/appeals/constants/support.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { EventType } from '@pins/event-client';
 import { APPEAL_REPRESENTATION_TYPE, SERVICE_USER_TYPE } from '@planning-inspectorate/data-model';
-import { getAssignedTeam } from '#repositories/team.repository.js';
+import { broadcasters } from './integrations.broadcasters.js';
+import { integrationService } from './integrations.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

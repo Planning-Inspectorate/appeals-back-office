@@ -1,9 +1,9 @@
 import {
 	errorAddressLine1,
 	errorAddressLine2,
+	errorCounty,
 	errorPostcode,
-	errorTown,
-	errorCounty
+	errorTown
 } from '#lib/error-handlers/change-screen-error-handlers.js';
 
 /**

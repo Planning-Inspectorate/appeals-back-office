@@ -1,8 +1,8 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import { getAppeals, getMyAppeals, updateCompletedEventsController } from './appeals.controller.js';
-import { getAppealsValidator } from './appeals.validators.js';
 import { validateAppealStatus, validateHasInspector } from './appeals.middleware.js';
+import { getAppealsValidator } from './appeals.validators.js';
 
 const router = createRouter();
 

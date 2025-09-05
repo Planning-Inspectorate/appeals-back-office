@@ -1,18 +1,18 @@
 import logger from '#lib/logger.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
 import {
 	changeEiaColumnTwoThresholdPage,
+	changeEiaConsultedBodiesDetailsPage,
 	changeEiaRequiresEnvironmentalStatementPage,
-	changeEiaSensitiveAreaDetailsPage,
-	changeEiaConsultedBodiesDetailsPage
+	changeEiaSensitiveAreaDetailsPage
 } from './environmental-impact-assessment.mapper.js';
 import {
 	changeEiaColumnTwoThreshold,
+	changeEiaConsultedBodiesDetails,
 	changeEiaRequiresEnvironmentalStatement,
-	changeEiaSensitiveAreaDetails,
-	changeEiaConsultedBodiesDetails
+	changeEiaSensitiveAreaDetails
 } from './environmental-impact-assessment.service.js';
-import { getLpaQuestionnaireFromId } from '../lpa-questionnaire.service.js';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

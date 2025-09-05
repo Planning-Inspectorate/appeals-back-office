@@ -1,5 +1,5 @@
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 
 /**
  * @param {string} representationStatus

@@ -1,2 +1,2 @@
-export { renderDateSubmittedFactory, postDateSubmittedFactory } from './date-submitted.js';
-export { renderRedactionStatusFactory, postRedactionStatusFactory } from './redaction-status.js';
+export { postDateSubmittedFactory, renderDateSubmittedFactory } from './date-submitted.js';
+export { postRedactionStatusFactory, renderRedactionStatusFactory } from './redaction-status.js';

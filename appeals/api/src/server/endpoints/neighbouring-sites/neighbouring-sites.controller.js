@@ -1,13 +1,13 @@
-import { ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
-import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
+import neighbouringSitesRepository from '#repositories/neighbouring-sites.repository.js';
+import formatAddress from '#utils/format-address.js';
 import {
 	AUDIT_TRAIL_NEIGHBOURING_ADDRESS_ADDED,
+	AUDIT_TRAIL_NEIGHBOURING_ADDRESS_REMOVED,
 	AUDIT_TRAIL_NEIGHBOURING_ADDRESS_UPDATED,
-	AUDIT_TRAIL_NEIGHBOURING_ADDRESS_REMOVED
+	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
-import formatAddress from '#utils/format-address.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

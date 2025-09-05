@@ -1,8 +1,8 @@
-import { Router as createRouter } from 'express';
+import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import * as controller from './withdrawal.controller.js';
 import * as validators from './withdrawal.validators.js';
-import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { dateFieldNamePrefix } from './withdrawl.constants.js';
 
 const router = createRouter({ mergeParams: true });

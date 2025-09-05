@@ -1,9 +1,9 @@
-import { Router as createRouter } from 'express';
+import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import { getLookupData } from '../../common/controllers/lookup-data.controller.js';
 import { getAllocationLevels, saveAllocation } from './appeal-allocation-controller.js';
 import { getAllocationValidator, validateSpecialism } from './appeal-allocation-validator.js';
-import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 
 const router = createRouter();
 

@@ -1,5 +1,4 @@
-import { textareaInput } from '#lib/mappers/index.js';
-import { wrapComponents, buttonComponent } from '#lib/mappers/index.js';
+import { buttonComponent, textareaInput, wrapComponents } from '#lib/mappers/index.js';
 import { REVERT_BUTTON_TEXT } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */

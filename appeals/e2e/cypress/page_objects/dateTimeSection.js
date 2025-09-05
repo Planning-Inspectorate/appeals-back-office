@@ -1,6 +1,5 @@
 // @ts-nocheck
 import { Page } from './basePage';
-import { formatDateAndTime } from '../support/utils/formatDateAndTime';
 
 export class DateTimeSection extends Page {
 	// S E L E C T O R S

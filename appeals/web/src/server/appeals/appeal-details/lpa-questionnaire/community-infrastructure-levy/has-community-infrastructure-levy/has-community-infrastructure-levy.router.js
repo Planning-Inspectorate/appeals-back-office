@@ -1,6 +1,6 @@
+import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controllers from './has-community-infrastructure-levy.controller.js';
-import { asyncHandler } from '@pins/express';
 import { validateChangeHasCommunityInfrastructureLevy } from './has-community-infrastructure-levy.validator.js';
 
 const router = createRouter({ mergeParams: true });

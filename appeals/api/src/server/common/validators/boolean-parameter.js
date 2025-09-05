@@ -1,5 +1,5 @@
-import { body } from 'express-validator';
 import { ERROR_MUST_BE_BOOLEAN } from '@pins/appeals/constants/support.js';
+import { body } from 'express-validator';
 
 /** @typedef {import('express-validator').ValidationChain} ValidationChain */
 

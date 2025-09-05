@@ -1,8 +1,8 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import { dateInput } from '#lib/mappers/index.js';
-import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { getExampleDateHint } from '#lib/dates.js';
+import { dateInput } from '#lib/mappers/index.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 
 /**
  * @typedef {import('../appeal-details.types.js').WebAppeal} Appeal

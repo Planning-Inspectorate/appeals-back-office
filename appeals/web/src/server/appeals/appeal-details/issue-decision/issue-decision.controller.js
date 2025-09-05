@@ -1,4 +1,7 @@
-import { postInspectorDecision, postInspectorInvalidReason } from './issue-decision.service.js';
+import {
+	postDocumentUpload,
+	renderDocumentUpload
+} from '../../appeal-documents/appeal-documents.controller.js';
 import {
 	appellantCostsDecisionPage,
 	checkAndConfirmPage,
@@ -6,28 +9,9 @@ import {
 	lpaCostsDecisionPage,
 	viewDecisionPage
 } from './issue-decision.mapper.js';
-import {
-	postDocumentUpload,
-	renderDocumentUpload
-} from '../../appeal-documents/appeal-documents.controller.js';
+import { postInspectorDecision, postInspectorInvalidReason } from './issue-decision.service.js';
 
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
-import {
-	APPEAL_CASE_STAGE,
-	APPEAL_CASE_STATUS,
-	APPEAL_DOCUMENT_TYPE
-} from '@planning-inspectorate/data-model';
-import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
-import { cloneDeep } from 'lodash-es';
-import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
 import { createNewDocument } from '#app/components/file-uploader.component.js';
-import { getOriginalAndLatestLetterDatesObject, getTodaysISOString } from '#lib/dates.js';
-import {
-	CASE_OUTCOME_INVALID,
-	DECISION_TYPE_APPELLANT_COSTS,
-	DECISION_TYPE_INSPECTOR
-} from '@pins/appeals/constants/support.js';
 import {
 	baseUrl,
 	buildIssueDecisionLogicData,
@@ -36,9 +20,25 @@ import {
 	issueDecisionBackUrl,
 	preHeadingText
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
-import { isStatePassed } from '#lib/appeal-status.js';
-import { isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { getAttachmentsFolder } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { isStatePassed } from '#lib/appeal-status.js';
+import { getOriginalAndLatestLetterDatesObject, getTodaysISOString } from '#lib/dates.js';
+import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
+import { isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import {
+	CASE_OUTCOME_INVALID,
+	DECISION_TYPE_APPELLANT_COSTS,
+	DECISION_TYPE_INSPECTOR
+} from '@pins/appeals/constants/support.js';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE
+} from '@planning-inspectorate/data-model';
+import { cloneDeep } from 'lodash-es';
 
 /**
  * @typedef {import('../../../appeals/appeal-documents/appeal-documents.types.js').FileUploadInfoItem} FileUploadInfoItem

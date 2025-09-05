@@ -1,11 +1,11 @@
-import { parseHtml } from '@pins/platform';
-import supertest from 'supertest';
 import {
 	appealData,
 	appellantCaseDataIncompleteOutcome
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { parseHtml } from '@pins/platform';
 import nock from 'nock';
+import supertest from 'supertest';
 
 const { app, installMockApi, teardown } = createTestEnvironment();
 const request = supertest(app);

@@ -1,15 +1,15 @@
 import config from '#environment/config.js';
-import { removeSummaryListActions } from '#lib/mappers/index.js';
-import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
-import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
-import * as authSession from '../../app/auth/auth-session.service.js';
-import { mapStatusText, mapStatusFilterLabel } from '#lib/appeal-status.js';
+import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
+import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
+import { removeSummaryListActions } from '#lib/mappers/index.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
+import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import * as authSession from '../../app/auth/auth-session.service.js';
 
 /** @typedef {import('@pins/appeals').AppealSummary} AppealSummary */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */

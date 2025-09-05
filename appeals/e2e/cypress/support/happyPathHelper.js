@@ -1,10 +1,10 @@
 // @ts-nocheck
 
 import { users } from '../fixtures/users';
-import { ListCasesPage } from '../page_objects/listCasesPage';
 import { CaseDetailsPage } from '../page_objects/caseDetailsPage.js';
-import { FileUploader } from '../page_objects/shared.js';
 import { DateTimeSection } from '../page_objects/dateTimeSection';
+import { ListCasesPage } from '../page_objects/listCasesPage';
+import { FileUploader } from '../page_objects/shared.js';
 import { urlPaths } from './urlPaths.js';
 
 const caseDetailsPage = new CaseDetailsPage();

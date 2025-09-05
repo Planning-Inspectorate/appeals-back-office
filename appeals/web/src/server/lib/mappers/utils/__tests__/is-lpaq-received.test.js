@@ -1,7 +1,9 @@
-import { isLpaqReceived } from '../is-lpaq-received.js';
 import { appealData } from '#testing/appeals/appeals.js';
-import { DOCUMENT_STATUS_NOT_RECEIVED } from '@pins/appeals/constants/support.js';
-import { DOCUMENT_STATUS_RECEIVED } from '@pins/appeals/constants/support.js';
+import {
+	DOCUMENT_STATUS_NOT_RECEIVED,
+	DOCUMENT_STATUS_RECEIVED
+} from '@pins/appeals/constants/support.js';
+import { isLpaqReceived } from '../is-lpaq-received.js';
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal

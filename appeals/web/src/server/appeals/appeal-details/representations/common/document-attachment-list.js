@@ -1,7 +1,7 @@
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
 
-import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { mapDocumentDownloadUrl } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 
 export const getAttachmentList = (/** @type {Representation} */ representation) => {
 	const filteredAttachments = representation.attachments?.filter((attachment) => {

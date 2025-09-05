@@ -1,6 +1,9 @@
+import { getCaseDocumentation } from '#appeals/appeal-details/accordions/common/case-documentation.js';
 import { permissionNames } from '#environment/permissions.js';
 import { userHasPermission } from '#lib/mappers/index.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { isDefined } from '#lib/ts-utilities.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { getCaseContacts } from './common/case-contacts.js';
 import { getCaseCosts } from './common/case-costs.js';
 import { getCaseManagement } from './common/case-management.js';
@@ -10,9 +13,6 @@ import { getSiteDetails } from './common/site-details.js';
 import { getCaseHearing } from './s78/case-hearing.js';
 import { getCaseInquiry } from './s78/case-inquiry.js';
 import { removeAccordionComponentsActions } from './utils/index.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { getCaseDocumentation } from '#appeals/appeal-details/accordions/common/case-documentation.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 
 /**
  *

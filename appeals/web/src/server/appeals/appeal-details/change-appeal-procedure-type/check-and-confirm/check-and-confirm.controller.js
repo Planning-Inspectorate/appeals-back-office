@@ -1,11 +1,11 @@
-import { objectContainsAllKeys } from '#lib/object-utilities.js';
+import { getTimetableTypeText } from '#appeals/appeal-details/timetable/timetable.mapper.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent, textSummaryListItem } from '#lib/mappers/index.js';
-import { appealProcedureToLabelText } from './check-and-confirm.mapper.js';
-import { getTimetableTypes } from '../change-appeal-timetable/change-appeal-timetable.mapper.js';
+import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
-import { getTimetableTypeText } from '#appeals/appeal-details/timetable/timetable.mapper.js';
+import { getTimetableTypes } from '../change-appeal-timetable/change-appeal-timetable.mapper.js';
+import { appealProcedureToLabelText } from './check-and-confirm.mapper.js';
 
 /**
  * @typedef {import('../change-appeal-procedure-type.controller.js').AppealTimetable} AppealTimetable

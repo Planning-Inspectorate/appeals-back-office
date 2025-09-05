@@ -1,10 +1,10 @@
 import { AppealSummary } from './appeal-summary.js';
-import { SiteSafety } from './site-safety.js';
-import { SiteAccess } from './site-access.js';
 import { DesignatedSiteName } from './designated-site-name.js';
-import { ListedBuilding } from './listed-building.js';
-import { InvalidIncompleteReason } from './invalid-incomplete.js';
 import { Folder } from './folders-documents.js';
+import { InvalidIncompleteReason } from './invalid-incomplete.js';
+import { ListedBuilding } from './listed-building.js';
+import { SiteAccess } from './site-access.js';
+import { SiteSafety } from './site-safety.js';
 
 const updateableFields = {
 	isCorrectAppealType: {

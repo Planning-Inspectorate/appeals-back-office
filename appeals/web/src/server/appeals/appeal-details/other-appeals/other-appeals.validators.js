@@ -1,6 +1,6 @@
+import logger from '#lib/logger.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
-import logger from '#lib/logger.js';
 import { getLinkableAppealSummaryFromReference } from './other-appeals.service.js';
 
 export const validateAddOtherAppealsReference = createValidator(

@@ -1,9 +1,9 @@
-import { databaseConnector } from '#utils/database-connector.js';
-import { sub } from 'date-fns';
 import { updateCompletedEvents } from '#endpoints/appeals/appeals.service.js';
-import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
-import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
 import { getAppealNotifications } from '#repositories/appeal-notification.repository.js';
+import { databaseConnector } from '#utils/database-connector.js';
+import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
+import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
+import { sub } from 'date-fns';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */

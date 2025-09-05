@@ -1,39 +1,39 @@
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import appealRepository from '#repositories/appeal.repository.js';
+import { notifySend } from '#notify/notify-send.js';
 import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
+import appealRepository from '#repositories/appeal.repository.js';
+import transitionState from '#state/transition-state.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
+import logger from '#utils/logger.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
+import {
+	FEATURE_FLAG_NAMES,
+	PROCEDURE_TYPE_ID_MAP,
+	PROCEDURE_TYPE_MAP
+} from '@pins/appeals/constants/common.js';
+import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
+import {
+	APPEAL_TYPE_SHORTHAND_HAS,
+	AUDIT_TRAIL_CASE_STARTED,
+	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
+	AUDIT_TRAIL_SYSTEM_UUID,
+	AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED,
+	CASE_RELATIONSHIP_LINKED,
+	ERROR_NOT_FOUND
+} from '@pins/appeals/constants/support.js';
 import {
 	calculateTimetable,
 	recalculateDateIfNotBusinessDay,
 	setTimeInTimeZone
 } from '@pins/appeals/utils/business-days.js';
-import logger from '#utils/logger.js';
-import {
-	AUDIT_TRAIL_CASE_TIMELINE_CREATED,
-	AUDIT_TRAIL_TIMETABLE_DUE_DATE_CHANGED,
-	AUDIT_TRAIL_SYSTEM_UUID,
-	ERROR_NOT_FOUND,
-	CASE_RELATIONSHIP_LINKED
-} from '@pins/appeals/constants/support.js';
-import transitionState from '#state/transition-state.js';
 import formatDate, { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
-import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import {
-	PROCEDURE_TYPE_MAP,
-	PROCEDURE_TYPE_ID_MAP,
-	FEATURE_FLAG_NAMES
-} from '@pins/appeals/constants/common.js';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE
 } from '@planning-inspectorate/data-model';
-import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
-import { notifySend } from '#notify/notify-send.js';
-import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
-import { APPEAL_TYPE_SHORTHAND_HAS } from '@pins/appeals/constants/support.js';
-import { AUDIT_TRAIL_CASE_STARTED } from '@pins/appeals/constants/support.js';
-import { isFeatureActive } from '#utils/feature-flags.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
