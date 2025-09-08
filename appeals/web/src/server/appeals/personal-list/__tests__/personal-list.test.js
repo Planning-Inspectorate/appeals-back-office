@@ -285,10 +285,11 @@ describe('personal-list', () => {
 				}
 			},
 			{
-				name: 'Awaiting LPA update',
+				name: 'Update questionnaire',
 				requiredAction: 'awaitingLpaUpdate',
 				expectedHtml: {
-					caseOfficer: 'Awaiting LPA update'
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}?backUrl=%2Fappeals-service%2Fpersonal-list">Update questionnaire<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`,
+					nonCaseOfficer: 'Update questionnaire'
 				}
 			},
 			{
