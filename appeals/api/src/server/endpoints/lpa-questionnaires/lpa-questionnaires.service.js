@@ -15,7 +15,7 @@ import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
-	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
+	AUDIT_TRAIL_LPAQ_INCOMPLETE,
 	ERROR_NO_RECIPIENT_EMAIL,
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
@@ -107,7 +107,7 @@ const updateLPAQuestionnaireValidationOutcome = async (
 		createAuditTrail({
 			appealId,
 			azureAdUserId,
-			details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, ['LPA questionnaire'])
+			details: stringTokenReplacement(AUDIT_TRAIL_LPAQ_INCOMPLETE, ['LPA questionnaire'])
 		});
 	}
 
