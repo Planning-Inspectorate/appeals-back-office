@@ -543,7 +543,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		happyPathHelper.reviewLPaStatement(caseRef);
 
 		// Verify Hearing ready to set up tag - all cases page
-		cy.visit(urlPaths.allCases);
+		cy.visit(urlPaths.appealsList);
 		hearingSectionPage.verifyTagOnAllCasesPage(caseRef, 'Hearing ready to set up');
 
 		// Verify Hearing ready to set up tag - personal list page
@@ -573,7 +573,7 @@ describe('Setup hearing and add hearing estimates', () => {
 			caseDetailsPage.validateBannerMessage('Important', 'Add hearing address');
 
 			// Verify Hearing ready to set up tag - all cases page
-			cy.visit(urlPaths.allCases);
+			cy.visit(urlPaths.appealsList);
 			hearingSectionPage.verifyTagOnAllCasesPage(caseRef, 'Hearing ready to set up');
 
 			// Verify Hearing ready to set up tag - personal list page
@@ -590,7 +590,7 @@ describe('Setup hearing and add hearing estimates', () => {
 			caseDetailsPage.validateBannerMessage('Success', 'Hearing updated');
 
 			// Verify Awaiting hearing tag - all cases page
-			cy.visit(urlPaths.allCases);
+			cy.visit(urlPaths.appealsList);
 			hearingSectionPage.verifyTagOnAllCasesPage(caseRef, 'Awaiting hearing');
 
 			// Verify Awaiting hearing tag - personal list page
@@ -684,7 +684,7 @@ describe('Setup hearing and add hearing estimates', () => {
 			happyPathHelper.reviewLPaStatement(caseRef);
 
 			// Verify Hearing ready to set up tag - all cases page
-			cy.visit(urlPaths.allCases);
+			cy.visit(urlPaths.appealsList);
 			hearingSectionPage.verifyTagOnAllCasesPage(caseRef, 'Hearing ready to set up');
 
 			// Verify Hearing ready to set up tag - personal list page
@@ -714,7 +714,7 @@ describe('Setup hearing and add hearing estimates', () => {
 				caseDetailsPage.validateBannerMessage('Success', 'Hearing set up');
 
 				// Verify Awaiting hearing tag - all cases page
-				cy.visit(urlPaths.allCases);
+				cy.visit(urlPaths.appealsList);
 				hearingSectionPage.verifyTagOnAllCasesPage(caseRef, 'Awaiting hearing');
 
 				// Verify Awaiting hearing tag - personal list page
@@ -733,7 +733,7 @@ describe('Setup hearing and add hearing estimates', () => {
 				caseDetailsPage.validateBannerMessage('Important', 'Add hearing address');
 
 				// Verify Awaiting hearing tag - all cases page
-				cy.visit(urlPaths.allCases);
+				cy.visit(urlPaths.appealsList);
 				hearingSectionPage.verifyTagOnAllCasesPage(caseRef, 'Hearing ready to set up');
 
 				// Verify Awaiting hearing tag - personal list page

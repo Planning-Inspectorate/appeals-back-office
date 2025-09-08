@@ -11,11 +11,13 @@ export const mapCostsLpaDecision = ({ appealDetails, currentRoute, session, requ
 	const { lpaApplicationFolder, lpaWithdrawalFolder, lpaDecisionFolder } =
 		appealDetails.costs ?? {};
 
+	const lpaApplicationCount = lpaApplicationFolder?.documents?.length || 0;
+	const lpaWithdrawalCount = lpaWithdrawalFolder?.documents?.length || 0;
+
 	if (
 		isChildAppeal(appealDetails) ||
 		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
-		!lpaApplicationFolder?.documents?.length ||
-		lpaWithdrawalFolder?.documents?.length
+		lpaApplicationCount <= lpaWithdrawalCount
 	) {
 		return { id: 'lpa-costs-decision', display: {} };
 	}

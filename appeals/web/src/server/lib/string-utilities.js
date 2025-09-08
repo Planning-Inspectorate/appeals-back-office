@@ -32,7 +32,7 @@ export const uncapitalizeFirstLetter = (str) => {
  * Pad a number with leading zeros
  *
  * @param {number | string} num
- * @params {number} [length]
+ * @param {number} [length]
  * @returns {string}
  */
 export const padNumberWithZero = (num, length = 2) => num.toString().padStart(length, '0');
@@ -75,5 +75,9 @@ export const toCamelCase = (str) => {
  * @param {string} str - The string to convert.
  * @returns {string} - The sentence case formatted string.
  */
-export const toSentenceCase = (str) =>
-	capitalizeFirstLetter(camelCaseToWords(toCamelCase(str)).toLowerCase());
+export const toSentenceCase = (str) => {
+	if (!str) {
+		return '';
+	}
+	return capitalizeFirstLetter(camelCaseToWords(toCamelCase(str)).toLowerCase());
+};
