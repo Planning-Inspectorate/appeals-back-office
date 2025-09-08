@@ -19,9 +19,9 @@ import createManyToManyRelationData from '#utils/create-many-to-many-relation-da
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { jest } from '@jest/globals';
 import {
+	AUDIT_TRAIL_LPAQ_INCOMPLETE,
 	AUDIT_TRAIL_LPAQ_IS_CORRECT_APPEAL_TYPE_UPDATED,
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
-	AUDIT_TRAIL_SUBMISSION_INCOMPLETE,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_INVALID_LPA_QUESTIONNAIRE_VALIDATION_OUTCOME,
 	ERROR_LPA_QUESTIONNAIRE_VALID_VALIDATION_OUTCOME_REASONS_REQUIRED,
@@ -493,9 +493,7 @@ describe('lpa questionnaires routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, [
-							'LPA questionnaire'
-						]),
+						details: stringTokenReplacement(AUDIT_TRAIL_LPAQ_INCOMPLETE, ['LPA questionnaire']),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
@@ -549,9 +547,7 @@ describe('lpa questionnaires routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, [
-							'LPA questionnaire'
-						]),
+						details: stringTokenReplacement(AUDIT_TRAIL_LPAQ_INCOMPLETE, ['LPA questionnaire']),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
@@ -605,9 +601,7 @@ describe('lpa questionnaires routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, [
-							'LPA questionnaire'
-						]),
+						details: stringTokenReplacement(AUDIT_TRAIL_LPAQ_INCOMPLETE, ['LPA questionnaire']),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
@@ -661,9 +655,7 @@ describe('lpa questionnaires routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, [
-							'LPA questionnaire'
-						]),
+						details: stringTokenReplacement(AUDIT_TRAIL_LPAQ_INCOMPLETE, ['LPA questionnaire']),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
@@ -717,9 +709,7 @@ describe('lpa questionnaires routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, [
-							'LPA questionnaire'
-						]),
+						details: stringTokenReplacement(AUDIT_TRAIL_LPAQ_INCOMPLETE, ['LPA questionnaire']),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
@@ -782,9 +772,7 @@ describe('lpa questionnaires routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, [
-							'LPA questionnaire'
-						]),
+						details: stringTokenReplacement(AUDIT_TRAIL_LPAQ_INCOMPLETE, ['LPA questionnaire']),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
@@ -876,9 +864,7 @@ describe('lpa questionnaires routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, [
-							'LPA questionnaire'
-						]),
+						details: stringTokenReplacement(AUDIT_TRAIL_LPAQ_INCOMPLETE, ['LPA questionnaire']),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
@@ -967,9 +953,7 @@ describe('lpa questionnaires routes', () => {
 				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
 					data: {
 						appealId: householdAppeal.id,
-						details: stringTokenReplacement(AUDIT_TRAIL_SUBMISSION_INCOMPLETE, [
-							'LPA questionnaire'
-						]),
+						details: stringTokenReplacement(AUDIT_TRAIL_LPAQ_INCOMPLETE, ['LPA questionnaire']),
 						loggedAt: expect.any(Date),
 						userId: householdAppeal.caseOfficer.id
 					}
