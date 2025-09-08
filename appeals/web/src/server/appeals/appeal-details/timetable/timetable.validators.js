@@ -103,7 +103,7 @@ const validatorsMap = {
  * @param {string} idText
  * @returns {string}
  */
-const buildSessionDate = (req, idText) => {
+export const buildSessionDate = (req, idText) => {
 	const updatedDueDateDay = parseInt(req.body[`${idText}-due-date-day`], 10);
 	const updatedDueDateMonth = parseInt(req.body[`${idText}-due-date-month`], 10);
 	const updatedDueDateYear = parseInt(req.body[`${idText}-due-date-year`], 10);

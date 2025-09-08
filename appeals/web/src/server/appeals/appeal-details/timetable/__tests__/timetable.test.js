@@ -934,25 +934,42 @@ describe('Timetable', () => {
 		});
 
 		it('should render "Timetable CYA" page for householder appeal type', async () => {
-			await request.post(`${baseUrl}/edit`).send({
-				'lpa-questionnaire-due-date-day': '13',
-				'lpa-questionnaire-due-date-month': '10',
-				'lpa-questionnaire-due-date-year': '2030'
-			});
+			const monthVariants = [
+				{
+					month: '10',
+					description: 'Month as a number'
+				},
+				{
+					month: 'Oct',
+					description: 'Month as short text'
+				},
+				{
+					month: 'OCTOBER',
+					description: 'Month as full uppercase text'
+				}
+			];
 
-			const response = await request.get(`${baseUrl}/edit/check`);
-			const element = parseHtml(response.text);
+			for (const variant of monthVariants) {
+				await request.post(`${baseUrl}/edit`).send({
+					'lpa-questionnaire-due-date-day': '13',
+					'lpa-questionnaire-due-date-month': variant.month,
+					'lpa-questionnaire-due-date-year': '2030'
+				});
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('LPA questionnaire due</dt>');
-			expect(element.innerHTML).toContain('13 October 2030</dd>');
-			expect(element.innerHTML).toContain(
-				'<a class="govuk-link" href="/appeals-service/appeal-details/1/timetable/edit">Change '
-			);
-			expect(element.innerHTML).toContain(
-				'We’ll send an email to the appellant and LPA to tell them about the new'
-			);
-			expect(element.innerHTML).toContain('Update timetable due dates</button>');
+				const response = await request.get(`${baseUrl}/edit/check`);
+				const element = parseHtml(response.text);
+
+				expect(element.innerHTML).toMatchSnapshot(variant.description);
+				expect(element.innerHTML).toContain('LPA questionnaire due</dt>');
+				expect(element.innerHTML).toContain('13 October 2030</dd>');
+				expect(element.innerHTML).toContain(
+					'<a class="govuk-link" href="/appeals-service/appeal-details/1/timetable/edit">Change '
+				);
+				expect(element.innerHTML).toContain(
+					'We’ll send an email to the appellant and LPA to tell them about the new'
+				);
+				expect(element.innerHTML).toContain('Update timetable due dates</button>');
+			}
 		});
 
 		describe.each([APPEAL_TYPE.S78, APPEAL_TYPE.PLANNED_LISTED_BUILDING])(
