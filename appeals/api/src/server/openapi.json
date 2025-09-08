@@ -9132,6 +9132,26 @@
 					"numberOfResidencesNetChange": {
 						"type": "number",
 						"example": 0
+					},
+					"highwayLand": {
+						"type": "boolean",
+						"example": false
+					},
+					"advertInPosition": {
+						"type": "boolean",
+						"example": true
+					},
+					"landownerPermission": {
+						"type": "boolean",
+						"example": true
+					},
+					"siteGridReferenceEasting": {
+						"type": "string",
+						"example": "123456"
+					},
+					"siteGridReferenceNorthing": {
+						"type": "string",
+						"example": "654321"
 					}
 				},
 				"xml": {
@@ -10389,6 +10409,26 @@
 					"numberOfResidencesNetChange": {
 						"type": "number",
 						"example": 0
+					},
+					"highwayLand": {
+						"type": "boolean",
+						"example": false
+					},
+					"advertInPosition": {
+						"type": "boolean",
+						"example": true
+					},
+					"landownerPermission": {
+						"type": "boolean",
+						"example": true
+					},
+					"siteGridReferenceEasting": {
+						"type": "string",
+						"example": "123456"
+					},
+					"siteGridReferenceNorthing": {
+						"type": "string",
+						"example": "654321"
 					}
 				},
 				"xml": {
@@ -14290,6 +14330,7 @@
 						"type": "string",
 						"nullable": true,
 						"enum": [
+							"advertisement",
 							"full-appeal",
 							"householder-planning",
 							"listed-building",
@@ -14299,6 +14340,26 @@
 							"removal-or-variation-of-conditions",
 							"reserved-matters"
 						]
+					},
+					"highwayLand": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"advertInPosition": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"landownerPermission": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"siteGridReferenceEasting": {
+						"type": "string",
+						"nullable": true
+					},
+					"siteGridReferenceNorthing": {
+						"type": "string",
+						"nullable": true
 					},
 					"validation": {
 						"type": "object",
@@ -33473,6 +33534,7 @@
 						"type": "string",
 						"nullable": true,
 						"enum": [
+							"advertisement",
 							"full-appeal",
 							"householder-planning",
 							"listed-building",
@@ -33482,6 +33544,26 @@
 							"removal-or-variation-of-conditions",
 							"reserved-matters"
 						]
+					},
+					"highwayLand": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"advertInPosition": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"landownerPermission": {
+						"type": "boolean",
+						"nullable": true
+					},
+					"siteGridReferenceEasting": {
+						"type": "string",
+						"nullable": true
+					},
+					"siteGridReferenceNorthing": {
+						"type": "string",
+						"nullable": true
 					},
 					"appellantCaseValidationOutcomeId": {
 						"type": "number",
@@ -33581,26 +33663,6 @@
 					},
 					"numberOfResidencesNetChange": {
 						"type": "number",
-						"nullable": true
-					},
-					"highwayLand": {
-						"type": "boolean",
-						"nullable": true
-					},
-					"advertInPosition": {
-						"type": "boolean",
-						"nullable": true
-					},
-					"landownerPermission": {
-						"type": "boolean",
-						"nullable": true
-					},
-					"siteGridReferenceEasting": {
-						"type": "string",
-						"nullable": true
-					},
-					"siteGridReferenceNorthing": {
-						"type": "string",
 						"nullable": true
 					}
 				}

@@ -106,20 +106,13 @@ export const validAppellantCaseS20 = {
 	}
 };
 
-export const validLpaQuestionnaire = {
+const validLpaQuestionnaireCommon = {
 	casedata: {
 		caseReference: '6000000',
-		caseType: 'D',
+		nearbyCaseReferences: ['1000000'],
 		lpaQuestionnaireSubmittedDate: new Date(2024, 5, 1).toISOString(),
-		lpaStatement: 'cupidatat ipsum eu culpa',
 		siteAccessDetails: ['Here it is'],
 		siteSafetyDetails: ['Fine'],
-		isCorrectAppealType: true,
-		isGreenBelt: false,
-		inConservationArea: true,
-		newConditionDetails: 'cupidatat',
-		notificationMethod: ['notice', 'letter'],
-		nearbyCaseReferences: ['1000000'],
 		neighbouringSiteAddresses: [
 			{
 				neighbouringSiteAddressLine1: 'deserunt in irure do',
@@ -131,8 +124,7 @@ export const validLpaQuestionnaire = {
 				neighbouringSiteSafetyDetails: 'magna proident incididunt in non'
 			}
 		],
-		affectedListedBuildingNumbers: ['10001', '10002'],
-		lpaCostsAppliedFor: false
+		reasonForNeighbourVisits: undefined
 	},
 	documents: [
 		{
@@ -160,17 +152,34 @@ export const validLpaQuestionnaire = {
 	]
 };
 
+export const validLpaQuestionnaireHas = {
+	casedata: {
+		...validLpaQuestionnaireCommon.casedata,
+		caseType: 'D',
+		lpaStatement: 'cupidatat ipsum eu culpa',
+		isCorrectAppealType: true,
+		isGreenBelt: false,
+		inConservationArea: true,
+		newConditionDetails: 'cupidatat',
+		notificationMethod: ['notice', 'letter'],
+		affectedListedBuildingNumbers: ['10001', '10002'],
+		lpaCostsAppliedFor: false
+	},
+	documents: validLpaQuestionnaireCommon.documents
+};
+
 export const validLpaQuestionnaireCASPlanning = {
 	casedata: {
-		...validLpaQuestionnaire.casedata,
+		...validLpaQuestionnaireHas.casedata,
 		caseType: 'ZP'
 	},
-	documents: validLpaQuestionnaire.documents
+	documents: validLpaQuestionnaireCommon.documents
 };
 
 export const validLpaQuestionnaireS78 = {
 	casedata: {
-		...validLpaQuestionnaire.casedata,
+		...validLpaQuestionnaireCommon.casedata,
+		...validLpaQuestionnaireHas.casedata,
 		caseType: 'W',
 		changedListedBuildingNumbers: ['10023', '17824'],
 		designatedSitesNames: ['SSSI'],
@@ -185,7 +194,6 @@ export const validLpaQuestionnaireS78 = {
 		eiaScreeningOpinion: true,
 		eiaRequiresEnvironmentalStatement: true,
 		eiaCompletedEnvironmentalStatement: true,
-		eiaScopingOpinion: true,
 		consultedBodiesDetails: '',
 		hasProtectedSpecies: true,
 		hasStatutoryConsultees: true,
@@ -622,11 +630,53 @@ export const appealIngestionInputS20Written = {
 	}
 };
 
-export const validLpaQuestionnaireIngestion = {
+const validLpaQuestionnaireIngestionCommon = {
 	data: {
 		lpaQuestionnaire: {
 			connectOrCreate: {
 				create: {
+					lpaQuestionnaireSubmittedDate: '2024-06-01T00:00:00.000Z',
+					reasonForNeighbourVisits: undefined,
+					siteAccessDetails: 'Here it is',
+					siteSafetyDetails: 'Fine'
+				},
+				where: {
+					appealId: 100
+				}
+			}
+		},
+		neighbouringSites: {
+			create: [
+				{
+					address: {
+						create: {
+							addressCounty: 'reprehenderit eu mollit Excepteur sit',
+							addressLine1: 'deserunt in irure do',
+							addressLine2: null,
+							addressTown: 'laboris ut enim et laborum',
+							postcode: 'aliqua in qui ipsum'
+						}
+					},
+					source: 'lpa'
+				}
+			]
+		}
+	},
+	where: {
+		id: 100
+	}
+};
+
+export const validLpaQuestionnaireIngestionHas = {
+	...validLpaQuestionnaireIngestionCommon,
+	data: {
+		...validLpaQuestionnaireIngestionCommon.data,
+		lpaQuestionnaire: {
+			...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire,
+			connectOrCreate: {
+				...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire.connectOrCreate,
+				create: {
+					...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire.connectOrCreate.create,
 					inConservationArea: true,
 					isCorrectAppealType: true,
 					isGreenBelt: false,
@@ -661,12 +711,8 @@ export const validLpaQuestionnaireIngestion = {
 							}
 						]
 					},
-					lpaQuestionnaireSubmittedDate: '2024-06-01T00:00:00.000Z',
 					lpaStatement: 'cupidatat ipsum eu culpa',
-					newConditionDetails: 'cupidatat',
-					reasonForNeighbourVisits: undefined,
-					siteAccessDetails: 'Here it is',
-					siteSafetyDetails: 'Fine'
+					newConditionDetails: 'cupidatat'
 				},
 				where: {
 					appealId: 100
@@ -695,15 +741,20 @@ export const validLpaQuestionnaireIngestion = {
 	}
 };
 export const validLpaQuestionnaireIngestionS78 = {
-	...validLpaQuestionnaireIngestion,
+	...validLpaQuestionnaireIngestionCommon,
+	...validLpaQuestionnaireIngestionHas,
 	data: {
-		...validLpaQuestionnaireIngestion.data,
+		...validLpaQuestionnaireIngestionCommon.data,
+		...validLpaQuestionnaireIngestionHas.data,
 		lpaQuestionnaire: {
-			...validLpaQuestionnaireIngestion.data.lpaQuestionnaire,
+			...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire,
+			...validLpaQuestionnaireIngestionHas.data.lpaQuestionnaire,
 			connectOrCreate: {
-				...validLpaQuestionnaireIngestion.data.lpaQuestionnaire.connectOrCreate,
+				...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire.connectOrCreate,
+				...validLpaQuestionnaireIngestionHas.data.lpaQuestionnaire.connectOrCreate,
 				create: {
-					...validLpaQuestionnaireIngestion.data.lpaQuestionnaire.connectOrCreate.create,
+					...validLpaQuestionnaireIngestionCommon.data.lpaQuestionnaire.connectOrCreate.create,
+					...validLpaQuestionnaireIngestionHas.data.lpaQuestionnaire.connectOrCreate.create,
 					affectsScheduledMonument: true,
 					isAonbNationalLandscape: true,
 					isGypsyOrTravellerSite: true,
@@ -715,7 +766,6 @@ export const validLpaQuestionnaireIngestionS78 = {
 					eiaScreeningOpinion: true,
 					eiaRequiresEnvironmentalStatement: true,
 					eiaCompletedEnvironmentalStatement: true,
-					eiaScopingOpinion: true,
 					consultedBodiesDetails: '',
 					hasProtectedSpecies: true,
 					hasStatutoryConsultees: true,
@@ -778,7 +828,8 @@ export const validLpaQuestionnaireIngestionS20 = {
 				...validLpaQuestionnaireIngestionS78.data.lpaQuestionnaire.connectOrCreate,
 				create: {
 					...validLpaQuestionnaireIngestionS78.data.lpaQuestionnaire.connectOrCreate.create,
-					preserveGrantLoan: true
+					preserveGrantLoan: true,
+					historicEnglandConsultation: undefined
 				}
 			}
 		}

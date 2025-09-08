@@ -105,6 +105,26 @@ const updateableFields = {
 		type: 'string',
 		nullable: true,
 		enum: [...Object.values(APPEAL_TYPE_OF_PLANNING_APPLICATION)]
+	},
+	highwayLand: {
+		type: 'boolean',
+		nullable: true
+	},
+	advertInPosition: {
+		type: 'boolean',
+		nullable: true
+	},
+	landownerPermission: {
+		type: 'boolean',
+		nullable: true
+	},
+	siteGridReferenceEasting: {
+		type: 'string',
+		nullable: true
+	},
+	siteGridReferenceNorthing: {
+		type: 'string',
+		nullable: true
 	}
 };
 
