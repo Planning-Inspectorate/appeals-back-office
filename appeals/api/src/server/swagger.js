@@ -11,7 +11,7 @@ import {
 } from '#tests/documents/mocks.js';
 import {
 	validAppellantCase,
-	validLpaQuestionnaire,
+	validLpaQuestionnaireHas,
 	validRepresentationIp
 } from '#tests/integrations/mocks.js';
 import {
@@ -97,7 +97,7 @@ export const spec = {
 			...validAppellantCase
 		},
 		QuestionnaireData: {
-			...validLpaQuestionnaire
+			...validLpaQuestionnaireHas
 		},
 		RepresentationData: {
 			...validRepresentationIp
@@ -522,7 +522,12 @@ export const spec = {
 				details: 'The site is behind a tall hedge',
 				isVisible: false
 			},
-			numberOfResidencesNetChange: 0
+			numberOfResidencesNetChange: 0,
+			highwayLand: false,
+			advertInPosition: true,
+			landownerPermission: true,
+			siteGridReferenceEasting: '123456',
+			siteGridReferenceNorthing: '654321'
 		},
 		UpdateCaseTeamRequest: {
 			caseOfficer: '13de469c-8de6-4908-97cd-330ea73df618',
@@ -676,7 +681,12 @@ export const spec = {
 			appellantProcedurePreferenceDetails: 'Reason for preference',
 			appellantProcedurePreferenceDuration: 3,
 			appellantProcedurePreferenceWitnessCount: 2,
-			numberOfResidencesNetChange: 0
+			numberOfResidencesNetChange: 0,
+			highwayLand: false,
+			advertInPosition: true,
+			landownerPermission: true,
+			siteGridReferenceEasting: '123456',
+			siteGridReferenceNorthing: '654321'
 		},
 		UpdateAppellantCaseResponse: {},
 		UpdateLPAQuestionnaireRequest: {

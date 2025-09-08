@@ -33,7 +33,10 @@ const importAppellantCase = async (
 	);
 
 	if (!result?.appeal) {
-		throw new BackOfficeAppError(`Failure importing appellant case. Appeal could not be created.`);
+		throw new BackOfficeAppError(
+			`Failure importing appellant case. Appeal could not be created.`,
+			400
+		);
 	} else {
 		return result;
 	}
@@ -57,7 +60,8 @@ const importLPAQuestionnaire = async (caseReference, data, documents, relatedRef
 
 	if (!result?.appeal) {
 		throw new BackOfficeAppError(
-			`Failure importing LPA questionnaire. Appeal with case reference '${caseReference}' does not exist.`
+			`Failure importing LPA questionnaire. Appeal with case reference '${caseReference}' does not exist.`,
+			400
 		);
 	} else {
 		return result;
@@ -76,7 +80,8 @@ const importRepresentation = async (appeal, data, attachments) => {
 
 	if (!result?.rep) {
 		throw new BackOfficeAppError(
-			`Failure importing Representation associated with case reference '${appeal.reference}'.`
+			`Failure importing Representation associated with case reference '${appeal.reference}'.`,
+			400
 		);
 	} else {
 		return result;

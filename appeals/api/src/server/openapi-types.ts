@@ -1375,6 +1375,16 @@ export interface SingleAppellantCaseResponse {
 	};
 	/** @example 0 */
 	numberOfResidencesNetChange?: number;
+	/** @example false */
+	highwayLand?: boolean;
+	/** @example true */
+	advertInPosition?: boolean;
+	/** @example true */
+	landownerPermission?: boolean;
+	/** @example "123456" */
+	siteGridReferenceEasting?: string;
+	/** @example "654321" */
+	siteGridReferenceNorthing?: string;
 }
 
 export interface UpdateCaseTeamRequest {
@@ -1923,6 +1933,16 @@ export interface UpdateAppellantCaseRequest {
 	appellantProcedurePreferenceWitnessCount?: number;
 	/** @example 0 */
 	numberOfResidencesNetChange?: number;
+	/** @example false */
+	highwayLand?: boolean;
+	/** @example true */
+	advertInPosition?: boolean;
+	/** @example true */
+	landownerPermission?: boolean;
+	/** @example "123456" */
+	siteGridReferenceEasting?: string;
+	/** @example "654321" */
+	siteGridReferenceNorthing?: string;
 }
 
 export type UpdateAppellantCaseResponse = object;
@@ -3894,6 +3914,7 @@ export type AppellantCase = {
 		| 'other-minor'
 		| null;
 	typeOfPlanningApplication?:
+		| 'advertisement'
 		| 'full-appeal'
 		| 'householder-planning'
 		| 'listed-building'
@@ -3903,6 +3924,11 @@ export type AppellantCase = {
 		| 'removal-or-variation-of-conditions'
 		| 'reserved-matters'
 		| null;
+	highwayLand?: boolean | null;
+	advertInPosition?: boolean | null;
+	landownerPermission?: boolean | null;
+	siteGridReferenceEasting?: string | null;
+	siteGridReferenceNorthing?: string | null;
 	validation?: {
 		outcome?: string | null;
 		incompleteReasons?: {
@@ -12186,6 +12212,7 @@ export interface AppellantCaseUpdateRequest {
 		| 'other-minor'
 		| null;
 	typeOfPlanningApplication?:
+		| 'advertisement'
 		| 'full-appeal'
 		| 'householder-planning'
 		| 'listed-building'
@@ -12195,6 +12222,11 @@ export interface AppellantCaseUpdateRequest {
 		| 'removal-or-variation-of-conditions'
 		| 'reserved-matters'
 		| null;
+	highwayLand?: boolean | null;
+	advertInPosition?: boolean | null;
+	landownerPermission?: boolean | null;
+	siteGridReferenceEasting?: string | null;
+	siteGridReferenceNorthing?: string | null;
 	appellantCaseValidationOutcomeId?: number | null;
 	validationOutcome?: {
 		id?: number;
@@ -12225,11 +12257,6 @@ export interface AppellantCaseUpdateRequest {
 	originalDevelopmentDescription?: string | null;
 	changedDevelopmentDescription?: string | null;
 	numberOfResidencesNetChange?: number | null;
-	highwayLand?: boolean | null;
-	advertInPosition?: boolean | null;
-	landownerPermission?: boolean | null;
-	siteGridReferenceEasting?: string | null;
-	siteGridReferenceNorthing?: string | null;
 }
 
 export interface LpaQuestionnaireUpdateRequest {

@@ -64,6 +64,10 @@ function createDataMap(mappingRequest) {
 			const s78 = createMap(apiMappers.apiS78Mappers, mappingRequest);
 			return mergeMaps(caseData, s78);
 		}
+		case APPEAL_CASE_TYPE.ZA: {
+			const casAdvert = createMap(apiMappers.apiCasAdvertMappers, mappingRequest);
+			return mergeMaps(caseData, casAdvert);
+		}
 		default:
 			return caseData;
 	}
