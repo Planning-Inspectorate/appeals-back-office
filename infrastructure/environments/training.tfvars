@@ -49,6 +49,7 @@ apps_config = {
     featureFlagCancelCase             = false
     featureFlagChangeProcedureType    = false
     featureFlagAdvertisement          = false
+    featureFlagHearingPostMvp         = false
   }
 
   use_system_test_bc_for_change_lpa = false
