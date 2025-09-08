@@ -90,7 +90,7 @@ export const postInspectorDecision = async (req, res) => {
 		)
 	);
 
-	const decision = results.find((result) => result !== null) ?? null;
+	const decision = results.find((result) => !!result?.documentType) ?? null;
 
 	return res.status(201).send(decision);
 };
