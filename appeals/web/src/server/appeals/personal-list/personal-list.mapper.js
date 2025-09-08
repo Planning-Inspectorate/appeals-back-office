@@ -318,7 +318,15 @@ function mapRequiredActionToPersonalListActionHtml(
 			return `<span>Awaiting LPA statement<span class="govuk-visually-hidden"> for appeal ${appealId}</span></span>`;
 		}
 		case 'awaitingLpaUpdate': {
-			return 'Awaiting LPA update';
+			if (!lpaQuestionnaireId) {
+				return '';
+			}
+			return isCaseOfficer
+				? `<a class="govuk-link" href="${addBackLinkQueryToUrl(
+						request,
+						`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}`
+				  )}">Update questionnaire<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+				: 'Update questionnaire';
 		}
 		case 'issueDecision': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
