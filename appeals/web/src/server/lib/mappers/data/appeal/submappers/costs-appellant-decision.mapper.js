@@ -11,11 +11,13 @@ export const mapCostsAppellantDecision = ({ appealDetails, currentRoute, session
 	const { appellantApplicationFolder, appellantWithdrawalFolder, appellantDecisionFolder } =
 		appealDetails.costs ?? {};
 
+	const appellantApplicationCount = appellantApplicationFolder?.documents?.length || 0;
+	const appellantWithdrawalCount = appellantWithdrawalFolder?.documents?.length || 0;
+
 	if (
 		isChildAppeal(appealDetails) ||
 		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
-		!appellantApplicationFolder?.documents?.length ||
-		appellantWithdrawalFolder?.documents?.length
+		appellantApplicationCount <= appellantWithdrawalCount
 	) {
 		return { id: 'appellant-costs-decision', display: {} };
 	}
