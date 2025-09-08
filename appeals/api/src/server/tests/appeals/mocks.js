@@ -61,6 +61,13 @@ export const auditTrails = [
 		user: {
 			azureAdUserId
 		}
+	},
+	{
+		details: 'Description of development updated to\nlorem ipsum',
+		loggedAt: new Date('2024-03-25T23:59:59.999Z').toISOString(),
+		user: {
+			azureAdUserId
+		}
 	}
 ];
 

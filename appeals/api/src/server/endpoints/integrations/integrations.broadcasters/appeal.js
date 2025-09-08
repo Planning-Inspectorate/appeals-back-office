@@ -151,10 +151,9 @@ function getSchemaForCaseType(caseType) {
 	switch (caseType) {
 		case APPEAL_CASE_TYPE.D:
 		case APPEAL_CASE_TYPE.ZP:
-			return schemas.events.appealHas;
-		case APPEAL_CASE_TYPE.ZA:
 		case APPEAL_CASE_TYPE.H:
-			return schemas.events.appealAdvert;
+		case APPEAL_CASE_TYPE.ZA:
+			return schemas.events.appealHas;
 		default:
 			return schemas.events.appealS78;
 	}

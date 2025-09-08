@@ -20,6 +20,7 @@ import otherAppealsRouter from '../other-appeals/other-appeals.router.js';
 import safetyRisksRouter from '../safety-risks/safety-risks.router.js';
 import serviceUserRouter from '../service-user/service-user.router.js';
 import siteAddressRouter from './address/address.router.js';
+import advertisementDescriptionRouter from './advertisement-description/advertisement-description.router.js';
 import agriculturalHoldingRouter from './agricultural-holding/agricultural-holding.router.js';
 import * as controller from './appellant-case.controller.js';
 import * as validators from './appellant-case.validators.js';
@@ -163,6 +164,13 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	applicationDevelopmentTypeRouter
+);
+
+router.use(
+	'/advertisement-description',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	advertisementDescriptionRouter
 );
 
 router.use(
