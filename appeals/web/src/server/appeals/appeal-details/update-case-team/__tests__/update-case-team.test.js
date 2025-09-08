@@ -131,7 +131,10 @@ describe('update-case-team', () => {
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
-				expect(element.innerHTML).toContain('Not assigned</dd>');
+				expect(element.innerHTML).toContain('Not assigned');
+				expect(element.innerHTML).toContain(
+					'<br>This will remove the current case team from the appeal'
+				);
 				expect(element.innerHTML).toContain('Change team</span>');
 				expect(element.innerHTML).toContain('Update case team');
 			});

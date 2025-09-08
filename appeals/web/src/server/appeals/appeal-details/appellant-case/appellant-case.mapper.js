@@ -75,8 +75,6 @@ export async function appellantCasePage(
 		session
 	);
 
-	const lpaText = 'Local planning authority';
-
 	/**
 	 * @type {PageComponent}
 	 */
@@ -98,25 +96,10 @@ export async function appellantCasePage(
 								}
 							}
 					  ]
-					: []),
-				...(mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem
-					? [
-							{
-								...mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
-								key: {
-									text: lpaText
-								}
-							}
-					  ]
 					: [])
 			]
 		}
 	};
-
-	appellantCaseSummary.parameters.rows = appellantCaseSummary.parameters.rows.map(
-		(/** @type {SummaryListRowProperties} */ row) =>
-			row.key.text === lpaText ? row : removeSummaryListActions(row)
-	);
 
 	const userHasUpdateCase = userHasPermission(permissionNames.updateCase, session);
 	const appealTypeSpecificComponents = generateCaseTypeSpecificComponents(
@@ -740,13 +723,23 @@ function generateCaseTypeSpecificComponents(
 			}
 		case APPEAL_TYPE.CAS_PLANNING:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
-				return generateCASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData);
+				return generateCASComponents(
+					appealDetails,
+					appellantCaseData,
+					mappedAppellantCaseData,
+					userHasUpdateCasePermission
+				);
 			} else {
 				throw new Error('Feature flag inactive for CAS');
 			}
 		case APPEAL_TYPE.CAS_ADVERTISEMENT:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS_ADVERT)) {
-				return generateCASAdvertComponents(appealDetails, mappedAppellantCaseData);
+				return generateCASAdvertComponents(
+					appealDetails,
+					appellantCaseData,
+					mappedAppellantCaseData,
+					userHasUpdateCasePermission
+				);
 			} else {
 				throw new Error('Feature flag inactive for CAS adverts');
 			}

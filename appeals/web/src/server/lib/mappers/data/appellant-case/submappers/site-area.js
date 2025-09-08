@@ -9,5 +9,6 @@ export const mapSiteArea = ({ appellantCaseData, currentRoute, userHasUpdateCase
 			? `${appellantCaseData.siteAreaSquareMetres} m²`
 			: 'No data',
 		link: `${currentRoute}/site-area/change`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase,
+		classes: 'appeal-site-area'
 	});

@@ -9,5 +9,7 @@ export const mapDevelopmentDescription = ({ appellantCaseData, currentRoute, use
 		link: `${currentRoute}/development-description/change`,
 		editable: userHasUpdateCase,
 		withShowMore: true,
-		showMoreLabelText: 'Enter the description of development that you submitted in your application'
+		showMoreLabelText:
+			'Enter the description of development that you submitted in your application',
+		classes: 'appeal-development-description'
 	});

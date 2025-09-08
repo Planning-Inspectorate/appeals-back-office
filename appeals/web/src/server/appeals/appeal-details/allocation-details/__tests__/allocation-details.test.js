@@ -85,9 +85,7 @@ describe('Allocation Details', () => {
 			'allocation-level': 'A'
 		});
 
-		const response = await request.post(`${baseUrl}/allocation-specialism`).send({
-			'allocation-specialisms': []
-		});
+		const response = await request.post(`${baseUrl}/allocation-specialism`).send({});
 
 		const element = parseHtml(response.text);
 
