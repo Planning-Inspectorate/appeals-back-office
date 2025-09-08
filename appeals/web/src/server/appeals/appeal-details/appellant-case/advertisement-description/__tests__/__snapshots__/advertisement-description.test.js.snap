@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`advertisement-description GET /change should render the development description change page when accessed from the appellant case page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Enter the description of advertisement</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count"
+                        data-maxlength="1000">
+                            <label class="govuk-label" for="advertisement-description">Enter the original description of the advertisement that you submitted
+                                in your application</label>
+                            <textarea class="govuk-textarea govuk-js-character-count"
+                            id="advertisement-description" name="advertisementDescription" rows="5"
+                            aria-describedby="advertisement-description-info"></textarea>
+                            <div id="advertisement-description-info" class="govuk-hint govuk-character-count__message">You can enter up to 1000 characters</div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

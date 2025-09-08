@@ -1,3 +1,4 @@
+import appealRepository from '#repositories/appeal.repository.js';
 import auditTrailRepository from '#repositories/audit-trail.repository.js';
 import { formatAuditTrail } from './audit-trails.formatter.js';
 
@@ -12,7 +13,9 @@ import { formatAuditTrail } from './audit-trails.formatter.js';
 const getAuditTrailById = async (req, res) => {
 	const { appealId } = req.params;
 	const auditTrail = await auditTrailRepository.getAuditTrail(Number(appealId));
-	const formattedAuditTrail = formatAuditTrail(auditTrail);
+	const appealType = await appealRepository.getAppealTypeById(Number(appealId));
+
+	const formattedAuditTrail = formatAuditTrail(auditTrail, appealType?.key);
 
 	return res.send(formattedAuditTrail);
 };

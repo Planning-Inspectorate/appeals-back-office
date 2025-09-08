@@ -48,6 +48,36 @@ describe('audit trails routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual([]);
 			});
+
+			test('maps details for advertisement description changes', async () => {
+				// @ts-ignore
+				databaseConnector.auditTrail.findMany.mockResolvedValue(auditTrails);
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					appealType: { key: 'ZA' }
+				});
+
+				const { id } = householdAppeal;
+				const response = await request
+					.get(`/appeals/${id}/audit-trails`)
+					.set('azureAdUserId', azureAdUserId);
+
+				const expectedResponse = [...auditTrails].map((trail) => {
+					if (trail.details.includes('Description of development updated to')) {
+						trail.details = trail.details.replace(
+							'Description of development',
+							'Description of advertisement'
+						);
+					}
+					return {
+						azureAdUserId: trail.user.azureAdUserId,
+						details: trail.details,
+						loggedDate: trail.loggedAt
+					};
+				});
+
+				expect(response.body).toEqual(expectedResponse);
+			});
 		});
 	});
 });

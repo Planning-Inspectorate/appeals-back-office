@@ -5,6 +5,7 @@ import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
+/** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} InspectorDecision */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Schema.User} User */
@@ -160,6 +161,24 @@ const getAppealById = async (id, includeDetails = true) => {
 	if (appeal) {
 		// @ts-ignore
 		return appeal;
+	}
+};
+
+/**
+ * @param {number} id
+ * @returns {Promise<AppealType|undefined>}
+ */
+const getAppealTypeById = async (id) => {
+	const appealType = await databaseConnector.appeal.findUnique({
+		where: {
+			id
+		},
+		select: { appealType: true }
+	});
+
+	if (appealType) {
+		// @ts-ignore
+		return appealType.appealType;
 	}
 };
 
@@ -495,6 +514,7 @@ const setAssignedTeamId = (id, assignedTeamId) => {
 export default {
 	getLinkedAppeals,
 	getAppealById,
+	getAppealTypeById,
 	getAppealByAppealReference,
 	updateAppealById,
 	setAppealDecision,

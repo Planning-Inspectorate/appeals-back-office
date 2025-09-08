@@ -1741,6 +1741,12 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                     data-cy="change-application-date">Change<span class="govuk-visually-hidden"> What date did you submit your application? (3. Application details)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Enter the description of the advertisement</dt>
+                            <dd                             class="govuk-summary-list__value">Test development description details</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/advertisement-description/change"
+                                    data-cy="change-advertisement-description">Change<span class="govuk-visually-hidden"> Enter the description of the advertisement (3. Application details)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Agreement to change the description of the advertisement</dt>
                             <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/add-documents/70459"

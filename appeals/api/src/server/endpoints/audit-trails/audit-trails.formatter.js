@@ -4,13 +4,14 @@
 
 /**
  * @param {AuditTrail[] | null | undefined} auditTrail
+ * @param {string | undefined} appealTypeKey
  * @returns {GetAuditTrailsResponse | []}
  */
-const formatAuditTrail = (auditTrail) =>
+const formatAuditTrail = (auditTrail, appealTypeKey) =>
 	auditTrail
 		? auditTrail.map(({ details, loggedAt, user, doc }) => ({
 				azureAdUserId: user?.azureAdUserId || '',
-				details,
+				details: formatAuditDetails(details, appealTypeKey) || '',
 				loggedDate: loggedAt,
 				doc: doc
 					? {
@@ -24,5 +25,17 @@ const formatAuditTrail = (auditTrail) =>
 					: undefined
 		  }))
 		: [];
+
+const formatAuditDetails = (details, appealTypeKey) => {
+	if (appealTypeKey !== 'ZA' && appealTypeKey !== 'H') return details;
+
+	if (details.includes('Description of development updated to')) {
+		const newDetails = details.replace(
+			'Description of development',
+			'Description of advertisement'
+		);
+		return newDetails;
+	} else return details;
+};
 
 export { formatAuditTrail };
