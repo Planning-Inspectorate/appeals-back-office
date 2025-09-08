@@ -4,8 +4,8 @@ import { mapNotificationBannersFromSession, sortNotificationBanners } from '#lib
 import { formatCaseOfficerDetailsForCaseSummary } from '#lib/mappers/utils/format-case-officer-details-for-case-summary.js';
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { getCancelAppealSection } from './cancel/cancel-appeal-section.js';
 import { generateAppealDetailsSections } from './appeal-details-page-sections/index.js';
+import { getCancelAppealSection } from './cancel/cancel-appeal-section.js';
 import { generateCaseNotes } from './case-notes/case-notes.mapper.js';
 import { generateStatusTags } from './status-tags/status-tags.mapper.js';
 
