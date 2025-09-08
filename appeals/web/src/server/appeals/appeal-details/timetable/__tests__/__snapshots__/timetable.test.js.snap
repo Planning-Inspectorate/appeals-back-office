@@ -1914,7 +1914,67 @@ exports[`Timetable GET /edit/check S78 and S20 should render correct "Timetable 
 </main>"
 `;
 
-exports[`Timetable GET /edit/check should render "Timetable CYA" page for householder appeal type 1`] = `
+exports[`Timetable GET /edit/check should render "Timetable CYA" page for householder appeal type: Month as a number 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
+            <h1 class="govuk-heading-l">Check details and update timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
+                    <dd class="govuk-summary-list__value">13 October 2030</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/timetable/edit">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <p class="govuk-body">We’ll send an email to the appellant and LPA to tell them about the new
+                timetable</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Update timetable due dates</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`Timetable GET /edit/check should render "Timetable CYA" page for householder appeal type: Month as full uppercase text 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
+            <h1 class="govuk-heading-l">Check details and update timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> LPA questionnaire due</dt>
+                    <dd class="govuk-summary-list__value">13 October 2030</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/timetable/edit">Change <span class="govuk-visually-hidden">LPA questionnaire due date</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <p class="govuk-body">We’ll send an email to the appellant and LPA to tell them about the new
+                timetable</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Update timetable due dates</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`Timetable GET /edit/check should render "Timetable CYA" page for householder appeal type: Month as short text 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
