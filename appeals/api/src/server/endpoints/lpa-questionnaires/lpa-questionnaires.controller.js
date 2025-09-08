@@ -126,15 +126,23 @@ const updateLPAQuestionnaireById = async (req, res) => {
 
 		const updatedProperties = Object.keys(body).filter((key) => body[key] !== undefined);
 
+		// Make sure we only create unique audit trail details for properties that have changed.
+		const auditTrailDetails = [
+			...new Set(
+				updatedProperties.map(
+					(updatedProperty) =>
+						CONSTANTS[`AUDIT_TRAIL_LPAQ_${camelToScreamingSnake(updatedProperty)}_UPDATED`] ||
+						CONSTANTS.AUDIT_TRAIL_LPAQ_UPDATED
+				)
+			)
+		];
+
 		await Promise.all(
-			updatedProperties.map((updatedProperty) =>
+			auditTrailDetails.map((details) =>
 				createAuditTrail({
 					appealId: appeal.id,
 					azureAdUserId: req.get('azureAdUserId'),
-					details:
-						// @ts-ignore
-						CONSTANTS[`AUDIT_TRAIL_LPAQ_${camelToScreamingSnake(updatedProperty)}_UPDATED`] ||
-						CONSTANTS.AUDIT_TRAIL_LPAQ_UPDATED
+					details
 				})
 			)
 		);
