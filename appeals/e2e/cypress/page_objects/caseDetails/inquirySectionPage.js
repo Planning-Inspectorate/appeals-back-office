@@ -1,10 +1,10 @@
 // @ts-nocheck
 
+import { getDateAndTimeValues } from '../../support/utils/format.js';
+import { AddressSection } from '../addressSection.js';
 import { CaseDetailsPage } from '../caseDetailsPage';
 import { DateTimeSection } from '../dateTimeSection.js';
-import { getDateAndTimeValues } from '../../support/utils/dateAndTime.js';
 import { EstimatedDaysSection } from '../estimatedDaysSection.js';
-import { AddressSection } from '../addressSection.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();

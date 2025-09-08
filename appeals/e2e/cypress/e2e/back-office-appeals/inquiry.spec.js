@@ -3,15 +3,14 @@
 
 import { users } from '../../fixtures/users';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage';
+import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
+import { CYASection } from '../../page_objects/cyaSection.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
-import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
-import { CYASection } from '../../page_objects/cyaSection.js';
-import { formatDateAndTime } from '../../support/utils/dateAndTime.js';
-import { formatObjectAsString } from '../../support/utils/format.js';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { urlPaths } from '../../support/urlPaths';
+import { formatDateAndTime, formatObjectAsString } from '../../support/utils/format.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();
@@ -71,7 +70,7 @@ const overviewDetails = {
 	linkedAppeals: 'No linked appeals',
 	relatedAppeals: '1000000',
 	netGainResidential: 'Not provided'
-}
+};
 
 const expectedCaseDetailsSections = [
 	'Overview',
