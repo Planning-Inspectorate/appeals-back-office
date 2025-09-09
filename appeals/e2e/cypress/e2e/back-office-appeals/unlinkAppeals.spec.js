@@ -16,7 +16,6 @@ describe('unlink appeals', () => {
 		cy.createCase().then((caseRef) => {
 			cy.createCase().then((caseRefToLink) => {
 				happyPathHelper.assignCaseOfficer(caseRef);
-				caseDetailsPage.clickAccordionByButton('Overview');
 				caseDetailsPage.clickAddLinkedAppeal();
 				caseDetailsPage.fillInput(caseRefToLink);
 				caseDetailsPage.clickButtonByText('Continue');
@@ -44,7 +43,6 @@ describe('unlink appeals', () => {
 			cy.createCase().then((caseRefToLinkAsLead) => {
 				cy.createCase().then((unlinkedCaseRefToLink) => {
 					happyPathHelper.assignCaseOfficer(caseRef);
-					caseDetailsPage.clickAccordionByButton('Overview');
 					caseDetailsPage.clickAddLinkedAppeal();
 					caseDetailsPage.fillInput(caseRefToLinkAsLead);
 					caseDetailsPage.clickButtonByText('Continue');
@@ -73,7 +71,6 @@ describe('unlink appeals', () => {
 			cy.createCase().then((caseRefToLinkAsChild) => {
 				cy.createCase().then((caseRefToLinkAsSecondChild) => {
 					happyPathHelper.assignCaseOfficer(caseRefToLinkAsLead);
-					caseDetailsPage.clickAccordionByButton('Overview');
 					caseDetailsPage.clickAddLinkedAppeal();
 					caseDetailsPage.fillInput(caseRefToLinkAsChild);
 					caseDetailsPage.clickButtonByText('Continue');

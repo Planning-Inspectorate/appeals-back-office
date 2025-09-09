@@ -183,7 +183,6 @@ describe('Issue individual costs decision', () => {
 			//Verify case details updates
 			caseDetailsPage.validateBannerMessage('Success', 'Appellant costs decision issued');
 			caseDetailsPage.checkDecisionOutcome('Appellant costs decision: Issued');
-			caseDetailsPage.clickAccordionByText('Overview');
 			caseDetailsPage.checkCorrectAnswerDisplays('Appellant costs decision', 'Issued');
 
 			const notifies = [
@@ -225,7 +224,6 @@ describe('Issue individual costs decision', () => {
 			//Verify case details updates
 			caseDetailsPage.validateBannerMessage('Success', 'LPA costs decision issued');
 			caseDetailsPage.checkDecisionOutcome('LPA costs decision: Issued');
-			caseDetailsPage.clickAccordionByText('Overview');
 			caseDetailsPage.checkCorrectAnswerDisplays('LPA costs decision', 'Issued');
 
 			const notifies = [

@@ -23,7 +23,6 @@ describe('related appeals', () => {
 		cy.createCase().then((caseRef) => {
 			cy.createCase().then((caseRefToLink) => {
 				happyPathHelper.assignCaseOfficer(caseRef);
-				caseDetailsPage.clickAccordionByButton('Overview');
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseRefToLink);
 				caseDetailsPage.clickButtonByText('Continue');
@@ -39,7 +38,6 @@ describe('related appeals', () => {
 			cy.createCase().then((firstCaseRefToLink) => {
 				cy.createCase().then((secondCaseRefToLink) => {
 					happyPathHelper.assignCaseOfficer(caseRef);
-					caseDetailsPage.clickAccordionByButton('Overview');
 					caseDetailsPage.clickAddRelatedAppeals();
 					caseDetailsPage.fillInput(firstCaseRefToLink);
 					caseDetailsPage.clickButtonByText('Continue');
@@ -65,7 +63,6 @@ describe('related appeals', () => {
 
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.clickAddRelatedAppeals();
 			caseDetailsPage.fillInput(horizonAppealId);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -84,7 +81,6 @@ describe('related appeals', () => {
 				//related appeal in validation status
 				happyPathHelper.assignCaseOfficer(caseRef);
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
-				caseDetailsPage.clickAccordionByButton('Overview');
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseRefToLink);
 				caseDetailsPage.clickButtonByText('Continue');
@@ -108,7 +104,6 @@ describe('related appeals', () => {
 				//related appeal in validation status
 				happyPathHelper.assignCaseOfficer(caseRef);
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
-				caseDetailsPage.clickAccordionByButton('Overview');
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseRefToLink);
 				caseDetailsPage.clickButtonByText('Continue');
@@ -132,7 +127,6 @@ describe('related appeals', () => {
 				//related appeal in validation status
 				happyPathHelper.assignCaseOfficer(caseRef);
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
-				caseDetailsPage.clickAccordionByButton('Overview');
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseRefToLink);
 				caseDetailsPage.clickButtonByText('Continue');
@@ -162,7 +156,6 @@ describe('related appeals', () => {
 				happyPathHelper.reviewLpaq(caseRef);
 				happyPathHelper.progressSiteVisit(caseRef);
 				caseDetailsPage.checkStatusOfCase('Issue decision', 0);
-				caseDetailsPage.clickAccordionByButton('Overview');
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseRefToLink);
 				caseDetailsPage.clickButtonByText('Continue');
@@ -191,7 +184,6 @@ describe('related appeals', () => {
 				happyPathHelper.startS78Case(caseRef, 'written');
 				happyPathHelper.reviewS78Lpaq(caseRef);
 				caseDetailsPage.checkStatusOfCase('Statements', 0);
-				caseDetailsPage.clickAccordionByButton('Overview');
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseRefToLink);
 				caseDetailsPage.clickButtonByText('Continue');
@@ -224,7 +216,6 @@ describe('related appeals', () => {
 				appellantCasePage.clickBackLink();
 
 				//case details
-				caseDetailsPage.clickAccordionByText('Overview');
 				caseDetailsPage.assertRelatedAppealValue(relatedCase);
 			});
 		});
@@ -256,7 +247,6 @@ describe('related appeals', () => {
 				lpaqPage.clickBackLink();
 
 				//case details
-				caseDetailsPage.clickAccordionByText('Overview');
 				caseDetailsPage.assertRelatedAppealValue(relatedCase);
 			});
 		});
@@ -265,7 +255,6 @@ describe('related appeals', () => {
 	it('related appeals error messaging', () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.clickAddRelatedAppeals();
 
 			caseDetailsPage.clickButtonByText('Continue');

@@ -26,7 +26,6 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 			cy.createCase().then((caseRef) => {
 				happyPathHelper.assignCaseOfficer(caseRef);
 				happyPathHelper.reviewAppellantCase(caseRef);
-				caseDetailsPage.clickAccordionByButton('Case management');
 				caseDetailsPage.clickViewCaseHistory();
 				caseDetailsPage.verifyTableCellTextCaseHistory(
 					users.appeals.caseAdmin.email + ' was added to the team'
@@ -49,7 +48,6 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 				caseDetailsPage.clickButtonByText('Continue');
 				caseDetailsPage.validateBannerMessage('Success', 'Site ownership updated');
 				caseDetailsPage.clickBackLink();
-				caseDetailsPage.clickAccordionByButton('Case management');
 				caseDetailsPage.clickViewCaseHistory();
 				caseDetailsPage.verifyTableCellTextCaseHistory(
 					`Document sample-file.doc uploaded (version 1, no redaction required)`
