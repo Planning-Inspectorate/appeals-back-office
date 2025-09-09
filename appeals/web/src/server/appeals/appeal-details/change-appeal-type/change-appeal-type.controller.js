@@ -13,12 +13,12 @@ import {
 	appealTypePage,
 	changeAppealFinalDatePage,
 	changeAppealMarkAppealInvalidPage,
+	changeAppealTransferAppealPage,
 	checkTransferPage,
 	invalidChangeAppealType,
 	resubmitAppealPage
 } from './change-appeal-type.mapper.js';
 import {
-	changeAppealTransferAppealPage,
 	getAppealTypes,
 	getNoResubmitAppealRequestRedirectUrl,
 	postAppealChangeRequest,
@@ -486,12 +486,11 @@ export const postMarkAppealInvalid = (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getTransferAppeal = async (request, response) => {
-	const {
-		errors,
-		params: { appealId }
-	} = request;
+	const { errors } = request;
 
-	const mappedPageContent = changeAppealTransferAppealPage(appealId);
+	const appealData = request.currentAppeal;
+
+	const mappedPageContent = changeAppealTransferAppealPage(appealData);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
