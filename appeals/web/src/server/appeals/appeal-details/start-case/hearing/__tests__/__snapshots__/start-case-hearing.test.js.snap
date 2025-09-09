@@ -39,3 +39,76 @@ exports[`start case hearing flow GET /start-case/hearing should render the date 
     </div>
 </main>"
 `;
+
+exports[`start case hearing flow GET /start-case/hearing/date should render the date page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - start case</span>
+            <h1 class="govuk-heading-l">Hearing date and time</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="hearing-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Date</legend>
+                                <div id="hearing-date-hint" class="govuk-hint">For example, 31 3 2025</div>
+                                <div class="govuk-date-input" id="hearing-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="hearing-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="hearing-date-day" name="hearing-date-day" type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="hearing-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="hearing-date-month" name="hearing-date-month" type="text" value=""
+                                            inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="hearing-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                            id="hearing-date-year" name="hearing-date-year" type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Time</legend>
+                            <div id="hearing-date-hint" class="govuk-hint">For example, 9:00 or 13:15</div>
+                            <div class="govuk-date-input">
+                                <div class="govuk-date-input__item govuk-!-margin-right-1">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="hearing-time-hour">Hour</label>
+                                        <input class="govuk-input govuk-input--width-2" id="hearing-time-hour"
+                                        name="hearing-time-hour" type="text" value="10">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item govuk-!-font-size-19 govuk-!-padding-0 govuk-!-margin-right-1">:</div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="hearing-time-minute">Minute</label>
+                                        <input class="govuk-input govuk-input--width-2" id="hearing-time-minute"
+                                        name="hearing-time-minute" type="text" value="00">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;

@@ -154,4 +154,218 @@ describe('start case hearing flow', () => {
 			);
 		});
 	});
+
+	describe('GET /start-case/hearing/date', () => {
+		const editEntrypoint = encodeURIComponent(`${baseUrl}/1/start-case/hearing/date`);
+
+		it('should render the date page', async () => {
+			const response = await request.get(`${baseUrl}/1/start-case/hearing/date`);
+			expect(response.statusCode).toBe(200);
+
+			const mainHtml = parseHtml(response.text).innerHTML;
+			expect(mainHtml).toMatchSnapshot();
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-caption-l')?.innerHTML.trim()).toBe(
+				'Appeal 351062 - start case'
+			);
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Hearing date and time');
+			expect(pageHtml.querySelector('input#hearing-date-day')).not.toBeNull();
+			expect(pageHtml.querySelector('input#hearing-date-month')).not.toBeNull();
+			expect(pageHtml.querySelector('input#hearing-date-year')).not.toBeNull();
+			expect(pageHtml.querySelector('input#hearing-time-hour')).not.toBeNull();
+			expect(pageHtml.querySelector('input#hearing-time-minute')).not.toBeNull();
+			expect(pageHtml.querySelector('button:contains("Continue")')).not.toBeNull();
+			expect(pageHtml.querySelector('a.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/1/start-case/hearing`
+			);
+		});
+
+		it('should render previously entered values', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
+				'hearing-date-day': '01',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+
+			const response = await request.get(`${baseUrl}/1/start-case/hearing/date`);
+			expect(response.statusCode).toBe(200);
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('input#hearing-date-day')?.getAttribute('value')).toBe('01');
+			expect(pageHtml.querySelector('input#hearing-date-month')?.getAttribute('value')).toBe('02');
+			expect(pageHtml.querySelector('input#hearing-date-year')?.getAttribute('value')).toBe('3025');
+			expect(pageHtml.querySelector('input#hearing-time-hour')?.getAttribute('value')).toBe('12');
+			expect(pageHtml.querySelector('input#hearing-time-minute')?.getAttribute('value')).toBe('00');
+		});
+
+		it('should render edited values', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.twice()
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
+				'hearing-date-day': '01',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+			await request
+				.post(`${baseUrl}/1/start-case/hearing/date?editEntrypoint=${editEntrypoint}`)
+				.send({
+					'hearing-date-day': '08',
+					'hearing-date-month': '09',
+					'hearing-date-year': '3025',
+					'hearing-time-hour': '13',
+					'hearing-time-minute': '00'
+				});
+
+			const response = await request.get(
+				`${baseUrl}/1/start-case/hearing/date?editEntrypoint=${editEntrypoint}`
+			);
+			expect(response.statusCode).toBe(200);
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('input#hearing-date-day')?.getAttribute('value')).toBe('08');
+			expect(pageHtml.querySelector('input#hearing-date-month')?.getAttribute('value')).toBe('09');
+			expect(pageHtml.querySelector('input#hearing-date-year')?.getAttribute('value')).toBe('3025');
+			expect(pageHtml.querySelector('input#hearing-time-hour')?.getAttribute('value')).toBe('13');
+			expect(pageHtml.querySelector('input#hearing-time-minute')?.getAttribute('value')).toBe('00');
+		});
+
+		it('should have a back link to the CYA page when editing', async () => {
+			const response = await request.get(
+				`${baseUrl}/1/start-case/hearing/date?editEntrypoint=${editEntrypoint}`
+			);
+			expect(response.statusCode).toBe(200);
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-back-link')?.getAttribute('href')).toBe(
+				`${baseUrl}/1/start-case/hearing/confirm`
+			);
+		});
+	});
+
+	describe('POST /start-case/hearing/date', () => {
+		it('should redirect to the CYA page when a valid date and time are entered', async () => {
+			const response = await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
+				'hearing-date-day': '01',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/1/start-case/hearing/confirm`);
+		});
+
+		it('should return 400 on invalid date with appropriate error message', async () => {
+			const response = await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
+				'hearing-date-day': '31',
+				'hearing-date-month': '02',
+				'hearing-date-year': '2025',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Hearing date must be a real date');
+		});
+
+		it('should return 400 on missing date with appropriate error message', async () => {
+			const response = await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the hearing date');
+		});
+
+		it('should return 400 on date in the past with appropriate error message', async () => {
+			const response = await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
+				'hearing-date-day': '28',
+				'hearing-date-month': '02',
+				'hearing-date-year': '1999',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('The hearing date must be in the future');
+		});
+
+		it('should return 400 on invalid time with appropriate error message', async () => {
+			const response = await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
+				'hearing-date-day': '28',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '99',
+				'hearing-time-minute': '99'
+			});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter a real hearing time');
+		});
+
+		it('should return 400 on missing time with appropriate error message', async () => {
+			const response = await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
+				'hearing-date-day': '28',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025'
+			});
+
+			expect(response.statusCode).toBe(400);
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the hearing time');
+		});
+	});
 });
