@@ -2,17 +2,37 @@
 import { BrowserAuthData } from '../fixtures/browser-auth-data';
 import { appealsApiClient } from './appealsApiClient';
 
-//OVERWRITE
+// const cookiesToSet = ['domain', 'expiry', 'httpOnly', 'path', 'secure'];
+// Pick a stable auth cookie name if you know it; regex is a safe default.
+const AUTH_COOKIE_MATCH = /(Auth|\.AspNetCore|idsrv|x-ms-)/i;
 
-Cypress.Commands.overwrite('type', (originalFn, subject, text, options = {}) => {
-	options.delay = 0;
+function assertAuthCookiesExist() {
+	cy.getCookies().then((cookies) => {
+		const ok = cookies.some((c) => AUTH_COOKIE_MATCH.test(c.name));
+		expect(ok, 'at least one auth cookie present').to.be.true;
+	});
+}
 
-	return originalFn(subject, text, options);
-});
+// Checks we are authenticated by probing a known auth-only page.
+// Adjust PATH if your app uses a different landing route.
+function assertAuthenticated() {
+	const PATH = '/appeals-service/personal-list';
 
-//ADD
+	cy.request({
+		url: PATH,
+		failOnStatusCode: false, // don't fail the test on 302/404
+		followRedirect: false // so we can inspect Location header
+	}).then((res) => {
+		const location = res.headers?.location || '';
 
-const cookiesToSet = ['domain', 'expiry', 'httpOnly', 'path', 'secure'];
+		// Not bounced to Azure AD
+		expect(location, 'not redirected to AAD').not.to.include('login.microsoftonline.com');
+
+		// SPA backends may return 404 for client-routed paths; accept it.
+		// 200 = served page, 302 = in-app redirect, 404 = SPA not SSR'd but still auth OK
+		expect(res.status, 'authenticated status').to.be.oneOf([200, 302, 404]);
+	});
+}
 
 Cypress.Commands.add('clearCookiesFiles', () => {
 	cy.task('ClearAllCookies').then((cleared) => {
@@ -41,19 +61,11 @@ Cypress.Commands.add('validateDownloadedFile', (fileName) => {
 });
 
 Cypress.Commands.add('login', (user) => {
-	cy.task('CookiesFileExists', user.id).then((exists) => {
-		if (!exists) {
-			cy.log(`No cookies 🍪 found!\nLogging in as: ${user.id}`);
-			cy.loginWithPuppeteer(user);
-		} else {
-			cy.log(`Found some cookies! 🍪\nSetting cookies for: ${user.id}`);
-			setLocalCookies(user.id);
-		}
-	});
+	cy.loginSession(user);
 });
 
 Cypress.Commands.add('loginWithPuppeteer', (user) => {
-	var config = {
+	const config = {
 		username: user.email,
 		password: Cypress.env('PASSWORD'),
 		loginUrl: Cypress.config('baseUrl'),
@@ -71,13 +83,43 @@ Cypress.Commands.add('loginWithPuppeteer', (user) => {
 				secure: cookie.secure,
 				log: false
 			});
-			if (cookiesToSet.includes(cookie.name)) {
-				cy.getCookie(cookie.name).should('not.be.empty');
-			}
 		});
+
+		// Bind cookies to the app origin and verify we’re authenticated
+		cy.visit('/');
+		assertAuthenticated();
 	});
 
 	return;
+});
+
+Cypress.Commands.add('loginSession', (user) => {
+	if (!user?.id || !user?.email) {
+		throw new Error('loginSession: user must be an object with { id, email }');
+	}
+
+	const sessionKey = `azure:${Cypress.config('baseUrl')}:${user.id}`;
+
+	cy.session(
+		sessionKey,
+		() => {
+			cy.task('CookiesFileExists', user.id).then((exists) => {
+				if (!exists) {
+					cy.log(`No cookie file for ${user.id} → performing Azure sign-in`);
+					cy.loginWithPuppeteer(user);
+				} else {
+					cy.log(`Using cookie file for ${user.id}`);
+					setLocalCookies(user.id);
+				}
+			});
+		},
+		{
+			cacheAcrossSpecs: true,
+			validate() {
+				assertAuthenticated();
+			}
+		}
+	);
 });
 
 Cypress.Commands.add('getByData', (value) => {
@@ -157,16 +199,17 @@ export function setLocalCookies(userId) {
 				secure: cookie.secure,
 				log: false
 			});
-			if (cookiesToSet.includes(cookie.name)) {
-				cy.getCookie(cookie.name).should('not.be.empty');
-			}
 		});
+
+		// Bind cookies and verify auth
+		cy.visit('/');
+		assertAuthenticated();
 	});
 }
 
 Cypress.Commands.add('setCurrentCookies', (cookies) => {
+	cy.clearCookies();
 	cookies.forEach((cookie) => {
-		cy.clearCookies();
 		cy.setCookie(cookie.name, cookie.value, {
 			domain: cookie.domain,
 			expiry: cookie.expiry,
@@ -174,8 +217,10 @@ Cypress.Commands.add('setCurrentCookies', (cookies) => {
 			path: cookie.path,
 			secure: cookie.secure
 		});
-		Cypress.Cookies.preserveOnce(cookie.name);
 	});
+
+	cy.visit('/');
+	assertAuthenticated();
 });
 
 Cypress.Commands.add('getBusinessActualDate', (date, days) => {
