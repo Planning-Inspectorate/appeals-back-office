@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { request } from '#tests/../app-test.js';
 import { mocks } from '#tests/appeals/index.js';
 import { savedFolder } from '#tests/documents/mocks.js';
@@ -7,6 +8,8 @@ import { jest } from '@jest/globals';
 import {
 	AUDIT_TRAIL_ASSIGNED_CASE_OFFICER,
 	AUDIT_TRAIL_ASSIGNED_INSPECTOR,
+	CASE_RELATIONSHIP_LINKED,
+	CASE_RELATIONSHIP_RELATED,
 	ERROR_CANNOT_BE_EMPTY_STRING,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_MUST_BE_CORRECT_UTC_DATE_FORMAT,
@@ -17,6 +20,7 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
+import { cloneDeep } from 'lodash-es';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const householdAppeal = mocks.householdAppeal;
@@ -270,6 +274,12 @@ const folders = [
 ];
 
 describe('Appeal detail routes', () => {
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 	describe('/appeals/:appealId', () => {
 		describe('GET', () => {
 			test('gets a single household appeal', async () => {
@@ -482,6 +492,8 @@ describe('Appeal detail routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					data: {
 						caseOfficerUserId: householdAppeal.caseOfficer.id,
@@ -528,6 +540,8 @@ describe('Appeal detail routes', () => {
 					})
 					.set('azureAdUserId', azureAdUserId);
 
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					data: {
 						caseOfficerUserId: householdAppeal.caseOfficer.id,
@@ -559,7 +573,6 @@ describe('Appeal detail routes', () => {
 			});
 
 			test('assigns an inspector to an appeal', async () => {
-				jest.clearAllMocks();
 				const inspector = '37b537ee-8a4e-42c3-8b97-089ddb8949e7';
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
@@ -572,6 +585,8 @@ describe('Appeal detail routes', () => {
 						inspector
 					})
 					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
 
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					data: {
@@ -596,6 +611,302 @@ describe('Appeal detail routes', () => {
 						userId: 10
 					}
 				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					inspector
+				});
+			});
+
+			test('assigns a case officer to linked appeals', async () => {
+				const leadAppeal = cloneDeep(householdAppeal);
+				leadAppeal.childAppeals = [
+					{ child: { id: 10 }, childId: 10, type: CASE_RELATIONSHIP_LINKED },
+					{ child: { id: 20 }, childId: 20, type: CASE_RELATIONSHIP_RELATED },
+					{ child: { id: 30 }, childId: 30, type: CASE_RELATIONSHIP_LINKED }
+				];
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue({
+					...leadAppeal,
+					caseOfficerId: null,
+					caseOfficer: undefined
+				});
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue(leadAppeal.caseOfficer);
+
+				const response = await request
+					.patch(`/appeals/${leadAppeal.id}`)
+					.send({
+						caseOfficer: leadAppeal.caseOfficer.azureAdUserId
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(3);
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(1, {
+					data: {
+						caseOfficerUserId: leadAppeal.caseOfficer.id,
+						caseUpdatedDate: expect.any(Date)
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					},
+					where: {
+						id: leadAppeal.id
+					}
+				});
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(2, {
+					data: {
+						caseOfficerUserId: leadAppeal.caseOfficer.id,
+						caseUpdatedDate: expect.any(Date)
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					},
+					where: {
+						id: leadAppeal.childAppeals[0].childId
+					}
+				});
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(3, {
+					data: {
+						caseOfficerUserId: leadAppeal.caseOfficer.id,
+						caseUpdatedDate: expect.any(Date)
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					},
+					where: {
+						id: leadAppeal.childAppeals[2].childId
+					}
+				});
+
+				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(3);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: leadAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [
+							leadAppeal.caseOfficer.azureAdUserId
+						]),
+						loggedAt: expect.any(Date),
+						userId: leadAppeal.caseOfficer.id
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: leadAppeal.childAppeals[0].childId,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [
+							leadAppeal.caseOfficer.azureAdUserId
+						]),
+						loggedAt: expect.any(Date),
+						userId: leadAppeal.caseOfficer.id
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
+					data: {
+						appealId: leadAppeal.childAppeals[2].childId,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [
+							leadAppeal.caseOfficer.azureAdUserId
+						]),
+						loggedAt: expect.any(Date),
+						userId: leadAppeal.caseOfficer.id
+					}
+				});
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					caseOfficer: leadAppeal.caseOfficer.azureAdUserId
+				});
+			});
+
+			test('replace a case officer to linked appeals', async () => {
+				const leadAppeal = cloneDeep(householdAppeal);
+				leadAppeal.childAppeals = [
+					{ child: { id: 10 }, childId: 10, type: CASE_RELATIONSHIP_LINKED },
+					{ child: { id: 20 }, childId: 20, type: CASE_RELATIONSHIP_RELATED },
+					{ child: { id: 30 }, childId: 30, type: CASE_RELATIONSHIP_LINKED }
+				];
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(leadAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue(leadAppeal.caseOfficer);
+
+				const response = await request
+					.patch(`/appeals/${leadAppeal.id}`)
+					.send({
+						caseOfficer: leadAppeal.caseOfficer.azureAdUserId
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(3);
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(1, {
+					data: {
+						caseOfficerUserId: 1,
+						caseUpdatedDate: expect.any(Date)
+					},
+					where: {
+						id: leadAppeal.id
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					}
+				});
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(2, {
+					data: {
+						caseOfficerUserId: 1,
+						caseUpdatedDate: expect.any(Date)
+					},
+					where: {
+						id: leadAppeal.childAppeals[0].childId
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					}
+				});
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(3, {
+					data: {
+						caseOfficerUserId: 1,
+						caseUpdatedDate: expect.any(Date)
+					},
+					where: {
+						id: leadAppeal.childAppeals[2].childId
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					}
+				});
+
+				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(3);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: leadAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [
+							leadAppeal.caseOfficer.azureAdUserId
+						]),
+						loggedAt: expect.any(Date),
+						userId: leadAppeal.caseOfficer.id
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: leadAppeal.childAppeals[0].childId,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [
+							leadAppeal.caseOfficer.azureAdUserId
+						]),
+						loggedAt: expect.any(Date),
+						userId: leadAppeal.caseOfficer.id
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
+					data: {
+						appealId: leadAppeal.childAppeals[2].childId,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_CASE_OFFICER, [
+							leadAppeal.caseOfficer.azureAdUserId
+						]),
+						loggedAt: expect.any(Date),
+						userId: leadAppeal.caseOfficer.id
+					}
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					caseOfficer: leadAppeal.caseOfficer.azureAdUserId
+				});
+			});
+
+			test('assigns an inspector to linked appeals', async () => {
+				const leadAppeal = cloneDeep(householdAppeal);
+				leadAppeal.childAppeals = [
+					{ child: { id: 10 }, childId: 10, type: CASE_RELATIONSHIP_LINKED },
+					{ child: { id: 20 }, childId: 20, type: CASE_RELATIONSHIP_RELATED },
+					{ child: { id: 30 }, childId: 30, type: CASE_RELATIONSHIP_LINKED }
+				];
+				const inspector = '37b537ee-8a4e-42c3-8b97-089ddb8949e7';
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(leadAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({ id: 10, azureAdUserId: inspector });
+
+				const response = await request
+					.patch(`/appeals/${leadAppeal.id}`)
+					.send({
+						inspector
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(3);
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(1, {
+					data: {
+						inspectorUserId: 10,
+						caseUpdatedDate: expect.any(Date)
+					},
+					where: {
+						id: leadAppeal.id
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					}
+				});
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(2, {
+					data: {
+						inspectorUserId: 10,
+						caseUpdatedDate: expect.any(Date)
+					},
+					where: {
+						id: leadAppeal.childAppeals[0].childId
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					}
+				});
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(3, {
+					data: {
+						inspectorUserId: 10,
+						caseUpdatedDate: expect.any(Date)
+					},
+					where: {
+						id: leadAppeal.childAppeals[2].childId
+					},
+					include: {
+						appealStatus: true,
+						appealType: true
+					}
+				});
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(3);
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
+					data: {
+						appealId: leadAppeal.id,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [inspector]),
+						loggedAt: expect.any(Date),
+						userId: 10
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
+					data: {
+						appealId: leadAppeal.childAppeals[0].childId,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [inspector]),
+						loggedAt: expect.any(Date),
+						userId: 10
+					}
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
+					data: {
+						appealId: leadAppeal.childAppeals[2].childId,
+						details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_INSPECTOR, [inspector]),
+						loggedAt: expect.any(Date),
+						userId: 10
+					}
+				});
+
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({
 					inspector
@@ -835,6 +1146,12 @@ describe('Appeal detail routes', () => {
 });
 
 describe('appeals/case-reference/:caseReference', () => {
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
 	describe('GET', () => {
 		test('gets a single household appeal', async () => {
 			// @ts-ignore

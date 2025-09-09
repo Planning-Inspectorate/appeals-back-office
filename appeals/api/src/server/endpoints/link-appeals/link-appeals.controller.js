@@ -1,5 +1,7 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { appealDetailService } from '#endpoints/appeal-details/appeal-details.service.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { setAssignedTeamId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
@@ -74,6 +76,12 @@ export const linkAppeal = async (req, res) => {
 
 	if (result) {
 		await duplicateFiles(childAppeal, parentAppeal, APPEAL_CASE_STAGE.COSTS);
+		const azureAdUserId = req.get('azureAdUserId') || '';
+		await setAssignedTeamId(childAppeal.id, parentAppeal.assignedTeamId || null, azureAdUserId);
+		const caseOfficer = parentAppeal.caseOfficer?.azureAdUserId || null;
+		const inspector = parentAppeal.inspector?.azureAdUserId || null;
+		await appealDetailService.assignUser(childAppeal, { caseOfficer }, azureAdUserId);
+		await appealDetailService.assignUser(childAppeal, { inspector }, azureAdUserId);
 	}
 
 	const siteAddress = currentAppeal.address

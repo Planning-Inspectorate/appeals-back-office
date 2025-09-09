@@ -4,12 +4,16 @@ import { mocks } from '#tests/appeals/index.js';
 import { caseTeams } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { cloneDeep } from 'lodash-es';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const householdAppeal = mocks.householdAppeal;
 const teeamIdNumericErrorMessage = 'teamId must be a number equal to or greater than 0';
 const teamIdRequiredErrorMessage = 'teamId is required';
 describe('case team routes', () => {
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
@@ -88,6 +92,7 @@ describe('case team routes', () => {
 				expect(response.status).toEqual(200);
 				expect(response.body).toEqual({ teamId: 1 });
 			});
+
 			it(`returns teamId of null when 0 is provided`, async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				databaseConnector.appeal.update.mockResolvedValue({ assignedTeamId: null });
@@ -103,6 +108,63 @@ describe('case team routes', () => {
 					data: { assignedTeamId: null }
 				});
 				expect(response.body).toEqual({ assignedTeamId: null });
+			});
+
+			it('returns valid assigned team Id when valid teamId is provided', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.update.mockResolvedValue({ assignedTeamId: 1 });
+
+				const response = await request
+					.patch(`/appeals/${householdAppeal.id}/case-team`)
+					.send({ teamId: 1 })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(1);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+					where: { id: householdAppeal.id },
+					data: { assignedTeamId: 1 }
+				});
+				expect(response.body).toEqual({ assignedTeamId: 1 });
+			});
+
+			it('returns valid assigned team Id when valid teamId is provided and there are linked appeals', async () => {
+				const leadAppeal = cloneDeep(householdAppeal);
+				leadAppeal.childAppeals = [
+					{ childId: 10, parentId: 1 },
+					{ childId: 20, parentId: 1 }
+				];
+				databaseConnector.appeal.findUnique.mockResolvedValue(leadAppeal);
+				databaseConnector.appealRelationship.findMany.mockResolvedValue(leadAppeal.childAppeals);
+				databaseConnector.appeal.update.mockResolvedValue({ assignedTeamId: 1 });
+
+				const response = await request
+					.patch(`/appeals/${leadAppeal.id}/case-team`)
+					.send({ teamId: 1 })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(response.status).toEqual(200);
+
+				expect(databaseConnector.appeal.update).toHaveBeenCalledTimes(3);
+
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(1, {
+					where: { id: leadAppeal.id },
+					data: { assignedTeamId: 1 }
+				});
+
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(2, {
+					where: { id: leadAppeal.childAppeals[0].childId },
+					data: { assignedTeamId: 1 }
+				});
+
+				expect(databaseConnector.appeal.update).toHaveBeenNthCalledWith(3, {
+					where: { id: leadAppeal.childAppeals[1].childId },
+					data: { assignedTeamId: 1 }
+				});
+
+				expect(response.body).toEqual({ assignedTeamId: 1 });
 			});
 		});
 	});

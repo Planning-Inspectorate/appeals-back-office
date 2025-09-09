@@ -147,6 +147,7 @@ const appealDetailsInclude = {
 
 /**
  * @param {number} id
+ * @param {boolean} [includeDetails]
  * @returns {Promise<Appeal|undefined>}
  */
 const getAppealById = async (id, includeDetails = true) => {
@@ -358,6 +359,38 @@ const getLinkedAppeals = async (appealReference, relationshipType) => {
 
 /**
  *
+ * @param {number} appealId
+ * @param {string} relationshipType
+ * @returns {Promise<AppealRelationship[]>}
+ */
+const getLinkedAppealsById = async (appealId, relationshipType) => {
+	// ToDo Fix this typescript type
+	// @ts-ignore
+	return await databaseConnector.appealRelationship.findMany({
+		where: {
+			AND: [
+				{ type: relationshipType },
+				{
+					OR: [
+						{
+							parentId: {
+								equals: appealId
+							}
+						},
+						{
+							childId: {
+								equals: appealId
+							}
+						}
+					]
+				}
+			]
+		}
+	});
+};
+
+/**
+ *
  * @param {AppealRelationshipRequest} relation
  * @returns {Promise<AppealRelationship>}
  */
@@ -494,6 +527,7 @@ const setAssignedTeamId = (id, assignedTeamId) => {
 
 export default {
 	getLinkedAppeals,
+	getLinkedAppealsById,
 	getAppealById,
 	getAppealByAppealReference,
 	updateAppealById,

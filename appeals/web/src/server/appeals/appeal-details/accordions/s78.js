@@ -59,7 +59,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 
 	const caseContacts = getCaseContacts(mappedData);
 
-	const caseTeam = getCaseTeam(mappedData);
+	const caseTeam = !isChildAppeal(appealDetails) && getCaseTeam(mappedData);
 
 	const caseManagement = getCaseManagement(mappedData);
 
@@ -83,6 +83,7 @@ export function generateAccordion(appealDetails, mappedData, session) {
 		!userHasPermission(permissionNames.viewCaseDetails, session) ||
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.AWAITING_TRANSFER
 	) {
+		// @ts-ignore
 		removeAccordionComponentsActions(accordionComponents);
 	}
 
@@ -144,10 +145,14 @@ export function generateAccordion(appealDetails, mappedData, session) {
 					heading: { text: 'Contacts' },
 					content: { html: '', pageComponents: [caseContacts] }
 				},
-				{
-					heading: { text: 'Team' },
-					content: { html: '', pageComponents: [caseTeam] }
-				},
+				...(caseTeam
+					? [
+							{
+								heading: { text: 'Team' },
+								content: { html: '', pageComponents: [caseTeam] }
+							}
+					  ]
+					: []),
 				{
 					heading: { text: 'Case management' },
 					content: { html: '', pageComponents: [caseManagement] }

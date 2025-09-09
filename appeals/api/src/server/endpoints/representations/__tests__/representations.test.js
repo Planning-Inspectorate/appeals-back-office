@@ -20,7 +20,9 @@ import { cloneDeep } from 'lodash-es';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('/appeals/:id/reps', () => {
-	beforeEach(() => {});
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
