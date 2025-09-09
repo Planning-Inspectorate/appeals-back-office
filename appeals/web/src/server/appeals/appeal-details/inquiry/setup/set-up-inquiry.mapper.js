@@ -70,9 +70,10 @@ export function inquiryDatePage(appealData, values, action) {
  * @param {Appeal} appealData
  * @param {string} action
  * @param {{inquiryEstimationYesNo: string, inquiryEstimationDays: number}} [values]
+ * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {{backLinkUrl: string, title: string, pageComponents: {type: string, parameters: {name: string, fieldset: {legend: {classes: string, text: string, isPageHeading: boolean}}, idPrefix: string, items: [{conditional: {html: string}, text: string, value: string},{text: string, value: string}]}}[], preHeading: string}}
  */
-export function inquiryEstimationPage(appealData, action, values) {
+export function inquiryEstimationPage(appealData, action, errors, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const inquiryEstimationComponent = {
 		type: 'radios',
@@ -99,6 +100,7 @@ export function inquiryEstimationPage(appealData, action, values) {
 									id: 'inquiry-estimation-days',
 									name: 'inquiryEstimationDays',
 									value: values?.inquiryEstimationDays,
+									...(errors && { errorMessage: { text: errors.msg } }),
 									label: {
 										text: 'Expected number of days to carry out the inquiry',
 										classes: 'govuk-label--s'
@@ -129,7 +131,7 @@ export function inquiryEstimationPage(appealData, action, values) {
 			action === 'setup' ? 'set up' : 'change'
 		} inquiry`,
 		// @ts-ignore
-		pageComponents: [inquiryEstimationComponent]
+		pageComponents: [inquiryEstimationComponent, errors]
 	};
 }
 
