@@ -211,7 +211,7 @@ export const renderInquiryEstimation = async (request, response, action, values)
 
 	const appealDetails = request.currentAppeal;
 
-	const mappedPageContent = await inquiryEstimationPage(appealDetails, action, values);
+	const mappedPageContent = inquiryEstimationPage(appealDetails, action, errors, values);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
