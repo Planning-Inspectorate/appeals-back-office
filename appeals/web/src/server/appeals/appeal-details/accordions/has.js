@@ -9,16 +9,17 @@ import { getCaseManagement } from './common/case-management.js';
 import { getCaseOverview } from './common/case-overview.js';
 import { getCaseTeam } from './common/case-team.js';
 import { getSiteDetails } from './common/site-details.js';
-import { removeAppealDetailsSectionComponentsActions } from './utils/index.js';
+import { removeAccordionComponentsActions } from './utils/index.js';
 
 /**
  * @param {import('../appeal-details.types.js').WebAppeal} appealDetails
  * @param {{appeal: MappedInstructions}} mappedData
  * @param {import("express-session").Session & Partial<import("express-session").SessionData>} session
- * @returns {PageComponent[]}
+ * @returns {SharedPageComponentProperties & AccordionPageComponent}
  */
-export function generateAppealDetailsPageComponents(appealDetails, mappedData, session) {
+export function generateAccordion(appealDetails, mappedData, session) {
 	const caseOverview = getCaseOverview(mappedData, appealDetails);
+
 	const siteDetails = isChildAppeal(appealDetails) ? [] : getSiteDetails(mappedData, appealDetails);
 
 	/** @type {PageComponent[]} */
@@ -36,10 +37,6 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 								: []),
 							mappedData.appeal.siteVisitTimetable.display.summaryListItem
 						].filter(isDefined)
-					},
-					wrapperHtml: {
-						opening: '<h1 class="govuk-heading-l">Timetable</h1>',
-						closing: ''
 					}
 				}
 		  ]
@@ -51,10 +48,6 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 							mappedData.appeal.validAt.display.summaryListItem,
 							mappedData.appeal.startedAt.display.summaryListItem
 						].filter(isDefined)
-					},
-					wrapperHtml: {
-						opening: '<h1 class="govuk-heading-l">Timetable</h1>',
-						closing: ''
 					}
 				}
 		  ];
@@ -74,10 +67,6 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 				mappedData.appeal.lpaQuestionnaire.display.tableItem
 			].filter(isDefined),
 			firstCellIsHeader: true
-		},
-		wrapperHtml: {
-			opening: '<h1 class="govuk-heading-l">Documentation</h1>',
-			closing: ''
 		}
 	};
 
@@ -89,12 +78,11 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 
 	const caseManagement = getCaseManagement(mappedData);
 
-	const pageComponents = [
+	const accordionComponents = [
 		caseOverview,
 		...(siteDetails ?? []),
 		caseTimetable[0],
 		caseDocumentation,
-		...(caseCosts ? [caseCosts] : []),
 		caseContacts,
 		caseTeam,
 		caseManagement
@@ -104,7 +92,62 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 		!userHasPermission(permissionNames.viewCaseDetails, session) ||
 		appealDetails.appealStatus === APPEAL_CASE_STATUS.AWAITING_TRANSFER
 	) {
-		removeAppealDetailsSectionComponentsActions(pageComponents);
+		removeAccordionComponentsActions(accordionComponents);
 	}
-	return pageComponents;
+
+	/** @type {PageComponent} */
+	const appealDetailsAccordion = {
+		type: 'accordion',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			id: 'accordion-default' + appealDetails.appealId,
+			items: [
+				{
+					heading: { text: 'Overview' },
+					content: { html: '', pageComponents: [caseOverview] }
+				},
+				...(siteDetails.length
+					? [
+							{
+								heading: { text: 'Site' },
+								content: { html: '', pageComponents: siteDetails }
+							}
+					  ]
+					: []),
+				{
+					heading: { text: 'Timetable' },
+					content: { html: '', pageComponents: caseTimetable }
+				},
+				{
+					heading: { text: 'Documentation' },
+					content: { html: '', pageComponents: [caseDocumentation] }
+				},
+				...(caseCosts
+					? [
+							{
+								heading: { text: 'Costs' },
+								content: { html: '', pageComponents: [caseCosts] }
+							}
+					  ]
+					: []),
+				{
+					heading: { text: 'Contacts' },
+					content: { html: '', pageComponents: [caseContacts] }
+				},
+				{
+					heading: { text: 'Team' },
+					content: { html: '', pageComponents: [caseTeam] }
+				},
+				{
+					heading: { text: 'Case management' },
+					content: { html: '', pageComponents: [caseManagement] }
+				}
+			]
+		}
+	};
+
+	return appealDetailsAccordion;
 }

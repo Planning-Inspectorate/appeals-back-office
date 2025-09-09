@@ -3,11 +3,11 @@ import { removeSummaryListActions } from '#lib/mappers/index.js';
 const caseDocumentationTableActionColumnIndex = 3;
 
 /**
- * @param {PageComponent[]} pageComponents
+ * @param {PageComponent[]} accordionComponents
  * @returns {void}
  */
-export function removeAppealDetailsSectionComponentsActions(pageComponents) {
-	pageComponents.forEach((component) => {
+export function removeAccordionComponentsActions(accordionComponents) {
+	accordionComponents.forEach((component) => {
 		switch (component.type) {
 			case 'summary-list':
 				component.parameters.rows = component.parameters.rows.map(

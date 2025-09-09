@@ -21,9 +21,5 @@ export const getCaseCosts = (mappedData) => ({
 			mappedData.appeal.costsLpaCorrespondence.display.tableItem
 		].filter(isDefined),
 		firstCellIsHeader: true
-	},
-	wrapperHtml: {
-		opening: '<h1 class="govuk-heading-l">Costs</h1>',
-		closing: ''
 	}
 });

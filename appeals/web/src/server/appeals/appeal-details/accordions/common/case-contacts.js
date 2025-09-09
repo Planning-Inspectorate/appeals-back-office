@@ -17,9 +17,5 @@ export const getCaseContacts = (mappedData) => ({
 				}
 			}
 		].filter(isDefined)
-	},
-	wrapperHtml: {
-		opening: '<h1 class="govuk-heading-l">Contacts</h1>',
-		closing: ''
 	}
 });
