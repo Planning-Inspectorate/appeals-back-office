@@ -35,7 +35,7 @@ export const redirectAndClearSession = (path, sessionKey) => (request, response)
  * @param {Record<string, string>} sessionValues
  * @returns {{day: string, month: string, year: string, hour: string, minute: string}}
  */
-const sessionValuesToDateTime = (sessionValues = {}) => {
+export const sessionValuesToDateTime = (sessionValues = {}) => {
 	return {
 		day: sessionValues['hearing-date-day'] || '',
 		month: sessionValues['hearing-date-month'] || '',
