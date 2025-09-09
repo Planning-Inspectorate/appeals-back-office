@@ -349,6 +349,9 @@ describe('appellant-case', () => {
 			expect(unprettifiedElement.innerHTML).toContain('What is the application reference number?');
 			expect(unprettifiedElement.innerHTML).toContain('What date did you submit your application?');
 			expect(unprettifiedElement.innerHTML).toContain(
+				'Agreement to change the description of the advertisement'
+			);
+			expect(unprettifiedElement.innerHTML).toContain(
 				'Are there other appeals linked to your development?'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Was your application granted or refused?');

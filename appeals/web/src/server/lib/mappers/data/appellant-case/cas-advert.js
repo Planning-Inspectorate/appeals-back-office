@@ -1,9 +1,11 @@
 import { submaps as hasSubmaps } from './has.js';
+import { mapChangedAdvertisementDescriptionDocument } from './submappers/changed-advertisement-description-document.js';
 import { mapDesignAccessStatement } from './submappers/design-access-statement.js';
 import { mapSupportingDocuments } from './submappers/supporting-documents.js';
 
 export const submaps = {
 	...hasSubmaps,
 	supportingDocuments: mapSupportingDocuments,
-	designAndAccessStatement: mapDesignAccessStatement
+	designAndAccessStatement: mapDesignAccessStatement,
+	changedAdvertisementDescriptionDocument: mapChangedAdvertisementDescriptionDocument
 };

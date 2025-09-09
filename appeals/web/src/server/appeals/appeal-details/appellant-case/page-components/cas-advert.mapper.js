@@ -85,6 +85,7 @@ export function generateCASAdvertComponents(appealDetails, mappedAppellantCaseDa
 				mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
 				mappedAppellantCaseData.applicationReference.display.summaryListItem,
 				mappedAppellantCaseData.applicationDate.display.summaryListItem,
+				mappedAppellantCaseData.changedAdvertisementDescriptionDocument.display.summaryListItem,
 				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
 				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
