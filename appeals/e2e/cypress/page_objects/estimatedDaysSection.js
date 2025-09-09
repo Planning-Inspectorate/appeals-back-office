@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { CaseDetailsPage } from './caseDetailsPage.js';
 import { formatAsWholeNumber } from '../support/utils/format.js';
+import { CaseDetailsPage } from './caseDetailsPage.js';
 
 export class EstimatedDaysSection extends CaseDetailsPage {
 	// S E L E C T O R S

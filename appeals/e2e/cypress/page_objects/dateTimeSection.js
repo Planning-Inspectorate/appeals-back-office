@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { Page } from './basePage';
 import { formatAsWholeNumber } from '../support/utils/format.js';
+import { Page } from './basePage';
 
 export class DateTimeSection extends Page {
 	// S E L E C T O R S

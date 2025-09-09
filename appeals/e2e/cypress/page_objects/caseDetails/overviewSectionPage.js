@@ -3,7 +3,6 @@
 import { CaseDetailsPage } from '../caseDetailsPage';
 
 export class OverviewSectionPage extends CaseDetailsPage {
-
 	overviewSectionElements = {
 		...this.elements, // Inherit parent elements
 		applicationReference: () => cy.get('.appeal-lpa-reference .govuk-summary-list__value'),

@@ -1,5 +1,4 @@
 // @ts-nocheck
-import { Page } from './basePage';
 import { CaseDetailsPage } from './caseDetailsPage.js';
 
 export class AddressSection extends CaseDetailsPage {
