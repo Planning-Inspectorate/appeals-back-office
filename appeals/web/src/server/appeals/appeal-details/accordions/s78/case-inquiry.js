@@ -43,7 +43,7 @@ export const getCaseInquiry = (mappedData, appealDetails) => {
 				...(inquiryEstimatesComponent ? [inquiryEstimatesComponent] : [])
 			],
 			{
-				opening: '<h1 class="govuk-heading-l">Inquiry</h1><div id="case-details-inquiry-section">',
+				opening: '<div id="case-details-inquiry-section">',
 				closing: '</div>'
 			}
 		)

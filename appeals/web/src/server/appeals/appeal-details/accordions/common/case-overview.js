@@ -34,10 +34,6 @@ export const getCaseOverview = (mappedData, appealDetails) => ({
 			mappedData.appeal?.costsAppellantDecision?.display.summaryListItem,
 			mappedData.appeal?.costsLpaDecision?.display.summaryListItem
 		].filter(isDefined)
-	},
-	wrapperHtml: {
-		opening: '<h1 class="govuk-heading-l">Overview</h1>',
-		closing: ''
 	}
 });
 
