@@ -80,7 +80,6 @@ export class HearingSectionPage extends CaseDetailsPage {
 		cy.login(users.appeals.caseAdmin);
 		caseDetailsPage.navigateToAppealsService();
 		listCasesPage.clickAppealByRef(caseRef);
-		caseDetailsPage.clickAccordionByButton('Hearing');
 	}
 	ensureHearingExists(caseRef, date) {
 		return cy.loadAppealDetails(caseRef).then((appealDetails) => {
@@ -114,7 +113,6 @@ export class HearingSectionPage extends CaseDetailsPage {
 		});
 	}
 	verifyCaseHistory(hearingInformation) {
-		caseDetailsPage.clickAccordionByButton('Case management');
 		caseDetailsPage.clickViewCaseHistory();
 		hearingInformation.forEach((info) => {
 			caseDetailsPage.verifyTableCellTextCaseHistory(info);
