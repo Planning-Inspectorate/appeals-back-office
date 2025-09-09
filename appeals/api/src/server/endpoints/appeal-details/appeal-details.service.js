@@ -1,5 +1,6 @@
 import { formatCostsDecision } from '#endpoints/appeals/appeals.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { contextEnum } from '#mappers/context-enum.js';
 import { mapCase } from '#mappers/mapper-factory.js';
 import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
@@ -115,6 +116,26 @@ const assignUser = async (caseData, { caseOfficer, inspector }, azureAdUserId) =
 };
 
 /**
+ * @param {Appeal} caseData
+ * @param {UsersToAssign} usersToAssign
+ * @param {string|undefined} azureAdUserId
+ * @returns {Promise<object | null>}
+ */
+const assignUserForLinkedAppeals = async (caseData, usersToAssign, azureAdUserId) => {
+	const { childAppeals = [] } = caseData || {};
+	return Promise.all(
+		childAppeals
+			.filter((linkedAppeal) => linkedAppeal?.type === CASE_RELATIONSHIP_LINKED)
+			.map(async (linkedAppeal) => {
+				// @ts-ignore
+				await appealDetailService.assignUser(linkedAppeal?.child, usersToAssign, azureAdUserId);
+				// @ts-ignore
+				await broadcasters.broadcastAppeal(linkedAppeal?.childId);
+			})
+	);
+};
+
+/**
  *
  * @param {Pick<AppealDto, 'appealId' | 'startedAt' | 'validAt' | 'planningApplicationReference' | 'agent'>} param0
  * @param {string|undefined} azureAdUserId
@@ -199,6 +220,7 @@ export const appealDetailService = {
 	loadAndFormatAppeal,
 	loadLinkedAppeals,
 	assignUser,
+	assignUserForLinkedAppeals,
 	assignedUserType,
 	updateAppealDetails
 };

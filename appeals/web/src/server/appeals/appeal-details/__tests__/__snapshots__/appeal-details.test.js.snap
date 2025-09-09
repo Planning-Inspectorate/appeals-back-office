@@ -670,45 +670,9 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-5"> Team</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-5"> Case management</span></h2>
                     </div>
                     <div id="accordion-default2-content-5" class="govuk-accordion__section-content">
-                        <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
-                                <dd class="govuk-summary-list__value">
-                                    <ul class="govuk-list">
-                                        <li>Test Team</li>
-                                        <li>test@emai.com</li>
-                                    </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
-                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
-                                <dd class="govuk-summary-list__value">
-                                    <p class="govuk-body">Not assigned</p>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-case-officer/search-case-officer"
-                                    data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-inspector"><dt class="govuk-summary-list__key"> Inspector</dt>
-                                <dd class="govuk-summary-list__value">
-                                    <p class="govuk-body">Not assigned</p>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-inspector/search-inspector"
-                                    data-cy="assign-inspector">Assign<span class="govuk-visually-hidden"> Inspector</span></a>
-                                </dd>
-                            </div>
-                        </dl>
-                    </div>
-                </div>
-                <div class="govuk-accordion__section">
-                    <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default2-heading-6"> Case management</span></h2>
-                    </div>
-                    <div id="accordion-default2-content-6" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>
@@ -1442,45 +1406,9 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 </div>
                 <div class="govuk-accordion__section">
                     <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Team</span></h2>
+                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-5"> Case management</span></h2>
                     </div>
                     <div id="accordion-default1-content-5" class="govuk-accordion__section-content">
-                        <dl class="govuk-summary-list">
-                            <div class="govuk-summary-list__row appeal-case-team"><dt class="govuk-summary-list__key"> Case team</dt>
-                                <dd class="govuk-summary-list__value">
-                                    <ul class="govuk-list">
-                                        <li>Test Team</li>
-                                        <li>test@emai.com</li>
-                                    </ul>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/case-team/edit"
-                                    data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
-                                <dd class="govuk-summary-list__value">
-                                    <p class="govuk-body">Not assigned</p>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-case-officer/search-case-officer"
-                                    data-cy="assign-case-officer">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
-                                </dd>
-                            </div>
-                            <div class="govuk-summary-list__row appeal-inspector"><dt class="govuk-summary-list__key"> Inspector</dt>
-                                <dd class="govuk-summary-list__value">
-                                    <p class="govuk-body">Not assigned</p>
-                                </dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-inspector/search-inspector"
-                                    data-cy="assign-inspector">Assign<span class="govuk-visually-hidden"> Inspector</span></a>
-                                </dd>
-                            </div>
-                        </dl>
-                    </div>
-                </div>
-                <div class="govuk-accordion__section">
-                    <div class="govuk-accordion__section-header">
-                        <h2 class="govuk-accordion__section-heading"><span class="govuk-accordion__section-button" id="accordion-default1-heading-6"> Case management</span></h2>
-                    </div>
-                    <div id="accordion-default1-content-6" class="govuk-accordion__section-content">
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Cross-team correspondence</dt>
                                 <dd                                 class="govuk-summary-list__value">No documents</dd>

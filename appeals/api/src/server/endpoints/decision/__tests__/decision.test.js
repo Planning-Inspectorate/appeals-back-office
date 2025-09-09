@@ -36,6 +36,9 @@ import { request } from '../../../app-test.js';
 import { sendNewDecisionLetter } from '../decision.service';
 const { databaseConnector } = await import('#utils/database-connector.js');
 describe('decision routes', () => {
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
 	beforeEach(() => {
 		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
