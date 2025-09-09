@@ -15,9 +15,14 @@ export const validateAddLinkedAppealReference = createValidator(
 		.bail()
 		.custom(async (reference, { req }) => {
 			if (reference === appealShortReference(req.currentAppeal.appealReference)) {
-				req.body.linkSelf = true;
+				// Appeal cannot link to itself
 				req.session.linkableAppeal = { linkableAppealSummary: { appealReference: reference } };
-				return Promise.resolve();
+				return Promise.reject();
+			}
+			if (['2', '3', '4'].includes(reference[0])) {
+				// Horizon appeals are not linkable
+				req.session.linkableAppeal = { linkableAppealSummary: { appealReference: reference } };
+				return Promise.reject();
 			}
 			try {
 				const linkableAppealSummary = await getLinkableAppealByReference(

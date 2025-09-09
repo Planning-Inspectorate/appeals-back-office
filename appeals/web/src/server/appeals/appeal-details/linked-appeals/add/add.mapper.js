@@ -11,9 +11,16 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @param {{ appealReference: string }} [sessionData]
  * @param {string} [backLinkUrl]
  * @param {string} [errorMsg]
+ * @param {string} [enteredAppealReference]
  * @returns {PageContent}
  */
-export function addLinkedAppealPage(appealData, sessionData, backLinkUrl, errorMsg) {
+export function addLinkedAppealPage(
+	appealData,
+	sessionData,
+	backLinkUrl,
+	errorMsg,
+	enteredAppealReference
+) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	/** @type {PageContent} */
@@ -28,7 +35,7 @@ export function addLinkedAppealPage(appealData, sessionData, backLinkUrl, errorM
 					id: 'appeal-reference',
 					name: 'appeal-reference',
 					type: 'text',
-					value: sessionData?.appealReference,
+					value: errorMsg ? enteredAppealReference : sessionData?.appealReference,
 					errorMessage: errorMsg
 						? {
 								text: errorMsg
