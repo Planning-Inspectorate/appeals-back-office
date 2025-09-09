@@ -18,7 +18,6 @@ describe('unrelate appeals', () => {
 			cy.createCase().then((caseRefToRelate) => {
 				cy.createCase().then((secondCaseRefToRelate) => {
 					happyPathHelper.assignCaseOfficer(caseRef);
-					caseDetailsPage.clickAccordionByButton('Overview');
 					caseDetailsPage.clickAddRelatedAppeals();
 					caseDetailsPage.fillInput(caseRefToRelate);
 					caseDetailsPage.clickButtonByText('Continue');
@@ -49,7 +48,6 @@ describe('unrelate appeals', () => {
 
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.clickAddRelatedAppeals();
 			caseDetailsPage.fillInput(horizonAppealId);
 			caseDetailsPage.clickButtonByText('Continue');

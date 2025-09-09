@@ -30,7 +30,6 @@ describe('add cost decision and redact', () => {
 			cy.simulateSiteVisit(caseRef).then((caseRef) => {
 				cy.reload();
 			});
-			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.clickIssueAppellantCostsDecision();
 			caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -44,7 +43,6 @@ describe('add cost decision and redact', () => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
-			caseDetailsPage.clickAccordionByButton('Costs');
 			caseDetailsPage.clickAddAppellantApplication();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -67,7 +65,6 @@ describe('add cost decision and redact', () => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
-			caseDetailsPage.clickAccordionByButton('Costs');
 			caseDetailsPage.clickAddAppellantApplication();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
