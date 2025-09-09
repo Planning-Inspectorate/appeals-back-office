@@ -105,32 +105,3 @@ export async function getNoResubmitAppealRequestRedirectUrl(apiClient, appealTyp
 	}
 	return `/appeals-service/appeal-details/${appealId}/change-appeal-type/transfer-appeal`;
 }
-
-/**
- *
- * @param {string} appealId
- * @returns
- */
-export function changeAppealTransferAppealPage(appealId) {
-	/** @type {PageComponent} */
-	const textComponent = {
-		type: 'html',
-		parameters: {
-			html: `
-            <p class="govuk-body">At this moment, this new service only supports some appeal types.<p>
-            <p class="govuk-body">You need to transfer the case to Horizon, then add the Horizon reference number to this case.<p>
-        `
-		}
-	};
-
-	const pageContent = {
-		title: 'You must transfer this case to Horizon',
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/change-appeal-type/resubmit`,
-		preHeading: `Appeal ${appealId}`,
-		heading: 'You must transfer this case to Horizon',
-		pageComponents: [textComponent],
-		submitButtonText: 'Mark as awaiting transfer'
-	};
-
-	return pageContent;
-}

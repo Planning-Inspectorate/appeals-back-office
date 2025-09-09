@@ -351,3 +351,34 @@ export function changeAppealMarkAppealInvalidPage(appealId, existingAppealType, 
 
 	return pageContent;
 }
+
+/**
+ *
+ * @param {Appeal} appealDetails
+ * @returns {PageContent}
+ */
+export function changeAppealTransferAppealPage(appealDetails) {
+	/** @type {PageComponent} */
+	const textComponent = {
+		type: 'html',
+		parameters: {
+			html: `
+            <p class="govuk-body">At the moment, this new service only supports some appeal types.<p>
+            <p class="govuk-body">You need to transfer the case to Horizon, then add the Horizon reference number to this appeal.<p>
+        `
+		}
+	};
+
+	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+
+	const pageContent = {
+		title: 'You must transfer this case to Horizon',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
+		preHeading: `Appeal ${shortAppealReference} - update appeal type`,
+		heading: 'You must transfer this case to Horizon',
+		pageComponents: [textComponent],
+		submitButtonText: 'Mark as awaiting transfer'
+	};
+
+	return pageContent;
+}
