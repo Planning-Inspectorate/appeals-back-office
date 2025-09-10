@@ -66,4 +66,48 @@ describe('case-procedure.mapper', () => {
 			id: 'case-procedure'
 		});
 	});
+
+	it('Should not display change link if linked child appeal', () => {
+		params.appealDetails.isChildAppeal = true;
+		const result = mapCaseProcedure(params);
+		expect(result).toEqual({
+			display: {
+				summaryListItem: {
+					actions: {
+						items: []
+					},
+					classes: 'appeal-case-procedure',
+					key: {
+						text: 'Appeal procedure'
+					},
+					value: {
+						text: 'hearing'
+					}
+				}
+			},
+			id: 'case-procedure'
+		});
+	});
+
+	it('Should not display change link if linked lead appeal', () => {
+		params.appealDetails.isParentAppeal = true;
+		const result = mapCaseProcedure(params);
+		expect(result).toEqual({
+			display: {
+				summaryListItem: {
+					actions: {
+						items: []
+					},
+					classes: 'appeal-case-procedure',
+					key: {
+						text: 'Appeal procedure'
+					},
+					value: {
+						text: 'hearing'
+					}
+				}
+			},
+			id: 'case-procedure'
+		});
+	});
 });
