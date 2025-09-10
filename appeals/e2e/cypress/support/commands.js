@@ -287,11 +287,11 @@ Cypress.Commands.add('navigateToAppealDetailsPage', (reference) => {
 	});
 });
 
-Cypress.Commands.add('addInquiryViaApi', (reference, date) => {
+Cypress.Commands.add('addInquiryViaApi', (reference, date, propertyOverrides = {}) => {
 	return cy.wrap(null).then(async () => {
 		const details = await appealsApiClient.loadCaseDetails(reference);
 		const appealId = await details.appealId;
-		return await appealsApiClient.addInquiry(appealId, date);
+		return await appealsApiClient.addInquiry(appealId, date, propertyOverrides);
 	});
 });
 
