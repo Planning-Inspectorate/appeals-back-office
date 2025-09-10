@@ -6,6 +6,7 @@ import { localPlanningDepartmentList } from './LPAs/training.js';
  */
 
 async function deleteTestRecords() {
+	const BATCH_SIZE = 500;
 	const lpaCodes = localPlanningDepartmentList.map((lpa) => lpa.lpaCode);
 
 	const appeals = await getAppeals(lpaCodes);
@@ -14,22 +15,34 @@ async function deleteTestRecords() {
 		return;
 	}
 
-	const appealIDs = appeals.map((a) => a.id);
-	const appeaRefs = appeals.map((a) => a.reference);
-	const representationIDs = await getReps(appealIDs);
-	const appellantCaseIDs = await getAppellantCases(appealIDs);
-	const lpaqIDs = await getLpaQuestionnaires(appealIDs);
-	const docIDs = await getDocuments(appealIDs);
+	const noIterations = appeals.length / BATCH_SIZE;
 
 	try {
-		await deleteAppealData(
-			appealIDs,
-			appeaRefs,
-			appellantCaseIDs,
-			lpaqIDs,
-			docIDs,
-			representationIDs
-		);
+		for (
+			let eachIteration = 0;
+			noIterations !== 0 && eachIteration < noIterations;
+			eachIteration++
+		) {
+			console.log(`Running batch - ${eachIteration + 1} of ${noIterations}`);
+
+			const batchedAppeals = appeals.splice(0, BATCH_SIZE);
+
+			const appealIDs = batchedAppeals.map((a) => a.id);
+			const appeaRefs = batchedAppeals.map((a) => a.reference);
+			const representationIDs = await getReps(appealIDs);
+			const appellantCaseIDs = await getAppellantCases(appealIDs);
+			const lpaqIDs = await getLpaQuestionnaires(appealIDs);
+			const docIDs = await getDocuments(appealIDs);
+
+			await deleteAppealData(
+				appealIDs,
+				appeaRefs,
+				appellantCaseIDs,
+				lpaqIDs,
+				docIDs,
+				representationIDs
+			);
+		}
 	} catch (error) {
 		console.error(error);
 		throw error;
