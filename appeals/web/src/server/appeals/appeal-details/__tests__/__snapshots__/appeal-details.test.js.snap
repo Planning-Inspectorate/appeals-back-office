@@ -534,9 +534,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                             </div>
                             <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
                                 <dd class="govuk-summary-list__value">Householder</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/change-appeal-type/appeal-type"
-                                    data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
-                                </dd>
                             </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
                                 <dd class="govuk-summary-list__value">Written</dd>
@@ -1309,9 +1306,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                             </div>
                             <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
                                 <dd class="govuk-summary-list__value">Householder</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type"
-                                    data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
-                                </dd>
                             </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
                                 <dd class="govuk-summary-list__value">Written</dd>
@@ -1623,9 +1617,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
                             </div>
                             <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
                                 <dd class="govuk-summary-list__value">Householder</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type"
-                                    data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
-                                </dd>
                             </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
                                 <dd class="govuk-summary-list__value">Written</dd>
@@ -2081,9 +2072,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
                             </div>
                             <div class="govuk-summary-list__row appeal-appeal-type"><dt class="govuk-summary-list__key"> Appeal type</dt>
                                 <dd class="govuk-summary-list__value">Householder</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type"
-                                    data-cy="change-appeal-type">Change<span class="govuk-visually-hidden"> Appeal type</span></a>
-                                </dd>
                             </div>
                             <div class="govuk-summary-list__row govuk-summary-list__row--no-actions appeal-case-procedure"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
                                 <dd class="govuk-summary-list__value">Written</dd>
