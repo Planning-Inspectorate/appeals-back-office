@@ -162,7 +162,7 @@ export async function postUpload(request, response) {
  */
 const getRedactionStatusBackUrl = (appealDetails, _comment, request) => {
 	const baseUrl = `/appeals-service/appeal-details/${appealDetails.appealId}/interested-party-comments/add`;
-	return getBackLinkUrl(request, `${baseUrl}/redaction-status`, `${baseUrl}/check-your-answers`);
+	return getBackLinkUrl(request, `${baseUrl}/upload`, `${baseUrl}/check-your-answers`);
 };
 
 export const renderRedactionStatus = renderRedactionStatusFactory({
