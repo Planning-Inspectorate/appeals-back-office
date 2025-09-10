@@ -574,6 +574,38 @@ describe('add-ip-comment', () => {
 		});
 	});
 
+	describe('GET /redaction-status', () => {
+		const appealId = 2;
+
+		/** @type {*} */
+		let pageHtml;
+
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/interested-party-comments/add/redaction-status`
+			);
+			pageHtml = parseHtml(response.text, { rootElement: 'body' });
+		});
+
+		it('should match the snapshot', () => {
+			expect(pageHtml.innerHTML).toMatchSnapshot();
+		});
+
+		it('should render the correct heading', () => {
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Redaction status');
+		});
+
+		it('should render the correct back link', async () => {
+			expect(pageHtml.querySelector('.govuk-back-link').getAttribute('href')).toBe(
+				'/appeals-service/appeal-details/2/interested-party-comments/add/upload'
+			);
+		});
+	});
+
 	describe('GET /date-submitted', () => {
 		const appealId = 2;
 
