@@ -324,12 +324,16 @@ export function changeAppealFinalDatePage(
 
 /**
  *
- * @param {string} appealId
+ * @param {Appeal} appealDetails
  * @param {string} existingAppealType
  * @param {string} newAppealType
  * @returns
  */
-export function changeAppealMarkAppealInvalidPage(appealId, existingAppealType, newAppealType) {
+export function changeAppealMarkAppealInvalidPage(
+	appealDetails,
+	existingAppealType,
+	newAppealType
+) {
 	/** @type {PageComponent} */
 	const textComponent = {
 		type: 'html',
@@ -340,10 +344,12 @@ export function changeAppealMarkAppealInvalidPage(appealId, existingAppealType, 
 		}
 	};
 
+	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+
 	const pageContent = {
 		title: `We will mark the ${existingAppealType} appeal as invalid`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/change-appeal-type/resubmit`,
-		preHeading: `Appeal ${appealId}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
+		preHeading: `Appeal ${shortAppealReference} - update appeal type`,
 		heading: `We will mark the ${existingAppealType} appeal as invalid`,
 		pageComponents: [textComponent],
 		submitButtonText: 'Continue'

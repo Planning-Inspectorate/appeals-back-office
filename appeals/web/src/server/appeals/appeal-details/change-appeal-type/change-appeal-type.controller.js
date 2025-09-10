@@ -439,7 +439,6 @@ export const postCheckTransfer = async (request, response) => {
 export const getMarkAppealInvalid = async (request, response) => {
 	const {
 		errors,
-		params: { appealId },
 		session: { changeAppealType }
 	} = request;
 	const appealData = request.currentAppeal;
@@ -454,7 +453,7 @@ export const getMarkAppealInvalid = async (request, response) => {
 	}
 
 	const mappedPageContent = changeAppealMarkAppealInvalidPage(
-		appealId,
+		appealData,
 		appealData.appealType.toLowerCase(),
 		changeAppeal.type
 	);
@@ -503,11 +502,19 @@ export const getTransferAppeal = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postTransferAppeal = async (request, response) => {
+	const { session } = request;
+
 	try {
 		const { appealId } = request.params;
 		const appealTypeId = parseInt(request.session.changeAppealType.appealTypeId, 10);
 
 		await postAppealTransferRequest(request.apiClient, appealId, appealTypeId);
+
+		addNotificationBannerToSession({
+			session,
+			bannerDefinitionKey: 'appealMarkedAsAwaitingTransfer',
+			appealId
+		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
