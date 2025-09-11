@@ -16,7 +16,7 @@ import {
 	ERROR_PAGENUMBER_AND_PAGESIZE_ARE_REQUIRED
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { cloneDeep, omit } from 'lodash-es';
+import { omit } from 'lodash-es';
 import { request } from '../../../app-test.js';
 import { getIdsOfReferencedAppeals, mapAppealToDueDate } from '../appeals.formatter.js';
 import { mapAppealStatuses } from '../appeals.service.js';
@@ -1804,10 +1804,10 @@ describe('getRelevantLinkedAppealIds Tests', () => {
 
 describe('updateCompletedEvents', () => {
 	test('updates completed events', async () => {
-		const siteVisit = cloneDeep({ ...householdAppeal.siteVisit, appealId: appealS78.id });
+		const siteVisit = structuredClone({ ...householdAppeal.siteVisit, appealId: appealS78.id });
 		const appealStatus = [{ status: 'awaiting_event', valid: true }];
 		const childAppeals = [{ childId: 100, type: CASE_RELATIONSHIP_LINKED }];
-		const linkedLeadAppeal = cloneDeep({
+		const linkedLeadAppeal = structuredClone({
 			...appealS78,
 			siteVisit,
 			appealStatus,

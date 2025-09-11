@@ -2,7 +2,6 @@
 import { notifySend } from '#notify/notify-send.js';
 import { householdAppeal } from '#tests/appeals/mocks.js';
 import { jest } from '@jest/globals';
-import { cloneDeep } from 'lodash-es';
 
 const genericNotifySendData = {
 	doNotMockNotifySend: true,
@@ -53,7 +52,8 @@ describe('decision-is-allowed-split-dismissed-appellant.md', () => {
 	});
 
 	test('should call notify sendEmail with the correct data', async () => {
-		const notifySendData = cloneDeep(genericNotifySendData);
+		const notifySendData = structuredClone({ ...genericNotifySendData, notifyClient: {} });
+		notifySendData.notifyClient.sendEmail = jest.fn();
 
 		const expectedContent = expectedContentRows(['We have made a decision on your appeal.']).join(
 			'\n'
@@ -74,7 +74,8 @@ describe('decision-is-allowed-split-dismissed-appellant.md', () => {
 	});
 
 	test('should call notify sendEmail with the correct data when a linked appeal', async () => {
-		const notifySendData = cloneDeep(genericNotifySendData);
+		const notifySendData = structuredClone({ ...genericNotifySendData, notifyClient: {} });
+		notifySendData.notifyClient.sendEmail = jest.fn();
 		notifySendData.personalisation.child_appeals = ['CHILD123', 'CHILD456', 'CHILD789'];
 
 		const expectedContent = expectedContentRows([

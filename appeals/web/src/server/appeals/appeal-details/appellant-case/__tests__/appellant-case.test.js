@@ -41,7 +41,7 @@ import {
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_TYPE_OF_PLANNING_APPLICATION
 } from '@planning-inspectorate/data-model';
-import { cloneDeep } from 'lodash-es';
+
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -5498,7 +5498,7 @@ describe('appellant-case', () => {
 		});
 
 		it('should render the delete document page with the expected content when there are multiple document versions', async () => {
-			const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
+			const multipleVersionsDocument = structuredClone(documentFileVersionsInfoChecked);
 			multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 			nock('http://test/')

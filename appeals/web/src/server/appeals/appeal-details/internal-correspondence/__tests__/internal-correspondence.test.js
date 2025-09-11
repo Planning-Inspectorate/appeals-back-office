@@ -19,7 +19,7 @@ import {
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
-import { capitalize, cloneDeep } from 'lodash-es';
+import { capitalize } from 'lodash-es';
 import nock from 'nock';
 import supertest from 'supertest';
 import { documentNameFromCategory } from '../internal-correspondence.service';
@@ -2320,7 +2320,7 @@ describe('internal correspondence', () => {
 			});
 
 			it(`should render the delete document page with the expected content when there are multiple document versions (${correspondenceCategory})`, async () => {
-				const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
+				const multipleVersionsDocument = structuredClone(documentFileVersionsInfoChecked);
 				multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 				nock('http://test/')

@@ -20,7 +20,6 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
-import { cloneDeep } from 'lodash-es';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const householdAppeal = mocks.householdAppeal;
@@ -618,7 +617,7 @@ describe('Appeal detail routes', () => {
 			});
 
 			test('assigns a case officer to linked appeals', async () => {
-				const leadAppeal = cloneDeep(householdAppeal);
+				const leadAppeal = structuredClone(householdAppeal);
 				leadAppeal.childAppeals = [
 					{ child: { id: 10 }, childId: 10, type: CASE_RELATIONSHIP_LINKED },
 					{ child: { id: 20 }, childId: 20, type: CASE_RELATIONSHIP_RELATED },
@@ -722,7 +721,7 @@ describe('Appeal detail routes', () => {
 			});
 
 			test('replace a case officer to linked appeals', async () => {
-				const leadAppeal = cloneDeep(householdAppeal);
+				const leadAppeal = structuredClone(householdAppeal);
 				leadAppeal.childAppeals = [
 					{ child: { id: 10 }, childId: 10, type: CASE_RELATIONSHIP_LINKED },
 					{ child: { id: 20 }, childId: 20, type: CASE_RELATIONSHIP_RELATED },
@@ -821,7 +820,7 @@ describe('Appeal detail routes', () => {
 			});
 
 			test('assigns an inspector to linked appeals', async () => {
-				const leadAppeal = cloneDeep(householdAppeal);
+				const leadAppeal = structuredClone(householdAppeal);
 				leadAppeal.childAppeals = [
 					{ child: { id: 10 }, childId: 10, type: CASE_RELATIONSHIP_LINKED },
 					{ child: { id: 20 }, childId: 20, type: CASE_RELATIONSHIP_RELATED },

@@ -22,7 +22,7 @@ import {
 import { createTestEnvironment } from '#testing/index.js';
 import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform';
-import { capitalize, cloneDeep, upperCase } from 'lodash-es';
+import { capitalize, upperCase } from 'lodash-es';
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -1676,7 +1676,7 @@ describe('costs', () => {
 					});
 
 					it(`should render the delete document page with the expected content when there are multiple document versions (${costsCategory} ${costsDocumentType})`, async () => {
-						const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
+						const multipleVersionsDocument = structuredClone(documentFileVersionsInfoChecked);
 						multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 						nock('http://test/')
@@ -3069,7 +3069,7 @@ describe('costs', () => {
 			});
 
 			it(`should render the delete document page with the expected content when there are multiple document versions`, async () => {
-				const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
+				const multipleVersionsDocument = structuredClone(documentFileVersionsInfoChecked);
 				multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 				nock('http://test/')

@@ -38,7 +38,6 @@ import {
 	APPEAL_CASE_STATUS,
 	APPEAL_DOCUMENT_TYPE
 } from '@planning-inspectorate/data-model';
-import { cloneDeep } from 'lodash-es';
 
 /**
  * @typedef {import('../../../appeals/appeal-documents/appeal-documents.types.js').FileUploadInfoItem} FileUploadInfoItem
@@ -192,7 +191,7 @@ function storeFileUploadInfo(session, decisionType) {
 	// Note that postDocumentUpload and renderDocumentUpload functions use the fileUploadInfo at the route of the session object.
 	// This makes sure the values are stored in the session for the decision type so the session.fileUploadInfo can be reused.
 	const { outcome } = session[decisionType] || {};
-	session[decisionType] = cloneDeep({ outcome, ...session.fileUploadInfo });
+	session[decisionType] = structuredClone({ outcome, ...session.fileUploadInfo });
 	delete session.fileUploadInfo;
 }
 
@@ -204,7 +203,7 @@ function storeFileUploadInfo(session, decisionType) {
 function restoreFileUploadInfo(session, decisionType) {
 	// Note that postDocumentUpload and renderDocumentUpload functions use the fileUploadInfo at the route of the session object.
 	// This makes sure the values are restored from the session for the decision type so the session.fileUploadInfo can be reused.
-	session.fileUploadInfo = cloneDeep(session[decisionType] || {});
+	session.fileUploadInfo = structuredClone(session[decisionType] || {});
 }
 
 /** @type {import('@pins/express').RequestHandler<Response>} */
@@ -363,7 +362,7 @@ export const postAppellantCostsDecisionLetterUpload = async (request, response) 
 		return response.status(404).render('app/404');
 	}
 
-	request.currentFolder = cloneDeep(currentAppeal.costs.appellantDecisionFolder);
+	request.currentFolder = structuredClone(currentAppeal.costs.appellantDecisionFolder);
 
 	const { lpaHasAppliedForCosts, lpaDecisionHasAlreadyBeenIssued } =
 		buildIssueDecisionLogicData(currentAppeal);
@@ -393,7 +392,7 @@ export const postAppellantCostsDecisionLetterUpload = async (request, response) 
 export const renderAppellantCostsDecisionLetterUpload = async (request, response) => {
 	const { currentAppeal, specificDecisionType } = request;
 
-	request.currentFolder = cloneDeep(currentAppeal.costs.appellantDecisionFolder);
+	request.currentFolder = structuredClone(currentAppeal.costs.appellantDecisionFolder);
 
 	restoreFileUploadInfo(request.session, 'appellantCostsDecision');
 
@@ -482,7 +481,7 @@ export const postLpaCostsDecisionLetterUpload = async (request, response) => {
 		return response.status(404).render('app/404');
 	}
 
-	request.currentFolder = cloneDeep(currentAppeal.costs.lpaDecisionFolder);
+	request.currentFolder = structuredClone(currentAppeal.costs.lpaDecisionFolder);
 
 	await postDocumentUpload({
 		request,
@@ -502,7 +501,7 @@ export const postLpaCostsDecisionLetterUpload = async (request, response) => {
 export const renderLpaCostsDecisionLetterUpload = async (request, response) => {
 	const { currentAppeal, specificDecisionType } = request;
 
-	request.currentFolder = cloneDeep(currentAppeal.costs.lpaDecisionFolder);
+	request.currentFolder = structuredClone(currentAppeal.costs.lpaDecisionFolder);
 
 	restoreFileUploadInfo(request.session, 'lpaCostsDecision');
 

@@ -5,7 +5,7 @@ import {
 } from '#testing/app/fixtures/referencedata.js';
 import { createTestEnvironment } from '#testing/index.js';
 import { parseHtml } from '@pins/platform';
-import { cloneDeep } from 'lodash-es';
+
 import nock from 'nock';
 import supertest from 'supertest';
 
@@ -85,7 +85,7 @@ describe('final-comments', () => {
 			});
 
 			it(`should render the accept ${finalCommentsType.type} final comments page with the expected content when no comment`, async () => {
-				const finalComments = cloneDeep({ ...finalCommentsForReviewWithAttachments });
+				const finalComments = structuredClone(finalCommentsForReviewWithAttachments);
 				finalComments.items[0].originalRepresentation = '';
 				nock('http://test/')
 					.get(`/appeals/2/reps?type=${finalCommentsType.type}_final_comment`)

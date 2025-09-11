@@ -31,7 +31,7 @@ import {
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { add, sub } from 'date-fns';
-import { cloneDeep } from 'lodash-es';
+
 import { request } from '../../../app-test.js';
 import { sendNewDecisionLetter } from '../decision.service';
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -323,7 +323,7 @@ describe('decision routes', () => {
 		});
 
 		test('returns 200 when only issuing appellant costs decisions', async () => {
-			const appeal = cloneDeep(householdAppeal);
+			const appeal = structuredClone(householdAppeal);
 			const correctAppealState = {
 				...appeal,
 				appealStatus: [
@@ -400,7 +400,7 @@ describe('decision routes', () => {
 		});
 
 		test('returns 200 when only issuing lpa costs decisions', async () => {
-			const appeal = cloneDeep(householdAppeal);
+			const appeal = structuredClone(householdAppeal);
 			const correctAppealState = {
 				...appeal,
 				appealStatus: [
