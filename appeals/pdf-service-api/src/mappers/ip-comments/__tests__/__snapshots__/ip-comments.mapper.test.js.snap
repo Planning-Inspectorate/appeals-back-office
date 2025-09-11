@@ -417,6 +417,83 @@ exports[`mapIpCommentsData should map interested party comments data correctly 1
     "otherAppeals": [],
     "planningApplicationReference": "44377/APP/3/218453",
     "procedureType": "Written",
+    "publishedComments": [
+      {
+        "attachments": [
+          {
+            "documentGuid": "58565a17-f943-4548-9588-596205ad7ac1",
+            "documentVersion": {
+              "blobStoragePath": "appeal/6000072/58565a17-f943-4548-9588-596205ad7ac1/v1/file_example_XLSX_5000.xlsx",
+              "document": {
+                "caseId": 72,
+                "createdAt": "2025-07-09T00:00:00.000Z",
+                "folderId": 3600,
+                "guid": "58565a17-f943-4548-9588-596205ad7ac1",
+                "isDeleted": false,
+                "latestVersionId": 1,
+                "name": "file_example_XLSX_5000.xlsx",
+              },
+              "documentGuid": "58565a17-f943-4548-9588-596205ad7ac1",
+              "documentType": "representationAttachments",
+              "documentURI": "https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/6000072/58565a17-f943-4548-9588-596205ad7ac1/v1/file_example_XLSX_5000.xlsx",
+              "fileName": "file_example_XLSX_5000.xlsx",
+              "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              "originalFilename": "file_example_XLSX_5000.xlsx",
+              "size": 188887,
+              "version": 1,
+            },
+            "representationId": 236,
+            "version": 1,
+          },
+          {
+            "documentGuid": "7416a70a-321b-45f5-a045-e426e46e9a7f",
+            "documentVersion": {
+              "blobStoragePath": "appeal/6000072/7416a70a-321b-45f5-a045-e426e46e9a7f/v1/file_example_PNG_2100kB.png",
+              "document": {
+                "caseId": 72,
+                "createdAt": "2025-07-09T11:27:45.191Z",
+                "folderId": 3600,
+                "guid": "7416a70a-321b-45f5-a045-e426e46e9a7f",
+                "isDeleted": false,
+                "latestVersionId": 1,
+                "name": "file_example_PNG_2100kB.png",
+              },
+              "documentGuid": "7416a70a-321b-45f5-a045-e426e46e9a7f",
+              "documentType": "representationAttachments",
+              "documentURI": "https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/6000072/7416a70a-321b-45f5-a045-e426e46e9a7f/v1/file_example_PNG_2100kB.png",
+              "fileName": "file_example_PNG_2100kB.png",
+              "mime": "image/png",
+              "originalFilename": "file_example_PNG_2100kB.png",
+              "size": 2060826,
+              "version": 1,
+            },
+            "representationId": 236,
+            "version": 1,
+          },
+        ],
+        "author": "Eva Sharma - Source: Back Office - Has email: true",
+        "created": "2025-07-03T15:13:59.982Z",
+        "id": 240,
+        "notes": "",
+        "origin": "citizen",
+        "originalRepresentation": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+        "redactedRepresentation": "",
+        "rejectionReasons": [],
+        "representationType": "comment",
+        "represented": {
+          "address": {
+            "addressLine1": "",
+            "postCode": "",
+          },
+          "email": "test9@example.com",
+          "id": 317,
+          "name": "Eva Sharma - Source: Back Office - Has email: true",
+        },
+        "siteVisitRequested": false,
+        "source": "back-office-appeals",
+        "status": "valid",
+      },
+    ],
     "rejectedComments": [
       {
         "attachments": [],
@@ -625,126 +702,6 @@ exports[`mapIpCommentsData should map interested party comments data correctly 1
           "items": [
             {
               "key": "Interested party",
-              "text": "Fiona Burgess - Source: Front Office - Has email: true",
-            },
-            {
-              "key": "Date received",
-              "text": "3 July 2025, 16:13",
-            },
-            {
-              "key": "Comment",
-              "text": String {
-                "length": 247,
-                "val": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
-              },
-            },
-            {
-              "html": "file-sample_100kB.docx",
-              "key": "Supporting documents",
-            },
-          ],
-        },
-        {
-          "items": [
-            {
-              "key": "Interested party",
-              "text": "Ryan Marshall - Source: Back Office - Has email: true",
-            },
-            {
-              "key": "Date received",
-              "text": "3 July 2025, 16:13",
-            },
-            {
-              "key": "Comment",
-              "text": String {
-                "length": 247,
-                "val": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
-              },
-            },
-            {
-              "html": "No documents",
-              "key": "Supporting documents",
-            },
-          ],
-        },
-        {
-          "items": [
-            {
-              "key": "Interested party",
-              "text": "Sophie Skinner - Source: Front Office - Has email: false",
-            },
-            {
-              "key": "Date received",
-              "text": "3 July 2025, 16:13",
-            },
-            {
-              "key": "Comment",
-              "text": String {
-                "length": 247,
-                "val": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
-              },
-            },
-            {
-              "html": "No documents",
-              "key": "Supporting documents",
-            },
-          ],
-        },
-        {
-          "items": [
-            {
-              "key": "Interested party",
-              "text": "Haley Eland - Source: Front Office - Has email: true",
-            },
-            {
-              "key": "Date received",
-              "text": "3 July 2025, 16:13",
-            },
-            {
-              "key": "Comment",
-              "text": String {
-                "length": 247,
-                "val": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
-              },
-            },
-            {
-              "html": "No documents",
-              "key": "Supporting documents",
-            },
-          ],
-        },
-        {
-          "items": [
-            {
-              "key": "Interested party",
-              "text": "Lee Thornton - Source: Back Office - Has email: false",
-            },
-            {
-              "key": "Date received",
-              "text": "3 July 2025, 16:13",
-            },
-            {
-              "key": "Comment",
-              "text": String {
-                "length": 247,
-                "val": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
-              },
-            },
-            {
-              "html": "No documents",
-              "key": "Supporting documents",
-            },
-          ],
-        },
-      ],
-      "heading": "Awaiting review",
-    },
-    {
-      "comments": [
-        {
-          "items": [
-            {
-              "key": "Interested party",
               "text": "Eva Sharma - Source: Back Office - Has email: true",
             },
             {
@@ -765,7 +722,7 @@ exports[`mapIpCommentsData should map interested party comments data correctly 1
           ],
         },
       ],
-      "heading": "Accepted",
+      "heading": "Published",
     },
   ],
 }

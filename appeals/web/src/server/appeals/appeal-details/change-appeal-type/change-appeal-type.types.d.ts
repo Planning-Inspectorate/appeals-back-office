@@ -3,4 +3,7 @@ export interface ChangeAppealTypeRequest {
 	resubmit?: boolean;
 	appealTypeFinalDate?: Date | null;
 	transferredAppealHorizonReference?: string;
+	day?: string;
+	month?: string;
+	year?: string;
 }

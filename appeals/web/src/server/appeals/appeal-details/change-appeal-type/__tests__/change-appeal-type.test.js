@@ -234,6 +234,13 @@ describe('change-appeal-type', () => {
 	});
 
 	describe('GET /change-appeal-type/change-appeal-final-date', () => {
+		beforeEach(async () => {
+			// Ensure changeAppealType is set in session
+			await request.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`).send({
+				appealType: 1
+			});
+		});
+
 		it('should render the final date page', async () => {
 			const response = await request.get(
 				`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`
@@ -259,16 +266,19 @@ describe('change-appeal-type', () => {
 	});
 
 	describe('POST /change-appeal-type/change-appeal-final-date', () => {
-		beforeEach(() => {
+		beforeEach(async () => {
 			nock('http://test/').post('/appeals/1/appeal-change-request').reply(200, { success: true });
 			nock('http://test/').post('/appeals/validate-business-date').reply(200, { success: true });
+			await request.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`).send({
+				appealType: 1
+			});
 		});
 
 		afterEach(() => {
 			nock.cleanAll();
 		});
 
-		it('should redirect to the appeal details page when the required dates fields are populated and valid', async () => {
+		it('should redirect to the check change final date page when the required dates fields are populated and valid', async () => {
 			await request
 				.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`)
 				.send({ appealType: 1 });
@@ -284,137 +294,143 @@ describe('change-appeal-type', () => {
 					'change-appeal-final-date-year': 3000
 				});
 			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/check-change-appeal-final-date'
+			);
+		});
+
+		it('should re-render the final date page with an error message if required field is missing', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+				.send({});
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Deadline to resubmit appeal');
+
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain('Enter the deadline to resubmit the appeal');
+		});
+
+		it('should re-render the final date page with an error message if the provided date day is invalid', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+				.send({
+					'change-appeal-final-date-day': 32,
+					'change-appeal-final-date-month': 11,
+					'change-appeal-final-date-year': 2024
+				});
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Deadline to resubmit appeal');
+
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain(
+				'Deadline to resubmit the appeal day must be between 1 and 31</a>'
+			);
+		});
+
+		it('should re-render the final date page with an error message if the provided date month is invalid', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+				.send({
+					'change-appeal-final-date-day': 1,
+					'change-appeal-final-date-month': 13,
+					'change-appeal-final-date-year': 2024
+				});
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Deadline to resubmit appeal');
+
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain(
+				'Deadline to resubmit the appeal month must be between 1 and 12</a>'
+			);
+		});
+
+		it('should re-render the final date page with an error message if the provided date year is invalid', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+				.send({
+					'change-appeal-final-date-day': 11,
+					'change-appeal-final-date-month': 11,
+					'change-appeal-final-date-year': 'x'
+				});
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Deadline to resubmit appeal');
+
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain(
+				'Deadline to resubmit the appeal year must be a number</a>'
+			);
+		});
+
+		it('should re-render the final date page with an error message if an invalid date was provided', async () => {
+			const response = await request
+				.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
+				.send({
+					'change-appeal-final-date-day': 29,
+					'change-appeal-final-date-month': 2,
+					'change-appeal-final-date-year': 3000
+				});
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Deadline to resubmit appeal');
+
+			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+			expect(unprettifiedErrorSummaryHTML).toContain(
+				'Deadline to resubmit the appeal must be a real date</a>'
+			);
 		});
 	});
 
-	it('should re-render the final date page with an error message if required field is missing', async () => {
-		const response = await request
-			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
-			.send({});
-
-		expect(response.statusCode).toBe(200);
-
-		const element = parseHtml(response.text);
-		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Deadline to resubmit appeal');
-
-		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-			rootElement: '.govuk-error-summary',
-			skipPrettyPrint: true
-		}).innerHTML;
-
-		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain('Enter the deadline to resubmit the appeal');
-	});
-
-	it('should re-render the final date page with an error message if the provided date day is invalid', async () => {
-		const response = await request
-			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
-			.send({
-				'change-appeal-final-date-day': 32,
-				'change-appeal-final-date-month': 11,
-				'change-appeal-final-date-year': 2024
-			});
-
-		expect(response.statusCode).toBe(200);
-
-		const element = parseHtml(response.text);
-		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Deadline to resubmit appeal');
-
-		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-			rootElement: '.govuk-error-summary',
-			skipPrettyPrint: true
-		}).innerHTML;
-
-		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain(
-			'Deadline to resubmit the appeal day must be between 1 and 31</a>'
-		);
-	});
-
-	it('should re-render the final date page with an error message if the provided date month is invalid', async () => {
-		const response = await request
-			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
-			.send({
-				'change-appeal-final-date-day': 1,
-				'change-appeal-final-date-month': 13,
-				'change-appeal-final-date-year': 2024
-			});
-
-		expect(response.statusCode).toBe(200);
-
-		const element = parseHtml(response.text);
-		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Deadline to resubmit appeal');
-
-		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-			rootElement: '.govuk-error-summary',
-			skipPrettyPrint: true
-		}).innerHTML;
-
-		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain(
-			'Deadline to resubmit the appeal month must be between 1 and 12</a>'
-		);
-	});
-
-	it('should re-render the final date page with an error message if the provided date year is invalid', async () => {
-		const response = await request
-			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
-			.send({
-				'change-appeal-final-date-day': 11,
-				'change-appeal-final-date-month': 11,
-				'change-appeal-final-date-year': 'x'
-			});
-
-		expect(response.statusCode).toBe(200);
-
-		const element = parseHtml(response.text);
-		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Deadline to resubmit appeal');
-
-		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-			rootElement: '.govuk-error-summary',
-			skipPrettyPrint: true
-		}).innerHTML;
-
-		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain(
-			'Deadline to resubmit the appeal year must be a number</a>'
-		);
-	});
-
-	it('should re-render the final date page with an error message if an invalid date was provided', async () => {
-		const response = await request
-			.post(`${baseUrl}/1${changeAppealTypePath}/${changeAppealFinalDatePath}`)
-			.send({
-				'change-appeal-final-date-day': 29,
-				'change-appeal-final-date-month': 2,
-				'change-appeal-final-date-year': 3000
-			});
-
-		expect(response.statusCode).toBe(200);
-
-		const element = parseHtml(response.text);
-		expect(element.innerHTML).toMatchSnapshot();
-		expect(element.innerHTML).toContain('Deadline to resubmit appeal');
-
-		const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-			rootElement: '.govuk-error-summary',
-			skipPrettyPrint: true
-		}).innerHTML;
-
-		expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-		expect(unprettifiedErrorSummaryHTML).toContain(
-			'Deadline to resubmit the appeal must be a real date</a>'
-		);
-	});
-
 	it('should re-render the final date page with an error message if the provided date is not a business day', async () => {
+		await request.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`).send({
+			appealType: 1
+		});
+
 		const monthVariants = [
-			{ description: 'numeric month', value: '1' },
+			{ description: 'numeric month', value: 1 },
 			{ description: 'full month name', value: 'January' },
 			{ description: 'abbreviated month name', value: 'Jan' }
 		];

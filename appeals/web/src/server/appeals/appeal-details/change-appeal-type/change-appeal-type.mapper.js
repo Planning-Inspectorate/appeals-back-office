@@ -280,9 +280,9 @@ export async function checkTransferPage(appealDetails, transferredAppealHorizonR
 /**
  *
  * @param {Appeal} appealDetails
- * @param { number } changeDay
- * @param { number } changeMonth
- * @param { number } changeYear,
+ * @param { string | undefined } changeDay
+ * @param { string | undefined } changeMonth
+ * @param { string | undefined } changeYear,
  * @param {import('@pins/express').ValidationErrors|undefined}  errors
  * @returns {PageContent}
  */
@@ -314,7 +314,7 @@ export function changeAppealFinalDatePage(
 	const pageContent = {
 		title: `Deadline to resubmit appeal - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
-		preHeading: `Appeal ${shortAppealReference} - change appeal type`,
+		preHeading: `Appeal ${shortAppealReference}`,
 		pageComponents: [selectDateComponent],
 		submitButtonText: 'Continue'
 	};
@@ -324,12 +324,16 @@ export function changeAppealFinalDatePage(
 
 /**
  *
- * @param {string} appealId
+ * @param {Appeal} appealDetails
  * @param {string} existingAppealType
  * @param {string} newAppealType
  * @returns
  */
-export function changeAppealMarkAppealInvalidPage(appealId, existingAppealType, newAppealType) {
+export function changeAppealMarkAppealInvalidPage(
+	appealDetails,
+	existingAppealType,
+	newAppealType
+) {
 	/** @type {PageComponent} */
 	const textComponent = {
 		type: 'html',
@@ -340,13 +344,46 @@ export function changeAppealMarkAppealInvalidPage(appealId, existingAppealType, 
 		}
 	};
 
+	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+
 	const pageContent = {
 		title: `We will mark the ${existingAppealType} appeal as invalid`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealId}/change-appeal-type/resubmit`,
-		preHeading: `Appeal ${appealId}`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
+		preHeading: `Appeal ${shortAppealReference} - update appeal type`,
 		heading: `We will mark the ${existingAppealType} appeal as invalid`,
 		pageComponents: [textComponent],
 		submitButtonText: 'Continue'
+	};
+
+	return pageContent;
+}
+
+/**
+ *
+ * @param {Appeal} appealDetails
+ * @returns {PageContent}
+ */
+export function changeAppealTransferAppealPage(appealDetails) {
+	/** @type {PageComponent} */
+	const textComponent = {
+		type: 'html',
+		parameters: {
+			html: `
+            <p class="govuk-body">At the moment, this new service only supports some appeal types.<p>
+            <p class="govuk-body">You need to transfer the case to Horizon, then add the Horizon reference number to this appeal.<p>
+        `
+		}
+	};
+
+	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+
+	const pageContent = {
+		title: 'You must transfer this case to Horizon',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
+		preHeading: `Appeal ${shortAppealReference} - update appeal type`,
+		heading: 'You must transfer this case to Horizon',
+		pageComponents: [textComponent],
+		submitButtonText: 'Mark as awaiting transfer'
 	};
 
 	return pageContent;
