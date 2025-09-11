@@ -376,12 +376,10 @@ export function generateHorizonAppealUrl(appealId) {
  */
 export const formatPlanningObligationStatus = (planningObligationStatus) => {
 	switch (planningObligationStatus) {
-		case 'not_started': // TODO (A2-173): replace with data model constants once those are available
+		case 'not started yet': // TODO (A2-173): replace with data model constants once those are available
 			return 'Not yet started';
 		case 'finalised': // TODO (A2-173): replace with data model constants once those are available
 			return 'Finalised';
-		case 'not-applicable': // TODO (A2-173): replace with data model constants once those are available
-			return 'Not applicable';
 		default:
 			return 'Not answered';
 	}
