@@ -1,13 +1,14 @@
 import * as appealDetailsService from '#appeals/appeal-details/appeal-details.service.js';
 import { getDocumentFileType } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { appealTypeToAppealCaseTypeMapper } from '#common/feature-flags-appeal-types.js';
 import logger from '#lib/logger.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { uncapitalizeFirstLetter } from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { DOCUMENT_FOLDER_DISPLAY_LABELS } from '@pins/appeals/constants/documents.js';
+import isFPA from '@pins/appeals/utils/is-fpa.js';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import {
 	postChangeDocumentDetails,
@@ -100,7 +101,7 @@ export const postLpaQuestionnaire = async (request, response) => {
 		request.session.reviewOutcome = reviewOutcome;
 
 		if (reviewOutcome === 'complete') {
-			if (currentAppeal.appealType !== APPEAL_TYPE.HOUSEHOLDER) {
+			if (isFPA(appealTypeToAppealCaseTypeMapper(currentAppeal.appealType))) {
 				return response.redirect(
 					`/appeals-service/appeal-details/${appealId}/lpa-questionnaire/${lpaQuestionnaireId}/environment-service-team-review-case`
 				);
