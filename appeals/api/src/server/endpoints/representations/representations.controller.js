@@ -202,7 +202,7 @@ export async function updateRepresentation(request, response) {
 }
 
 /**
- * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment'} representationType
+ * @param {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment' | 'appellant_proofs_evidence' | 'lpa_proofs_evidence'} representationType
  * @returns {(req: Request, res: Response) => Promise<Response>}
  * */
 export const createRepresentation = (representationType) => async (req, res) => {
@@ -216,6 +216,27 @@ export const createRepresentation = (representationType) => async (req, res) => 
 	await broadcasters.broadcastRepresentation(rep.id, EventType.Create);
 	return res.status(201).send(rep);
 };
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export async function createRepresentationProofOfEvidence(req, res) {
+	const {
+		appeal,
+		params: { proofOfEvidenceType },
+		body: { attachments }
+	} = req;
+	const rep = await representationService.createRepresentationProofOfEvidence(
+		appeal,
+		proofOfEvidenceType === 'lpa'
+			? APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+			: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+		attachments
+	);
+	return res.status(201).send(rep);
+}
 
 /**
  * @param {Request} req

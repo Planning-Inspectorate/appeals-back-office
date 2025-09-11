@@ -57,9 +57,10 @@ describe('mapAppellantProofOfEvidence', () => {
 
 	it('should return correct table row when status is not received', () => {
 		data.appealDetails.documentationSummary.appellantProofOfEvidence.status = 'not_received';
-		expected.display.tableItem[1].text = 'Awaiting';
+		expected.display.tableItem[1].text = 'Awaiting proof of evidence and witness';
 		expected.display.tableItem[2].text = '';
-		expected.display.tableItem[3].html = '';
+		expected.display.tableItem[3].html =
+			'<a href="/test/proof-of-evidence/appellant/add-representation?backUrl=%2Ftest" data-cy="add-appellant-proofs-evidence" class="govuk-link">Add<span class="govuk-visually-hidden"> Appellant proof of evidence</span></a>';
 
 		const result = mapAppellantProofOfEvidence(data);
 
