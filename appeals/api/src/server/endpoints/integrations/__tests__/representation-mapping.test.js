@@ -54,6 +54,11 @@ const reasons = [
 		id: 6,
 		name: 'Received after deadline',
 		hasText: false
+	},
+	{
+		id: 7,
+		name: 'other_reason',
+		hasText: true
 	}
 ];
 
@@ -149,6 +154,44 @@ describe('representation mapper', () => {
 				expect(validationResult).toBe(true);
 			});
 		}
+
+		test('Mapping rejection reasons', async () => {
+			const mapped = mapRepresentationEntity({
+				...mockRepresentation,
+				representationRejectionReasonsSelected: [
+					{
+						// @ts-ignore
+						representationRejectionReason: {
+							name: 'Contains links to web pages',
+							hasText: false
+						}
+					},
+					{
+						// @ts-ignore
+						representationRejectionReason: {
+							name: 'other_reason',
+							hasText: true
+						},
+						representationRejectionReasonText: [
+							// @ts-ignore
+							{ text: 'Custom rejection reason text' }
+						]
+					}
+				]
+			});
+
+			expect(mapped?.invalidOrIncompleteDetails).toEqual(['Contains links to web pages']);
+			expect(mapped?.otherInvalidOrIncompleteDetails).toEqual([
+				'other_reason: Custom rejection reason text'
+			]);
+
+			const validationResult = await validateFromSchema(
+				schemas.events.appealRepresentation,
+				// @ts-ignore
+				mapped
+			);
+			expect(validationResult).toBe(true);
+		});
 	});
 
 	describe('unsuccessfull representation mapping', () => {
