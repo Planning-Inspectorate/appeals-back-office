@@ -1,3 +1,4 @@
+import { getEnabledAppealCaseTypes } from '#common/feature-flags-appeal-types.js';
 import { isFeatureActive } from '#common/feature-flags.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { addressToString } from '#lib/address-formatter.js';
@@ -6,7 +7,7 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
 /** @typedef {import('@pins/appeals').Pagination} Pagination */
@@ -113,21 +114,7 @@ export function nationalListPage(
 		selected: inspectorFilter === String(inspector?.id)
 	}));
 
-	//TODO: maybe make this a shared function across web
-	const enabledAppealTypes = [APPEAL_CASE_TYPE.D];
-
-	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_78)) {
-		enabledAppealTypes.push(APPEAL_CASE_TYPE.W);
-	}
-	if (isFeatureActive(FEATURE_FLAG_NAMES.SECTION_20)) {
-		enabledAppealTypes.push(APPEAL_CASE_TYPE.Y);
-	}
-	if (isFeatureActive(FEATURE_FLAG_NAMES.CAS_ADVERT)) {
-		enabledAppealTypes.push(APPEAL_CASE_TYPE.ZA);
-	}
-	if (isFeatureActive(FEATURE_FLAG_NAMES.CAS)) {
-		enabledAppealTypes.push(APPEAL_CASE_TYPE.ZP);
-	}
+	const enabledAppealTypes = getEnabledAppealCaseTypes();
 
 	let enabledAppealProcedures = [];
 

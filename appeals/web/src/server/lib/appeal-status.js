@@ -1,5 +1,5 @@
+import { isAppealTypeEnabled } from '#common/feature-flags-appeal-types.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
 
@@ -10,11 +10,7 @@ import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
  * @returns {string}
  * */
 export function mapStatusText(appealStatus, appealType, appealProcedureType) {
-	if (
-		![APPEAL_TYPE.HOUSEHOLDER, APPEAL_TYPE.S78, APPEAL_TYPE.PLANNED_LISTED_BUILDING].includes(
-			appealType
-		)
-	) {
+	if (!isAppealTypeEnabled(appealType)) {
 		return appealStatus;
 	}
 
