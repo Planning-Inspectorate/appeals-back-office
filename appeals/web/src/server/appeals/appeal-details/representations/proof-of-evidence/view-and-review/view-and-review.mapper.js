@@ -1,6 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { APPEAL_PROOF_OF_EVIDENCE_STATUS } from '@pins/appeals/constants/common.js';
 import { generateProofOfEvidenceSummaryList } from './page-components/common.js';
+import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
@@ -22,6 +23,12 @@ export function reviewProofOfEvidencePage(
 ) {
 	const shortReference = appealShortReference(appealDetails.appealReference);
 
+	const notificationBanners = mapNotificationBannersFromSession(
+		session,
+		'viewProofOfEvidence',
+		appealDetails.appealId
+	);
+
 	const proofOfEvidenceSummaryList = generateProofOfEvidenceSummaryList(
 		appealDetails.appealId,
 		proofOfEvidence
@@ -35,7 +42,7 @@ export function reviewProofOfEvidencePage(
 		preHeading: `Appeal ${shortReference}`,
 		heading: title,
 		submitButtonText: 'Continue',
-		pageComponents: [proofOfEvidenceSummaryList]
+		pageComponents: [...notificationBanners, proofOfEvidenceSummaryList]
 	};
 
 	pageContent.pageComponents.push({

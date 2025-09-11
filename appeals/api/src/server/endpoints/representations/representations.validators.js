@@ -8,7 +8,10 @@ import {
 	ERROR_REP_OUTCOME_MUST_BE_ONE_OF
 } from '@pins/appeals/constants/support.js';
 import { composeMiddleware } from '@pins/express';
-import { body } from 'express-validator';
+import { body, param } from 'express-validator';
+import { ERROR_INVALID_PROOF_OF_EVIDENCE_TYPE } from '@pins/appeals/constants/support.js';
+import { ERROR_ATTACHMENTS_REQUIRED } from '@pins/appeals/constants/support.js';
+import { ERROR_ATTACHMENTS_EMPTY } from '@pins/appeals/constants/support.js';
 
 export const getRepresentationRouteValidator = composeMiddleware(
 	validateIdParameter('appealId'),
@@ -44,6 +47,22 @@ export const createRepresentationValidator = composeMiddleware(
 		.custom((value) => value.every((/** @type {*} */ item) => typeof item === 'string'))
 		.withMessage(ERROR_MUST_BE_ARRAY_OF_STRINGS),
 	body('redactionStatus').isString(),
+	validationErrorHandler
+);
+
+export const createRepresentationProofOfEvidenceValidator = composeMiddleware(
+	param('proofOfEvidenceType').isString().withMessage(ERROR_MUST_BE_STRING),
+	param('proofOfEvidenceType')
+		.isIn(['appellant', 'lpa'])
+		.withMessage(ERROR_INVALID_PROOF_OF_EVIDENCE_TYPE),
+
+	body('attachments')
+		.exists({ checkFalsy: true })
+		.withMessage(ERROR_ATTACHMENTS_REQUIRED)
+		.isArray({ min: 1 })
+		.withMessage(ERROR_ATTACHMENTS_EMPTY)
+		.custom((value) => value.every((/** @type {*} */ item) => typeof item === 'string'))
+		.withMessage(ERROR_MUST_BE_ARRAY_OF_STRINGS),
 	validationErrorHandler
 );
 

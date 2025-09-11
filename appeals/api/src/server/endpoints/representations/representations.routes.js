@@ -8,7 +8,8 @@ import {
 	createRepresentationValidator,
 	getRepresentationRouteValidator,
 	getRepresentationUpdateValidator,
-	validateRejectionReasonsPayload
+	validateRejectionReasonsPayload,
+	createRepresentationProofOfEvidenceValidator
 } from './representations.validators.js';
 
 const router = createRouter();
@@ -161,6 +162,33 @@ router.post(
 	checkAppealExistsByIdAndAddToRequest,
 	createRepresentationValidator,
 	asyncHandler(controller.createRepresentation('comment'))
+);
+
+router.post(
+	'/:appealId/reps/:proofOfEvidenceType/proof-of-evidence',
+	/*
+	#swagger.tags = ['Representations']
+	#swagger.path = '/appeals/{appealId}/reps/{proofOfEvidenceType}/proof-of-evidence'
+	#swagger.description = Create a representation
+	#swagger.parameters['azureAdUserId'] = {
+		in: 'header',
+		required: true,
+		example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+	}
+	#swagger.requestBody = {
+		in: 'body',
+		required: true,
+		schema: { $ref: '#/components/schemas/CreateRepRequest' },
+	}
+	#swagger.responses[201] = {
+		description: 'Create a Representation against an appeal',
+		schema: { $ref: '#/components/schemas/RepResponse' }
+	}
+	#swagger.responses[400] = {}
+ */
+	checkAppealExistsByIdAndAddToRequest,
+	createRepresentationProofOfEvidenceValidator,
+	asyncHandler(controller.createRepresentationProofOfEvidence)
 );
 
 router.patch(

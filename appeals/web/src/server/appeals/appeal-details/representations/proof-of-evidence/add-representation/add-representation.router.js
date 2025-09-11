@@ -1,0 +1,18 @@
+import { Router as createRouter } from 'express';
+import { asyncHandler } from '@pins/express';
+import {
+	renderDocumentUpload,
+	postDocumentUpload,
+	renderCheckYourAnswers,
+	postCheckYourAnswers
+} from './add-representation.controller.js';
+
+const router = createRouter({ mergeParams: true });
+
+router.get('/', asyncHandler(renderDocumentUpload));
+router.post('/', asyncHandler(postDocumentUpload));
+
+router.get('/check-your-answers', asyncHandler(renderCheckYourAnswers));
+router.post('/check-your-answers', asyncHandler(postCheckYourAnswers));
+
+export default router;
