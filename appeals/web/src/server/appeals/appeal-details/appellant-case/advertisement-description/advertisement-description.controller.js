@@ -29,7 +29,7 @@ const renderChangeAdvertisementDescription = async (request, response) => {
 	const mappedPageContents = changeAdvertismentDescriptionPage(
 		currentAppeal,
 		appellantCaseData,
-		request.session.developmentDescription
+		request.session.advertisementDescription
 	);
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,
@@ -42,7 +42,7 @@ const renderChangeAdvertisementDescription = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postChangeAdvertisementDescription = async (request, response) => {
-	request.session.developmentDescription = request.body['developmentDescription'];
+	request.session.advertisementDescription = request.body['advertisementDescription'];
 	const { currentAppeal, apiClient, errors } = request;
 	const { appealId, appellantCaseId } = currentAppeal;
 	if (errors) {
@@ -54,16 +54,16 @@ export const postChangeAdvertisementDescription = async (request, response) => {
 			apiClient,
 			appealId,
 			appellantCaseId,
-			request.session.developmentDescription
+			request.session.advertisementDescription
 		);
 
 		addNotificationBannerToSession({
 			session: request.session,
 			bannerDefinitionKey: 'changePage',
 			appealId,
-			text: 'Original development description has been updated'
+			text: 'Original advertisement description has been updated'
 		});
-		delete request.session.developmentDescription;
+		delete request.session.advertisementDescription;
 		return response.redirect(`/appeals-service/appeal-details/${appealId}/appellant-case`);
 	} catch (error) {
 		logger.error(error);
