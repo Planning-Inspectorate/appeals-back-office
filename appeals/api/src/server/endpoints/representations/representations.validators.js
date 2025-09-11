@@ -2,16 +2,16 @@ import validateIdParameter from '#common/validators/id-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import {
+	ERROR_ATTACHMENTS_EMPTY,
+	ERROR_ATTACHMENTS_REQUIRED,
 	ERROR_INVALID_EMAIL,
+	ERROR_INVALID_PROOF_OF_EVIDENCE_TYPE,
 	ERROR_MUST_BE_ARRAY_OF_STRINGS,
 	ERROR_MUST_BE_STRING,
 	ERROR_REP_OUTCOME_MUST_BE_ONE_OF
 } from '@pins/appeals/constants/support.js';
 import { composeMiddleware } from '@pins/express';
 import { body, param } from 'express-validator';
-import { ERROR_INVALID_PROOF_OF_EVIDENCE_TYPE } from '@pins/appeals/constants/support.js';
-import { ERROR_ATTACHMENTS_REQUIRED } from '@pins/appeals/constants/support.js';
-import { ERROR_ATTACHMENTS_EMPTY } from '@pins/appeals/constants/support.js';
 
 export const getRepresentationRouteValidator = composeMiddleware(
 	validateIdParameter('appealId'),

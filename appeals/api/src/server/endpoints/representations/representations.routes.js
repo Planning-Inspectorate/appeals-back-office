@@ -5,11 +5,11 @@ import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import * as controller from './representations.controller.js';
 import {
+	createRepresentationProofOfEvidenceValidator,
 	createRepresentationValidator,
 	getRepresentationRouteValidator,
 	getRepresentationUpdateValidator,
-	validateRejectionReasonsPayload,
-	createRepresentationProofOfEvidenceValidator
+	validateRejectionReasonsPayload
 } from './representations.validators.js';
 
 const router = createRouter();

@@ -1,10 +1,10 @@
-import { Router as createRouter } from 'express';
 import { asyncHandler } from '@pins/express';
+import { Router as createRouter } from 'express';
 import {
-	renderDocumentUpload,
+	postCheckYourAnswers,
 	postDocumentUpload,
 	renderCheckYourAnswers,
-	postCheckYourAnswers
+	renderDocumentUpload
 } from './add-representation.controller.js';
 
 const router = createRouter({ mergeParams: true });

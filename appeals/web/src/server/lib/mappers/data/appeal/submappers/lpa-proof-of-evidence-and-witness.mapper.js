@@ -4,8 +4,8 @@ import {
 	mapAddRepresentationSummaryActionLink,
 	mapRepresentationDocumentSummaryActionLink
 } from '#lib/representation-utilities.js';
-import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { APPEAL_PROOF_OF_EVIDENCE_STATUS } from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { capitalize } from 'lodash-es';
 
 /** @type {import('../mapper.js').SubMapper} */

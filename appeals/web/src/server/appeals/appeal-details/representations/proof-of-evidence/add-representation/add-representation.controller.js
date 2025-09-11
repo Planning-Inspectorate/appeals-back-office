@@ -1,19 +1,19 @@
-import { clearEdits, editLink, isAtEditEntrypoint } from '#lib/edit-utilities.js';
-import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
-import { preserveQueryString } from '#lib/url-utilities.js';
+import { createNewDocument } from '#app/components/file-uploader.component.js';
 import {
 	postDocumentUpload as postDocumentUploadHelper,
 	renderDocumentUpload as renderDocumentUploadHelper
 } from '#appeals/appeal-documents/appeal-documents.controller.js';
-import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
-import { appealShortReference } from '#lib/appeals-formatter.js';
-import { createNewDocument } from '#app/components/file-uploader.component.js';
-import config from '@pins/appeals.web/environment/config.js';
 import { getDocumentRedactionStatuses } from '#appeals/appeal-documents/appeal.documents.service.js';
-import { APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import { appealShortReference } from '#lib/appeals-formatter.js';
+import { clearEdits, editLink, isAtEditEntrypoint } from '#lib/edit-utilities.js';
 import logger from '#lib/logger.js';
-import { postRepresentationProofOfEvidence } from '../proof-of-evidence.service.js';
+import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
+import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { preserveQueryString } from '#lib/url-utilities.js';
+import config from '@pins/appeals.web/environment/config.js';
+import { APPEAL_DOCUMENT_TYPE, APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import { postRepresentationProofOfEvidence } from '../proof-of-evidence.service.js';
 
 /** @type {import('@pins/express').RequestHandler<{}>}  */
 export const renderDocumentUpload = async (request, response) => {
