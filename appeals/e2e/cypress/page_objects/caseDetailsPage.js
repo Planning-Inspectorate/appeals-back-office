@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { formatDateAndTime } from '../support/utils/formatDateAndTime';
+import { formatDateAndTime } from '../support/utils/format';
 import { Page } from './basePage';
 import { DateTimeSection } from './dateTimeSection.js';
 
