@@ -1,13 +1,22 @@
 import { commentsSection } from './sections/comments.section.js';
 
 export default function mapIpCommentsData(templateData) {
-	const { awaitingReviewComments, acceptedComments /*rejectedComments*/ } = templateData;
-	return {
-		details: templateData,
-		sections: [
-			commentsSection(awaitingReviewComments, 'Awaiting review'),
-			commentsSection(acceptedComments, 'Accepted')
-			// commentsSection(rejectedComments, 'Rejected')
-		]
-	};
+	const {
+		awaitingReviewComments = [],
+		acceptedComments = [],
+		publishedComments = [] /*rejectedComments*/
+	} = templateData || {};
+	const sections = [];
+	if (publishedComments.length) {
+		sections.push(commentsSection(publishedComments, 'Published'));
+	} else {
+		sections.push(commentsSection(awaitingReviewComments, 'Awaiting review'));
+		sections.push(commentsSection(acceptedComments, 'Accepted'));
+		// sections.push(commentsSection(rejectedComments, 'Rejected'));
+	}
+	if (publishedComments)
+		return {
+			details: templateData,
+			sections
+		};
 }

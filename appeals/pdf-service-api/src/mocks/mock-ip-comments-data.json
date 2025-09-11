@@ -613,6 +613,83 @@
 					}
 				]
 			}
+		],
+		"publishedComments": [
+			{
+				"id": 240,
+				"origin": "citizen",
+				"author": "Eva Sharma - Source: Back Office - Has email: true",
+				"status": "valid",
+				"originalRepresentation": "I love cheese, especially cottage cheese queso. Ricotta monterey jack emmental cheese and biscuits jarlsberg manchego roquefort babybel. Chalk and cheese cut the cheese cream cheese croque monsieur cheese strings blue castello halloumi say cheese.",
+				"redactedRepresentation": "",
+				"created": "2025-07-03T15:13:59.982Z",
+				"notes": "",
+				"attachments": [
+					{
+						"documentGuid": "58565a17-f943-4548-9588-596205ad7ac1",
+						"version": 1,
+						"representationId": 236,
+						"documentVersion": {
+							"documentGuid": "58565a17-f943-4548-9588-596205ad7ac1",
+							"version": 1,
+							"documentType": "representationAttachments",
+							"originalFilename": "file_example_XLSX_5000.xlsx",
+							"fileName": "file_example_XLSX_5000.xlsx",
+							"mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+							"size": 188887,
+							"blobStoragePath": "appeal/6000072/58565a17-f943-4548-9588-596205ad7ac1/v1/file_example_XLSX_5000.xlsx",
+							"documentURI": "https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/6000072/58565a17-f943-4548-9588-596205ad7ac1/v1/file_example_XLSX_5000.xlsx",
+							"document": {
+								"guid": "58565a17-f943-4548-9588-596205ad7ac1",
+								"name": "file_example_XLSX_5000.xlsx",
+								"caseId": 72,
+								"folderId": 3600,
+								"createdAt": "2025-07-09T00:00:00.000Z",
+								"isDeleted": false,
+								"latestVersionId": 1
+							}
+						}
+					},
+					{
+						"documentGuid": "7416a70a-321b-45f5-a045-e426e46e9a7f",
+						"version": 1,
+						"representationId": 236,
+						"documentVersion": {
+							"documentGuid": "7416a70a-321b-45f5-a045-e426e46e9a7f",
+							"version": 1,
+							"documentType": "representationAttachments",
+							"originalFilename": "file_example_PNG_2100kB.png",
+							"fileName": "file_example_PNG_2100kB.png",
+							"mime": "image/png",
+							"size": 2060826,
+							"blobStoragePath": "appeal/6000072/7416a70a-321b-45f5-a045-e426e46e9a7f/v1/file_example_PNG_2100kB.png",
+							"documentURI": "https://127.0.0.1:10000/devstoreaccount1/document-service-uploads/document-service-uploads/appeal/6000072/7416a70a-321b-45f5-a045-e426e46e9a7f/v1/file_example_PNG_2100kB.png",
+							"document": {
+								"guid": "7416a70a-321b-45f5-a045-e426e46e9a7f",
+								"name": "file_example_PNG_2100kB.png",
+								"caseId": 72,
+								"folderId": 3600,
+								"createdAt": "2025-07-09T11:27:45.191Z",
+								"isDeleted": false,
+								"latestVersionId": 1
+							}
+						}
+					}
+				],
+				"representationType": "comment",
+				"siteVisitRequested": false,
+				"source": "back-office-appeals",
+				"represented": {
+					"id": 317,
+					"name": "Eva Sharma - Source: Back Office - Has email: true",
+					"email": "test9@example.com",
+					"address": {
+						"addressLine1": "",
+						"postCode": ""
+					}
+				},
+				"rejectionReasons": []
+			}
 		]
 	}
 }

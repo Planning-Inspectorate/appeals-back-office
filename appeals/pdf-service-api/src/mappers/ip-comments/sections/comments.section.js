@@ -14,6 +14,12 @@ function mapComment(ipComment) {
 		name: attachment.documentVersion.fileName
 	}));
 
+	let dateFormat = 'd MMMM yyyy, HH:mm';
+	// Only display the time if it's not midnight
+	if (new Date(created).getTime().toString().endsWith('00000')) {
+		dateFormat = 'd MMMM yyyy';
+	}
+
 	return {
 		items: [
 			{
@@ -22,7 +28,7 @@ function mapComment(ipComment) {
 			},
 			{
 				key: 'Date received',
-				text: formatDate(created, 'd MMMM yyyy, HH:mm')
+				text: formatDate(created, dateFormat)
 			},
 			{
 				key: 'Comment',
