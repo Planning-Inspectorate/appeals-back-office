@@ -1,13 +1,13 @@
 // @ts-nocheck
 import { householdAppeal as appeal } from '#tests/appeals/mocks.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { cloneDeep } from 'lodash-es';
+
 import { checkAppealsStatusBeforeLPAQ } from '../link-appeals.service.js';
 
 describe('Link Appeals Service', () => {
 	describe('checkAppealsStatusBeforeLPAQ', () => {
 		it('should return true where the linked appeal is the parent and it already has linked children and has status before LPA Questionnaire', () => {
-			const linkedAppeal = cloneDeep({
+			const linkedAppeal = structuredClone({
 				...appeal,
 				id: 2,
 				childAppeals: [{ appeal: { id: 3 } }]
@@ -19,7 +19,7 @@ describe('Link Appeals Service', () => {
 		});
 
 		it('should return false where the linked appeal is the parent and it already has linked children and has status LPA Questionnaire', () => {
-			const linkedAppeal = cloneDeep({
+			const linkedAppeal = structuredClone({
 				...appeal,
 				id: 2,
 				appealStatus: [
@@ -37,7 +37,7 @@ describe('Link Appeals Service', () => {
 		});
 
 		it('should return true where the linked appeal is the parent but has no children and the current appeal has status before LPA Questionnaire', () => {
-			const linkedAppeal = cloneDeep({ ...appeal, id: 2 });
+			const linkedAppeal = structuredClone({ ...appeal, id: 2 });
 			const isCurrentAppealParent = false;
 
 			const result = checkAppealsStatusBeforeLPAQ(appeal, linkedAppeal, isCurrentAppealParent);
@@ -45,11 +45,11 @@ describe('Link Appeals Service', () => {
 		});
 
 		it('should return false where the linked appeal is the parent but has no children and the current appeal has status LPA Questionnaire', () => {
-			const appealAtLPAQ = cloneDeep({
+			const appealAtLPAQ = structuredClone({
 				...appeal,
 				appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, valid: true }]
 			});
-			const linkedAppeal = cloneDeep({ ...appeal, id: 2 });
+			const linkedAppeal = structuredClone({ ...appeal, id: 2 });
 			const isCurrentAppealParent = false;
 
 			const result = checkAppealsStatusBeforeLPAQ(
@@ -61,7 +61,7 @@ describe('Link Appeals Service', () => {
 		});
 
 		it('should return true where the current appeal is the parent and it has status before LPA Questionnaire', () => {
-			const linkedAppeal = cloneDeep({ ...appeal, id: 2 });
+			const linkedAppeal = structuredClone({ ...appeal, id: 2 });
 			const isCurrentAppealParent = true;
 
 			const result = checkAppealsStatusBeforeLPAQ(appeal, linkedAppeal, isCurrentAppealParent);
@@ -69,11 +69,11 @@ describe('Link Appeals Service', () => {
 		});
 
 		it('should return false where the current appeal is the parent and it has status LPA Questionnaire', () => {
-			const appealAtLPAQ = cloneDeep({
+			const appealAtLPAQ = structuredClone({
 				...appeal,
 				appealStatus: [{ status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, valid: true }]
 			});
-			const linkedAppeal = cloneDeep({ ...appeal, id: 2 });
+			const linkedAppeal = structuredClone({ ...appeal, id: 2 });
 			const isCurrentAppealParent = true;
 
 			const result = checkAppealsStatusBeforeLPAQ(

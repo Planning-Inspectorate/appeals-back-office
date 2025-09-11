@@ -4,7 +4,7 @@ import { mocks } from '#tests/appeals/index.js';
 import { caseTeams } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
-import { cloneDeep } from 'lodash-es';
+
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const householdAppeal = mocks.householdAppeal;
@@ -131,7 +131,7 @@ describe('case team routes', () => {
 			});
 
 			it('returns valid assigned team Id when valid teamId is provided and there are linked appeals', async () => {
-				const leadAppeal = cloneDeep(householdAppeal);
+				const leadAppeal = structuredClone(householdAppeal);
 				leadAppeal.childAppeals = [
 					{ childId: 10, parentId: 1 },
 					{ childId: 20, parentId: 1 }

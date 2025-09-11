@@ -15,7 +15,6 @@ import {
 	ERROR_NOT_FOUND
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
-import { cloneDeep } from 'lodash-es';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 
@@ -959,11 +958,11 @@ describe('/appeals/:id/reps', () => {
 		let mockS78Appeal;
 		let mockS20Appeal;
 		beforeEach(() => {
-			mockS78Appeal = cloneDeep({
+			mockS78Appeal = structuredClone({
 				...appealS78,
 				representations: appealS78.representations.filter((rep) => rep.status !== 'awaiting_review')
 			});
-			mockS20Appeal = cloneDeep({
+			mockS20Appeal = structuredClone({
 				...appealS20,
 				representations: appealS20.representations.filter((rep) => rep.status !== 'awaiting_review')
 			});

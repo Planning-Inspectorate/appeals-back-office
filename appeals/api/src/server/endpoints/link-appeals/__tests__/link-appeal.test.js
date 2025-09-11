@@ -11,7 +11,6 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
 } from '@pins/appeals/constants/support.js';
-import { cloneDeep } from 'lodash-es';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
 const { default: got } = await import('got');
@@ -126,7 +125,7 @@ describe('appeal linked appeals routes', () => {
 			});
 
 			test('returns 201 when an internal appeal is linked', async () => {
-				const childAppeal = cloneDeep({ ...householdAppeal, id: 2, reference: '4567654' });
+				const childAppeal = structuredClone({ ...householdAppeal, id: 2, reference: '4567654' });
 				// @ts-ignore
 				databaseConnector.appeal.findUnique.mockResolvedValueOnce(householdAppeal);
 				// @ts-ignore

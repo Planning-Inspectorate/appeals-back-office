@@ -30,7 +30,7 @@ import { azureAdUserId } from '#tests/shared/mocks.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { dateISOStringToDisplayDate, formatTime } from '@pins/appeals/utils/date-formatter.js';
 import { format, parseISO } from 'date-fns';
-import { cloneDeep } from 'lodash-es';
+
 import {
 	fetchRescheduleTemplateIds,
 	fetchSiteVisitScheduleTemplateIds
@@ -254,10 +254,10 @@ describe('site visit routes', () => {
 			});
 
 			test('creates a site visit for linked appeals', async () => {
-				const siteVisit = cloneDeep({ ...householdAppeal.siteVisit, appealId: appealS78.id });
+				const siteVisit = structuredClone({ ...householdAppeal.siteVisit, appealId: appealS78.id });
 				const appealStatus = [{ status: 'event', valid: true }];
 				const childAppeals = [{ childId: 100, type: CASE_RELATIONSHIP_LINKED }];
-				const linkedLeadAppeal = cloneDeep({
+				const linkedLeadAppeal = structuredClone({
 					...appealS78,
 					siteVisit,
 					appealStatus,

@@ -35,7 +35,7 @@ import {
 	APPEAL_VIRUS_CHECK_STATUS
 } from '@planning-inspectorate/data-model';
 import { addDays } from 'date-fns';
-import { cloneDeep } from 'lodash-es';
+
 import nock from 'nock';
 import supertest from 'supertest';
 import { textInputCharacterLimits } from '../../../appeal.constants.js';
@@ -1283,7 +1283,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render a notification banner when a file is unscanned', async () => {
 			//Create a document with virus scan still in progress
-			let updatedLPAQuestionnaireData = cloneDeep(lpaQuestionnaireDataIncompleteOutcome);
+			let updatedLPAQuestionnaireData = structuredClone(lpaQuestionnaireDataIncompleteOutcome);
 			updatedLPAQuestionnaireData.documents.conservationMap.documents.push(
 				notCheckedDocumentFolderInfoDocuments
 			);
@@ -1305,7 +1305,7 @@ describe('LPA Questionnaire review', () => {
 
 		it('should render an error when a file has a virus', async () => {
 			//Create a document with failed virus check
-			let updatedLPAQuestionnaireData = cloneDeep(lpaQuestionnaireDataNotValidated);
+			let updatedLPAQuestionnaireData = structuredClone(lpaQuestionnaireDataNotValidated);
 			updatedLPAQuestionnaireData.documents.conservationMap.documents.push({
 				...notCheckedDocumentFolderInfoDocuments,
 				// @ts-ignore
@@ -3826,7 +3826,7 @@ describe('LPA Questionnaire review', () => {
 		});
 
 		it('should render the delete document page with the expected content when there are multiple document versions', async () => {
-			const multipleVersionsDocument = cloneDeep(documentFileVersionsInfoChecked);
+			const multipleVersionsDocument = structuredClone(documentFileVersionsInfoChecked);
 			multipleVersionsDocument.allVersions.push(multipleVersionsDocument.allVersions[0]);
 
 			nock('http://test/')
