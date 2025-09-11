@@ -120,9 +120,9 @@ const mapReasons = (data) => {
 	data.representationRejectionReasonsSelected
 		?.filter((reason) => reason.representationRejectionReason?.hasText === true)
 		.forEach((reason) => {
-			reason.representationRejectionReasonText.map((txt) =>
-				customReasons.push(`${reason.representationRejectionReason.name}: ${txt}`)
-			);
+			reason.representationRejectionReasonText.forEach((txt) => {
+				customReasons.push(`${reason.representationRejectionReason.name}: ${txt.text}`);
+			});
 		});
 
 	return {
