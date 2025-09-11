@@ -1,3 +1,5 @@
+import logger from '#lib/logger.js';
+
 export const DOCUMENT_STAGE = 'representation';
 export const DOCUMENT_TYPE = 'representationAttachments';
 
@@ -32,4 +34,33 @@ export const patchRepresentationAttachments = async (apiClient, appealId, repId,
 			}
 		})
 		.json();
+};
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {number | string} appealId
+ * @param {string[]} documentGUIDs
+ * @param {string} proofOfEvidenceType
+ * @returns {Promise<any>}
+ * */
+export const postRepresentationProofOfEvidence = async (
+	apiClient,
+	appealId,
+	documentGUIDs,
+	proofOfEvidenceType
+) => {
+	try {
+		const response = await apiClient.post(
+			`appeals/${appealId}/reps/${proofOfEvidenceType}/proof-of-evidence`,
+			{
+				json: {
+					attachments: documentGUIDs
+				}
+			}
+		);
+		return response.body;
+	} catch (error) {
+		logger.error('Error posting representation proof of evidence:', error);
+		throw new Error('Failed to post representation proof of evidence');
+	}
 };

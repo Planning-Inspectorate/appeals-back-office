@@ -67,6 +67,33 @@ export function mapRepresentationDocumentSummaryActionLink(
 }
 
 /**
+ * @param {string} currentRoute
+ * @param {RepresentationType} representationType
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @returns {string} action link html
+ */
+export function mapAddRepresentationSummaryActionLink(currentRoute, representationType, request) {
+	/** @type {Record<string, string>} */
+	const visuallyHiddenTexts = {
+		'appellant-proofs-evidence': 'Appellant proof of evidence',
+		'lpa-proofs-evidence': 'LPA proof of evidence'
+	};
+
+	/** @type {Record<string, string>} */
+	const hrefs = {
+		'appellant-proofs-evidence': `${currentRoute}/proof-of-evidence/appellant/add-representation`,
+		'lpa-proofs-evidence': `${currentRoute}/proof-of-evidence/lpa/add-representation`
+	};
+
+	return `<a href="${addBackLinkQueryToUrl(
+		request,
+		hrefs[representationType]
+	)}" data-cy="add-${representationType}" class="govuk-link">Add<span class="govuk-visually-hidden"> ${
+		visuallyHiddenTexts[representationType]
+	}</span></a>`;
+}
+
+/**
  *
  * @param {string|null|undefined} representationStatus
  * @param {boolean|undefined} isRedacted

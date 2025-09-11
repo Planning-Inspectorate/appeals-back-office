@@ -787,6 +787,80 @@ describe('/appeals/:id/reps', () => {
 		});
 	});
 
+	describe('POST representation/:proofOfEvidenceType/proof-of-evidence', () => {
+		beforeEach(() => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+		});
+
+		test('400 when attachment guids is empty', async () => {
+			const response = await request
+				.post('/appeals/1/reps/lpa/proof-of-evidence')
+				.send({
+					attachments: []
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					attachments: 'Attachments must be a non-empty array'
+				}
+			});
+		});
+
+		test('400 when attachment guids does not exist', async () => {
+			const response = await request
+				.post('/appeals/1/reps/lpa/proof-of-evidence')
+				.send({})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					attachments: 'Attachments field is required'
+				}
+			});
+		});
+
+		test('400 when proof of evidence type is not valid', async () => {
+			const response = await request
+				.post('/appeals/1/reps/app/proof-of-evidence')
+				.send({
+					attachments: ['123-456-789']
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					proofOfEvidenceType: 'must be either appellant or lpa'
+				}
+			});
+		});
+
+		test('200 when representation is successfully created for LPA', async () => {
+			const response = await request
+				.post('/appeals/1/reps/lpa/proof-of-evidence')
+				.send({
+					attachments: ['12345-6789-12345']
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+		});
+
+		test('200 when representation is successfully created for appellant', async () => {
+			const response = await request
+				.post('/appeals/1/reps/appellant/proof-of-evidence')
+				.send({
+					attachments: ['12345-6789-12345']
+				})
+				.set('azureAdUserId', '732652365');
+
+			expect(response.status).toEqual(201);
+		});
+	});
+
 	describe('PATCH /appeals/:appealId/reps/:repId/rejection-reasons', () => {
 		test('400 when payload id is not a number', async () => {
 			const response = await request

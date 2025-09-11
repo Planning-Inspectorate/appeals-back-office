@@ -2,13 +2,16 @@ import validateIdParameter from '#common/validators/id-parameter.js';
 import { validationErrorHandler } from '#middleware/error-handler.js';
 import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import {
+	ERROR_ATTACHMENTS_EMPTY,
+	ERROR_ATTACHMENTS_REQUIRED,
 	ERROR_INVALID_EMAIL,
+	ERROR_INVALID_PROOF_OF_EVIDENCE_TYPE,
 	ERROR_MUST_BE_ARRAY_OF_STRINGS,
 	ERROR_MUST_BE_STRING,
 	ERROR_REP_OUTCOME_MUST_BE_ONE_OF
 } from '@pins/appeals/constants/support.js';
 import { composeMiddleware } from '@pins/express';
-import { body } from 'express-validator';
+import { body, param } from 'express-validator';
 
 export const getRepresentationRouteValidator = composeMiddleware(
 	validateIdParameter('appealId'),
@@ -44,6 +47,22 @@ export const createRepresentationValidator = composeMiddleware(
 		.custom((value) => value.every((/** @type {*} */ item) => typeof item === 'string'))
 		.withMessage(ERROR_MUST_BE_ARRAY_OF_STRINGS),
 	body('redactionStatus').isString(),
+	validationErrorHandler
+);
+
+export const createRepresentationProofOfEvidenceValidator = composeMiddleware(
+	param('proofOfEvidenceType').isString().withMessage(ERROR_MUST_BE_STRING),
+	param('proofOfEvidenceType')
+		.isIn(['appellant', 'lpa'])
+		.withMessage(ERROR_INVALID_PROOF_OF_EVIDENCE_TYPE),
+
+	body('attachments')
+		.exists({ checkFalsy: true })
+		.withMessage(ERROR_ATTACHMENTS_REQUIRED)
+		.isArray({ min: 1 })
+		.withMessage(ERROR_ATTACHMENTS_EMPTY)
+		.custom((value) => value.every((/** @type {*} */ item) => typeof item === 'string'))
+		.withMessage(ERROR_MUST_BE_ARRAY_OF_STRINGS),
 	validationErrorHandler
 );
 

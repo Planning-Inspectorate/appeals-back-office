@@ -102,7 +102,7 @@ export const getRepStatusAuditLogDetails = (status, repType, redactedRep) => {
 
 /**
  * @typedef {Object} CreateRepresentationInput
- * @property {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment'} representationType
+ * @property {'comment' | 'lpa_statement' | 'appellant_statement' | 'lpa_final_comment' | 'appellant_final_comment' | 'lpa_proofs_evidence' | 'appellant_proofs_evidence'} representationType
  * @property {{ firstName: string, lastName: string, email: string }} ipDetails
  * @property {{ addressLine1: string, addressLine2?: string, town: string, county?: string, postCode: string }} ipAddress
  * @property {string[]} attachments
@@ -162,6 +162,42 @@ export const createRepresentation = async (appealId, input) => {
 				);
 			}
 		}
+	}
+
+	return representation;
+};
+
+/**
+ * @param {Appeal} appeal
+ * @param {string} proofOfEvidenceType
+ * @param {string[]} attachments
+ * @returns {Promise<import('@pins/appeals.api').Schema.Representation>}
+ * */
+export const createRepresentationProofOfEvidence = async (
+	appeal,
+	proofOfEvidenceType,
+	attachments
+) => {
+	const representation = await representationRepository.createRepresentation({
+		appealId: appeal.id,
+		representationType:
+			proofOfEvidenceType === 'lpa'
+				? APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
+				: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+		source: proofOfEvidenceType === 'lpa' ? 'lpa' : 'citizen',
+		dateCreated: new Date(),
+		representedId: proofOfEvidenceType === 'lpa' ? appeal.lpaId : appeal.appellantId
+	});
+
+	if (attachments.length > 0) {
+		const documents = await documentRepository.getDocumentsByIds(attachments);
+
+		const mappedDocuments = documents.map((d) => ({
+			documentGuid: d.guid,
+			version: d.latestDocumentVersion?.version ?? 1
+		}));
+
+		await representationRepository.addAttachments(representation.id, mappedDocuments);
 	}
 
 	return representation;

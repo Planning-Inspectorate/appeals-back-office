@@ -327,6 +327,9 @@ export const ERROR_LINKING_APPEALS =
 	'The appeals cannot be linked as the lead or child are already linked to other appeals.';
 export const ERROR_INVALID_EMAIL = 'must be a valid email';
 export const ERROR_INVALID_FILENAME = 'must be a valid filename';
+export const ERROR_INVALID_PROOF_OF_EVIDENCE_TYPE = 'must be either appellant or lpa';
+export const ERROR_ATTACHMENTS_REQUIRED = 'Attachments field is required';
+export const ERROR_ATTACHMENTS_EMPTY = 'Attachments must be a non-empty array';
 
 export const ERROR_INVALID_POSTCODE = 'needs to be a valid and include spaces';
 export const UK_POSTCODE_REGEX = /^([A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}|GIR ?0A{2})$/gm;
