@@ -1,3 +1,4 @@
+import config from '#environment/config.js';
 import { mapAgent } from './submappers/agent.mapper.js';
 import { mapAllocationDetails } from './submappers/allocation-details.mapper.js';
 import { mapAppealDecision } from './submappers/appeal-decision.mapper.js';
@@ -51,6 +52,14 @@ import { mapCaseTeam } from './submappers/team.mapper.js';
 import { mapValidAt } from './submappers/valid-at.mapper.js';
 import { mapVisitType } from './submappers/visit-type.mapper.js';
 
+// Default empty mapper for when feature flag is off
+const mapDefaultCaseTeam = () => ({
+	display: {},
+	id: 'caseTeam',
+	title: 'Team',
+	items: []
+});
+
 /** @type {Record<string, import('./mapper.js').SubMapper>} */
 export const submaps = {
 	appealReference: mapAppealReference,
@@ -78,7 +87,8 @@ export const submaps = {
 	siteVisitDate: mapSiteVisitDate,
 	siteVisitStartTime: mapSiteVisitStartTime,
 	siteVisitEndTime: mapSiteVisitEndTime,
-	caseTeam: mapCaseTeam,
+	caseTeam: config.featureFlags.featureFlagAutoAssignTeam ? mapCaseTeam : mapDefaultCaseTeam,
+
 	caseOfficer: mapCaseOfficer,
 	inspector: mapInspector,
 	crossTeamCorrespondence: mapCrossTeamCorrespondence,

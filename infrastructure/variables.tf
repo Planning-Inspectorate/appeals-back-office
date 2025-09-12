@@ -59,6 +59,7 @@ variable "apps_config" {
       featureFlagChangeProcedureType    = bool
       featureFlagAdvertisement          = bool
       featureFlagHearingPostMvp         = bool
+      featureFlagAutoAssignTeam         = bool
     })
 
     logging = object({
