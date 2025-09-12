@@ -1,5 +1,7 @@
 import { APPEAL_CASE_STAGE, APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 
+export const REP_ATTACHMENT_DOCTYPE = 'representationAttachments';
+
 /** @type {string[]} */
 export const FOLDERS = [
 	`${APPEAL_CASE_STAGE.APPELLANT_CASE}/${APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT}`,
@@ -52,7 +54,7 @@ export const FOLDERS = [
 	`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.MAIN_PARTY_CORRESPONDENCE}`,
 	`${APPEAL_CASE_STAGE.INTERNAL}/${APPEAL_DOCUMENT_TYPE.UNCATEGORISED}`,
 	`${APPEAL_CASE_STAGE.APPEAL_DECISION}/${APPEAL_DOCUMENT_TYPE.CASE_DECISION_LETTER}`,
-	'representation/representationAttachments'
+	`representation/${REP_ATTACHMENT_DOCTYPE}`
 ];
 
 export const VALID_MIME_TYPES = Object.freeze({

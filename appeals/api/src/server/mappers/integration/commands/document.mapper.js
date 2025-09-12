@@ -1,4 +1,5 @@
 import config from '#config/config.js';
+import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
 import { APPEAL_CASE_STAGE } from '@planning-inspectorate/data-model';
 import { randomUUID } from 'node:crypto';
 
@@ -22,7 +23,7 @@ export const mapDocumentIn = (doc, stage = null) => {
 	if (stage === 'representation') {
 		metadata.fileName = `${randomUUID()}_${metadata.originalFilename}`;
 		// @ts-ignore
-		metadata.documentType = 'representationAttachments';
+		metadata.documentType = REP_ATTACHMENT_DOCTYPE;
 	}
 
 	metadata.blobStorageContainer = config.BO_BLOB_CONTAINER;

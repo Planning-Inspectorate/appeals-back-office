@@ -19,7 +19,8 @@ module.exports = {
 				jest: true
 			},
 			globals: {
-				mockNotifySend: true
+				mockNotifySend: true,
+				mockBroadcasters: true
 			}
 		},
 		{

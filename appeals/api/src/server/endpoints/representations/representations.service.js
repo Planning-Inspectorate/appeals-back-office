@@ -152,6 +152,16 @@ export const createRepresentation = async (appealId, input) => {
 		}));
 
 		await representationRepository.addAttachments(representation.id, mappedDocuments);
+
+		for (const document of mappedDocuments) {
+			if (document?.documentGuid) {
+				await broadcasters.broadcastDocument(
+					document.documentGuid,
+					document.version,
+					document.version > 1 ? EventType.Update : EventType.Create
+				);
+			}
+		}
 	}
 
 	return representation;
@@ -183,6 +193,17 @@ export const updateAttachments = async (repId, attachments) => {
 		repId,
 		mappedDocuments
 	);
+
+	for (const document of mappedDocuments) {
+		if (document?.documentGuid) {
+			await broadcasters.broadcastDocument(
+				document.documentGuid,
+				document.version,
+				document.version > 1 ? EventType.Update : EventType.Create
+			);
+		}
+	}
+
 	return updatedRepresentation;
 };
 
