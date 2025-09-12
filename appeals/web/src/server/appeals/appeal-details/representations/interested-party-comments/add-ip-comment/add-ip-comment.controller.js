@@ -12,6 +12,7 @@ import { backLinkGenerator } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 import { APPEAL_REDACTED_STATUS } from '@planning-inspectorate/data-model';
+import { getAttachmentsFolder } from '../../document-attachments/attachments-service.js';
 import {
 	postDateSubmittedFactory,
 	postRedactionStatusFactory,
@@ -23,7 +24,6 @@ import {
 	statusFormatMap
 } from '../common/redaction-status.js';
 import { ipAddressPage } from '../interested-party-comments.mapper.js';
-import { getAttachmentsFolder } from '../interested-party-comments.service.js';
 import {
 	checkAddressPage,
 	dateSubmitted,

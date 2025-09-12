@@ -1,4 +1,4 @@
-import { patchRepresentationAttachments } from '#appeals/appeal-details/representations/final-comments/final-comments.service.js';
+import { patchRepresentationAttachments } from '#appeals/appeal-details/representations/document-attachments/attachments-service.js';
 import {
 	postChangeDocumentDetails,
 	postChangeDocumentFileName,

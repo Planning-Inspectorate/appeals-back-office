@@ -13,7 +13,7 @@ import {
 import { dateInput } from '#lib/mappers/index.js';
 import config from '@pins/appeals.web/environment/config.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
-import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../interested-party-comments.service.js';
+import { DOCUMENT_STAGE, DOCUMENT_TYPE } from '../../document-attachments/attachments-service.js';
 
 /** @typedef {import("../../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').interestedPartyComment} IpComment */
