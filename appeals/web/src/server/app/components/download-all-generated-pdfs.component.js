@@ -3,6 +3,7 @@ import { getLpaQuestionnaireFromId } from '#appeals/appeal-details/lpa-questionn
 import { getSingularRepresentationByType } from '#appeals/appeal-details/representations/representations.service.js';
 import config from '#environment/config.js';
 import logger from '#lib/logger.js';
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 const pdfServiceGenerateUrl = config.pdfServiceHost + '/generate-pdf';
 const FETCH_TIMEOUT_MS = 30000;
@@ -57,10 +58,9 @@ async function generatePdfViaService(templateName, templateData, appealIdForLog,
  * @returns {Promise<*>}
  */
 export async function generateAllPdfs(currentAppealData, apiClient) {
-	const { appealId } = currentAppealData;
+	const { appealId, appealType } = currentAppealData;
 
-	// --- Step 1: Define a single source of truth for all tasks ---
-	const tasks = [
+	const hasTasks = [
 		{
 			filenameInZip: `LPA questionnaire ${currentAppealData.appealReference}.pdf`,
 			templateName: 'lpa-questionnaire-pdf',
@@ -86,15 +86,6 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 			}
 		},
 		{
-			filenameInZip: `LPA statement ${currentAppealData.appealReference}.pdf`,
-			templateName: 'lpa-statement-pdf',
-			async fetchData() {
-				logger.debug('[DownloadAll] Fetching data for: LPA Statement');
-				const rawData = await getSingularRepresentationByType(apiClient, appealId, 'lpa_statement');
-				return rawData ? { lpaStatementData: { ...currentAppealData, ...rawData } } : null;
-			}
-		},
-		{
 			filenameInZip: `Appellant case ${currentAppealData.appealReference}.pdf`,
 			templateName: 'appellant-case-pdf',
 			async fetchData() {
@@ -104,6 +95,20 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 				const rawData = await getAppellantCaseFromAppealId(apiClient, appealId, appellantCaseId);
 				logger.info('rawData getAppellantCaseFromAppealId', rawData);
 				return rawData ? { appellantCaseData: { ...currentAppealData, ...rawData } } : null;
+			}
+		}
+	];
+
+	// --- Step 1: Define a single source of truth for all tasks ---
+	const s78Tasks = [
+		...hasTasks,
+		{
+			filenameInZip: `LPA statement ${currentAppealData.appealReference}.pdf`,
+			templateName: 'lpa-statement-pdf',
+			async fetchData() {
+				logger.debug('[DownloadAll] Fetching data for: LPA Statement');
+				const rawData = await getSingularRepresentationByType(apiClient, appealId, 'lpa_statement');
+				return rawData ? { lpaStatementData: { ...currentAppealData, ...rawData } } : null;
 			}
 		},
 		{
@@ -168,6 +173,8 @@ export async function generateAllPdfs(currentAppealData, apiClient) {
 			}
 		}
 	];
+
+	const tasks = appealType === APPEAL_TYPE.HOUSEHOLDER ? hasTasks : s78Tasks;
 
 	// --- Step 2: Fetch data and generate PDFs in parallel ---
 	logger.info(`[DownloadAll] Starting to process ${tasks.length} PDF generation tasks.`);

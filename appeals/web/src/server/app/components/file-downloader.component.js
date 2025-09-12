@@ -9,6 +9,7 @@ import config from '@pins/appeals.web/environment/config.js';
 import { BlobStorageClient } from '@pins/blob-storage-client';
 import { APPEAL_CASE_STAGE, APPEAL_VIRUS_CHECK_STATUS } from '@planning-inspectorate/data-model';
 import archiver from 'archiver';
+import { kebabCase } from 'lodash-es';
 import getActiveDirectoryAccessToken from '../../lib/active-directory-token.js';
 
 /** @typedef {import('../auth/auth-session.service').SessionWithAuth} SessionWithAuth */
@@ -250,11 +251,15 @@ export const getBulkDocumentDownload = async (
 		?.filter((folder) => folder.documents.length)
 		.filter((folder) => !folder.path.startsWith(APPEAL_CASE_STAGE.INTERNAL))
 		.flatMap((folder) => {
+			const folderPath = folder.path
+				.split('/')
+				.map((folderName) => kebabCase(folderName.trim()))
+				.join('/');
 			return folder.documents.map((document) => {
 				const { blobStorageContainer, blobStoragePath, documentURI } =
 					document.latestDocumentVersion;
 				return {
-					fullName: `${folder.path}/${document.name}`,
+					fullName: `${folderPath}/${document.name}`,
 					blobStorageContainer,
 					blobStoragePath,
 					documentURI
