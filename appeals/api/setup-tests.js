@@ -640,3 +640,16 @@ jest.unstable_mockModule('./src/server/config/config.js', () => ({
 		}
 	}
 }));
+
+const broadcastersMock = {
+	broadcastServiceUser: jest.fn(),
+	broadcastDocument: jest.fn(),
+	broadcastAppeal: jest.fn(),
+	broadcastEvent: jest.fn(),
+	broadcastEventEstimates: jest.fn(),
+	broadcastRepresentation: jest.fn()
+};
+global.mockBroadcasters = broadcastersMock;
+jest.unstable_mockModule('#endpoints/integrations/integrations.broadcasters.js', () => ({
+	broadcasters: broadcastersMock
+}));
