@@ -473,7 +473,6 @@ describe('Setup hearing and add hearing estimates', () => {
 
 	it('should verify the timetable behaviour', () => {
 		hearingSectionPage.deleteHearingIfExists(caseRef);
-		caseDetailsPage.clickAccordionByButton('TimeTable');
 
 		// Initial verification without planning obligation
 		caseDetailsPage.elements
@@ -724,7 +723,6 @@ describe('Setup hearing and add hearing estimates', () => {
 				// navigate to details page
 				caseDetailsPage.clickLinkByText(caseRef);
 
-				caseDetailsPage.clickAccordionByButton('Hearing');
 				caseDetailsPage.clickRowChangeLink('whether-the-address-is-known-or-not');
 				hearingSectionPage.selectRadioButtonByValue('No');
 				caseDetailsPage.clickButtonByText('Continue');

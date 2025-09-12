@@ -18,7 +18,6 @@ describe('Manage correspondence', () => {
 		const uploadDate = new Date();
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Case management');
 			caseDetailsPage.clickAddCrossTeamCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -46,7 +45,6 @@ describe('Manage correspondence', () => {
 		const uploadDate = new Date();
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Case management');
 			caseDetailsPage.clickAddInspectorCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');

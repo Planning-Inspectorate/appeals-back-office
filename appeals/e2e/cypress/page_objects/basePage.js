@@ -9,11 +9,11 @@ export class Page {
 	 *********************************************************/
 
 	selectors = {
-		accordion: '.govuk-accordion__section-heading-text-focus',
-		accordionButton: '.govuk-accordion__section-button',
-		accordionToggleText: '.govuk-accordion__section-toggle-text',
-		accordionSectionHeader: '.govuk-accordion__section-header',
-		accordionSectionExpanded: 'govuk-accordion__section.govuk-accordion__section--expanded',
+		// accordion: '.govuk-accordion__section-heading-text-focus',
+		// accordionButton: '.govuk-accordion__section-button',
+		// accordionToggleText: '.govuk-accordion__section-toggle-text',
+		// accordionSectionHeader: '.govuk-accordion__section-header',
+		// accordionSectionExpanded: 'govuk-accordion__section.govuk-accordion__section--expanded',
 		backLink: '.govuk-back-link',
 		bannerHeader: '.govuk-notification-banner__heading',
 		bannerLink: '.govuk-notification-banner__link',
@@ -67,10 +67,10 @@ export class Page {
 	};
 
 	basePageElements = {
-		accordion: (text) =>
-			cy.get(this.selectors.accordion).contains('span', text, { matchCase: false }),
-		accordionButton: (text) =>
-			cy.get(this.selectors.accordionButton).contains('span', text, { matchCase: false }),
+		// accordion: (text) =>
+		// 	cy.get(this.selectors.accordion).contains('span', text, { matchCase: false }),
+		// accordionButton: (text) =>
+		// 	cy.get(this.selectors.accordionButton).contains('span', text, { matchCase: false }),
 		additionalDocumentsAdd: () => cy.get(this.selectors.summaryCardActions).children().last(),
 		additonalDocumentManage: () => cy.get(this.selectors.summaryCardActions).children().first(),
 		answerCell: (question) =>
@@ -166,13 +166,13 @@ export class Page {
 		this.basePageElements.checkbox().check({ force: true });
 	}
 
-	clickAccordionByText(text) {
-		this.basePageElements.accordion(text).click();
-	}
+	// clickAccordionByText(text) {
+	// 	this.basePageElements.accordion(text).click();
+	// }
 
-	clickAccordionByButton(text) {
-		this.basePageElements.accordionButton(text).click();
-	}
+	// clickAccordionByButton(text) {
+	// 	this.basePageElements.accordionButton(text).click();
+	// }
 
 	clickBackLink(buttonText) {
 		this.basePageElements.backLink().click();
@@ -320,14 +320,14 @@ export class Page {
 		this.basePageElements.tableCell().contains(fileName).should('exist');
 	}
 
-	showAllSections() {
-		cy.get('body').then(($body) => {
-			const exists = $body.find('span:contains(Show all sections)').length > 0;
-			if (exists) {
-				this.clickAccordionByText('Show all sections');
-			}
-		});
-	}
+	// showAllSections() {
+	// 	cy.get('body').then(($body) => {
+	// 		const exists = $body.find('span:contains(Show all sections)').length > 0;
+	// 		if (exists) {
+	// 			this.clickAccordionByText('Show all sections');
+	// 		}
+	// 	});
+	// }
 
 	validateSuccessPanelTitle(successMessage, exactMatch = false) {
 		this.basePageElements.panelTitle().should(assertType(exactMatch), successMessage);

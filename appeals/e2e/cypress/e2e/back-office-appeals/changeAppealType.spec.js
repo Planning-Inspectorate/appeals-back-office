@@ -18,7 +18,6 @@ describe('Change Appeal Type', () => {
 	it('Change appeal type and do not resubmit', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.clickChangeAppealType();
 			caseDetailsPage.selectRadioButtonByValue('Planning');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -32,7 +31,6 @@ describe('Change Appeal Type', () => {
 	it('Change appeal type and resubmit', () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
-			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.clickChangeAppealType();
 			caseDetailsPage.selectRadioButtonByValue('Planning obligation');
 			caseDetailsPage.clickButtonByText('Continue');

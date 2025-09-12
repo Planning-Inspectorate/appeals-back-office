@@ -191,7 +191,7 @@ export class CaseDetailsPage extends Page {
 		setUpTimetableHearingDate: () => cy.getByData(this._cyDataSelectors.setUpTimetableHearingDate),
 		timeTableRows: () => cy.get('.appeal-case-timetable dt'),
 		personalListFilterDropdown: () => cy.get('.govuk-select'),
-		caseDetailsSections: () => cy.get('.govuk-accordion__section-heading-text-focus'),
+		// caseDetailsSections: () => cy.get('.govuk-accordion__section-heading-text-focus'),
 		pageHeading: () => cy.get(this._cyDataSelectors.pageHeading),
 		inquiryEstimatedDaysInput: () => cy.get('#inquiry-estimation-days'),
 		line1: () => cy.get('#address-line-1'),
@@ -269,22 +269,18 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickAssignCaseOfficer() {
-		this.clickAccordionByText('Team');
 		this.elements.assignCaseOfficer().click();
 	}
 
 	clickAssignInspector() {
-		this.clickAccordionByText('Team');
 		this.elements.assignInspector().click();
 	}
 
 	clickReviewAppellantCase() {
-		this.clickAccordionByButton('Documentation');
 		this.elements.reviewAppeallantCase().click();
 	}
 
 	clickSetUpSiteVisitType() {
-		this.clickAccordionByButton('Site');
 		this.elements.setUpSiteVisit().click();
 	}
 
@@ -319,12 +315,10 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickArrangeVisitTypeHasCaseTimetable() {
-		this.clickAccordionByText('Timetable');
 		this.elements.arrangeScheduleVisit().click();
 	}
 
 	clickChangeVisitTypeHasCaseTimetable() {
-		this.clickAccordionByText('Timetable');
 		this.elements.changeScheduleVisit().click();
 	}
 
@@ -397,11 +391,9 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickChangeLpaqDueDate() {
-		this.clickAccordionByText('Timetable');
 		this.elements.changeLpaqDueDate().click();
 	}
 	clickChangeStartDate() {
-		this.clickAccordionByText('Timetable');
 		this.elements.changeStartDate().click();
 	}
 
@@ -410,12 +402,10 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickChangeAppellant() {
-		this.clickAccordionByText('Contacts');
 		this.elements.changeAppellant().click();
 	}
 
 	clickChangeAgent() {
-		this.clickAccordionByText('Contacts');
 		this.elements.changeAgent().click();
 	}
 

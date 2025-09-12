@@ -19,7 +19,6 @@ describe('link appeals', () => {
 				happyPathHelper.assignCaseOfficer(leadCase);
 
 				//link appeal
-				caseDetailsPage.clickAccordionByButton('Overview');
 				happyPathHelper.addLinkedAppeal(leadCase, childCase);
 				caseDetailsPage.checkStatusOfCase('Lead', 1);
 
@@ -46,7 +45,6 @@ describe('link appeals', () => {
 				happyPathHelper.assignCaseOfficer(childCase);
 
 				//link appeal
-				caseDetailsPage.clickAccordionByButton('Overview');
 				happyPathHelper.addLinkedAppeal(leadCase, leadCase);
 				caseDetailsPage.checkStatusOfCase('Child', 1);
 
@@ -71,7 +69,6 @@ describe('link appeals', () => {
 		cy.createCase().then((leadCase) => {
 			cy.createCase().then((childCase) => {
 				happyPathHelper.assignCaseOfficer(leadCase);
-				caseDetailsPage.clickAccordionByButton('Overview');
 
 				//link appeal
 				happyPathHelper.addLinkedAppeal(leadCase, childCase);
@@ -89,7 +86,6 @@ describe('link appeals', () => {
 			cy.createCase().then((childCase1) => {
 				cy.createCase().then((childCase2) => {
 					happyPathHelper.assignCaseOfficer(leadCase);
-					caseDetailsPage.clickAccordionByButton('Overview');
 
 					happyPathHelper.addLinkedAppeal(leadCase, childCase1);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
@@ -118,14 +114,12 @@ describe('link appeals', () => {
 			cy.createCase().then((leadCase2) => {
 				cy.createCase().then((childCase) => {
 					happyPathHelper.assignCaseOfficer(leadCase1);
-					caseDetailsPage.clickAccordionByButton('Overview');
 
 					happyPathHelper.addLinkedAppeal(leadCase1, childCase);
 					caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 					//2nd lead case
 					happyPathHelper.assignCaseOfficer(leadCase2);
-					caseDetailsPage.clickAccordionByButton('Overview');
 
 					//link appeal
 					caseDetailsPage.clickAddLinkedAppeal();
@@ -143,14 +137,12 @@ describe('link appeals', () => {
 				cy.createCase().then((childCase1) => {
 					cy.createCase().then((childCase2) => {
 						happyPathHelper.assignCaseOfficer(leadCase1);
-						caseDetailsPage.clickAccordionByButton('Overview');
 
 						happyPathHelper.addLinkedAppeal(leadCase1, childCase1);
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						//2nd lead case
 						happyPathHelper.assignCaseOfficer(leadCase2);
-						caseDetailsPage.clickAccordionByButton('Overview');
 
 						happyPathHelper.addLinkedAppeal(leadCase2, childCase2);
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
@@ -174,20 +166,17 @@ describe('link appeals', () => {
 				cy.createCase().then((childCase1) => {
 					cy.createCase().then((childCase2) => {
 						happyPathHelper.assignCaseOfficer(leadCase1);
-						caseDetailsPage.clickAccordionByButton('Overview');
 
 						happyPathHelper.addLinkedAppeal(leadCase1, childCase1);
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						//2nd lead case
 						happyPathHelper.assignCaseOfficer(leadCase2);
-						caseDetailsPage.clickAccordionByButton('Overview');
 						happyPathHelper.addLinkedAppeal(leadCase2, childCase2);
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						//attempt to add a child appeal from a child appeal
-						happyPathHelper.viewCaseDetails(childCase1);
-						caseDetailsPage.clickAccordionByButton('Overview');
+						happyPathHelper.assignCaseOfficer(childCase1);
 						caseDetailsPage.checkAddLinkedAppealDoesNotExist();
 					});
 				});

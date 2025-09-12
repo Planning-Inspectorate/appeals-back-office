@@ -4,7 +4,7 @@ import { mapNotificationBannersFromSession, sortNotificationBanners } from '#lib
 import { formatCaseOfficerDetailsForCaseSummary } from '#lib/mappers/utils/format-case-officer-details-for-case-summary.js';
 import { mapStatusDependentNotifications } from '#lib/mappers/utils/map-status-dependent-notifications.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
-import { generateAccordionItems } from './accordions/index.js';
+import { generateAppealDetailsSections } from './appeal-details-page-sections/index.js';
 import { getCancelAppealSection } from './cancel/cancel-appeal-section.js';
 import { generateCaseNotes } from './case-notes/case-notes.mapper.js';
 import { generateStatusTags } from './status-tags/status-tags.mapper.js';
@@ -87,7 +87,7 @@ export async function appealDetailsPage(
 		? [mappedData.appeal.downloadCaseFiles.display.htmlItem]
 		: [];
 	appealDetails.numberOfResidencesNetChange = appellantCase?.numberOfResidencesNetChange ?? null;
-	const accordion = generateAccordionItems(appealDetails, mappedData, session);
+	const appealDetailsSections = generateAppealDetailsSections(appealDetails, mappedData, session);
 	const statusDependentNotifications = mapStatusDependentNotifications(appealDetails, request);
 	const notificationBanners = sortNotificationBanners([
 		...statusDependentNotifications,
@@ -102,7 +102,7 @@ export async function appealDetailsPage(
 		caseSummary,
 		...caseDownload,
 		caseNotes,
-		accordion,
+		...appealDetailsSections,
 		...(caseCancel ?? [])
 	];
 
