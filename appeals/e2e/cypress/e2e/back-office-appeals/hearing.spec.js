@@ -6,7 +6,7 @@ import { HearingSectionPage } from '../../page_objects/caseDetails/hearingSectio
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
 import { urlPaths } from '../../support/urlPaths';
-import { formatDateAndTime } from '../../support/utils/formatDateAndTime';
+import { formatDateAndTime } from '../../support/utils/format';
 
 const caseDetailsPage = new CaseDetailsPage();
 const hearingSectionPage = new HearingSectionPage();

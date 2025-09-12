@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { formatAsWholeNumber } from '../support/utils/format.js';
 import { Page } from './basePage';
 
 export class DateTimeSection extends Page {
@@ -136,6 +137,41 @@ export class DateTimeSection extends Page {
 	enterHearingTime(hour, minute) {
 		this.#set(this.elements.enterHearingTimeHour(), hour);
 		this.#set(this.elements.enterHearingTimeMinute(), minute);
+	}
+
+	verifyPrepopulatedInquiryValues(expectedValues) {
+		this.#verifyPrepopulatedValues(this.selectorPrefix.inquiry, expectedValues);
+	}
+
+	#verifyPrepopulatedValues(dateSelector, expectedValues) {
+		// verify date
+		cy.get(dateSelector + '-date-day')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.day);
+			});
+		cy.get(dateSelector + '-date-month')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.month);
+			});
+		cy.get(dateSelector + '-date-year')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.year);
+			});
+
+		// verify time
+		cy.get(dateSelector + '-time-hour')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.hours);
+			});
+		cy.get(dateSelector + '-time-minute')
+			.invoke('prop', 'value')
+			.then((text) => {
+				expect(formatAsWholeNumber(text)).to.equal(expectedValues.minutes);
+			});
 	}
 
 	// Private helper methods

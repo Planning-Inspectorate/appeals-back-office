@@ -6,7 +6,7 @@ import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { FileUploader } from '../../page_objects/shared.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { tag } from '../../support/tag';
-import { formatDateAndTime } from '../../support/utils/formatDateAndTime';
+import { formatDateAndTime } from '../../support/utils/format';
 
 const caseDetailsPage = new CaseDetailsPage();
 
