@@ -4,8 +4,8 @@
 			"name": "registerSubscription",
 			"type": "serviceBusTrigger",
 			"direction": "in",
-			"topicName": "appeal-document-to-move",
-			"subscriptionName": "appeal-document-to-move-bo-sub",
+			"topicName": "%SB_TOPIC_NAME_DOCUMENT_MOVE%",
+			"subscriptionName": "%SB_SUBSCRIPTION_NAME_DOCUMENT_MOVE%",
 			"connection": "ServiceBusConnection"
 		}
 	]

@@ -4,8 +4,8 @@
 			"name": "registerSubscription",
 			"type": "serviceBusTrigger",
 			"direction": "in",
-			"topicName": "appeal-fo-appellant-submission",
-			"subscriptionName": "appeal-fo-appellant-submission-bo-sub",
+			"topicName": "%SB_TOPIC_NAME_APPEAL_FO_APPELLANT_SUBMISSION%",
+			"subscriptionName": "%SB_SUBSCRIPTION_NAME_APPEAL_FO_APPELLANT_SUBMISSION%",
 			"connection": "ServiceBusConnection"
 		}
 	]
