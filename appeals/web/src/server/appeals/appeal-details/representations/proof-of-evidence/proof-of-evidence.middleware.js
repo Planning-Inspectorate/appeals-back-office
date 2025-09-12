@@ -1,6 +1,5 @@
 import { getSingularRepresentationByType } from '#appeals/appeal-details/representations/representations.service.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
-import { getAttachmentsFolder } from './proof-of-evidence.service.js';
 
 const proofOfEvidenceTypeToAppealRepresentationTypeMap = {
 	appellant: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
@@ -35,20 +34,6 @@ export const withSingularRepresentation = async (req, res, next) => {
 		}
 
 		req.currentRepresentation = representation;
-	} catch (/** @type {any} */ error) {
-		return res.status(500).render('app/500.njk');
-	}
-
-	next();
-};
-/**
- * @type {import('express').RequestHandler}
- */
-export const getRepresentationAttachmentsFolder = async (req, res, next) => {
-	const { appealId } = req.params;
-
-	try {
-		req.currentFolder = await getAttachmentsFolder(req.apiClient, appealId);
 	} catch (/** @type {any} */ error) {
 		return res.status(500).render('app/500.njk');
 	}

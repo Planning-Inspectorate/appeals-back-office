@@ -1,3 +1,4 @@
+import { getRepresentationAttachmentsFolder } from '#appeals/appeal-details/representations/document-attachments/attachments-middleware.js';
 import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { asyncHandler } from '@pins/express';
@@ -14,11 +15,23 @@ const router = createRouter({ mergeParams: true });
 
 router.use('/add', validateAppeal, addIpCommentRouter);
 
-router.use('/:commentId/redact', redactIpCommentRouter);
+router.use('/:commentId/redact', validateAppeal, validateComment, redactIpCommentRouter);
 
-router.use('/:commentId/edit', validateAppeal, validateComment, editIpCommentRouter);
+router.use(
+	'/:commentId/edit',
+	validateAppeal,
+	validateComment,
+	getRepresentationAttachmentsFolder,
+	editIpCommentRouter
+);
 
-router.use('/:commentId', validateAppeal, validateComment, viewAndReviewIpCommentRouter);
+router.use(
+	'/:commentId',
+	validateAppeal,
+	validateComment,
+	getRepresentationAttachmentsFolder,
+	viewAndReviewIpCommentRouter
+);
 
 // Redirect as shared manage documents routes return to the wrong page after a successful delete
 router.get('/:commentId', (request, response) => {
