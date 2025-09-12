@@ -12,7 +12,7 @@ import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
-import { patchRepresentationAttachments } from '../../final-comments/final-comments.service.js';
+import { patchRepresentationAttachments } from '../../document-attachments/attachments-service.js';
 
 /**
  * @param {import('@pins/express').Request} request
