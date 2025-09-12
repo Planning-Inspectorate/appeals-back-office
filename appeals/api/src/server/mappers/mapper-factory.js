@@ -225,11 +225,15 @@ function createFoldersLayout(folders, context) {
 			const repsFinalCommentsFolders = folders.filter((f) =>
 				f.path.startsWith(APPEAL_CASE_STAGE.FINAL_COMMENTS)
 			);
+			const repsProofsEvidenceFolders = folders.filter((f) =>
+				f.path.startsWith(APPEAL_CASE_STAGE.EVIDENCE)
+			);
 
 			return {
 				...repsIpCommentsFolders,
 				...repsStatementsFolders,
-				...repsFinalCommentsFolders
+				...repsFinalCommentsFolders,
+				...repsProofsEvidenceFolders
 			};
 		}
 		default: {

@@ -1,6 +1,9 @@
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { documentationFolderTableItem } from '#lib/mappers/index.js';
-import { mapRepresentationDocumentSummaryActionLink } from '#lib/representation-utilities.js';
+import {
+	mapAddRepresentationSummaryActionLink,
+	mapRepresentationDocumentSummaryActionLink
+} from '#lib/representation-utilities.js';
 import { APPEAL_PROOF_OF_EVIDENCE_STATUS } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { capitalize } from 'lodash-es';
@@ -17,7 +20,7 @@ export const mapLPAProofOfEvidence = ({ appealDetails, currentRoute, request }) 
 	const statusText =
 		status && status.toLowerCase() === APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
 			? APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
-			: APPEAL_PROOF_OF_EVIDENCE_STATUS.AWAITING;
+			: 'Awaiting proof of evidence and witness';
 
 	const receivedText =
 		statusText === APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
@@ -29,12 +32,15 @@ export const mapLPAProofOfEvidence = ({ appealDetails, currentRoute, request }) 
 		text: 'LPA proof of evidence and witness',
 		statusText: capitalize(statusText),
 		receivedText,
-		actionHtml: mapRepresentationDocumentSummaryActionLink(
-			currentRoute,
-			appealDetails?.documentationSummary?.lpaProofOfEvidence?.status || undefined,
-			appealDetails?.documentationSummary?.lpaProofOfEvidence?.representationStatus,
-			'lpa-proofs-evidence',
-			request
-		)
+		actionHtml:
+			statusText === APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED
+				? mapRepresentationDocumentSummaryActionLink(
+						currentRoute,
+						appealDetails?.documentationSummary?.lpaProofOfEvidence?.status || undefined,
+						appealDetails?.documentationSummary?.lpaProofOfEvidence?.representationStatus,
+						'lpa-proofs-evidence',
+						request
+				  )
+				: mapAddRepresentationSummaryActionLink(currentRoute, 'lpa-proofs-evidence', request)
 	});
 };
