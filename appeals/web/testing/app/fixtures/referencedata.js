@@ -3779,6 +3779,27 @@ export const representationRejectionReasons = [
 	}
 ];
 
+export const lpaProofOfEvidenceIncompleteReasons = [
+	{
+		id: 1,
+		name: 'Not complete',
+		representationType: 'lpa_proofs_evidence',
+		hasText: false
+	},
+	{
+		id: 2,
+		name: 'Not relevant',
+		representationType: 'lpa_proofs_evidence',
+		hasText: false
+	},
+	{
+		id: 3,
+		name: 'Other reason',
+		representationType: 'lpa_proofs_evidence',
+		hasText: true
+	}
+];
+
 export const shareRepsResponseFinalComment = {
 	id: 1,
 	appealId: 1,
