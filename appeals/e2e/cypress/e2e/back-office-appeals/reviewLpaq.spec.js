@@ -151,7 +151,7 @@ describe('Review LPAQ', () => {
 			lpaqPage.assertProtectedSpecies(''); //awaiting bug fix
 			lpaqPage.assertGreenBelt(casedata.isGreenBelt ? 'Yes' : 'No');
 			// lpaqPage.assertAONB(); //awaiting bug fix
-			lpaqPage.assertDesignatedSites('No');
+			lpaqPage.assertDesignatedSites(casedata.designatedSitesNames);
 			lpaqPage.assertTreePreservationOrder('No documents');
 			// lpaqPage.assertGypsyTraveller(''); //awaiting bug fix
 			lpaqPage.assertDefinitiveMapLabel('No documents');
@@ -235,7 +235,7 @@ describe('Review LPAQ', () => {
 				lpaqPage.assertProtectedSpecies(''); //awaiting bug fix
 				lpaqPage.assertGreenBelt(casedata.isGreenBelt ? 'Yes' : 'No');
 				// lpaqPage.assertAONB(); //awaiting bug fix
-				lpaqPage.assertDesignatedSites('No');
+				lpaqPage.assertDesignatedSites(casedata.designatedSitesNames);
 				lpaqPage.assertTreePreservationOrder('No documents');
 				// lpaqPage.assertGypsyTraveller(''); //awaiting bug fix
 				lpaqPage.assertDefinitiveMapLabel('No documents');

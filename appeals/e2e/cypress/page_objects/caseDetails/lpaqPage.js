@@ -213,11 +213,17 @@ export class LpaqPage extends Page {
 		this.assertFieldLabelAndValue('Is the site in an area of outstanding natural beauty?', value);
 	}
 
-	assertDesignatedSites(value) {
-		this.assertFieldLabelAndValue(
-			'Is the development in, near or likely to affect any designated sites?',
-			value
-		);
+	assertDesignatedSites(values) {
+		cy.contains('Is the development in, near or likely to affect any designated sites?')
+			.siblings('.govuk-summary-list__value')
+			.invoke('text')
+			.then((text) => {
+				const normalized = text.replace(/\s+/g, ' ').trim();
+
+				values.forEach((line) => {
+					expect(normalized).to.include(line);
+				});
+			});
 	}
 
 	assertTreePreservationOrder(value) {
