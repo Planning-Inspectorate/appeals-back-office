@@ -112,6 +112,8 @@ export const AUDIT_TRAIL_ADDRESS_UPDATED = 'Site address updated to\n{replacemen
 export const AUDIT_TRAIL_APPELLANT_CASE_UPDATED = 'Case updated';
 export const AUDIT_TRAIL_DEVELOPMENT_TYPE_UPDATED = 'Development type updated to {replacement0}';
 export const AUDIT_TRAIL_SITE_AREA_SQUARE_METRES_UPDATED = 'Site area updated to {replacement0} m²';
+export const AUDIT_TRAIL_HIGHWAY_LAND_UPDATED =
+	"'Is the appeal site on highway land?' updated to {replacement0}";
 export const AUDIT_TRAIL_IS_GREEN_BELT_UPDATED =
 	"'Is the site in a green belt?' updated to {replacement0}";
 export const AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED =
