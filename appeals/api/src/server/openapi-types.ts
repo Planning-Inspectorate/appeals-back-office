@@ -243,28 +243,14 @@ export interface QuestionnaireData {
 	casedata?: {
 		/** @example "6000000" */
 		caseReference?: string;
-		/** @example "D" */
-		caseType?: string;
+		/** @example ["1000000"] */
+		nearbyCaseReferences?: string[];
 		/** @example "2024-05-31T23:00:00.000Z" */
 		lpaQuestionnaireSubmittedDate?: string;
-		/** @example "cupidatat ipsum eu culpa" */
-		lpaStatement?: string;
 		/** @example ["Here it is"] */
 		siteAccessDetails?: string[];
 		/** @example ["Fine"] */
 		siteSafetyDetails?: string[];
-		/** @example true */
-		isCorrectAppealType?: boolean;
-		/** @example false */
-		isGreenBelt?: boolean;
-		/** @example true */
-		inConservationArea?: boolean;
-		/** @example "cupidatat" */
-		newConditionDetails?: string;
-		/** @example ["notice","letter"] */
-		notificationMethod?: string[];
-		/** @example ["1000000"] */
-		nearbyCaseReferences?: string[];
 		neighbouringSiteAddresses?: {
 			/** @example "deserunt in irure do" */
 			neighbouringSiteAddressLine1?: string;
@@ -279,6 +265,21 @@ export interface QuestionnaireData {
 			/** @example "magna proident incididunt in non" */
 			neighbouringSiteSafetyDetails?: string;
 		}[];
+		reasonForNeighbourVisits?: undefined;
+		/** @example "D" */
+		caseType?: string;
+		/** @example "cupidatat ipsum eu culpa" */
+		lpaStatement?: string;
+		/** @example true */
+		isCorrectAppealType?: boolean;
+		/** @example false */
+		isGreenBelt?: boolean;
+		/** @example true */
+		inConservationArea?: boolean;
+		/** @example "cupidatat" */
+		newConditionDetails?: string;
+		/** @example ["notice","letter"] */
+		notificationMethod?: string[];
 		/** @example ["10001","10002"] */
 		affectedListedBuildingNumbers?: string[];
 		/** @example false */

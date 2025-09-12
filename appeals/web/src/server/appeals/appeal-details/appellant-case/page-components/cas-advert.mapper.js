@@ -54,6 +54,8 @@ export function generateCASAdvertComponents(appealDetails, mappedAppellantCaseDa
 			},
 			rows: [
 				mappedAppellantCaseData.siteAddress.display.summaryListItem,
+				// grid Reference row placeholder
+				mappedAppellantCaseData.highwayLand.display.summaryListItem,
 				mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
 				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
 				mappedAppellantCaseData.ownersKnown.display.summaryListItem,

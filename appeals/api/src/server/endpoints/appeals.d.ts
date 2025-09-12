@@ -231,6 +231,11 @@ interface SingleAppellantCaseResponse {
 	developmentType?: string | null;
 	typeOfPlanningApplication?: string | null;
 	numberOfResidencesNetChange?: number | null;
+	highwayLand?: boolean | null;
+	advertInPosition?: boolean | null;
+	landownerPermission?: boolean | null;
+	siteGridReferenceEasting?: string | null;
+	siteGridReferenceNothing?: string | null;
 }
 
 interface UpdateAppellantCaseRequest {
@@ -580,6 +585,11 @@ interface AppealListResponse {
 	awaitingLinkedAppeal: boolean | null;
 	costsDecision?: CostsDecision;
 	numberOfResidencesNetChange: number | null;
+	highwayLand?: boolean | null;
+	advertInPosition?: boolean | null;
+	landownerPermission?: boolean | null;
+	siteGridReferenceEasting?: string | null;
+	siteGridReferenceNothing?: string | null;
 }
 interface DocumentationSummary {
 	appellantCase?: DocumentationSummaryEntry;
