@@ -50,6 +50,7 @@ apps_config = {
     featureFlagChangeProcedureType    = false
     featureFlagAdvertisement          = false
     featureFlagHearingPostMvp         = false
+    featureFlagAutoAssignTeam         = false
   }
 
   use_system_test_bc_for_change_lpa = false
