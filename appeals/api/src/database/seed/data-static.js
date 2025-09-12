@@ -511,22 +511,12 @@ export const representationRejectionReasons = [
 		hasText: true
 	},
 	{
-		name: 'Includes personal or medical information',
+		name: 'Not complete',
 		representationType: 'lpa_proofs_evidence',
 		hasText: false
 	},
 	{
-		name: 'Includes inflammatory content',
-		representationType: 'lpa_proofs_evidence',
-		hasText: false
-	},
-	{
-		name: 'Not relevant to this appeal',
-		representationType: 'lpa_proofs_evidence',
-		hasText: false
-	},
-	{
-		name: 'Contains links to web pages',
+		name: 'Not relevant',
 		representationType: 'lpa_proofs_evidence',
 		hasText: false
 	},
