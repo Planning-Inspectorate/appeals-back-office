@@ -186,7 +186,7 @@ describe('link appeals', () => {
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						//attempt to add a child appeal from a child appeal
-						happyPathHelper.assignCaseOfficer(childCase1);
+						happyPathHelper.viewCaseDetails(childCase1);
 						caseDetailsPage.clickAccordionByButton('Overview');
 						caseDetailsPage.checkAddLinkedAppealDoesNotExist();
 					});
