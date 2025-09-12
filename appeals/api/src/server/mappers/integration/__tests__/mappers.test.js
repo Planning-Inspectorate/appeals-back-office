@@ -4,7 +4,13 @@ import { fullPlanningAppeal } from '#tests/appeals/mocks.js';
 import { isCaseInvalid } from '#utils/case-invalid.js';
 import { findStatusDate } from '#utils/mapping/map-dates.js';
 import { APPEAL_REPRESENTATION_TYPE } from '@pins/appeals/constants/common.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
+import {
+	APPEAL_CASE_STAGE,
+	APPEAL_CASE_STATUS,
+	APPEAL_DOCUMENT_TYPE
+} from '@planning-inspectorate/data-model';
+import { mapDocumentEntity } from '../map-document-entity.js';
 import { mapCaseDates } from '../shared/s20s78/map-case-dates.js';
 import { mapDesignatedSiteNames } from '../shared/s20s78/questionnaire-fields.js';
 
@@ -232,5 +238,87 @@ describe('mapCaseDates', () => {
 			siteNoticesSentDate: null,
 			lpaProofsSubmittedDate: null
 		});
+	});
+});
+
+describe('map-document-entity', () => {
+	const internalRepDocType = REP_ATTACHMENT_DOCTYPE;
+	test.each([
+		{
+			desc: 'representationAttachments - APPELLANT_FINAL_COMMENT',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT,
+			expected: APPEAL_DOCUMENT_TYPE.APPELLANT_FINAL_COMMENT
+		},
+		{
+			desc: 'representationAttachments - LPA_FINAL_COMMENT',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT,
+			expected: APPEAL_DOCUMENT_TYPE.LPA_FINAL_COMMENT
+		},
+		{
+			desc: 'representationAttachments - APPELLANT_STATEMENT',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_STATEMENT,
+			expected: APPEAL_DOCUMENT_TYPE.APPELLANT_STATEMENT
+		},
+		{
+			desc: 'representationAttachments - LPA_STATEMENT',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+			expected: APPEAL_DOCUMENT_TYPE.LPA_STATEMENT
+		},
+		{
+			desc: 'representationAttachments - COMMENT',
+			documentType: internalRepDocType,
+			representationType: APPEAL_REPRESENTATION_TYPE.COMMENT,
+			expected: APPEAL_DOCUMENT_TYPE.INTERESTED_PARTY_COMMENT
+		},
+		{
+			desc: 'representationAttachments - unknown type',
+			documentType: internalRepDocType,
+			representationType: 'SOMETHING_UNKNOWN',
+			expected: APPEAL_DOCUMENT_TYPE.UNCATEGORISED
+		},
+		{
+			desc: 'other documentType',
+			documentType: 'someOtherType',
+			representationType: null,
+			expected: 'someOtherType'
+		},
+		{
+			desc: 'documentType undefined',
+			documentType: undefined,
+			representationType: null,
+			expected: APPEAL_DOCUMENT_TYPE.UNCATEGORISED
+		}
+	])('handles document type: $desc', ({ documentType, representationType, expected }) => {
+		const doc = {
+			guid: 'doc-123',
+			caseId: 'case-456',
+			name: '123e4567-e89b-12d3-a456-426614174000_test.pdf',
+			case: { reference: 'REF-1', appealType: { key: 'D' } },
+			versions: [
+				{
+					version: 1,
+					originalFilename: 'test.pdf',
+					size: 1000,
+					mime: 'application/pdf',
+					documentURI: 'http://doc.uri',
+					fileMD5: 'md5hash',
+					dateCreated: new Date('2025-01-01T10:00:00.000Z'),
+					dateReceived: new Date('2025-01-01T11:00:00.000Z'),
+					lastModified: new Date('2025-01-01T12:00:00.000Z'),
+					documentType,
+					stage: APPEAL_CASE_STAGE.APPEAL_DECISION,
+					redactionStatus: { key: 'NOT_REDACTED' },
+					representation: representationType
+						? { representation: { representationType } }
+						: undefined
+				}
+			]
+		};
+		const result = mapDocumentEntity(doc);
+		expect(result.documentType).toBe(expected);
 	});
 });

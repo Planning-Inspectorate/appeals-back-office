@@ -5,6 +5,8 @@ import { mapDocumentEntity } from '#mappers/integration/map-document-entity.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import pino from '#utils/logger.js';
 import { ODW_SYSTEM_ID } from '@pins/appeals/constants/common.js';
+import { REP_ATTACHMENT_DOCTYPE } from '@pins/appeals/constants/documents.js';
+import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { schemas, validateFromSchema } from '../integrations.validators.js';
 
 const entityInfo = {
@@ -22,6 +24,7 @@ export const broadcastDocument = async (documentId, version, updateType) => {
 	if (!config.serviceBusEnabled && config.NODE_ENV !== 'development') {
 		return false;
 	}
+
 	const document = await databaseConnector.document.findUnique({
 		where: { guid: documentId },
 		include: {
@@ -66,6 +69,16 @@ export const broadcastDocument = async (documentId, version, updateType) => {
 		);
 
 		pino.error(`Error validating ${entityInfo.name} entity: ${errorDetails}`);
+		return false;
+	}
+
+	const latestDocumentVersion = document.versions?.length === 1 ? document.versions[0] : null;
+
+	// wait to broadcast representationAttachments if document type is not known
+	if (
+		latestDocumentVersion?.documentType === REP_ATTACHMENT_DOCTYPE &&
+		msg.documentType === APPEAL_DOCUMENT_TYPE.UNCATEGORISED
+	) {
 		return false;
 	}
 
