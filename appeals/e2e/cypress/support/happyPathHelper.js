@@ -15,9 +15,13 @@ const fileUploader = new FileUploader();
 let sampleFiles = fileUploader.sampleFiles;
 
 export const happyPathHelper = {
-	assignCaseOfficer(caseRef) {
+	viewCaseDetails(caseRef) {
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
+	},
+
+	assignCaseOfficer(caseRef) {
+		happyPathHelper.viewCaseDetails(caseRef);
 		caseDetailsPage.clickAssignCaseOfficer();
 		caseDetailsPage.searchForCaseOfficer('case');
 		caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
@@ -26,8 +30,7 @@ export const happyPathHelper = {
 		caseDetailsPage.verifyAnswerSummaryValue(users.appeals.caseAdmin.email);
 	},
 	reviewAppellantCase(caseRef) {
-		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		happyPathHelper.viewCaseDetails(caseRef);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.selectRadioButtonByValue('Valid');
 		caseDetailsPage.clickButtonByText('Continue');
@@ -36,8 +39,7 @@ export const happyPathHelper = {
 	reviewLpaq(caseRef) {
 		let dueDate = new Date();
 
-		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		happyPathHelper.viewCaseDetails(caseRef);
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue('Complete');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -45,8 +47,7 @@ export const happyPathHelper = {
 	reviewS78Lpaq(caseRef) {
 		let dueDate = new Date();
 
-		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		happyPathHelper.viewCaseDetails(caseRef);
 		caseDetailsPage.clickReviewLpaq();
 		caseDetailsPage.selectRadioButtonByValue('Complete');
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -55,15 +56,13 @@ export const happyPathHelper = {
 	},
 
 	startCase(caseRef) {
-		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		happyPathHelper.viewCaseDetails(caseRef);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
 
 	startS78Case(caseRef, procedureType) {
-		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		happyPathHelper.viewCaseDetails(caseRef);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
@@ -71,8 +70,7 @@ export const happyPathHelper = {
 	},
 
 	startS78InquiryCase(caseRef, procedureType) {
-		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
+		happyPathHelper.viewCaseDetails(caseRef);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
@@ -114,8 +112,6 @@ export const happyPathHelper = {
 	},
 
 	uploadDocAppellantCase(caseRef) {
-		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
 		happyPathHelper.assignCaseOfficer(caseRef);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.clickAddAgreementToChangeDescriptionEvidence();
@@ -130,8 +126,6 @@ export const happyPathHelper = {
 	},
 
 	manageDocsAppellantCase(caseRef) {
-		cy.visit(urlPaths.appealsList);
-		listCasesPage.clickAppealByRef(caseRef);
 		happyPathHelper.uploadDocAppellantCase(caseRef);
 		cy.reloadUntilVirusCheckComplete();
 		caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
