@@ -1,5 +1,6 @@
 import { databaseConnector } from '../../server/utils/database-connector.js';
 import { seedStaticData } from './data-static.js';
+import { localPlanningDepartmentList as localPlanningDepartmentListProd } from './LPAs/prod.js';
 import { localPlanningDepartmentList } from './LPAs/training.js';
 import { mapLpasToTeams } from './map-lpa-and-teams.js';
 import { seedLPAs } from './seed-lpas.js';
@@ -50,7 +51,10 @@ const seedTraining = async () => {
 		);
 		await seedStaticData(databaseConnector);
 		await seedTeams(databaseConnector, teamsToCreate);
-		const mappedLPAs = mapLpasToTeams(localPlanningDepartmentList, lpaAssignments);
+		const mappedLPAs = mapLpasToTeams(
+			[...localPlanningDepartmentList, ...localPlanningDepartmentListProd],
+			lpaAssignments
+		);
 		await seedLPAs(databaseConnector, mappedLPAs);
 	} catch (error) {
 		console.error(error);
