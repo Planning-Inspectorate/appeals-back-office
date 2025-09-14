@@ -34,6 +34,7 @@ import {
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE
 } from '@planning-inspectorate/data-model';
+import { mapValues } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -298,6 +299,24 @@ const updateAppealTimetable = async (appeal, body, notifyClient, azureAdUserId) 
 	}
 };
 
+/**
+ * @param {Appeal} appeal
+ * @param {string} startDate
+ * @param {string} procedureType
+ */
+const calculateAppealTimetable = async (appeal, startDate, procedureType) => {
+	const startedAt = await recalculateDateIfNotBusinessDay(startDate);
+	const timetable = await calculateTimetable(appeal.appealType?.key, startedAt, procedureType);
+
+	return mapValues(
+		{
+			...timetable,
+			startDate: startedAt
+		},
+		/** @type {(date: Date) => string} */ (date) => date.toISOString()
+	);
+};
+
 const dueDateToAppealTimetableTextMapper = {
 	lpaQuestionnaireDueDate: 'LPA questionnaire',
 	ipCommentsDueDate: 'Interested party comments',
@@ -400,4 +419,4 @@ const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 	);
 };
 
-export { checkAppealTimetableExists, startCase, updateAppealTimetable };
+export { calculateAppealTimetable, checkAppealTimetableExists, startCase, updateAppealTimetable };
