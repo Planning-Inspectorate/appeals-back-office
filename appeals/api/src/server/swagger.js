@@ -902,6 +902,16 @@ export const spec = {
 			planningObligationDueDate: '2024-08-13T01:00:00.000Z',
 			proofOfEvidenceAndWitnessesDueDate: '2024-08-14T01:00:00.000Z'
 		},
+		CalculateAppealTimetableResponse: {
+			finalCommentReviewDate: '2024-08-09T01:00:00.000Z',
+			issueDeterminationDate: '2024-08-10T01:00:00.000Z',
+			lpaQuestionnaireDueDate: '2024-08-11T01:00:00.000Z',
+			statementReviewDate: '2024-08-12T01:00:00.000Z',
+			statementOfCommonGroundDueDate: '2024-08-12T01:00:00.000Z',
+			planningObligationDueDate: '2024-08-13T01:00:00.000Z',
+			proofOfEvidenceAndWitnessesDueDate: '2024-08-14T01:00:00.000Z',
+			startDate: '2024-08-09T01:00:00.000Z'
+		},
 		AllDocumentRedactionStatusesResponse: {
 			id: 1,
 			name: 'Document redaction status'

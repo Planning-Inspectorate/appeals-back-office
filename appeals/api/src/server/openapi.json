@@ -618,6 +618,75 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/appeal-timetables/calculate": {
+			"get": {
+				"tags": ["Appeal Timetables"],
+				"description": "Calculates the timetable that would result from starting this appeal",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "startDate",
+						"in": "query",
+						"required": false,
+						"example": "2025-01-01",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "procedureType",
+						"in": "query",
+						"required": false,
+						"example": "written",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "The timetable that would result from starting this appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CalculateAppealTimetableResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/CalculateAppealTimetableResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				}
+			}
+		},
 		"/appeals/appeal-types": {
 			"get": {
 				"tags": ["Appeal Types"],
@@ -6754,17 +6823,16 @@
 								"type": "string",
 								"example": "6000000"
 							},
-							"caseType": {
-								"type": "string",
-								"example": "D"
+							"nearbyCaseReferences": {
+								"type": "array",
+								"example": ["1000000"],
+								"items": {
+									"type": "string"
+								}
 							},
 							"lpaQuestionnaireSubmittedDate": {
 								"type": "string",
 								"example": "2024-05-31T23:00:00.000Z"
-							},
-							"lpaStatement": {
-								"type": "string",
-								"example": "cupidatat ipsum eu culpa"
 							},
 							"siteAccessDetails": {
 								"type": "array",
@@ -6776,36 +6844,6 @@
 							"siteSafetyDetails": {
 								"type": "array",
 								"example": ["Fine"],
-								"items": {
-									"type": "string"
-								}
-							},
-							"isCorrectAppealType": {
-								"type": "boolean",
-								"example": true
-							},
-							"isGreenBelt": {
-								"type": "boolean",
-								"example": false
-							},
-							"inConservationArea": {
-								"type": "boolean",
-								"example": true
-							},
-							"newConditionDetails": {
-								"type": "string",
-								"example": "cupidatat"
-							},
-							"notificationMethod": {
-								"type": "array",
-								"example": ["notice", "letter"],
-								"items": {
-									"type": "string"
-								}
-							},
-							"nearbyCaseReferences": {
-								"type": "array",
-								"example": ["1000000"],
 								"items": {
 									"type": "string"
 								}
@@ -6838,6 +6876,40 @@
 											"example": "magna proident incididunt in non"
 										}
 									}
+								}
+							},
+							"reasonForNeighbourVisits": {
+								"type": "undefined"
+							},
+							"caseType": {
+								"type": "string",
+								"example": "D"
+							},
+							"lpaStatement": {
+								"type": "string",
+								"example": "cupidatat ipsum eu culpa"
+							},
+							"isCorrectAppealType": {
+								"type": "boolean",
+								"example": true
+							},
+							"isGreenBelt": {
+								"type": "boolean",
+								"example": false
+							},
+							"inConservationArea": {
+								"type": "boolean",
+								"example": true
+							},
+							"newConditionDetails": {
+								"type": "string",
+								"example": "cupidatat"
+							},
+							"notificationMethod": {
+								"type": "array",
+								"example": ["notice", "letter"],
+								"items": {
+									"type": "string"
 								}
 							},
 							"affectedListedBuildingNumbers": {
@@ -11215,6 +11287,46 @@
 				},
 				"xml": {
 					"name": "UpdateAppealTimetableResponse"
+				}
+			},
+			"CalculateAppealTimetableResponse": {
+				"type": "object",
+				"properties": {
+					"finalCommentReviewDate": {
+						"type": "string",
+						"example": "2024-08-09T01:00:00.000Z"
+					},
+					"issueDeterminationDate": {
+						"type": "string",
+						"example": "2024-08-10T01:00:00.000Z"
+					},
+					"lpaQuestionnaireDueDate": {
+						"type": "string",
+						"example": "2024-08-11T01:00:00.000Z"
+					},
+					"statementReviewDate": {
+						"type": "string",
+						"example": "2024-08-12T01:00:00.000Z"
+					},
+					"statementOfCommonGroundDueDate": {
+						"type": "string",
+						"example": "2024-08-12T01:00:00.000Z"
+					},
+					"planningObligationDueDate": {
+						"type": "string",
+						"example": "2024-08-13T01:00:00.000Z"
+					},
+					"proofOfEvidenceAndWitnessesDueDate": {
+						"type": "string",
+						"example": "2024-08-14T01:00:00.000Z"
+					},
+					"startDate": {
+						"type": "string",
+						"example": "2024-08-09T01:00:00.000Z"
+					}
+				},
+				"xml": {
+					"name": "CalculateAppealTimetableResponse"
 				}
 			},
 			"AllDocumentRedactionStatusesResponse": {

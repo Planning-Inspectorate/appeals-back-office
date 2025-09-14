@@ -243,28 +243,14 @@ export interface QuestionnaireData {
 	casedata?: {
 		/** @example "6000000" */
 		caseReference?: string;
-		/** @example "D" */
-		caseType?: string;
+		/** @example ["1000000"] */
+		nearbyCaseReferences?: string[];
 		/** @example "2024-05-31T23:00:00.000Z" */
 		lpaQuestionnaireSubmittedDate?: string;
-		/** @example "cupidatat ipsum eu culpa" */
-		lpaStatement?: string;
 		/** @example ["Here it is"] */
 		siteAccessDetails?: string[];
 		/** @example ["Fine"] */
 		siteSafetyDetails?: string[];
-		/** @example true */
-		isCorrectAppealType?: boolean;
-		/** @example false */
-		isGreenBelt?: boolean;
-		/** @example true */
-		inConservationArea?: boolean;
-		/** @example "cupidatat" */
-		newConditionDetails?: string;
-		/** @example ["notice","letter"] */
-		notificationMethod?: string[];
-		/** @example ["1000000"] */
-		nearbyCaseReferences?: string[];
 		neighbouringSiteAddresses?: {
 			/** @example "deserunt in irure do" */
 			neighbouringSiteAddressLine1?: string;
@@ -279,6 +265,21 @@ export interface QuestionnaireData {
 			/** @example "magna proident incididunt in non" */
 			neighbouringSiteSafetyDetails?: string;
 		}[];
+		reasonForNeighbourVisits?: undefined;
+		/** @example "D" */
+		caseType?: string;
+		/** @example "cupidatat ipsum eu culpa" */
+		lpaStatement?: string;
+		/** @example true */
+		isCorrectAppealType?: boolean;
+		/** @example false */
+		isGreenBelt?: boolean;
+		/** @example true */
+		inConservationArea?: boolean;
+		/** @example "cupidatat" */
+		newConditionDetails?: string;
+		/** @example ["notice","letter"] */
+		notificationMethod?: string[];
 		/** @example ["10001","10002"] */
 		affectedListedBuildingNumbers?: string[];
 		/** @example false */
@@ -2272,6 +2273,25 @@ export interface UpdateAppealTimetableResponse {
 	planningObligationDueDate?: string;
 	/** @example "2024-08-14T01:00:00.000Z" */
 	proofOfEvidenceAndWitnessesDueDate?: string;
+}
+
+export interface CalculateAppealTimetableResponse {
+	/** @example "2024-08-09T01:00:00.000Z" */
+	finalCommentReviewDate?: string;
+	/** @example "2024-08-10T01:00:00.000Z" */
+	issueDeterminationDate?: string;
+	/** @example "2024-08-11T01:00:00.000Z" */
+	lpaQuestionnaireDueDate?: string;
+	/** @example "2024-08-12T01:00:00.000Z" */
+	statementReviewDate?: string;
+	/** @example "2024-08-12T01:00:00.000Z" */
+	statementOfCommonGroundDueDate?: string;
+	/** @example "2024-08-13T01:00:00.000Z" */
+	planningObligationDueDate?: string;
+	/** @example "2024-08-14T01:00:00.000Z" */
+	proofOfEvidenceAndWitnessesDueDate?: string;
+	/** @example "2024-08-09T01:00:00.000Z" */
+	startDate?: string;
 }
 
 export interface AllDocumentRedactionStatusesResponse {

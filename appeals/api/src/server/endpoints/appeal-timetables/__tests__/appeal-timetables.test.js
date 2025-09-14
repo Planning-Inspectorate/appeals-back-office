@@ -1394,4 +1394,71 @@ describe('appeal timetables routes', () => {
 			});
 		});
 	});
+
+	describe('GET /appeals/:appealId/appeal-timetables/calculate', () => {
+		beforeEach(() => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppealWithTimetable);
+		});
+
+		test('returns the calculated appeal timetable', async () => {
+			const { id } = fullPlanningAppeal;
+			const response = await request
+				.get(
+					`/appeals/${id}/appeal-timetables/calculate?startDate=2024-06-12T22:59:00.000Z&procedureType=hearing`
+				)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				appellantStatementDueDate: '2024-07-17T22:59:00.000Z',
+				finalCommentsDueDate: '2024-07-31T22:59:00.000Z',
+				ipCommentsDueDate: '2024-07-17T22:59:00.000Z',
+				lpaQuestionnaireDueDate: '2024-06-19T22:59:00.000Z',
+				lpaStatementDueDate: '2024-07-17T22:59:00.000Z',
+				s106ObligationDueDate: '2024-07-31T22:59:00.000Z',
+				statementOfCommonGroundDueDate: '2024-07-17T22:59:00.000Z',
+				startDate: '2024-06-11T23:00:00.000Z'
+			});
+		});
+
+		test('returns the calculated appeal timetable for a weekend start date', async () => {
+			const { id } = fullPlanningAppeal;
+			const response = await request
+				.get(
+					`/appeals/${id}/appeal-timetables/calculate?startDate=2024-06-15T22:59:00.000Z&procedureType=hearing`
+				)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				appellantStatementDueDate: '2024-07-22T22:59:00.000Z',
+				finalCommentsDueDate: '2024-08-05T22:59:00.000Z',
+				ipCommentsDueDate: '2024-07-22T22:59:00.000Z',
+				lpaQuestionnaireDueDate: '2024-06-24T22:59:00.000Z',
+				lpaStatementDueDate: '2024-07-22T22:59:00.000Z',
+				s106ObligationDueDate: '2024-08-05T22:59:00.000Z',
+				statementOfCommonGroundDueDate: '2024-07-22T22:59:00.000Z',
+				startDate: '2024-06-16T23:00:00.000Z'
+			});
+		});
+
+		test('returns the calculated appeal timetable with no start date', async () => {
+			const { id } = fullPlanningAppeal;
+			const response = await request
+				.get(`/appeals/${id}/appeal-timetables/calculate?procedureType=hearing`)
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual({
+				appellantStatementDueDate: '2024-07-10T22:59:00.000Z',
+				finalCommentsDueDate: '2024-07-24T22:59:00.000Z',
+				ipCommentsDueDate: '2024-07-10T22:59:00.000Z',
+				lpaQuestionnaireDueDate: '2024-06-12T22:59:00.000Z',
+				lpaStatementDueDate: '2024-07-10T22:59:00.000Z',
+				s106ObligationDueDate: '2024-07-24T22:59:00.000Z',
+				startDate: '2024-06-04T23:00:00.000Z',
+				statementOfCommonGroundDueDate: '2024-07-10T22:59:00.000Z'
+			});
+		});
+	});
 });
