@@ -114,7 +114,6 @@ const renderCheckAndConfirm = async (request, response) => {
 			),
 			currentAppeal.appealReference
 		);
-		console.log(caseTeamId);
 		return response.status(200).render('patterns/check-and-confirm-page.pattern.njk', {
 			pageContent: mappedPageContent
 		});
