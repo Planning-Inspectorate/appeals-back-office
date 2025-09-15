@@ -262,9 +262,15 @@ const buildAllAppealsWhereClause = (
 		...(!!appealTypeId && {
 			appealTypeId
 		}),
-		...(!!assignedTeamId && {
-			assignedTeamId
+		// Search for records where assignedTeamId is null
+		...(assignedTeamId === -1 && {
+			assignedTeamId: null
 		}),
+		// Otherwise, filter by assignedTeamId if provided and not zero
+		...(!!assignedTeamId &&
+			assignedTeamId !== -1 && {
+				assignedTeamId
+			}),
 		...(!!procedureTypeId && {
 			procedureTypeId
 		})
