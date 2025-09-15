@@ -149,6 +149,11 @@ export function nationalListPage(
 			value: 'all',
 			selected: caseTeamFilter === 'all'
 		},
+		{
+			text: 'Not assigned',
+			value: -1,
+			selected: caseTeamFilter === '-1'
+		},
 		...caseTeams.map(({ name, id }) => ({
 			text: name,
 			value: id,

@@ -1402,6 +1402,24 @@ test('gets appeals when given a assignedTeamId param', async () => {
 		statusesInNationalList
 	});
 });
+test('gets unassigned teams when assignedTeamId param is -1', async () => {
+	databaseConnector.appeal.findMany
+		.mockResolvedValueOnce([householdAppeal])
+		.mockResolvedValueOnce(allAppeals);
+
+	const response = await request
+		.get('/appeals?assignedTeamId=-1')
+		.set('azureAdUserId', azureAdUserId);
+
+	expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
+		expect.objectContaining({
+			where: expect.objectContaining({
+				assignedTeamId: null
+			})
+		})
+	);
+	expect(response.status).toEqual(200);
+});
 describe('mapAppealToDueDate Tests', () => {
 	let mockAppeal = {
 		appealType: null,
