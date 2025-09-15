@@ -13,5 +13,6 @@ export const mapSiteAddress = ({
 		text: 'What is the address of the appeal site?',
 		value: appealSiteToAddressString(appellantCaseData.appealSite),
 		link: `${currentRoute}/site-address/change/${appealDetails.appealSite.addressId}`,
-		editable: userHasUpdateCase
+		editable: userHasUpdateCase,
+		classes: 'appeal-site-address'
 	});
