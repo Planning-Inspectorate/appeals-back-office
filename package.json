@@ -33,7 +33,7 @@
 		"c4": "docker pull structurizr/lite && docker run -it --rm -p 8082:8080 -v $PWD:/usr/local/structurizr structurizr/lite"
 	},
 	"dependencies": {
-		"@badeball/cypress-cucumber-preprocessor": "22.0.1",
+		"@badeball/cypress-cucumber-preprocessor": "23.1.0",
 		"@planning-inspectorate/data-model": "^1.18.0",
 		"cypress": "13.6.4",
 		"got": "^12.5.2",

@@ -23,7 +23,7 @@
 		"nodemon": "3.0.3"
 	},
 	"devDependencies": {
-		"@badeball/cypress-cucumber-preprocessor": "^22.0.1",
+		"@badeball/cypress-cucumber-preprocessor": "^23.1.0",
 		"@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
 		"@cypress/grep": "^4.1.0",
 		"@cypress/webpack-preprocessor": "^5.16.1",
