@@ -28,12 +28,12 @@ export class DateTimeSection extends Page {
 		withdrawalRequestDate: '#withdrawal-request-date-',
 		hearingDate: '#hearing-date-',
 		inquiryEstimationDays: '#inquiry-estimation-days',
-		lpaQuestionnaireDueDate: '#lpa-questionnaire-due-date-',
-		lpaStatementDueDate: '#statement-due-date-',
-		ipCommentsDueDate: '#ip-comments-due-date-',
-		finalCommentsDueDate: '#final-comments-due-date-',
-		statementOfCommonGroundDueDate: '#statement-of-common-ground-due-date-',
-		proofOfEvidenceAndWitnessesDueDate: '#proof-of-evidence-and-witnesses-due-date-',
+		lpaQuestionnaireDueDate: '#lpa-questionnaire-due',
+		lpaStatementDueDate: '#lpa-statement-due',
+		ipCommentsDueDate: '#ip-comments-due',
+		finalCommentsDueDate: '#final-comments-due',
+		statementOfCommonGroundDueDate: '#statement-of-common-ground-due',
+		proofOfEvidenceAndWitnessesDueDate: '#proof-of-evidence-and-witnesses-due',
 		inquiryDate: '#inquiry-date-',
 		inquiry: '#inquiry',
 		hearing: '#hearing'
@@ -143,7 +143,7 @@ export class DateTimeSection extends Page {
 		this.#verifyPrepopulatedValues(this.selectorPrefix.inquiry, expectedValues);
 	}
 
-	#verifyPrepopulatedValues(dateSelector, expectedValues) {
+	#verifyPrepopulatedValues(dateSelector, expectedValues, includeTime = true) {
 		// verify date
 		cy.get(dateSelector + '-date-day')
 			.invoke('prop', 'value')
@@ -162,16 +162,22 @@ export class DateTimeSection extends Page {
 			});
 
 		// verify time
-		cy.get(dateSelector + '-time-hour')
-			.invoke('prop', 'value')
-			.then((text) => {
-				expect(formatAsWholeNumber(text)).to.equal(expectedValues.hours);
-			});
-		cy.get(dateSelector + '-time-minute')
-			.invoke('prop', 'value')
-			.then((text) => {
-				expect(formatAsWholeNumber(text)).to.equal(expectedValues.minutes);
-			});
+		if (includeTime) {
+			cy.get(dateSelector + '-time-hour')
+				.invoke('prop', 'value')
+				.then((text) => {
+					expect(formatAsWholeNumber(text)).to.equal(expectedValues.hours);
+				});
+			cy.get(dateSelector + '-time-minute')
+				.invoke('prop', 'value')
+				.then((text) => {
+					expect(formatAsWholeNumber(text)).to.equal(expectedValues.minutes);
+				});
+		}
+	}
+
+	verifyPrepopulatedTimeTableDueDates(field, expectedValues) {
+		this.#verifyPrepopulatedValues(this.selectorPrefix[field], expectedValues, false);
 	}
 
 	// Private helper methods
