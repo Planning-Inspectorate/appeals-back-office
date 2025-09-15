@@ -1,7 +1,4 @@
-import {
-	getAttachmentsFolder,
-	getInterestedPartyComment
-} from './interested-party-comments.service.js';
+import { getInterestedPartyComment } from './interested-party-comments.service.js';
 
 /**
  * @type {import('express').RequestHandler}
@@ -17,8 +14,6 @@ export const validateComment = async (req, res, next) => {
 		}
 
 		req.currentRepresentation = representation;
-
-		req.currentFolder = await getAttachmentsFolder(req.apiClient, appealId);
 
 		next();
 	} catch (/** @type {any} */ error) {

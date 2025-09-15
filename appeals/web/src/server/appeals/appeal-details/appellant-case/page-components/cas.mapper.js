@@ -1,4 +1,4 @@
-import { removeSummaryListActions } from '#lib/mappers/index.js';
+import { generateHASComponents } from './has.mapper.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
@@ -10,150 +10,68 @@ import { removeSummaryListActions } from '#lib/mappers/index.js';
  * @param {Appeal} appealDetails
  * @param {SingleAppellantCaseResponse} appellantCaseData
  * @param {MappedInstructions} mappedAppellantCaseData
+ * @param {boolean} userHasUpdateCasePermission
  * @returns {PageComponent[]}
  */
-export function generateCASComponents(appealDetails, appellantCaseData, mappedAppellantCaseData) {
-	/**
-	 * @type {PageComponent}
-	 */
-	const appellantSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			card: {
-				title: {
-					text: '1. Appellant details'
-				}
-			},
-			rows: [
-				mappedAppellantCaseData.appellant.display.summaryListItem,
-				...(appealDetails.agent ? [mappedAppellantCaseData.agent.display.summaryListItem] : [])
-			]
-		}
-	};
+export function generateCASComponents(
+	appealDetails,
+	appellantCaseData,
+	mappedAppellantCaseData,
+	userHasUpdateCasePermission
+) {
+	const pageComponents = generateHASComponents(
+		appealDetails,
+		appellantCaseData,
+		mappedAppellantCaseData,
+		userHasUpdateCasePermission
+	);
 
-	/**
-	 * @type {PageComponent}
-	 */
-	const appealSiteSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			attributes: {
-				id: 'site-details'
-			},
-			card: {
-				title: {
-					text: '2. Site details'
-				}
-			},
-			rows: [
-				mappedAppellantCaseData.siteAddress.display.summaryListItem,
-				mappedAppellantCaseData.siteArea.display.summaryListItem,
-				mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
-				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
-				mappedAppellantCaseData.ownersKnown.display.summaryListItem,
-				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
-				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
-			]
-		}
-	};
+	const uploadedDocumentsComponentIndex = pageComponents.findIndex(
+		(component) =>
+			component.type === 'summary-list' &&
+			component.parameters.attributes?.id === 'uploaded-documents'
+	);
 
-	/**
-	 * @type {PageComponent}
-	 */
-	const applicationSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			attributes: {
-				id: 'application-summary'
+	if (uploadedDocumentsComponentIndex !== -1) {
+		/**
+		 * @type {PageComponent}
+		 */
+		const uploadedDocuments = {
+			type: 'summary-list',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
 			},
-			card: {
-				title: {
-					text: '3. Application details'
-				}
-			},
-			rows: [
-				mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
-				mappedAppellantCaseData.applicationReference.display.summaryListItem,
-				mappedAppellantCaseData.applicationDate.display.summaryListItem,
-				mappedAppellantCaseData.developmentDescription.display.summaryListItem,
-				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
-				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
-				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
-				mappedAppellantCaseData.decisionLetter.display.summaryListItem
-			]
-		}
-	};
+			parameters: {
+				attributes: {
+					id: 'uploaded-documents'
+				},
+				card: {
+					title: {
+						text: '4. Upload documents'
+					}
+				},
+				rows: [
+					mappedAppellantCaseData.applicationForm.display.summaryListItem,
+					mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
+					mappedAppellantCaseData.appealStatement.display.summaryListItem,
+					mappedAppellantCaseData.costsDocument.display.summaryListItem,
+					mappedAppellantCaseData.designAndAccessStatement.display.summaryListItem,
+					mappedAppellantCaseData.supportingDocuments.display.summaryListItem
+				]
+			}
+		};
+		pageComponents[uploadedDocumentsComponentIndex] = uploadedDocuments;
+	}
 
-	/**
-	 * @type {PageComponent}
-	 */
-	const appealSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			attributes: {
-				id: 'appeal-summary'
-			},
-			card: {
-				title: {
-					text: '4. Appeal details'
-				}
-			},
-			rows: [
-				removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem)
-			]
-		}
-	};
+	const additionalDocumentsComponentIndex = pageComponents.findIndex(
+		(component) =>
+			component.type === 'summary-list' &&
+			component.parameters.attributes?.id === 'additional-documents'
+	);
+	if (additionalDocumentsComponentIndex !== -1) {
+		pageComponents.splice(additionalDocumentsComponentIndex, 1);
+	}
 
-	/**
-	 * @type {PageComponent}
-	 */
-	const uploadedDocuments = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			attributes: {
-				id: 'uploaded-documents'
-			},
-			card: {
-				title: {
-					text: '5. Upload documents'
-				}
-			},
-			rows: [
-				mappedAppellantCaseData.applicationForm.display.summaryListItem,
-				mappedAppellantCaseData.changedDevelopmentDescriptionDocument.display.summaryListItem,
-				mappedAppellantCaseData.appealStatement.display.summaryListItem,
-				mappedAppellantCaseData.costsDocument.display.summaryListItem,
-				mappedAppellantCaseData.designAndAccessStatement.display.summaryListItem,
-				mappedAppellantCaseData.supportingDocuments.display.summaryListItem
-			]
-		}
-	};
-
-	return [
-		appellantSummary,
-		appealSiteSummary,
-		applicationSummary,
-		appealSummary,
-		uploadedDocuments
-	];
+	return pageComponents;
 }

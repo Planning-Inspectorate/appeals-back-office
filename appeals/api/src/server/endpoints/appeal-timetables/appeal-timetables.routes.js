@@ -1,7 +1,11 @@
 import { checkAppealExistsByIdAndAddToRequest } from '#middleware/check-appeal-exists-and-add-to-request.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import { startAppeal, updateAppealTimetableById } from './appeal-timetables.controller.js';
+import {
+	getCalculatedAppealTimetable,
+	startAppeal,
+	updateAppealTimetableById
+} from './appeal-timetables.controller.js';
 import { checkAppealTimetableExists } from './appeal-timetables.service.js';
 import {
 	createAppealTimetableValidator,
@@ -67,6 +71,39 @@ router.patch(
 	checkAppealTimetableExists,
 	patchAppealTimetableValidator,
 	asyncHandler(updateAppealTimetableById)
+);
+
+router.get(
+	'/:appealId/appeal-timetables/calculate',
+	/*
+		#swagger.tags = ['Appeal Timetables']
+		#swagger.path = '/appeals/{appealId}/appeal-timetables/calculate'
+		#swagger.description = 'Calculates the timetable that would result from starting this appeal'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.parameters['startDate'] = {
+			in: 'query',
+			required: false,
+			example: '2025-01-01'
+		}
+		#swagger.parameters['procedureType'] = {
+			in: 'query',
+			required: false,
+			example: 'written'
+		}
+		#swagger.responses[200] = {
+			description: 'The timetable that would result from starting this appeal',
+			schema: { $ref: '#/components/schemas/CalculateAppealTimetableResponse' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+		#swagger.responses[500] = {}
+	 */
+	checkAppealExistsByIdAndAddToRequest,
+	asyncHandler(getCalculatedAppealTimetable)
 );
 
 export { router as appealTimetablesRoutes };
