@@ -108,7 +108,7 @@
     "@types/supertest": "^2.0.12",
     "autoprefixer": "^10.4.7",
     "chokidar-cli": "^3.0.0",
-    "core-js": "^3.42.0",
+    "core-js": "^3.45.1",
     "cross-env": "^7.0.3",
     "figures": "^4.0.1",
     "jest": "^29.7.0",
