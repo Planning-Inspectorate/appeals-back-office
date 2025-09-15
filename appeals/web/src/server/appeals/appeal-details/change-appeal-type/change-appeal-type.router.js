@@ -53,11 +53,7 @@ router
 	.route('/check-change-appeal-final-date')
 	.get(asyncHandler(controller.getCheckChangeAppealFinalDate))
 	.post(
-		validators.validateChangeAppealFinalDateFields,
-		validators.validateChangeAppealFinalDateValid,
-		validators.validateChangeAppealFinalDateIsBusinessDay,
-		validators.validateChangeAppealFinalDateInFuture,
-		extractAndProcessDateErrors({ fieldNamePrefix: changeAppealTypeDateField }),
+		// validation not required as occurs on post change-appeal-final-date
 		asyncHandler(controller.postCheckChangeAppealFinalDate)
 	);
 

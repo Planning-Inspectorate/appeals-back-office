@@ -43,6 +43,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[APPEAL_CASE_STATUS.WITHDRAWN]: {
 						target: APPEAL_CASE_STATUS.WITHDRAWN
 					},
+					[APPEAL_CASE_STATUS.INVALID]: { target: APPEAL_CASE_STATUS.INVALID },
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID }
 				},
 				meta: {
@@ -59,6 +60,7 @@ const createStateMachine = (appealType, procedureType, currentState, eventElapse
 					[VALIDATION_OUTCOME_VALID]: { target: APPEAL_CASE_STATUS.READY_TO_START },
 					[VALIDATION_OUTCOME_INVALID]: { target: APPEAL_CASE_STATUS.INVALID },
 					[VALIDATION_OUTCOME_INCOMPLETE]: undefined,
+					[APPEAL_CASE_STATUS.INVALID]: { target: APPEAL_CASE_STATUS.INVALID },
 					[APPEAL_CASE_STATUS.CLOSED]: { target: APPEAL_CASE_STATUS.CLOSED },
 					[APPEAL_CASE_STATUS.AWAITING_TRANSFER]: {
 						target: APPEAL_CASE_STATUS.AWAITING_TRANSFER

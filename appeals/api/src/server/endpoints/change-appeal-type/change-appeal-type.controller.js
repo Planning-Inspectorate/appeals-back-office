@@ -41,6 +41,10 @@ export const requestChangeOfAppealType = async (req, res) => {
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
 
+	const newCaseStatus = isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_APPEAL_TYPE)
+		? APPEAL_CASE_STATUS.INVALID
+		: APPEAL_CASE_STATUS.CLOSED;
+
 	await changeAppealType(
 		appeal,
 		newAppealTypeId,
@@ -48,7 +52,8 @@ export const requestChangeOfAppealType = async (req, res) => {
 		newAppealTypeFinalDate,
 		notifyClient,
 		siteAddress,
-		req.get('azureAdUserId') || ''
+		req.get('azureAdUserId') || '',
+		newCaseStatus
 	);
 
 	return res.send(true);

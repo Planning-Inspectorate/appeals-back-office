@@ -6,7 +6,6 @@ import { databaseConnector } from '#utils/database-connector.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import { setTimeInTimeZone } from '@pins/appeals/utils/business-days.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
-import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -21,6 +20,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
  * @param {import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @param {string} siteAddress
  * @param {string} azureAdUserId
+ * @param {string} newCaseStatus
  * @returns {Promise<void>}
  */
 const changeAppealType = async (
@@ -30,7 +30,8 @@ const changeAppealType = async (
 	dueDate,
 	notifyClient,
 	siteAddress,
-	azureAdUserId
+	azureAdUserId,
+	newCaseStatus
 ) => {
 	Promise.all([
 		await databaseConnector.appeal.update({
@@ -43,7 +44,7 @@ const changeAppealType = async (
 		await timetableRepository.upsertAppealTimetableById(appeal.id, {
 			caseResubmissionDueDate: setTimeInTimeZone(dueDate, DEADLINE_HOUR, DEADLINE_MINUTE)
 		}),
-		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.CLOSED),
+		await transitionState(appeal.id, azureAdUserId, newCaseStatus),
 		await broadcasters.broadcastAppeal(appeal.id)
 	]);
 
