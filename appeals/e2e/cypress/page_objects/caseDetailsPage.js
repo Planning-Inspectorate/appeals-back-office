@@ -475,7 +475,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickLinkedAppeal(caseRef) {
-		cy.getByData('linked-appeal-' + caseRef).click();
+		cy.getByData('linked-appeal-' + caseRef.reference).click();
 	}
 
 	clickRemoveFileUpload(fileName) {
@@ -739,7 +739,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	verifyAppealRefOnCaseDetails(caseRef) {
-		this.elements.getAppealRefCaseDetails().contains(caseRef);
+		this.elements.getAppealRefCaseDetails().contains(caseRef.reference);
 	}
 
 	verifyCheckYourAnswers(label, value) {
@@ -816,7 +816,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	acceptLpaStatement(caseRef, updateAllocation, representation) {
-		cy.addRepresentation(caseRef, 'lpaStatement', null, representation).then((caseRef) => {
+		cy.addRepresentation(caseRef.reference, 'lpaStatement', null, representation).then((caseRef) => {
 			cy.reload();
 		});
 		this.elements.lpaStatementReviewLink().click();

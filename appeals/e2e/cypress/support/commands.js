@@ -170,9 +170,9 @@ Cypress.Commands.add('simulateFinalCommentsDeadlineElapsed', (caseRef) => {
 
 Cypress.Commands.add(
 	'addRepresentation',
-	(reference, type, serviceUserId, representation = null) => {
+	(caseRef, type, serviceUserId, representation = null) => {
 		return cy.wrap(null).then(async () => {
-			await appealsApiClient.addRepresentation(reference, type, serviceUserId, representation);
+			await appealsApiClient.addRepresentation(caseRef.reference, type, serviceUserId, representation);
 		});
 	}
 );

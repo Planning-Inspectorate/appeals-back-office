@@ -80,7 +80,12 @@ describe('related appeals', () => {
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
 				//related appeal in validation status
 				happyPathHelper.assignCaseOfficer(caseRef);
+<<<<<<< HEAD
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
+=======
+				caseDetailsPage.checkStatusOfCase('Validation', 0); 
+				caseDetailsPage.clickAccordionByButton('Overview');
+>>>>>>> bb058907c (test(appeals): tests run with object)
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseRefToLink.reference);
 				caseDetailsPage.clickButtonByText('Continue');
@@ -205,18 +210,18 @@ describe('related appeals', () => {
 				appellantCasePage.clickAddRelatedAppeals();
 
 				//related appeals
-				appellantCasePage.fillInput(relatedCase);
+				appellantCasePage.fillInput(relatedCase.reference);
 				appellantCasePage.clickButtonByText('Continue');
 				appellantCasePage.selectRadioButtonByValue('yes');
 				appellantCasePage.clickButtonByText('Continue');
 
 				//appellant case
-				caseDetailsPage.assertRelatedAppealValue(relatedCase);
+				caseDetailsPage.assertRelatedAppealValue(relatedCase.reference);
 				appellantCasePage.validateBannerMessage('Success', 'Related appeal added');
 				appellantCasePage.clickBackLink();
 
 				//case details
-				caseDetailsPage.assertRelatedAppealValue(relatedCase);
+				caseDetailsPage.assertRelatedAppealValue(relatedCase.reference);
 			});
 		});
 	});

@@ -16,6 +16,10 @@ let sampleFiles = fileUploader.sampleFiles;
 
 export const happyPathHelper = {
 
+	viewCaseDetails(caseRef) {
+		cy.visit(urlPaths.appealsList);
+		listCasesPage.clickAppealByRef(caseRef);
+	},
 	assignCaseOfficer(caseRef) {
 		cy.visit(`${urlPaths.caseDetails}/${caseRef.id}`);
 		caseDetailsPage.clickAssignCaseOfficer();
@@ -83,7 +87,7 @@ export const happyPathHelper = {
 		happyPathHelper.addThirdPartyComment(caseRef.reference, false);
 		caseDetailsPage.clickBackLink();
 		happyPathHelper.addLpaStatement(caseRef.reference);
-		cy.simulateStatementsDeadlineElapsed(caseRef.reference);
+		cy.simulateStatementsDeadlineElapsed(caseRef);
 		cy.reload();
 		caseDetailsPage.basePageElements.bannerLink().click();
 		caseDetailsPage.clickButtonByText('Confirm');
@@ -294,11 +298,11 @@ export const happyPathHelper = {
 
 	addLinkedAppeal(leadCaseRef, childCaseRef) {
 		caseDetailsPage.clickAddLinkedAppeal();
-		caseDetailsPage.fillInput(childCaseRef);
+		caseDetailsPage.fillInput(childCaseRef.reference);
 		caseDetailsPage.clickButtonByText('Continue');
 
 		//select lead appeal
-		caseDetailsPage.selectRadioButtonByValue(leadCaseRef);
+		caseDetailsPage.selectRadioButtonByValue(leadCaseRef.reference);
 		caseDetailsPage.clickButtonByText('Continue');
 
 		//CYA

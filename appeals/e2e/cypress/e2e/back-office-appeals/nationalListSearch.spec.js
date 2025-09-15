@@ -25,9 +25,9 @@ describe('All cases search', () => {
 	});
 
 	it('Case admin user should be able to use search using appeal id', { tags: tag.smoke }, () => {
-		const testData = { rowIndex: 0, cellIndex: 0, textToMatch: caseRef, strict: true };
+		const testData = { rowIndex: 0, cellIndex: 0, textToMatch: caseRef.reference, strict: true };
 		listCasesPage.verifySectionHeader('Search all cases');
-		listCasesPage.nationalListSearch(caseRef);
+		listCasesPage.nationalListSearch(caseRef.reference);
 		listCasesPage.verifyTableCellText(testData);
 		listCasesPage.clearSearchResults();
 	});
