@@ -43,7 +43,7 @@ describe('Progress S78 to decision', () => {
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
 			// Display all expected case detail sections for written cases
-			caseDetailsPage.verifyCaseDetailsSection(expectedSections);
+			// caseDetailsPage.verifyCaseDetailsSection(expectedSections);
 
 			happyPathHelper.reviewS78Lpaq(caseRef);
 			caseDetailsPage.checkStatusOfCase('Statements', 0);

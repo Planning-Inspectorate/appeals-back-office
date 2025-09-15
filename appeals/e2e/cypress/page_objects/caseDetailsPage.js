@@ -816,7 +816,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	acceptLpaStatement(caseRef, updateAllocation, representation) {
-		cy.addRepresentation(caseRef.reference, 'lpaStatement', null, representation).then((caseRef) => {
+		cy.addRepresentation(caseRef, 'lpaStatement', null, representation).then((caseRef) => {
 			cy.reload();
 		});
 		this.elements.lpaStatementReviewLink().click();

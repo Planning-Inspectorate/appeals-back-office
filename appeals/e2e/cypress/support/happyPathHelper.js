@@ -82,11 +82,11 @@ export const happyPathHelper = {
 	reviewLPaStatement(caseRef) {
 		happyPathHelper.reviewS78Lpaq(caseRef);
 		caseDetailsPage.checkStatusOfCase('Statements', 0);
-		happyPathHelper.addThirdPartyComment(caseRef.reference, true);
+		happyPathHelper.addThirdPartyComment(caseRef, true);
 		caseDetailsPage.clickBackLink();
-		happyPathHelper.addThirdPartyComment(caseRef.reference, false);
+		happyPathHelper.addThirdPartyComment(caseRef, false);
 		caseDetailsPage.clickBackLink();
-		happyPathHelper.addLpaStatement(caseRef.reference);
+		happyPathHelper.addLpaStatement(caseRef);
 		cy.simulateStatementsDeadlineElapsed(caseRef);
 		cy.reload();
 		caseDetailsPage.basePageElements.bannerLink().click();

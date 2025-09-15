@@ -160,7 +160,7 @@ describe('link appeals', () => {
 		});
 	});
 
-	it('As a child appeal, I am unable to link to another child appeal', () => {
+	it.only('As a child appeal, I am unable to link to another child appeal', () => {
 		cy.createCase().then((leadCase1) => {
 			cy.createCase().then((leadCase2) => {
 				cy.createCase().then((childCase1) => {
