@@ -87,7 +87,7 @@
 		"jest-mock-extended": "^3.0.1",
 		"mock-fs": "^5.5.0",
 		"nodemon": "^2.0.18",
-		"prisma": "6.5.0",
+		"prisma": "6.16.1",
 		"rimraf": "^6.0.1",
 		"stream-chain": "^3.4.0",
 		"stream-json": "^1.9.1",
