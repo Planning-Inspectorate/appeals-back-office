@@ -95,33 +95,33 @@ Cypress.Commands.add('createCase', (customValues) => {
 	});
 });
 
-Cypress.Commands.add('addLpaqSubmissionToCase', (reference) => {
+Cypress.Commands.add('addLpaqSubmissionToCase', (caseRef) => {
 	return cy.wrap(null).then(async () => {
-		await appealsApiClient.lpqaSubmission(reference);
-		cy.log('Added LPA submission to case ref ' + reference);
+		await appealsApiClient.lpqaSubmission(caseRef.reference);
+		cy.log('Added LPA submission to case ref ' + caseRef.reference);
 		return;
 	});
 });
 
-Cypress.Commands.add('simulateSiteVisit', (reference) => {
+Cypress.Commands.add('simulateSiteVisit', (caseRef) => {
 	return cy.wrap(null).then(async () => {
-		await appealsApiClient.simulateSiteVisitElapsed(reference);
-		cy.log('Simulated site visit elapsed for case ref ' + reference);
+		await appealsApiClient.simulateSiteVisitElapsed(caseRef.reference);
+		cy.log('Simulated site visit elapsed for case ref ' + caseRef.reference);
 		return;
 	});
 });
 
-Cypress.Commands.add('simulateStatementsDeadlineElapsed', (reference) => {
+Cypress.Commands.add('simulateStatementsDeadlineElapsed', (caseRef) => {
 	return cy.wrap(null).then(async () => {
-		await appealsApiClient.simulateStatementsElapsed(reference);
+		await appealsApiClient.simulateStatementsElapsed(caseRef.reference);
 		return;
 	});
 });
 
-Cypress.Commands.add('simulateFinalCommentsDeadlineElapsed', (reference) => {
+Cypress.Commands.add('simulateFinalCommentsDeadlineElapsed', (caseRef) => {
 	return cy.wrap(null).then(async () => {
-		await appealsApiClient.simulateFinalCommentsElapsed(reference);
-		cy.log('Simulated site visit elapsed for case ref ' + reference);
+		await appealsApiClient.simulateFinalCommentsElapsed(caseRef.reference);
+		cy.log('Simulated site visit elapsed for case ref ' + caseRef.reference);
 		return;
 	});
 });
@@ -135,9 +135,9 @@ Cypress.Commands.add(
 	}
 );
 
-Cypress.Commands.add('loadAppealDetails', (reference) => {
+Cypress.Commands.add('loadAppealDetails', (caseRef) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseRef.reference);
 		return details;
 	});
 });
@@ -190,9 +190,9 @@ Cypress.Commands.add('getBusinessActualDate', (date, days) => {
 	});
 });
 
-Cypress.Commands.add('addAllocationLevelAndSpecialisms', (reference) => {
+Cypress.Commands.add('addAllocationLevelAndSpecialisms', (caseRef) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseRef.reference);
 		const appealId = await details.appealId;
 		const specIds = await appealsApiClient.getSpecialisms();
 		const ids = specIds.map((item) => item.id);
@@ -200,24 +200,24 @@ Cypress.Commands.add('addAllocationLevelAndSpecialisms', (reference) => {
 	});
 });
 
-Cypress.Commands.add('addHearingDetails', (reference, date) => {
+Cypress.Commands.add('addHearingDetails', (caseRef, date) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseRef.reference);
 		const appealId = await details.appealId;
 		return await appealsApiClient.addHearing(appealId, date);
 	});
 });
 
-Cypress.Commands.add('deleteHearing', (reference) => {
+Cypress.Commands.add('deleteHearing', (caseRef) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseRef.reference);
 		const appealId = await details.appealId;
 		const hearingId = await details.hearing.hearingId;
 		return await appealsApiClient.deleteHearing(appealId, hearingId);
 	});
 });
 
-Cypress.Commands.add('checkNotifySent', (reference, expectedNotifies) => {
+Cypress.Commands.add('checkNotifySent', (caseRef, expectedNotifies) => {
 	// ensure input is always an array
 	const expected = [].concat(expectedNotifies);
 
@@ -235,7 +235,7 @@ Cypress.Commands.add('checkNotifySent', (reference, expectedNotifies) => {
 
 	return cy.wrap(null).then(async () => {
 		// returns an array of email objects sent for the given appeal
-		const sentNotifies = await appealsApiClient.getNotifyEmails(reference);
+		const sentNotifies = await appealsApiClient.getNotifyEmails(caseRef.reference);
 
 		// filter for expected notifies that were NOT found in the sent notfies array
 		const missingNotifies = expected.filter(
@@ -256,60 +256,60 @@ Cypress.Commands.add('checkNotifySent', (reference, expectedNotifies) => {
 	});
 });
 
-Cypress.Commands.add('updateAppealDetails', (reference, caseDetails) => {
+Cypress.Commands.add('updateAppealDetails', (caseRef, caseDetails) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseRef.reference);
 		const appealId = details.appealId;
 		const appellantCaseId = details.appellantCaseId;
 		return await appealsApiClient.updateAppealCases(appealId, appellantCaseId, caseDetails);
 	});
 });
 
-Cypress.Commands.add('updateTimeTableDetails', (reference, timeTableDetails) => {
+Cypress.Commands.add('updateTimeTableDetails', (caseRef, timeTableDetails) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseRef.reference);
 		const appealId = await details.appealId;
 		const appealTimetableId = await details.appealTimetable.appealTimetableId;
 		return await appealsApiClient.updateTimeTable(appealId, appealTimetableId, timeTableDetails);
 	});
 });
 
-Cypress.Commands.add('simulateHearingElapsed', (reference) => {
+Cypress.Commands.add('simulateHearingElapsed', (caseRef) => {
 	return cy.wrap(null).then(async () => {
-		return appealsApiClient.simulateHearingElapsed(reference).then(() => {
-			cy.log(`Simulated hearing elapsed for case ref ${reference}`);
+		return appealsApiClient.simulateHearingElapsed(caseRef.reference).then(() => {
+			cy.log(`Simulated hearing elapsed for case ref ${caseRef.reference}`);
 		});
 	});
 });
 
-Cypress.Commands.add('navigateToAppealDetailsPage', (reference) => {
+Cypress.Commands.add('navigateToAppealDetailsPage', (caseRef) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseRef.reference);
 		const appealId = await details.appealId;
 		cy.visit(`appeals-service/appeal-details/${appealId}`);
 	});
 });
 
-Cypress.Commands.add('addInquiryViaApi', (reference, date, propertyOverrides = {}) => {
+Cypress.Commands.add('addInquiryViaApi', (caseRef, date, propertyOverrides = {}) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseRef.reference);
 		const appealId = await details.appealId;
 		return await appealsApiClient.addInquiry(appealId, date, propertyOverrides);
 	});
 });
 
-Cypress.Commands.add('addEstimateViaApi', (procedureType, reference, estimate = null) => {
+Cypress.Commands.add('addEstimateViaApi', (procedureType, caseRef, estimate = null) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseRef.reference);
 		const appealId = await details.appealId;
 		console.log(estimate);
 		return await appealsApiClient.addEstimate(procedureType, appealId, estimate);
 	});
 });
 
-Cypress.Commands.add('deleteEstimateViaApi', (procedureType, reference) => {
+Cypress.Commands.add('deleteEstimateViaApi', (procedureType, caseRef) => {
 	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
+		const details = await appealsApiClient.loadCaseDetails(caseRef.reference);
 		const appealId = await details.appealId;
 		return await appealsApiClient.deleteEstimate(procedureType, appealId);
 	});
