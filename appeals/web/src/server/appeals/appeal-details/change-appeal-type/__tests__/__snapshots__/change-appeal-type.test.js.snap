@@ -405,6 +405,36 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
 </main>"
 `;
 
+exports[`change-appeal-type GET /change-appeal-type/check-change-appeal-final-date should render the check change appeal final date page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
+            <h1 class="govuk-heading-l">Check details and update timetable due dates</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Deadline to resubmit appeal</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/change-appeal-final-date">Change <span class="govuk-visually-hidden">Deadline to resubmit appeal</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <p class="govuk-body">We will send an email to the appellant to tell them that they need to
+                resubmit a new appeal by .</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Mark appeal as invalid</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`change-appeal-type GET /change-appeal-type/check-transfer should render a 500 error page if the required data is not present in the session 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
