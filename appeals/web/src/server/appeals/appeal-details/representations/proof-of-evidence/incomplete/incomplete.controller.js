@@ -40,7 +40,7 @@ export async function renderReasons(request, response) {
 		['proofOfEvidence', appealId],
 		errors
 	);
-	console.log('proofOfEvidenceType: ', proofOfEvidenceType);
+
 	const pageContent = incompleteProofOfEvidencePage(currentAppeal, proofOfEvidenceType);
 
 	return response.status(200).render('appeals/appeal/reject-representation.njk', {
