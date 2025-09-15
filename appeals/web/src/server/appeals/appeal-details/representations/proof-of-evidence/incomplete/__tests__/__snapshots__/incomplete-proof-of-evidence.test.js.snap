@@ -1,5 +1,109 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`incomplete proof of evidence GET /confirm should render the incomplete appellant proof of evidence CYA page with the expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and reject appellant proof of evidence and witnesses</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Proof of evidence and witnesses</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ol class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
+                            <li><a class="govuk-link" href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf"
+                                target="_blank">blank copy 5.pdf</a>
+                            </li>
+                        </ol>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/appellant/change/135568/?backUrl=/proof-of-evidence/appellant/incomplete/confirm">Change <span class="govuk-visually-hidden">supporting documents</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
+                    <dd class="govuk-summary-list__value">Reject proof of evidence and witnesses</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/appellant">Change <span class="govuk-visually-hidden">Review decision</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for rejecting the appellant proof of evidence and witnesses</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">
+                            <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
+                                <li>Received after deadline</li>
+                            </ul>
+                        </div>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/appellant/incomplete/reasons">Change <span class="govuk-visually-hidden">Incomplete reasons</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <p class="govuk-body">We’ll send an email to the appellant to explain why you rejected their
+                proof of evidence and witnesses</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Confirm statement is incomplete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`incomplete proof of evidence GET /confirm should render the incomplete lpa proof of evidence CYA page with the expected content 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and reject lpa proof of evidence and witnesses</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Proof of evidence and witnesses</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <ol class="govuk-list govuk-!-margin-top-0 govuk-!-padding-left-0">
+                            <li><a class="govuk-link" href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf"
+                                target="_blank">blank copy 5.pdf</a>
+                            </li>
+                        </ol>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/change/135568/?backUrl=/proof-of-evidence/lpa/incomplete/confirm">Change <span class="govuk-visually-hidden">supporting documents</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
+                    <dd class="govuk-summary-list__value">Reject proof of evidence and witnesses</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/lpa">Change <span class="govuk-visually-hidden">Review decision</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Reason for rejecting the lpa proof of evidence and witnesses</dt>
+                    <dd                     class="govuk-summary-list__value">
+                        <div class="pins-show-more" data-label="Read more" data-mode="html">
+                            <ul class="govuk-list govuk-!-margin-top-0 govuk-!-margin-bottom-0 govuk-list--bullet">
+                                <li>Received after deadline</li>
+                            </ul>
+                        </div>
+                        </dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/incomplete/reasons">Change <span class="govuk-visually-hidden">Incomplete reasons</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <p class="govuk-body">We’ll send an email to the appellant to explain why you rejected their
+                proof of evidence and witnesses</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Confirm statement is incomplete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`incomplete proof of evidence GET /reasons should render the incomplete appellant proof of evidence page with the expected content 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
