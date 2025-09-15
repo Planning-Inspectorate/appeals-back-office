@@ -197,6 +197,7 @@ export const getInquiryEstimation = async (request, response) => {
  */
 export const getChangeInquiryEstimation = async (request, response) => {
 	const sessionValues = request.session.changeInquiry || {};
+	console.log('sessionValues ', sessionValues);
 	return renderInquiryEstimation(request, response, 'change', sessionValues);
 };
 
@@ -208,7 +209,7 @@ export const getChangeInquiryEstimation = async (request, response) => {
  */
 export const renderInquiryEstimation = async (request, response, action, values) => {
 	const { errors } = request;
-
+	console.log('values ', values);
 	const appealDetails = request.currentAppeal;
 
 	const mappedPageContent = inquiryEstimationPage(appealDetails, action, errors, values);
@@ -225,7 +226,10 @@ export const renderInquiryEstimation = async (request, response, action, values)
  */
 export const postInquiryEstimation = async (request, response) => {
 	if (request.errors) {
-		return renderInquiryEstimation(request, response, 'setup');
+		console.log('request.session ', request.session);
+		const sessionValues = request.session.setUpInquiry || {};
+
+		return renderInquiryEstimation(request, response, 'setup', sessionValues);
 	}
 
 	const { appealId } = request.currentAppeal;
