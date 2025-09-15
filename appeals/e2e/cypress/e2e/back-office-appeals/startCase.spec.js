@@ -48,7 +48,6 @@ describe('Start case', () => {
 			happyPathHelper.reviewAppellantCase(caseRef);
 			happyPathHelper.startCase(caseRef);
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
-			caseDetailsPage.clickAccordionByButton('Overview');
 			caseDetailsPage.verifyAppealType('Planning listed building and conservation area appeal');
 			cy.loadAppealDetails(caseRef).then((appealDetails) => {
 				const startedAt = appealDetails?.startedAt;

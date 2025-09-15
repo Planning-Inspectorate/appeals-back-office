@@ -84,7 +84,6 @@ describe('Update Decision Letter', () => {
 				`Decision issued on ${formattedDate.date} (updated on ${formattedDate.date})`
 			);
 			//verify Case History
-			caseDetailsPage.clickAccordionByText('Case management');
 			caseDetailsPage.clickViewCaseHistory();
 			caseDetailsPage.verifyTableCellTextCaseHistory(
 				'Correction notice added: Test Correction Notice'

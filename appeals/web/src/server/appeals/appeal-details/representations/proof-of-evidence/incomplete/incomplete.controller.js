@@ -19,22 +19,29 @@ export const redirectAndClearSession = (path, sessionKey) => (request, response)
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  **/
 export async function renderReasons(request, response) {
-	const { params, currentAppeal, currentRepresentation, apiClient, session, errors } = request;
+	const {
+		params: { proofOfEvidenceType, appealId },
+		currentAppeal,
+		currentRepresentation,
+		apiClient,
+		session,
+		errors
+	} = request;
 
-	const rejectionReasons = await getRepresentationRejectionReasonOptions(
+	const incompleteReasons = await getRepresentationRejectionReasonOptions(
 		apiClient,
 		currentRepresentation.representationType
 	);
 
 	const mappedRejectionReasons = mapRejectionReasonOptionsToCheckboxItemParameters(
 		currentRepresentation,
-		rejectionReasons,
+		incompleteReasons,
 		session,
-		['proofOfEvidence', params.appealId],
+		['proofOfEvidence', appealId],
 		errors
 	);
 
-	const pageContent = incompleteProofOfEvidencePage(currentAppeal);
+	const pageContent = incompleteProofOfEvidencePage(currentAppeal, proofOfEvidenceType);
 
 	return response.status(200).render('appeals/appeal/reject-representation.njk', {
 		errors,
@@ -49,7 +56,7 @@ export async function renderReasons(request, response) {
  */
 export const postReasons = async (request, response) => {
 	const {
-		params: { appealId },
+		params: { appealId, proofOfEvidenceType },
 		errors
 	} = request;
 
@@ -59,5 +66,7 @@ export const postReasons = async (request, response) => {
 
 	return response
 		.status(200)
-		.redirect(`/appeals-service/appeal-details/${appealId}/proof-of-evidence/incomplete/confirm`);
+		.redirect(
+			`/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceType}/incomplete/confirm`
+		);
 };

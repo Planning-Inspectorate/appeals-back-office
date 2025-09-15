@@ -422,7 +422,6 @@ it('should not accept invalid input - inquiry Estimate', () => {
 
 	cy.visit(urlPaths.appealsList);
 	listCasesPage.clickAppealByRef(caseRef);
-	caseDetailsPage.clickAccordionByButton('Inquiry');
 	caseDetailsPage.clickInquiryEstimateLink();
 
 	// Test empty fields
@@ -458,7 +457,6 @@ it('should add inquiry Estimates', () => {
 
 	cy.visit(urlPaths.appealsList);
 	listCasesPage.clickAppealByRef(caseRef);
-	caseDetailsPage.clickAccordionByButton('Inquiry');
 	caseDetailsPage.clickInquiryEstimateLink();
 
 	// Add initial estimates and verify

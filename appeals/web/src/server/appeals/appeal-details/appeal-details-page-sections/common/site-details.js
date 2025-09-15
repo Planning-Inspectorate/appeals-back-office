@@ -25,6 +25,10 @@ export const getSiteDetails = (mappedData, appealDetails) => {
 					: [mappedData.appeal.siteVisit.display.summaryListItem]),
 				mappedData.appeal.inspectorNeighbouringSites.display.summaryListItem
 			].filter(isDefined)
+		},
+		wrapperHtml: {
+			opening: '<h1 class="govuk-heading-l">Site</h1>',
+			closing: ''
 		}
 	};
 
