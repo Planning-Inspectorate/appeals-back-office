@@ -2,37 +2,17 @@
 import { BrowserAuthData } from '../fixtures/browser-auth-data';
 import { appealsApiClient } from './appealsApiClient';
 
-// const cookiesToSet = ['domain', 'expiry', 'httpOnly', 'path', 'secure'];
-// Pick a stable auth cookie name if you know it; regex is a safe default.
-const AUTH_COOKIE_MATCH = /(Auth|\.AspNetCore|idsrv|x-ms-)/i;
+//OVERWRITE
 
-function assertAuthCookiesExist() {
-	cy.getCookies().then((cookies) => {
-		const ok = cookies.some((c) => AUTH_COOKIE_MATCH.test(c.name));
-		expect(ok, 'at least one auth cookie present').to.be.true;
-	});
-}
+Cypress.Commands.overwrite('type', (originalFn, subject, text, options = {}) => {
+	options.delay = 0;
 
-// Checks we are authenticated by probing a known auth-only page.
-// Adjust PATH if your app uses a different landing route.
-function assertAuthenticated() {
-	const PATH = '/appeals-service/personal-list';
+	return originalFn(subject, text, options);
+});
 
-	cy.request({
-		url: PATH,
-		failOnStatusCode: false, // don't fail the test on 302/404
-		followRedirect: false // so we can inspect Location header
-	}).then((res) => {
-		const location = res.headers?.location || '';
+//ADD
 
-		// Not bounced to Azure AD
-		expect(location, 'not redirected to AAD').not.to.include('login.microsoftonline.com');
-
-		// SPA backends may return 404 for client-routed paths; accept it.
-		// 200 = served page, 302 = in-app redirect, 404 = SPA not SSR'd but still auth OK
-		expect(res.status, 'authenticated status').to.be.oneOf([200, 302, 404]);
-	});
-}
+const cookiesToSet = ['domain', 'expiry', 'httpOnly', 'path', 'secure'];
 
 Cypress.Commands.add('clearCookiesFiles', () => {
 	cy.task('ClearAllCookies').then((cleared) => {
@@ -61,11 +41,19 @@ Cypress.Commands.add('validateDownloadedFile', (fileName) => {
 });
 
 Cypress.Commands.add('login', (user) => {
-	cy.loginSession(user);
+	cy.task('CookiesFileExists', user.id).then((exists) => {
+		if (!exists) {
+			cy.log(`No cookies 🍪 found!\nLogging in as: ${user.id}`);
+			cy.loginWithPuppeteer(user);
+		} else {
+			cy.log(`Found some cookies! 🍪\nSetting cookies for: ${user.id}`);
+			setLocalCookies(user.id);
+		}
+	});
 });
 
 Cypress.Commands.add('loginWithPuppeteer', (user) => {
-	const config = {
+	var config = {
 		username: user.email,
 		password: Cypress.env('PASSWORD'),
 		loginUrl: Cypress.config('baseUrl'),
@@ -83,43 +71,13 @@ Cypress.Commands.add('loginWithPuppeteer', (user) => {
 				secure: cookie.secure,
 				log: false
 			});
+			if (cookiesToSet.includes(cookie.name)) {
+				cy.getCookie(cookie.name).should('not.be.empty');
+			}
 		});
-
-		// Bind cookies to the app origin and verify we’re authenticated
-		cy.visit('/');
-		assertAuthenticated();
 	});
 
 	return;
-});
-
-Cypress.Commands.add('loginSession', (user) => {
-	if (!user?.id || !user?.email) {
-		throw new Error('loginSession: user must be an object with { id, email }');
-	}
-
-	const sessionKey = `azure:${Cypress.config('baseUrl')}:${user.id}`;
-
-	cy.session(
-		sessionKey,
-		() => {
-			cy.task('CookiesFileExists', user.id).then((exists) => {
-				if (!exists) {
-					cy.log(`No cookie file for ${user.id} → performing Azure sign-in`);
-					cy.loginWithPuppeteer(user);
-				} else {
-					cy.log(`Using cookie file for ${user.id}`);
-					setLocalCookies(user.id);
-				}
-			});
-		},
-		{
-			cacheAcrossSpecs: true,
-			validate() {
-				assertAuthenticated();
-			}
-		}
-	);
 });
 
 Cypress.Commands.add('getByData', (value) => {
@@ -127,10 +85,13 @@ Cypress.Commands.add('getByData', (value) => {
 });
 
 Cypress.Commands.add('createCase', (customValues) => {
-	return cy.wrap(null).then(async () => {
-		const appealRef = await appealsApiClient.caseSubmission(customValues);
-		cy.log('Generated case with ref ' + appealRef);
-		return appealRef;
+	return cy.wrap(null).then(() => {
+		return appealsApiClient.caseSubmission(customValues).then((data) => {
+			const appealRef = data.reference;
+			const appealId = data.id;
+			cy.log(`Generated case with ref ${appealRef} and id ${appealId}`);
+			return { reference: appealRef, id: appealId };
+		});
 	});
 });
 
@@ -199,17 +160,16 @@ export function setLocalCookies(userId) {
 				secure: cookie.secure,
 				log: false
 			});
+			if (cookiesToSet.includes(cookie.name)) {
+				cy.getCookie(cookie.name).should('not.be.empty');
+			}
 		});
-
-		// Bind cookies and verify auth
-		cy.visit('/');
-		assertAuthenticated();
 	});
 }
 
 Cypress.Commands.add('setCurrentCookies', (cookies) => {
-	cy.clearCookies();
 	cookies.forEach((cookie) => {
+		cy.clearCookies();
 		cy.setCookie(cookie.name, cookie.value, {
 			domain: cookie.domain,
 			expiry: cookie.expiry,
@@ -217,10 +177,8 @@ Cypress.Commands.add('setCurrentCookies', (cookies) => {
 			path: cookie.path,
 			secure: cookie.secure
 		});
+		Cypress.Cookies.preserveOnce(cookie.name);
 	});
-
-	cy.visit('/');
-	assertAuthenticated();
 });
 
 Cypress.Commands.add('getBusinessActualDate', (date, days) => {
