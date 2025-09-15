@@ -1,4 +1,4 @@
-import { removeSummaryListActions } from '#lib/mappers/index.js';
+import { generateHASComponents } from './has.mapper.js';
 
 /**
  * @typedef {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse} SingleAppellantCaseResponse
@@ -8,149 +8,103 @@ import { removeSummaryListActions } from '#lib/mappers/index.js';
 /**
  *
  * @param {Appeal} appealDetails
+ * @param {SingleAppellantCaseResponse} appellantCaseData
  * @param {MappedInstructions} mappedAppellantCaseData
+ * @param {boolean} userHasUpdateCasePermission
  * @returns {PageComponent[]}
  */
-export function generateCASAdvertComponents(appealDetails, mappedAppellantCaseData) {
-	/**
-	 * @type {PageComponent}
-	 */
-	const appellantSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			card: {
-				title: {
-					text: '1. Appellant details'
-				}
-			},
-			rows: [
-				mappedAppellantCaseData.appellant.display.summaryListItem,
-				...(appealDetails.agent ? [mappedAppellantCaseData.agent.display.summaryListItem] : [])
-			]
-		}
-	};
+export function generateCASAdvertComponents(
+	appealDetails,
+	appellantCaseData,
+	mappedAppellantCaseData,
+	userHasUpdateCasePermission
+) {
+	const pageComponents = generateHASComponents(
+		appealDetails,
+		appellantCaseData,
+		mappedAppellantCaseData,
+		userHasUpdateCasePermission
+	);
 
-	/**
-	 * @type {PageComponent}
-	 */
-	const appealSiteSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			attributes: {
-				id: 'site-details'
-			},
-			card: {
-				title: {
-					text: '2. Site details'
-				}
-			},
-			rows: [
-				mappedAppellantCaseData.siteAddress.display.summaryListItem,
-				mappedAppellantCaseData.inGreenBelt.display.summaryListItem,
-				mappedAppellantCaseData.siteOwnership.display.summaryListItem,
-				mappedAppellantCaseData.ownersKnown.display.summaryListItem,
-				mappedAppellantCaseData.inspectorAccess.display.summaryListItem,
-				mappedAppellantCaseData.healthAndSafetyIssues.display.summaryListItem
-			]
-		}
-	};
+	const siteDetailsComponentIndex = pageComponents.findIndex(
+		(component) =>
+			component.type === 'summary-list' && component.parameters.attributes?.id === 'site-details'
+	);
 
-	/**
-	 * @type {PageComponent}
-	 */
-	const applicationSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			attributes: {
-				id: 'application-summary'
-			},
-			card: {
-				title: {
-					text: '3. Application details'
-				}
-			},
-			rows: [
-				mappedAppellantCaseData.localPlanningAuthority.display.summaryListItem,
-				mappedAppellantCaseData.applicationReference.display.summaryListItem,
-				mappedAppellantCaseData.applicationDate.display.summaryListItem,
-				mappedAppellantCaseData.advertisementDescription.display.summaryListItem,
-				mappedAppellantCaseData.changedAdvertisementDescriptionDocument.display.summaryListItem,
-				mappedAppellantCaseData.relatedAppeals.display.summaryListItem,
-				mappedAppellantCaseData.applicationDecision.display.summaryListItem,
-				mappedAppellantCaseData.applicationDecisionDate.display.summaryListItem,
-				mappedAppellantCaseData.decisionLetter.display.summaryListItem
-			]
+	if (siteDetailsComponentIndex !== -1) {
+		const rows = pageComponents[siteDetailsComponentIndex].parameters.rows;
+		const siteAreaIndex = rows.findIndex(
+			(/** @type {{ classes: string; }} */ row) => row.classes === 'appeal-site-area'
+		);
+		if (siteAreaIndex !== -1) {
+			rows.splice(siteAreaIndex, 1);
 		}
-	};
+	}
 
-	/**
-	 * @type {PageComponent}
-	 */
-	const appealSummary = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			attributes: {
-				id: 'appeal-summary'
-			},
-			card: {
-				title: {
-					text: '4. Appeal details'
-				}
-			},
-			rows: [
-				removeSummaryListActions(mappedAppellantCaseData.applicationType.display.summaryListItem)
-			]
-		}
-	};
+	const applicationSummaryComponentIndex = pageComponents.findIndex(
+		(component) =>
+			component.type === 'summary-list' &&
+			component.parameters.attributes?.id === 'application-summary'
+	);
 
-	/**
-	 * @type {PageComponent}
-	 */
-	const uploadedDocuments = {
-		type: 'summary-list',
-		wrapperHtml: {
-			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
-			closing: '</div></div>'
-		},
-		parameters: {
-			attributes: {
-				id: 'uploaded-documents'
-			},
-			card: {
-				title: {
-					text: '5. Upload documents'
-				}
-			},
-			rows: [
-				mappedAppellantCaseData.applicationForm.display.summaryListItem,
-				mappedAppellantCaseData.appealStatement.display.summaryListItem,
-				mappedAppellantCaseData.costsDocument.display.summaryListItem,
-				mappedAppellantCaseData.supportingDocuments.display.summaryListItem
-			]
-		}
-	};
+	if (applicationSummaryComponentIndex !== -1) {
+		const rows = pageComponents[applicationSummaryComponentIndex].parameters.rows;
 
-	return [
-		appellantSummary,
-		appealSiteSummary,
-		applicationSummary,
-		appealSummary,
-		uploadedDocuments
-	];
+		const developmentDescriptionIndex = rows.findIndex(
+			(/** @type {{ classes: string; }} */ row) => row.classes === 'appeal-development-description'
+		);
+		const advertisementDescription =
+			mappedAppellantCaseData.advertisementDescription.display.summaryListItem;
+		const changedAdvertisementDescriptionDoc =
+			mappedAppellantCaseData.changedAdvertisementDescriptionDocument.display.summaryListItem;
+		const indexAfterDescription = developmentDescriptionIndex + 1;
+
+		rows[developmentDescriptionIndex] = advertisementDescription;
+		rows.splice(indexAfterDescription, 0, changedAdvertisementDescriptionDoc);
+	}
+
+	const uploadedDocumentsComponentIndex = pageComponents.findIndex(
+		(component) =>
+			component.type === 'summary-list' &&
+			component.parameters.attributes?.id === 'uploaded-documents'
+	);
+
+	if (uploadedDocumentsComponentIndex !== -1) {
+		/** @type {PageComponent} */
+		const uploadedDocuments = {
+			type: 'summary-list',
+			wrapperHtml: {
+				opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+				closing: '</div></div>'
+			},
+			parameters: {
+				attributes: {
+					id: 'uploaded-documents'
+				},
+				card: {
+					title: {
+						text: '4. Upload documents'
+					}
+				},
+				rows: [
+					mappedAppellantCaseData.applicationForm.display.summaryListItem,
+					mappedAppellantCaseData.appealStatement.display.summaryListItem,
+					mappedAppellantCaseData.costsDocument.display.summaryListItem,
+					mappedAppellantCaseData.supportingDocuments.display.summaryListItem
+				]
+			}
+		};
+		pageComponents[uploadedDocumentsComponentIndex] = uploadedDocuments;
+	}
+
+	const additionalDocumentsComponentIndex = pageComponents.findIndex(
+		(component) =>
+			component.type === 'summary-list' &&
+			component.parameters.attributes?.id === 'additional-documents'
+	);
+	if (additionalDocumentsComponentIndex !== -1) {
+		pageComponents.splice(additionalDocumentsComponentIndex, 1);
+	}
+
+	return pageComponents;
 }
