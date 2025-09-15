@@ -50,7 +50,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
@@ -142,7 +142,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
+                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
@@ -334,7 +334,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
@@ -429,7 +429,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
+                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
@@ -660,7 +660,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
@@ -752,7 +752,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
+                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
@@ -957,7 +957,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
@@ -1049,7 +1049,7 @@ exports[`appellant-case GET /appellant-case notification banners should render a
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
+                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
@@ -1325,7 +1325,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
@@ -1417,7 +1417,7 @@ exports[`appellant-case GET /appellant-case should render review outcome form fi
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
+                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
@@ -1621,7 +1621,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
@@ -1713,7 +1713,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
+                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
@@ -1878,7 +1878,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
@@ -1970,10 +1970,15 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
+                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site on highway land?</dt>
+                            <dd                             class="govuk-summary-list__value">No data</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/highway-land/change">Change<span class="govuk-visually-hidden"> Is the appeal site on highway land? (2. Site details)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
@@ -2105,7 +2110,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
@@ -2197,7 +2202,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
+                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
@@ -2343,7 +2348,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
@@ -2435,7 +2440,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
+                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
@@ -2700,7 +2705,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
@@ -2792,7 +2797,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
+                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
@@ -2957,7 +2962,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/site-address/change/1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
@@ -3049,7 +3054,7 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
+                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
@@ -5489,7 +5494,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list govuk-summary-list--no-border">
-                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Site address</dt>
+                <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                         data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site?</span></a>
@@ -5581,7 +5586,7 @@ exports[`appellant-case POST /appellant-case should re-render the appellant case
                 </div>
                 <div class="govuk-summary-card__content">
                     <dl class="govuk-summary-list" id="site-details">
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
+                        <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> What is the address of the appeal site?</dt>
                             <dd                             class="govuk-summary-list__value">96 The Avenue, Maidstone, Kent, MD21 5XY</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/appellant-case/site-address/change/1"
                                     data-cy="change-site-address">Change<span class="govuk-visually-hidden"> What is the address of the appeal site? (2. Site details)</span></a>
