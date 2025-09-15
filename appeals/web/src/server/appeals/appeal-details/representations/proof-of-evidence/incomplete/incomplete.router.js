@@ -19,7 +19,7 @@ router
 		validateAppeal,
 		validateIncompleteReason('Select why the proof of evidence and witnesses are incomplete'),
 		validateIncompleteReasonTextItems,
-		saveBodyToSession('proofOfEvidence'),
+		saveBodyToSession('proofOfEvidence', { scopeToAppeal: true }),
 		asyncHandler(postReasons)
 	);
 
