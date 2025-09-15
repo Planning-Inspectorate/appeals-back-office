@@ -156,7 +156,11 @@ export async function updateRepresentation(request, response) {
 
 	if (
 		status === APPEAL_REPRESENTATION_STATUS.INCOMPLETE &&
-		existingRep.representationType !== APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT
+		![
+			APPEAL_REPRESENTATION_TYPE.LPA_STATEMENT,
+			APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
+			APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
+		].includes(existingRep.representationType)
 	) {
 		return response.status(400).send({ errors: { status: ERROR_REP_ONLY_STATEMENT_INCOMPLETE } });
 	}
