@@ -19,7 +19,14 @@ export const redirectAndClearSession = (path, sessionKey) => (request, response)
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  **/
 export async function renderReasons(request, response) {
-	const { params, currentAppeal, currentRepresentation, apiClient, session, errors } = request;
+	const {
+		params: { proofOfEvidenceType, appealId },
+		currentAppeal,
+		currentRepresentation,
+		apiClient,
+		session,
+		errors
+	} = request;
 
 	const incompleteReasons = await getRepresentationRejectionReasonOptions(
 		apiClient,
@@ -30,11 +37,11 @@ export async function renderReasons(request, response) {
 		currentRepresentation,
 		incompleteReasons,
 		session,
-		['proofOfEvidence', params.appealId],
+		['proofOfEvidence', appealId],
 		errors
 	);
-
-	const pageContent = incompleteProofOfEvidencePage(currentAppeal);
+	console.log('proofOfEvidenceType: ', proofOfEvidenceType);
+	const pageContent = incompleteProofOfEvidencePage(currentAppeal, proofOfEvidenceType);
 
 	return response.status(200).render('appeals/appeal/reject-representation.njk', {
 		errors,

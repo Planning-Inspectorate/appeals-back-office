@@ -1,12 +1,11 @@
 import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
+import {
+	validateIncompleteReason,
+	validateIncompleteReasonTextItems
+} from '#appeals/appeal-details/representations/proof-of-evidence/incomplete/incomplete.validator.js';
+import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-
-import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
-import {
-	validateRejectionReasonTextItems,
-	validateRejectReason
-} from '../../common/validators/reject.validators.js';
 import { postReasons, redirectAndClearSession, renderReasons } from './incomplete.controller.js';
 
 const router = createRouter({ mergeParams: true });
@@ -18,8 +17,8 @@ router
 	.get(validateAppeal, asyncHandler(renderReasons))
 	.post(
 		validateAppeal,
-		validateRejectReason('Select why the proof of evidence and witnesses are incomplete'),
-		validateRejectionReasonTextItems,
+		validateIncompleteReason('Select why the proof of evidence and witnesses are incomplete'),
+		validateIncompleteReasonTextItems,
 		saveBodyToSession('proofOfEvidence'),
 		asyncHandler(postReasons)
 	);
