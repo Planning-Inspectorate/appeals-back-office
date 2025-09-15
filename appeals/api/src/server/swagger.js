@@ -150,6 +150,11 @@ export const spec = {
 			newAppealTypeId: 32,
 			newAppealTypeFinalDate: '2024-02-02'
 		},
+		AppealTypeResubmitMarkInvalidRequest: {
+			newAppealTypeId: 32,
+			newAppealTypeFinalDate: '2024-02-02',
+			appellantCaseId: 12
+		},
 		AppealTypeTransferRequest: {
 			newAppealTypeId: 32
 		},

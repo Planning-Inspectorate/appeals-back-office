@@ -340,7 +340,7 @@ export function changeAppealMarkAppealInvalidPage(
 		type: 'html',
 		parameters: {
 			html: `
-			<p class="govuk-body">You need to add a deadline for the appellant to resubmit the new ${newAppealType} appeal.<p>
+			<p class="govuk-body">You need to add a deadline for the appellant to resubmit the new ${newAppealType.toLowerCase()} appeal.<p>
       	`
 		}
 	};

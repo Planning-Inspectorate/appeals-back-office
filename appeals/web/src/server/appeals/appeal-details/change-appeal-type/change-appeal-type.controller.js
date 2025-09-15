@@ -23,7 +23,7 @@ import {
 	getAppealTypes,
 	getChangeAppealTypes,
 	getNoResubmitAppealRequestRedirectUrl,
-	postAppealChangeRequest,
+	postAppealResubmitMarkInvalidRequest,
 	postAppealTransferConfirmation,
 	postAppealTransferRequest
 } from './change-appeal-type.service.js';
@@ -588,15 +588,17 @@ export const postCheckChangeAppealFinalDate = async (request, response) => {
 		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
 		const { day, month, year } = request.session.changeAppealType;
 		const { errors } = request;
+		const { appellantCaseId } = request.currentAppeal;
 
 		if (errors) {
 			return renderChangeAppealFinalDate(request, response);
 		}
 		const appealTypeId = parseInt(request.session.changeAppealType.appealTypeId, 10);
 
-		await postAppealChangeRequest(
+		await postAppealResubmitMarkInvalidRequest(
 			request.apiClient,
 			appealId,
+			appellantCaseId,
 			appealTypeId,
 			dayMonthYearHourMinuteToISOString({
 				year,

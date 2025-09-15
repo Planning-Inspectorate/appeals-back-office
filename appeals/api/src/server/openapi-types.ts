@@ -804,6 +804,15 @@ export interface AppealTypeChangeRequest {
 	newAppealTypeFinalDate?: string;
 }
 
+export interface AppealTypeResubmitMarkInvalidRequest {
+	/** @example 32 */
+	newAppealTypeId?: number;
+	/** @example "2024-02-02" */
+	newAppealTypeFinalDate?: string;
+	/** @example 12 */
+	appellantCaseId?: number;
+}
+
 export interface AppealTypeTransferRequest {
 	/** @example 32 */
 	newAppealTypeId?: number;
