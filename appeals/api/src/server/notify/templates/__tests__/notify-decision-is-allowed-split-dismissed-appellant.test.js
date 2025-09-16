@@ -35,7 +35,7 @@ const expectedContentRows = (replacementRows) => [
 	'',
 	'We have also informed the local planning authority of the decision.',
 	'',
-	'# The Planning Inspectorate’s role',
+	"# The Planning Inspectorate's role",
 	'',
 	'The Planning Inspectorate cannot change or revoke the decision. You can [challenge the decision in the High Court](https://www.gov.uk/appeal-planning-decision/if-you-think-the-appeal-decision-is-legally-incorrect) if you think the Planning Inspectorate made a legal mistake.',
 	'',
