@@ -349,7 +349,7 @@ export function changeAppealMarkAppealInvalidPage(
 	const pageContent = {
 		title: `We will mark the ${existingAppealType} appeal as invalid`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
-		preHeading: `Appeal ${shortAppealReference} - update appeal type`,
+		preHeading: `Appeal ${shortAppealReference} - change appeal type`,
 		heading: `We will mark the ${existingAppealType} appeal as invalid`,
 		pageComponents: [textComponent],
 		submitButtonText: 'Continue'
