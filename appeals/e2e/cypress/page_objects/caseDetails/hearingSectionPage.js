@@ -93,7 +93,7 @@ export class HearingSectionPage extends CaseDetailsPage {
 		});
 	}
 	deleteHearingIfExists(caseRef) {
-		cy.log(`Checking for hearing with case reference: ${caseRef}`);
+		cy.log(`Checking for hearing with case reference: ${caseRef.reference}`);
 
 		cy.loadAppealDetails(caseRef).then((appealDetails) => {
 			cy.log('Appeal details:', appealDetails);
@@ -123,7 +123,7 @@ export class HearingSectionPage extends CaseDetailsPage {
 		cy.simulateHearingElapsed(caseRef);
 		cy.reload();
 		caseDetailsPage.validateBannerMessage('Important', 'Issue decision');
-		caseDetailsPage.clickIssueDecision(caseRef);
+		caseDetailsPage.clickIssueDecision(caseRef.reference);
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Allowed'));
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.uploadSampleFile(caseDetailsPage.sampleFiles.pdf);

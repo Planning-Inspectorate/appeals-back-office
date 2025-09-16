@@ -739,7 +739,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	verifyAppealRefOnCaseDetails(caseRef) {
-		this.elements.getAppealRefCaseDetails().contains(caseRef.reference);
+		this.elements.getAppealRefCaseDetails().contains(caseRef);
 	}
 
 	verifyCheckYourAnswers(label, value) {
