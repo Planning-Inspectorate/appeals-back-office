@@ -165,6 +165,8 @@ describe('link appeals', () => {
 			cy.createCase().then((leadCase2) => {
 				cy.createCase().then((childCase1) => {
 					cy.createCase().then((childCase2) => {
+						//cannot assign case officer for child case
+						happyPathHelper.assignCaseOfficer(childCase1);
 						happyPathHelper.assignCaseOfficer(leadCase1);
 
 						happyPathHelper.addLinkedAppeal(leadCase1, childCase1);
@@ -176,7 +178,7 @@ describe('link appeals', () => {
 						caseDetailsPage.checkStatusOfCase('Lead', 1);
 
 						//attempt to add a child appeal from a child appeal
-						happyPathHelper.assignCaseOfficer(childCase1);
+						happyPathHelper.viewCaseDetails(childCase1);
 						caseDetailsPage.checkAddLinkedAppealDoesNotExist();
 					});
 				});

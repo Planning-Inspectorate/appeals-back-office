@@ -52,7 +52,6 @@ describe('change appeal procedure types', () => {
 
 			happyPathHelper.startS78Case(caseRef, 'written');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-			caseDetailsPage.clickAccordionByButton('Overview');
 			overviewSectionPage.verifyCaseOverviewDetails(overviewDetails.written);
 
 			overviewSectionPage.clickRowChangeLink('case-procedure');

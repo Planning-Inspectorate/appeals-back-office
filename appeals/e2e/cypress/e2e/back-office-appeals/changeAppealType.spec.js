@@ -23,7 +23,8 @@ describe('Change Appeal Type', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.selectRadioButtonByValue('No');
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.validateBannerMessage('Important', 'This appeal is awaiting transfer');
+			caseDetailsPage.clickButtonByText('Mark as awaiting transfer');
+			caseDetailsPage.validateBannerMessage('Important', 'Mark as transferred');
 			caseDetailsPage.checkStatusOfCase('Awaiting transfer', 0);
 		});
 	});

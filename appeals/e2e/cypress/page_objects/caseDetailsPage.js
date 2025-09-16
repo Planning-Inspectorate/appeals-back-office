@@ -191,7 +191,7 @@ export class CaseDetailsPage extends Page {
 		setUpTimetableHearingDate: () => cy.getByData(this._cyDataSelectors.setUpTimetableHearingDate),
 		timeTableRows: () => cy.get('.appeal-case-timetable dt'),
 		personalListFilterDropdown: () => cy.get('.govuk-select'),
-		// caseDetailsSections: () => cy.get('.govuk-accordion__section-heading-text-focus'),
+		caseDetailsSections: () => cy.get('#main-content'),
 		pageHeading: () => cy.get(this._cyDataSelectors.pageHeading),
 		inquiryEstimatedDaysInput: () => cy.get('#inquiry-estimation-days'),
 		line1: () => cy.get('#address-line-1'),
@@ -205,7 +205,8 @@ export class CaseDetailsPage extends Page {
 		estimatedPreparationTime: () => cy.get('#preparation-time'),
 		estimatedSittingTime: () => cy.get('#sitting-time'),
 		estimatedReportingTime: () => cy.get('#reporting-time'),
-		caseDetailsInquiryEstimateLink: () => cy.get('#addInquiryEstimates')
+		caseDetailsInquiryEstimateLink: () => cy.get('#addInquiryEstimates'),
+		caseOfficerValue: () => cy.get('.appeal-case-officer .govuk-summary-list__value')
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -657,6 +658,13 @@ export class CaseDetailsPage extends Page {
 		this.elements.decisionOutcomeText().contains(this.basePageElements.link, text);
 	}
 
+	getCaseOfficer() {
+		return this.elements
+			.caseOfficerValue()
+			.invoke('text')
+			.then((text) => text.split('\n')[0].trim());
+	}
+
 	verifyAnswerSummaryValue(answer) {
 		this.elements.answerCellAppeals(answer).then(($elem) => {
 			cy.wrap($elem)
@@ -861,12 +869,16 @@ export class CaseDetailsPage extends Page {
 	};
 
 	verifyCaseDetailsSection = (expectedSections) => {
-		const actualSections = [];
 		this.elements
 			.caseDetailsSections()
-			.each(($el) => actualSections.push($el.text().trim()))
-			.then(() => expect(actualSections).to.deep.equal(expectedSections));
+			.find('h1.govuk-heading-l')
+			.should(($h1s) => {
+				const actual = [...$h1s].map((h) => h.textContent.replace(/\s+/g, ' ').trim());
+
+				expect(actual).to.deep.equal(expectedSections);
+			});
 	};
+
 	verifyAppealType(expectedAppealType) {
 		this.elements.appealType().should('contain', expectedAppealType);
 	}
