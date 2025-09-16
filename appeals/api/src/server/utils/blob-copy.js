@@ -17,13 +17,19 @@ export const copyBlobs = async (copyList) => {
 	}
 
 	// Copy blobs using the event client
-	const messages = copyList.map((copyDetails) => {
-		const { sourceBlobName, destinationBlobName } = copyDetails;
-		return {
-			originalURI: sourceBlobName ?? '',
-			importedURI: destinationBlobName
-		};
-	});
+	const messages = copyList
+		.map((copyDetails) => {
+			const { sourceBlobName, destinationBlobName } = copyDetails;
+			if (!sourceBlobName || !destinationBlobName) {
+				return null;
+			}
+			const container = `${config.BO_BLOB_STORAGE_ACCOUNT}/${config.BO_BLOB_CONTAINER}`;
+			return {
+				originalURI: `${container}/${sourceBlobName}`,
+				importedURI: `${container}/${destinationBlobName}`
+			};
+		})
+		.filter((message) => message !== null);
 	if (messages.length > 0) {
 		const topic = producers.boBlobMove;
 		const res = await eventClient.sendEvents(topic, messages, EventType.Create);
