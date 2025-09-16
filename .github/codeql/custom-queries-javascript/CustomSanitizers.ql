@@ -1,9 +1,11 @@
 import javascript
 import semmle.javascript.security.dataflow.SSRF
 
+/**
+ * Custom sanitizers for our project.
+ */
 class RouterValidationSanitizer extends SSRF::Sanitizer {
   RouterValidationSanitizer() {
-    // Match by function name
     this.hasLocationInfo("validateAppeal")
   }
 }
