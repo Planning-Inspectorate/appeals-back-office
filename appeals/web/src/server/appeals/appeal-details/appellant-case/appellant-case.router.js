@@ -31,6 +31,7 @@ import applicationOutcomeRouter from './application-outcome/application-outcome.
 import applicationSubmissionDateRouter from './application-submission-date/application-submission-date.router.js';
 import developmentDescriptionRouter from './development-description/development-description.router.js';
 import highwayLandRouter from './highway-land/highway-land.router.js';
+import landownerPermissionRouter from './landowner-permission/landowner-permission.router.js';
 import outcomeIncompleteRouter from './outcome-incomplete/outcome-incomplete.router.js';
 import outcomeValidRouter from './outcome-valid/outcome-valid.router.js';
 import ownersKnownRouter from './owners-known/owners-known.router.js';
@@ -70,6 +71,12 @@ router.use(
 	validateAppeal,
 	assertUserHasPermission(permissionNames.updateCase),
 	inspectorAccessRouter
+);
+router.use(
+	'/landowner-permission',
+	validateAppeal,
+	assertUserHasPermission(permissionNames.updateCase),
+	landownerPermissionRouter
 );
 router.use(
 	'/safety-risks',

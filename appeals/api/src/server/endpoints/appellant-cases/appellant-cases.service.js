@@ -268,6 +268,7 @@ export function renderAuditTrailDetail(data) {
 		AUDIT_TRAIL_HIGHWAY_LAND_UPDATED: () => (data.highwayLand ? 'Yes' : 'No'),
 		AUDIT_TRAIL_IS_GREEN_BELT_UPDATED: () => (data.isGreenBelt ? 'Yes' : 'No'),
 		AUDIT_TRAIL_ADVERT_IN_POSITION_UPDATED: () => (data.advertInPosition ? 'Yes' : 'No'),
+		AUDIT_TRAIL_LANDOWNER_PERMISSION_UPDATED: () => (data.landownerPermission ? 'Yes' : 'No'),
 		AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED: () => data.knowsOtherOwners ?? 'No data',
 		AUDIT_TRAIL_SITE_ACCESS_DETAILS_UPDATED: () =>
 			data.siteAccessDetails ? `Yes\n${data.siteAccessDetails}` : 'No',
