@@ -41,7 +41,7 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 	});
 	test('should call notify sendEmail with the correct data when there is both a statement and ip comments', async () => {
 		const expectedContent = [
-			'We have received the local planning authority’s questionnaire, all statements and comments from interested parties.',
+			"We have received the local planning authority's questionnaire, all statements and comments from interested parties.",
 			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
 			...expectedTailContent
 		].join('\n');
@@ -111,7 +111,7 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 		];
 
 		const expectedContent = [
-			'We have received the local planning authority’s questionnaire, all statements and comments from interested parties.',
+			"We have received the local planning authority's questionnaire, all statements and comments from interested parties.",
 			'You can [view this information in the appeals service](/mock-front-office-url/appeals/ABC45678).',
 			...expectedTailContentWithoutWhatHappensNext
 		].join('\n');

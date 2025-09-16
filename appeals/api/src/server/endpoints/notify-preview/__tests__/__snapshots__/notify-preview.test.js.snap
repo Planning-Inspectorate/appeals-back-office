@@ -17,7 +17,7 @@ Planning application reference: planningApplicationReference<br>
 
 <p><a href="/manage-appeals/12345" class="govuk-link">Sign in to our service</a> to view the decision letter dated dateISOStringToDisplayDate(file.receivedDate).</p>
 
-<h3> The Planning Inspectorate’s role</h3>
+<h3> The Planning Inspectorate's role</h3>
 
 <p>The Planning Inspectorate cannot change or revoke the decision. Only the High Court can change this decision.</p>
 

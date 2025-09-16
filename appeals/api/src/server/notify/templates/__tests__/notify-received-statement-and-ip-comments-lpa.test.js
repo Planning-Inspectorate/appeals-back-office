@@ -30,7 +30,7 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'We’ve received comments from interested parties.',
+			"We've received comments from interested parties.",
 			'You can [view this information in the appeals service](/mock-front-office-url/manage-appeals/ABC45678).',
 			'# Appeal details',
 			'',
@@ -105,7 +105,7 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'We’ve received comments from interested parties.',
+			"We've received comments from interested parties.",
 			'You can [view this information in the appeals service](/mock-front-office-url/manage-appeals/ABC45678).',
 			'# Appeal details',
 			'',
