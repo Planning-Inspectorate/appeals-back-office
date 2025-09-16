@@ -13,7 +13,7 @@ router
 	.get(asyncHandler(controller.getHearingDateKnown))
 	.post(
 		validators.validateDateKnown,
-		saveBodyToSession('startCaseHearing'),
+		saveBodyToSession('startCaseAppealProcedure', { scopeToAppeal: true }),
 		asyncHandler(controller.postHearingDateKnown)
 	);
 
@@ -25,8 +25,13 @@ router
 		extractAndProcessDateErrors({
 			fieldNamePrefix: 'hearing-date'
 		}),
-		saveBodyToSession('startCaseHearing'),
+		saveBodyToSession('startCaseAppealProcedure', { scopeToAppeal: true }),
 		asyncHandler(controller.postHearingDate)
 	);
+
+router
+	.route('/confirm')
+	.get(asyncHandler(controller.getHearingConfirm))
+	.post(asyncHandler(controller.postHearingConfirm));
 
 export default router;
