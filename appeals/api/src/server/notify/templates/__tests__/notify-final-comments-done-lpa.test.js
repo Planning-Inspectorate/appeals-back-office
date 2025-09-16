@@ -18,7 +18,7 @@ describe('final-comments-done-lpa.md', () => {
 		};
 
 		const expectedContent = [
-			'We have received the appellant’s final comments.',
+			"We have received the appellant's final comments.",
 			'',
 			'# Appeal details',
 			'',
@@ -28,7 +28,7 @@ describe('final-comments-done-lpa.md', () => {
 			'',
 			'# What happens next',
 			'',
-			'You can [view the appellant’s final comments](/mock-front-office-url/manage-appeals/ABC45678).',
+			"You can [view the appellant's final comments](/mock-front-office-url/manage-appeals/ABC45678).",
 			'',
 			'The inspector will visit the site and we will contact you when we have made the decision.',
 			'',
@@ -45,7 +45,7 @@ describe('final-comments-done-lpa.md', () => {
 			'test@136s7.com',
 			{
 				content: expectedContent,
-				subject: 'We have received the appellant’s final comments: ABC45678'
+				subject: "We have received the appellant's final comments: ABC45678"
 			}
 		);
 	});

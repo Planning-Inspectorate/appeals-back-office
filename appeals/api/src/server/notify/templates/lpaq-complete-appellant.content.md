@@ -1,4 +1,4 @@
-We have received the local planning authority’s questionnaire.
+We have received the local planning authority's questionnaire.
 
 You can [view this information in the appeals service]({{front_office_url}}/appeals/{{appeal_reference_number}}).
 

@@ -6,7 +6,7 @@ We started your appeal on {{start_date}}.
 
 # Next steps
 
-We’ve asked {{local_planning_authority}} to complete a questionnaire about your appeal. They will send you a copy of their completed questionnaire.
+We've asked {{local_planning_authority}} to complete a questionnaire about your appeal. They will send you a copy of their completed questionnaire.
 
 We will arrange for an inspector to visit the address. You may need to attend the visit.
 

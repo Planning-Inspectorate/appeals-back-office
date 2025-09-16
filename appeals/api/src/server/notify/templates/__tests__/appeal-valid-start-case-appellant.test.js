@@ -37,7 +37,7 @@ describe('appeal-valid-start-case-appellant.md', () => {
 			'',
 			'# Next steps',
 			'',
-			'We’ve asked Bristol City Council to complete a questionnaire about your appeal. They will send you a copy of their completed questionnaire.',
+			"We've asked Bristol City Council to complete a questionnaire about your appeal. They will send you a copy of their completed questionnaire.",
 			'',
 			'We will arrange for an inspector to visit the address. You may need to attend the visit.',
 			'',
