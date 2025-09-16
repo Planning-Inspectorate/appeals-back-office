@@ -5,8 +5,8 @@ import {
 import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { getSavedBackUrl } from '#lib/middleware/save-back-url.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
-import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
 	addHorizonReferencePage,
@@ -299,7 +299,7 @@ const renderAddHorizonReference = async (request, response) => {
 
 	const mappedPageContent = addHorizonReferencePage(
 		appealData,
-		getBackLinkUrlFromQuery(request),
+		getSavedBackUrl(request, 'changeAppealType'),
 		horizonReference
 	);
 
@@ -446,6 +446,10 @@ export const getMarkAppealInvalid = async (request, response) => {
 	const changeAppeal = appealTypes.find(
 		(appealType) => appealType.id === parseInt(changeAppealType.appealTypeId)
 	);
+	const existingAppealType =
+		appealTypes
+			.find((appealType) => appealType.type === appealData.appealType)
+			?.changeAppealType.toLowerCase() ?? appealData.appealType.toLowerCase();
 
 	if (!changeAppeal) {
 		logger.error('error');
@@ -454,8 +458,8 @@ export const getMarkAppealInvalid = async (request, response) => {
 
 	const mappedPageContent = changeAppealMarkAppealInvalidPage(
 		appealData,
-		appealData.appealType.toLowerCase(),
-		changeAppeal.type
+		existingAppealType,
+		changeAppeal.changeAppealType.toLowerCase()
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {

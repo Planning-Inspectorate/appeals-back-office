@@ -1,3 +1,4 @@
+import { saveBackUrl } from '#lib/middleware/save-back-url.js';
 import { extractAndProcessDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
@@ -9,7 +10,7 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/appeal-type')
-	.get(asyncHandler(controller.getAppealType))
+	.get(saveBackUrl('changeAppealType'), asyncHandler(controller.getAppealType))
 	.post(validators.validateAppealType, asyncHandler(controller.postAppealType));
 
 router
