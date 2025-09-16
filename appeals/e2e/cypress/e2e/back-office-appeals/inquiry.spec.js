@@ -157,8 +157,6 @@ it('Can start case as inquiry with address and estimated days', () => {
 	// Verify timetable rows
 	caseDetailsPage.verifyTimeTableRows(timeTableRows);
 
-	// Verify overview details
-	caseDetailsPage.clickAccordionByButton('Overview');
 	overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
 
 	// Verify order of sections
@@ -197,7 +195,6 @@ it('Can update inquiry date', () => {
 		// find case and open inqiiry section
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
-		caseDetailsPage.clickAccordionByButton('Inquiry');
 
 		// generate new date and update it in inquiry
 		cy.getBusinessActualDate(new Date(), 25).then((newInquiryDate) => {
@@ -230,7 +227,6 @@ it('Can update inquiry time', () => {
 		// find case and open inqiiry section
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
-		caseDetailsPage.clickAccordionByButton('Inquiry');
 
 		// generate new date with upfdated time value and update it in inquiry
 		const newInquiryDate = new Date(inquiryDate);
@@ -262,7 +258,6 @@ it('Can update inquiry estimated days when already set - using do you know link'
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
-		caseDetailsPage.clickAccordionByButton('Inquiry');
 
 		// change inquiry estimated days
 		const newEstimatedDays = estimatedInquiryDays;
@@ -296,7 +291,6 @@ it('Can update inquiry estimated days when already set - using estimated days li
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
-		caseDetailsPage.clickAccordionByButton('Inquiry');
 
 		// change inquiry estimated days
 		const newEstimatedDays = estimatedInquiryDays;
@@ -329,7 +323,6 @@ it('Can update inquiry estimated days when not already set', () => {
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
-		caseDetailsPage.clickAccordionByButton('Inquiry');
 
 		// change inquiry estimated days
 		const newEstimatedDays = estimatedInquiryDays;
@@ -363,7 +356,6 @@ it('Can update inquiry address', () => {
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
-		caseDetailsPage.clickAccordionByButton('Inquiry');
 
 		// change inquiry address
 		inquirySectionPage.clickChangeLink(inquirySectionPage.inquirySectionLinks.address);
@@ -391,7 +383,6 @@ it('Can update answer from CYA page - change address', () => {
 		// find case and open inquiry section
 		cy.visit(urlPaths.appealsList);
 		listCasesPage.clickAppealByRef(caseRef);
-		caseDetailsPage.clickAccordionByButton('Inquiry');
 
 		// change inquiry address to reach cya page
 		const newAddress = {

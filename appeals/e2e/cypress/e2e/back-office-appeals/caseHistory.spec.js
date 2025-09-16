@@ -22,14 +22,17 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 		{ tags: tag.smoke },
 		() => {
 			let dueDate = new Date();
+			let officer;
 
 			cy.createCase().then((caseRef) => {
 				happyPathHelper.assignCaseOfficer(caseRef);
 				happyPathHelper.reviewAppellantCase(caseRef);
-				caseDetailsPage.clickViewCaseHistory();
-				caseDetailsPage.verifyTableCellTextCaseHistory(
-					users.appeals.caseAdmin.email + ' was added to the team'
-				);
+
+				caseDetailsPage.getCaseOfficer().then((name) => {
+					officer = name;
+					caseDetailsPage.clickViewCaseHistory();
+					caseDetailsPage.verifyTableCellTextCaseHistory(officer + ' was added to the team');
+				});
 				caseDetailsPage.verifyTableCellTextCaseHistory('Case progressed to validation');
 			});
 		}
