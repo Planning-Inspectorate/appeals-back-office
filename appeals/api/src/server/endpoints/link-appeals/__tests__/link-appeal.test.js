@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { eventClient } from '#infrastructure/event-client.js';
 import { request } from '#tests/../app-test.js';
 import { householdAppeal, linkedAppeals } from '#tests/appeals/mocks.js';
 import { documentCreated, documentVersionCreated, savedFolder } from '#tests/documents/mocks.js';
@@ -11,6 +12,7 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
 } from '@pins/appeals/constants/support.js';
+import { EventType } from '@pins/event-client';
 import { cloneDeep } from 'lodash-es';
 
 const { databaseConnector } = await import('#utils/database-connector.js');
@@ -168,6 +170,17 @@ describe('appeal linked appeals routes', () => {
 						externalSource: false
 					}
 				});
+
+				expect(eventClient.sendEvents).toHaveBeenCalledWith(
+					'appeal-document-to-move',
+					[
+						{
+							importedURI: `https://127.0.0.1:10000/document-service-uploads/appeal/1345264/mock-uuid/v1/mydoc-4567654.pdf`,
+							originalURI: `https://127.0.0.1:10000/document-service-uploads/appeal/6000001/27d0fda4-8a9a-4f5a-a158-68eaea676158/v1/mydoc.pdf`
+						}
+					],
+					EventType.Create
+				);
 
 				expect(databaseConnector.document.create).toHaveBeenCalledWith({
 					data: {
