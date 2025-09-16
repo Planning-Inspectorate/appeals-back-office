@@ -270,6 +270,11 @@ interface UpdateAppellantCaseRequest {
 	agriculturalHolding?: boolean | null;
 	tenantAgriculturalHolding?: boolean | null;
 	otherTenantsAgriculturalHolding?: boolean | null;
+	highwayLand?: boolean | null;
+	advertInPosition?: boolean | null;
+	landownerPermission?: boolean | null;
+	siteGridReferenceEasting?: string | null;
+	siteGridReferenceNothing?: string | null;
 }
 
 interface UpdateAppellantCaseValidationOutcome {
