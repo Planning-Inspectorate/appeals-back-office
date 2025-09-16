@@ -2,11 +2,11 @@ import { appealShortReference } from '#lib/appeals-formatter.js';
 import { ensureArray } from '#lib/array-utilities.js';
 import { buttonComponent, simpleHtmlComponent, wrapComponents } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
+import { newLine2LineBreak } from '#lib/string-utilities.js';
 import { checkRedactedText } from '#lib/validators/redacted-text.validator.js';
 import { REVERT_BUTTON_TEXT } from '@pins/appeals/constants/common.js';
 import { redactInput } from '../../../representations/common/components/redact-input.js';
 import { getAttachmentList } from '../../common/document-attachment-list.js';
-import { newLine2LineBreak } from '#lib/string-utilities.js';
 
 /** @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import("#appeals/appeal-details/representations/types.js").Representation} Representation */
