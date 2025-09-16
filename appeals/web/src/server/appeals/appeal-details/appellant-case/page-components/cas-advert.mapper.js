@@ -36,18 +36,22 @@ export function generateCASAdvertComponents(
 
 		// remove the site area row
 		const siteAreaIndex = rows.findIndex(
-			(/** @type {{ classes: string; }} */ row) => row.classes === 'appeal-site-area'
+			(/** @type {{ key: {text: string}; }} */ row) => row.key.text === 'appeal-site-area'
 		);
 		if (siteAreaIndex !== -1) {
 			rows.splice(siteAreaIndex, 1);
 		}
 
-		// add the highway land row
+		// add the highway land row and advertisementInPosition row
 		const appealSiteAddressIndex = rows.findIndex(
 			(/** @type {{ classes: string; }} */ row) => row.classes === 'appeal-site-address'
 		);
 		const highwayLand = mappedAppellantCaseData.highwayLand.display.summaryListItem;
-		rows.splice(appealSiteAddressIndex + 1, 0, highwayLand);
+
+		const advertisementInPosition =
+			mappedAppellantCaseData.advertisementInPosition.display.summaryListItem;
+
+		rows.splice(appealSiteAddressIndex + 1, 0, highwayLand, advertisementInPosition);
 	}
 
 	const applicationSummaryComponentIndex = pageComponents.findIndex(
