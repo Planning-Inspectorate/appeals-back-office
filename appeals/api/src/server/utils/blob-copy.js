@@ -13,17 +13,25 @@ import { EventType } from '@pins/event-client';
  */
 export const copyBlobs = async (copyList) => {
 	if (config.useBlobEmulator) {
-		return copyBlobsUsingEmulator(copyList);
+		await copyBlobsUsingEmulator(copyList);
 	}
 
-	// Copy blobs using the event client
+	return copyBlobsUsingAzure(copyList);
+};
+
+/**
+ * Copies blobs from one location to another using Azure event client
+ * @param {{sourceBlobName:  string | null | undefined, destinationBlobName: string}[]} copyList
+ * @returns {Promise<Promise<Awaited<unknown>[]> | Promise<{[p: string]: Awaited<*>, [p: number]: Awaited<*>, [p: symbol]: Awaited<*>}>>}
+ */
+const copyBlobsUsingAzure = async (copyList) => {
 	const messages = copyList
 		.map((copyDetails) => {
 			const { sourceBlobName, destinationBlobName } = copyDetails;
 			if (!sourceBlobName || !destinationBlobName) {
 				return null;
 			}
-			const container = `${config.BO_BLOB_STORAGE_ACCOUNT}/${config.BO_BLOB_CONTAINER}`;
+			const container = `${config.BO_BLOB_STORAGE_ACCOUNT}${config.BO_BLOB_CONTAINER}`;
 			return {
 				originalURI: `${container}/${sourceBlobName}`,
 				importedURI: `${container}/${destinationBlobName}`
@@ -41,7 +49,7 @@ export const copyBlobs = async (copyList) => {
 };
 
 /**
- *
+ * Copies blobs from one location to another within the blob emulator
  * @param {{sourceBlobName:  string | null | undefined, destinationBlobName: string}[]} copyList
  * @returns {Promise<Promise<Awaited<unknown>[]> | Promise<{[p: string]: Awaited<*>, [p: number]: Awaited<*>, [p: symbol]: Awaited<*>}>>}
  */
