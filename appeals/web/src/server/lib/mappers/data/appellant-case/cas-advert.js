@@ -4,6 +4,7 @@ import { mapAdvertisementInPosition } from './submappers/advertisement-in-positi
 import { mapChangedAdvertisementDescriptionDocument } from './submappers/changed-advertisement-description-document.js';
 import { mapDesignAccessStatement } from './submappers/design-access-statement.js';
 import { mapHighwayLand } from './submappers/highway-land.js';
+import { mapLandownerPermission } from './submappers/landowner-permission.js';
 import { mapSupportingDocuments } from './submappers/supporting-documents.js';
 
 export const submaps = {
@@ -13,5 +14,6 @@ export const submaps = {
 	designAndAccessStatement: mapDesignAccessStatement,
 	changedAdvertisementDescriptionDocument: mapChangedAdvertisementDescriptionDocument,
 	advertisementDescription: mapAdvertisementDescription,
-	advertisementInPosition: mapAdvertisementInPosition
+	advertisementInPosition: mapAdvertisementInPosition,
+	landownerPermission: mapLandownerPermission
 };

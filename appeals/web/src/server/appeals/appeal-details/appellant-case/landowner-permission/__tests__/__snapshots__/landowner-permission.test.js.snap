@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Advertisement in position page GET /change should render change landowner permission page with no radio button selected when landownerPermission boolean is false 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Do you have the landowner&#39;s permission?</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="landowner-permission" name="landownerPermission"
+                                    type="radio" value="yes">
+                                    <label class="govuk-label govuk-radios__label" for="landowner-permission">Yes</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="landowner-permission-2" name="landownerPermission"
+                                    type="radio" value="no" checked>
+                                    <label class="govuk-label govuk-radios__label" for="landowner-permission-2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`Advertisement in position page GET /change should render change landowner permission page with yes radio button selected when landownerPermission boolean is true 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Do you have the landowner&#39;s permission?</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <div class="govuk-radios" data-module="govuk-radios">
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="landowner-permission" name="landownerPermission"
+                                    type="radio" value="yes" checked>
+                                    <label class="govuk-label govuk-radios__label" for="landowner-permission">Yes</label>
+                                </div>
+                                <div class="govuk-radios__item">
+                                    <input class="govuk-radios__input" id="landowner-permission-2" name="landownerPermission"
+                                    type="radio" value="no">
+                                    <label class="govuk-label govuk-radios__label" for="landowner-permission-2">No</label>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
