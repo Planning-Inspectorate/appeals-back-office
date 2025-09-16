@@ -1,5 +1,5 @@
 {% if has_ip_comments -%}
-   We’ve received comments from interested parties.
+   We've received comments from interested parties.
 {% else -%}
    We did not receive any comments from interested parties.
 {% endif -%}
