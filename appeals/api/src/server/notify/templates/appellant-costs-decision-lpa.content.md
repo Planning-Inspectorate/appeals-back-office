@@ -4,7 +4,7 @@ We have made a decision on the appellant's application for an award of appeal co
 
 # Appeal costs decision
 
-[Sign in to our service](https://{{front_office_url}}/manage-appeals/{{appeal_reference_number}}/appeal-details) to view the decision.
+[Sign in to our service]({{front_office_url}}/manage-appeals/{{appeal_reference_number}}/appeal-details) to view the decision.
 
 We have also informed the appellant of the decision.
 
