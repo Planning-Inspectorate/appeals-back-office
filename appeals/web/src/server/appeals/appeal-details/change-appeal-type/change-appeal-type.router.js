@@ -52,9 +52,6 @@ router
 router
 	.route('/check-change-appeal-final-date')
 	.get(asyncHandler(controller.getCheckChangeAppealFinalDate))
-	.post(
-		// validation not required as occurs on post change-appeal-final-date
-		asyncHandler(controller.postCheckChangeAppealFinalDate)
-	);
+	.post(asyncHandler(controller.postCheckChangeAppealFinalDate));
 
 export default router;
