@@ -291,7 +291,9 @@ describe('set up inquiry', () => {
 		});
 
 		it('should return 400 on missing inquiryEstimationYesNo with appropriate error message', async () => {
-			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/address`).send({});
+			const response = await request
+				.post(`${baseUrl}/${appealId}/Inquiry/setup/estimation`)
+				.send({});
 
 			expect(response.statusCode).toBe(400);
 
@@ -302,7 +304,39 @@ describe('set up inquiry', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain(
-				'Select yes if you know the address of where the inquiry will take place'
+				'Select yes if you know the expected number of days to carry out the inquiry'
+			);
+		});
+
+		it('should return an appropriate error message when symbols are input', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/estimation`).send({
+				inquiryEstimationYesNo: 'yes',
+				inquiryEstimationDays: '%%%----££££'
+			});
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Enter the number of days using numbers 0 to 99');
+		});
+
+		it('should return an appropriate error message when an incorrect number value is posted', async () => {
+			const response = await request.post(`${baseUrl}/${appealId}/Inquiry/setup/estimation`).send({
+				inquiryEstimationYesNo: 'yes',
+				inquiryEstimationDays: '0.1'
+			});
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain(
+				'Number of days must be a whole or half number, like 3 or 3.5'
 			);
 		});
 	});
@@ -474,6 +508,7 @@ describe('set up inquiry', () => {
 			url: `${baseUrl}/${appealId}/Inquiry/setup/address-details`
 		});
 	});
+
 	describe('GET /inquiry/setup/timetable-due-dates', () => {
 		const appealId = 2;
 
