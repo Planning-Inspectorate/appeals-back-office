@@ -1,3 +1,4 @@
+import { areIdParamsValid } from '#lib/validators/id-param.validator.js';
 import { getInterestedPartyComment } from './interested-party-comments.service.js';
 
 /**
@@ -6,6 +7,10 @@ import { getInterestedPartyComment } from './interested-party-comments.service.j
  * */
 export const validateComment = async (req, res, next) => {
 	const { appealId, commentId } = req.params;
+
+	if (!areIdParamsValid(appealId, commentId)) {
+		return res.status(400).render('app/400.njk');
+	}
 
 	try {
 		const representation = await getInterestedPartyComment(req.apiClient, appealId, commentId);
