@@ -302,22 +302,26 @@ export const appellantCaseIncompleteReasons = [
 /**
  * An array of appellant case invalid reasons.
  *
- * @type {Pick<AppellantCaseInvalidReason, 'name' | 'hasText'>[]}
+ * @type {Pick<AppellantCaseInvalidReason, 'id' | 'name' | 'hasText'>[]}
  */
 export const appellantCaseInvalidReasons = [
 	{
+		id: 1,
 		name: 'Appeal has not been submitted on time',
 		hasText: false
 	},
 	{
+		id: 2,
 		name: 'Documents have not been submitted on time',
 		hasText: false
 	},
 	{
+		id: 3,
 		name: 'The appellant does not have the right to appeal',
 		hasText: false
 	},
 	{
+		id: 4,
 		name: 'Other reason',
 		hasText: true
 	}
@@ -615,10 +619,16 @@ export async function seedStaticData(databaseConnector) {
 		});
 	}
 	for (const appellantCaseInvalidReason of appellantCaseInvalidReasons) {
+		console.log(appellantCaseInvalidReason);
+		console.log(appellantCaseInvalidReason);
 		await databaseConnector.appellantCaseInvalidReason.upsert({
-			create: appellantCaseInvalidReason,
-			where: { name: appellantCaseInvalidReason.name },
-			update: {}
+			create: {
+				id: appellantCaseInvalidReason.id,
+				name: appellantCaseInvalidReason.name,
+				hasText: appellantCaseInvalidReason.hasText
+			},
+			where: { id: appellantCaseInvalidReason.id },
+			update: { name: appellantCaseInvalidReason.name, hasText: appellantCaseInvalidReason.hasText }
 		});
 	}
 	for (const lpaQuestionnaireValidationOutcome of lpaQuestionnaireValidationOutcomes) {
