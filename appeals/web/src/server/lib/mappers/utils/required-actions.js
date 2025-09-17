@@ -1,7 +1,8 @@
+import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.js';
 import config from '#environment/config.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
-import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
+import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED,
@@ -273,8 +274,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 	}
 
 	if (
-		config.featureFlags.featureFlagNetResidence &&
-		appealDetails.appealType === APPEAL_TYPE.S78 &&
+		isNetResidencesAppealType(appealDetails.appealType) &&
 		appealDetails.numberOfResidencesNetChange === null &&
 		!isChildAppeal(appealDetails)
 	) {
