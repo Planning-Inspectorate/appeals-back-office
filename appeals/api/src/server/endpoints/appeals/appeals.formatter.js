@@ -345,6 +345,12 @@ export const mapAppealToDueDate = async (
 					0
 			);
 		}
+		case APPEAL_CASE_STATUS.AWAITING_TRANSFER: {
+			const appealStatus = appeal.appealStatus.find(
+				(state) => state.status === APPEAL_CASE_STATUS.AWAITING_TRANSFER
+			);
+			return addBusinessDays(new Date(appealStatus?.createdAt || ''), 5);
+		}
 		default: {
 			return undefined;
 		}
