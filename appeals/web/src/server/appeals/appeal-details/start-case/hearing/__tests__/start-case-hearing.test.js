@@ -403,7 +403,12 @@ describe('start case hearing flow', () => {
 				appeal_type: 'Planning appeal',
 				local_planning_authority: 'Wiltshire Council',
 				start_date: '1 February 2025',
-				questionnaire_due_date: '1 February 2025'
+				questionnaire_due_date: '1 February 2025',
+				lpa_statement_due_date: '1 March 2025',
+				ip_comments_due_date: '1 April 2025',
+				statement_of_common_ground_due_date: '1 May 2025',
+				hearing_date: '1 February 3025',
+				hearing_time: '12:00pm'
 			};
 			nock('http://test/')
 				.get('/appeals/1')
@@ -416,16 +421,22 @@ describe('start case hearing flow', () => {
 				.get('/appeals/1/appeal-timetables/calculate?procedureType=hearing')
 				.reply(200, {
 					startDate: '2025-02-01T12:00:00.000Z',
-					lpaQuestionnaireDueDate: '2025-02-01T12:00:00.000Z'
+					lpaQuestionnaireDueDate: '2025-02-01T12:00:00.000Z',
+					lpaStatementDueDate: '2025-03-01T12:00:00.000Z',
+					ipCommentsDueDate: '2025-04-01T12:00:00.000Z',
+					statementOfCommonGroundDueDate: '2025-05-01T12:00:00.000Z'
 				});
 			nock('http://test/')
 				.post(
-					'/appeals/notify-preview/appeal-valid-start-case-appellant.content.md',
+					'/appeals/notify-preview/appeal-valid-start-case-appellant-hearing.content.md',
 					personalisation
 				)
 				.reply(200, { renderedHtml: 'Rendered HTML for appellant preview' });
 			nock('http://test/')
-				.post('/appeals/notify-preview/appeal-valid-start-case-lpa.content.md', personalisation)
+				.post(
+					'/appeals/notify-preview/appeal-valid-start-case-lpa-hearing.content.md',
+					personalisation
+				)
 				.reply(200, { renderedHtml: 'Rendered HTML for LPA preview' });
 
 			await request
@@ -489,8 +500,13 @@ describe('start case hearing flow', () => {
 				site_address: '21 The Pavement, Wandsworth, SW4 0HY',
 				appeal_type: 'Planning appeal',
 				local_planning_authority: 'Wiltshire Council',
-				start_date: '',
-				questionnaire_due_date: '1 February 2025'
+				start_date: '1 February 2025',
+				questionnaire_due_date: '1 February 2025',
+				lpa_statement_due_date: '1 March 2025',
+				ip_comments_due_date: '1 April 2025',
+				statement_of_common_ground_due_date: '1 May 2025',
+				hearing_date: '',
+				hearing_time: ''
 			};
 			nock('http://test/')
 				.get('/appeals/1')
@@ -502,7 +518,11 @@ describe('start case hearing flow', () => {
 			nock('http://test/')
 				.get('/appeals/1/appeal-timetables/calculate?procedureType=hearing')
 				.reply(200, {
-					lpaQuestionnaireDueDate: '2025-02-01T12:00:00.000Z'
+					startDate: '2025-02-01T12:00:00.000Z',
+					lpaQuestionnaireDueDate: '2025-02-01T12:00:00.000Z',
+					lpaStatementDueDate: '2025-03-01T12:00:00.000Z',
+					ipCommentsDueDate: '2025-04-01T12:00:00.000Z',
+					statementOfCommonGroundDueDate: '2025-05-01T12:00:00.000Z'
 				});
 			nock('http://test/')
 				.post(
