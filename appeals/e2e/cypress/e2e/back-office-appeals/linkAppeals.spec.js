@@ -76,7 +76,7 @@ describe('link appeals', () => {
 
 				//child appeal
 				caseDetailsPage.clickLinkedAppeal(childCase);
-				caseDetailsPage.verifyAppealRefOnCaseDetails(childCase);
+				caseDetailsPage.verifyAppealRefOnCaseDetails(childCase.reference);
 			});
 		});
 	});
