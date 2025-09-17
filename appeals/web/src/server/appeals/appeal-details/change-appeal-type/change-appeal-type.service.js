@@ -80,15 +80,6 @@ export async function postAppealTransferConfirmation(
 
 /**
  * @param {import('got').Got} apiClient
- * @param {string} horizonReference
- * @returns {Promise<{caseFound: boolean}>}
- */
-export async function checkAppealReferenceExistsInHorizon(apiClient, horizonReference) {
-	return await apiClient.get(`appeals/transferred-appeal/${horizonReference}`).json();
-}
-
-/**
- * @param {import('got').Got} apiClient
  * @param {string} appealTypeId
  * @param {string} appealId
  * @returns {Promise<string>}
