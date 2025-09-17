@@ -331,7 +331,7 @@ model AppellantCaseValidationOutcome {
 /// AppellantCaseIncompleteReason model
 /// Contains information on all possible resons to consider an appellant case incomplete.
 model AppellantCaseIncompleteReason {
-  id                                     Int                                      @id @default(autoincrement())
+  id                                     Int                                      @id
   name                                   String                                   @unique
   hasText                                Boolean                                  @default(false)
   appellantCaseIncompleteReasonsSelected AppellantCaseIncompleteReasonsSelected[]
