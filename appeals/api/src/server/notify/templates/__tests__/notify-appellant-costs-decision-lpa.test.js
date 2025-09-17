@@ -29,7 +29,7 @@ describe('appellant-costs-decision-lpa.md', () => {
 			'',
 			'# Appeal costs decision',
 			'',
-			'[Sign in to our service](/mock-front-office-url/manage-appeals/134526/appeal-details) to view the decision.',
+			'[Sign in to our service](/mock-front-office-url/manage-appeals/134526) to view the decision.',
 			'',
 			'We have also informed the appellant of the decision.',
 			'',
