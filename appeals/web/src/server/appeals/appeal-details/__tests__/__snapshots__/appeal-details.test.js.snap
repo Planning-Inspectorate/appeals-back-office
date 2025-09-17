@@ -4586,7 +4586,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
 </main>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners Important banners residential units banner should render a "Add number of residential units" important notification banner a link to add residential units when numberOfResidencesNetChange has not been added 1`] = `
+exports[`appeal-details GET /:appealId Notification banners Important banners residential units banner should render a "Add number of residential units" important notification banner a link to add residential units when numberOfResidencesNetChange has not been added for Planning appeal 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
 aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
 data-index="0">
@@ -4598,7 +4598,31 @@ data-index="0">
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners Important banners residential units banner should render a "Add number of residential units" important notification banner even when case is complete if numberOfResidencesNetChange has not been added 1`] = `
+exports[`appeal-details GET /:appealId Notification banners Important banners residential units banner should render a "Add number of residential units" important notification banner a link to add residential units when numberOfResidencesNetChange has not been added for Planning listed building and conservation area appeal 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content"><a class="govuk-link" data-cy="add-residences-net-change" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Add number of residential units</a>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Notification banners Important banners residential units banner should render a "Add number of residential units" important notification banner even when case is complete if numberOfResidencesNetChange has not been added for Planning appeal 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content"><a class="govuk-link" data-cy="add-residences-net-change" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Add number of residential units</a>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Notification banners Important banners residential units banner should render a "Add number of residential units" important notification banner even when case is complete if numberOfResidencesNetChange has not been added for Planning listed building and conservation area appeal 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
 aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
 data-index="0">
@@ -5425,11 +5449,17 @@ data-index="0">
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Overview should render a "Is there a net gain or loss of residential units?" row in the overview accordion for S78 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-change"><dt class="govuk-summary-list__key"> Is there a net gain or loss of residential units?</dt><dd class="govuk-summary-list__value"> Not provided</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="add-net-residence-change">Add<span class="govuk-visually-hidden"> Is there a net gain or loss of residential units?</span></a></dd></div>"`;
+exports[`appeal-details GET /:appealId Overview should render a "Is there a net gain or loss of residential units?" row in the overview accordion for Planning appeal 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-change"><dt class="govuk-summary-list__key"> Is there a net gain or loss of residential units?</dt><dd class="govuk-summary-list__value"> Not provided</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="add-net-residence-change">Add<span class="govuk-visually-hidden"> Is there a net gain or loss of residential units?</span></a></dd></div>"`;
 
-exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net gain" in the overview accordion for S78 if numberOfResidencesNetChange has a positive value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net gain</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net gain</span></a></dd></div>"`;
+exports[`appeal-details GET /:appealId Overview should render a "Is there a net gain or loss of residential units?" row in the overview accordion for Planning listed building and conservation area appeal 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-change"><dt class="govuk-summary-list__key"> Is there a net gain or loss of residential units?</dt><dd class="govuk-summary-list__value"> Not provided</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="add-net-residence-change">Add<span class="govuk-visually-hidden"> Is there a net gain or loss of residential units?</span></a></dd></div>"`;
 
-exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net loss" in the overview accordion for S78 if numberOfResidencesNetChange has a negative value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net loss</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net loss</span></a></dd></div>"`;
+exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net gain" in the overview accordion for Planning appeal if numberOfResidencesNetChange has a positive value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net gain</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net gain</span></a></dd></div>"`;
+
+exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net gain" in the overview accordion for Planning listed building and conservation area appeal if numberOfResidencesNetChange has a positive value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net gain</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net gain</span></a></dd></div>"`;
+
+exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net loss" in the overview accordion for Planning appeal if numberOfResidencesNetChange has a negative value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net loss</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net loss</span></a></dd></div>"`;
+
+exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net loss" in the overview accordion for Planning listed building and conservation area appeal if numberOfResidencesNetChange has a negative value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net loss</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net loss</span></a></dd></div>"`;
 
 exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Assign case officer" and a green modifier class if appeal status is assign_case_officer 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Assign case officer</strong>"`;
 

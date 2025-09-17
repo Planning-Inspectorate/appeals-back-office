@@ -46,6 +46,7 @@ apps_config = {
     featureFlagChangeAppealType       = true
     featureFlagPdfDownload            = true
     featureFlagNetResidence           = true
+    featureFlagNetResidenceS20        = true
     featureFlagCancelCase             = true
     featureFlagChangeProcedureType    = true
     featureFlagAdvertisement          = true
