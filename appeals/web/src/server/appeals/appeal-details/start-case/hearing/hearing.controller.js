@@ -149,11 +149,13 @@ export const postHearingDate = async (request, response) => {
  * Generate Notify preview templates for appellant and LPA
  * @param {import('got').Got} apiClient
  * @param {object} personalisation
+ * @param {boolean} dateKnown
  * @returns {Promise<{appellantTemplate: {renderedHtml: string}, lpaTemplate: {renderedHtml: string}}>}
  */
-const generateStartCaseNotifyPreviews = async (apiClient, personalisation) => {
-	const appellantTemplateName = 'appeal-valid-start-case-appellant.content.md';
-	const lpaTemplateName = 'appeal-valid-start-case-lpa.content.md';
+const generateStartCaseNotifyPreviews = async (apiClient, personalisation, dateKnown) => {
+	const suffix = dateKnown ? '-hearing' : '';
+	const appellantTemplateName = `appeal-valid-start-case-appellant${suffix}.content.md`;
+	const lpaTemplateName = `appeal-valid-start-case-lpa${suffix}.content.md`;
 
 	const [appellantTemplate, lpaTemplate] = await Promise.all([
 		generateNotifyPreview(apiClient, appellantTemplateName, personalisation),
@@ -173,9 +175,9 @@ export const getHearingConfirm = async (request, response) => {
 		'startCaseAppealProcedure',
 		currentAppeal.appealId
 	);
+	const dateKnown = sessionValues?.dateKnown === 'yes';
 	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/start-case`;
-	const backLinkUrl =
-		sessionValues?.dateKnown === 'yes' ? `${baseUrl}/hearing/date` : `${baseUrl}/hearing`;
+	const backLinkUrl = dateKnown ? `${baseUrl}/hearing/date` : `${baseUrl}/hearing`;
 	const hearingDateTime = dayMonthYearHourMinuteToISOString({
 		day: sessionValues['hearing-date-day'],
 		month: sessionValues['hearing-date-month'],
@@ -197,7 +199,14 @@ export const getHearingConfirm = async (request, response) => {
 		local_planning_authority:
 			currentAppeal.localPlanningDepartment || 'the local planning authority',
 		start_date: dateISOStringToDisplayDate(timetable.startDate),
-		questionnaire_due_date: dateISOStringToDisplayDate(timetable.lpaQuestionnaireDueDate)
+		questionnaire_due_date: dateISOStringToDisplayDate(timetable.lpaQuestionnaireDueDate),
+		lpa_statement_due_date: dateISOStringToDisplayDate(timetable.lpaStatementDueDate),
+		ip_comments_due_date: dateISOStringToDisplayDate(timetable.ipCommentsDueDate),
+		statement_of_common_ground_due_date: dateISOStringToDisplayDate(
+			timetable.statementOfCommonGroundDueDate
+		),
+		hearing_date: dateISOStringToDisplayDate(hearingDateTime),
+		hearing_time: dateISOStringToDisplayTime12hr(hearingDateTime)
 	};
 
 	/** @type {string} */
@@ -205,7 +214,11 @@ export const getHearingConfirm = async (request, response) => {
 	/** @type {string} */
 	let lpaPreview = '';
 	try {
-		const result = await generateStartCaseNotifyPreviews(request.apiClient, personalisation);
+		const result = await generateStartCaseNotifyPreviews(
+			request.apiClient,
+			personalisation,
+			dateKnown
+		);
 		appellantPreview = result.appellantTemplate?.renderedHtml || '';
 		lpaPreview = result.lpaTemplate?.renderedHtml || '';
 	} catch (error) {
@@ -233,7 +246,7 @@ export const getHearingConfirm = async (request, response) => {
 					}
 				},
 				'Do you know the date and time of the hearing?': {
-					value: sessionValues.dateKnown === 'yes' ? 'Yes' : 'No',
+					value: dateKnown ? 'Yes' : 'No',
 					actions: {
 						Change: {
 							href: editLink(baseUrl, 'hearing'),
@@ -244,7 +257,7 @@ export const getHearingConfirm = async (request, response) => {
 						}
 					}
 				},
-				...(sessionValues.dateKnown === 'yes'
+				...(dateKnown
 					? {
 							'Hearing date': {
 								value: dateISOStringToDisplayDate(hearingDateTime),
