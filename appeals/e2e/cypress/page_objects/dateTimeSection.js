@@ -36,7 +36,8 @@ export class DateTimeSection extends Page {
 		proofOfEvidenceAndWitnessesDueDate: '#proof-of-evidence-and-witnesses-due',
 		inquiryDate: '#inquiry-date-',
 		inquiry: '#inquiry',
-		hearing: '#hearing'
+		hearing: '#hearing',
+		planningObligationDueDate: '#planning-obligation-due'
 	};
 
 	// E L E M E N T S
