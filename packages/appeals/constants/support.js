@@ -116,6 +116,8 @@ export const AUDIT_TRAIL_HIGHWAY_LAND_UPDATED =
 	"'Is the appeal site on highway land?' updated to {replacement0}";
 export const AUDIT_TRAIL_IS_GREEN_BELT_UPDATED =
 	"'Is the site in a green belt?' updated to {replacement0}";
+export const AUDIT_TRAIL_ADVERT_IN_POSITION_UPDATED =
+	"'Is the advertisement in position?' updated to {replacement0}'";
 export const AUDIT_TRAIL_SITE_OWNERSHIP_UPDATED =
 	"'Does the appellant own all of the land involved in the appeal?' updated to {replacement0}";
 export const AUDIT_TRAIL_KNOWS_OTHER_OWNERS_UPDATED =

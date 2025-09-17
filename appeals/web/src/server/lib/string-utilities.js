@@ -1,3 +1,5 @@
+import escape from 'escape-html';
+
 /**
  * @param {string} str
  * @returns {boolean}
@@ -80,4 +82,15 @@ export const toSentenceCase = (str) => {
 		return '';
 	}
 	return capitalizeFirstLetter(camelCaseToWords(toCamelCase(str)).toLowerCase());
+};
+
+/**
+ * replaces new line chars with a <br>
+ * @param {string} [value]
+ * @returns {string}
+ */
+export const newLine2LineBreak = (value) => {
+	if (!value) return '';
+
+	return escape(value).replace(/\r\n|\n/g, '<br>');
 };

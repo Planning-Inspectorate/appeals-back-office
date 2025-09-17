@@ -9,6 +9,7 @@ import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-co
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { buildHtmlList } from '#lib/nunjucks-template-builders/tag-builders.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
+import { newLine2LineBreak } from '#lib/string-utilities.js';
 import { COMMENT_STATUS } from '@pins/appeals/constants/common.js';
 import { capitalize } from 'lodash-es';
 import { mapRejectionReasonOptionsToCheckboxItemParameters } from '../../common/render-select-rejection-reasons.js';
@@ -173,7 +174,7 @@ export const renderCheckYourAnswers = async (
 						{
 							type: 'show-more',
 							parameters: {
-								text: currentRepresentation.originalRepresentation,
+								html: newLine2LineBreak(currentRepresentation.originalRepresentation),
 								labelText: 'Statement'
 							}
 						}

@@ -1981,6 +1981,17 @@ exports[`appellant-case GET /appellant-case should render the appellant case pag
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/highway-land/change">Change<span class="govuk-visually-hidden"> Is the appeal site on highway land? (2. Site details)</span></a>
                                 </dd>
                         </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the advertisement in position?</dt>
+                            <dd                             class="govuk-summary-list__value"></dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/advertisement-in-position/change">Change<span class="govuk-visually-hidden"> Is the advertisement in position? (2. Site details)</span></a>
+                                </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-site-area"><dt class="govuk-summary-list__key"> What is the area of the appeal site?</dt>
+                            <dd                             class="govuk-summary-list__value">30.1 m²</dd>
+                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/site-area/change"
+                                    data-cy="change-site-area">Change<span class="govuk-visually-hidden"> What is the area of the appeal site? (2. Site details)</span></a>
+                                </dd>
+                        </div>
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the appeal site in a green belt?</dt>
                             <dd                             class="govuk-summary-list__value">No data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/appellant-case/green-belt/change/appellant">Change<span class="govuk-visually-hidden"> Is the appeal site in a green belt? (2. Site details)</span></a>

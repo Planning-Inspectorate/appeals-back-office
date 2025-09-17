@@ -433,7 +433,7 @@ exports[`change-appeal-type GET /change-appeal-type/check-transfer should render
         <div class="govuk-grid-column-two-thirds">
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Horizon reference</dt>
-                    <dd class="govuk-summary-list__value">123</dd>
+                    <dd class="govuk-summary-list__value">1234567</dd>
                     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/add-horizon-reference">Change<span class="govuk-visually-hidden"> level</span></a>
                     </dd>
                 </div>
@@ -490,47 +490,6 @@ exports[`change-appeal-type GET /change-appeal-type/resubmit should render the r
 </main>"
 `;
 
-exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should re-render the add horizon reference page with an error message if an appeal matching the provided horizon reference was not found in horizon 1`] = `
-"<main class="govuk-main-wrapper" id="main-content">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-error-summary" data-module="govuk-error-summary">
-                <div role="alert">
-                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
-                    <div class="govuk-error-summary__body">
-                        <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a valid Horizon appeal reference</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-        </div>
-    </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <div class="govuk-grid-row">
-                <div class="govuk-grid-column-full">
-                    <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
-                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> Horizon reference</label></h1>
-                            <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
-                            name="horizon-reference" type="text">
-                        </div>
-                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
-                        data-module="govuk-button">Continue</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>"
-`;
-
 exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should re-render the add horizon reference page with an error message if no horizon reference was provided 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -540,7 +499,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#">Enter a valid Horizon appeal reference</a>
+                            <li><a href="#horizon-reference">Enter a valid Horizon appeal reference</a>
                             </li>
                         </ul>
                     </div>
@@ -572,18 +531,42 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
 </main>"
 `;
 
-exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should render a custom error page stating that there is a problem with Horizon, if the transferred-appeal endpoint returns a 500 1`] = `
+exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should re-render the add horizon reference page with an error message if the provided horizon reference was not valid 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Sorry, there is a problem with Horizon</h1>
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#horizon-reference">Enter a valid Horizon appeal reference</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
         </div>
     </div>
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-body">Try again later.</p>
-            <p class="govuk-body"><a href="/appeals-service/appeal-details/1" class="govuk-link">Go back to case overview</a>
-            </p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> Horizon reference</label></h1>
+                            <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
+                            name="horizon-reference" type="text">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </main>"

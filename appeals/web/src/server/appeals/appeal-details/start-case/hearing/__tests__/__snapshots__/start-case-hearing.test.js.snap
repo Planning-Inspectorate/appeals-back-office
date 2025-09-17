@@ -40,6 +40,126 @@ exports[`start case hearing flow GET /start-case/hearing should render the date 
 </main>"
 `;
 
+exports[`start case hearing flow GET /start-case/hearing/confirm should render the confirm page when date is known 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and start case</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+                    <dd class="govuk-summary-list__value">Hearing</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/select-procedure?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fselect-procedure"
+                        data-cy="change-appeal-procedure">Change <span class="govuk-visually-hidden">Appeal procedure</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the date and time of the hearing?</dt>
+                    <dd                     class="govuk-summary-list__value">Yes</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/hearing?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing"
+                            data-cy="change-date-known">Change <span class="govuk-visually-hidden">Do you know the date and time of the hearing?</span></a>
+                        </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Hearing date</dt>
+                    <dd class="govuk-summary-list__value">1 February 3025</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/hearing/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing%2Fdate"
+                        data-cy="change-hearing-date">Change <span class="govuk-visually-hidden">Hearing date</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Hearing time</dt>
+                    <dd class="govuk-summary-list__value">12:00pm</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/hearing/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing%2Fdate"
+                        data-cy="change-hearing-time">Change <span class="govuk-visually-hidden">Hearing time</span></a>
+                    </dd>
+                </div>
+            </dl>
+            <p class="govuk-body" data-cy="start-timetable-info">We’ll start the timetable now and send emails to the relevant parties.</p>
+            <div             class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details" data-cy="preview-email-to-appellant">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                        </summary>
+                        <div class="govuk-details__text">Rendered HTML for appellant preview</div>
+                    </details>
+                </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <details class="govuk-details" data-cy="preview-email-to-lpa">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                    </summary>
+                    <div class="govuk-details__text">Rendered HTML for LPA preview</div>
+                </details>
+            </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <form method="post" novalidate="novalidate">
+                    <button type="submit" class="govuk-button" data-module="govuk-button">Start case</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
+exports[`start case hearing flow GET /start-case/hearing/confirm should render the confirm page when date is not known 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and start case</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal procedure</dt>
+                    <dd class="govuk-summary-list__value">Hearing</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/select-procedure?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fselect-procedure"
+                        data-cy="change-appeal-procedure">Change <span class="govuk-visually-hidden">Appeal procedure</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the date and time of the hearing?</dt>
+                    <dd                     class="govuk-summary-list__value">No</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/start-case/hearing?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing"
+                            data-cy="change-date-known">Change <span class="govuk-visually-hidden">Do you know the date and time of the hearing?</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <p class="govuk-body" data-cy="start-timetable-info">We’ll start the timetable now and send emails to the relevant parties.</p>
+            <div             class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <details class="govuk-details" data-cy="preview-email-to-appellant">
+                        <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                        </summary>
+                        <div class="govuk-details__text">Rendered HTML for appellant preview</div>
+                    </details>
+                </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <details class="govuk-details" data-cy="preview-email-to-lpa">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                    </summary>
+                    <div class="govuk-details__text">Rendered HTML for LPA preview</div>
+                </details>
+            </div>
+        </div>
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <form method="post" novalidate="novalidate">
+                    <button type="submit" class="govuk-button" data-module="govuk-button">Start case</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+</main>"
+`;
+
 exports[`start case hearing flow GET /start-case/hearing/date should render the date page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

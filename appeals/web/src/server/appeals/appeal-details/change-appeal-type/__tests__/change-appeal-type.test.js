@@ -501,11 +501,7 @@ describe('change-appeal-type', () => {
 			expect(unprettifiedErrorSummaryHTML).toContain('Enter a valid Horizon appeal reference</a>');
 		});
 
-		it('should re-render the add horizon reference page with an error message if an appeal matching the provided horizon reference was not found in horizon', async () => {
-			nock('http://test/').get('/appeals/transferred-appeal/123').reply(200, {
-				caseFound: false
-			});
-
+		it('should re-render the add horizon reference page with an error message if the provided horizon reference was not valid', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
 				.send({
@@ -528,30 +524,11 @@ describe('change-appeal-type', () => {
 			expect(unprettifiedErrorSummaryHTML).toContain('Enter a valid Horizon appeal reference</a>');
 		});
 
-		it('should render a custom error page stating that there is a problem with Horizon, if the transferred-appeal endpoint returns a 500', async () => {
-			nock('http://test/').get('/appeals/transferred-appeal/123').reply(500);
-
+		it('should redirect to the check transfer page if a valid 7 digit reference was entered', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
 				.send({
-					'horizon-reference': '123'
-				});
-
-			expect(response.statusCode).toBe(500);
-			const element = parseHtml(response.text);
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Sorry, there is a problem with Horizon</h1>');
-		});
-
-		it('should redirect to the check transfer page if an appeal matching the provided horizon reference was found in horizon', async () => {
-			nock('http://test/').get('/appeals/transferred-appeal/123').reply(200, {
-				caseFound: true
-			});
-
-			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
-				.send({
-					'horizon-reference': '123'
+					'horizon-reference': '1234567'
 				});
 
 			expect(response.statusCode).toBe(302);
@@ -572,14 +549,10 @@ describe('change-appeal-type', () => {
 		});
 
 		it('should render the check transfer page, with the appeal reference of the transferred appeal displayed in the summary, if the required data is present in the session', async () => {
-			nock('http://test/').get('/appeals/transferred-appeal/123').reply(200, {
-				caseFound: true
-			});
-
 			const addHorizonReferencePostResponse = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
 				.send({
-					'horizon-reference': '123'
+					'horizon-reference': '1234567'
 				});
 
 			expect(addHorizonReferencePostResponse.statusCode).toBe(302);
@@ -596,7 +569,7 @@ describe('change-appeal-type', () => {
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 			expect(unprettifiedElement.innerHTML).toContain(
-				'<dt class="govuk-summary-list__key"> Horizon reference</dt><dd class="govuk-summary-list__value"> 123</dd>'
+				'<dt class="govuk-summary-list__key"> Horizon reference</dt><dd class="govuk-summary-list__value"> 1234567</dd>'
 			);
 			expect(unprettifiedElement.innerHTML).toContain('Mark case as transferred</button>');
 		});
@@ -626,7 +599,7 @@ describe('change-appeal-type', () => {
 			const addHorizonReferencePostResponse = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
 				.send({
-					'horizon-reference': '123'
+					'horizon-reference': '1234567'
 				});
 
 			expect(addHorizonReferencePostResponse.statusCode).toBe(302);

@@ -65,6 +65,31 @@ describe('start case hearing flow', () => {
 			).toBeDefined();
 		});
 
+		it('should not preselect a previously entered value for a different appeal', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			await request.post(`${baseUrl}/2/start-case/hearing`).send({ dateKnown: 'yes' });
+
+			const response = await request.get(`${baseUrl}/1/start-case/hearing`);
+			expect(response.statusCode).toBe(200);
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(
+				pageHtml.querySelector('input[name="dateKnown"][value="yes"]')?.getAttribute('checked')
+			).toBeUndefined();
+		});
+
 		it('should render an edited value', async () => {
 			nock('http://test/')
 				.get('/appeals/1')
@@ -366,6 +391,170 @@ describe('start case hearing flow', () => {
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
 			expect(errorSummaryHtml).toContain('Enter the hearing time');
+		});
+	});
+
+	describe('GET /start-case/hearing/confirm', () => {
+		it('should render the confirm page when date is known', async () => {
+			const personalisation = {
+				appeal_reference_number: 'APP/Q9999/D/21/351062',
+				lpa_reference: '48269/APP/2021/1482',
+				site_address: '21 The Pavement, Wandsworth, SW4 0HY',
+				appeal_type: 'Planning appeal',
+				local_planning_authority: 'Wiltshire Council',
+				start_date: '1 February 2025',
+				questionnaire_due_date: '1 February 2025'
+			};
+			nock('http://test/')
+				.get('/appeals/1')
+				.times(3)
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+			nock('http://test/')
+				.get('/appeals/1/appeal-timetables/calculate?procedureType=hearing')
+				.reply(200, {
+					startDate: '2025-02-01T12:00:00.000Z',
+					lpaQuestionnaireDueDate: '2025-02-01T12:00:00.000Z'
+				});
+			nock('http://test/')
+				.post(
+					'/appeals/notify-preview/appeal-valid-start-case-appellant.content.md',
+					personalisation
+				)
+				.reply(200, { renderedHtml: 'Rendered HTML for appellant preview' });
+			nock('http://test/')
+				.post('/appeals/notify-preview/appeal-valid-start-case-lpa.content.md', personalisation)
+				.reply(200, { renderedHtml: 'Rendered HTML for LPA preview' });
+
+			await request
+				.post(`${baseUrl}/1/start-case/select-procedure`)
+				.send({ appealProcedure: 'hearing' });
+			await request.post(`${baseUrl}/1/start-case/hearing`).send({ dateKnown: 'yes' });
+			await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
+				'hearing-date-day': '01',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+			const response = await request.get(`${baseUrl}/1/start-case/hearing/confirm`);
+
+			expect(response.statusCode).toBe(200);
+			const mainHtml = parseHtml(response.text).innerHTML;
+			expect(mainHtml).toMatchSnapshot();
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-caption-l')?.innerHTML.trim()).toBe('Appeal 351062');
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Check details and start case');
+			expect(
+				pageHtml.querySelector('a[data-cy="change-appeal-procedure"]')?.getAttribute('href')
+			).toBe(
+				`${baseUrl}/1/start-case/select-procedure?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fselect-procedure`
+			);
+			expect(pageHtml.querySelector('a[data-cy="change-date-known"]')?.getAttribute('href')).toBe(
+				`${baseUrl}/1/start-case/hearing?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing`
+			);
+			expect(pageHtml.querySelector('a[data-cy="change-hearing-date"]')?.getAttribute('href')).toBe(
+				`${baseUrl}/1/start-case/hearing/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing%2Fdate`
+			);
+			expect(pageHtml.querySelector('a[data-cy="change-hearing-time"]')?.getAttribute('href')).toBe(
+				`${baseUrl}/1/start-case/hearing/date?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing%2Fdate`
+			);
+			expect(pageHtml.innerHTML).toContain(
+				'We’ll start the timetable now and send emails to the relevant parties.'
+			);
+			expect(pageHtml.querySelector('button:contains("Start case")')).not.toBeNull();
+
+			expect(
+				pageHtml.querySelector('details[data-cy="preview-email-to-appellant"]')
+			).not.toBeNull();
+			expect(pageHtml.querySelector('details[data-cy="preview-email-to-lpa"]')).not.toBeNull();
+
+			const appellantPreview = pageHtml.querySelector(
+				'details[data-cy="preview-email-to-appellant"] .govuk-details__text'
+			)?.innerHTML;
+			const lpaPreview = pageHtml.querySelector(
+				'details[data-cy="preview-email-to-lpa"] .govuk-details__text'
+			)?.innerHTML;
+			expect(appellantPreview).toContain('Rendered HTML for appellant preview');
+			expect(lpaPreview).toContain('Rendered HTML for LPA preview');
+		});
+
+		it('should render the confirm page when date is not known', async () => {
+			const personalisation = {
+				appeal_reference_number: 'APP/Q9999/D/21/351062',
+				lpa_reference: '48269/APP/2021/1482',
+				site_address: '21 The Pavement, Wandsworth, SW4 0HY',
+				appeal_type: 'Planning appeal',
+				local_planning_authority: 'Wiltshire Council',
+				start_date: '',
+				questionnaire_due_date: '1 February 2025'
+			};
+			nock('http://test/')
+				.get('/appeals/1')
+				.twice()
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+			nock('http://test/')
+				.get('/appeals/1/appeal-timetables/calculate?procedureType=hearing')
+				.reply(200, {
+					lpaQuestionnaireDueDate: '2025-02-01T12:00:00.000Z'
+				});
+			nock('http://test/')
+				.post(
+					'/appeals/notify-preview/appeal-valid-start-case-appellant.content.md',
+					personalisation
+				)
+				.reply(200, { renderedHtml: 'Rendered HTML for appellant preview' });
+			nock('http://test/')
+				.post('/appeals/notify-preview/appeal-valid-start-case-lpa.content.md', personalisation)
+				.reply(200, { renderedHtml: 'Rendered HTML for LPA preview' });
+
+			await request
+				.post(`${baseUrl}/1/start-case/select-procedure`)
+				.send({ appealProcedure: 'hearing' });
+			await request.post(`${baseUrl}/1/start-case/hearing`).send({ dateKnown: 'no' });
+			const response = await request.get(`${baseUrl}/1/start-case/hearing/confirm`);
+
+			expect(response.statusCode).toBe(200);
+			const mainHtml = parseHtml(response.text).innerHTML;
+			expect(mainHtml).toMatchSnapshot();
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+			expect(pageHtml.querySelector('.govuk-caption-l')?.innerHTML.trim()).toBe('Appeal 351062');
+			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Check details and start case');
+			expect(
+				pageHtml.querySelector('a[data-cy="change-appeal-procedure"]')?.getAttribute('href')
+			).toBe(
+				`${baseUrl}/1/start-case/select-procedure?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fselect-procedure`
+			);
+			expect(pageHtml.querySelector('a[data-cy="change-date-known"]')?.getAttribute('href')).toBe(
+				`${baseUrl}/1/start-case/hearing?editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fstart-case%2Fhearing`
+			);
+			expect(pageHtml.querySelector('a[data-cy="change-hearing-date"]')).toBeNull();
+			expect(pageHtml.querySelector('a[data-cy="change-hearing-time"]')).toBeNull();
+			expect(pageHtml.innerHTML).toContain(
+				'We’ll start the timetable now and send emails to the relevant parties.'
+			);
+			expect(pageHtml.querySelector('button:contains("Start case")')).not.toBeNull();
+
+			expect(
+				pageHtml.querySelector('details[data-cy="preview-email-to-appellant"]')
+			).not.toBeNull();
+			expect(pageHtml.querySelector('details[data-cy="preview-email-to-lpa"]')).not.toBeNull();
+
+			const appellantPreview = pageHtml.querySelector(
+				'details[data-cy="preview-email-to-appellant"] .govuk-details__text'
+			)?.innerHTML;
+			const lpaPreview = pageHtml.querySelector(
+				'details[data-cy="preview-email-to-lpa"] .govuk-details__text'
+			)?.innerHTML;
+			expect(appellantPreview).toContain('Rendered HTML for appellant preview');
+			expect(lpaPreview).toContain('Rendered HTML for LPA preview');
 		});
 	});
 });

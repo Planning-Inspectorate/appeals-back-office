@@ -63,19 +63,21 @@ exports[`lpa-statements GET / should render the review LPA statement page with t
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Statement</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Statement" data-mode="text">Every single thing in the world has its own personality - and it is up
+                        <div class="pins-show-more" data-label="Statement" data-mode="html">Every single thing in the world has its own personality - and it is up
                             to you to make friends with the little rascals. Steve wants reflections,
                             so let&#39;s give him eflections It&#39;s amazing what you can do with
                             a little love in your heart. Clouds are free they come and go as they please.
-                            The secret to doing anything is believing that you can do it. Anything
+                            <br>
+                            <br>The secret to doing anything is believing that you can do it. Anything
                             hatyou believe you can do strong enough, you can do. Anything. As long
                             as you believe. It looks so good, I might as well not stop. This present
                             moment is perfect simply due to the fact you&#39;re xperiencingit. Making
-                            all those little fluffies that live in the clouds. You don&#39;t want to
-                            kill all your dark areas they are very important. I will take some magic
-                            white, and a little bit of andykebrown and a little touch of yellow. Anyone
-                            can paint. Each highlight must have it&#39;s own private shadow. Don&#39;t
-                            fiddle with it all day.</div>
+                            all those little fluffies that live in the clouds.
+                            <br>
+                            <br>You don&#39;t want to kill all your dark areas they are very important.
+                            I will take some magic white, and a little bit of andykebrown and a little
+                            touch of yellow. Anyone can paint. Each highlight must have it&#39;s own
+                            private shadow. Don&#39;t fiddle with it all day.</div>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -131,19 +133,21 @@ exports[`lpa-statements GET / should render the review LPA statement page with t
             <dl class="govuk-summary-list">
                 <div class="govuk-summary-list__row govuk-summary-list__row--no-actions"><dt class="govuk-summary-list__key"> Statement</dt>
                     <dd class="govuk-summary-list__value">
-                        <div class="pins-show-more" data-label="Statement" data-mode="text">Every single thing in the world has its own personality - and it is up
+                        <div class="pins-show-more" data-label="Statement" data-mode="html">Every single thing in the world has its own personality - and it is up
                             to you to make friends with the little rascals. Steve wants reflections,
                             so let&#39;s give him eflections It&#39;s amazing what you can do with
                             a little love in your heart. Clouds are free they come and go as they please.
-                            The secret to doing anything is believing that you can do it. Anything
+                            <br>
+                            <br>The secret to doing anything is believing that you can do it. Anything
                             hatyou believe you can do strong enough, you can do. Anything. As long
                             as you believe. It looks so good, I might as well not stop. This present
                             moment is perfect simply due to the fact you&#39;re xperiencingit. Making
-                            all those little fluffies that live in the clouds. You don&#39;t want to
-                            kill all your dark areas they are very important. I will take some magic
-                            white, and a little bit of andykebrown and a little touch of yellow. Anyone
-                            can paint. Each highlight must have it&#39;s own private shadow. Don&#39;t
-                            fiddle with it all day.</div>
+                            all those little fluffies that live in the clouds.
+                            <br>
+                            <br>You don&#39;t want to kill all your dark areas they are very important.
+                            I will take some magic white, and a little bit of andykebrown and a little
+                            touch of yellow. Anyone can paint. Each highlight must have it&#39;s own
+                            private shadow. Don&#39;t fiddle with it all day.</div>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Supporting documents</dt>
@@ -197,19 +201,21 @@ exports[`lpa-statements GET / should render the view LPA statement page with the
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Statement</dt>
             <dd class="govuk-summary-list__value">
-                <div class="pins-show-more" data-label="Statement" data-mode="text">Every single thing in the world has its own personality - and it is up
+                <div class="pins-show-more" data-label="Statement" data-mode="html">Every single thing in the world has its own personality - and it is up
                     to you to make friends with the little rascals. Steve wants reflections,
                     so let&#39;s give him eflections It&#39;s amazing what you can do with
                     a little love in your heart. Clouds are free they come and go as they please.
-                    The secret to doing anything is believing that you can do it. Anything
+                    <br>
+                    <br>The secret to doing anything is believing that you can do it. Anything
                     hatyou believe you can do strong enough, you can do. Anything. As long
                     as you believe. It looks so good, I might as well not stop. This present
                     moment is perfect simply due to the fact you&#39;re xperiencingit. Making
-                    all those little fluffies that live in the clouds. You don&#39;t want to
-                    kill all your dark areas they are very important. I will take some magic
-                    white, and a little bit of andykebrown and a little touch of yellow. Anyone
-                    can paint. Each highlight must have it&#39;s own private shadow. Don&#39;t
-                    fiddle with it all day.</div>
+                    all those little fluffies that live in the clouds.
+                    <br>
+                    <br>You don&#39;t want to kill all your dark areas they are very important.
+                    I will take some magic white, and a little bit of andykebrown and a little
+                    touch of yellow. Anyone can paint. Each highlight must have it&#39;s own
+                    private shadow. Don&#39;t fiddle with it all day.</div>
             </dd>
             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/lpa-statement/redact">Redact<span class="govuk-visually-hidden"> statement</span></a>
             </dd>
