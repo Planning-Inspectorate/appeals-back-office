@@ -220,7 +220,7 @@ export const AUDIT_TRAIL_CORRECTION_NOTICE_ADDED = 'Correction notice added: {re
 export const AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED = 'Appellant costs decision issued';
 export const AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED = 'LPA costs decision issued';
 
-export const AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED = 'Case team updated';
+export const AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED = 'Case team {replacement0} assigned';
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 
 export const DATABASE_ORDER_BY_ASC = 'asc';
