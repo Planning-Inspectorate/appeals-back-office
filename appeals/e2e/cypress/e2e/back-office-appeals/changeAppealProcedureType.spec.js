@@ -46,121 +46,118 @@ describe('change appeal procedure types', () => {
 	});
 
 	it('should change appeal procedure type - written in LPAQ state', () => {
-			happyPathHelper.startS78Case(caseRef, 'written');
-			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+		happyPathHelper.startS78Case(caseRef, 'written');
+		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-			// For written procedure:
-			const writtenDetails = { ...overviewDetails, appealProcedure: 'Written' };
-			overviewSectionPage.verifyCaseOverviewDetails(writtenDetails);
+		const writtenDetails = { ...overviewDetails, appealProcedure: 'Written' };
+		overviewSectionPage.verifyCaseOverviewDetails(writtenDetails);
 
-			overviewSectionPage.clickRowChangeLink('case-procedure');
+		overviewSectionPage.clickRowChangeLink('case-procedure');
 
+		procedureTypePage.verifyHeader(procedureTypeCaption());
+		procedureTypePage.selectProcedureType('written');
+
+		// verify previous values are prepopulated
+		cy.loadAppealDetails(caseRef).then((appealDetails) => {
 			procedureTypePage.verifyHeader(procedureTypeCaption());
-			procedureTypePage.selectProcedureType('written');
+			const appealTimetable = appealDetails?.appealTimetable;
+			const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
+			const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
+			const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
 
-			// verify previous values are prepopulated
-			cy.loadAppealDetails(caseRef).then((appealDetails) => {
-				procedureTypePage.verifyHeader(procedureTypeCaption());
-				const appealTimetable = appealDetails?.appealTimetable;
-				const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
-				const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
-				const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
+			dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+				'lpaQuestionnaireDueDate',
+				getDateAndTimeValues(lpaQuestionnaireDueDate)
+			);
+			dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+				'lpaStatementDueDate',
+				getDateAndTimeValues(lpaStatementDueDate)
+			);
+			dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+				'ipCommentsDueDate',
+				getDateAndTimeValues(ipCommentsDueDate)
+			);
 
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'lpaQuestionnaireDueDate',
-					getDateAndTimeValues(lpaQuestionnaireDueDate)
+			// update final comments due date and check CYA page
+			cy.getBusinessActualDate(new Date(), 60).then((dueDate) => {
+				caseDetailsPage.changeTimetableDates(timetableItems.slice(0, 1), dueDate, 0); //update and continue
+				const updateFinalCommentsDueDate = new Date(dueDate);
+
+				cyaSection.verifyCheckYourAnswers(
+					'LPA questionnaire due',
+					formatDateAndTime(lpaQuestionnaireDueDate).date
 				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'lpaStatementDueDate',
-					getDateAndTimeValues(lpaStatementDueDate)
+				cyaSection.verifyCheckYourAnswers(
+					'Statements due',
+					formatDateAndTime(lpaStatementDueDate).date
 				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'ipCommentsDueDate',
-					getDateAndTimeValues(ipCommentsDueDate)
+				cyaSection.verifyCheckYourAnswers(
+					'Interested party comments due',
+					formatDateAndTime(ipCommentsDueDate).date
 				);
-
-				// update final comments due date and check CYA page
-				cy.getBusinessActualDate(new Date(), 60).then((dueDate) => {
-					caseDetailsPage.changeTimetableDates(timetableItems.slice(0,1), dueDate, 0); //update and continue
-					const updateFinalCommentsDueDate = new Date(dueDate);
-
-					cyaSection.verifyCheckYourAnswers(
-						'LPA questionnaire due',
-						formatDateAndTime(lpaQuestionnaireDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Statements due',
-						formatDateAndTime(lpaStatementDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Interested party comments due',
-						formatDateAndTime(ipCommentsDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Final comments due',
-						formatDateAndTime(updateFinalCommentsDueDate).date
-					);
-				});
+				cyaSection.verifyCheckYourAnswers(
+					'Final comments due',
+					formatDateAndTime(updateFinalCommentsDueDate).date
+				);
 			});
-
+		});
 	});
 
 	it('should change appeal procedure type - hearing in LPAQ state', () => {
-			happyPathHelper.startS78Case(caseRef, 'hearing');
-			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
+		happyPathHelper.startS78Case(caseRef, 'hearing');
+		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
-			// For hearing procedure:
-			const hearingDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
-			overviewSectionPage.verifyCaseOverviewDetails(hearingDetails);
+		const hearingDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
+		overviewSectionPage.verifyCaseOverviewDetails(hearingDetails);
 
-			overviewSectionPage.clickRowChangeLink('case-procedure');
+		overviewSectionPage.clickRowChangeLink('case-procedure');
 
+		procedureTypePage.verifyHeader(procedureTypeCaption());
+		procedureTypePage.selectProcedureType('hearing');
+
+		// verify previous values are prepopulated
+		cy.loadAppealDetails(caseRef).then((appealDetails) => {
 			procedureTypePage.verifyHeader(procedureTypeCaption());
-			procedureTypePage.selectProcedureType('hearing');
+			const appealTimetable = appealDetails?.appealTimetable;
+			const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
+			const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
+			const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
 
-			// verify previous values are prepopulated
-			cy.loadAppealDetails(caseRef).then((appealDetails) => {
-				procedureTypePage.verifyHeader(procedureTypeCaption());
-				const appealTimetable = appealDetails?.appealTimetable;
-				const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
-				const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
-				const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
+			dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+				'lpaQuestionnaireDueDate',
+				getDateAndTimeValues(lpaQuestionnaireDueDate)
+			);
+			dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+				'lpaStatementDueDate',
+				getDateAndTimeValues(lpaStatementDueDate)
+			);
+			dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+				'ipCommentsDueDate',
+				getDateAndTimeValues(ipCommentsDueDate)
+			);
 
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'lpaQuestionnaireDueDate',
-					getDateAndTimeValues(lpaQuestionnaireDueDate)
+			// update statement of common ground due date and check CYA page
+			cy.getBusinessActualDate(new Date(), 60).then((dueDate) => {
+				caseDetailsPage.changeTimetableDates(timetableItems.slice(1, 2), dueDate, 0); //update and continue
+				const updateStatementOfCommonGroundDueDate = new Date(dueDate);
+
+				cyaSection.verifyCheckYourAnswers(
+					'LPA questionnaire due',
+					formatDateAndTime(lpaQuestionnaireDueDate).date
 				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'lpaStatementDueDate',
-					getDateAndTimeValues(lpaStatementDueDate)
+				cyaSection.verifyCheckYourAnswers(
+					'Statements due',
+					formatDateAndTime(lpaStatementDueDate).date
 				);
-				dateTimeSection.verifyPrepopulatedTimeTableDueDates(
-					'ipCommentsDueDate',
-					getDateAndTimeValues(ipCommentsDueDate)
+				cyaSection.verifyCheckYourAnswers(
+					'Interested party comments due',
+					formatDateAndTime(ipCommentsDueDate).date
 				);
-
-				// update statement of common ground due date and check CYA page
-				cy.getBusinessActualDate(new Date(), 60).then((dueDate) => {
-					caseDetailsPage.changeTimetableDates(timetableItems.slice(1, 2), dueDate, 0); //update and continue
-					const updateStatementOfCommonGroundDueDate = new Date(dueDate);
-
-					cyaSection.verifyCheckYourAnswers(
-						'LPA questionnaire due',
-						formatDateAndTime(lpaQuestionnaireDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Statements due',
-						formatDateAndTime(lpaStatementDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Interested party comments due',
-						formatDateAndTime(ipCommentsDueDate).date
-					);
-					cyaSection.verifyCheckYourAnswers(
-						'Statement of common ground due',
-						formatDateAndTime(updateStatementOfCommonGroundDueDate).date
-					);
-				});
+				cyaSection.verifyCheckYourAnswers(
+					'Statement of common ground due',
+					formatDateAndTime(updateStatementOfCommonGroundDueDate).date
+				);
+			});
 		});
 	});
 
