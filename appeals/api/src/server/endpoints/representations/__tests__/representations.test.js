@@ -1177,9 +1177,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1192,9 +1192,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1263,9 +1263,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1278,9 +1278,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1376,9 +1376,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: false,
+						is_hearing_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1391,9 +1391,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: false,
+						is_hearing_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1451,9 +1451,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: false,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1466,9 +1466,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: false,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1524,9 +1524,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: false,
 						has_statement: false,
+						is_hearing_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1539,9 +1539,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: false,
 						has_statement: false,
+						is_hearing_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1601,9 +1601,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+							'You need to [submit your final comments](/mock-front-office-url/manage-appeals/6000002) by 4 December 2024.'
 					},
 					recipientEmail: mockS20Appeal.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1616,9 +1616,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: false,
 						what_happens_next:
-							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.',
-						subject: 'Submit your final comments'
+							'You need to [submit your final comments](/mock-front-office-url/appeals/6000002) by 4 December 2024.'
 					},
 					recipientEmail: mockS20Appeal.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1686,8 +1686,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
-						what_happens_next: 'We will contact you when the hearing has been set up.',
-						subject: `We've received all statements and comments`
+						is_hearing_procedure: true,
+						what_happens_next: 'We will contact you when the hearing has been set up.'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1700,8 +1700,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
-						what_happens_next: 'We will contact you if we need any more information.',
-						subject: `We have received the local planning authority's questionnaire, all statements and comments from interested parties`
+						is_hearing_procedure: true,
+						what_happens_next: 'We will contact you if we need any more information.'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1768,8 +1768,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
-						what_happens_next: 'We will contact you when the hearing has been set up.',
-						subject: `We've received all statements and comments`
+						is_hearing_procedure: true,
+						what_happens_next: 'We will contact you when the hearing has been set up.'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1782,8 +1782,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
-						what_happens_next: 'We will contact you if we need any more information.',
-						subject: `We have received the local planning authority's questionnaire, all statements and comments from interested parties`
+						is_hearing_procedure: true,
+						what_happens_next: 'We will contact you if we need any more information.'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1855,8 +1855,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
-						what_happens_next: 'The hearing is on 31 January 2025.',
-						subject: `We've received all statements and comments`
+						is_hearing_procedure: true,
+						what_happens_next: 'The hearing is on 31 January 2025.'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1869,9 +1869,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: true,
 						what_happens_next:
-							'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.',
-						subject: `We have received the local planning authority's questionnaire, all statements and comments from interested parties`
+							'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -1941,8 +1941,8 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
-						what_happens_next: 'The hearing is on 31 January 2025.',
-						subject: `We've received all statements and comments`
+						is_hearing_procedure: true,
+						what_happens_next: 'The hearing is on 31 January 2025.'
 					},
 					recipientEmail: appealS78.lpa.email,
 					templateName: 'received-statement-and-ip-comments-lpa'
@@ -1955,9 +1955,9 @@ describe('/appeals/:id/reps', () => {
 						...expectedEmailPayload,
 						has_ip_comments: true,
 						has_statement: true,
+						is_hearing_procedure: true,
 						what_happens_next:
-							'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.',
-						subject: `We have received the local planning authority's questionnaire, all statements and comments from interested parties`
+							'Your hearing is on 31 January 2025.\n\nWe will contact you if we need any more information.'
 					},
 					recipientEmail: appealS78.appellant.email,
 					templateName: 'received-statement-and-ip-comments-appellant'
@@ -2030,6 +2030,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS78Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS78Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2098,6 +2099,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS78Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS78Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2215,6 +2217,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS20Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS20Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2286,6 +2289,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS20Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS20Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2344,6 +2348,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS78Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS78Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2410,6 +2415,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS20Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS20Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
@@ -2478,6 +2484,7 @@ describe('/appeals/:id/reps', () => {
 					lpa_reference: mockS20Appeal.applicationReference,
 					has_ip_comments: false,
 					has_statement: false,
+					is_hearing_procedure: false,
 					appeal_reference_number: mockS20Appeal.reference,
 					final_comments_deadline: '',
 					site_address: expectedSiteAddress,
