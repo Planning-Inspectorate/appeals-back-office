@@ -30,6 +30,7 @@ import { jest } from '@jest/globals';
 import { APPEAL_REPRESENTATION_STATUS, APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { parseHtml } from '@pins/platform';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { addDays } from 'date-fns';
 import { omit } from 'lodash-es';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -5945,6 +5946,117 @@ describe('appeal-details', () => {
 
 				expect(cancelSection).toBeNull();
 			});
+		});
+	});
+	describe('Site visit section', () => {
+		const appealId = appealData.appealId.toString();
+		const futureDate = addDays(new Date(), 1).toISOString();
+		const todayDate = new Date().toISOString();
+
+		beforeEach(() => {
+			nock.cleanAll();
+			nock('http://test/').get(`/appeals/${appealId}/case-notes`).reply(200, caseNotes);
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=appellant_final_comment`)
+				.reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/')
+				.get(`/appeals/${appealId}/reps?type=lpa_final_comment`)
+				.reply(200, lpaFinalCommentsAwaitingReview);
+			nock('http://test/')
+				.get(/appeals\/\d+\/appellant-cases\/\d+/)
+				.reply(200, { planningObligation: { hasObligation: false } });
+		});
+
+		it('should render the site visit section with correct link after site visit data has passed and decision has not been issued', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData });
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const siteSection = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '#site-visit-section'
+			}).innerHTML;
+			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).toContain('Record missed site visit</a>');
+		});
+		it('should render the site visit section with no links after site visit data has passed and decision has been issued', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, completedStateList: ['issue_determination'] });
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const siteSection = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '#site-visit-section'
+			}).innerHTML;
+			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).not.toContain('Cancel site visit</a>');
+			expect(siteSection).not.toContain('Record missed site visit</a>');
+		});
+
+		it('should render the site visit section with correct link before site visit', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealData,
+					siteVisit: {
+						siteVisitId: 0,
+						visitDate: futureDate,
+						visitEndTime: futureDate,
+						visitStartTime: futureDate,
+						visitType: 'Accompanied'
+					}
+				});
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const siteSection = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '#site-visit-section'
+			}).innerHTML;
+			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).toContain('Cancel site visit</a>');
+		});
+		it('should render the site visit section with correct links on site visit date', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealData,
+					siteVisit: {
+						siteVisitId: 0,
+						visitDate: todayDate,
+						visitEndTime: todayDate,
+						visitStartTime: todayDate,
+						visitType: 'Accompanied'
+					}
+				});
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const siteSection = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '#site-visit-section'
+			}).innerHTML;
+			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).toContain('Cancel site visit</a>');
+			expect(siteSection).toContain('Record missed site visit</a>');
+		});
+
+		it('should render no links when site visit is not set up', async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, {
+					...appealData,
+					siteVisit: {}
+				});
+			const response = await request.get(`${baseUrl}/${appealId}`);
+
+			const siteSection = parseHtml(response.text, {
+				skipPrettyPrint: true,
+				rootElement: '#site-visit-section'
+			}).innerHTML;
+			expect(siteSection).toContain('Site</h1>');
+			expect(siteSection).not.toContain('Cancel site visit</a>');
+			expect(siteSection).not.toContain('Record missed site visit</a>');
 		});
 	});
 
