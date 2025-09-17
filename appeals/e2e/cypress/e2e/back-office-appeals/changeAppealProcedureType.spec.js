@@ -15,6 +15,7 @@ const caseDetailsPage = new CaseDetailsPage();
 const procedureTypePage = new ProcedureTypePage();
 const dateTimeSection = new DateTimeSection();
 const cyaSection = new CYASection();
+const currentDate = new Date();
 
 describe('change appeal procedure types', () => {
 	let caseRef;
@@ -107,6 +108,12 @@ describe('change appeal procedure types', () => {
 		happyPathHelper.startS78Case(caseRef, 'hearing');
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
+		// Add planning obligation
+		cy.updateAppealDetails(caseRef, { planningObligation: true });
+		cy.getBusinessActualDate(currentDate, 1).then((date) => {
+			cy.updateTimeTableDetails(caseRef, { planningObligationDueDate: date });
+		});
+
 		const hearingDetails = { ...overviewDetails, appealProcedure: 'Hearing' };
 		overviewSectionPage.verifyCaseOverviewDetails(hearingDetails);
 
@@ -122,6 +129,10 @@ describe('change appeal procedure types', () => {
 			const lpaQuestionnaireDueDate = new Date(appealTimetable.lpaQuestionnaireDueDate);
 			const lpaStatementDueDate = new Date(appealTimetable.lpaStatementDueDate);
 			const ipCommentsDueDate = new Date(appealTimetable.ipCommentsDueDate);
+			const statementOfCommonGroundDueDate = new Date(
+				appealTimetable.statementOfCommonGroundDueDate
+			);
+			const planningObligationDueDate = new Date(appealTimetable.planningObligationDueDate);
 
 			dateTimeSection.verifyPrepopulatedTimeTableDueDates(
 				'lpaQuestionnaireDueDate',
@@ -135,9 +146,13 @@ describe('change appeal procedure types', () => {
 				'ipCommentsDueDate',
 				getDateAndTimeValues(ipCommentsDueDate)
 			);
+			dateTimeSection.verifyPrepopulatedTimeTableDueDates(
+				'planningObligationDueDate',
+				getDateAndTimeValues(planningObligationDueDate)
+			);
 
 			// update statement of common ground due date and check CYA page
-			cy.getBusinessActualDate(new Date(), 60).then((dueDate) => {
+			cy.getBusinessActualDate(new Date(), 10).then((dueDate) => {
 				caseDetailsPage.changeTimetableDates(timetableItems.slice(1, 2), dueDate, 0); //update and continue
 				const updateStatementOfCommonGroundDueDate = new Date(dueDate);
 
@@ -156,6 +171,10 @@ describe('change appeal procedure types', () => {
 				cyaSection.verifyCheckYourAnswers(
 					'Statement of common ground due',
 					formatDateAndTime(updateStatementOfCommonGroundDueDate).date
+				);
+				cyaSection.verifyCheckYourAnswers(
+					'Planning obligation due',
+					formatDateAndTime(planningObligationDueDate).date
 				);
 			});
 		});
