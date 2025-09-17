@@ -29,7 +29,7 @@ describe('appellant-costs-decision-appellant.md', () => {
 			'',
 			'# Appeal costs decision',
 			'',
-			'[Sign in to our service](/mock-front-office-url/appeals/134526/appeal-details) to view the decision.',
+			'[Sign in to our service](/mock-front-office-url/appeals/134526) to view the decision.',
 			'',
 			'We have also informed the local planning authority of the decision.',
 			'',
