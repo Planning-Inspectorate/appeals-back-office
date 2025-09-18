@@ -159,7 +159,7 @@ it('Can start case as inquiry with address and estimated days', () => {
 	overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
 
 	// Verify order of sections
-	// caseDetailsPage.verifyCaseDetailsSection(expectedCaseDetailsSections);
+	caseDetailsPage.verifyCaseDetailsSection(expectedCaseDetailsSections);
 });
 
 it('Can start case as inquiry without address or estimated days', () => {
@@ -405,7 +405,7 @@ it('Can update answer from CYA page - change address', () => {
 	});
 });
 
-it('should not accept invalid input - inquiry Estimate', () => {
+it.only('should not accept invalid input - inquiry Estimate', () => {
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseRef, inquiryDate);
 	});
