@@ -475,7 +475,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickLinkedAppeal(caseRef) {
-		cy.getByData('linked-appeal-' + caseRef).click();
+		cy.getByData('linked-appeal-' + caseRef.reference).click();
 	}
 
 	clickRemoveFileUpload(fileName) {

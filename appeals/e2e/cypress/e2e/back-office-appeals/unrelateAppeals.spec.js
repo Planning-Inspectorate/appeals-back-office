@@ -19,19 +19,19 @@ describe('unrelate appeals', () => {
 				cy.createCase().then((secondCaseRefToRelate) => {
 					happyPathHelper.assignCaseOfficer(caseRef);
 					caseDetailsPage.clickAddRelatedAppeals();
-					caseDetailsPage.fillInput(caseRefToRelate);
+					caseDetailsPage.fillInput(caseRefToRelate.reference);
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef.reference);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 					caseDetailsPage.clickAddRelatedAppeals();
-					caseDetailsPage.fillInput(secondCaseRefToRelate);
+					caseDetailsPage.fillInput(secondCaseRefToRelate.reference);
 					caseDetailsPage.clickButtonByText('Continue');
-					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+					caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef.reference);
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 					caseDetailsPage.clickManageRelatedAppeals();
-					caseDetailsPage.clickRemoveRelatedAppealByRef(caseRefToRelate);
+					caseDetailsPage.clickRemoveRelatedAppealByRef(caseRefToRelate.reference);
 					caseDetailsPage.selectRadioButtonByValue('Yes');
 					caseDetailsPage.clickButtonByText('Continue');
 					caseDetailsPage.validateBannerMessage('Success', 'Related appeal removed');
@@ -51,7 +51,7 @@ describe('unrelate appeals', () => {
 			caseDetailsPage.clickAddRelatedAppeals();
 			caseDetailsPage.fillInput(horizonAppealId);
 			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef);
+			caseDetailsPage.selectRadioButtonByValue('Yes, relate this appeal to ' + caseRef.reference);
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.validateBannerMessage('Success', 'Related appeal added');
 			caseDetailsPage.clickManageRelatedAppeals();

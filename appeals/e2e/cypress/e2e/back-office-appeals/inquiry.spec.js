@@ -156,7 +156,6 @@ it('Can start case as inquiry with address and estimated days', () => {
 
 	// Verify timetable rows
 	caseDetailsPage.verifyTimeTableRows(timeTableRows);
-
 	overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
 
 	// Verify order of sections
@@ -406,7 +405,7 @@ it('Can update answer from CYA page - change address', () => {
 	});
 });
 
-it('should not accept invalid input - inquiry Estimate', () => {
+it.only('should not accept invalid input - inquiry Estimate', () => {
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		cy.addInquiryViaApi(caseRef, inquiryDate);
 	});

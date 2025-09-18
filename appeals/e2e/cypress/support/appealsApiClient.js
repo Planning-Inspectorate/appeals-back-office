@@ -46,7 +46,10 @@ export const appealsApiClient = {
 			}
 
 			const data = await response.json();
-			return data.reference;
+			return {
+				reference: data.reference,
+				id: data.id
+			};
 		} catch (error) {
 			console.error('Error making API call:', error);
 			throw error;
