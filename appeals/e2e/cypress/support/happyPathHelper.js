@@ -1,12 +1,14 @@
 // @ts-nocheck
 
 import { users } from '../fixtures/users';
+import { Page } from '../page_objects/basePage.js';
 import { CaseDetailsPage } from '../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../page_objects/dateTimeSection';
 import { ListCasesPage } from '../page_objects/listCasesPage';
 import { FileUploader } from '../page_objects/shared.js';
 import { urlPaths } from './urlPaths.js';
 
+const basePage = new Page();
 const caseDetailsPage = new CaseDetailsPage();
 const dateTimeSection = new DateTimeSection();
 const listCasesPage = new ListCasesPage();
@@ -36,20 +38,20 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
-	reviewLpaq(caseRef) {
+	reviewLpaq(caseRef, state = 'Complete') {
 		let dueDate = new Date();
 
 		happyPathHelper.viewCaseDetails(caseRef);
 		caseDetailsPage.clickReviewLpaq();
-		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.selectRadioButtonByValue(state);
 		caseDetailsPage.clickButtonByText('Confirm');
 	},
-	reviewS78Lpaq(caseRef) {
+	reviewS78Lpaq(caseRef, state = 'Complete') {
 		let dueDate = new Date();
 
 		happyPathHelper.viewCaseDetails(caseRef);
 		caseDetailsPage.clickReviewLpaq();
-		caseDetailsPage.selectRadioButtonByValue('Complete');
+		caseDetailsPage.selectRadioButtonByValue(state);
 		caseDetailsPage.clickButtonByText('Confirm');
 		caseDetailsPage.selectRadioButtonByValue('yes');
 		caseDetailsPage.clickButtonByText('Continue');
@@ -280,6 +282,52 @@ export const happyPathHelper = {
 		}
 	},
 
+	issueLinkedAppealDecisions(
+		caseRef,
+		decision,
+		numOfChildren,
+		appellantCostsBool = true,
+		lpaCostsBool = true
+	) {
+		caseDetailsPage.clickIssueDecision();
+		for (let i = 0; i <= numOfChildren; i++) {
+			basePage.selectRadioButtonByValue(basePage.exactMatch(decision));
+			basePage.clickButtonByText('Continue');
+		}
+
+		fileUploader.uploadFiles(sampleFiles.pdf);
+		fileUploader.clickButtonByText('Continue');
+
+		//Appellant costs
+		if (appellantCostsBool) {
+			basePage.selectRadioButtonByValue('Yes');
+			basePage.clickButtonByText('Continue');
+			fileUploader.uploadFiles(sampleFiles.pdf);
+			fileUploader.clickButtonByText('Continue');
+		} else {
+			basePage.selectRadioButtonByValue('No');
+			basePage.clickButtonByText('Continue');
+		}
+
+		//LPA costs
+		if (lpaCostsBool) {
+			basePage.selectRadioButtonByValue('Yes');
+			basePage.clickButtonByText('Continue');
+			fileUploader.uploadFiles(sampleFiles.pdf);
+			fileUploader.clickButtonByText('Continue');
+		} else {
+			basePage.selectRadioButtonByValue('No');
+			basePage.clickButtonByText('Continue');
+		}
+
+		//CYA
+		basePage.clickButtonByText('Issue decision');
+
+		//Banner & inset text
+		caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
+		caseDetailsPage.checkStatusOfCase('Complete', 0);
+	},
+
 	issueAppellantCostsDecision(caseRef) {
 		caseDetailsPage.clickIssueAppellantCostsDecision();
 		fileUploader.uploadFiles(sampleFiles.pdf);
@@ -294,17 +342,20 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Issue lpa costs decision');
 	},
 
-	addLinkedAppeal(leadCaseRef, childCaseRef) {
+	addLinkedAppeal(leadCaseRef, childCaseRef, firstLink = true) {
 		caseDetailsPage.clickAddLinkedAppeal();
-		caseDetailsPage.fillInput(childCaseRef);
-		caseDetailsPage.clickButtonByText('Continue');
+		basePage.fillInput(childCaseRef);
+		basePage.clickButtonByText('Continue');
 
-		//select lead appeal
-		caseDetailsPage.selectRadioButtonByValue(leadCaseRef);
-		caseDetailsPage.clickButtonByText('Continue');
+		if (firstLink) {
+			basePage.selectRadioButtonByValue(leadCaseRef);
+			basePage.clickButtonByText('Continue');
+		} else {
+			basePage.verifyRowExists('Which is the lead appeal?', false);
+		}
 
 		//CYA
-		caseDetailsPage.clickButtonByText('Add linked appeal');
+		basePage.clickButtonByText('Add linked appeal');
 
 		//case details
 		caseDetailsPage.validateBannerMessage('Success', 'Linked appeal added');
