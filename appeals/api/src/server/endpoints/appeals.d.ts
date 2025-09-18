@@ -953,7 +953,7 @@ type CreateInquiry = {
 	ipCommentsDueDate: Date | string;
 	statementOfCommonGroundDueDate: Date | string;
 	proofOfEvidenceAndWitnessesDueDate: Date | string;
-	planningObligationDueDate: Date | string;
+	planningObligationDueDate: Date | string | undefined;
 };
 
 type UpdateInquiry = {

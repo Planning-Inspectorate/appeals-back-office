@@ -185,6 +185,7 @@ export function addressDetailsPage(appealData, action, currentAddress, errors) {
  * @param {Appeal} appealDetails
  * @param {any} sessionValues
  * @param {'change' | 'setup'} action
+ * @param {import('@pins/appeals.api').Appeals.SingleAppellantCaseResponse | undefined} appellantCase
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns Promise<PageContent>
  */
@@ -192,6 +193,7 @@ export const inquiryDueDatesPage = async (
 	appealDetails,
 	sessionValues,
 	action,
+	appellantCase,
 	errors = undefined
 ) => {
 	/**
@@ -207,6 +209,7 @@ export const inquiryDueDatesPage = async (
 		heading: `Timetable due dates`,
 		pageComponents: []
 	};
+
 	/**
 	 *
 	 * @type {string[]}
@@ -216,9 +219,12 @@ export const inquiryDueDatesPage = async (
 		'statementDueDate',
 		'ipCommentsDueDate',
 		'statementOfCommonGroundDueDate',
-		'proofOfEvidenceAndWitnessesDueDate',
-		'planningObligationDueDate'
+		'proofOfEvidenceAndWitnessesDueDate'
 	];
+
+	if (appellantCase?.planningObligation?.hasObligation) {
+		dueDateFields.push('planningObligationDueDate');
+	}
 
 	pageContent.pageComponents = dueDateFields.map((dateField) => {
 		const fieldType = getDueDateFieldNameAndID(dateField);
@@ -292,11 +298,12 @@ export const getDueDateFieldNameAndID = (dateField) => {
 /**
  * @param {string|number} appealId
  * @param {string} appealReference
+ * @param {boolean} hasObligation
  * @param {'setup'|'change'} action
  * @param {import('@pins/express').Session} session
  * @returns {PageContent}
  */
-export function confirmInquiryPage(appealId, appealReference, action, session) {
+export function confirmInquiryPage(appealId, appealReference, hasObligation, action, session) {
 	const procedureType = APPEAL_CASE_PROCEDURE.INQUIRY;
 	/**@type {PageComponent[]} */
 	const pageComponents = [
@@ -317,7 +324,9 @@ export function confirmInquiryPage(appealId, appealReference, action, session) {
 	];
 
 	pageComponents.push(...mapInquiryDetails(appealId, action, session.setUpInquiry));
-	pageComponents.push(...mapInquiryTimetableDue(appealId, action, session.setUpInquiry));
+	pageComponents.push(
+		...mapInquiryTimetableDue(appealId, action, hasObligation, session.setUpInquiry)
+	);
 
 	// Add page footer
 	pageComponents.push(
@@ -502,10 +511,11 @@ export function mapInquiryDetails(appealId, action, values) {
 /**
  * @param {string|number} appealId
  * @param {string} action
+ * @param {boolean} hasObligation
  * @param {any} values
  * @returns {PageComponent[]}
  */
-export function mapInquiryTimetableDue(appealId, action, values) {
+export function mapInquiryTimetableDue(appealId, action, hasObligation, values) {
 	/**@type {PageComponent[]} */
 	const pageComponents = [
 		simpleHtmlComponent(
@@ -614,8 +624,11 @@ export function mapInquiryTimetableDue(appealId, action, values) {
 					})?.display.summaryListItem
 				]
 			}
-		},
-		{
+		}
+	];
+
+	if (hasObligation) {
+		pageComponents.push({
 			type: 'summary-list',
 			parameters: {
 				rows: [
@@ -634,7 +647,8 @@ export function mapInquiryTimetableDue(appealId, action, values) {
 					})?.display.summaryListItem
 				]
 			}
-		}
-	];
+		});
+	}
+
 	return pageComponents;
 }

@@ -6,7 +6,7 @@ import {
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isEmpty, isEqual, pick } from 'lodash-es';
-import { createInquiry, updateInquiry } from './inquiry.service.js';
+import { addAppellantCaseToLocals, createInquiry, updateInquiry } from './inquiry.service.js';
 import {
 	addressDetailsPage,
 	addressKnownPage,
@@ -368,7 +368,16 @@ export const getChangeInquiryDueDates = async (request, response) => {
  */
 export const renderInquiryDueDates = async (request, response, action, values) => {
 	const { currentAppeal, errors } = request;
-	const mappedPageContent = await inquiryDueDatesPage(currentAppeal, values, action, errors);
+
+	const appellantCase = await addAppellantCaseToLocals(request);
+
+	const mappedPageContent = await inquiryDueDatesPage(
+		currentAppeal,
+		values,
+		action,
+		appellantCase,
+		errors
+	);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -483,11 +492,19 @@ export const getInquiryCheckDetails = async (request, response) => {
 		errors
 	} = request;
 
+	const appellantCase = await addAppellantCaseToLocals(request);
+
 	if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const mappedPageContent = confirmInquiryPage(appealId, appealReference, 'setup', session);
+	const mappedPageContent = confirmInquiryPage(
+		appealId,
+		appealReference,
+		appellantCase?.planningObligation?.hasObligation,
+		'setup',
+		session
+	);
 
 	return response.render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -541,9 +558,11 @@ export const postInquiryCheckDetails = async (request, response) => {
 			return response.status(500).render('app/500.njk');
 		}
 
+		const appellantCase = await addAppellantCaseToLocals(request);
+
 		// Create Inquiry
 		await createInquiry(request, {
-			...buildInquiryRequest(inquiry),
+			...buildInquiryRequest(inquiry, appellantCase?.planningObligation?.hasObligation),
 			startDate: getTodaysISOString()
 		});
 
@@ -616,10 +635,10 @@ export const postChangeInquiryCheckDetails = async (request, response) => {
 
 /**
  * @param {any} inquiry
- *
- * @returns {{estimatedDays?: string, inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string, planningObligationDueDate: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}}
+ * @param {boolean} hasObligation
+ * @returns {{estimatedDays?: string, inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string,  address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}}
  */
-const buildInquiryRequest = (inquiry) => {
+const buildInquiryRequest = (inquiry, hasObligation) => {
 	const submittedAddress = {
 		address: {
 			...pick(inquiry, ['addressLine1', 'addressLine2', 'town', 'county']),
@@ -627,7 +646,10 @@ const buildInquiryRequest = (inquiry) => {
 		}
 	};
 
-	return {
+	/**
+	 * @type {{inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string, planningObligationDueDate?: string, estimatedDays?: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}}
+	 */
+	const confirmDetails = {
 		inquiryStartTime: dayMonthYearHourMinuteToISOString({
 			day: inquiry['inquiry-date-day'],
 			month: inquiry['inquiry-date-month'],
@@ -663,13 +685,18 @@ const buildInquiryRequest = (inquiry) => {
 			day: inquiry['inquiry-date-day'],
 			month: inquiry['inquiry-date-month'],
 			year: inquiry['inquiry-date-year']
-		}),
-		planningObligationDueDate: dayMonthYearHourMinuteToISOString({
+		})
+	};
+
+	if (hasObligation) {
+		confirmDetails.planningObligationDueDate = dayMonthYearHourMinuteToISOString({
 			day: inquiry['planning-obligation-due-date-day'],
 			month: inquiry['planning-obligation-due-date-month'],
 			year: inquiry['planning-obligation-due-date-year']
-		})
-	};
+		});
+	}
+
+	return confirmDetails;
 };
 
 /**

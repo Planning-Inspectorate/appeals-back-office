@@ -11,7 +11,28 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
 describe('set up inquiry', () => {
-	beforeEach(installMockApi);
+	const appealId = 2;
+	const validData = {
+		planningObligation: {
+			hasObligation: true
+		}
+	};
+
+	beforeEach(() => {
+		installMockApi();
+		nock('http://test/')
+			.get(`/appeals/${appealId}`)
+			.reply(200, { ...appealData, appealId })
+			.persist();
+
+		nock('http://test/')
+			.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+			.reply(200, {
+				...validData
+			})
+			.persist();
+	});
+
 	afterEach(teardown);
 
 	describe('GET /inquiry/setup', () => {
@@ -521,7 +542,11 @@ describe('set up inquiry', () => {
 
 	describe('GET /inquiry/setup/timetable-due-dates', () => {
 		const appealId = 2;
-
+		const validData = {
+			planningObligation: {
+				hasObligation: true
+			}
+		};
 		let pageHtml;
 
 		beforeAll(async () => {
@@ -529,11 +554,19 @@ describe('set up inquiry', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
 
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {
+					...validData
+				});
+
 			const response = await request.get(
-				`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`
+				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
 			);
 			pageHtml = parseHtml(response.text);
 		});
+
+		afterEach(teardown);
 
 		it('should match the snapshot', () => {
 			expect(pageHtml.innerHTML).toMatchSnapshot();
@@ -592,20 +625,50 @@ describe('set up inquiry', () => {
 		});
 	});
 
-	describe('POST /inquiry/setup/timetable-due-dates', () => {
-		const appealId = 2;
-
-		beforeEach(() => {
+	describe('GET /inquiry/setup/timetable-due-dates when hasObligation is false', () => {
+		let pageHtml;
+		beforeAll(async () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {
+					planningObligation: { hasObligation: false }
+				});
+
+			const response = await request.get(
+				`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`
+			);
+			pageHtml = parseHtml(response.text);
+		});
+
+		it('should not render a date input for planning obligation date when no planning obligation is present', () => {
+			expect(pageHtml.querySelector('input#planning-obligation-due-date-day')).toBeNull();
+			expect(pageHtml.querySelector('input#planning-obligation-due-date-month')).toBeNull();
+			expect(pageHtml.querySelector('input#planning-obligation-due-date-year')).toBeNull();
+		});
+	});
+
+	describe('POST /inquiry/setup/timetable-due-dates', () => {
+		beforeEach(async () => {
+			nock('http://test/')
+				.get(`/appeals/${appealId}`)
+				.reply(200, { ...appealData, appealId });
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {
+					...validData
+				});
 		});
 
 		it('should return 400 with an error when all fields are blank', async () => {
 			const appealId = 2;
 			// Use a clearly past date
 			const response = await request
-				.post(`${baseUrl}/${appealId}/Inquiry/setup/timetable-due-dates`)
+				.post(`${baseUrl}/${appealId}/inquiry/setup/timetable-due-dates`)
 				.send({});
 
 			expect(response.statusCode).toBe(400);
@@ -734,6 +797,11 @@ describe('set up inquiry', () => {
 		const estimationValue = {
 			inquiryEstimationDays: '10'
 		};
+		const validData = {
+			planningObligation: {
+				hasObligation: true
+			}
+		};
 
 		let pageHtml;
 
@@ -741,6 +809,12 @@ describe('set up inquiry', () => {
 			nock('http://test/')
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
+
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {
+					...validData
+				});
 
 			// set session data with post requests to previous pages
 			await request.post(`${baseUrl}/${appealId}/start-case/select-procedure`).send({
@@ -801,7 +875,11 @@ describe('set up inquiry', () => {
 
 	describe('POST /inquiry/setup/check-details', () => {
 		const appealId = 1;
-
+		const validData = {
+			planningObligation: {
+				hasObligation: true
+			}
+		};
 		const dateValues = {
 			'inquiry-date-day': '01',
 			'inquiry-date-month': '02',
@@ -816,7 +894,6 @@ describe('set up inquiry', () => {
 			county: 'Slabshire',
 			postCode: 'X25 3YZ'
 		};
-
 		const estimationValue = {
 			inquiryEstimationDays: '10'
 		};
@@ -826,9 +903,18 @@ describe('set up inquiry', () => {
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
 
+			nock('http://test/')
+				.get(`/appeals/${appealId}/appellant-cases/${appealData.appellantCaseId}`)
+				.reply(200, {
+					...validData
+				})
+				.persist();
+
 			nock('http://test/').post(`/appeals/${appealId}/appeal-timetables`).reply(200);
 			nock('http://test/').post(`/appeals/${appealId}/inquiry-estimates`).reply(200);
 		});
+
+		afterEach(teardown);
 
 		it('should redirect to appeal details page after submission with address', async () => {
 			nock('http://test/')

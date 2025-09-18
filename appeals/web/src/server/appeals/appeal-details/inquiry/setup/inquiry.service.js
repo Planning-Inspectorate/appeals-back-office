@@ -1,6 +1,8 @@
+import { getAppellantCaseFromAppealId } from '#appeals/appeal-details/appellant-case/appellant-case.service.js';
+
 /**
  * @param {import('@pins/express/types/express.js').Request} request
- * @param {{startDate: string, estimatedDays?: string, inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string, planningObligationDueDate: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}} inquiryDetails
+ * @param {{startDate: string, estimatedDays?: string, inquiryStartTime: string, lpaQuestionnaireDueDate: string, statementDueDate: string, ipCommentsDueDate: string, statementOfCommonGroundDueDate: string, proofOfEvidenceAndWitnessesDueDate: string, planningObligationDueDate?: string, address?: {addressLine1: string, addressLine2?: string, town: string, county?: string, postcode: string}}} inquiryDetails
  * @returns {Promise<{inquiryId: number}>}
  */
 export const createInquiry = async (request, inquiryDetails) => {
@@ -25,4 +27,19 @@ export const updateInquiry = async (request, inquiryDetails) => {
 			json: inquiryDetails
 		})
 		.json();
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} req
+ */
+export const addAppellantCaseToLocals = async (req) => {
+	try {
+		return getAppellantCaseFromAppealId(
+			req.apiClient,
+			req.currentAppeal.appealId,
+			req.currentAppeal.appellantCaseId
+		);
+	} catch (error) {
+		console.log('error appellant case!!!!!!!!!!!!', error);
+	}
 };
