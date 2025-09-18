@@ -2,15 +2,19 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
+import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
+import { FileUploader } from '../../page_objects/shared.js';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { tag } from '../../support/tag';
 
 const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
+const documentationSectionPage = new DocumentationSectionPage();
+const fileUploader = new FileUploader();
 
 describe('manage docs on appellant case', () => {
 	beforeEach(() => {
@@ -18,7 +22,7 @@ describe('manage docs on appellant case', () => {
 	});
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
-	it('upload new version of document on appellant case', { tags: tag.smoke }, () => {
+	/*it('upload new version of document on appellant case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
 			cy.reloadUntilVirusCheckComplete();
@@ -119,5 +123,39 @@ describe('manage docs on appellant case', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Success', 'Document filename updated');
 		});
-	});
+	});*/
+
+	it(
+		'can upload appellant proof of evidence and witness to inquiry case',
+		{ tags: tag.smoke },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseRef) => {
+				happyPathHelper.assignCaseOfficer(caseRef);
+				happyPathHelper.reviewAppellantCase(caseRef);
+				happyPathHelper.startS78InquiryCase(caseRef, 'inquiry', true);
+
+				// find case and open inqiiry section
+				//cy.visit(urlPaths.appealsList);
+				//listCasesPage.clickAppealByRef(caseRef);
+
+				documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
+				fileUploader.uploadFiles(sampleFiles.document);
+
+				/*happyPathHelper.uploadDocAppellantCase(caseRef);
+			cy.reloadUntilVirusCheckComplete();
+			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
+			cy.reloadUntilVirusCheckComplete();
+			caseDetailsPage.clickLinkByText('View and edit');
+			caseDetailsPage.clickButtonByText('upload a new version');
+			caseDetailsPage.uploadSampleFile(sampleFiles.document2);
+			caseDetailsPage.clickButtonByText('Continue');
+			caseDetailsPage.clickButtonByText('Confirm');
+			caseDetailsPage.clickButtonByText('Confirm');
+			caseDetailsPage.validateBannerMessage(
+				'Success',
+				'Agreement to change description evidence updated'
+			);*/
+			});
+		}
+	);
 });

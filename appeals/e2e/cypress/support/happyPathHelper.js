@@ -1,6 +1,7 @@
 // @ts-nocheck
 
 import { users } from '../fixtures/users';
+import { InquirySectionPage } from '../page_objects/caseDetails/inquirySectionPage';
 import { CaseDetailsPage } from '../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../page_objects/dateTimeSection';
 import { ListCasesPage } from '../page_objects/listCasesPage';
@@ -8,11 +9,41 @@ import { FileUploader } from '../page_objects/shared.js';
 import { urlPaths } from './urlPaths.js';
 
 const caseDetailsPage = new CaseDetailsPage();
+const inquirySectionPage = new InquirySectionPage();
 const dateTimeSection = new DateTimeSection();
 const listCasesPage = new ListCasesPage();
 const fileUploader = new FileUploader();
 
 let sampleFiles = fileUploader.sampleFiles;
+
+const safeAddedDays = 7;
+
+const timetableItems = [
+	{
+		row: 'lpa-questionnaire-due-date',
+		editable: true
+	},
+	{
+		row: 'statement-due-date',
+		editable: true
+	},
+	{
+		row: 'ip-comments-due-date',
+		editable: true
+	},
+	{
+		row: 'statement-of-common-ground-due-date',
+		editable: true
+	},
+	{
+		row: 'proof-of-evidence-and-witnesses-due-date',
+		editable: true
+	},
+	{
+		row: 'planning-obligation-due-date',
+		editable: true
+	}
+];
 
 export const happyPathHelper = {
 	viewCaseDetails(caseRef) {
@@ -69,11 +100,31 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Start case');
 	},
 
-	startS78InquiryCase(caseRef, procedureType) {
+	startS78InquiryCase(caseRef, procedureType, fullFlow = false) {
 		happyPathHelper.viewCaseDetails(caseRef);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
+
+		if (fullFlow) {
+			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+				dateTimeSection.enterInquiryDate(inquiryDate);
+				dateTimeSection.enterInquiryTime('12', '00');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('No');
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.selectRadioButtonByValue('No');
+				caseDetailsPage.clickButtonByText('Continue');
+
+				// enter timetable dates
+				cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
+					inquirySectionPage.enterTimetableDueDates(timetableItems, startDate, 7);
+				});
+
+				caseDetailsPage.clickButtonByText('Continue');
+				caseDetailsPage.clickButtonByText('Start case');
+			});
+		}
 		//dateTimeSection.enterDueDate();
 		//caseDetailsPage.clickButtonByText('Continue');
 		//caseDetailsPage.selectRadioButtonByValue('Yes');
