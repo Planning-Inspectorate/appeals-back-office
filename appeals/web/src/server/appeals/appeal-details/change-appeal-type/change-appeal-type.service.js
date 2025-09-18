@@ -96,3 +96,22 @@ export async function getNoResubmitAppealRequestRedirectUrl(apiClient, appealTyp
 	}
 	return `/appeals-service/appeal-details/${appealId}/change-appeal-type/transfer-appeal`;
 }
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealType
+ * @param {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} changeAppealType
+ */
+export async function getChangeAppealTypes(apiClient, appealType, changeAppealType) {
+	const appealTypes = await getAppealTypes(apiClient);
+
+	const existingChangeAppealType =
+		appealTypes.find((types) => types.type === appealType)?.changeAppealType ?? appealType;
+
+	const newChangeAppealType = appealTypes.find(
+		(appealType) => appealType.id === changeAppealType.appealTypeId
+	)?.changeAppealType;
+
+	return { existingChangeAppealType, newChangeAppealType };
+}
