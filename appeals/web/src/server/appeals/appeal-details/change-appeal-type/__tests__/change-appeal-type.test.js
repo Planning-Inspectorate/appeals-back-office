@@ -156,14 +156,11 @@ describe('change-appeal-type', () => {
 	});
 
 	describe('POST /change-appeal-type/resubmit', () => {
-		beforeEach(async () => {
-			// Ensure changeAppealType is set in session
+		it('should redirect to the mark appeal invalid page the required field is equal to yes', async () => {
 			await request.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`).send({
 				appealType: 1
 			});
-		});
 
-		it('should redirect to the mark appeal invalid page the required field is equal to yes', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
 				.send({
@@ -177,23 +174,14 @@ describe('change-appeal-type', () => {
 			);
 		});
 
-		// To Do: unskip when /update-appeal is developed
-		it.skip('should redirect to update appeal page if the required field is equal to no and the appeal type is in CBOS', async () => {
-			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
-				.send({
-					appealResubmit: false
-				});
+		it('should redirect to update appeal page if the required field is equal to no and the appeal type is in CBOS', async () => {
+			nock('http://test/')
+				.get('/appeals/appeal-types?filterEnabled=true')
+				.reply(200, appealTypesData);
+			await request.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`).send({
+				appealType: 66
+			});
 
-			expect(response.statusCode).toBe(200);
-			expect(response.headers.location).toContain(markAppealInvalidPath);
-			expect(response.text).toContain(
-				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/update-appeal'
-			);
-		});
-
-		// To Do: unskip when /transfer-appeal is developed
-		it.skip('should redirect to transfer appeal page if the required field is equal to no and appeal type is not in CBOS', async () => {
 			const response = await request
 				.post(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
 				.send({
@@ -201,7 +189,28 @@ describe('change-appeal-type', () => {
 				});
 
 			expect(response.statusCode).toBe(302);
-			expect(response.headers.location).toContain(markAppealInvalidPath);
+			expect(response.headers.location).toContain('/update-appeal');
+			expect(response.text).toContain(
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/update-appeal'
+			);
+		});
+
+		it('should redirect to transfer appeal page if the required field is equal to no and appeal type is not in CBOS', async () => {
+			nock('http://test/')
+				.get('/appeals/appeal-types?filterEnabled=true')
+				.reply(200, appealTypesData);
+			await request.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`).send({
+				appealType: 12
+			});
+
+			const response = await request
+				.post(`${baseUrl}/1${changeAppealTypePath}/${resubmitPath}`)
+				.send({
+					appealResubmit: false
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toContain('/transfer-appeal');
 			expect(response.text).toContain(
 				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-type/transfer-appeal'
 			);
