@@ -457,9 +457,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                     <dd class="govuk-summary-list__value">
                         <p class="govuk-body">Not assigned</p>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-case-officer/search-case-officer"
-                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
-                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
@@ -1102,9 +1099,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                     <dd class="govuk-summary-list__value">
                         <p class="govuk-body">Not assigned</p>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-case-officer/search-case-officer"
-                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
