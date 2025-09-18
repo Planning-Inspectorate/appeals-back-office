@@ -36,7 +36,13 @@ module "function_doc_processing" {
     # Function env variables
     API_HOST                = module.app_api.default_site_hostname
     BO_BLOB_CONTAINER       = azurerm_storage_container.appeal_documents.name
-    BO_BLOB_STORAGE_ACCOUNT = azurerm_storage_account.documents.primary_blob_endpoint # TODO: replace with custom domain
+    BO_BLOB_STORAGE_ACCOUNT = azurerm_storage_account.documents.primary_blob_endpoint # TODO: replace with custom
+
+    # Service bus topic
+    SB_TOPIC_NAME_DOCUMENT_MOVE = azurerm_servicebus_topic.appeal_document_to_move.name
+
+    # service bus subscriptions
+    SB_SUBSCRIPTION_NAME_DOCUMENT_MOVE = azurerm_servicebus_subscription.document_to_move.name
   }
 }
 
