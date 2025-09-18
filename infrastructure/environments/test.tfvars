@@ -1,6 +1,6 @@
 apps_config = {
   app_service_plan_sku       = "P1v3"
-  functions_node_version     = 20
+  functions_node_version     = 22
   functions_service_plan_sku = "P1v3"
   node_environment           = "production"
   private_endpoint_enabled   = true
