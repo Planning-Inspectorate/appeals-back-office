@@ -82,8 +82,8 @@ BEGIN
 	-- Create the IncompleteReasons from id = 1
     INSERT INTO AppellantCaseIncompleteReason ( id, name, hasText) VALUES ( 1, 'Appellant name is not the same on the application form and appeal form',                                          0 )
 	INSERT INTO AppellantCaseIncompleteReason ( id, name, hasText) VALUES ( 2, 'Attachments and/or appendices have not been included to the full statement of case',                              1 )
-    INSERT INTO AppellantCaseIncompleteReason ( id, name, hasText) VALUES ( 3, "LPA's decision notice is missing",                                                                                0 )
-    INSERT INTO AppellantCaseIncompleteReason ( id, name, hasText) VALUES ( 4, "LPA's decision notice is incorrect or incomplete",                                                                1 )
+    INSERT INTO AppellantCaseIncompleteReason ( id, name, hasText) VALUES ( 3, 'LPA''s decision notice is missing',                                                                                0 )
+    INSERT INTO AppellantCaseIncompleteReason ( id, name, hasText) VALUES ( 4, 'LPA''s decision notice is incorrect or incomplete',                                                                1 )
     INSERT INTO AppellantCaseIncompleteReason ( id, name, hasText) VALUES ( 5, 'Documents and/or plans referred in the application form, decision notice and appeal covering letter are missing', 1 )
     INSERT INTO AppellantCaseIncompleteReason ( id, name, hasText) VALUES ( 6, 'Agricultural holding certificate and declaration have not been completed on the appeal form',                     0 )
     INSERT INTO AppellantCaseIncompleteReason ( id, name, hasText) VALUES ( 7, 'The original application form is missing',                                                                        0 )
