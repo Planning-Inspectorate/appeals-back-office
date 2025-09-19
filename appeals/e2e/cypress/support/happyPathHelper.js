@@ -14,35 +14,6 @@ const fileUploader = new FileUploader();
 
 let sampleFiles = fileUploader.sampleFiles;
 
-const safeAddedDays = 7;
-
-const timetableItems = [
-	{
-		row: 'lpa-questionnaire-due-date',
-		editable: true
-	},
-	{
-		row: 'statement-due-date',
-		editable: true
-	},
-	{
-		row: 'ip-comments-due-date',
-		editable: true
-	},
-	{
-		row: 'statement-of-common-ground-due-date',
-		editable: true
-	},
-	{
-		row: 'proof-of-evidence-and-witnesses-due-date',
-		editable: true
-	},
-	{
-		row: 'planning-obligation-due-date',
-		editable: true
-	}
-];
-
 export const happyPathHelper = {
 	viewCaseDetails(caseRef) {
 		cy.visit(urlPaths.appealsList);
