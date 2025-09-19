@@ -100,31 +100,11 @@ export const happyPathHelper = {
 		caseDetailsPage.clickButtonByText('Start case');
 	},
 
-	startS78InquiryCase(caseRef, procedureType, fullFlow = false) {
+	startS78InquiryCase(caseRef, procedureType) {
 		happyPathHelper.viewCaseDetails(caseRef);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
-
-		if (fullFlow) {
-			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
-				dateTimeSection.enterInquiryDate(inquiryDate);
-				dateTimeSection.enterInquiryTime('12', '00');
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.selectRadioButtonByValue('No');
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.selectRadioButtonByValue('No');
-				caseDetailsPage.clickButtonByText('Continue');
-
-				// enter timetable dates
-				cy.getBusinessActualDate(new Date(), safeAddedDays + 2).then((startDate) => {
-					inquirySectionPage.enterTimetableDueDates(timetableItems, startDate, 7);
-				});
-
-				caseDetailsPage.clickButtonByText('Continue');
-				caseDetailsPage.clickButtonByText('Start case');
-			});
-		}
 		//dateTimeSection.enterDueDate();
 		//caseDetailsPage.clickButtonByText('Continue');
 		//caseDetailsPage.selectRadioButtonByValue('Yes');
@@ -174,6 +154,7 @@ export const happyPathHelper = {
 			'Success',
 			'Agreement to change description evidence added'
 		);
+		caseDetailsPage.verifyAnswerSummaryValue(sampleFiles.document);
 	},
 
 	manageDocsAppellantCase(caseRef) {
