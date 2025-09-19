@@ -267,9 +267,9 @@ const updateAppealTimetable = async (appeal, body, notifyClient, azureAdUserId) 
 	);
 
 	// @ts-ignore
-	const result = await appealTimetableRepository.updateAppealTimetableById(
+	const result = await appealTimetableRepository.updateAppealTimetableByAppealId(
 		// @ts-ignore
-		appeal.appealTimetable.id,
+		appeal.id,
 		// @ts-ignore
 		processedBody
 	);

@@ -150,7 +150,7 @@ describe('appeal timetables routes', () => {
 					expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
 						data: responseBody,
 						where: {
-							id: appealTimetable.id
+							appealId: appealWithTimetable.id
 						}
 					});
 					expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
@@ -240,7 +240,7 @@ describe('appeal timetables routes', () => {
 					expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
 						data: responseBody,
 						where: {
-							id: appealTimetable.id
+							appealId: appealWithTimetable.id
 						}
 					});
 
@@ -288,6 +288,45 @@ describe('appeal timetables routes', () => {
 					expect(response.body).toEqual(requestBody);
 				}
 			);
+
+			test('updates a full planning appeal timetable when appeal is a linked lead appeal', async () => {
+				const appealWithTimetable = structuredClone(fullPlanningAppealWithTimetable);
+				appealWithTimetable.childAppeals = [{ child: { ...fullPlanningAppeal, id: 2 } }];
+				const requestBody = structuredClone(householdAppealRequestBody);
+				const responseBody = structuredClone(householdAppealResponseBody);
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(appealWithTimetable);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+
+				const { appealTimetable, id } = appealWithTimetable;
+				const response = await request
+					.patch(`/appeals/${id}/appeal-timetables/${appealTimetable.id}`)
+					.send(requestBody)
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledTimes(2);
+
+				expect(databaseConnector.appealTimetable.update).toHaveBeenNthCalledWith(1, {
+					data: responseBody,
+					where: {
+						appealId: appealWithTimetable.id
+					}
+				});
+
+				expect(databaseConnector.appealTimetable.update).toHaveBeenNthCalledWith(2, {
+					data: responseBody,
+					where: {
+						appealId: appealWithTimetable.id
+					}
+				});
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual(requestBody);
+			});
 
 			test('returns an error if appealId is not numeric', async () => {
 				// @ts-ignore
@@ -544,7 +583,7 @@ describe('appeal timetables routes', () => {
 				expect(databaseConnector.appealTimetable.update).toHaveBeenCalledWith({
 					data: householdAppealResponseBody,
 					where: {
-						id: appealTimetable.id
+						appealId: houseAppealWithTimetable.id
 					}
 				});
 				expect(response.status).toEqual(500);
