@@ -1,5 +1,13 @@
-import { appealData } from '#testing/appeals/appeals.js';
+import usersService from '#appeals/appeal-users/users-service.js';
+import {
+	activeDirectoryUsersData,
+	appealData,
+	appellantFinalCommentsAwaitingReview,
+	caseNotes,
+	lpaFinalCommentsAwaitingReview
+} from '#testing/appeals/appeals.js';
 import { createTestEnvironment } from '#testing/index.js';
+import { jest } from '@jest/globals';
 import { parseHtml } from '@pins/platform/testing/html-parser.js';
 import nock from 'nock';
 import supertest from 'supertest';
@@ -14,6 +22,15 @@ const appealDataWithoutStartDate = {
 
 describe('start case hearing flow', () => {
 	beforeEach(() => {
+		jest
+			.useFakeTimers({ doNotFake: ['nextTick', 'setImmediate'] })
+			.setSystemTime(new Date('2025-09-19'));
+		// @ts-ignore
+		usersService.getUsersByRole = jest.fn().mockResolvedValue(activeDirectoryUsersData);
+		// @ts-ignore
+		usersService.getUserById = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
+		// @ts-ignore
+		usersService.getUserByRoleAndId = jest.fn().mockResolvedValue(activeDirectoryUsersData[0]);
 		nock('http://test/')
 			.get('/appeals/1')
 			.reply(200, {
@@ -21,7 +38,10 @@ describe('start case hearing flow', () => {
 				appealType: 'Planning appeal'
 			});
 	});
-	afterEach(teardown);
+	afterEach(() => {
+		teardown();
+		jest.useRealTimers();
+	});
 
 	const editEntrypoint = encodeURIComponent(`${baseUrl}/1/start-case/hearing`);
 	describe('GET /start-case/hearing', () => {
@@ -404,11 +424,13 @@ describe('start case hearing flow', () => {
 				local_planning_authority: 'Wiltshire Council',
 				start_date: '1 February 2025',
 				questionnaire_due_date: '1 February 2025',
-				lpa_statement_due_date: '1 March 2025',
-				ip_comments_due_date: '1 April 2025',
+				lpa_statement_deadline: '1 March 2025',
+				ip_comments_deadline: '1 April 2025',
 				statement_of_common_ground_due_date: '1 May 2025',
 				hearing_date: '1 February 3025',
-				hearing_time: '12:00pm'
+				hearing_time: '12:00pm',
+				procedure_type: 'a hearing',
+				child_appeals: []
 			};
 			nock('http://test/')
 				.get('/appeals/1')
@@ -428,13 +450,13 @@ describe('start case hearing flow', () => {
 				});
 			nock('http://test/')
 				.post(
-					'/appeals/notify-preview/appeal-valid-start-case-appellant-hearing.content.md',
+					'/appeals/notify-preview/appeal-valid-start-case-s78-appellant-hearing.content.md',
 					personalisation
 				)
 				.reply(200, { renderedHtml: 'Rendered HTML for appellant preview' });
 			nock('http://test/')
 				.post(
-					'/appeals/notify-preview/appeal-valid-start-case-lpa-hearing.content.md',
+					'/appeals/notify-preview/appeal-valid-start-case-s78-lpa-hearing.content.md',
 					personalisation
 				)
 				.reply(200, { renderedHtml: 'Rendered HTML for LPA preview' });
@@ -502,11 +524,13 @@ describe('start case hearing flow', () => {
 				local_planning_authority: 'Wiltshire Council',
 				start_date: '1 February 2025',
 				questionnaire_due_date: '1 February 2025',
-				lpa_statement_due_date: '1 March 2025',
-				ip_comments_due_date: '1 April 2025',
+				lpa_statement_deadline: '1 March 2025',
+				ip_comments_deadline: '1 April 2025',
 				statement_of_common_ground_due_date: '1 May 2025',
 				hearing_date: '',
-				hearing_time: ''
+				hearing_time: '',
+				procedure_type: 'a hearing',
+				child_appeals: []
 			};
 			nock('http://test/')
 				.get('/appeals/1')
@@ -526,14 +550,15 @@ describe('start case hearing flow', () => {
 				});
 			nock('http://test/')
 				.post(
-					'/appeals/notify-preview/appeal-valid-start-case-appellant.content.md',
+					'/appeals/notify-preview/appeal-valid-start-case-s78-appellant.content.md',
 					personalisation
 				)
 				.reply(200, { renderedHtml: 'Rendered HTML for appellant preview' });
 			nock('http://test/')
-				.post('/appeals/notify-preview/appeal-valid-start-case-lpa.content.md', personalisation)
+				.post('/appeals/notify-preview/appeal-valid-start-case-s78-lpa.content.md', personalisation)
 				.reply(200, { renderedHtml: 'Rendered HTML for LPA preview' });
 
+			// Set up the session values
 			await request
 				.post(`${baseUrl}/1/start-case/select-procedure`)
 				.send({ appealProcedure: 'hearing' });
@@ -575,6 +600,70 @@ describe('start case hearing flow', () => {
 			)?.innerHTML;
 			expect(appellantPreview).toContain('Rendered HTML for appellant preview');
 			expect(lpaPreview).toContain('Rendered HTML for LPA preview');
+		});
+	});
+
+	describe('POST /start-case/hearing/confirm', () => {
+		it('should redirect to the appeal details page when submitted', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.times(4)
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+			nock('http://test/')
+				.post('/appeals/1/appeal-timetables', {
+					startDate: '2025-09-18T23:00:00.000Z',
+					procedureType: 'hearing',
+					hearingStartTime: '3025-02-01T12:00:00.000Z'
+				})
+				.reply(201, {
+					startDate: '2025-02-01T12:00:00.000Z',
+					lpaQuestionnaireDueDate: '2025-02-01T12:00:00.000Z',
+					lpaStatementDueDate: '2025-03-01T12:00:00.000Z',
+					ipCommentsDueDate: '2025-04-01T12:00:00.000Z',
+					statementOfCommonGroundDueDate: '2025-05-01T12:00:00.000Z'
+				});
+			nock('http://test/').get('/appeals/1/case-notes').reply(200, caseNotes);
+			nock('http://test/')
+				.get('/appeals/1/reps?type=appellant_final_comment')
+				.reply(200, appellantFinalCommentsAwaitingReview);
+			nock('http://test/')
+				.get('/appeals/1/reps?type=lpa_final_comment')
+				.reply(200, lpaFinalCommentsAwaitingReview);
+			nock('http://test/')
+				.get(/appeals\/\d+\/appellant-cases\/\d+/)
+				.reply(200, { planningObligation: { hasObligation: false } });
+
+			// Set up the session values
+			await request
+				.post(`${baseUrl}/1/start-case/select-procedure`)
+				.send({ appealProcedure: 'hearing' });
+			await request.post(`${baseUrl}/1/start-case/hearing`).send({ dateKnown: 'yes' });
+			await request.post(`${baseUrl}/1/start-case/hearing/date`).send({
+				'hearing-date-day': '01',
+				'hearing-date-month': '02',
+				'hearing-date-year': '3025',
+				'hearing-time-hour': '12',
+				'hearing-time-minute': '00'
+			});
+
+			const response = await request.post(`${baseUrl}/1/start-case/hearing/confirm`).send({});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toBe(`${baseUrl}/1`);
+
+			const caseDetailsResponse = await request.get(`${baseUrl}/1`);
+
+			const caseDetailsHTML = parseHtml(caseDetailsResponse.text);
+
+			expect(caseDetailsHTML.innerHTML).toMatchSnapshot();
+			const banners = caseDetailsHTML.querySelectorAll('.govuk-notification-banner__heading');
+			expect(banners).toHaveLength(3);
+			expect(banners[0]?.innerHTML).toBe('Appeal started');
+			expect(banners[1]?.innerHTML).toBe('Timetable started');
+			expect(banners[2]?.innerHTML).toBe('Hearing set up');
 		});
 	});
 });

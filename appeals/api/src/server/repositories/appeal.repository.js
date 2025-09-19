@@ -217,7 +217,8 @@ const updateAppealById = (
 		inspector,
 		agent,
 		applicationReference,
-		procedureTypeId
+		procedureTypeId,
+		hearingStartTime
 	}
 ) =>
 	databaseConnector.appeal.update({
@@ -231,7 +232,16 @@ const updateAppealById = (
 			...(hasValueOrIsNull(inspector) && { inspectorUserId: inspector }),
 			...(hasValueOrIsNull(agent) && { agentId: agent }),
 			...(hasValueOrIsNull(procedureTypeId) && { procedureTypeId }),
-			caseUpdatedDate: new Date()
+			caseUpdatedDate: new Date(),
+			...(hearingStartTime && {
+				hearing: {
+					upsert: {
+						create: { hearingStartTime },
+						update: { hearingStartTime },
+						where: { appealId: id }
+					}
+				}
+			})
 		},
 		include: {
 			appealType: true,

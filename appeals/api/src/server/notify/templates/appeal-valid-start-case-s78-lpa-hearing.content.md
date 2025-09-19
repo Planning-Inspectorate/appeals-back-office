@@ -11,10 +11,10 @@ Start date: {{start_date}}
 Due by {{questionnaire_due_date}}.
 
 ## Statement from the local planning authority
-Due by {{lpa_statement_due_date}}.
+Due by {{lpa_statement_deadline}}.
 
 ## Interested party comments
-Due by {{ip_comments_due_date}}.
+Due by {{ip_comments_deadline}}.
 
 ## Statement of common ground
 Due by {{statement_of_common_ground_due_date}}.
