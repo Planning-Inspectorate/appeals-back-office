@@ -29,7 +29,7 @@ const updateAppealStatusByAppealId = (appealId, status) =>
 const rollBackAppealStatusTo = (appealId, status) =>
 	databaseConnector.$transaction(async (tx) => {
 		const prevStatus = await tx.appealStatus.findFirst({
-			where: { appealId, status }
+			where: { appealId, valid: true }
 		});
 
 		if (!prevStatus) {
@@ -38,6 +38,7 @@ const rollBackAppealStatusTo = (appealId, status) =>
 
 		await tx.appealStatus.deleteMany({
 			where: {
+				appealId: prevStatus.appealId,
 				createdAt: {
 					gt: prevStatus.createdAt
 				}
