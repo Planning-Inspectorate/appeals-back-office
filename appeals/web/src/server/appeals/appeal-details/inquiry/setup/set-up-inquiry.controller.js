@@ -188,7 +188,7 @@ export const postChangeInquiryDate = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryEstimation = async (request, response) => {
-	return renderInquiryEstimation(request, response, 'setup');
+	return renderInquiryEstimation(request, response, 'setup', request.session.setUpInquiry || {});
 };
 
 /**
