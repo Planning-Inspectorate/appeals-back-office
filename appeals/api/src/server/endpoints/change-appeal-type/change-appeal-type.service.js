@@ -6,8 +6,10 @@ import timetableRepository from '#repositories/appeal-timetable.repository.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import transitionState from '#state/transition-state.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
+	AUDIT_TRAIL_APPEAL_TYPE_UPDATED,
 	AUDIT_TRAIL_SUBMISSION_INVALID,
 	VALIDATION_OUTCOME_INVALID
 } from '@pins/appeals/constants/support.js';
@@ -149,4 +151,30 @@ const resubmitAndMarkInvalid = async (
 	}
 };
 
-export { changeAppealType, resubmitAndMarkInvalid };
+/**
+ * @param {Appeal} appeal
+ * @param {number} newAppealTypeId
+ * @param {string} newAppealType
+ * @param {string} azureAdUserId
+ * @returns {Promise<void>}
+ */
+const updateAppealType = async (appeal, newAppealTypeId, newAppealType, azureAdUserId) => {
+	Promise.all([
+		await databaseConnector.appeal.update({
+			where: { id: appeal.id },
+			data: {
+				appealTypeId: newAppealTypeId
+			}
+		}),
+		await createAuditTrail({
+			appealId: appeal.id,
+			azureAdUserId,
+			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_TYPE_UPDATED, [newAppealType])
+		})
+	]);
+
+	// To do
+	// Add notifies & broadcast
+};
+
+export { changeAppealType, resubmitAndMarkInvalid, updateAppealType };

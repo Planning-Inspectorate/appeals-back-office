@@ -1,5 +1,6 @@
 import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
 import { currentStatus, isCurrentStatus } from '#utils/current-status.js';
+import { filterEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { ERROR_INVALID_APPEAL_STATE, ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
@@ -16,6 +17,19 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 export const loadAllAppealTypesAndAddToRequest = async (req, res, next) => {
 	const allAppealTypes = await getAllAppealTypes();
 	req.appealTypes = allAppealTypes;
+	next();
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} _res
+ * @param {NextFunction} next
+ * @returns {Promise<Response | void>}
+ */
+export const loadEnabledAppealTypesAndAddToRequest = async (req, _res, next) => {
+	const appealTypes = await getAllAppealTypes();
+	const enabledAppealTypes = filterEnabledAppealTypes(appealTypes);
+	req.appealTypes = enabledAppealTypes;
 	next();
 };
 
@@ -61,6 +75,24 @@ export const validateAppealStatusForTransfer = async (req, res, next) => {
 	const isValidStatus = isCurrentStatus(req.appeal, APPEAL_CASE_STATUS.AWAITING_TRANSFER);
 
 	if (!isValidStatus) {
+		return res.status(400).send({ errors: { appealStatus: ERROR_INVALID_APPEAL_STATE } });
+	}
+	next();
+};
+
+/**
+ * @type {import("express").RequestHandler}
+ * @returns {Promise<object|void>}
+ */
+export const validateAppealStatusForUpdate = async (req, res, next) => {
+	const validAppealChangeTypeStatuses = [
+		APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+		APPEAL_CASE_STATUS.VALIDATION
+	];
+
+	const status = currentStatus(req.appeal);
+
+	if (!validAppealChangeTypeStatuses.includes(status)) {
 		return res.status(400).send({ errors: { appealStatus: ERROR_INVALID_APPEAL_STATE } });
 	}
 	next();

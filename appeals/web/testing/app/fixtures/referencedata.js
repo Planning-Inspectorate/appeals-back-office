@@ -1577,33 +1577,38 @@ export const appealTypesData = [
 		type: 'Householder',
 		shorthand: 'HAS',
 		key: 'D',
-		enabled: true
+		enabled: true,
+		changeAppealType: 'Householder'
 	},
 	{
 		id: 75,
 		type: 'Planning appeal',
 		shorthand: 'FPA',
 		key: 'W',
-		enabled: false
+		enabled: false,
+		changeAppealType: 'Planning'
 	},
 	{
 		id: 77,
 		type: 'Planning listed building and conservation area appeal',
 		shorthand: 'S20',
 		key: 'Y',
-		enabled: false
+		enabled: false,
+		changeAppealType: 'Planning listed building and conservation area'
 	},
 	{
 		id: 78,
 		type: 'CAS advert',
 		key: 'ZA',
-		enabled: false
+		enabled: false,
+		changeAppealType: 'Commercial advertisement (CAS)'
 	},
 	{
 		id: 79,
 		type: 'CAS planning',
 		key: 'ZP',
-		enabled: false
+		enabled: false,
+		changeAppealType: 'Commercial planning (CAS)'
 	}
 ];
 

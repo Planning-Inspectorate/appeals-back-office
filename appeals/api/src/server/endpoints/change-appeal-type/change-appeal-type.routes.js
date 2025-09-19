@@ -6,12 +6,15 @@ import {
 	requestChangeOfAppealType,
 	requestConfirmationTransferOfAppeal,
 	requestResubmitAndMarkInvalid,
-	requestTransferOfAppeal
+	requestTransferOfAppeal,
+	requestUpdateOfAppeal
 } from './change-appeal-type.controller.js';
 import {
 	loadAllAppealTypesAndAddToRequest,
+	loadEnabledAppealTypesAndAddToRequest,
 	validateAppealStatus,
 	validateAppealStatusForTransfer,
+	validateAppealStatusForUpdate,
 	validateAppealType
 } from './change-appeal-type.middleware.js';
 import {
@@ -148,6 +151,32 @@ router.post(
 	validateAppealStatusForTransfer,
 	postAppealTypeTransferConfirmationValidator,
 	asyncHandler(requestConfirmationTransferOfAppeal)
+);
+
+router.post(
+	'/:appealId/appeal-update-request',
+	/*
+		#swagger.tags = ['Appeal Type Change Request']
+		#swagger.path = '/appeals/{appealId}/appeal-update-request'
+		#swagger.description = 'Updates the appeal type'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Appeal type update request',
+			schema: { $ref: '#/components/schemas/AppealTypeUpdateRequest' },
+			required: true
+		}
+		#swagger.responses[400] = {}
+	 */
+	checkAppealExistsByIdAndAddToRequest,
+	loadEnabledAppealTypesAndAddToRequest,
+	validateAppealType,
+	validateAppealStatusForUpdate,
+	asyncHandler(requestUpdateOfAppeal)
 );
 
 export { router as changeAppealTypeRoutes };

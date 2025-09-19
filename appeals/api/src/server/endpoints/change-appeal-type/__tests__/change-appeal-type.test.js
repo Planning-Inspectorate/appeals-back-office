@@ -504,3 +504,138 @@ describe('appeal change type transfer confirmation routes', () => {
 		});
 	});
 });
+
+describe('appeal change update routes', () => {
+	describe('POST', () => {
+		test('returns 404 if the appeal does not exist', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue();
+
+			const response = await request
+				.post(`/appeals/${6}/appeal-update-request`)
+				.send({
+					newAppealTypeId: 16
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(404);
+			expect(response.body).toEqual({
+				errors: {
+					appealId: ERROR_NOT_FOUND
+				}
+			});
+		});
+
+		test('returns 400 if the appeal type is not valid', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
+						valid: true
+					}
+				]
+			});
+			// @ts-ignore
+			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/appeal-update-request`)
+				.send({
+					newAppealTypeId: 9
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					newAppealTypeId: ERROR_NOT_FOUND
+				}
+			});
+		});
+
+		test.each([
+			['awaiting event', APPEAL_CASE_STATUS.AWAITING_EVENT],
+			['awaiting transfer', APPEAL_CASE_STATUS.AWAITING_TRANSFER],
+			['closed', APPEAL_CASE_STATUS.CLOSED],
+			['complete', APPEAL_CASE_STATUS.COMPLETE],
+			['event', APPEAL_CASE_STATUS.EVENT],
+			['evidence', APPEAL_CASE_STATUS.EVIDENCE],
+			['final comments', APPEAL_CASE_STATUS.FINAL_COMMENTS],
+			['invalid', APPEAL_CASE_STATUS.INVALID],
+			['issue determination', APPEAL_CASE_STATUS.ISSUE_DETERMINATION],
+			['lpa questionnaire', APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE],
+			['ready to start', APPEAL_CASE_STATUS.READY_TO_START],
+			['statements', APPEAL_CASE_STATUS.STATEMENTS],
+			['transferred', APPEAL_CASE_STATUS.TRANSFERRED],
+			['withdrawn', APPEAL_CASE_STATUS.WITHDRAWN],
+			['witnesses', APPEAL_CASE_STATUS.WITNESSES]
+		])('returns 400 for invalid appeal case status: %s', async (_, caseStatus) => {
+			const appealWithInvalidCaseStatus = {
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: caseStatus,
+						valid: true
+					}
+				]
+			};
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithInvalidCaseStatus);
+			// @ts-ignore
+			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/appeal-update-request`)
+				.send({
+					newAppealTypeId: 10
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(400);
+			expect(response.body).toEqual({
+				errors: {
+					appealStatus: ERROR_INVALID_APPEAL_STATE
+				}
+			});
+		});
+
+		test.each([
+			['assign case officer', APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER],
+			['validation', APPEAL_CASE_STATUS.VALIDATION]
+		])('successfully updates appeal type for valid case status: %s', async (_, caseStatus) => {
+			const appealWithInvalidCaseStatus = {
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: caseStatus,
+						valid: true
+					}
+				]
+			};
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithInvalidCaseStatus);
+			// @ts-ignore
+			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/appeal-update-request`)
+				.send({
+					newAppealTypeId: 10
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+				where: { id: householdAppeal.id },
+				data: {
+					appealTypeId: 10
+				}
+			});
+
+			expect(response.status).toEqual(200);
+		});
+	});
+});
