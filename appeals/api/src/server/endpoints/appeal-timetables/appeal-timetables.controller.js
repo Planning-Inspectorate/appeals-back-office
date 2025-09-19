@@ -91,7 +91,18 @@ const updateAppealTimetableById = async (req, res) => {
 	const { body, appeal, notifyClient } = req;
 
 	try {
-		await updateAppealTimetable(appeal, body, notifyClient, req.get('azureAdUserId') || '');
+		const azureAdUserId = req.get('azureAdUserId') || '';
+		await updateAppealTimetable(appeal, body, notifyClient, azureAdUserId);
+
+		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && appeal.childAppeals?.length) {
+			await Promise.all(
+				appeal.childAppeals.map(async (childAppeal) => {
+					if (childAppeal.child) {
+						return updateAppealTimetable(childAppeal.child, body, notifyClient, azureAdUserId);
+					}
+				})
+			);
+		}
 
 		const updatedTimetable = {
 			lpaQuestionnaireDueDate: body.lpaQuestionnaireDueDate,
