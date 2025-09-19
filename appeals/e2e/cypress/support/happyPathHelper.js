@@ -125,6 +125,7 @@ export const happyPathHelper = {
 			'Success',
 			'Agreement to change description evidence added'
 		);
+		caseDetailsPage.verifyAnswerSummaryValue(sampleFiles.document);
 	},
 
 	manageDocsAppellantCase(caseRef) {
