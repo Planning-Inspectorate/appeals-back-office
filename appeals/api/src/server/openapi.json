@@ -9337,6 +9337,14 @@
 					"startDate": {
 						"type": "string",
 						"example": "2024-05-09"
+					},
+					"procedureType": {
+						"type": "string",
+						"example": "written"
+					},
+					"hearingStartTime": {
+						"type": "string",
+						"example": "2024-05-09T12:00:00.000Z"
 					}
 				},
 				"xml": {
