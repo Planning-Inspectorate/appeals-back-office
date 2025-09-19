@@ -1,6 +1,8 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import { getAssignedTeam } from '#repositories/team.repository.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import {
 	AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED,
 	CASE_RELATIONSHIP_LINKED
@@ -21,7 +23,9 @@ export const setAssignedTeamId = async (appealId, assignedTeamId, azureAdUserId)
 	await createAuditTrail({
 		appealId: appealId,
 		azureAdUserId: azureAdUserId,
-		details: AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED
+		details: stringTokenReplacement(AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED, [
+			assignedTeamId ? (await getAssignedTeam(assignedTeamId))?.name || 'unknown' : 'unassigned'
+		])
 	});
 	await broadcasters.broadcastAppeal(appealId);
 

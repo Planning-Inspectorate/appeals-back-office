@@ -4134,10 +4134,16 @@ export const appealDataToGetRequiredActions = {
 		appealType: 'Planning appeal',
 		awaitingLinkedAppeal: true
 	},
-	addResidencesNetChange: {
+	addResidencesNetChangeS78: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
 		appealType: 'Planning appeal',
+		numberOfResidencesNetChange: null
+	},
+	addResidencesNetChangeS20: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		appealType: 'Planning listed building and conservation area appeal',
 		numberOfResidencesNetChange: null
 	}
 };

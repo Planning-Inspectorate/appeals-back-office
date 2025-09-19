@@ -127,9 +127,11 @@ const getMyAppeals = async (req, res) => {
 				(appeal.appealStatus !== APPEAL_CASE_STATUS.COMPLETE ||
 					appeal.costsDecision?.awaitingAppellantCostsDecision ||
 					appeal.costsDecision?.awaitingLpaCostsDecision ||
-					(config.featureFlags.featureFlagNetResidence &&
-						appeal.numberOfResidencesNetChange === null &&
-						appeal.appealType === APPEAL_TYPE.S78))
+					(appeal.numberOfResidencesNetChange === null &&
+						((config.featureFlags.featureFlagNetResidence &&
+							appeal.appealType === APPEAL_TYPE.S78) ||
+							(config.featureFlags.featureFlagNetResidenceS20 &&
+								appeal.appealType === APPEAL_TYPE.PLANNED_LISTED_BUILDING))))
 		);
 
 	const sortedAppeals = sortAppeals(filteredAppeals);

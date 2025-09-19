@@ -70,19 +70,22 @@ describe('required actions', () => {
 			).toEqual(['issueDecision']);
 		});
 
-		it('should return "addResidencesNetChange" if number of residences net change has not been provided and is S78', () => {
-			expect(
-				getRequiredActionsForAppeal(
-					{
-						...appealData,
-						appealType: 'Planning appeal',
-						appealStatus: APPEAL_CASE_STATUS.COMPLETE,
-						numberOfResidencesNetChange: null
-					},
-					'detail'
-				)
-			).toEqual(['addResidencesNetChange']);
-		});
+		it.each(['Planning appeal', 'Planning listed building and conservation area appeal'])(
+			'should return "addResidencesNetChange" if number of residences net change has not been provided and is %s',
+			(appealType) => {
+				expect(
+					getRequiredActionsForAppeal(
+						{
+							...appealData,
+							appealType: appealType,
+							appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+							numberOfResidencesNetChange: null
+						},
+						'detail'
+					)
+				).toEqual(['addResidencesNetChange']);
+			}
+		);
 
 		describe('when appeal status is "VALIDATION"', () => {
 			const appealDataWithValidationStatus = {

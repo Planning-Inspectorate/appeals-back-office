@@ -1,15 +1,16 @@
 // @ts-nocheck
+
 import { request } from '#tests/../app-test.js';
 import { mocks } from '#tests/appeals/index.js';
 import { caseTeams } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
-
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 const householdAppeal = mocks.householdAppeal;
 const teeamIdNumericErrorMessage = 'teamId must be a number equal to or greater than 0';
 const teamIdRequiredErrorMessage = 'teamId is required';
+
 describe('case team routes', () => {
 	beforeAll(() => {
 		jest.clearAllMocks();
@@ -82,15 +83,19 @@ describe('case team routes', () => {
 
 			it(`returns error message when teamId is less than 0`, async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
-				databaseConnector.appeal.update.mockResolvedValue({ teamId: 1 });
+				databaseConnector.appeal.update.mockResolvedValue({ teamId: -1 });
 
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/case-team`)
-					.send({ teamId: 1 })
+					.send({ teamId: -1 })
 					.set('azureAdUserId', azureAdUserId);
 
-				expect(response.status).toEqual(200);
-				expect(response.body).toEqual({ teamId: 1 });
+				expect(response.status).toEqual(400);
+				expect(response.body).toEqual({
+					errors: {
+						teamId: 'teamId must be a number equal to or greater than 0'
+					}
+				});
 			});
 
 			it(`returns teamId of null when 0 is provided`, async () => {
@@ -113,7 +118,11 @@ describe('case team routes', () => {
 			it('returns valid assigned team Id when valid teamId is provided', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
 				databaseConnector.appeal.update.mockResolvedValue({ assignedTeamId: 1 });
-
+				databaseConnector.team.findUnique.mockResolvedValue({ id: 1, name: 'Team 1' });
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
 				const response = await request
 					.patch(`/appeals/${householdAppeal.id}/case-team`)
 					.send({ teamId: 1 })
@@ -126,6 +135,16 @@ describe('case team routes', () => {
 				expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
 					where: { id: householdAppeal.id },
 					data: { assignedTeamId: 1 }
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledTimes(1);
+
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: 'Case team Team 1 assigned',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
 				});
 				expect(response.body).toEqual({ assignedTeamId: 1 });
 			});
