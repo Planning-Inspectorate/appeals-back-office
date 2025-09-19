@@ -103,6 +103,7 @@ export class CaseDetailsPage extends Page {
 		manageLinkedAppeals: () => cy.getByData(this._cyDataSelectors.manageLinkedAppeals),
 		manageNotifyingParties: () => cy.getByData(this._cyDataSelectors.manageNotifyingParties),
 		linkedAppeal: () => cy.get(`[data-cy^=${this._cyDataSelectors.linkedAppeal}]`),
+		linkedAppealValue: () => cy.get('.appeal-linked-appeals .govuk-summary-list__value'),
 		manageRelatedAppeals: () => cy.getByData(this._cyDataSelectors.manageRelatedAppeals),
 		uploadFile: () => cy.getByData(this._cyDataSelectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
@@ -475,7 +476,7 @@ export class CaseDetailsPage extends Page {
 	}
 
 	clickLinkedAppeal(caseRef) {
-		cy.getByData('linked-appeal-' + caseRef).click();
+		cy.getByData(this._cyDataSelectors.linkedAppeal + caseRef).click();
 	}
 
 	clickRemoveFileUpload(fileName) {
@@ -652,6 +653,10 @@ export class CaseDetailsPage extends Page {
 
 	checkAddLinkedAppealDoesNotExist() {
 		this.elements.addLinkedAppeal().should('not.exist');
+	}
+
+	verifyNumberOfLinkedAppeals(num) {
+		this.elements.linkedAppeal().should('have.length', num);
 	}
 
 	checkViewDecisionLetterIsLink(text) {

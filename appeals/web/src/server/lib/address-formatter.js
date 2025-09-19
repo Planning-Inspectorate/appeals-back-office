@@ -30,7 +30,20 @@ export const addressToMultilineStringHtml = (address) => {
 		', </br>'
 	);
 };
-
+/**
+ * converts a multi part address to a multiline string
+ *
+ * @param {import('@pins/appeals').Address} address
+ * @returns {string}
+ */
+export const addressToMultilineStringNoCommasHtml = (address) => {
+	return join(
+		map(pick(address, ['addressLine1', 'addressLine2', 'town', 'county', 'postCode']), (value) => {
+			return value?.trim();
+		}).filter((value) => value?.length),
+		'</br>'
+	);
+};
 /**
  * @param {import('@pins/appeals.api').Appeals.AppealSite} appealSite
  * @returns {import('@pins/appeals').Address}
@@ -60,6 +73,18 @@ export const appealSiteToAddressString = (appealSite) => {
 export const appealSiteToMultilineAddressStringHtml = (appealSite) => {
 	if (appealSite) {
 		return addressToMultilineStringHtml(appealSiteToAddress(appealSite));
+	}
+
+	return '';
+};
+
+/**
+ * @param {import('@pins/appeals.api').Appeals.AppealSite | undefined} appealSite
+ * @returns {string}
+ */
+export const appealSiteToMultilineAddressStringNoCommasHtml = (appealSite) => {
+	if (appealSite) {
+		return addressToMultilineStringNoCommasHtml(appealSiteToAddress(appealSite));
 	}
 
 	return '';

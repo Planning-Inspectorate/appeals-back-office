@@ -1,7 +1,6 @@
-import config from '#environment/config.js';
+import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
-import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 
 /** @type {import('../mapper.js').SubMapper} */
 export const mapNetResidenceGainOrLoss = ({
@@ -16,8 +15,7 @@ export const mapNetResidenceGainOrLoss = ({
 	if (
 		netChange == null ||
 		netChange === 0 ||
-		!config.featureFlags.featureFlagNetResidence ||
-		appealDetails.appealType !== APPEAL_TYPE.S78
+		!isNetResidencesAppealType(appealDetails.appealType)
 	) {
 		return { id, display: {} };
 	}

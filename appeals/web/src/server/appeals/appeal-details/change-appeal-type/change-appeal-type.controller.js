@@ -14,12 +14,14 @@ import {
 	changeAppealFinalDatePage,
 	changeAppealMarkAppealInvalidPage,
 	changeAppealTransferAppealPage,
+	checkDetailsAndUpdateAppealTypePage,
 	checkTransferPage,
 	invalidChangeAppealType,
 	resubmitAppealPage
 } from './change-appeal-type.mapper.js';
 import {
 	getAppealTypes,
+	getChangeAppealTypes,
 	getNoResubmitAppealRequestRedirectUrl,
 	postAppealChangeRequest,
 	postAppealTransferConfirmation,
@@ -137,6 +139,12 @@ export const postResubmitAppeal = async (request, response) => {
 
 		const isResubmit = appealResubmit === 'true';
 
+		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		request.session.changeAppealType = {
+			...request.session.changeAppealType,
+			resubmit: isResubmit
+		};
+
 		if (!isResubmit) {
 			const redirectUrl = await getNoResubmitAppealRequestRedirectUrl(
 				request.apiClient,
@@ -145,12 +153,6 @@ export const postResubmitAppeal = async (request, response) => {
 			);
 			return response.redirect(redirectUrl);
 		}
-
-		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
-		request.session.changeAppealType = {
-			...request.session.changeAppealType,
-			resubmit: isResubmit
-		};
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/change-appeal-type/mark-appeal-invalid`
@@ -442,24 +444,21 @@ export const getMarkAppealInvalid = async (request, response) => {
 		session: { changeAppealType }
 	} = request;
 	const appealData = request.currentAppeal;
-	const appealTypes = await getAppealTypes(request.apiClient);
-	const changeAppeal = appealTypes.find(
-		(appealType) => appealType.id === parseInt(changeAppealType.appealTypeId)
+	const { existingChangeAppealType, newChangeAppealType } = await getChangeAppealTypes(
+		request.apiClient,
+		appealData.appealType,
+		changeAppealType
 	);
-	const existingAppealType =
-		appealTypes
-			.find((appealType) => appealType.type === appealData.appealType)
-			?.changeAppealType.toLowerCase() ?? appealData.appealType.toLowerCase();
 
-	if (!changeAppeal) {
-		logger.error('error');
+	if (!newChangeAppealType) {
+		logger.error('Unable to parse new change appeal type');
 		return response.status(500).render('app/500.njk');
 	}
 
 	const mappedPageContent = changeAppealMarkAppealInvalidPage(
 		appealData,
-		existingAppealType,
-		changeAppeal.changeAppealType.toLowerCase()
+		existingChangeAppealType.toLowerCase(),
+		newChangeAppealType.toLowerCase()
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
@@ -616,6 +615,35 @@ export const postCheckChangeAppealFinalDate = async (request, response) => {
 		});
 
 		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const getUpdateAppeal = async (request, response) => {
+	try {
+		const appealData = request.currentAppeal;
+		const {
+			errors,
+			session: { changeAppealType }
+		} = request;
+		const { existingChangeAppealType } = await getChangeAppealTypes(
+			request.apiClient,
+			appealData.appealType,
+			changeAppealType
+		);
+
+		return checkDetailsAndUpdateAppealTypePage(
+			appealData,
+			existingChangeAppealType,
+			response,
+			errors
+		);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');

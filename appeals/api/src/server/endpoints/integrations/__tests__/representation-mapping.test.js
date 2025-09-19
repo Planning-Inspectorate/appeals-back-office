@@ -112,6 +112,10 @@ describe('representation mapper', () => {
 			{
 				lpa: null,
 				representatonType: APPEAL_REPRESENTATION_TYPE.APPELLANT_FINAL_COMMENT
+			},
+			{
+				lpa: null,
+				representatonType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE
 			}
 		]) {
 			test(`Mapping citizen source: ${source}`, async () => {
@@ -137,6 +141,10 @@ describe('representation mapper', () => {
 			{
 				lpa: { lpaCode: 'XXXX' },
 				representatonType: APPEAL_REPRESENTATION_TYPE.LPA_FINAL_COMMENT
+			},
+			{
+				lpa: { lpaCode: 'XXXX' },
+				representatonType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
 			}
 		]) {
 			test(`Mapping lpa source: ${source}`, async () => {
