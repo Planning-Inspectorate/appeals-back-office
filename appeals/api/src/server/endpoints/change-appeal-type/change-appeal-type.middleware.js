@@ -65,3 +65,21 @@ export const validateAppealStatusForTransfer = async (req, res, next) => {
 	}
 	next();
 };
+
+/**
+ * @type {import("express").RequestHandler}
+ * @returns {Promise<object|void>}
+ */
+export const validateAppealStatusForUpdate = async (req, res, next) => {
+	const validAppealChangeTypeStatuses = [
+		APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+		APPEAL_CASE_STATUS.VALIDATION
+	];
+
+	const status = currentStatus(req.appeal);
+
+	if (!validAppealChangeTypeStatuses.includes(status)) {
+		return res.status(400).send({ errors: { appealStatus: ERROR_INVALID_APPEAL_STATE } });
+	}
+	next();
+};
