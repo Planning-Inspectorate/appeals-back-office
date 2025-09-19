@@ -147,6 +147,7 @@ interface UpdateAppealRequest {
 	inspector?: number | null;
 	agent?: number | null;
 	procedureTypeId?: number | null;
+	hearingStartTime?: string;
 }
 
 interface SingleAppellantCaseResponse {
