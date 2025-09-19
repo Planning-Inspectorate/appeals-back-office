@@ -25,7 +25,8 @@ import {
 	getNoResubmitAppealRequestRedirectUrl,
 	postAppealChangeRequest,
 	postAppealTransferConfirmation,
-	postAppealTransferRequest
+	postAppealTransferRequest,
+	postAppealUpdateRequest
 } from './change-appeal-type.service.js';
 
 /**
@@ -644,6 +645,31 @@ export const getUpdateAppeal = async (request, response) => {
 			response,
 			errors
 		);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postUpdateAppeal = async (request, response) => {
+	try {
+		const { appealId } = request.params;
+		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		const { appealTypeId } = request.session.changeAppealType;
+
+		await postAppealUpdateRequest(request.apiClient, appealId, appealTypeId);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'appealTypeUpdated',
+			appealId
+		});
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');
