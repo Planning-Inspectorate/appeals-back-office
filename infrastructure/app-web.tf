@@ -97,10 +97,12 @@ module "app_web" {
     FEATURE_FLAG_PDF_DOWNLOAD             = var.apps_config.featureFlags.featureFlagPdfDownload
     FEATURE_FLAG_NOTIFY_CASE_HISTORY      = var.apps_config.featureFlags.featureFlagNotifyCaseHistory
     FEATURE_FLAG_NET_RESIDENCE            = var.apps_config.featureFlags.featureFlagNetResidence
+    FEATURE_FLAG_NET_RESIDENCE_S20        = var.apps_config.featureFlags.featureFlagNetResidenceS20
     FEATURE_FLAG_CANCEL_CASE              = var.apps_config.featureFlags.featureFlagCancelCase
     FEATURE_FLAG_CHANGE_PROCEDURE_TYPE    = var.apps_config.featureFlags.featureFlagChangeProcedureType
     FEATURE_FLAG_HEARING_POST_MVP         = var.apps_config.featureFlags.featureFlagHearingPostMvp
     FEATURE_FLAG_AUTO_ASSIGN_TEAM         = var.apps_config.featureFlags.featureFlagAutoAssignTeam
+    FEATURE_FLAG_CANCEL_SITE_VISIT        = var.apps_config.featureFlags.featureFlagCancelSiteVisit
 
     #change LPA
     USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA = var.apps_config.use_system_test_bc_for_change_lpa

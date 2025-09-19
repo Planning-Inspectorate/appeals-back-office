@@ -457,9 +457,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
                     <dd class="govuk-summary-list__value">
                         <p class="govuk-body">Not assigned</p>
                     </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/assign-case-officer/search-case-officer"
-                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
-                    </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
                     <dd class="govuk-summary-list__value">21 The Pavement, Wandsworth, SW4 0HY</dd>
@@ -810,50 +807,51 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -1102,9 +1100,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
                 <div class="govuk-summary-list__row appeal-case-officer"><dt class="govuk-summary-list__key"> Case officer</dt>
                     <dd class="govuk-summary-list__value">
                         <p class="govuk-body">Not assigned</p>
-                    </dd>
-                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/assign-case-officer/search-case-officer"
-                        data-cy="assign-case-officer-name">Assign<span class="govuk-visually-hidden"> Case officer</span></a>
                     </dd>
                 </div>
                 <div class="govuk-summary-list__row appeal-site-address"><dt class="govuk-summary-list__key"> Site address</dt>
@@ -1450,50 +1445,51 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -1859,50 +1855,51 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -2274,50 +2271,51 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -2683,50 +2681,51 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -3089,50 +3088,51 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -3509,50 +3509,51 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/3/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F3"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/3/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -3902,50 +3903,51 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F1"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/1/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -4312,50 +4314,51 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/2/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -4586,7 +4589,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
 </main>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners Important banners residential units banner should render a "Add number of residential units" important notification banner a link to add residential units when numberOfResidencesNetChange has not been added 1`] = `
+exports[`appeal-details GET /:appealId Notification banners Important banners residential units banner should render a "Add number of residential units" important notification banner a link to add residential units when numberOfResidencesNetChange has not been added for Planning appeal 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
 aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
 data-index="0">
@@ -4598,7 +4601,31 @@ data-index="0">
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Notification banners Important banners residential units banner should render a "Add number of residential units" important notification banner even when case is complete if numberOfResidencesNetChange has not been added 1`] = `
+exports[`appeal-details GET /:appealId Notification banners Important banners residential units banner should render a "Add number of residential units" important notification banner a link to add residential units when numberOfResidencesNetChange has not been added for Planning listed building and conservation area appeal 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content"><a class="govuk-link" data-cy="add-residences-net-change" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Add number of residential units</a>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Notification banners Important banners residential units banner should render a "Add number of residential units" important notification banner even when case is complete if numberOfResidencesNetChange has not been added for Planning appeal 1`] = `
+"<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
+aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
+data-index="0">
+    <div class="govuk-notification-banner__header">
+        <h3 class="govuk-notification-banner__title" id="govuk-notification-banner-title"> Important</h3>
+    </div>
+    <div class="govuk-notification-banner__content"><a class="govuk-link" data-cy="add-residences-net-change" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2">Add number of residential units</a>
+    </div>
+</div>"
+`;
+
+exports[`appeal-details GET /:appealId Notification banners Important banners residential units banner should render a "Add number of residential units" important notification banner even when case is complete if numberOfResidencesNetChange has not been added for Planning listed building and conservation area appeal 1`] = `
 "<div class="govuk-notification-banner govuk-!-margin-bottom-5" role="region"
 aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner"
 data-index="0">
@@ -4807,50 +4834,51 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -5425,11 +5453,17 @@ data-index="0">
 </div>"
 `;
 
-exports[`appeal-details GET /:appealId Overview should render a "Is there a net gain or loss of residential units?" row in the overview accordion for S78 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-change"><dt class="govuk-summary-list__key"> Is there a net gain or loss of residential units?</dt><dd class="govuk-summary-list__value"> Not provided</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="add-net-residence-change">Add<span class="govuk-visually-hidden"> Is there a net gain or loss of residential units?</span></a></dd></div>"`;
+exports[`appeal-details GET /:appealId Overview should render a "Is there a net gain or loss of residential units?" row in the overview accordion for Planning appeal 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-change"><dt class="govuk-summary-list__key"> Is there a net gain or loss of residential units?</dt><dd class="govuk-summary-list__value"> Not provided</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="add-net-residence-change">Add<span class="govuk-visually-hidden"> Is there a net gain or loss of residential units?</span></a></dd></div>"`;
 
-exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net gain" in the overview accordion for S78 if numberOfResidencesNetChange has a positive value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net gain</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net gain</span></a></dd></div>"`;
+exports[`appeal-details GET /:appealId Overview should render a "Is there a net gain or loss of residential units?" row in the overview accordion for Planning listed building and conservation area appeal 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-change"><dt class="govuk-summary-list__key"> Is there a net gain or loss of residential units?</dt><dd class="govuk-summary-list__value"> Not provided</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="add-net-residence-change">Add<span class="govuk-visually-hidden"> Is there a net gain or loss of residential units?</span></a></dd></div>"`;
 
-exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net loss" in the overview accordion for S78 if numberOfResidencesNetChange has a negative value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net loss</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net loss</span></a></dd></div>"`;
+exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net gain" in the overview accordion for Planning appeal if numberOfResidencesNetChange has a positive value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net gain</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net gain</span></a></dd></div>"`;
+
+exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net gain" in the overview accordion for Planning listed building and conservation area appeal if numberOfResidencesNetChange has a positive value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net gain</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net gain</span></a></dd></div>"`;
+
+exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net loss" in the overview accordion for Planning appeal if numberOfResidencesNetChange has a negative value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net loss</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net loss</span></a></dd></div>"`;
+
+exports[`appeal-details GET /:appealId Overview should render net-residence-gain-or-loss row as "Net loss" in the overview accordion for Planning listed building and conservation area appeal if numberOfResidencesNetChange has a negative value 1`] = `"<div class="govuk-summary-list__row appeal-net-residence-gain-or-loss"><dt class="govuk-summary-list__key"> Net loss</dt><dd class="govuk-summary-list__value"> 1</dd><dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F2" data-cy="change-net-residence-gain-or-loss">Change<span class="govuk-visually-hidden"> Net loss</span></a></dd></div>"`;
 
 exports[`appeal-details GET /:appealId Status tags should render a status tag with the content "Assign case officer" and a green modifier class if appeal status is assign_case_officer 1`] = `"<strong class="govuk-tag govuk-tag--green pins-status-tag--full-width">Assign case officer</strong>"`;
 
@@ -5796,50 +5830,51 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -6196,50 +6231,51 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -6590,50 +6626,51 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -6997,50 +7034,51 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -7393,50 +7431,51 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list appeal-case-timetable">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -7814,50 +7853,51 @@ exports[`appeal-details GET /:appealId should render the received appeal details
             </dd>
         </div>
     </dl>
-    <h1 class="govuk-heading-l">Site</h1>
-    <dl class="govuk-summary-list">
-        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-            <dd class="govuk-summary-list__value">Accompanied</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-            <dd class="govuk-summary-list__value">9 October 2023</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-            <dd class="govuk-summary-list__value">9:38am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-            <dd class="govuk-summary-list__value">10:00am</dd>
-            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
-                data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-            </dd>
-        </div>
-        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-            <dd             class="govuk-summary-list__value">
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                </ul>
+    <div id="site-visit-section">
+        <h1 class="govuk-heading-l">Site</h1>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        </p>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                <dd class="govuk-summary-list__value">9 October 2023</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                 </dd>
-                <dd class="govuk-summary-list__actions">
-                    <ul class="govuk-summary-list__actions-list">
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
-                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
-                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
-                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                        </li>
+            </div>
+            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                <dd class="govuk-summary-list__value">9:38am</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/visit-booked"
+                    data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                </dd>
+            </div>
+            <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                <dd class="govuk-summary-list__value">Accompanied</dd>
+                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                    data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                </dd>
+            </div>
+        </dl>
+        <h1 class="govuk-heading-m">Site visit requests</h1>
+        <dl class="govuk-summary-list">
+            <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                <dd                 class="govuk-summary-list__value">
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                     </ul>
-                </dd>
-        </div>
-    </dl>
+                    </dd>
+                    <dd class="govuk-summary-list__actions">
+                        <ul class="govuk-summary-list__actions-list">
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
+                                data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                            <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
+                                data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                            </li>
+                        </ul>
+                    </dd>
+            </div>
+        </dl>
+    </div>
     <h1 class="govuk-heading-l">Timetable</h1>
     <dl class="govuk-summary-list">
         <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>
@@ -8260,50 +8300,51 @@ exports[`appeal-details should not render a back button 1`] = `
                         </dd>
                     </div>
                 </dl>
-                <h1 class="govuk-heading-l">Site</h1>
-                <dl class="govuk-summary-list">
-                    <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Visit type</dt>
-                        <dd class="govuk-summary-list__value">Accompanied</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
-                            data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Visit type</span></a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-                        <dd class="govuk-summary-list__value">9 October 2023</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
-                            data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Start time</dt>
-                        <dd class="govuk-summary-list__value">9:38am</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
-                            data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Start time</span></a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> End time</dt>
-                        <dd class="govuk-summary-list__value">10:00am</dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
-                            data-cy="change-site-visit-end-time">Change<span class="govuk-visually-hidden"> End time</span></a>
-                        </dd>
-                    </div>
-                    <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
-                        <dd                         class="govuk-summary-list__value">
-                            <ul class="govuk-list govuk-list--bullet">
-                                <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
-                            </ul>
+                <div id="site-visit-section">
+                    <h1 class="govuk-heading-l">Site</h1>
+                    <p class="govuk-body"><a class="govuk-link" href="/appeals-service/2/site-visit/missed/index">Record missed site visit</a>
+                    </p>
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
+                            <dd class="govuk-summary-list__value">9 October 2023</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
+                                data-cy="change-site-visit-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                             </dd>
-                            <dd class="govuk-summary-list__actions">
-                                <ul class="govuk-summary-list__actions-list">
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
-                                        data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                                    </li>
-                                    <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
-                                        data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
-                                    </li>
+                        </div>
+                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
+                            <dd class="govuk-summary-list__value">9:38am</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked"
+                                data-cy="change-site-visit-start-time">Change<span class="govuk-visually-hidden"> Time</span></a>
+                            </dd>
+                        </div>
+                        <div class="govuk-summary-list__row appeal-visit-type"><dt class="govuk-summary-list__key"> Type</dt>
+                            <dd class="govuk-summary-list__value">Accompanied</dd>
+                            <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/visit-booked?backUrl=%2Fappeals-service%2Fappeal-details%2F2"
+                                data-cy="change-set-visit-type">Change<span class="govuk-visually-hidden"> Type</span></a>
+                            </dd>
+                        </div>
+                    </dl>
+                    <h1 class="govuk-heading-m">Site visit requests</h1>
+                    <dl class="govuk-summary-list">
+                        <div class="govuk-summary-list__row appeal-neighbouring-sites-inspector"><dt class="govuk-summary-list__key"> Interested party and neighbour addresses</dt>
+                            <dd                             class="govuk-summary-list__value">
+                                <ul class="govuk-list govuk-list--bullet">
+                                    <li>2 Grove Cottage, Shotesham Road, Woodton, Devon, NR35 2ND</li>
                                 </ul>
-                            </dd>
-                    </div>
-                </dl>
+                                </dd>
+                                <dd class="govuk-summary-list__actions">
+                                    <ul class="govuk-summary-list__actions-list">
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/manage"
+                                            data-cy="manage-neighbouring-sites-inspector">Manage<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                                        </li>
+                                        <li class="govuk-summary-list__actions-list-item"><a class="govuk-link" href="/appeals-service/appeal-details/2/neighbouring-sites/add/back-office"
+                                            data-cy="add-neighbouring-sites-inspector">Add<span class="govuk-visually-hidden"> Interested party and neighbour addresses</span></a>
+                                        </li>
+                                    </ul>
+                                </dd>
+                        </div>
+                    </dl>
+                </div>
                 <h1 class="govuk-heading-l">Timetable</h1>
                 <dl class="govuk-summary-list appeal-case-timetable">
                     <div class="govuk-summary-list__row appeal-valid-date"><dt class="govuk-summary-list__key"> Valid date</dt>

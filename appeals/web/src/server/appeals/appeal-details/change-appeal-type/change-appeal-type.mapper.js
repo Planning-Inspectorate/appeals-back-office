@@ -1,6 +1,7 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { getExampleDateHint } from '#lib/dates.js';
-import { dateInput } from '#lib/mappers/index.js';
+import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
+import { dateInput, simpleHtmlComponent } from '#lib/mappers/index.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { changeAppealTypeDateField } from './change-appeal-types.constants.js';
 
@@ -387,4 +388,63 @@ export function changeAppealTransferAppealPage(appealDetails) {
 	};
 
 	return pageContent;
+}
+
+/**
+ *
+ * @param {Appeal} appealDetails
+ * @param {string} existingChangeAppealType
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ * @param {import('@pins/express').ValidationErrors | undefined} errors
+ * @returns
+ */
+export function checkDetailsAndUpdateAppealTypePage(
+	appealDetails,
+	existingChangeAppealType,
+	response,
+	errors
+) {
+	/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} */
+	const responses = {
+		'Appeal type': {
+			value: existingChangeAppealType,
+			actions: {
+				Change: {
+					href: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/appeal-type`,
+					visuallyHiddenText: 'Appeal type'
+				}
+			}
+		},
+		'Does the appellant need to resubmit the appeal?': {
+			value: 'No',
+			actions: {
+				Change: {
+					href: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
+					visuallyHiddenText: 'Does the appellant need to resubmit the appeal? '
+				}
+			}
+		}
+	};
+
+	const shortAppealReference = appealShortReference(appealDetails.appealReference);
+
+	return renderCheckYourAnswersComponent(
+		{
+			title: 'Check details and update appeal type',
+			heading: 'Check details and update appeal type',
+			preHeading: `Appeal ${shortAppealReference}`,
+			backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
+			submitButtonText: 'Update appeal type',
+			responses,
+			after: [
+				simpleHtmlComponent(
+					'p',
+					{ class: 'govuk-body' },
+					`We will send an email to the relevant parties to tell them that the appeal type has changed.`
+				)
+			]
+		},
+		response,
+		errors
+	);
 }
