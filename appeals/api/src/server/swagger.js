@@ -161,6 +161,9 @@ export const spec = {
 		AppealTypeTransferConfirmationRequest: {
 			newAppealReference: '76215416'
 		},
+		AppealTypeUpdateRequest: {
+			newAppealTypeId: 32
+		},
 		AppealTypes: [
 			{
 				type: 'Appeal type name',

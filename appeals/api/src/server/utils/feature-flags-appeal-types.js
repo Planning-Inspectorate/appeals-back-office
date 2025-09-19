@@ -53,3 +53,14 @@ export const getEnabledAppealTypes = () => {
 
 	return enabledAppeals;
 };
+
+/**
+ * @param {import('@pins/appeals.api').Schema.AppealType[]} appealTypes
+ */
+export const filterEnabledAppealTypes = (appealTypes) => {
+	const enabledAppealTypes = getEnabledAppealTypes();
+
+	return appealTypes.filter((appealType) => {
+		return enabledAppealTypes.includes(appealType.key);
+	}, []);
+};

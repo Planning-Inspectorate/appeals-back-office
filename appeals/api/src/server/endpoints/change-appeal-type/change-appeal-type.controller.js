@@ -6,7 +6,11 @@ import { isFeatureActive } from '#utils/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { addDays } from '@pins/appeals/utils/business-days.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { changeAppealType, resubmitAndMarkInvalid } from './change-appeal-type.service.js';
+import {
+	changeAppealType,
+	resubmitAndMarkInvalid,
+	updateAppealType
+} from './change-appeal-type.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -143,6 +147,27 @@ export const requestConfirmationTransferOfAppeal = async (req, res) => {
 		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.TRANSFERRED),
 		await broadcasters.broadcastAppeal(appeal.id)
 	]);
+
+	return res.send(true);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const requestUpdateOfAppeal = async (req, res) => {
+	const { newAppealTypeId } = req.body;
+	const newAppealType = (
+		req.appealTypes.find((appealType) => appealType.id === Number(newAppealTypeId))?.type || ''
+	).toLowerCase();
+
+	await updateAppealType(
+		req.appeal,
+		newAppealTypeId,
+		newAppealType,
+		req.get('azureAdUserId') || ''
+	);
 
 	return res.send(true);
 };

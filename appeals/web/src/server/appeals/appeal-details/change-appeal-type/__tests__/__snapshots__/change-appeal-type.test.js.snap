@@ -46,22 +46,27 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type" name="appealType"
                                         type="radio" value="66" checked>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type">Householder</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
                                         type="radio" value="75">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-2">Planning</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-3" name="appealType"
                                         type="radio" value="77">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-3">Planning listed building and conservation area</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
                                         type="radio" value="79">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">Commercial planning (CAS)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-5" name="appealType"
                                         type="radio" value="78">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-5">Commercial advertisement (CAS)</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -96,22 +101,27 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type" name="appealType"
                                         type="radio" value="66" checked>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type">Householder</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
                                         type="radio" value="75">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-2">Planning</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-3" name="appealType"
                                         type="radio" value="77">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-3">Planning listed building and conservation area</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
                                         type="radio" value="79">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">Commercial planning (CAS)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-5" name="appealType"
                                         type="radio" value="78">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-5">Commercial advertisement (CAS)</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -520,6 +530,41 @@ exports[`change-appeal-type GET /change-appeal-type/resubmit should render the r
 </main>"
 `;
 
+exports[`change-appeal-type GET /change-appeal-type/update-appeal should render the check details and update appeal page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and update appeal type</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
+                    <dd class="govuk-summary-list__value">Planning</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type">Change <span class="govuk-visually-hidden">Appeal type</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the appellant need to resubmit the appeal?</dt>
+                    <dd                     class="govuk-summary-list__value">No</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/resubmit">Change <span class="govuk-visually-hidden">Does the appellant need to resubmit the appeal? </span></a>
+                        </dd>
+                </div>
+            </dl>
+            <p class="govuk-body">We will send an email to the relevant parties to tell them that the appeal
+                type has changed.</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Update appeal type</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should re-render the add horizon reference page with an error message if no horizon reference was provided 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -638,22 +683,27 @@ exports[`change-appeal-type POST /change-appeal-type/appeal-type should re-rende
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type" name="appealType"
                                         type="radio" value="66" checked>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type">Householder</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
                                         type="radio" value="75">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-2">Planning</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-3" name="appealType"
                                         type="radio" value="77">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-3">Planning listed building and conservation area</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
                                         type="radio" value="79">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">Commercial planning (CAS)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-5" name="appealType"
                                         type="radio" value="78">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-5">Commercial advertisement (CAS)</label>
                                     </div>
                         </div>
                         </fieldset>
@@ -1094,6 +1144,23 @@ exports[`change-appeal-type POST /change-appeal-type/resubmit should re-render t
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`change-appeal-type POST /change-appeal-type/update-appeal should render a 500 error page if the required data is not present in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
         </div>
     </div>
 </main>"

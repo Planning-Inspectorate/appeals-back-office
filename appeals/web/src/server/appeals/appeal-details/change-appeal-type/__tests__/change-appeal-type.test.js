@@ -17,6 +17,7 @@ const addHorizonReferencePath = '/add-horizon-reference';
 const checkTransferPath = '/check-transfer';
 const markAppealInvalidPath = '/mark-appeal-invalid';
 const checkChangeAppealFinalDatePath = '/check-change-appeal-final-date';
+const updateAppealPath = '/update-appeal';
 
 /** @typedef {import('../../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 
@@ -674,6 +675,46 @@ describe('change-appeal-type', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+	});
+
+	describe('GET /change-appeal-type/update-appeal', () => {
+		it('should render the check details and update appeal page', async () => {
+			// Ensure change appeal type is set in session
+			await request.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`).send({
+				appealType: 75
+			});
+
+			const response = await request.get(`${baseUrl}/1${changeAppealTypePath}${updateAppealPath}`);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and update appeal type</h1>');
+		});
+	});
+
+	describe('POST /change-appeal-type/update-appeal', () => {
+		it('should render a 500 error page if the required data is not present in the session', async () => {
+			const response = await request.post(`${baseUrl}/1${changeAppealTypePath}${updateAppealPath}`);
+
+			const element = parseHtml(response.text);
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Sorry, there is a problem with the service</h1>');
+		});
+
+		it('should redirect to appeal details screen on success', async () => {
+			// nock update server request
+			nock('http://test/').post('/appeals/1/appeal-update-request').reply(200);
+			// Ensure change appeal type is set in session
+			await request.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`).send({
+				appealType: 75
+			});
+
+			const response = await request.post(`${baseUrl}/1${changeAppealTypePath}${updateAppealPath}`);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.headers.location).toContain('/appeals-service/appeal-details/1');
+			expect(response.text).toContain('Found. Redirecting to /appeals-service/appeal-details/1');
 		});
 	});
 });

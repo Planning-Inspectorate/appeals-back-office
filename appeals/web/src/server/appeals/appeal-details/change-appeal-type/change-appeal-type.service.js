@@ -142,3 +142,18 @@ export async function getChangeAppealTypes(apiClient, appealType, changeAppealTy
 
 	return { existingChangeAppealType, newChangeAppealType };
 }
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {number} appealTypeId
+ * @returns {Promise<void>}
+ */
+export async function postAppealUpdateRequest(apiClient, appealId, appealTypeId) {
+	return await apiClient
+		.post(`appeals/${appealId}/appeal-update-request`, {
+			json: { newAppealTypeId: appealTypeId }
+		})
+		.json();
+}

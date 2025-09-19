@@ -393,21 +393,21 @@ export function changeAppealTransferAppealPage(appealDetails) {
 /**
  *
  * @param {Appeal} appealDetails
- * @param {string} existingChangeAppealType
+ * @param {string} newChangeAppealType
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns
  */
 export function checkDetailsAndUpdateAppealTypePage(
 	appealDetails,
-	existingChangeAppealType,
+	newChangeAppealType,
 	response,
 	errors
 ) {
 	/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} */
 	const responses = {
 		'Appeal type': {
-			value: existingChangeAppealType,
+			value: newChangeAppealType,
 			actions: {
 				Change: {
 					href: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/appeal-type`,

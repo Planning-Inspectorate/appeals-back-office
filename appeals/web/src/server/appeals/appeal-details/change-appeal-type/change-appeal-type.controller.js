@@ -25,7 +25,8 @@ import {
 	getNoResubmitAppealRequestRedirectUrl,
 	postAppealResubmitMarkInvalidRequest,
 	postAppealTransferConfirmation,
-	postAppealTransferRequest
+	postAppealTransferRequest,
+	postAppealUpdateRequest
 } from './change-appeal-type.service.js';
 
 /**
@@ -634,18 +635,46 @@ export const getUpdateAppeal = async (request, response) => {
 			errors,
 			session: { changeAppealType }
 		} = request;
-		const { existingChangeAppealType } = await getChangeAppealTypes(
+		const { newChangeAppealType } = await getChangeAppealTypes(
 			request.apiClient,
 			appealData.appealType,
 			changeAppealType
 		);
 
-		return checkDetailsAndUpdateAppealTypePage(
-			appealData,
-			existingChangeAppealType,
-			response,
-			errors
-		);
+		if (!newChangeAppealType) {
+			logger.error('Unable to parse new change appeal type');
+			return response.status(500).render('app/500.njk');
+		}
+
+		return checkDetailsAndUpdateAppealTypePage(appealData, newChangeAppealType, response, errors);
+	} catch (error) {
+		logger.error(error);
+		return response.status(500).render('app/500.njk');
+	}
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postUpdateAppeal = async (request, response) => {
+	try {
+		const { appealId } = request.params;
+		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		const { appealTypeId } = request.session.changeAppealType;
+
+		await postAppealUpdateRequest(request.apiClient, appealId, appealTypeId);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'appealTypeUpdated',
+			appealId
+		});
+
+		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
+		request.session.changeAppealType = {};
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
 	} catch (error) {
 		logger.error(error);
 		return response.status(500).render('app/500.njk');

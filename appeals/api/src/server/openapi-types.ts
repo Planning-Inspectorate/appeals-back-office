@@ -823,6 +823,11 @@ export interface AppealTypeTransferConfirmationRequest {
 	newAppealReference?: string;
 }
 
+export interface AppealTypeUpdateRequest {
+	/** @example 32 */
+	newAppealTypeId?: number;
+}
+
 export type AppealTypes = {
 	/** @example "Appeal type name" */
 	type?: string;
