@@ -1,7 +1,6 @@
 // @ts-nocheck
 
 import { users } from '../fixtures/users';
-import { InquirySectionPage } from '../page_objects/caseDetails/inquirySectionPage';
 import { CaseDetailsPage } from '../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../page_objects/dateTimeSection';
 import { ListCasesPage } from '../page_objects/listCasesPage';
@@ -9,7 +8,6 @@ import { FileUploader } from '../page_objects/shared.js';
 import { urlPaths } from './urlPaths.js';
 
 const caseDetailsPage = new CaseDetailsPage();
-const inquirySectionPage = new InquirySectionPage();
 const dateTimeSection = new DateTimeSection();
 const listCasesPage = new ListCasesPage();
 const fileUploader = new FileUploader();
