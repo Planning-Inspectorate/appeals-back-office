@@ -236,11 +236,12 @@ describe('set up inquiry', () => {
 
 			// set session data with post request
 			await request.post(`${baseUrl}/${appealId}/Inquiry/setup/estimation`).send({
-				inquiryEstimationYesNo: 'yes'
+				inquiryEstimationYesNo: 'yes',
+				inquiryEstimationDays: 8
 			});
 
 			const response = await request.get(`${baseUrl}/${appealId}/Inquiry/setup/estimation`);
-			pageHtml = parseHtml(response.text);
+			pageHtml = parseHtml(response.text, { skipPrettyPrint: true });
 		});
 
 		it('should match the snapshot', () => {
@@ -259,6 +260,15 @@ describe('set up inquiry', () => {
 
 		it('should render an input for inquiry estimation days', () => {
 			expect(pageHtml.querySelector('input[name="inquiryEstimationDays"]')).not.toBeNull();
+		});
+
+		it('should render correct values when session is set', () => {
+			expect(pageHtml.innerHTML).toContain(
+				`name="inquiryEstimationYesNo" type="radio" value="yes" checked`
+			);
+			expect(pageHtml.innerHTML).toContain(
+				`id="inquiry-estimation-days" name="inquiryEstimationDays" type="text" value="8"`
+			);
 		});
 	});
 
