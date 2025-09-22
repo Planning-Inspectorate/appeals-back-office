@@ -423,6 +423,7 @@ describe('hearing routes', () => {
 
 				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledWith({
 					where: {
+						appealId: 2,
 						createdAt: {
 							gt: new Date('2999-01-01T12:00:00.000Z')
 						}
