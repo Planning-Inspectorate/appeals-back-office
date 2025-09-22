@@ -112,7 +112,8 @@ describe('inquiry routes', () => {
 					inquiry_date: '1 January 2999',
 					inquiry_time: '1:00pm',
 					inquiry_address:
-						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom'
+						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);

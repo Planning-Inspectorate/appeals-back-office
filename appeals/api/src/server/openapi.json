@@ -770,6 +770,51 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/case-team-email": {
+			"get": {
+				"tags": ["Case Team"],
+				"description": "Gets the case team from an appeal id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Assigned case team for the appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TeamEmailResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/TeamEmailResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/case-team": {
 			"patch": {
 				"tags": ["Case Team"],
@@ -11668,6 +11713,18 @@
 				},
 				"xml": {
 					"name": "UpdateAsssignedTeamResponse"
+				}
+			},
+			"TeamEmailResponse": {
+				"type": "object",
+				"properties": {
+					"teamEmail": {
+						"type": "string",
+						"example": "email@email.com"
+					}
+				},
+				"xml": {
+					"name": "TeamEmailResponse"
 				}
 			},
 			"SingleLinkableAppealSummaryResponse": {

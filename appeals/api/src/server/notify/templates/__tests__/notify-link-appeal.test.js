@@ -17,7 +17,8 @@ describe('link-appeal.md', () => {
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
 				event_type: 'site visit',
-				linked_before_lpa_questionnaire: true
+				linked_before_lpa_questionnaire: true,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 
@@ -69,7 +70,8 @@ describe('link-appeal.md', () => {
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
 				event_type: 'site visit',
-				linked_before_lpa_questionnaire: false
+				linked_before_lpa_questionnaire: false,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

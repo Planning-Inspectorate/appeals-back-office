@@ -16,7 +16,8 @@ describe('site-visit-schedule-access-required-appellant.md', () => {
 				lpa_reference: 'LPA-77889',
 				visit_date: '9 October 2025',
 				start_time: '8:30am',
-				end_time: '12:30pm'
+				end_time: '12:30pm',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

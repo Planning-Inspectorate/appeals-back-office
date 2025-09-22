@@ -1,3 +1,4 @@
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import timetableRepository from '#repositories/appeal-timetable.repository.js';
@@ -54,7 +55,8 @@ const changeAppealType = async (
 		lpa_reference: appeal.applicationReference || '',
 		site_address: siteAddress,
 		due_date: formatDate(new Date(dueDate || ''), false),
-		appeal_type: newAppealType || ''
+		appeal_type: newAppealType || '',
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
 	};
 
 	if (recipientEmail) {

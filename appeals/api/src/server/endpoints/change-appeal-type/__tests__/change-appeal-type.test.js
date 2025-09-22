@@ -266,7 +266,8 @@ describe('appeal change type resubmit routes', () => {
 					lpa_reference: appeal.applicationReference,
 					appeal_type: appealTypes[newType - 1].type.toLowerCase(),
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-					due_date: formatDate(new Date('3000-02-05'), false)
+					due_date: formatDate(new Date('3000-02-05'), false),
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				},
 				recipientEmail: 'test@136s7.com',
 				templateName: 'appeal-type-change-non-has'

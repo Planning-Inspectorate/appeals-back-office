@@ -226,7 +226,8 @@ describe('hearing routes', () => {
 					hearing_date: '1 January 2999',
 					hearing_time: '12:00pm',
 					hearing_address:
-						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom'
+						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -345,7 +346,8 @@ describe('hearing routes', () => {
 					hearing_date: '2 January 2999',
 					hearing_time: '12:00pm',
 					hearing_address:
-						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom'
+						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -1135,7 +1137,8 @@ describe('hearing routes', () => {
 					hearing_date: '1 January 2999',
 					hearing_time: '1:00pm',
 					hearing_address:
-						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom'
+						'Court 2, 24 Court Street, Test Town, Test County, AB12 3CD, United Kingdom',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
@@ -1806,7 +1809,8 @@ describe('hearing routes', () => {
 				const personalisation = {
 					appeal_reference_number: '1345264',
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-					lpa_reference: '48269/APP/2021/1482'
+					lpa_reference: '48269/APP/2021/1482',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);

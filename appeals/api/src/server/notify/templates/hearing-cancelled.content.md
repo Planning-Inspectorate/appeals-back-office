@@ -7,4 +7,4 @@ We have cancelled your hearing.
 We will contact you by email when we rearrange your hearing.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

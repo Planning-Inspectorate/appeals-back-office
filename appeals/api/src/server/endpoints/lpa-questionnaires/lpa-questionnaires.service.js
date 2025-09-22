@@ -1,4 +1,5 @@
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
@@ -144,7 +145,8 @@ const updateLPAQuestionnaireValidationOutcome = async (
 				lpa_reference: lpaReference || '',
 				site_address: siteAddress,
 				due_date: formatDate(new Date(lpaQuestionnaireDueDate), false),
-				reasons: incompleteReasonsList
+				reasons: incompleteReasonsList,
+				team_email_address: await getTeamEmailFromAppealId(appeal.id)
 			};
 
 			await notifySend({
@@ -261,7 +263,8 @@ async function sendLpaqCompleteEmail(
 	const personalisation = {
 		...fields,
 		appeal_reference_number: appeal.reference,
-		lpa_reference: appeal.applicationReference || ''
+		lpa_reference: appeal.applicationReference || '',
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
 	};
 
 	await notifySend({

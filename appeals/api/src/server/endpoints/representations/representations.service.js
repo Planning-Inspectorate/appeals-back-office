@@ -1,5 +1,6 @@
 import config from '#config/config.js';
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import addressRepository from '#repositories/address.repository.js';
@@ -511,7 +512,8 @@ async function notifyPublished({
 			has_ip_comments: hasIpComments,
 			has_statement: hasLpaStatement,
 			is_hearing_procedure: isHearingProcedure,
-			user_type: userTypeNoCommentSubmitted
+			user_type: userTypeNoCommentSubmitted,
+			team_email_address: await getTeamEmailFromAppealId(appeal.id)
 		}
 	});
 }

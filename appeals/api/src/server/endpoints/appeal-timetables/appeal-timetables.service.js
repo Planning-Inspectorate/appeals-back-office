@@ -1,5 +1,6 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
@@ -119,6 +120,8 @@ const sendStartCaseNotifies = async (
 			  ]
 			: 'when you can view information from other parties in the appeals service.';
 
+	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+
 	// Note that those properties not used within the specified template will be ignored
 	const commonEmailVariables = {
 		appeal_reference_number: appeal.reference,
@@ -142,7 +145,8 @@ const sendStartCaseNotifies = async (
 		child_appeals:
 			appeal.childAppeals
 				?.filter((appeal) => appeal.type === CASE_RELATIONSHIP_LINKED)
-				.map((appeal) => appeal.childRef) || []
+				.map((appeal) => appeal.childRef) || [],
+		team_email_address: teamEmail
 	};
 
 	if (appellantEmail) {
@@ -412,7 +416,8 @@ const sendTimetableUpdateNotify = async (appeal, processedBody, notifyClient, az
 					appeal.appealTimetable?.finalCommentsDueDate
 			),
 			false
-		)
+		),
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
 	};
 
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;

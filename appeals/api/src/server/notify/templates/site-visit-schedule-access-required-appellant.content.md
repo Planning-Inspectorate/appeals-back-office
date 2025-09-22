@@ -10,7 +10,7 @@ Someone must be at the site at the scheduled time to give the inspector access t
 
 If nobody is available, you can give written consent for the inspector to access the site by themselves. Explain how the inspector can safely access the site with your consent.
 
-In all cases, email caseofficers@planninginspectorate.gov.uk to either give:
+In all cases, email {{team_email_address}} to either give:
 
 - the details of who will be at the site to give the inspector access
 - your consent for the inspector to access the site by themselves
@@ -26,4 +26,4 @@ You cannot give the inspector any documents or discuss the appeal with them.
 The inspector will carry out the inspection on their own.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

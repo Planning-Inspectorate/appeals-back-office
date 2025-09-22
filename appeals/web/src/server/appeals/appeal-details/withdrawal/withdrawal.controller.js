@@ -17,6 +17,7 @@ import {
 } from '../../appeal-documents/appeal-documents.controller.js';
 import { addDocumentDetailsFormDataToFileUploadInfo } from '../../appeal-documents/appeal-documents.mapper.js';
 import { getDocumentRedactionStatuses } from '../../appeal-documents/appeal.documents.service.js';
+import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import { checkAndConfirmPage, manageWithdrawalRequestFolderPage } from './withdrawal.mapper.js';
 import { postWithdrawalRequest } from './withdrawal.service.js';
 
@@ -195,13 +196,18 @@ export const renderCheckYourAnswers = async (request, response) => {
 	if (!objectContainsAllKeys(session, ['fileUploadInfo'])) {
 		return response.status(500).render('app/500.njk');
 	}
+	const { email: assignedTeamEmail } = await getTeamFromAppealId(
+		request.apiClient,
+		currentAppeal.appealId
+	);
 	const personalisation = {
 		appeal_reference_number: currentAppeal.appealReference,
 		lpa_reference: currentAppeal.planningApplicationReference,
 		site_address: addressToString(currentAppeal.appealSite),
 		withdrawal_date: formatDate(new Date(), false),
 		event_set: !!getEventType(currentAppeal),
-		event_type: getEventType(currentAppeal)
+		event_type: getEventType(currentAppeal),
+		team_email_address: assignedTeamEmail
 	};
 	const appealWithdrawnAppellantTemplateName = 'appeal-withdrawn-appellant.content.md';
 	const appealWithdrawnAppellantTemplate = await generateNotifyPreview(

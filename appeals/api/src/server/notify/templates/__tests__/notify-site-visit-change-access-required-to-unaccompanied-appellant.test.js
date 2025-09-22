@@ -14,7 +14,8 @@ describe('site-visit-change-access-required-to-unaccompanied-appellant.md', () =
 				appeal_reference_number: 'UVW98765',
 				site_address: '9, Quiet Close',
 				lpa_reference: 'PLN-11223',
-				visit_date: '2 August 2025'
+				visit_date: '2 August 2025',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

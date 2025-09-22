@@ -20,7 +20,8 @@ describe('appeal-valid-start-case-appellant-hearing.md', () => {
 				lpa_statement_deadline: '01 March 2025',
 				ip_comments_deadline: '01 April 2025',
 				hearing_date: '01 May 2025',
-				hearing_time: '1pm'
+				hearing_time: '1pm',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',

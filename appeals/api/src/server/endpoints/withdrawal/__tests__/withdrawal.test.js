@@ -107,7 +107,8 @@ describe('appeal withdrawal routes', () => {
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					withdrawal_date: formatDate(utcDate, false),
 					event_set: true,
-					event_type: 'site visit'
+					event_type: 'site visit',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				},
 				recipientEmail: 'test@136s7.com',
 				templateName: 'appeal-withdrawn-appellant'
@@ -122,7 +123,8 @@ describe('appeal withdrawal routes', () => {
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 					withdrawal_date: formatDate(utcDate, false),
 					event_set: true,
-					event_type: 'site visit'
+					event_type: 'site visit',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				},
 				recipientEmail: 'maid@lpa-email.gov.uk',
 				templateName: 'appeal-withdrawn-lpa'

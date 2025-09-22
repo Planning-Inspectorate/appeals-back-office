@@ -15,7 +15,8 @@ describe('appeal-valid-start-case-appellant.md', () => {
 				appeal_reference_number: '134526',
 				site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 				start_date: '01 January 2025',
-				local_planning_authority: 'Bristol City Council'
+				local_planning_authority: 'Bristol City Council',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',

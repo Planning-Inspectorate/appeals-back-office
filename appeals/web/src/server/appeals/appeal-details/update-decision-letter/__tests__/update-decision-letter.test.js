@@ -229,6 +229,14 @@ describe('update-decision-letter', () => {
 		afterEach(teardown);
 
 		it('should render the check your decision page', async () => {
+			nock('http://test/')
+				.get('/appeals/1/case-team-email')
+				.reply(200, {
+					id: 1,
+					email: 'caseofficers@planninginspectorate.gov.uk',
+					name: 'standard email'
+				})
+				.persist();
 			expect(uploadDecisionLetterResponse.statusCode).toBe(302);
 			expect(correctionNoticeResponse.statusCode).toBe(302);
 

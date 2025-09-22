@@ -679,7 +679,8 @@ describe('decision routes', () => {
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 						front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
 						correction_notice_reason: correctionNotice,
-						decision_date: formatDate(decisionDate, false)
+						decision_date: formatDate(decisionDate, false),
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					}
 				});
 			});
@@ -735,7 +736,8 @@ describe('decision routes', () => {
 					site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
 					front_office_url: 'https://appeal-planning-decision.service.gov.uk/appeals/1345264',
 					correction_notice_reason: correctionNotice,
-					decision_date: formatDate(decisionDate, false)
+					decision_date: formatDate(decisionDate, false),
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				}
 			});
 		});

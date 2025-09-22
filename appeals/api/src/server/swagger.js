@@ -995,6 +995,9 @@ export const spec = {
 
 		UpdateAsssignedTeamResponse: {
 			teamId: 1
+		},
+		TeamEmailResponse: {
+			teamEmail: 'email@email.com'
 		}
 	},
 	'@definitions': {

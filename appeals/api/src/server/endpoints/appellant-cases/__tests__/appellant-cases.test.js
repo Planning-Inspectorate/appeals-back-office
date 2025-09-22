@@ -43,6 +43,11 @@ describe('appellant cases routes', () => {
 	beforeEach(() => {
 		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
+		databaseConnector.team.findUnique.mockResolvedValue({
+			id: 1,
+			name: 'Case Team',
+			email: 'caseofficers@planninginspectorate.gov.uk'
+		});
 	});
 	afterEach(() => {
 		jest.resetAllMocks();
@@ -626,7 +631,8 @@ describe('appellant cases routes', () => {
 							reasons: [
 								'The original application form is incomplete',
 								'Other: Appellant contact information is incorrect or missing'
-							]
+							],
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email,
 						templateName: 'appeal-incomplete'
@@ -898,7 +904,8 @@ describe('appellant cases routes', () => {
 							reasons: [
 								'Appeal has not been submitted on time',
 								'Other: The appeal site address does not match'
-							]
+							],
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email,
 						templateName: 'appeal-invalid'
@@ -914,7 +921,8 @@ describe('appellant cases routes', () => {
 							reasons: [
 								'Appeal has not been submitted on time',
 								'Other: The appeal site address does not match'
-							]
+							],
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.lpa.email,
 						templateName: 'appeal-invalid-lpa'
@@ -998,7 +1006,8 @@ describe('appellant cases routes', () => {
 							lpa_reference: appeal.applicationReference,
 							site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
 
-							feedback_link: 'https://forms.office.com/r/9U4Sq9rEff'
+							feedback_link: 'https://forms.office.com/r/9U4Sq9rEff',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.agent.email,
 						templateName: 'appeal-confirmed'

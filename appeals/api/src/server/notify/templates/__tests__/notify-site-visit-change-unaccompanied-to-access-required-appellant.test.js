@@ -16,7 +16,8 @@ describe('site-visit-change-unaccompanied-to-access-required-appellant.md', () =
 				lpa_reference: 'REF-20201',
 				visit_date: '27 September 2025',
 				start_time: '9:00am',
-				end_time: '11:00am'
+				end_time: '11:00am',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

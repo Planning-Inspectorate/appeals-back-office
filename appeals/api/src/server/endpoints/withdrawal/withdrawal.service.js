@@ -1,3 +1,4 @@
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
@@ -39,7 +40,8 @@ export const publishWithdrawal = async (
 		site_address: siteAddress,
 		withdrawal_date: formatDate(new Date(withdrawalRequestDate || ''), false),
 		event_type: eventType,
-		event_set: !!eventType
+		event_set: !!eventType,
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
 	};
 
 	if (recipientEmail) {

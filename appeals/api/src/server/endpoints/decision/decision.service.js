@@ -1,5 +1,6 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { getRepresentations } from '#endpoints/representations/representations.service.js';
 import { notifySend } from '#notify/notify-send.js';
@@ -262,7 +263,8 @@ export const sendNewDecisionLetter = async (
 			: 'Address not available',
 		correction_notice_reason: correctionNotice,
 		decision_date: formatDate(decisionDate, false),
-		front_office_url: environment.FRONT_OFFICE_URL || ''
+		front_office_url: environment.FRONT_OFFICE_URL || '',
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
 	};
 
 	await Promise.all(
