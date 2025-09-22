@@ -22,6 +22,14 @@ describe('manage docs on appellant case', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	const setupInquiry = (caseRef, inquiryDate) => {
+		// require case to be started as inquiry to access appellant POE evidence e.g.
+		cy.addInquiryViaApi(caseRef, inquiryDate);
+		happyPathHelper.assignCaseOfficer(caseRef);
+		happyPathHelper.reviewAppellantCase(caseRef);
+		happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
+	};
+
 	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('upload new version of document on appellant case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
@@ -133,10 +141,7 @@ describe('manage docs on appellant case', () => {
 			cy.createCase({ caseType: 'W' }).then((caseRef) => {
 				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 					// require case to be started as inquiry to access appellant POE evidence
-					cy.addInquiryViaApi(caseRef, inquiryDate);
-					happyPathHelper.assignCaseOfficer(caseRef);
-					happyPathHelper.reviewAppellantCase(caseRef);
-					happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
+					setupInquiry(caseRef, inquiryDate);
 
 					// find case and open inqiiry section
 					cy.visit(urlPaths.appealsList);
@@ -168,10 +173,7 @@ describe('manage docs on appellant case', () => {
 			cy.createCase({ caseType: 'W' }).then((caseRef) => {
 				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 					// require case to be started as inquiry to access appellant POE evidence
-					cy.addInquiryViaApi(caseRef, inquiryDate);
-					happyPathHelper.assignCaseOfficer(caseRef);
-					happyPathHelper.reviewAppellantCase(caseRef);
-					happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
+					setupInquiry(caseRef, inquiryDate);
 
 					// find case and open inqiiry section
 					cy.visit(urlPaths.appealsList);
