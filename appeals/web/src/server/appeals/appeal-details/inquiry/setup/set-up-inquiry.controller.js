@@ -57,7 +57,7 @@ export const updateInquirySession = (request, response, next) => {
 
 	sessionValues['inquiryEstimationDays'] =
 		sessionValues['inquiryEstimationYesNo'] === 'yes'
-			? sessionValues['inquiryEstimationDays'] ?? request.currentAppeal.inquiry.estimatedDays
+			? (sessionValues['inquiryEstimationDays'] ?? request.currentAppeal.inquiry.estimatedDays)
 			: undefined;
 
 	sessionValues['addressKnown'] =
@@ -77,16 +77,18 @@ export const updateInquirySession = (request, response, next) => {
 		sessionValues['addressKnown'] === 'no'
 			? pick([], ['addressLine1', 'addressLine2', 'town', 'county', 'postCode'])
 			: isEmpty(existingAddressValues)
-			? {
-					...pick(appealDetails.inquiry.address, [
-						'addressLine1',
-						'addressLine2',
-						'town',
-						'county'
-					]),
-					postCode: appealDetails.inquiry.address ? appealDetails.inquiry.address['postcode'] : null
-			  }
-			: existingAddressValues;
+				? {
+						...pick(appealDetails.inquiry.address, [
+							'addressLine1',
+							'addressLine2',
+							'town',
+							'county'
+						]),
+						postCode: appealDetails.inquiry.address
+							? appealDetails.inquiry.address['postcode']
+							: null
+					}
+				: existingAddressValues;
 
 	request.session.changeInquiry = { ...sessionValues, ...addressValues };
 
@@ -188,7 +190,7 @@ export const postChangeInquiryDate = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryEstimation = async (request, response) => {
-	return renderInquiryEstimation(request, response, 'setup');
+	return renderInquiryEstimation(request, response, 'setup', request.session.setUpInquiry || {});
 };
 
 /**
