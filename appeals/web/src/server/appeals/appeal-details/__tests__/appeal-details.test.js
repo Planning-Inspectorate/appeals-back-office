@@ -70,6 +70,7 @@ const appealStatuses = [
 ];
 
 describe('appeal-details', () => {
+	beforeAll(teardown);
 	beforeEach(() => {
 		installMockApi();
 		installReadOnlyMockApi();

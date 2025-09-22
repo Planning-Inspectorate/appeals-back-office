@@ -81,6 +81,7 @@ const appealDataCasPlanning = {
 };
 
 describe('LPA Questionnaire review', () => {
+	beforeAll(teardown);
 	beforeEach(installMockApi);
 	afterEach(teardown);
 

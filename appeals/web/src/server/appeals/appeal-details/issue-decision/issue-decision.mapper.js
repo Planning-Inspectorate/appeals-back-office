@@ -1,7 +1,6 @@
 import {
 	baseUrl,
-	buildIssueDecisionLogicData,
-	preHeadingText
+	buildIssueDecisionLogicData
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import {
 	mapDocumentDownloadUrl,
@@ -14,6 +13,7 @@ import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import * as displayPageFormatter from '#lib/display-page-formatter.js';
 import { getErrorByFieldname } from '#lib/error-handlers/change-screen-error-handlers.js';
 import { mapNotificationBannersFromSession } from '#lib/mappers/index.js';
+import { preHeadingText } from '#lib/mappers/utils/appeal-preheading.js';
 import isLinkedAppeal, { isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import {
 	preRenderPageComponents,
