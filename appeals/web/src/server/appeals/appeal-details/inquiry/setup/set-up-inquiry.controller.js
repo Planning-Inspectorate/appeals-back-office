@@ -6,7 +6,6 @@ import {
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { isEmpty, isEqual, pick } from 'lodash-es';
-import { addAppellantCaseToLocals, createInquiry, updateInquiry } from './inquiry.service.js';
 import {
 	addressDetailsPage,
 	addressKnownPage,
@@ -16,6 +15,11 @@ import {
 	inquiryDueDatesPage,
 	inquiryEstimationPage
 } from './set-up-inquiry.mapper.js';
+import {
+	addAppellantCaseToLocals,
+	createInquiry,
+	updateInquiry
+} from './set-up-inquiry.service.js';
 
 /** @typedef {import('express').NextFunction} NextFunction */
 

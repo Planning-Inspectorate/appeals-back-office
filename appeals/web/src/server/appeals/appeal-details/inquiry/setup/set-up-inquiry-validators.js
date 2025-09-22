@@ -14,7 +14,7 @@ import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { capitalize } from 'lodash-es';
 
-import { addAppellantCaseToLocals } from '#appeals/appeal-details/inquiry/setup/inquiry.service.js';
+import { addAppellantCaseToLocals } from '#appeals/appeal-details/inquiry/setup/set-up-inquiry.service.js';
 import {
 	createAddressLine1Validator,
 	createAddressLine2Validator,

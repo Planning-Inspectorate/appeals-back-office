@@ -33,13 +33,9 @@ export const updateInquiry = async (request, inquiryDetails) => {
  * @param {import('@pins/express/types/express.js').Request} req
  */
 export const addAppellantCaseToLocals = async (req) => {
-	try {
-		return getAppellantCaseFromAppealId(
-			req.apiClient,
-			req.currentAppeal.appealId,
-			req.currentAppeal.appellantCaseId
-		);
-	} catch (error) {
-		console.log('error appellant case!!!!!!!!!!!!', error);
-	}
+	return getAppellantCaseFromAppealId(
+		req.apiClient,
+		req.currentAppeal.appealId,
+		req.currentAppeal.appellantCaseId
+	);
 };
