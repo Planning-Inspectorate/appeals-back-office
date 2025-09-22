@@ -13,6 +13,7 @@ const request = supertest(app);
 const baseUrl = '/appeals-service/appeal-details';
 
 describe('procedure-preference', () => {
+	beforeAll(teardown);
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/')

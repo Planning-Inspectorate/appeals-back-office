@@ -17,12 +17,12 @@ import {
 	buildIssueDecisionLogicData,
 	checkDecisionUrl,
 	getDecisions,
-	issueDecisionBackUrl,
-	preHeadingText
+	issueDecisionBackUrl
 } from '#appeals/appeal-details/issue-decision/issue-decision.utils.js';
 import { getAttachmentsFolder } from '#appeals/appeal-documents/appeal.documents.service.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { getOriginalAndLatestLetterDatesObject, getTodaysISOString } from '#lib/dates.js';
+import { preHeadingText } from '#lib/mappers/utils/appeal-preheading.js';
 import { mapFileUploadInfoToMappedDocuments } from '#lib/mappers/utils/file-upload-info-to-documents.js';
 import { isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { objectContainsAllKeys } from '#lib/object-utilities.js';
