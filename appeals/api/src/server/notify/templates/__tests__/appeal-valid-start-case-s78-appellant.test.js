@@ -23,7 +23,8 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 				ip_comments_deadline: '20 January 2025',
 				final_comments_deadline: '30 January 2025',
 				we_will_email_when:
-					'when you can view information from other parties in the appeals service.'
+					'when you can view information from other parties in the appeals service.',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -115,7 +116,8 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 				ip_comments_deadline: '20 January 2025',
 				final_comments_deadline: '30 January 2025',
 				child_appeals: ['656565'],
-				we_will_email_when: 'as this is a test'
+				we_will_email_when: 'as this is a test',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -209,7 +211,8 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 				ip_comments_deadline: '20 January 2025',
 				final_comments_deadline: '30 January 2025',
 				child_appeals: ['111111', '222222', '333333', '444444', '555555'],
-				we_will_email_when: 'as this is a test'
+				we_will_email_when: 'as this is a test',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -310,7 +313,8 @@ describe('appeal-valid-start-case-s78-appellant.md', () => {
 				we_will_email_when: [
 					'to let you know when you can view information from other parties in the appeals service',
 					'when we set up your hearing'
-				]
+				],
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',

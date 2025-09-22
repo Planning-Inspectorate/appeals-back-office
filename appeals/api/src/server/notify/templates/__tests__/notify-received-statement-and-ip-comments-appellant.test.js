@@ -21,7 +21,8 @@ describe('received-statement-and-ip-comments-appellant.md', () => {
 				has_ip_comments: true,
 				what_happens_next:
 					'You need to [submit your final comments](/mock-front-office-url/appeals/ABC45678) by 01 January 2021.',
-				subject: 'Submit your final comments'
+				subject: 'Submit your final comments',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 		expectedTailContent = [

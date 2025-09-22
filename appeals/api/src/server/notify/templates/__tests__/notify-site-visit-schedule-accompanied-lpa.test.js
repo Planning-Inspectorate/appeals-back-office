@@ -15,7 +15,8 @@ describe('site-visit-schedule-accompanied-lpa.md', () => {
 				site_address: '72, Planning Crescent',
 				lpa_reference: 'REF-56789',
 				visit_date: '20 October 2025',
-				start_time: '2:00pm'
+				start_time: '2:00pm',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

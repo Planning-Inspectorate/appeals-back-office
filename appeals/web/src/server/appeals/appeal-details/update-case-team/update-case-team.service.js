@@ -19,3 +19,12 @@ export async function postUpdateTeam(apiClient, appealId, teamId) {
 		}
 	});
 }
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @returns {Promise<{email:string}>}
+ */
+export async function getTeamFromAppealId(apiClient, appealId) {
+	return apiClient.get(`appeals/${appealId}/case-team-email`).json();
+}

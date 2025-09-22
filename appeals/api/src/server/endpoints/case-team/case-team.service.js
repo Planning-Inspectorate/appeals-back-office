@@ -35,6 +35,22 @@ export const setAssignedTeamId = async (appealId, assignedTeamId, azureAdUserId)
 /**
  *
  * @param {number} appealId
+ * @returns {Promise<string>}
+ */
+export const getTeamEmailFromAppealId = async (appealId) => {
+	const DEFAULT_EMAIL = 'caseofficers@planninginspectorate.gov.uk';
+
+	const appeal = await appealRepository.getAppealById(appealId);
+	const teamId = appeal?.assignedTeamId;
+	if (!teamId) return DEFAULT_EMAIL;
+
+	const team = await getAssignedTeam(teamId);
+	return team?.email || DEFAULT_EMAIL;
+};
+
+/**
+ *
+ * @param {number} appealId
  * @param {number|null} assignedTeamId
  * @param {string|undefined} azureAdUserId
  * @returns

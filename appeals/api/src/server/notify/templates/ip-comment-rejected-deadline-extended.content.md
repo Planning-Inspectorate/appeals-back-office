@@ -15,9 +15,9 @@ We rejected your comment because:
     You can [submit a different comment]({{front_office_url}}/comment-planning-appeal/enter-appeal-reference) by {{deadline_date}}.
 
 {% else -%}
-    You can send a different comment to caseofficers@planninginspectorate.gov.uk by {{deadline_date}}.
+    You can send a different comment to {{team_email_address}} by {{deadline_date}}.
 
 {% endif -%}
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

@@ -15,7 +15,8 @@ describe('ip-comment-rejected.md', () => {
 				site_address: '10, Test Street',
 				lpa_reference: '12345XYZ',
 				deadline_date: '01 January 2021',
-				reasons: ['Reason one', 'Reason two', 'Reason three']
+				reasons: ['Reason one', 'Reason two', 'Reason three'],
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

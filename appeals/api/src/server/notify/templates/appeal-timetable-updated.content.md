@@ -17,4 +17,4 @@ Due by {{ip_comments_due_date}}.
 Due by {{final_comments_due_date}}.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

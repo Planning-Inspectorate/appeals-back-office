@@ -254,7 +254,8 @@ describe('lpa questionnaires routes', () => {
 						personalisation: {
 							lpa_reference: householdAppeal.applicationReference,
 							appeal_reference_number: householdAppeal.reference,
-							site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`
+							site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						}
 					}
 				],
@@ -266,7 +267,8 @@ describe('lpa questionnaires routes', () => {
 						personalisation: {
 							lpa_reference: casPlanningAppeal.applicationReference,
 							appeal_reference_number: casPlanningAppeal.reference,
-							site_address: `${casPlanningAppeal.address.addressLine1}, ${casPlanningAppeal.address.addressLine2}, ${casPlanningAppeal.address.addressTown}, ${casPlanningAppeal.address.addressCounty}, ${casPlanningAppeal.address.postcode}, ${casPlanningAppeal.address.addressCountry}`
+							site_address: `${casPlanningAppeal.address.addressLine1}, ${casPlanningAppeal.address.addressLine2}, ${casPlanningAppeal.address.addressTown}, ${casPlanningAppeal.address.addressCounty}, ${casPlanningAppeal.address.postcode}, ${casPlanningAppeal.address.addressCountry}`,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						}
 					}
 				],
@@ -280,7 +282,8 @@ describe('lpa questionnaires routes', () => {
 							appeal_reference_number: fullPlanningAppeal.reference,
 							site_address: `${fullPlanningAppeal.address.addressLine1}, ${fullPlanningAppeal.address.addressLine2}, ${fullPlanningAppeal.address.addressTown}, ${fullPlanningAppeal.address.addressCounty}, ${fullPlanningAppeal.address.postcode}, ${fullPlanningAppeal.address.addressCountry}`,
 							what_happens_next:
-								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
+								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						}
 					}
 				],
@@ -294,7 +297,8 @@ describe('lpa questionnaires routes', () => {
 							appeal_reference_number: listedBuildingAppeal.reference,
 							site_address: `${listedBuildingAppeal.address.addressLine1}, ${listedBuildingAppeal.address.addressLine2}, ${listedBuildingAppeal.address.addressTown}, ${listedBuildingAppeal.address.addressCounty}, ${listedBuildingAppeal.address.postcode}, ${listedBuildingAppeal.address.addressCountry}`,
 							what_happens_next:
-								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.'
+								'We will send you another email when the local planning authority submits their statement and we receive any comments from interested parties.',
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						}
 					}
 				]
@@ -353,7 +357,8 @@ describe('lpa questionnaires routes', () => {
 						personalisation: {
 							lpa_reference: test.appeal.applicationReference,
 							appeal_reference_number: test.appeal.reference,
-							site_address: `${test.appeal.address.addressLine1}, ${test.appeal.address.addressLine2}, ${test.appeal.address.addressTown}, ${test.appeal.address.addressCounty}, ${test.appeal.address.postcode}, ${test.appeal.address.addressCountry}`
+							site_address: `${test.appeal.address.addressLine1}, ${test.appeal.address.addressLine2}, ${test.appeal.address.addressTown}, ${test.appeal.address.addressCounty}, ${test.appeal.address.postcode}, ${test.appeal.address.addressCountry}`,
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: test.appeal.lpa.email,
 						templateName: 'lpaq-complete-lpa'
@@ -1010,7 +1015,8 @@ describe('lpa questionnaires routes', () => {
 							reasons: [
 								'Documents or information are missing: Policy is missing',
 								'Other: Addresses are incorrect or missing'
-							]
+							],
+							team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 						},
 						recipientEmail: appeal.lpa.email,
 						templateName: 'lpaq-incomplete'

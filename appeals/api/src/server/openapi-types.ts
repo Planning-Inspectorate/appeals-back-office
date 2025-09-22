@@ -2402,6 +2402,11 @@ export interface UpdateAsssignedTeamResponse {
 	teamId?: number;
 }
 
+export interface TeamEmailResponse {
+	/** @example "email@email.com" */
+	teamEmail?: string;
+}
+
 export interface SingleLinkableAppealSummaryResponse {
 	/**
 	 * ID in back-office or horizon

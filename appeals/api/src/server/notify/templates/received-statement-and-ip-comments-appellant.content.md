@@ -29,4 +29,4 @@ You can [view this information in the appeals service]({{front_office_url}}/appe
 {% endif -%}
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

@@ -7,4 +7,4 @@ We have reviewed your appeal and you have submitted all of the information we ne
 [Give feedback on the appeals service]({{feedback_link}}) (takes 2 minutes)
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

@@ -9,4 +9,4 @@ You can [view this information in the appeals service]({{front_office_url}}/appe
 We will send you another email when we set up your site visit.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

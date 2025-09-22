@@ -225,7 +225,8 @@ describe('appeal linked appeals routes', () => {
 						event_type: 'site visit',
 						lpa_reference: householdAppeal.applicationReference,
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						linked_before_lpa_questionnaire: true
+						linked_before_lpa_questionnaire: true,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: householdAppeal.agent.email,
 					templateName: 'link-appeal'
@@ -240,7 +241,8 @@ describe('appeal linked appeals routes', () => {
 						event_type: 'site visit',
 						lpa_reference: householdAppeal.applicationReference,
 						site_address: '96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom',
-						linked_before_lpa_questionnaire: true
+						linked_before_lpa_questionnaire: true,
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 					},
 					recipientEmail: householdAppeal.agent.email,
 					templateName: 'link-appeal'

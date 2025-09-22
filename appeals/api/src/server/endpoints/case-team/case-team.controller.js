@@ -1,7 +1,11 @@
 import * as caseTeamRepository from '#repositories/team.repository.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { setAssignedTeamId, setAssignedTeamIdForLinkedAppeals } from './case-team.service.js';
+import {
+	getTeamEmailFromAppealId,
+	setAssignedTeamId,
+	setAssignedTeamIdForLinkedAppeals
+} from './case-team.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -15,6 +19,15 @@ export const getAllCaseTeams = async (request, response) => {
 	return response.send(await caseTeamRepository.getCaseTeams());
 };
 
+/**
+ * @param {Request} request
+ * @param {Response} response
+ * @returns {Promise<Response>}
+ */
+export const getCaseTeamEmailFromAppealId = async (request, response) => {
+	const { appealId } = request.params;
+	return response.send({ email: await getTeamEmailFromAppealId(Number(appealId)) });
+};
 /**
  * @param {Request} req
  * @param {Response} res

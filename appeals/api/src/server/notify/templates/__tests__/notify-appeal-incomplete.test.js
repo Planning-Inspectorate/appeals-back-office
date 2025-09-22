@@ -18,7 +18,8 @@ describe('appeal-incomplete.md', () => {
 				reasons: [
 					'The original application form is incomplete',
 					'Other: Appellant contact information is incorrect or missing'
-				]
+				],
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

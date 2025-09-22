@@ -19,7 +19,8 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 				lpa_reference: '12345XYZ',
 				deadline_date: '01 January 2021',
 				reasons: ['Reason one', 'Reason two', 'Reason three'],
-				resubmit_comment_to_fo: true
+				resubmit_comment_to_fo: true,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 	});
@@ -69,7 +70,8 @@ describe('ip-comment-rejected-deadline-extended.md', () => {
 			...notifySendData,
 			personalisation: {
 				...notifySendData.personalisation,
-				resubmit_comment_to_fo: false
+				resubmit_comment_to_fo: false,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

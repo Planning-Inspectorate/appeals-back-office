@@ -23,7 +23,8 @@ describe('appeal-valid-start-case-lpa-hearing.md', () => {
 				statement_of_common_ground_due_date: '01 April 2025',
 				planning_obligation_due_date: '01 May 2025',
 				hearing_date: '01 April 2025',
-				hearing_time: '1pm'
+				hearing_time: '1pm',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',

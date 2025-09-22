@@ -15,7 +15,8 @@ describe('site-visit-change-accompanied-to-unaccompanied-lpa.md', () => {
 				site_address: '99, Final Close',
 				lpa_reference: 'CASE-89012',
 				visit_date: '22 September 2025',
-				start_time: '1:45pm'
+				start_time: '1:45pm',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

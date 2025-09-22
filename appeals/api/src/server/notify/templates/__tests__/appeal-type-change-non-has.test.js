@@ -18,7 +18,8 @@ describe('appeal-type-change-non-has.md', () => {
 				local_planning_authority: 'Bristol City Council',
 				existing_appeal_type: 'Householder',
 				appeal_type: 'D',
-				due_date: '01 January 2025'
+				due_date: '01 January 2025',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',

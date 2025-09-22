@@ -7,4 +7,4 @@ The {{user_type}} did not submit any final comments.
 The inspector will visit the site and we will contact you when we have made the decision.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}
