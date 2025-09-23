@@ -190,12 +190,11 @@ async function updateCompletedEvents(azureAdUserId) {
 
 	await Promise.all(
 		appealsToUpdate.map(async (appeal) => {
-			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
-
 			if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
 				// @ts-ignore
 				await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 			}
+			await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		})
 	);
 

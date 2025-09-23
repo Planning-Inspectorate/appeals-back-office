@@ -1300,9 +1300,21 @@ describe('/appeals/:id/reps', () => {
 				};
 
 				const childAppeals = [
-					{ type: CASE_RELATIONSHIP_LINKED, childId: 100 },
-					{ type: CASE_RELATIONSHIP_RELATED, childId: 200 },
-					{ type: CASE_RELATIONSHIP_LINKED, childId: 300 }
+					{
+						type: CASE_RELATIONSHIP_LINKED,
+						childId: 100,
+						child: { appealStatus: mockS78Appeal.appealStatus }
+					},
+					{
+						type: CASE_RELATIONSHIP_RELATED,
+						childId: 200,
+						child: { appealStatus: mockS78Appeal.appealStatus }
+					},
+					{
+						type: CASE_RELATIONSHIP_LINKED,
+						childId: 300,
+						child: { appealStatus: mockS78Appeal.appealStatus }
+					}
 				];
 
 				databaseConnector.appeal.findUnique.mockResolvedValue({
@@ -1365,7 +1377,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 					data: {
-						appealId: mockS78Appeal.id,
+						appealId: childAppeals[0].childId,
 						details: 'Case progressed to final_comments',
 						loggedAt: expect.any(Date),
 						userId: 1
@@ -1374,7 +1386,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 					data: {
-						appealId: childAppeals[0].childId,
+						appealId: childAppeals[2].childId,
 						details: 'Case progressed to final_comments',
 						loggedAt: expect.any(Date),
 						userId: 1
@@ -1383,7 +1395,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 					data: {
-						appealId: childAppeals[2].childId,
+						appealId: mockS78Appeal.id,
 						details: 'Case progressed to final_comments',
 						loggedAt: expect.any(Date),
 						userId: 1
@@ -2182,9 +2194,21 @@ describe('/appeals/:id/reps', () => {
 				};
 
 				const childAppeals = [
-					{ type: CASE_RELATIONSHIP_LINKED, childId: 100 },
-					{ type: CASE_RELATIONSHIP_RELATED, childId: 200 },
-					{ type: CASE_RELATIONSHIP_LINKED, childId: 300 }
+					{
+						type: CASE_RELATIONSHIP_LINKED,
+						childId: 100,
+						child: { appealStatus: mockS78Appeal.appealStatus }
+					},
+					{
+						type: CASE_RELATIONSHIP_RELATED,
+						childId: 200,
+						child: { appealStatus: mockS78Appeal.appealStatus }
+					},
+					{
+						type: CASE_RELATIONSHIP_LINKED,
+						childId: 300,
+						child: { appealStatus: mockS78Appeal.appealStatus }
+					}
 				];
 
 				databaseConnector.appeal.findUnique.mockResolvedValue({
@@ -2240,7 +2264,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 					data: {
-						appealId: mockS78Appeal.id,
+						appealId: childAppeals[0].childId,
 						details: 'Case progressed to event',
 						loggedAt: expect.any(Date),
 						userId: 1
@@ -2249,7 +2273,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 					data: {
-						appealId: childAppeals[0].childId,
+						appealId: childAppeals[2].childId,
 						details: 'Case progressed to event',
 						loggedAt: expect.any(Date),
 						userId: 1
@@ -2258,7 +2282,7 @@ describe('/appeals/:id/reps', () => {
 
 				expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 					data: {
-						appealId: childAppeals[2].childId,
+						appealId: mockS78Appeal.id,
 						details: 'Case progressed to event',
 						loggedAt: expect.any(Date),
 						userId: 1
