@@ -1,4 +1,5 @@
 import { getCaseDocumentation } from '#appeals/appeal-details/appeal-details-page-sections/common/case-documentation.js';
+import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
 import { userHasPermission } from '#lib/mappers/index.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
@@ -9,6 +10,7 @@ import { getCaseCosts } from './common/case-costs.js';
 import { getCaseManagement } from './common/case-management.js';
 import { getCaseOverview } from './common/case-overview.js';
 import { getCaseTeam } from './common/case-team.js';
+import { getSiteDetails as getSiteDetailsOld } from './common/site-details-old.js';
 import { getSiteDetails } from './common/site-details.js';
 import { getCaseHearing } from './s78/case-hearing.js';
 import { getCaseInquiry } from './s78/case-inquiry.js';
@@ -24,8 +26,11 @@ import { removeAppealDetailsSectionComponentsActions } from './utils/index.js';
 export function generateAppealDetailsPageComponents(appealDetails, mappedData, session) {
 	const caseOverview = getCaseOverview(mappedData, appealDetails);
 
-	const siteDetails = isChildAppeal(appealDetails) ? [] : getSiteDetails(mappedData, appealDetails);
-
+	const siteDetails = isChildAppeal(appealDetails)
+		? []
+		: config.featureFlags.featureFlagCancelSiteVisit
+		? getSiteDetails(mappedData, appealDetails)
+		: getSiteDetailsOld(mappedData, appealDetails);
 	/** @type {PageComponent[]} */
 	const caseTimetable = [
 		{

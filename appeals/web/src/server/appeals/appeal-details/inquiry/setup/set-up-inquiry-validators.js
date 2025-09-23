@@ -14,6 +14,7 @@ import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { capitalize } from 'lodash-es';
 
+import { addAppellantCaseToLocals } from '#appeals/appeal-details/inquiry/setup/set-up-inquiry.service.js';
 import {
 	createAddressLine1Validator,
 	createAddressLine2Validator,
@@ -79,7 +80,8 @@ export const runDueDateDaysValidator = async (req, res, next) => {
 		next();
 		return;
 	}
-	const validators = dueDateDaysInputValidator();
+	const appellantCase = await addAppellantCaseToLocals(req);
+	const validators = dueDateDaysInputValidator(appellantCase.planningObligation.hasObligation);
 	let index = 0;
 	// @ts-ignore
 	const runNext = (err) => {
@@ -104,11 +106,13 @@ export const createDueDateValidators = (fieldName, label) => [
 ];
 
 /**
+ * @param {Boolean} hasPlanningObligation
  * @returns {import('express').RequestHandler[]}
  */
-export const dueDateDaysInputValidator = () => {
+export const dueDateDaysInputValidator = (hasPlanningObligation) => {
 	/** @type {import('express').RequestHandler[]} */
 	const validatorsList = [];
+
 	const validatorsMap = {
 		lpaQuestionnaireDueDate: {
 			id: 'lpa-questionnaire-due-date',
@@ -130,10 +134,12 @@ export const dueDateDaysInputValidator = () => {
 			id: 'statement-of-common-ground-due-date',
 			label: 'Statement of common ground due date'
 		},
-		planningObligationDueDate: {
-			id: 'planning-obligation-due-date',
-			label: 'Planning obligation due date'
-		}
+		...(hasPlanningObligation && {
+			planningObligationDueDate: {
+				id: 'planning-obligation-due-date',
+				label: 'Planning obligation due date'
+			}
+		})
 	};
 
 	Object.values(validatorsMap).forEach((validatorType) => {
@@ -156,9 +162,14 @@ export const dueDateDaysInputValidator = () => {
 		extractAndProcessDateErrors({
 			fieldNamePrefix: 'statement-of-common-ground-due-date'
 		}),
-		extractAndProcessDateErrors({
-			fieldNamePrefix: 'planning-obligation-due-date'
-		})
+		...(hasPlanningObligation
+			? [
+					extractAndProcessDateErrors({
+						fieldNamePrefix: 'planning-obligation-due-date'
+					})
+			  ]
+			: [])
 	);
+
 	return validatorsList;
 };

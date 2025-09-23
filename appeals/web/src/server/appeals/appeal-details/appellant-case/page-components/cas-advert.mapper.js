@@ -52,6 +52,10 @@ export function generateCASAdvertComponents(
 			mappedAppellantCaseData.advertisementInPosition.display.summaryListItem;
 
 		rows.splice(appealSiteAddressIndex + 1, 0, highwayLand, advertisementInPosition);
+
+		const landownerPermission = mappedAppellantCaseData.landownerPermission.display.summaryListItem;
+
+		rows.splice(rows.length - 1, 0, landownerPermission);
 	}
 
 	const applicationSummaryComponentIndex = pageComponents.findIndex(

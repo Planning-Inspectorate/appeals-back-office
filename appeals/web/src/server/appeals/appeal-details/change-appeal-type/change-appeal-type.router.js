@@ -62,4 +62,6 @@ router
 		asyncHandler(controller.postCheckChangeAppealFinalDate)
 	);
 
+router.route('/update-appeal').get(asyncHandler(controller.getUpdateAppeal));
+
 export default router;

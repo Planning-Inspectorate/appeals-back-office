@@ -1,6 +1,6 @@
 apps_config = {
   app_service_plan_sku       = "P0v3"
-  functions_node_version     = 20
+  functions_node_version     = 22
   functions_service_plan_sku = "P0v3"
   node_environment           = "development"
   private_endpoint_enabled   = false
@@ -46,11 +46,13 @@ apps_config = {
     featureFlagChangeAppealType       = true
     featureFlagPdfDownload            = true
     featureFlagNetResidence           = true
+    featureFlagNetResidenceS20        = true
     featureFlagCancelCase             = true
     featureFlagChangeProcedureType    = true
     featureFlagAdvertisement          = true
     featureFlagHearingPostMvp         = false
     featureFlagAutoAssignTeam         = true
+    featureFlagCancelSiteVisit        = true
   }
 
   use_system_test_bc_for_change_lpa = true

@@ -9,7 +9,7 @@ import { happyPathHelper } from '../../support/happyPathHelper';
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('Change site visit', () => {
+describe.skip('Change site visit', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});

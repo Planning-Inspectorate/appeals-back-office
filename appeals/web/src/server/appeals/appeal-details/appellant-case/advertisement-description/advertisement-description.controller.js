@@ -31,6 +31,9 @@ const renderChangeAdvertisementDescription = async (request, response) => {
 		appellantCaseData,
 		request.session.advertisementDescription
 	);
+
+	delete request.session.advertisementDescription;
+
 	return response.status(200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContents,
 		errors

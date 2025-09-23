@@ -147,6 +147,7 @@ interface UpdateAppealRequest {
 	inspector?: number | null;
 	agent?: number | null;
 	procedureTypeId?: number | null;
+	hearingStartTime?: string;
 }
 
 interface SingleAppellantCaseResponse {
@@ -953,7 +954,7 @@ type CreateInquiry = {
 	ipCommentsDueDate: Date | string;
 	statementOfCommonGroundDueDate: Date | string;
 	proofOfEvidenceAndWitnessesDueDate: Date | string;
-	planningObligationDueDate: Date | string;
+	planningObligationDueDate: Date | string | undefined;
 };
 
 type UpdateInquiry = {

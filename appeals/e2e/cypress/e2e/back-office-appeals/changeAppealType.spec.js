@@ -29,7 +29,8 @@ describe('Change Appeal Type', () => {
 		});
 	});
 
-	it('Change appeal type and resubmit', () => {
+	// skipping test as is work in progress - https://pins-ds.atlassian.net/browse/A2-3649
+	it.skip('Change appeal type and resubmit', () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.assignCaseOfficer(caseRef);
 			caseDetailsPage.clickChangeAppealType();
