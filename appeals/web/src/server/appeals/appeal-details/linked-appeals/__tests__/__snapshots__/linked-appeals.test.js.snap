@@ -323,7 +323,7 @@ exports[`linked-appeals GET /linked-appeals/add/check-and-confirm should render 
             class="govuk-back-link">Back</a>
             <main class="govuk-main-wrapper" id="main-content">
                 <div class="govuk-grid-row">
-                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+                    <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 (lead)</span>
                         <h1 class="govuk-heading-l">Check details and add linked appeal</h1>
                     </div>
                 </div>

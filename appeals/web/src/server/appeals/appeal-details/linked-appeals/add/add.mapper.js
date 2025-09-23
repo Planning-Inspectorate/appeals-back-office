@@ -1,5 +1,6 @@
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { radiosInput } from '#lib/mappers/index.js';
+import { preHeadingText } from '#lib/mappers/utils/appeal-preheading.js';
 import { appealStatusToStatusText } from '#lib/nunjucks-filters/status-tag.js';
 import { addBackLinkQueryToUrl, getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -27,7 +28,7 @@ export function addLinkedAppealPage(
 	const pageContent = {
 		title: `Add linked appeal - ${shortAppealReference}`,
 		backLinkUrl: backLinkUrl || `/appeals-service/appeal-details/${appealData.appealId}`,
-		preHeading: `Appeal ${shortAppealReference} - add linked appeal`,
+		preHeading: preHeadingText(appealData, 'add linked appeal'),
 		pageComponents: [
 			{
 				type: 'input',
@@ -112,7 +113,7 @@ export function addLinkedAppealCheckAndConfirmPage(request) {
 		backLinkUrl:
 			backUrl ||
 			`/appeals-service/appeal-details/${currentAppeal.appealId}/linked-appeals/add/lead-appeal`,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: preHeadingText(currentAppeal),
 		heading: 'Check details and add linked appeal',
 		submitButtonProperties: {
 			text: 'Add linked appeal'
@@ -186,14 +187,13 @@ export function addLinkedAppealCheckAndConfirmPage(request) {
  * @returns {PageContent}
  * */
 export function alreadyLinkedPage(appealData, linkCandidateSummary) {
-	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const title = `You have already linked appeal ${linkCandidateSummary.appealReference}`;
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title,
 		heading: title,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: preHeadingText(appealData),
 		submitButtonProperties: {
 			text: 'Add a different linked appeal'
 		}
@@ -208,7 +208,6 @@ export function alreadyLinkedPage(appealData, linkCandidateSummary) {
  * @returns {PageContent}
  * */
 export function invalidCaseStatusPage(appealData, linkCandidateSummary) {
-	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const title = `You cannot link appeal ${linkCandidateSummary.appealReference}`;
 
 	const linkableCaseStatuses = [
@@ -222,7 +221,7 @@ export function invalidCaseStatusPage(appealData, linkCandidateSummary) {
 	const pageContent = {
 		title,
 		heading: title,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: preHeadingText(appealData),
 		pageComponents: [
 			{
 				type: 'html',
@@ -259,7 +258,6 @@ export function changeLeadAppealPage(
 	backUrl,
 	errorMessage
 ) {
-	const shortAppealReference = appealShortReference(appealData.appealReference);
 	const title = 'Which is the lead appeal?';
 
 	/**
@@ -283,7 +281,7 @@ export function changeLeadAppealPage(
 
 	const pageContent = {
 		title,
-		preHeading: `Appeal ${shortAppealReference} - add linked appeal`,
+		preHeading: preHeadingText(appealData, 'add linked appeal'),
 		backLinkUrl:
 			backUrl || `/appeals-service/appeal-details/${appealData.appealId}/linked-appeals/add`,
 		pageComponents: [
