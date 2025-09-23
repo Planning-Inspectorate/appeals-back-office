@@ -1405,6 +1405,10 @@ export interface UpdateCaseTeamResponse {
 export interface StartCaseRequest {
 	/** @example "2024-05-09" */
 	startDate?: string;
+	/** @example "written" */
+	procedureType?: string;
+	/** @example "2024-05-09T12:00:00.000Z" */
+	hearingStartTime?: string;
 }
 
 export interface StartCaseResponse {
