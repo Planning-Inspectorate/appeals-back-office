@@ -1241,4 +1241,90 @@ describe('site-visit', () => {
 			expect(result.changeType).toBe('unchanged');
 		});
 	});
+
+	describe('GET /site-visit/missed', () => {
+		it('should render the who missed the site visit page', async () => {
+			const response = await request.get(`${baseUrl}/1${siteVisitPath}/missed`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('- record missed site visit');
+			expect(element.innerHTML).toContain('Who missed the site visit?</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain('id="who-missed-site-visit-radio"');
+			expect(unprettifiedElement.innerHTML).toContain('Appellant</label>');
+			expect(unprettifiedElement.innerHTML).toContain('id="who-missed-site-visit-radio-2"');
+			expect(unprettifiedElement.innerHTML).toContain('LPA</label>');
+			expect(unprettifiedElement.innerHTML).toContain('id="who-missed-site-visit-radio-3"');
+			expect(unprettifiedElement.innerHTML).toContain('Inspector</label>');
+
+			expect(unprettifiedElement.innerHTML).toContain('Continue</button>');
+		});
+	});
+
+	describe('POST /site-visit/missed', () => {
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/1').reply(200, appealData);
+		});
+
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should re-render the who missed the site visit page with the expected error messages if required field is not populated', async () => {
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio: ''
+			});
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.innerHTML).toContain('Who missed the site visit?</h1>');
+			expect(element.innerHTML).toContain('who-missed-site-visit-radio-error');
+
+			const errorSummaryHtml = parseHtml(response.text, {
+				rootElement: '.govuk-error-summary',
+				skipPrettyPrint: true
+			}).innerHTML;
+
+			expect(errorSummaryHtml).toContain('There is a problem</h2>');
+			expect(errorSummaryHtml).toContain('Select who missed the site visit</a>');
+		});
+
+		it('should redirect to the who missed site visit CYA page if appellant radio button was selected', async () => {
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio: 'appellant'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/missed/check'
+			);
+		});
+
+		it('should redirect to the who missed site visit CYA page if lpa radio button was selected', async () => {
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio: 'lpa'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/missed/check'
+			);
+		});
+
+		it('should redirect to the who missed site visit CYA page if inspector radio button was selected', async () => {
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio: 'inspector'
+			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/site-visit/missed/check'
+			);
+		});
+	});
 });

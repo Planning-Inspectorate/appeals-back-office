@@ -406,7 +406,7 @@ exports[`start case hearing flow POST /start-case/hearing/confirm should redirec
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>

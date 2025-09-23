@@ -54,3 +54,12 @@ export const validateVisitStartTimeBeforeEndTime = createStartTimeBeforeEndTimeV
 		);
 	}
 );
+
+export const validateWhoMissedSiteVisit = createValidator(
+	body('whoMissedSiteVisitRadio')
+		.exists()
+		.withMessage('Select who missed the site visit')
+		.bail()
+		.notEmpty()
+		.withMessage('Select who missed the site visit')
+);

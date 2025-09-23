@@ -809,7 +809,7 @@ exports[`appeal-details GET /:appealId Linked appeals should not render action l
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -1447,7 +1447,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -1857,7 +1857,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -2273,7 +2273,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -2683,7 +2683,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the case ref
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -3090,7 +3090,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the lead or 
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -3511,7 +3511,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/3/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/3/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -3905,7 +3905,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -4316,7 +4316,7 @@ exports[`appeal-details GET /:appealId Linked appeals should render the received
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/2/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -4836,7 +4836,7 @@ exports[`appeal-details GET /:appealId Notification banners Important banners sh
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -5832,7 +5832,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -6233,7 +6233,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -6628,7 +6628,7 @@ exports[`appeal-details GET /:appealId should render a Decision inset panel when
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -7036,7 +7036,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -7433,7 +7433,7 @@ exports[`appeal-details GET /:appealId should render the appellant case status a
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -7855,7 +7855,7 @@ exports[`appeal-details GET /:appealId should render the received appeal details
     </dl>
     <div id="site-visit-section">
         <h1 class="govuk-heading-l">Site</h1>
-        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/1/site-visit/missed/index">Record missed site visit</a>
+        <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Record missed site visit</a>
         </p>
         <dl class="govuk-summary-list">
             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
@@ -8302,7 +8302,7 @@ exports[`appeal-details should not render a back button 1`] = `
                 </dl>
                 <div id="site-visit-section">
                     <h1 class="govuk-heading-l">Site</h1>
-                    <p class="govuk-body"><a class="govuk-link" href="/appeals-service/2/site-visit/missed/index">Record missed site visit</a>
+                    <p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/2/site-visit/missed">Record missed site visit</a>
                     </p>
                     <dl class="govuk-summary-list">
                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
