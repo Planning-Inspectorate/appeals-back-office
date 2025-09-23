@@ -21,14 +21,14 @@ export const getSiteDetails = (mappedData, appealDetails) => {
 	const cancelSiteVisitLink = {
 		type: 'html',
 		parameters: {
-			html: `<p class="govuk-body"><a class="govuk-link" href="/appeals-service/${appealDetails.appealId}/site-visit/delete">Cancel site visit</a></p>`
+			html: `<p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/delete">Cancel site visit</a></p>`
 		}
 	};
 	/** @type {PageComponent} */
 	const recordMissedSiteVisitLink = {
 		type: 'html',
 		parameters: {
-			html: `<p class="govuk-body"><a class="govuk-link" href="/appeals-service/${appealDetails.appealId}/site-visit/missed/index" >Record missed site visit</a></p>`
+			html: `<p class="govuk-body"><a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}/site-visit/missed" >Record missed site visit</a></p>`
 		}
 	};
 

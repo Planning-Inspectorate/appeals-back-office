@@ -559,3 +559,51 @@ export function setPreviousVisitTypeIfChanged(updateOrCreateSiteVisitParameters,
 		updateOrCreateSiteVisitParameters.previousVisitType = oldApiVisitType;
 	}
 }
+
+/**
+ * @param {string} appealId
+ * @param {string} appealReference
+ * @param {string|undefined} errorMessage
+ * @returns {PageContent}
+ */
+export function siteVisitMissedPage(appealId, appealReference, errorMessage) {
+	return {
+		title: 'Who missed the site visit?',
+		backLinkUrl: `/appeals-service/appeal-details/${appealId}`,
+		preHeading: `Appeal ${appealShortReference(appealReference)} - record missed site visit`,
+		pageComponents: [
+			{
+				type: 'radios',
+				parameters: {
+					name: 'whoMissedSiteVisitRadio',
+					idPrefix: 'who-missed-site-visit-radio',
+					fieldset: {
+						legend: {
+							text: 'Who missed the site visit?',
+							isPageHeading: true,
+							classes: 'govuk-fieldset__legend--l'
+						}
+					},
+					items: [
+						{
+							value: 'appellant',
+							text: 'Appellant'
+							// checked: planningObligationStatus === 'appellant'
+						},
+						{
+							value: 'lpa',
+							text: 'LPA'
+							// checked: planningObligationStatus === 'lpa'
+						},
+						{
+							value: 'inspector',
+							text: 'Inspector'
+							// checked: planningObligationStatus === 'inspector'
+						}
+					],
+					errorMessage: errorMessage && { text: errorMessage }
+				}
+			}
+		]
+	};
+}
