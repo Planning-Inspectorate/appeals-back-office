@@ -22,9 +22,17 @@ import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 /** @typedef {import("../../appeal-details.types.js").WebAppeal} Appeal */
 /** @typedef {import('#appeals/appeal-details/representations/types.js').Representation} Representation */
 
-/** @type {import('@pins/express').RequestHandler<Response>} */
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export const getManageFolder = async (request, response) => {
-	const { currentAppeal, query } = request;
+	const {
+		currentAppeal,
+		query,
+		locals: { pageContent }
+	} = request;
 	const manageFolderBaseUrl = request.baseUrl;
 
 	const representationBackLinkUrlSegments = manageFolderBaseUrl.split('/').slice(0, -1);
@@ -45,9 +53,12 @@ export const getManageFolder = async (request, response) => {
 		backLinkUrl,
 		viewAndEditUrl: `${manageFolderBaseUrl}/{{folderId}}/{{documentId}}`,
 		addButtonUrl,
-		pageHeadingTextOverride: 'Supporting documents',
-		addButtonTextOverride: 'Add document',
-		dateColumnLabelTextOverride: 'Date submitted'
+		pageHeadingTextOverride:
+			pageContent?.manageDocuments?.pageHeadingTextOverride || 'Supporting documents',
+		addButtonTextOverride: pageContent?.manageDocuments?.addButtonTextOverride || 'Add document',
+		dateColumnLabelTextOverride:
+			pageContent?.manageDocuments?.dateColumnLabelTextOverride || 'Date submitted',
+		preHeadingTextOverride: pageContent?.manageDocuments?.preHeadingTextOverride || 'Manage folder'
 	});
 };
 

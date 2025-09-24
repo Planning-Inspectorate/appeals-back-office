@@ -234,9 +234,7 @@ export async function createRepresentationProofOfEvidence(req, res) {
 	} = req;
 	const rep = await representationService.createRepresentationProofOfEvidence(
 		appeal,
-		proofOfEvidenceType === 'lpa'
-			? APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE
-			: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+		proofOfEvidenceType,
 		attachments
 	);
 	return res.status(201).send(rep);

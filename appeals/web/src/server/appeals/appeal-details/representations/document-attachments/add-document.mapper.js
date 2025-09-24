@@ -11,10 +11,18 @@ import { dateInput } from '#lib/mappers/index.js';
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @param {ReqBody} date
  * @param {string} backLinkUrl
+ * @param {Object} params
+ * @param {string} [params.pageHeadingTextOverride]
  * @returns {PageContent}
  * */
-export const dateSubmitted = (appealDetails, errors, date, backLinkUrl) => ({
-	title: 'When was the supporting document submitted?',
+export const dateSubmitted = (
+	appealDetails,
+	errors,
+	date,
+	backLinkUrl,
+	{ pageHeadingTextOverride }
+) => ({
+	title: pageHeadingTextOverride || 'When was the supporting document submitted?',
 	backLinkUrl,
 	preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
 	pageComponents: [
@@ -25,7 +33,7 @@ export const dateSubmitted = (appealDetails, errors, date, backLinkUrl) => ({
 				date.day && date.month && date.year
 					? date
 					: dateISOStringToDayMonthYearHourMinute(getTodaysISOString()),
-			legendText: 'When was the supporting document submitted?',
+			legendText: pageHeadingTextOverride || 'When was the supporting document submitted?',
 			legendIsPageHeading: true,
 			hint: 'For example, 27 3 2024',
 			errors: errors
