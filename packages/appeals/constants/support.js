@@ -357,7 +357,7 @@ export const UK_POSTCODE_REGEX = /^([A-Za-z]{1,2}\d[A-Za-z\d]? ?\d[A-Za-z]{2}|GI
 
 export const UUID_REGEX =
 	/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/;
-
+export const NUMERIC_INPUT_REGEX = /^[,0-9 ]+$/;
 export const LENGTH_1 = 1;
 export const LENGTH_8 = 8;
 export const LENGTH_10 = 10;
