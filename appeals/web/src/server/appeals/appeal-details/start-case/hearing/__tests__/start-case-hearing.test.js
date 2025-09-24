@@ -430,8 +430,14 @@ describe('start case hearing flow', () => {
 				hearing_date: '1 February 3025',
 				hearing_time: '12:00pm',
 				procedure_type: 'a hearing',
-				child_appeals: []
+				child_appeals: [],
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			};
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
 			nock('http://test/')
 				.get('/appeals/1')
 				.times(3)
@@ -530,8 +536,14 @@ describe('start case hearing flow', () => {
 				hearing_date: '',
 				hearing_time: '',
 				procedure_type: 'a hearing',
-				child_appeals: []
+				child_appeals: [],
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			};
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
 			nock('http://test/')
 				.get('/appeals/1')
 				.twice()
