@@ -1,6 +1,7 @@
 import { appealProcedureToLabelText } from '#appeals/appeal-details/change-appeal-procedure-type/check-and-confirm/check-and-confirm.mapper.js';
 import { sessionValuesToDateTime } from '#appeals/appeal-details/hearing/setup/set-up-hearing.controller.js';
 import { hearingDatePage } from '#appeals/appeal-details/hearing/setup/set-up-hearing.mapper.js';
+import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
@@ -199,6 +200,10 @@ export const getHearingConfirm = async (request, response) => {
 		currentAppeal.appealId,
 		sessionValues.appealProcedure
 	);
+	const { email: assignedTeamEmail } = await getTeamFromAppealId(
+		request.apiClient,
+		currentAppeal.appealId
+	);
 
 	const personalisation = {
 		appeal_reference_number: currentAppeal.appealReference,
@@ -217,7 +222,8 @@ export const getHearingConfirm = async (request, response) => {
 		hearing_date: dateISOStringToDisplayDate(hearingStartTime),
 		hearing_time: dateISOStringToDisplayTime12hr(hearingStartTime),
 		procedure_type: 'a hearing',
-		child_appeals: []
+		child_appeals: [],
+		team_email_address: assignedTeamEmail
 	};
 
 	/** @type {string} */

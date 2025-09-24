@@ -12,6 +12,7 @@ import {
 	buildRejectionReasons,
 	rejectionReasonHtml
 } from '../representations/common/components/reject-reasons.js';
+import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
 	decisionInvalidConfirmationPage,
 	mapInvalidReasonPage,
@@ -185,11 +186,17 @@ export const getCheckPage = async (request, response) => {
 			webAppellantCaseReviewOutcome.reasonsText
 		);
 
+		const { email: assignedTeamEmail } = await getTeamFromAppealId(
+			request.apiClient,
+			currentAppeal.appealId
+		);
+
 		const personalisation = {
 			appeal_reference_number: currentAppeal.appealReference,
 			lpa_reference: currentAppeal.planningApplicationReference || '',
 			site_address: appealSiteToAddressString(currentAppeal.appealSite),
-			reasons: invalidReasons
+			reasons: invalidReasons,
+			team_email_address: assignedTeamEmail
 		};
 
 		const { appellantTemplate, lpaTemplate } = await generateInvalidAppealNotifyPreviews(
