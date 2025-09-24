@@ -226,10 +226,12 @@ export const getHearingConfirm = async (request, response) => {
 		team_email_address: assignedTeamEmail
 	};
 
+	const errorMessage = 'Failed to generate email preview';
+
 	/** @type {string} */
-	let appellantPreview = '';
+	let appellantPreview = errorMessage;
 	/** @type {string} */
-	let lpaPreview = '';
+	let lpaPreview = errorMessage;
 	try {
 		const result = await generateStartCaseNotifyPreviews(
 			request.apiClient,
