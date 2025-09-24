@@ -15,8 +15,8 @@ export const teamsToCreate = [
  */
 export const lpaTeamAssignments = {
 	// Ops Test
-	Q9999: 1,
-	Q1111: null,
+	Q9999: null,
+	Q1111: 1,
 
 	// DevTeam1
 	MAID: 2,
