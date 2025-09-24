@@ -73,8 +73,12 @@ export class Page {
 		// 	cy.get(this.selectors.accordionButton).contains('span', text, { matchCase: false }),
 		additionalDocumentsAdd: () => cy.get(this.selectors.summaryCardActions).children().last(),
 		additonalDocumentManage: () => cy.get(this.selectors.summaryCardActions).children().first(),
-		answerCell: (question) =>
-			cy.contains(this.selectors.summaryListKey, question, { matchCase: false }).next(),
+		answerCell: (question, options) => {
+			const { matchQuestionCase = false } = options || {};
+			return cy
+				.contains(this.selectors.summaryListKey, question, { matchCase: matchQuestionCase })
+				.next();
+		},
 		applicationHeaderCentral: () => cy.get(`${this.selectors.centralCol} > p`),
 		backLink: () => cy.get(this.selectors.backLink),
 		bannerHeader: () => cy.get(this.selectors.bannerHeader),
@@ -345,8 +349,8 @@ export class Page {
 		this.basePageElements.projectManagement().click();
 	}
 
-	validateAnswer(question, answer) {
-		this.basePageElements.answerCell(question).then(($elem) => {
+	validateAnswer(question, answer, options) {
+		this.basePageElements.answerCell(question, options).then(($elem) => {
 			cy.wrap($elem)
 				.invoke('text')
 				.then((text) => expect(text.trim()).to.equal(answer));
