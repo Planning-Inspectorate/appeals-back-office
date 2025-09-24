@@ -863,6 +863,7 @@ export function mapFolderDocumentActionsHtmlProperty(folder, document, viewAndEd
  * @param {string} [params.pageHeadingTextOverride]
  * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
+ * @param {string} [params.preHeadingTextOverride]
  * @returns {PageContent}
  */
 export function manageFolderPage({
@@ -873,7 +874,8 @@ export function manageFolderPage({
 	request,
 	pageHeadingTextOverride,
 	addButtonTextOverride,
-	dateColumnLabelTextOverride
+	dateColumnLabelTextOverride,
+	preHeadingTextOverride
 }) {
 	const notificationBanners = mapNotificationBannersFromSession(
 		request.session,
@@ -924,7 +926,7 @@ export function manageFolderPage({
 		title: 'Manage folder',
 		backLinkText: 'Back',
 		backLinkUrl: backLinkUrl?.replace('{{folderId}}', folder.folderId.toString()),
-		preHeading: 'Manage folder',
+		preHeading: preHeadingTextOverride || 'Manage folder',
 		heading: pageHeadingTextOverride || mapManageFolderPageHeading(folder.path),
 		pageComponents: [
 			...notificationBanners,

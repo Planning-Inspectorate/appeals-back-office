@@ -294,6 +294,7 @@ export const renderDocumentDetails = async ({
  * @param {string} [params.pageHeadingTextOverride]
  * @param {string} [params.addButtonTextOverride]
  * @param {string} [params.dateColumnLabelTextOverride]
+ * @param {string} [params.preHeadingTextOverride]
  */
 export const renderManageFolder = async ({
 	request,
@@ -303,7 +304,8 @@ export const renderManageFolder = async ({
 	addButtonUrl,
 	pageHeadingTextOverride,
 	addButtonTextOverride,
-	dateColumnLabelTextOverride
+	dateColumnLabelTextOverride,
+	preHeadingTextOverride
 }) => {
 	const { currentFolder, errors } = request;
 
@@ -319,7 +321,8 @@ export const renderManageFolder = async ({
 		request,
 		pageHeadingTextOverride,
 		addButtonTextOverride,
-		dateColumnLabelTextOverride
+		dateColumnLabelTextOverride,
+		preHeadingTextOverride
 	});
 
 	return response.status(200).render('appeals/documents/manage-folder.njk', {

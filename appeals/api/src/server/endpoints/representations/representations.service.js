@@ -187,7 +187,7 @@ export const createRepresentationProofOfEvidence = async (
 				: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
 		source: proofOfEvidenceType === 'lpa' ? 'lpa' : 'citizen',
 		dateCreated: new Date(),
-		representedId: proofOfEvidenceType === 'lpa' ? appeal.lpaId : appeal.appellantId
+		representedId: appeal.appellantId
 	});
 
 	if (attachments.length > 0) {
