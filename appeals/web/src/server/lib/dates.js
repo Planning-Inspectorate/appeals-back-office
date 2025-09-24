@@ -81,7 +81,7 @@ export function dateISOStringToDisplayTime24hr(dateISOString) {
 	let displayTimeString;
 
 	try {
-		displayTimeString = formatInTimeZone(dateISOString, DEFAULT_TIMEZONE, 'H:mmaaa');
+		displayTimeString = formatInTimeZone(dateISOString, DEFAULT_TIMEZONE, 'H:mm');
 	} catch (e) {
 		displayTimeString = '';
 	}
