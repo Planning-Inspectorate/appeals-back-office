@@ -1,4 +1,5 @@
 import logger from '#lib/logger.js';
+import { removeCommasFromNumericInput } from '#lib/sanitizers/numeric-input-sanitizer.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
 import { HTTPError } from 'got';
@@ -58,10 +59,13 @@ export const postNetResidence = async (request, response) => {
 
 	switch (numberOfResidencesNetChange) {
 		case 'gain':
-			request.currentAppeal.numberOfResidencesNetChange = parseInt(request.body['net-gain']);
+			request.currentAppeal.numberOfResidencesNetChange = removeCommasFromNumericInput(
+				request.body['net-gain']
+			);
 			break;
 		case 'loss':
-			request.currentAppeal.numberOfResidencesNetChange = parseInt(request.body['net-loss']) * -1;
+			request.currentAppeal.numberOfResidencesNetChange =
+				removeCommasFromNumericInput(request.body['net-loss']) * -1;
 			break;
 		case 'noChange':
 			request.currentAppeal.numberOfResidencesNetChange = 0;

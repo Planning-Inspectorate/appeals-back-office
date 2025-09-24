@@ -189,7 +189,28 @@ describe('net-residence', () => {
 
 			expect(element.innerHTML).toMatchSnapshot();
 			expect(element.innerHTML).toContain(
-				`<a href="#net-gain">Net gain must be a whole number, like 5</a>`
+				`<a href="#net-gain">Net gain must be a number, like 5</a>`
+			);
+		});
+
+		it('should return error when net gain radio button selected and 0 entered', async () => {
+			const appealId = appealData.appealId.toString();
+
+			nock('http://test/').patch(`/appeals/1/appellant-cases/0`).reply(200, {});
+
+			const invalidData = {
+				'net-residence': 'gain',
+				'net-gain': '1.0'
+			};
+			const response = await request
+				.post(`${baseUrl}/${appealId}/residential-units/new`)
+				.send(invalidData);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				`<a href="#net-gain">Net gain must be a number, like 5</a>`
 			);
 		});
 
@@ -241,6 +262,27 @@ describe('net-residence', () => {
 			const invalidData = {
 				'net-residence': 'loss',
 				'net-loss': '1.43'
+			};
+			const response = await request
+				.post(`${baseUrl}/${appealId}/residential-units/new`)
+				.send(invalidData);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain(
+				`<a href="#net-loss">Net loss must be a number, like 5</a>`
+			);
+		});
+
+		it('should return error when net loss radio button selected and 0 entered', async () => {
+			const appealId = appealData.appealId.toString();
+
+			nock('http://test/').patch(`/appeals/1/appellant-cases/0`).reply(200, {});
+
+			const invalidData = {
+				'net-residence': 'loss',
+				'net-loss': '0'
 			};
 			const response = await request
 				.post(`${baseUrl}/${appealId}/residential-units/new`)
