@@ -190,9 +190,10 @@ const updateAppealType = async (
 			appealId: appeal.id,
 			azureAdUserId,
 			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_TYPE_UPDATED, [newAppealType])
-		}),
-		await broadcasters.broadcastAppeal(appeal.id)
+		})
 	]);
+
+	await broadcasters.broadcastAppeal(appeal.id);
 
 	const siteAddress = appeal.address
 		? formatAddressSingleLine(appeal.address)
