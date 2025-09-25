@@ -171,6 +171,7 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE ||
 				(ipCommentsCounts?.valid && ipCommentsCounts?.valid > 0);
 
+			//TODO: This POE banner management should be moved into the POE state section once it is ready
 			const lpaProofOfEvidenceCompleted =
 				appealDetails.documentationSummary.lpaProofOfEvidence?.representationStatus ===
 				APPEAL_REPRESENTATION_STATUS.VALID;
