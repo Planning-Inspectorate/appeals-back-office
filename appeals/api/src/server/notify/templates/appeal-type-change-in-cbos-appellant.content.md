@@ -14,4 +14,4 @@ We will contact you:
 - if we need any more information
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}
