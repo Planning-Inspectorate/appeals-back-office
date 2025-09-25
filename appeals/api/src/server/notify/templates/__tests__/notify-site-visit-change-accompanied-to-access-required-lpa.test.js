@@ -15,7 +15,8 @@ describe('site-visit-change-accompanied-to-access-required-lpa.md', () => {
 				site_address: '23, Transition Street',
 				lpa_reference: 'CASE-45632',
 				visit_date: '14 September 2025',
-				start_time: '10:00am'
+				start_time: '10:00am',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

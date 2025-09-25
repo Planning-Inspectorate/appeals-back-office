@@ -7,4 +7,4 @@ We have cancelled your inquiry.
 We will contact you by email when we rearrange your inquiry.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

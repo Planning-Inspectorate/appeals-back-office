@@ -15,7 +15,8 @@ describe('site-visit-schedule-accompanied-appellant.md', () => {
 				site_address: '45, Hearing Road',
 				lpa_reference: 'PLAN-12345',
 				visit_date: '15 October 2025',
-				start_time: '11:00am'
+				start_time: '11:00am',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

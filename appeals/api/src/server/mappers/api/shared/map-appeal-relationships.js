@@ -110,7 +110,7 @@ const mapLinkedAppeal = (relationship, isParentAppeal) => {
 		appealReference,
 		externalSource: externalSource === true,
 		linkingDate: linkingDate.toISOString(),
-		appealType: `${appealType?.type} (${appealType?.key})`,
+		appealType: appealType?.type,
 		externalAppealType,
 		externalId,
 		isParentAppeal,

@@ -13,4 +13,4 @@ If you see the inspector, you cannot give them any documents or discuss the appe
 If you need to contact us, include our appeal reference number in any communication.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

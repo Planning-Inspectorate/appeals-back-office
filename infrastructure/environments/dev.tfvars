@@ -50,8 +50,9 @@ apps_config = {
     featureFlagCancelCase             = true
     featureFlagChangeProcedureType    = true
     featureFlagAdvertisement          = true
-    featureFlagHearingPostMvp         = false
+    featureFlagHearingPostMvp         = true
     featureFlagAutoAssignTeam         = true
+    featureFlagCancelSiteVisit        = true
   }
 
   use_system_test_bc_for_change_lpa = true

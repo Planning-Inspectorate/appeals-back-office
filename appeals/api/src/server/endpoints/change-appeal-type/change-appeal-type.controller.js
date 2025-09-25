@@ -6,7 +6,7 @@ import { isFeatureActive } from '#utils/feature-flags.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { addDays } from '@pins/appeals/utils/business-days.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { changeAppealType } from './change-appeal-type.service.js';
+import { changeAppealType, resubmitAndMarkInvalid } from './change-appeal-type.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -43,6 +43,37 @@ export const requestChangeOfAppealType = async (req, res) => {
 
 	await changeAppealType(
 		appeal,
+		newAppealTypeId,
+		newAppealType || '',
+		newAppealTypeFinalDate,
+		notifyClient,
+		siteAddress,
+		req.get('azureAdUserId') || ''
+	);
+
+	return res.send(true);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+export const requestResubmitAndMarkInvalid = async (req, res) => {
+	const appeal = req.appeal;
+	const { newAppealTypeId, newAppealTypeFinalDate, appellantCaseId } = req.body;
+	const newAppealType = (
+		req.appealTypes.find((appealType) => appealType.id === Number(newAppealTypeId))?.type || ''
+	).toLowerCase();
+
+	const notifyClient = req.notifyClient;
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	await resubmitAndMarkInvalid(
+		appeal,
+		appellantCaseId,
 		newAppealTypeId,
 		newAppealType || '',
 		newAppealTypeFinalDate,

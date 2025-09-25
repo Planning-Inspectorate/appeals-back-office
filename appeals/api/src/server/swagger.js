@@ -150,6 +150,11 @@ export const spec = {
 			newAppealTypeId: 32,
 			newAppealTypeFinalDate: '2024-02-02'
 		},
+		AppealTypeResubmitMarkInvalidRequest: {
+			newAppealTypeId: 32,
+			newAppealTypeFinalDate: '2024-02-02',
+			appellantCaseId: 12
+		},
 		AppealTypeTransferRequest: {
 			newAppealTypeId: 32
 		},
@@ -538,7 +543,9 @@ export const spec = {
 			inspector: 'f7ea429b-65d8-4c44-8fc2-7f1a34069855'
 		},
 		StartCaseRequest: {
-			startDate: '2024-05-09'
+			startDate: '2024-05-09',
+			procedureType: 'written',
+			hearingStartTime: '2024-05-09T12:00:00.000Z'
 		},
 		StartCaseResponse: {
 			finalCommentReviewDate: '2024-08-09',
@@ -993,6 +1000,9 @@ export const spec = {
 
 		UpdateAsssignedTeamResponse: {
 			teamId: 1
+		},
+		TeamEmailResponse: {
+			teamEmail: 'email@email.com'
 		}
 	},
 	'@definitions': {

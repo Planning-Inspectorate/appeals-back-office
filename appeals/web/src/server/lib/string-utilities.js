@@ -1,4 +1,4 @@
-import escape from 'escape-html';
+import { escape } from 'lodash-es';
 
 /**
  * @param {string} str

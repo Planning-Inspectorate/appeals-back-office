@@ -11,6 +11,7 @@ import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import config from '@pins/appeals.web/environment/config.js';
+import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import { correctionNoticePage } from './update-decision-letter.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
@@ -75,13 +76,14 @@ export const renderUpdateDocumentCheckDetails = async (request, response) => {
 
 	const documentVersion = fileInfo.latestDocumentVersion.version + 1;
 	const documentName = fileInfo.name;
-
+	const { email: assignedTeamEmail } = await getTeamFromAppealId(request.apiClient, appealId);
 	const personalisation = {
 		appeal_reference_number: appealReference,
 		site_address: appealSiteToAddressString(appealSite),
 		lpa_reference: planningApplicationReference,
 		correction_notice_reason: correctionNotice,
-		decision_date: dateISOStringToDisplayDate(file.receivedDate)
+		decision_date: dateISOStringToDisplayDate(file.receivedDate),
+		team_email_address: assignedTeamEmail
 	};
 	const templateName = 'correction-notice-decision.content.md';
 	const template = await generateNotifyPreview(request.apiClient, templateName, personalisation);

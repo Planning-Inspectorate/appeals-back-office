@@ -1402,6 +1402,24 @@ test('gets appeals when given a assignedTeamId param', async () => {
 		statusesInNationalList
 	});
 });
+test('gets unassigned teams when assignedTeamId param is -1', async () => {
+	databaseConnector.appeal.findMany
+		.mockResolvedValueOnce([householdAppeal])
+		.mockResolvedValueOnce(allAppeals);
+
+	const response = await request
+		.get('/appeals?assignedTeamId=-1')
+		.set('azureAdUserId', azureAdUserId);
+
+	expect(databaseConnector.appeal.findMany).toHaveBeenCalledWith(
+		expect.objectContaining({
+			where: expect.objectContaining({
+				assignedTeamId: null
+			})
+		})
+	);
+	expect(response.status).toEqual(200);
+});
 describe('mapAppealToDueDate Tests', () => {
 	let mockAppeal = {
 		appealType: null,
@@ -1806,7 +1824,13 @@ describe('updateCompletedEvents', () => {
 	test('updates completed events', async () => {
 		const siteVisit = structuredClone({ ...householdAppeal.siteVisit, appealId: appealS78.id });
 		const appealStatus = [{ status: 'awaiting_event', valid: true }];
-		const childAppeals = [{ childId: 100, type: CASE_RELATIONSHIP_LINKED }];
+		const childAppeals = [
+			{
+				childId: 100,
+				type: CASE_RELATIONSHIP_LINKED,
+				child: { appealStatus }
+			}
+		];
 		const linkedLeadAppeal = structuredClone({
 			...appealS78,
 			siteVisit,
@@ -1832,7 +1856,7 @@ describe('updateCompletedEvents', () => {
 
 		expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 			data: {
-				appealId: linkedLeadAppeal.id,
+				appealId: childAppeals[0].childId,
 				details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['issue_determination']),
 				loggedAt: expect.any(Date),
 				userId: linkedLeadAppeal.caseOfficer.id
@@ -1841,7 +1865,7 @@ describe('updateCompletedEvents', () => {
 
 		expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 			data: {
-				appealId: childAppeals[0].childId,
+				appealId: linkedLeadAppeal.id,
 				details: stringTokenReplacement(AUDIT_TRAIL_PROGRESSED_TO_STATUS, ['issue_determination']),
 				loggedAt: expect.any(Date),
 				userId: linkedLeadAppeal.caseOfficer.id

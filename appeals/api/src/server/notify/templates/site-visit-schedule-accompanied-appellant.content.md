@@ -15,4 +15,4 @@ You will accompany the inspector throughout the visit.
 If you need to contact us, include our appeal reference number in any communication.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

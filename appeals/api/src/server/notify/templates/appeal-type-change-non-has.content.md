@@ -11,4 +11,4 @@ You need to submit a new {{appeal_type}} by {{due_date}} at {{front_office_url}}
 We have closed your {{existing_appeal_type}}.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

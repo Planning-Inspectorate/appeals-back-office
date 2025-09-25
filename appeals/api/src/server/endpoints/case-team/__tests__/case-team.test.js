@@ -5,8 +5,8 @@ import { mocks } from '#tests/appeals/index.js';
 import { caseTeams } from '#tests/appeals/mocks.js';
 import { azureAdUserId } from '#tests/shared/mocks.js';
 import { jest } from '@jest/globals';
+import { getTeamEmailFromAppealId } from '../case-team.service.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
-
 const householdAppeal = mocks.householdAppeal;
 const teeamIdNumericErrorMessage = 'teamId must be a number equal to or greater than 0';
 const teamIdRequiredErrorMessage = 'teamId is required';
@@ -186,5 +186,44 @@ describe('case team routes', () => {
 				expect(response.body).toEqual({ assignedTeamId: 1 });
 			});
 		});
+	});
+});
+
+describe('getTeamEmailFromAppealId', () => {
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
+	afterEach(() => {
+		jest.clearAllMocks();
+	});
+
+	it('throws an error when the appeal is not found', async () => {
+		databaseConnector.appeal.findUnique.mockResolvedValue(null);
+
+		const result = await getTeamEmailFromAppealId(1);
+		expect(result).toBe('caseofficers@planninginspectorate.gov.uk');
+	});
+	it('returns default email when the appeal has no assigned team', async () => {
+		const appeal = { id: 1, assignedTeamId: null };
+		databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+
+		const result = await getTeamEmailFromAppealId(1);
+		expect(result).toBe('caseofficers@planninginspectorate.gov.uk');
+	});
+	it('returns default email when the team is not found', async () => {
+		const appeal = { id: 1, assignedTeamId: '1' };
+		databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+		databaseConnector.team.findUnique.mockResolvedValue(null);
+
+		const result = await getTeamEmailFromAppealId(1);
+		expect(result).toBe('caseofficers@planninginspectorate.gov.uk');
+	});
+	it('returns team email when team exists', async () => {
+		const appeal = { id: 1, assignedTeamId: '1' };
+		databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+		databaseConnector.team.findUnique.mockResolvedValue({ id: 1, email: 'testemail@email.com' });
+
+		const result = await getTeamEmailFromAppealId(1);
+		expect(result).toBe('testemail@email.com');
 	});
 });

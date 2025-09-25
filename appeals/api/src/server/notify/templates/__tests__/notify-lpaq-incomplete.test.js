@@ -18,7 +18,8 @@ describe('lpaq-incomplete.md', () => {
 				reasons: [
 					'Documents or information are missing: Policy is missing',
 					'Other: Addresses are incorrect or missing'
-				]
+				],
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

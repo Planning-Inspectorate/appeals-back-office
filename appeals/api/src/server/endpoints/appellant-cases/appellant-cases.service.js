@@ -11,6 +11,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
@@ -69,6 +70,7 @@ export const updateAppellantCaseValidationOutcome = async (
 ) => {
 	const { id: appealId } = appeal;
 	const { appealDueDate, incompleteReasons, invalidReasons } = data;
+	const teamEmail = await getTeamEmailFromAppealId(appealId);
 
 	await appellantCaseRepository.updateAppellantCaseValidationOutcome({
 		appealId,
@@ -119,7 +121,8 @@ export const updateAppellantCaseValidationOutcome = async (
 			feedback_link:
 				appeal.appealType.type === APPEAL_TYPE.S78
 					? 'https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=mN94WIhvq0iTIpmM5VcIjYt1ax_BPvtOqhVjfvzyJN5UQzg1SlNPQjA3V0FDNUFJTldHMlEzMDdMRS4u'
-					: 'https://forms.office.com/r/9U4Sq9rEff'
+					: 'https://forms.office.com/r/9U4Sq9rEff',
+			team_email_address: teamEmail
 		};
 		await notifySend({
 			azureAdUserId,
@@ -161,7 +164,8 @@ export const updateAppellantCaseValidationOutcome = async (
 					lpa_reference: appeal.applicationReference,
 					site_address: siteAddress,
 					due_date: formatDate(new Date(updatedDueDate), false),
-					reasons: incompleteReasonsList
+					reasons: incompleteReasonsList,
+					team_email_address: teamEmail
 				};
 
 				await notifySend({
@@ -187,7 +191,8 @@ export const updateAppellantCaseValidationOutcome = async (
 				appeal_reference_number: appeal.reference,
 				lpa_reference: appeal.applicationReference,
 				site_address: siteAddress,
-				reasons: invalidReasonsList
+				reasons: invalidReasonsList,
+				team_email_address: teamEmail
 			};
 			await notifySend({
 				azureAdUserId,

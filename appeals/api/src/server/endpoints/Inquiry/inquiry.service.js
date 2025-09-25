@@ -1,4 +1,5 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import inquiryRepository from '#repositories/inquiry.repository.js';
@@ -49,7 +50,8 @@ const sendInquiryDetailsNotifications = async (
 		inquiry_time: formatTime12h(
 			typeof inquiryStartTime === 'string' ? new Date(inquiryStartTime) : inquiryStartTime
 		),
-		inquiry_address: formatAddressSingleLine({ ...address, id: 0 })
+		inquiry_address: formatAddressSingleLine({ ...address, id: 0 }),
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
 	};
 	await sendInquiryNotifications(notifyClient, templateName, appeal, personalisation);
 };

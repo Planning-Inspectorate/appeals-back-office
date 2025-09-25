@@ -15,7 +15,8 @@ describe('site-visit-change-accompanied-date-change-appellant.md', () => {
 				site_address: '12, New Site Lane',
 				lpa_reference: 'REF-32100',
 				visit_date: '30 August 2025',
-				start_time: '9:00am'
+				start_time: '9:00am',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

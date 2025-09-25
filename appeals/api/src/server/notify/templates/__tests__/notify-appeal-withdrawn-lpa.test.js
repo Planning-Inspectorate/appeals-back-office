@@ -15,7 +15,8 @@ test('should call notify sendEmail for appeal-withdrawn-lpa with the correct dat
 			site_address: '98 The Avenue, Leftfield, Maidstone, Kent, MD21 5YY, United Kingdom',
 			withdrawal_date: '03 January 2025',
 			event_set: true,
-			event_type: 'site visit'
+			event_type: 'site visit',
+			team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 		},
 		appeal: {
 			id: 'mock-appeal-generic-id',
@@ -73,7 +74,8 @@ test('should call notify sendEmail for appeal-withdrawn-lpa without site visit c
 			site_address: '98 The Avenue, Leftfield, Maidstone, Kent, MD21 5YY, United Kingdom',
 			withdrawal_date: '03 January 2025',
 			event_set: false,
-			event_type: ''
+			event_type: '',
+			team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 		},
 		appeal: {
 			id: 'mock-appeal-generic-id',
@@ -131,7 +133,8 @@ test('should call notify sendEmail for appeal-withdrawn-lpa with the correct dat
 			site_address: '98 The Avenue, Leftfield, Maidstone, Kent, MD21 5YY, United Kingdom',
 			withdrawal_date: '03 January 2025',
 			event_set: true,
-			event_type: 'hearing'
+			event_type: 'hearing',
+			team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 		},
 		appeal: {
 			id: 'mock-appeal-generic-id',

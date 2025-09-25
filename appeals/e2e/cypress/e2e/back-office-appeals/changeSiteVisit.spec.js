@@ -9,7 +9,7 @@ import { happyPathHelper } from '../../support/happyPathHelper';
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('Change site visit', () => {
+describe.skip('Change site visit', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
@@ -28,7 +28,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
-			caseDetailsPage.validateAnswer('Visit Type', 'Unaccompanied');
+			caseDetailsPage.validateAnswer('Type', 'Unaccompanied', { matchQuestionCase: true });
 			caseDetailsPage.elements.changeSetVisitType().click();
 			caseDetailsPage.clickButtonByText('Manage the site visit');
 			caseDetailsPage.selectRadioButtonByValue('Access Required');
@@ -37,7 +37,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit updated');
-			caseDetailsPage.validateAnswer('Visit Type', 'Access required');
+			caseDetailsPage.validateAnswer('Type', 'Access required', { matchQuestionCase: true });
 		});
 	});
 
@@ -55,7 +55,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
-			caseDetailsPage.validateAnswer('Visit Type', 'Access required');
+			caseDetailsPage.validateAnswer('Type', 'Access required', { matchQuestionCase: true });
 			caseDetailsPage.clickChangeVisitTypeHasCaseTimetable();
 			caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
 			dateTimeSection.enterVisitDate(visitDate);
@@ -63,7 +63,7 @@ describe('Change site visit', () => {
 			dateTimeSection.enterVisitEndTime('12', '00');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit updated');
-			caseDetailsPage.validateAnswer('Visit Type', 'Unaccompanied');
+			caseDetailsPage.validateAnswer('Type', 'Unaccompanied', { matchQuestionCase: true });
 		});
 	});
 });

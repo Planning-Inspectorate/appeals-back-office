@@ -18,13 +18,15 @@ describe('appeal-valid-start-case-lpa.md', () => {
 				local_planning_authority: 'Bristol City Council',
 				appeal_type: 'Householder',
 				procedure_type: 'a written procedure',
-				questionnaire_due_date: '01 January 2025'
+				questionnaire_due_date: '01 January 2025',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
 				reference: '134526'
 			},
-			startDate: new Date('2025-01-01')
+			startDate: new Date('2025-01-01'),
+			team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 		};
 
 		const expectedContent = [

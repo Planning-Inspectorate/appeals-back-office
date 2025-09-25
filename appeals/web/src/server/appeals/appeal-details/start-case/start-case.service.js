@@ -20,14 +20,22 @@
  * @param {string} appealId
  * @param {string} dateISOString
  * @param {string} [procedureType]
+ * @param {string} [hearingStartTime]
  * @returns {Promise<Appeal>}
  */
-export async function setStartDate(apiClient, appealId, dateISOString, procedureType) {
+export async function setStartDate(
+	apiClient,
+	appealId,
+	dateISOString,
+	procedureType,
+	hearingStartTime
+) {
 	return await apiClient
 		.post(`appeals/${appealId}/appeal-timetables`, {
 			json: {
 				startDate: dateISOString,
-				...(procedureType && { procedureType })
+				...(procedureType && { procedureType }),
+				...(hearingStartTime && { hearingStartTime })
 			}
 		})
 		.json();

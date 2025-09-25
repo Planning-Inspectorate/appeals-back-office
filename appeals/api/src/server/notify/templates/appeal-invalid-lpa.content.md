@@ -17,4 +17,4 @@ This is a new service. Help us improve it and [give your feedback](https://forms
 
 The Planning Inspectorate
 
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

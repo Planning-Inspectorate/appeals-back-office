@@ -16,7 +16,8 @@ describe('site-visit-change-accompanied-to-access-required-appellant.md', () => 
 				lpa_reference: 'APP-20256',
 				visit_date: '10 September 2025',
 				start_time: '8:00am',
-				end_time: '12:00pm'
+				end_time: '12:00pm',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

@@ -15,7 +15,8 @@ describe('site-visit-change-access-required-to-accompanied-appellant.md', () => 
 				site_address: '55, Sample Road',
 				lpa_reference: 'APP-45678',
 				visit_date: '19 June 2025',
-				start_time: '2:00pm'
+				start_time: '2:00pm',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

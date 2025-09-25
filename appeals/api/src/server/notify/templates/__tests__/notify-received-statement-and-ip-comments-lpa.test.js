@@ -25,7 +25,8 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 			recipientEmail,
 			personalisation: {
 				...basePersonalisation,
-				has_ip_comments: true
+				has_ip_comments: true,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 
@@ -62,7 +63,8 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 			recipientEmail,
 			personalisation: {
 				...basePersonalisation,
-				has_ip_comments: false
+				has_ip_comments: false,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 
@@ -100,7 +102,8 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 				...basePersonalisation,
 				has_ip_comments: true,
 				what_happens_next:
-					'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.'
+					'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 
@@ -143,7 +146,8 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 				...basePersonalisation,
 				has_ip_comments: false,
 				what_happens_next:
-					'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.'
+					'You need to [submit your final comments](/mock-front-office-url/manage-appeals/ABC45678) by 01 January 2021.',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 
@@ -183,7 +187,8 @@ describe('received-statement-and-ip-comments-lpa.md', () => {
 			recipientEmail,
 			personalisation: {
 				...basePersonalisation,
-				is_hearing_procedure: true
+				is_hearing_procedure: true,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

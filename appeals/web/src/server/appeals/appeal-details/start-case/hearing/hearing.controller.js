@@ -1,13 +1,15 @@
 import { appealProcedureToLabelText } from '#appeals/appeal-details/change-appeal-procedure-type/check-and-confirm/check-and-confirm.mapper.js';
 import { sessionValuesToDateTime } from '#appeals/appeal-details/hearing/setup/set-up-hearing.controller.js';
 import { hearingDatePage } from '#appeals/appeal-details/hearing/setup/set-up-hearing.mapper.js';
+import { getTeamFromAppealId } from '#appeals/appeal-details/update-case-team/update-case-team.service.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	dateISOStringToDisplayDate,
 	dateISOStringToDisplayTime12hr,
-	dayMonthYearHourMinuteToISOString
+	dayMonthYearHourMinuteToISOString,
+	getTodaysISOString
 } from '#lib/dates.js';
 import {
 	applyEdits,
@@ -19,8 +21,9 @@ import logger from '#lib/logger.js';
 import { renderCheckYourAnswersComponent } from '#lib/mappers/components/page-components/check-your-answers.js';
 import { detailsComponent } from '#lib/mappers/components/page-components/details.js';
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
+import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
-import { calculateAppealTimetable } from '../start-case.service.js';
+import { calculateAppealTimetable, setStartDate } from '../start-case.service.js';
 import { dateKnownPage } from './hearing.mapper.js';
 
 /** @typedef {import('@pins/express').ValidationErrors} ValidationErrors */
@@ -149,11 +152,13 @@ export const postHearingDate = async (request, response) => {
  * Generate Notify preview templates for appellant and LPA
  * @param {import('got').Got} apiClient
  * @param {object} personalisation
+ * @param {boolean} dateKnown
  * @returns {Promise<{appellantTemplate: {renderedHtml: string}, lpaTemplate: {renderedHtml: string}}>}
  */
-const generateStartCaseNotifyPreviews = async (apiClient, personalisation) => {
-	const appellantTemplateName = 'appeal-valid-start-case-appellant.content.md';
-	const lpaTemplateName = 'appeal-valid-start-case-lpa.content.md';
+const generateStartCaseNotifyPreviews = async (apiClient, personalisation, dateKnown) => {
+	const suffix = dateKnown ? '-hearing' : '';
+	const appellantTemplateName = `appeal-valid-start-case-s78-appellant${suffix}.content.md`;
+	const lpaTemplateName = `appeal-valid-start-case-s78-lpa${suffix}.content.md`;
 
 	const [appellantTemplate, lpaTemplate] = await Promise.all([
 		generateNotifyPreview(apiClient, appellantTemplateName, personalisation),
@@ -161,6 +166,19 @@ const generateStartCaseNotifyPreviews = async (apiClient, personalisation) => {
 	]);
 	return { appellantTemplate, lpaTemplate };
 };
+
+/**
+ * @param {Record<string, string>} sessionValues
+ * @returns {string}
+ */
+const hearingStartTimeFromSession = (sessionValues) =>
+	dayMonthYearHourMinuteToISOString({
+		day: sessionValues['hearing-date-day'],
+		month: sessionValues['hearing-date-month'],
+		year: sessionValues['hearing-date-year'],
+		hour: sessionValues['hearing-time-hour'],
+		minute: sessionValues['hearing-time-minute']
+	});
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
@@ -173,20 +191,18 @@ export const getHearingConfirm = async (request, response) => {
 		'startCaseAppealProcedure',
 		currentAppeal.appealId
 	);
+	const dateKnown = sessionValues?.dateKnown === 'yes';
 	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/start-case`;
-	const backLinkUrl =
-		sessionValues?.dateKnown === 'yes' ? `${baseUrl}/hearing/date` : `${baseUrl}/hearing`;
-	const hearingDateTime = dayMonthYearHourMinuteToISOString({
-		day: sessionValues['hearing-date-day'],
-		month: sessionValues['hearing-date-month'],
-		year: sessionValues['hearing-date-year'],
-		hour: sessionValues['hearing-time-hour'],
-		minute: sessionValues['hearing-time-minute']
-	});
+	const backLinkUrl = dateKnown ? `${baseUrl}/hearing/date` : `${baseUrl}/hearing`;
+	const hearingStartTime = hearingStartTimeFromSession(sessionValues);
 	const timetable = await calculateAppealTimetable(
 		request.apiClient,
 		currentAppeal.appealId,
 		sessionValues.appealProcedure
+	);
+	const { email: assignedTeamEmail } = await getTeamFromAppealId(
+		request.apiClient,
+		currentAppeal.appealId
 	);
 
 	const personalisation = {
@@ -197,15 +213,31 @@ export const getHearingConfirm = async (request, response) => {
 		local_planning_authority:
 			currentAppeal.localPlanningDepartment || 'the local planning authority',
 		start_date: dateISOStringToDisplayDate(timetable.startDate),
-		questionnaire_due_date: dateISOStringToDisplayDate(timetable.lpaQuestionnaireDueDate)
+		questionnaire_due_date: dateISOStringToDisplayDate(timetable.lpaQuestionnaireDueDate),
+		lpa_statement_deadline: dateISOStringToDisplayDate(timetable.lpaStatementDueDate),
+		ip_comments_deadline: dateISOStringToDisplayDate(timetable.ipCommentsDueDate),
+		statement_of_common_ground_due_date: dateISOStringToDisplayDate(
+			timetable.statementOfCommonGroundDueDate
+		),
+		hearing_date: dateISOStringToDisplayDate(hearingStartTime),
+		hearing_time: dateISOStringToDisplayTime12hr(hearingStartTime),
+		procedure_type: 'a hearing',
+		child_appeals: [],
+		team_email_address: assignedTeamEmail
 	};
 
+	const errorMessage = 'Failed to generate email preview';
+
 	/** @type {string} */
-	let appellantPreview = '';
+	let appellantPreview = errorMessage;
 	/** @type {string} */
-	let lpaPreview = '';
+	let lpaPreview = errorMessage;
 	try {
-		const result = await generateStartCaseNotifyPreviews(request.apiClient, personalisation);
+		const result = await generateStartCaseNotifyPreviews(
+			request.apiClient,
+			personalisation,
+			dateKnown
+		);
 		appellantPreview = result.appellantTemplate?.renderedHtml || '';
 		lpaPreview = result.lpaTemplate?.renderedHtml || '';
 	} catch (error) {
@@ -233,7 +265,7 @@ export const getHearingConfirm = async (request, response) => {
 					}
 				},
 				'Do you know the date and time of the hearing?': {
-					value: sessionValues.dateKnown === 'yes' ? 'Yes' : 'No',
+					value: dateKnown ? 'Yes' : 'No',
 					actions: {
 						Change: {
 							href: editLink(baseUrl, 'hearing'),
@@ -244,10 +276,10 @@ export const getHearingConfirm = async (request, response) => {
 						}
 					}
 				},
-				...(sessionValues.dateKnown === 'yes'
+				...(dateKnown
 					? {
 							'Hearing date': {
-								value: dateISOStringToDisplayDate(hearingDateTime),
+								value: dateISOStringToDisplayDate(hearingStartTime),
 								actions: {
 									Change: {
 										href: editLink(baseUrl, 'hearing/date'),
@@ -259,7 +291,7 @@ export const getHearingConfirm = async (request, response) => {
 								}
 							},
 							'Hearing time': {
-								value: dateISOStringToDisplayTime12hr(hearingDateTime),
+								value: dateISOStringToDisplayTime12hr(hearingStartTime),
 								actions: {
 									Change: {
 										href: editLink(baseUrl, 'hearing/date'),
@@ -301,5 +333,55 @@ export const getHearingConfirm = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const postHearingConfirm = async (request, response) => {
-	return response.redirect(`/appeals-service/appeal-details/${request.currentAppeal.appealId}`);
+	try {
+		const {
+			currentAppeal: { appealId }
+		} = request;
+
+		const sessionValues = getSessionValuesForAppeal(request, 'startCaseAppealProcedure', appealId);
+
+		if (!sessionValues?.appealProcedure) {
+			return response.status(500).render('app/500.njk');
+		}
+
+		const hearingStartTime =
+			sessionValues?.dateKnown === 'yes' ? hearingStartTimeFromSession(sessionValues) : undefined;
+
+		await setStartDate(
+			request.apiClient,
+			appealId,
+			getTodaysISOString(),
+			sessionValues?.appealProcedure,
+			hearingStartTime
+		);
+
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'caseStarted',
+			appealId
+		});
+		addNotificationBannerToSession({
+			session: request.session,
+			bannerDefinitionKey: 'timetableStarted',
+			appealId
+		});
+		if (hearingStartTime) {
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'hearingSetUp',
+				appealId
+			});
+		}
+
+		return response.redirect(`/appeals-service/appeal-details/${appealId}`);
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: 'Something went wrong when posting the check details and start case page'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
 };

@@ -804,6 +804,15 @@ export interface AppealTypeChangeRequest {
 	newAppealTypeFinalDate?: string;
 }
 
+export interface AppealTypeResubmitMarkInvalidRequest {
+	/** @example 32 */
+	newAppealTypeId?: number;
+	/** @example "2024-02-02" */
+	newAppealTypeFinalDate?: string;
+	/** @example 12 */
+	appellantCaseId?: number;
+}
+
 export interface AppealTypeTransferRequest {
 	/** @example 32 */
 	newAppealTypeId?: number;
@@ -1405,6 +1414,10 @@ export interface UpdateCaseTeamResponse {
 export interface StartCaseRequest {
 	/** @example "2024-05-09" */
 	startDate?: string;
+	/** @example "written" */
+	procedureType?: string;
+	/** @example "2024-05-09T12:00:00.000Z" */
+	hearingStartTime?: string;
 }
 
 export interface StartCaseResponse {
@@ -2396,6 +2409,11 @@ export interface LPAChangeRequest {
 export interface UpdateAsssignedTeamResponse {
 	/** @example 1 */
 	teamId?: number;
+}
+
+export interface TeamEmailResponse {
+	/** @example "email@email.com" */
+	teamEmail?: string;
 }
 
 export interface SingleLinkableAppealSummaryResponse {

@@ -17,7 +17,8 @@ describe('correction-notice-decision.md', () => {
 				start_date: '01 January 2025',
 				existing_appeal_type: 'Householder',
 				correction_notice_reason: 'There has been a mistake - but we fixed it thanks',
-				decision_date: '01 January 2025'
+				decision_date: '01 January 2025',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',

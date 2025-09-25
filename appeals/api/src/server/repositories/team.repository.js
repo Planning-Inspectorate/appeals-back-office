@@ -65,3 +65,20 @@ export const getCaseTeams = () => {
 		}
 	});
 };
+
+/**
+ *
+ * @param {number} appealId
+ * @returns
+ */
+export const getTeamFromAppeal = async (appealId) => {
+	const appeal = await databaseConnector.appeal.findUnique({
+		where: { id: appealId },
+		select: { assignedTeamId: true }
+	});
+
+	if (!appeal || !appeal.assignedTeamId) {
+		return null;
+	}
+	return getAssignedTeam(appeal.assignedTeamId);
+};

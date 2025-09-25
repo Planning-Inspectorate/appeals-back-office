@@ -16,6 +16,7 @@ const changeAppealFinalDatePath = '/change-appeal-final-date';
 const addHorizonReferencePath = '/add-horizon-reference';
 const checkTransferPath = '/check-transfer';
 const markAppealInvalidPath = '/mark-appeal-invalid';
+const checkChangeAppealFinalDatePath = '/check-change-appeal-final-date';
 
 /** @typedef {import('../../../../app/auth/auth-session.service').SessionWithAuth} SessionWithAuth */
 
@@ -618,6 +619,58 @@ describe('change-appeal-type', () => {
 				.send({
 					confirm: 'yes'
 				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+	});
+
+	describe('GET /change-appeal-type/check-change-appeal-final-date', () => {
+		beforeEach(async () => {
+			// Ensure changeAppealType is set in session
+			await request.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`).send({
+				appealType: 1
+			});
+		});
+
+		it('should render the check change appeal final date page', async () => {
+			const response = await request.get(
+				`${baseUrl}/1${changeAppealTypePath}${checkChangeAppealFinalDatePath}`
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Check details and update timetable due dates</h1>');
+
+			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
+
+			expect(unprettifiedElement.innerHTML).toContain(
+				'<dt class="govuk-summary-list__key"> Deadline to resubmit appeal</dt>'
+			);
+
+			expect(unprettifiedElement.innerHTML).toContain('Mark appeal as invalid</button>');
+		});
+	});
+
+	describe('POST /change-appeal-type/check-change-appeal-final-date', () => {
+		beforeEach(async () => {
+			// Ensure changeAppealType is set in session
+			await request.post(`${baseUrl}/1${changeAppealTypePath}/${appealTypePath}`).send({
+				appealType: 1
+			});
+		});
+
+		it('should redirect to the case details page', async () => {
+			nock('http://test/')
+				.post('/appeals/1/appeal-resubmit-mark-invalid')
+				.reply(200, { success: true });
+
+			const response = await request
+				.post(`${baseUrl}/1${changeAppealTypePath}/${checkChangeAppealFinalDatePath}`)
+				.send();
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');

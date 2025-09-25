@@ -9,6 +9,7 @@ import {
 	scheduleOrManageSiteVisitPage,
 	setPreviousVisitTypeIfChanged,
 	siteVisitBookedPage,
+	siteVisitMissedPage,
 	stringIsSiteVisitConfirmationPageType
 } from './site-visit.mapper.js';
 import * as siteVisitService from './site-visit.service.js';
@@ -122,6 +123,35 @@ export const renderSiteVisitBooked = async (request, response) => {
 
 			return response.status(200).render('patterns/display-page.pattern.njk', {
 				pageContent
+			});
+		}
+	}
+
+	return response.status(404).render('app/404.njk');
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderSiteVisitMissed = async (request, response) => {
+	const appealDetails = request.currentAppeal;
+	const { errors } = request;
+
+	if (appealDetails) {
+		const siteVisitIdAsNumber = appealDetails.siteVisit?.siteVisitId;
+
+		if (typeof siteVisitIdAsNumber === 'number' && !Number.isNaN(siteVisitIdAsNumber)) {
+			const pageContent = siteVisitMissedPage(
+				request.params.appealId,
+				appealDetails.appealReference,
+				errors ? errors['whoMissedSiteVisitRadio'].msg : undefined
+			);
+
+			return response.status(200).render('patterns/display-page.pattern.njk', {
+				pageContent,
+				errors
 			});
 		}
 	}
@@ -264,6 +294,22 @@ export const postScheduleOrManageSiteVisit = async (request, response, pageType)
 	}
 };
 
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postSiteVisitMissed = async (request, response) => {
+	if (request.errors) {
+		return renderSiteVisitMissed(request, response);
+	}
+
+	request.session.whoMissedSiteVisit = request.body['whoMissedSiteVisitRadio'];
+
+	return response.redirect(
+		`/appeals-service/appeal-details/${request.currentAppeal.appealId}/site-visit/missed/check`
+	);
+};
+
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getSiteVisitScheduled = async (request, response) => {
 	renderScheduleOrManageSiteVisitConfirmation(request, response);
@@ -272,4 +318,9 @@ export const getSiteVisitScheduled = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getSiteVisitBooked = async (request, response) => {
 	renderSiteVisitBooked(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getSiteVisitMissed = async (request, response) => {
+	renderSiteVisitMissed(request, response);
 };

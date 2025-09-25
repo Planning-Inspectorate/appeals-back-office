@@ -43,7 +43,8 @@ const startAppeal = async (req, res) => {
 							startDate,
 							notifyClient,
 							req.get('azureAdUserId') || '',
-							body.procedureType || appeal.procedureType?.key
+							body.procedureType || appeal.procedureType?.key,
+							body.hearingStartTime
 						)
 					)
 				);
@@ -69,7 +70,8 @@ const startAppeal = async (req, res) => {
 				startDate,
 				notifyClient,
 				req.get('azureAdUserId') || '',
-				body.procedureType || appeal.procedureType?.key
+				body.procedureType || appeal.procedureType?.key,
+				body.hearingStartTime
 			);
 
 			if (result.success) {
@@ -91,7 +93,18 @@ const updateAppealTimetableById = async (req, res) => {
 	const { body, appeal, notifyClient } = req;
 
 	try {
-		await updateAppealTimetable(appeal, body, notifyClient, req.get('azureAdUserId') || '');
+		const azureAdUserId = req.get('azureAdUserId') || '';
+		await updateAppealTimetable(appeal, body, notifyClient, azureAdUserId);
+
+		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && appeal.childAppeals?.length) {
+			await Promise.all(
+				appeal.childAppeals.map(async (childAppeal) => {
+					if (childAppeal.child) {
+						return updateAppealTimetable(childAppeal.child, body, notifyClient, azureAdUserId);
+					}
+				})
+			);
+		}
 
 		const updatedTimetable = {
 			lpaQuestionnaireDueDate: body.lpaQuestionnaireDueDate,

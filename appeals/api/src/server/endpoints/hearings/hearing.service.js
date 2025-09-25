@@ -1,4 +1,5 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import hearingRepository from '#repositories/hearing.repository.js';
@@ -65,7 +66,8 @@ const sendHearingDetailsNotifications = async (
 		hearing_time: formatTime12h(
 			typeof hearingStartTime === 'string' ? new Date(hearingStartTime) : hearingStartTime
 		),
-		hearing_address: address ? formatAddressSingleLine({ ...address, id: 0 }) : ''
+		hearing_address: address ? formatAddressSingleLine({ ...address, id: 0 }) : '',
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
 	};
 	await sendHearingNotifications(
 		notifyClient,
@@ -106,7 +108,8 @@ const sendHearingNotifications = async (
 				appeal_reference_number: appeal.reference,
 				site_address: appeal.address ? formatAddressSingleLine(appeal.address) : '',
 				lpa_reference: appeal.applicationReference ?? '',
-				...personalisation
+				...personalisation,
+				team_email_address: await getTeamEmailFromAppealId(appeal.id)
 			},
 			recipientEmail: email
 		});

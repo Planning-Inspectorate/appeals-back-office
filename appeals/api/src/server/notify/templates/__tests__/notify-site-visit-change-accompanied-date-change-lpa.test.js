@@ -15,7 +15,8 @@ describe('site-visit-change-accompanied-date-change-lpa.md', () => {
 				site_address: '44, Reschedule Road',
 				lpa_reference: 'LPA-00987',
 				visit_date: '5 September 2025',
-				start_time: '3:15pm'
+				start_time: '3:15pm',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

@@ -1,7 +1,10 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { appealDetailService } from '#endpoints/appeal-details/appeal-details.service.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
-import { setAssignedTeamId } from '#endpoints/case-team/case-team.service.js';
+import {
+	getTeamEmailFromAppealId,
+	setAssignedTeamId
+} from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
@@ -101,7 +104,8 @@ export const linkAppeal = async (req, res) => {
 		lpa_reference: currentAppeal.applicationReference || '',
 		site_address: siteAddress,
 		event_type: 'site visit',
-		linked_before_lpa_questionnaire: linkedBeforeLPAQ
+		linked_before_lpa_questionnaire: linkedBeforeLPAQ,
+		team_email_address: await getTeamEmailFromAppealId(currentAppeal.id)
 	};
 
 	const appellantEmail = currentAppeal.agent?.email || currentAppeal.appellant?.email;

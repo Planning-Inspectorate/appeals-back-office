@@ -58,4 +58,16 @@ router
 
 router.route('/visit-booked').get(asyncHandler(controller.getSiteVisitBooked));
 
+router
+	.route('/missed')
+	.get(
+		assertUserHasPermission(permissionNames.setEvents),
+		asyncHandler(controller.getSiteVisitMissed)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.setEvents),
+		validators.validateWhoMissedSiteVisit,
+		asyncHandler(controller.postSiteVisitMissed)
+	);
+
 export default router;

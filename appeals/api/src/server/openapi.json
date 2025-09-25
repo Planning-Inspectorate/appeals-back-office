@@ -770,6 +770,51 @@
 				}
 			}
 		},
+		"/appeals/{appealId}/case-team-email": {
+			"get": {
+				"tags": ["Case Team"],
+				"description": "Gets the case team from an appeal id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Assigned case team for the appeal",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TeamEmailResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/TeamEmailResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				}
+			}
+		},
 		"/appeals/{appealId}/case-team": {
 			"patch": {
 				"tags": ["Case Team"],
@@ -3418,6 +3463,53 @@
 						"application/xml": {
 							"schema": {
 								"$ref": "#/components/schemas/AppealTypeChangeRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/appeal-resubmit-mark-invalid": {
+			"post": {
+				"tags": ["Appeal Type Change Request"],
+				"description": "Records a request to mark an appeal as invalid when due to be resubmitted",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal type change request",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/AppealTypeResubmitMarkInvalidRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/AppealTypeResubmitMarkInvalidRequest"
 							}
 						}
 					}
@@ -8005,6 +8097,26 @@
 					"name": "AppealTypeChangeRequest"
 				}
 			},
+			"AppealTypeResubmitMarkInvalidRequest": {
+				"type": "object",
+				"properties": {
+					"newAppealTypeId": {
+						"type": "number",
+						"example": 32
+					},
+					"newAppealTypeFinalDate": {
+						"type": "string",
+						"example": "2024-02-02"
+					},
+					"appellantCaseId": {
+						"type": "number",
+						"example": 12
+					}
+				},
+				"xml": {
+					"name": "AppealTypeResubmitMarkInvalidRequest"
+				}
+			},
 			"AppealTypeTransferRequest": {
 				"type": "object",
 				"properties": {
@@ -9337,6 +9449,14 @@
 					"startDate": {
 						"type": "string",
 						"example": "2024-05-09"
+					},
+					"procedureType": {
+						"type": "string",
+						"example": "written"
+					},
+					"hearingStartTime": {
+						"type": "string",
+						"example": "2024-05-09T12:00:00.000Z"
 					}
 				},
 				"xml": {
@@ -11660,6 +11780,18 @@
 				},
 				"xml": {
 					"name": "UpdateAsssignedTeamResponse"
+				}
+			},
+			"TeamEmailResponse": {
+				"type": "object",
+				"properties": {
+					"teamEmail": {
+						"type": "string",
+						"example": "email@email.com"
+					}
+				},
+				"xml": {
+					"name": "TeamEmailResponse"
 				}
 			},
 			"SingleLinkableAppealSummaryResponse": {

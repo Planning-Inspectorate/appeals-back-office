@@ -17,7 +17,8 @@ describe('appeal-start-date-change-appellant.md', () => {
 				start_date: '01 January 2025',
 				local_planning_authority: 'Bristol City Council',
 				site_visit: true,
-				costs_info: true
+				costs_info: true,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',
@@ -70,7 +71,8 @@ describe('appeal-start-date-change-appellant.md', () => {
 				start_date: '01 January 2025',
 				local_planning_authority: 'Bristol City Council',
 				site_visit: false,
-				costs_info: false
+				costs_info: false,
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			},
 			appeal: {
 				id: 'mock-appeal-generic-id',

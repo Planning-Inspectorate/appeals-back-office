@@ -266,11 +266,81 @@ describe('appeal change type resubmit routes', () => {
 					lpa_reference: appeal.applicationReference,
 					appeal_type: appealTypes[newType - 1].type.toLowerCase(),
 					site_address: `${appeal.address.addressLine1}, ${appeal.address.addressLine2}, ${appeal.address.addressTown}, ${appeal.address.addressCounty}, ${appeal.address.postcode}, ${appeal.address.addressCountry}`,
-					due_date: formatDate(new Date('3000-02-05'), false)
+					due_date: formatDate(new Date('3000-02-05'), false),
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				},
 				recipientEmail: 'test@136s7.com',
 				templateName: 'appeal-type-change-non-has'
 			});
+
+			expect(response.status).toEqual(200);
+		});
+	});
+});
+
+describe('appeal resubmit mark invalid type routes', () => {
+	describe('POST', () => {
+		test('returns 200 when an appeal requiring resubmission is marked as invalid', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/appeal-resubmit-mark-invalid`)
+				.send({
+					newAppealTypeId: 13,
+					newAppealTypeFinalDate: '3000-02-05T00:00:00.000Z',
+					appellantCaseId: 1
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(databaseConnector.appeal.update).toHaveBeenCalledWith({
+				data: {
+					caseResubmittedTypeId: 13,
+					caseUpdatedDate: expect.any(Date)
+				},
+				where: {
+					id: householdAppeal.id
+				}
+			});
+
+			expect(databaseConnector.appealTimetable.upsert).toHaveBeenCalledWith({
+				create: {
+					appealId: householdAppeal.id,
+					caseResubmissionDueDate: new Date('3000-02-05T23:59:00.000Z')
+				},
+				update: {
+					caseResubmissionDueDate: new Date('3000-02-05T23:59:00.000Z')
+				},
+				where: {
+					appealId: householdAppeal.id
+				},
+				include: {
+					appeal: true
+				}
+			});
+
+			expect(databaseConnector.appellantCase.update).toHaveBeenCalledWith({
+				where: { id: 1 },
+				data: {
+					appellantCaseValidationOutcomeId: 2
+				}
+			});
+
+			expect(databaseConnector.appellantCaseInvalidReasonText.deleteMany).toHaveBeenCalled();
+
+			expect(databaseConnector.appellantCaseInvalidReasonText.createMany).toHaveBeenCalledWith({
+				data: [
+					{
+						appellantCaseId: 1,
+						appellantCaseInvalidReasonId: 4,
+						text: 'Wrong appeal type, resubmission required'
+					}
+				]
+			});
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(1);
 
 			expect(response.status).toEqual(200);
 		});

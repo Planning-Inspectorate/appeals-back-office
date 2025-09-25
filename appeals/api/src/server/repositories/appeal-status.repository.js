@@ -38,6 +38,7 @@ const rollBackAppealStatusTo = (appealId, status) =>
 
 		await tx.appealStatus.deleteMany({
 			where: {
+				appealId: prevStatus.appealId,
 				createdAt: {
 					gt: prevStatus.createdAt
 				}

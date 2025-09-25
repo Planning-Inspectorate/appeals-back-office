@@ -105,7 +105,12 @@ async function transitionLinkedChildAppealsState(appeal, azureAdUserId, trigger)
 	if (appeal.childAppeals?.length) {
 		await Promise.all(
 			appeal.childAppeals
-				.filter((childAppeal) => childAppeal.type === CASE_RELATIONSHIP_LINKED)
+				.filter(
+					(childAppeal) =>
+						childAppeal.type === CASE_RELATIONSHIP_LINKED &&
+						childAppeal.child &&
+						currentStatus(childAppeal.child) === currentStatus(appeal)
+				)
 				.map((childAppeal) =>
 					// @ts-ignore
 					transitionState(childAppeal.childId, azureAdUserId, trigger)

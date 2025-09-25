@@ -102,6 +102,7 @@ module "app_web" {
     FEATURE_FLAG_CHANGE_PROCEDURE_TYPE    = var.apps_config.featureFlags.featureFlagChangeProcedureType
     FEATURE_FLAG_HEARING_POST_MVP         = var.apps_config.featureFlags.featureFlagHearingPostMvp
     FEATURE_FLAG_AUTO_ASSIGN_TEAM         = var.apps_config.featureFlags.featureFlagAutoAssignTeam
+    FEATURE_FLAG_CANCEL_SITE_VISIT        = var.apps_config.featureFlags.featureFlagCancelSiteVisit
 
     #change LPA
     USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA = var.apps_config.use_system_test_bc_for_change_lpa

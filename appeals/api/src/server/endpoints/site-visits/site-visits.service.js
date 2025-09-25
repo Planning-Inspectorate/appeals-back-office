@@ -12,6 +12,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import formatDate, { formatTime } from '@pins/appeals/utils/date-formatter.js';
 // eslint-disable-next-line no-unused-vars
+import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
@@ -69,7 +70,8 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 			start_time: formatTime(siteVisitData.visitStartTime),
 			end_time: formatTime(siteVisitData.visitEndTime),
 			visit_date: formatDate(new Date(siteVisitData.visitDate || ''), false),
-			inspector_name: siteVisitData.inspectorName || ''
+			inspector_name: siteVisitData.inspectorName || '',
+			team_email_address: await getTeamEmailFromAppealId(appealId)
 		};
 
 		if (notifyTemplateIds.appellant && siteVisitData.appellantEmail) {
@@ -179,7 +181,8 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 			start_time: formatTime(updateSiteVisitData.visitStartTime),
 			end_time: formatTime(updateSiteVisitData.visitEndTime),
 			visit_date: formatDate(new Date(updateSiteVisitData.visitDate || ''), false),
-			inspector_name: updateSiteVisitData.inspectorName || ''
+			inspector_name: updateSiteVisitData.inspectorName || '',
+			team_email_address: await getTeamEmailFromAppealId(appealId)
 		};
 
 		if (notifyTemplateIds.appellant && updateSiteVisitData.appellantEmail) {

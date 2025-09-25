@@ -85,7 +85,8 @@ export function loadConfig() {
 		USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		FEATURE_FLAG_CANCEL_CASE,
 		FEATURE_FLAG_CHANGE_PROCEDURE_TYPE,
-		FEATURE_FLAG_AUTO_ASSIGN_TEAM
+		FEATURE_FLAG_AUTO_ASSIGN_TEAM,
+		FEATURE_FLAG_CANCEL_SITE_VISIT
 	} = environment;
 
 	const config = {
@@ -158,7 +159,8 @@ export function loadConfig() {
 			featureFlagCancelCase: FEATURE_FLAG_CANCEL_CASE === 'true',
 			featureFlagChangeProcedureType: FEATURE_FLAG_CHANGE_PROCEDURE_TYPE === 'true',
 			featureFlagHearingPostMvp: FEATURE_FLAG_HEARING_POST_MVP === 'true',
-			featureFlagAutoAssignTeam: FEATURE_FLAG_AUTO_ASSIGN_TEAM === 'true'
+			featureFlagAutoAssignTeam: FEATURE_FLAG_AUTO_ASSIGN_TEAM === 'true',
+			featureFlagCancelSiteVisit: FEATURE_FLAG_CANCEL_SITE_VISIT === 'true'
 		},
 		useSystemTestBcForChangeLpa: USE_SYSTEM_TEST_BC_FOR_CHANGE_LPA,
 		pdfServiceHost: PDF_SERVICE_HOST

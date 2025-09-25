@@ -8,4 +8,4 @@ We have updated your timetable.
 Due by {{lpa_questionnaire_due_date}}.
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}

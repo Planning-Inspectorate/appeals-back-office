@@ -37,4 +37,19 @@ const updateAppealTimetableById = (id, data) =>
 		data
 	});
 
-export default { updateAppealTimetableById, upsertAppealTimetableById };
+/**
+ * @param {number} appealId
+ * @param {Timetable} data
+ * @returns {PrismaPromise<AppealTimetable>}
+ */
+const updateAppealTimetableByAppealId = (appealId, data) =>
+	databaseConnector.appealTimetable.update({
+		where: { appealId },
+		data
+	});
+
+export default {
+	updateAppealTimetableById,
+	upsertAppealTimetableById,
+	updateAppealTimetableByAppealId
+};

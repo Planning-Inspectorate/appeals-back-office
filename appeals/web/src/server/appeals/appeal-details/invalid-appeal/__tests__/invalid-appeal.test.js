@@ -285,6 +285,11 @@ describe('invalid-appeal', () => {
 			await request.post(`${baseUrl}/invalid/new`).send({
 				invalidReason: invalidReasonsWithoutTextIds[0]
 			});
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
 			const response = await request.get(`${baseUrl}/invalid/check`);
 			const element = parseHtml(response.text);
 

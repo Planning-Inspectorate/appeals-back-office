@@ -48,6 +48,8 @@ const caseOfficers = activeDirectoryUsersData.map(({ id }, index) => ({
 }));
 
 describe('national-list', () => {
+	beforeAll(teardown);
+
 	beforeEach(() => {
 		installMockApi();
 

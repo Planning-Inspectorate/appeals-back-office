@@ -79,11 +79,10 @@ const postSiteVisit = async (req, res) => {
 	}
 
 	if (arrayOfStatusesContainsString(appeal.appealStatus, APPEAL_CASE_STATUS.EVENT)) {
-		await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
-
 		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
 			await transitionLinkedChildAppealsState(appeal, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 		}
+		await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
 	}
 
 	return res.status(201).send({

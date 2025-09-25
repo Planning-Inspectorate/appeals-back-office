@@ -15,7 +15,8 @@ describe('site-visit-change-access-required-to-accompanied-lpa.md', () => {
 				site_address: '77, Decision Way',
 				lpa_reference: 'PLA-98765',
 				visit_date: '25 July 2025',
-				start_time: '11:15am'
+				start_time: '11:15am',
+				team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 			}
 		};
 

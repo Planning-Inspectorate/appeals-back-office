@@ -60,4 +60,4 @@ You may have to pay costs if you:
 [Find out more about appeal costs](https://www.gov.uk/claim-planning-appeal-costs).
 
 The Planning Inspectorate
-caseofficers@planninginspectorate.gov.uk
+{{team_email_address}}
