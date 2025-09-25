@@ -4150,6 +4150,38 @@ export const appealDataToGetRequiredActions = {
 		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
 		appealType: 'Planning listed building and conservation area appeal',
 		numberOfResidencesNetChange: null
+	},
+	reviewLpaProofOfEvidence: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		documentationSummary: {
+			lpaProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			},
+			appellantProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			}
+		}
+	},
+	reviewAppellantProofOfEvidence: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		documentationSummary: {
+			lpaProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			appellantProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
 	}
 };
 
