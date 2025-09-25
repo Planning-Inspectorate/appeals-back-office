@@ -64,10 +64,28 @@ export const happyPathHelper = {
 	},
 
 	startS78Case(caseRef, procedureType) {
+		if (procedureType === 'hearing') {
+			return happyPathHelper.startS78HearingCase(caseRef, procedureType);
+		}
 		happyPathHelper.viewCaseDetails(caseRef);
 		caseDetailsPage.clickReadyToStartCase();
 		caseDetailsPage.selectRadioButtonByValue(procedureType);
 		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.clickButtonByText('Start case');
+	},
+
+	startS78HearingCase(caseRef, procedureType, dateKnown = false) {
+		happyPathHelper.viewCaseDetails(caseRef);
+		caseDetailsPage.clickReadyToStartCase();
+		caseDetailsPage.selectRadioButtonByValue(procedureType);
+		caseDetailsPage.clickButtonByText('Continue');
+		caseDetailsPage.selectRadioButtonByValue(dateKnown ? 'yes' : 'no');
+		caseDetailsPage.clickButtonByText('Continue');
+		if (dateKnown) {
+			dateTimeSection.enterHearingDate(happyPathHelper.validVisitDate());
+			dateTimeSection.enterHearingTime('13', '45');
+			caseDetailsPage.clickButtonByText('Continue');
+		}
 		caseDetailsPage.clickButtonByText('Start case');
 	},
 
