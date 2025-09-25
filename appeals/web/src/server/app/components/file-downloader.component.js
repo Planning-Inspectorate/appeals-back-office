@@ -217,7 +217,8 @@ const createBlobDownloadStream = async (
 		if (!blobProperties) {
 			return null;
 		}
-	} catch {
+	} catch (error) {
+		console.error(`Error getting blob properties for ${documentKey}:`, error);
 		return null;
 	}
 
@@ -324,19 +325,36 @@ const buildZipFileName = (caseId, filename) => {
 const getRepresentationAttachmentFullNames = async (apiClient, caseId) => {
 	const representations = await getRepresentationAttachments(apiClient, caseId);
 	const fullAttachmentNames = {};
+	const statusCounts = {};
 	// @ts-ignore
-	representations?.items?.forEach((representation, index) =>
+	representations?.items?.forEach((representation) => {
+		let representationStatus = representation.status;
+		if (representation.status === 'valid') {
+			representationStatus = 'accepted';
+		} else if (representation.status === 'invalid') {
+			representationStatus = 'rejected';
+		}
+		// Keep a count of each representation type and status so that we can give each ip comment a unique folder name
+		const statusCountKey = `${representation.representationType}-${representation.status}`;
+		// @ts-ignore
+		if (statusCounts[statusCountKey] === undefined) {
+			// @ts-ignore
+			statusCounts[statusCountKey] = 0;
+		}
+		const representationType =
+			representation.representationType === 'comment'
+				? `Interested party comments/${toSentenceCase(
+						representationStatus
+						// @ts-ignore
+				  )}/Comment ${++statusCounts[statusCountKey]}`
+				: toSentenceCase(representation.representationType).replace('Lpa', 'LPA');
 		// @ts-ignore
 		representation.attachments.forEach((attachment) => {
 			const { document } = attachment.documentVersion || {};
-			const representationType =
-				representation.representationType === 'comment'
-					? `Interested party comments/Comment ${index + 1}`
-					: toSentenceCase(representation.representationType).replace('Lpa', 'LPA');
 			// @ts-ignore
 			fullAttachmentNames[document.guid] = `Representations/${representationType}/${document.name}`;
-		})
-	);
+		});
+	});
 	return fullAttachmentNames;
 };
 
