@@ -199,22 +199,35 @@ const updateAppealType = async (
 		? formatAddressSingleLine(appeal.address)
 		: 'Address not available';
 
-	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+	const agentOrAppellantEmail = appeal.agent?.email || appeal.appellant?.email;
+	const lpaEmail = appeal.lpa?.email;
+
 	const personalisation = {
 		appeal_reference_number: appeal.reference,
 		site_address: siteAddress,
 		lpa_reference: appeal.applicationReference || '',
-		team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+		team_email_address: teamEmail,
 		existing_appeal_type: appeal.appealType?.type.toLowerCase() || '',
 		new_appeal_type: newAppealType.toLowerCase() || ''
 	};
 
-	if (recipientEmail) {
+	if (agentOrAppellantEmail) {
 		await notifySend({
 			azureAdUserId,
 			templateName: 'appeal-type-change-in-cbos-appellant',
 			notifyClient,
-			recipientEmail,
+			recipientEmail: agentOrAppellantEmail,
+			personalisation
+		});
+	}
+
+	if (lpaEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: 'appeal-type-change-in-cbos-lpa',
+			notifyClient,
+			recipientEmail: lpaEmail,
 			personalisation
 		});
 	}

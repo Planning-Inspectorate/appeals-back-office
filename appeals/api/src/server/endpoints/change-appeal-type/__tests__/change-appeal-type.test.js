@@ -653,7 +653,7 @@ describe('appeal change update routes', () => {
 
 			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealWithValidCaseStatus.id);
 
-			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.anything(),
@@ -667,6 +667,21 @@ describe('appeal change update routes', () => {
 				},
 				recipientEmail: appealWithValidCaseStatus.agent.email,
 				templateName: 'appeal-type-change-in-cbos-appellant'
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: appealWithValidCaseStatus.reference,
+					lpa_reference: appealWithValidCaseStatus.applicationReference,
+					site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					existing_appeal_type: appealWithValidCaseStatus.appealType.type.toLowerCase(),
+					new_appeal_type: 'planning appeal'
+				},
+				recipientEmail: appealWithValidCaseStatus.lpa.email,
+				templateName: 'appeal-type-change-in-cbos-lpa'
 			});
 
 			expect(response.status).toEqual(200);
@@ -697,7 +712,7 @@ describe('appeal change update routes', () => {
 				})
 				.set('azureAdUserId', azureAdUserId);
 
-			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
 			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
 				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
 				notifyClient: expect.anything(),
