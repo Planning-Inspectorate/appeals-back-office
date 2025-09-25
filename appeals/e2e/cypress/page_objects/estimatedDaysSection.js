@@ -20,7 +20,7 @@ export class EstimatedDaysSection extends CaseDetailsPage {
 	// A C T I O N S
 
 	clearEstimatedDays() {
-		// clear est9mated day
+		// clear estimated day
 		this.elements.inquiryEstimatedDaysInput().clear();
 	}
 
