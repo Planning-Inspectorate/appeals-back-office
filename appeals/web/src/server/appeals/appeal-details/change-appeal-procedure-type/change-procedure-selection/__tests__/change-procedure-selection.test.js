@@ -233,7 +233,7 @@ describe('Change procedure type', () => {
 			expect(unprettifiedErrorSummaryHtml).toContain('Select the appeal procedure</a>');
 		});
 
-		it('should redirect to the timetable due page if a existing procedure is Written and change to Hearing', async () => {
+		it('should redirect to the hearing date page if a existing procedure is Written and change to hearing', async () => {
 			nock('http://test/')
 				.get('/appeals/1')
 				.reply(200, {
@@ -251,7 +251,29 @@ describe('Change procedure type', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-procedure-type/change-timetable'
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date'
+			);
+		});
+
+		it('should redirect to the inquiry date page if a existing procedure is Written and change to inquiry', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+
+			const response = await request
+				.post(
+					'/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type'
+				)
+				.send({
+					appealProcedure: 'inquiry'
+				});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe(
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/date'
 			);
 		});
 	});

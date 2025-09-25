@@ -52,12 +52,15 @@ export const postChangeSelectProcedure = async (request, response) => {
 			return renderSelectProcedure(request, response);
 		}
 
-		if (
-			appealProcedure === APPEAL_CASE_PROCEDURE.WRITTEN ||
-			appealProcedure === APPEAL_CASE_PROCEDURE.HEARING
-		) {
+		if (appealProcedure === APPEAL_CASE_PROCEDURE.WRITTEN) {
 			return response.redirect(
 				`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/change-timetable`
+			);
+		} else if (
+			[APPEAL_CASE_PROCEDURE.INQUIRY, APPEAL_CASE_PROCEDURE.HEARING].includes(appealProcedure)
+		) {
+			return response.redirect(
+				`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${appealProcedure}/date`
 			);
 		}
 
