@@ -257,5 +257,23 @@ function mapBannerKeysToNotificationBanners(bannerDefinitionKey, appealDetails, 
 				)}">Add number of residential units</a>`
 			});
 		}
+		case 'reviewLpaProofOfEvidence': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-link" data-cy="review-lpa-proof-of-evidence" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/proof-of-evidence/lpa`
+				)}">Review LPA proof of evidence and witnesses</a>`
+			});
+		}
+		case 'reviewAppellantProofOfEvidence': {
+			return createNotificationBanner({
+				bannerDefinitionKey,
+				html: `<a class="govuk-link" data-cy="review-appellant-proof-of-evidence" href="${addBackLinkQueryToUrl(
+					request,
+					`/appeals-service/appeal-details/${appealDetails.appealId}/proof-of-evidence/appellant`
+				)}">Review appellant proof of evidence and witnesses</a>`
+			});
+		}
 	}
 }

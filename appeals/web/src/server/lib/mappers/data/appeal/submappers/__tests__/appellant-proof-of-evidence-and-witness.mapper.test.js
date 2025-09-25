@@ -55,8 +55,35 @@ describe('mapAppellantProofOfEvidence', () => {
 		expect(result).toEqual(expected);
 	});
 
+	it('should return correct table row when representation status is valid', () => {
+		data.appealDetails.documentationSummary.appellantProofOfEvidence.status = 'received';
+		data.appealDetails.documentationSummary.appellantProofOfEvidence.representationStatus = 'valid';
+		expected.display.tableItem[1].text = 'Completed';
+		expected.display.tableItem[2].text = '2 August 2025';
+		expected.display.tableItem[3].html = expect.stringContaining('Appellant proof of evidence');
+
+		const result = mapAppellantProofOfEvidence(data);
+
+		expect(result).toEqual(expected);
+	});
+
+	it('should return correct table row when representation status is incomplete', () => {
+		data.appealDetails.documentationSummary.appellantProofOfEvidence.status = 'received';
+		data.appealDetails.documentationSummary.appellantProofOfEvidence.representationStatus =
+			'incomplete';
+		expected.display.tableItem[1].text = 'Incomplete';
+		expected.display.tableItem[2].text = '2 August 2025';
+		expected.display.tableItem[3].html = expect.stringContaining('Appellant proof of evidence');
+
+		const result = mapAppellantProofOfEvidence(data);
+
+		expect(result).toEqual(expected);
+	});
+
 	it('should return correct table row when status is not received', () => {
 		data.appealDetails.documentationSummary.appellantProofOfEvidence.status = 'not_received';
+		data.appealDetails.documentationSummary.appellantProofOfEvidence.representationStatus =
+			'awaiting_review';
 		expected.display.tableItem[1].text = 'Awaiting proof of evidence and witness';
 		expected.display.tableItem[2].text = '';
 		expected.display.tableItem[3].html =
