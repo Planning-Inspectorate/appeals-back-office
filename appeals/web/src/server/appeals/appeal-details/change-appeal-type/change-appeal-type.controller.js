@@ -303,7 +303,8 @@ const renderAddHorizonReference = async (request, response) => {
 	const mappedPageContent = addHorizonReferencePage(
 		appealData,
 		getSavedBackUrl(request, 'changeAppealType'),
-		horizonReference
+		horizonReference,
+		errors ? errors['horizon-reference'].msg : undefined
 	);
 
 	return response.status(200).render('patterns/change-page.pattern.njk', {
