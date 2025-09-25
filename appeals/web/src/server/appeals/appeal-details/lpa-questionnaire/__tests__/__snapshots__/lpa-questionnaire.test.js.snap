@@ -1180,13 +1180,13 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row lpa-eia-column-two-threshold"><dt class="govuk-summary-list__key"> Does the development meet or exceed the threshold or criteria in column 2?</dt>
-                            <dd                             class="govuk-summary-list__value">Not applicable</dd>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/environmental-impact-assessment/column-two-threshold/change"
                                     data-cy="change-eia-column-two-threshold">Change<span class="govuk-visually-hidden"> Does the development meet or exceed the threshold or criteria in column 2? (2. Environmental impact assessment)</span></a>
                                 </dd>
                         </div>
                         <div class="govuk-summary-list__row lpa-eia-requires-environmental-statement"><dt class="govuk-summary-list__key"> Did your screening opinion say the development needed an environmental statement?</dt>
-                            <dd                             class="govuk-summary-list__value">Not applicable</dd>
+                            <dd                             class="govuk-summary-list__value">Not answered</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/environmental-impact-assessment/requires-environmental-statement/change"
                                     data-cy="change-eia-requires-environmental-statement">Change<span class="govuk-visually-hidden"> Did your screening opinion say the development needed an environmental statement? (2. Environmental impact assessment)</span></a>
                                 </dd>
@@ -1211,8 +1211,8 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-eia-scoping-opinion">Add<span class="govuk-visually-hidden"> Scoping opinion documents (2. Environmental impact assessment)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Description of development</dt>
-                            <dd                             class="govuk-summary-list__value">Not applicable</dd>
+                        <div class="govuk-summary-list__row lpa-eia-development-description"><dt class="govuk-summary-list__key"> Description of development</dt>
+                            <dd                             class="govuk-summary-list__value">No Data</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/eia-development-description/change"
                                     data-cy="change-eia-development-description">Change<span class="govuk-visually-hidden"> Description of development (2. Environmental impact assessment)</span></a>
                                 </dd>
@@ -1392,8 +1392,8 @@ exports[`LPA Questionnaire review GET / should render the S78 LPA Questionnaire 
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-community-infrastructure-levy">Add<span class="govuk-visually-hidden"> Community infrastructure levy (5. Planning officer’s report and supplementary documents)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Is the community infrastructure levy formally adopted?</dt>
-                            <dd                             class="govuk-summary-list__value">Not applicable</dd>
+                        <div class="govuk-summary-list__row lpa-is-infrastructure-levy-formally-adopted"><dt class="govuk-summary-list__key"> Is the community infrastructure levy formally adopted?</dt>
+                            <dd                             class="govuk-summary-list__value">No documents</dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/lpa-questionnaire/1/is-infrastructure-levy-formally-adopted/change"
                                     data-cy="change-is-infrastructure-levy-formally-adopted">Change<span class="govuk-visually-hidden"> Is the community infrastructure levy formally adopted? (5. Planning officer’s report and supplementary documents)</span></a>
                                 </dd>

@@ -9,8 +9,12 @@ export const mapEiaColumnTwoThreshold = ({
 	booleanSummaryListItem({
 		id: 'eia-column-two-threshold',
 		text: 'Does the development meet or exceed the threshold or criteria in column 2?',
-		value: lpaQuestionnaireData.eiaColumnTwoThreshold,
-		defaultText: 'Not applicable',
+		value:
+			lpaQuestionnaireData.eiaColumnTwoThreshold === undefined ||
+			lpaQuestionnaireData.eiaColumnTwoThreshold === null
+				? null
+				: lpaQuestionnaireData.eiaColumnTwoThreshold,
+		defaultText: 'Not answered',
 		addCyAttribute: true,
 		link: `${currentRoute}/environmental-impact-assessment/column-two-threshold/change`,
 		editable: userHasUpdateCase,
