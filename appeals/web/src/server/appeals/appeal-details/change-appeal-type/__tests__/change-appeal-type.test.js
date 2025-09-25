@@ -489,51 +489,36 @@ describe('change-appeal-type', () => {
 	});
 
 	describe('POST /change-appeal-type/add-horizon-reference', () => {
-		it('should re-render the add horizon reference page with an error message if no horizon reference was provided', async () => {
-			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
-				.send({
-					'horizon-reference': ''
-				});
+		it.each([
+			['missing', '', 'Enter a reference number'],
+			['too short', '12345', 'Reference number must be 7 characters'],
+			['too long', '12345678', 'Reference number must be 7 characters'],
+			['not only numeric', 'a123456', 'Reference number must only include numbers']
+		])(
+			'should re-render the add horizon reference page with an error message if the horizon reference is: %s',
+			async (_, invalidReference, expectedError) => {
+				const response = await request
+					.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
+					.send({
+						'horizon-reference': invalidReference
+					});
 
-			expect(response.statusCode).toBe(200);
+				expect(response.statusCode).toBe(200);
 
-			const element = parseHtml(response.text);
+				const element = parseHtml(response.text);
 
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Horizon reference</label></h1>');
+				expect(element.innerHTML).toMatchSnapshot();
+				expect(element.innerHTML).toContain('Horizon reference</label></h1>');
 
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
+				const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
+					rootElement: '.govuk-error-summary',
+					skipPrettyPrint: true
+				}).innerHTML;
 
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Enter a valid Horizon appeal reference</a>');
-		});
-
-		it('should re-render the add horizon reference page with an error message if the provided horizon reference was not valid', async () => {
-			const response = await request
-				.post(`${baseUrl}/1${changeAppealTypePath}${addHorizonReferencePath}`)
-				.send({
-					'horizon-reference': '123'
-				});
-
-			expect(response.statusCode).toBe(200);
-
-			const element = parseHtml(response.text);
-
-			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Horizon reference</label></h1>');
-
-			const unprettifiedErrorSummaryHTML = parseHtml(response.text, {
-				rootElement: '.govuk-error-summary',
-				skipPrettyPrint: true
-			}).innerHTML;
-
-			expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
-			expect(unprettifiedErrorSummaryHTML).toContain('Enter a valid Horizon appeal reference</a>');
-		});
+				expect(unprettifiedErrorSummaryHTML).toContain('There is a problem</h2>');
+				expect(unprettifiedErrorSummaryHTML).toContain(`${expectedError}</a>`);
+			}
+		);
 
 		it('should redirect to the check transfer page if a valid 7 digit reference was entered', async () => {
 			const response = await request

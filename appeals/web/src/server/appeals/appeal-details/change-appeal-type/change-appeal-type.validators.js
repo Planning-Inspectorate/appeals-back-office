@@ -42,6 +42,12 @@ export const validateChangeAppealFinalDateIsBusinessDay =
 export const validateHorizonReference = createValidator(
 	body('horizon-reference')
 		.trim()
-		.matches(/^\d{7}$/)
-		.withMessage('Enter a valid Horizon appeal reference')
+		.notEmpty()
+		.withMessage('Enter a reference number')
+		.bail()
+		.isNumeric({ no_symbols: true })
+		.bail()
+		.withMessage('Reference number must only include numbers')
+		.isLength({ min: 7, max: 7 })
+		.withMessage('Reference number must be 7 characters')
 );

@@ -196,16 +196,17 @@ export function resubmitAppealPage(appealDetails, changeAppeal, errorMessage) {
  * @param {Appeal} appealDetails
  * @param {string|undefined} backUrl
  * @param {string|undefined} horizonReference
+ * @param {string | undefined} errorMessage
  * @returns {PageContent}
  */
-export function addHorizonReferencePage(appealDetails, backUrl, horizonReference) {
+export function addHorizonReferencePage(appealDetails, backUrl, horizonReference, errorMessage) {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Horizon reference - ${shortAppealReference}`,
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: `Appeal ${shortAppealReference} - mark as transferred`,
 		pageComponents: [
 			{
 				type: 'input',
@@ -219,7 +220,8 @@ export function addHorizonReferencePage(appealDetails, backUrl, horizonReference
 						isPageHeading: true,
 						classes: 'govuk-label--l'
 					},
-					value: horizonReference
+					value: horizonReference,
+					errorMessage: errorMessage && { text: errorMessage }
 				}
 			}
 		]
