@@ -4,6 +4,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { notifySend } from '#notify/notify-send.js';
 import timetableRepository from '#repositories/appeal-timetable.repository.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
+import commonRepository from '#repositories/common.repository.js';
 import transitionState from '#state/transition-state.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -100,6 +101,17 @@ const resubmitAndMarkInvalid = async (
 	azureAdUserId
 ) => {
 	const { id: appealId } = appeal;
+
+	const invalidOutcome = await commonRepository.getLookupListValueByName(
+		'appellantCaseValidationOutcome',
+		VALIDATION_OUTCOME_INVALID
+	);
+
+	const invalidReason = await commonRepository.getLookupListValueByName(
+		'appellantCaseInvalidReason',
+		'Other reason'
+	);
+
 	Promise.all([
 		await databaseConnector.appeal.update({
 			where: { id: appealId },
@@ -114,8 +126,8 @@ const resubmitAndMarkInvalid = async (
 		await appellantCaseRepository.updateAppellantCaseValidationOutcome({
 			appealId,
 			appellantCaseId,
-			validationOutcomeId: 2,
-			invalidReasons: [{ id: 4, text: ['Wrong appeal type, resubmission required'] }]
+			validationOutcomeId: invalidOutcome.id,
+			invalidReasons: [{ id: invalidReason.id, text: ['Wrong appeal type, resubmission required'] }]
 		}),
 		await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_INVALID)
 	]);
@@ -130,25 +142,25 @@ const resubmitAndMarkInvalid = async (
 		details
 	});
 
-	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-	const personalisation = {
-		existing_appeal_type: appeal.appealType?.type || '',
-		appeal_reference_number: appeal.reference,
-		lpa_reference: appeal.applicationReference || '',
-		site_address: siteAddress,
-		due_date: formatDate(new Date(dueDate || ''), false),
-		appeal_type: newAppealType || ''
-	};
+	// const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	// const personalisation = {
+	// 	existing_appeal_type: appeal.appealType?.type || '',
+	// 	appeal_reference_number: appeal.reference,
+	// 	lpa_reference: appeal.applicationReference || '',
+	// 	site_address: siteAddress,
+	// 	due_date: formatDate(new Date(dueDate || ''), false),
+	// 	appeal_type: newAppealType || ''
+	// };
 
-	if (recipientEmail) {
-		await notifySend({
-			azureAdUserId,
-			templateName: 'appeal-type-change-non-has',
-			notifyClient,
-			recipientEmail,
-			personalisation
-		});
-	}
+	// if (recipientEmail) {
+	// 	await notifySend({
+	// 		azureAdUserId,
+	// 		templateName: 'appeal-type-change-non-has',
+	// 		notifyClient,
+	// 		recipientEmail,
+	// 		personalisation
+	// 	});
+	// }
 };
 
 /**

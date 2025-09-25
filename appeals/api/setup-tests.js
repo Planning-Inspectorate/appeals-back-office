@@ -62,6 +62,7 @@ const mockAppellantCaseIncompleteReasonFindMany = jest.fn().mockResolvedValue({}
 const mockAppellantCaseIncompleteReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseIncompleteReasonsSelectedCreateMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonFindMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseInvalidReasonFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonsSelectedCreateMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindMany = jest.fn().mockResolvedValue({});
@@ -297,7 +298,8 @@ class MockPrismaClient {
 
 	get appellantCaseInvalidReason() {
 		return {
-			findMany: mockAppellantCaseInvalidReasonFindMany
+			findMany: mockAppellantCaseInvalidReasonFindMany,
+			findUnique: mockAppellantCaseInvalidReasonFindUnique
 		};
 	}
 
