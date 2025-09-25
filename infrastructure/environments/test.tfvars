@@ -50,7 +50,7 @@ apps_config = {
     featureFlagCancelCase             = true
     featureFlagChangeProcedureType    = true
     featureFlagAdvertisement          = true
-    featureFlagHearingPostMvp         = false
+    featureFlagHearingPostMvp         = true
     featureFlagAutoAssignTeam         = true
     featureFlagCancelSiteVisit        = true
   }
