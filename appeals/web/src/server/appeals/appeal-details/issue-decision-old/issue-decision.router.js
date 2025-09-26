@@ -70,12 +70,10 @@ router
 router
 	.route('/check-your-decision')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.getCheckDecision)
 	)
 	.post(
-		validateAppeal,
 		validators.validateCheckDecision,
 		assertUserHasPermission(permissionNames.setCaseOutcome),
 		asyncHandler(controller.postCheckDecision)

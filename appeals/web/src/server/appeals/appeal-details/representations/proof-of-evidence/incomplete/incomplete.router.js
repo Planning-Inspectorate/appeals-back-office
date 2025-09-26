@@ -1,4 +1,3 @@
-import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 import {
 	validateIncompleteReason,
 	validateIncompleteReasonTextItems
@@ -20,18 +19,14 @@ router.route('/').get(redirectAndClearSession('/reasons', 'proofOfEvidence'));
 
 router
 	.route('/reasons')
-	.get(validateAppeal, asyncHandler(renderReasons))
+	.get(asyncHandler(renderReasons))
 	.post(
-		validateAppeal,
 		validateIncompleteReason('Select why the proof of evidence and witnesses are incomplete'),
 		validateIncompleteReasonTextItems,
 		saveBodyToSession('proofOfEvidence', { scopeToAppeal: true }),
 		asyncHandler(postReasons)
 	);
 
-router
-	.route('/confirm')
-	.get(validateAppeal, asyncHandler(renderConfirm))
-	.post(validateAppeal, asyncHandler(postConfirm));
+router.route('/confirm').get(asyncHandler(renderConfirm)).post(asyncHandler(postConfirm));
 
 export default router;
