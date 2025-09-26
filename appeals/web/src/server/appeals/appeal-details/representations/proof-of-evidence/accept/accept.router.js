@@ -1,4 +1,3 @@
-import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 
@@ -8,7 +7,7 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/')
-	.get(validateAppeal, asyncHandler(getAcceptProofOfEvidence))
-	.post(validateAppeal, asyncHandler(postConfirmAcceptProofOfEvidence));
+	.get(asyncHandler(getAcceptProofOfEvidence))
+	.post(asyncHandler(postConfirmAcceptProofOfEvidence));
 
 export default router;

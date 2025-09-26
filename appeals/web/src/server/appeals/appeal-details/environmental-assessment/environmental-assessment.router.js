@@ -1,5 +1,4 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
-import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 import * as controller from '#appeals/appeal-details/environmental-assessment/environmental-assessment.controller.js';
 import {
 	validateCaseDocumentId,
@@ -15,13 +14,11 @@ const router = createRouter({ mergeParams: true });
 router
 	.route(['/upload-documents/:folderId'])
 	.get(
-		validateAppeal,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getDocumentUpload)
 	)
 	.post(
-		validateAppeal,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postDocumentUploadPage)
@@ -29,9 +26,8 @@ router
 
 router
 	.route('/upload-documents/:folderId/:documentId')
-	.get(validateAppeal, validateCaseFolderId, asyncHandler(controller.getDocumentVersionUpload))
+	.get(validateCaseFolderId, asyncHandler(controller.getDocumentVersionUpload))
 	.post(
-		validateAppeal,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postDocumentVersionUpload)
@@ -40,13 +36,11 @@ router
 router
 	.route('/check-your-answers/:folderId')
 	.get(
-		validateAppeal,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
-		validateAppeal,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentsCheckAndConfirm)
@@ -55,13 +49,11 @@ router
 router
 	.route('/check-your-answers/:folderId/:documentId')
 	.get(
-		validateAppeal,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
-		validateAppeal,
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
@@ -94,14 +86,12 @@ router
 router
 	.route('/change-document-name/:folderId/:documentId')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getChangeDocumentFileNameDetails)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentNameBodyFormat,
@@ -112,13 +102,11 @@ router
 router
 	.route('/change-document-details/:folderId/:documentId')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		asyncHandler(controller.getChangeDocumentVersionDetails)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
