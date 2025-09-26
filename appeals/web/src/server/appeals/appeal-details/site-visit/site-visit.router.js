@@ -50,6 +50,17 @@ router
 	);
 
 router
+	.route('/delete')
+	.get(
+		assertUserHasPermission(permissionNames.setEvents),
+		asyncHandler(controller.getCancelSiteVisit)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.setEvents),
+		asyncHandler(controller.postCancelSiteVisit)
+	);
+
+router
 	.route('/visit-scheduled/:confirmationPageTypeToRender')
 	.get(
 		assertUserHasPermission(permissionNames.setEvents),

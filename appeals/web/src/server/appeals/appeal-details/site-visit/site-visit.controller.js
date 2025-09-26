@@ -1,8 +1,12 @@
 import usersService from '#appeals/appeal-users/users-service.js';
+import { appealSiteToAddressString } from '#lib/address-formatter.js';
+import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
+	cancelSiteVisitPage,
 	getSiteVisitSuccessBannerTypeAndChangeType,
 	mapPostScheduleOrManageSiteVisitCommonParameters as mapPostScheduleOrManageSiteVisitToUpdateOrCreateSiteVisitParameters,
 	scheduleOrManageSiteVisitConfirmationPage,
@@ -323,4 +327,82 @@ export const getSiteVisitBooked = async (request, response) => {
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getSiteVisitMissed = async (request, response) => {
 	renderSiteVisitMissed(request, response);
+};
+
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getCancelSiteVisit = async (request, response) => {
+	renderCancelSiteVisit(request, response);
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */ const renderCancelSiteVisit = async (request, response) => {
+	const { errors } = request;
+
+	const appealDetails = request.currentAppeal;
+	const { email: assignedTeamEmail } = await getTeamFromAppealId(
+		request.apiClient,
+		appealDetails.appealId
+	);
+
+	const personalisation = {
+		appeal_reference_number: appealDetails.appealReference,
+		site_address: appealSiteToAddressString(appealDetails.appealSite),
+		lpa_reference: appealDetails.planningApplicationReference,
+		team_email_address: assignedTeamEmail
+	};
+	const templateName = 'site-visit-cancelled.content.md';
+	const template = await generateNotifyPreview(request.apiClient, templateName, personalisation);
+
+	if (appealDetails) {
+		const mappedPageContent = await cancelSiteVisitPage(appealDetails, template.renderedHtml);
+
+		return response.status(200).render('patterns/change-page.pattern.njk', {
+			pageContent: mappedPageContent,
+			errors
+		});
+	}
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const postCancelSiteVisit = async (request, response) => {
+	const { errors } = request;
+
+	if (errors) {
+		return renderCancelSiteVisit(request, response);
+	}
+
+	try {
+		const appealDetails = request.currentAppeal;
+
+		const cancelledSiteVisit = await siteVisitService.cancelSiteVisit(
+			request.apiClient,
+			appealDetails.appealId,
+			appealDetails.siteVisit?.siteVisitId
+		);
+
+		if (cancelledSiteVisit) {
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'siteVisitCancelled',
+				appealId: appealDetails.appealId
+			});
+
+			return response.redirect(`/appeals-service/appeal-details/${appealDetails.appealId}`);
+		}
+		return response.status(404).render('app/404.njk');
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error ? error.message : 'Something went wrong when scheduling the site visit'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
 };

@@ -88,3 +88,12 @@ export async function updateSiteVisit(
 export async function getSiteVisit(apiClient, appealId, siteVisitId) {
 	return apiClient.get(`appeals/${appealId}/site-visits/${siteVisitId}`).json();
 }
+/**
+ * @param {import('got').Got} apiClient
+ * @param {number} appealId
+ * @param {number} siteVisitId
+ * @returns {Promise<import('@pins/appeals.api/src/server/endpoints/appeals.js').SingleSiteVisitDetailsResponse>}
+ */
+export async function cancelSiteVisit(apiClient, appealId, siteVisitId) {
+	return apiClient.delete(`appeals/${appealId}/site-visits/${siteVisitId}`).json();
+}
