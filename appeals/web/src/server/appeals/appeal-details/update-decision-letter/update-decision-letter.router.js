@@ -2,7 +2,6 @@ import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { permissionNames } from '#environment/permissions.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import { validateAppeal } from '../appeal-details.middleware.js';
 import {
 	postDecisionLetterUpload,
 	renderDecisionLetterUpload
@@ -15,7 +14,6 @@ const router = createRouter({ mergeParams: true });
 router
 	.route('/correction-notice')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
@@ -23,7 +21,6 @@ router
 		asyncHandler(updateDecisionLetterController.getCorrectionNotice)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		updateCorrectionNoticeValidator,
 		asyncHandler(updateDecisionLetterController.postCorrectionNotice)
@@ -31,7 +28,6 @@ router
 router
 	.route('/check-details')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(
 			permissionNames.viewCaseDetails,
 			permissionNames.viewAssignedCaseDetails
@@ -39,7 +35,6 @@ router
 		asyncHandler(updateDecisionLetterController.getUpdateDocumentCheckDetails)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(updateDecisionLetterController.postUpdateDocumentCheckDetails)
 	);

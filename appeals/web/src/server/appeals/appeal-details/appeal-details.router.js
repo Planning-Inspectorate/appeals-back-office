@@ -1,7 +1,10 @@
 import { assertUserHasPermission } from '#app/auth/auth.guards.js';
 import { validateCaseNoteTextArea } from '#appeals/appeal-details/appeals-details.validator.js';
 import { postCaseNote } from '#appeals/appeal-details/case-notes/case-notes.controller.js';
-import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
+import {
+	clearUncommittedFilesFromSession,
+	validateCaseFolderId
+} from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import config from '#environment/config.js';
 import { permissionNames } from '#environment/permissions.js';
 import { asyncHandler } from '@pins/express';
@@ -139,6 +142,7 @@ router.use(
 router.use(
 	'/:appealId/costs',
 	validateAppeal,
+	validateCaseFolderId,
 	assertUserHasPermission(permissionNames.viewCaseDetails, permissionNames.viewAssignedCaseDetails),
 	costsRouter
 );
@@ -146,6 +150,7 @@ router.use(
 router.use(
 	'/:appealId/environmental-assessment',
 	validateAppeal,
+	validateCaseFolderId,
 	assertUserHasPermission(permissionNames.viewCaseDetails, permissionNames.viewAssignedCaseDetails),
 	environmentalAssessmentRouter
 );
@@ -177,6 +182,7 @@ router.use(
 router.use(
 	'/:appealId/internal-correspondence',
 	validateAppeal,
+	validateCaseFolderId,
 	assertUserHasPermission(permissionNames.viewCaseList),
 	internalCorrespondenceRouter
 );
