@@ -116,8 +116,10 @@ const sessionValuesToDateTime = (sessionValues) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const getInquiryDate = async (request, response) => {
-	const sessionValues = request.session['setUpInquiry'] || {};
-
+	const fromParams = request.params?.appealId;
+	const fromSession = request.session?.currentAppeal?.appealId;
+	const id = fromParams ?? fromSession;
+	const sessionValues = request.session['setUpInquiry']?.[id] || {};
 	return renderInquiryDate(request, response, 'setup', sessionValuesToDateTime(sessionValues));
 };
 
@@ -495,7 +497,7 @@ export const getInquiryCheckDetails = async (request, response) => {
 		session,
 		errors
 	} = request;
-
+	console.log(request.session);
 	const appellantCase = await addAppellantCaseToLocals(request);
 
 	if (!session.startCaseAppealProcedure?.[appealId]?.appealProcedure) {
