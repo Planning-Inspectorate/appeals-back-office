@@ -1,4 +1,7 @@
-import { clearUncommittedFilesFromSession } from '#appeals/appeal-documents/appeal-documents.middleware.js';
+import {
+	clearUncommittedFilesFromSession,
+	validateCaseFolderId
+} from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import { Router } from 'express';
 import { validateStatus } from '../common/validators.js';
@@ -33,6 +36,11 @@ router.use('/redact', redactRouter);
 
 router.use('/add-document', getRepresentationAttachmentsFolder, addDocumentRouter);
 
-router.use('/manage-documents', getRepresentationAttachmentsFolder, manageDocumentsRouter);
+router.use(
+	'/manage-documents',
+	validateCaseFolderId,
+	getRepresentationAttachmentsFolder,
+	manageDocumentsRouter
+);
 
 export default router;

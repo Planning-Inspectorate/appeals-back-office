@@ -1,4 +1,5 @@
 import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
+import { validateCaseFolderId } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import { Router as createRouter } from 'express';
 import addDocumentRouter from '../document-attachments/add-document.router.js';
 import { getRepresentationAttachmentsFolder } from '../document-attachments/attachments-middleware.js';
@@ -41,6 +42,7 @@ router.use(
 
 router.use(
 	'/:finalCommentsType/manage-documents',
+	validateCaseFolderId,
 	withSingularRepresentation,
 	getRepresentationAttachmentsFolder,
 	manageDocumentsRouter

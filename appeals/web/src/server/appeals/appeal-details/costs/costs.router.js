@@ -3,10 +3,7 @@ import { permissionNames } from '#environment/permissions.js';
 import { extractAndProcessDocumentDateErrors } from '#lib/validators/date-input.validator.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import {
-	validateCaseDocumentId,
-	validateCaseFolderId
-} from '../../appeal-documents/appeal-documents.middleware.js';
+import { validateCaseDocumentId } from '../../appeal-documents/appeal-documents.middleware.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
 import * as controller from './costs.controller.js';
 import { validatePostDecisionConfirmation } from './costs.validators.js';
@@ -19,12 +16,10 @@ router
 		'/:costsCategory/upload-documents/:folderId'
 	])
 	.get(
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getDocumentUpload)
 	)
 	.post(
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postDocumentUploadPage)
 	);
@@ -34,9 +29,8 @@ router
 		'/:costsCategory/:costsDocumentType/upload-documents/:folderId/:documentId',
 		'/:costsCategory/upload-documents/:folderId/:documentId'
 	])
-	.get(validateCaseFolderId, asyncHandler(controller.getDocumentVersionUpload))
+	.get(asyncHandler(controller.getDocumentVersionUpload))
 	.post(
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postDocumentVersionUpload)
 	);
@@ -49,12 +43,10 @@ router
 		'/:costsCategory/add-document-details/:folderId/:documentId'
 	])
 	.get(
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentDetails)
 	)
 	.post(
-		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
 		documentsValidators.validateDocumentDetailsReceivedDatesFields,
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
@@ -68,12 +60,10 @@ router
 router
 	.route('/:costsCategory/:costsDocumentType/check-your-answers/:folderId')
 	.get(
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentsCheckAndConfirm)
 	);
@@ -81,12 +71,10 @@ router
 router
 	.route('/:costsCategory/:costsDocumentType/check-your-answers/:folderId/:documentId')
 	.get(
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
 	);
@@ -96,14 +84,14 @@ router
 		'/:costsCategory/:costsDocumentType/manage-documents/:folderId',
 		'/:costsCategory/manage-documents/:folderId'
 	])
-	.get(validateCaseFolderId, asyncHandler(controller.getManageFolder));
+	.get(asyncHandler(controller.getManageFolder));
 
 router
 	.route([
 		'/:costsCategory/:costsDocumentType/manage-documents/:folderId/:documentId',
 		'/:costsCategory/manage-documents/:folderId/:documentId'
 	])
-	.get(validateCaseFolderId, asyncHandler(controller.getManageDocument));
+	.get(asyncHandler(controller.getManageDocument));
 
 router
 	.route([
@@ -111,13 +99,11 @@ router
 		'/:costsCategory/manage-documents/:folderId/:documentId/:versionId/delete'
 	])
 	.get(
-		validateCaseFolderId,
 		validateCaseDocumentId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getDeleteCostsDocument)
 	)
 	.post(
-		validateCaseFolderId,
 		validateCaseDocumentId,
 		assertUserHasPermission(permissionNames.updateCase),
 		documentsValidators.validateDocumentDeleteAnswer,
@@ -131,13 +117,11 @@ router
 	])
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getChangeDocumentFileNameDetails)
 	)
 	.post(
 		assertUserHasPermission(permissionNames.updateCase),
-		validateCaseFolderId,
 		documentsValidators.validateDocumentNameBodyFormat,
 		documentsValidators.validateDocumentName,
 		asyncHandler(controller.postChangeDocumentFileNameDetails)
@@ -150,12 +134,10 @@ router
 	])
 	.get(
 		assertUserHasPermission(permissionNames.updateCase),
-		validateCaseFolderId,
 		asyncHandler(controller.getChangeDocumentVersionDetails)
 	)
 	.post(
 		assertUserHasPermission(permissionNames.updateCase),
-		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
 		documentsValidators.validateDocumentDetailsReceivedDatesFields,
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
@@ -171,12 +153,10 @@ router
 		'/decision/check-and-confirm/:folderId/:documentId'
 	])
 	.get(
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getDecisionCheckAndConfirm)
 	)
 	.post(
-		validateCaseFolderId,
 		validatePostDecisionConfirmation,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postDecisionCheckAndConfirm)
@@ -185,12 +165,10 @@ router
 router
 	.route('/:costsCategory/check-and-confirm/:folderId/:documentId')
 	.get(
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.updateCase),
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
 	);

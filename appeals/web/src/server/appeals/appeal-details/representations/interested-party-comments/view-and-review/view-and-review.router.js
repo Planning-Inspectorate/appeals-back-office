@@ -4,6 +4,7 @@ import {
 } from '#appeals/appeal-details/representations/common/validators.js';
 import addDocumentRouter from '#appeals/appeal-details/representations/document-attachments/add-document.router.js';
 import manageDocumentsRouter from '#appeals/appeal-details/representations/document-attachments/manage-documents.router.js';
+import { validateCaseFolderId } from '#appeals/appeal-documents/appeal-documents.middleware.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 import rejectRouter from './reject/reject.router.js';
@@ -36,6 +37,6 @@ router
 		asyncHandler(controller.postReviewInterestedPartyComment)
 	);
 
-router.use('/manage-documents', manageDocumentsRouter);
+router.use('/manage-documents', validateCaseFolderId, manageDocumentsRouter);
 
 export default router;
