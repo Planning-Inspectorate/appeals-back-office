@@ -51,7 +51,7 @@ apps_config = {
     featureFlagChangeProcedureType    = false
     featureFlagAdvertisement          = false
     featureFlagHearingPostMvp         = false
-    featureFlagAutoAssignTeam         = false
+    featureFlagAutoAssignTeam         = true
     featureFlagCancelSiteVisit        = false
   }
 
