@@ -49,23 +49,41 @@ describe('set up inquiry', () => {
 	});
 
 	describe('GET /inquiry/setup/date', () => {
-		const appealId = 2;
+		const appealId = 7;
+		const savedDate = {
+			'inquiry-date-day': '19',
+			'inquiry-date-month': '03',
+			'inquiry-date-year': '2026',
+			'inquiry-time-hour': '10',
+			'inquiry-time-minute': '00'
+		};
 
 		let pageHtml;
-
 		beforeAll(async () => {
+			// Mock API call for the appeal
 			nock('http://test/')
+				.persist()
 				.get(`/appeals/${appealId}`)
 				.reply(200, { ...appealData, appealId });
 
+			// Save inquiry data for this appealId
+			await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send(savedDate);
+
+			//fetch page
 			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/date`);
 			pageHtml = parseHtml(response.text);
 		});
 
+		it('renders the saved inquiry date scoped by appealId', async () => {
+			expect(pageHtml.querySelector('input#inquiry-date-day').getAttribute('value')).toBe('19');
+			expect(pageHtml.querySelector('input#inquiry-date-month').getAttribute('value')).toBe('03');
+			expect(pageHtml.querySelector('input#inquiry-date-year').getAttribute('value')).toBe('2026');
+			expect(pageHtml.querySelector('input#inquiry-time-hour').getAttribute('value')).toBe('10');
+			expect(pageHtml.querySelector('input#inquiry-time-minute').getAttribute('value')).toBe('00');
+		});
 		it('should match the snapshot', () => {
 			expect(pageHtml.innerHTML).toMatchSnapshot();
 		});
-
 		it('should render the correct heading', () => {
 			expect(pageHtml.querySelector('h1')?.innerHTML.trim()).toBe('Inquiry date and time');
 		});
@@ -79,38 +97,6 @@ describe('set up inquiry', () => {
 		it('should render a Time field', () => {
 			expect(pageHtml.querySelector('input#inquiry-time-hour')).not.toBeNull();
 			expect(pageHtml.querySelector('input#inquiry-time-minute')).not.toBeNull();
-		});
-
-		it('should render any saved response', async () => {
-			nock('http://test/')
-				.get(`/appeals/${appealId}`)
-				.twice()
-				.reply(200, { ...appealData, appealId });
-
-			//set session data with post request
-			await request.post(`${baseUrl}/${appealId}/inquiry/setup/date`).send({
-				'inquiry-date-day': '01',
-				'inquiry-date-month': '02',
-				'inquiry-date-year': '3025',
-				'inquiry-time-hour': '12',
-				'inquiry-time-minute': '00'
-			});
-
-			const response = await request.get(`${baseUrl}/${appealId}/inquiry/setup/date`);
-
-			pageHtml = parseHtml(response.text);
-
-			expect(pageHtml.querySelector('input#inquiry-date-day').getAttribute('value')).toEqual('01');
-			expect(pageHtml.querySelector('input#inquiry-date-month').getAttribute('value')).toEqual(
-				'02'
-			);
-			expect(pageHtml.querySelector('input#inquiry-date-year').getAttribute('value')).toEqual(
-				'3025'
-			);
-			expect(pageHtml.querySelector('input#inquiry-time-hour').getAttribute('value')).toEqual('12');
-			expect(pageHtml.querySelector('input#inquiry-time-minute').getAttribute('value')).toEqual(
-				'00'
-			);
 		});
 	});
 

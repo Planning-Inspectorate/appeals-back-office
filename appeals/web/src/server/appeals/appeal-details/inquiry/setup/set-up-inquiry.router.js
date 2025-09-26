@@ -20,7 +20,7 @@ router
 		extractAndProcessDateErrors({
 			fieldNamePrefix: dateFieledName
 		}),
-		saveBodyToSession('setUpInquiry'),
+		saveBodyToSession('setUpInquiry', { scopeToAppeal: true }),
 		asyncHandler(controller.postInquiryDate)
 	);
 

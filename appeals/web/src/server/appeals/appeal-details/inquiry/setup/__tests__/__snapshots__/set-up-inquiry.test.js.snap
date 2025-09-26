@@ -114,7 +114,7 @@ exports[`set up inquiry GET /inquiry/setup/check-details should match the snapsh
                         <h3 class="govuk-heading-m">Inquiry details</h3>
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry date</dt>
-                                <dd class="govuk-summary-list__value">1 February 3025</dd>
+                                <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/date"
                                     data-cy="change-inquiry-date">Change<span class="govuk-visually-hidden"> Inquiry date</span></a>
                                 </dd>
@@ -122,7 +122,7 @@ exports[`set up inquiry GET /inquiry/setup/check-details should match the snapsh
                         </dl>
                         <dl class="govuk-summary-list">
                             <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Inquiry time</dt>
-                                <dd class="govuk-summary-list__value">12:00pm</dd>
+                                <dd class="govuk-summary-list__value"></dd>
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/inquiry/setup/date"
                                     data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>
                                 </dd>
@@ -236,6 +236,80 @@ exports[`set up inquiry GET /inquiry/setup/date should match the snapshot 1`] = 
                                         <div class="govuk-form-group">
                                             <label class="govuk-label govuk-date-input__label" for="inquiry-date-day">Day</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="inquiry-date-day" name="inquiry-date-day" type="text" value="19" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="inquiry-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="inquiry-date-month" name="inquiry-date-month" type="text" value="03"
+                                            inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="inquiry-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                            id="inquiry-date-year" name="inquiry-date-year" type="text" value="2026"
+                                            inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Time</legend>
+                            <div id="hearing-date-hint" class="govuk-hint">For example, 9:00 or 13:15</div>
+                            <div class="govuk-date-input">
+                                <div class="govuk-date-input__item govuk-!-margin-right-1">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="inquiry-time-hour">Hour</label>
+                                        <input class="govuk-input govuk-input--width-2" id="inquiry-time-hour"
+                                        name="inquiry-time-hour" type="text" value="10">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item govuk-!-font-size-19 govuk-!-padding-0 govuk-!-margin-right-1">:</div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="inquiry-time-minute">Minute</label>
+                                        <input class="govuk-input govuk-input--width-2" id="inquiry-time-minute"
+                                        name="inquiry-time-minute" type="text" value="00">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`set up inquiry GET /inquiry/setup/date with different appeal ID (no saved data) should match the snapshot for empty form 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - start case</span>
+            <h1 class="govuk-heading-l">Inquiry date and time</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="inquiry-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Date</legend>
+                                <div id="inquiry-date-hint" class="govuk-hint">For example, 31 3 2025</div>
+                                <div class="govuk-date-input" id="inquiry-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="inquiry-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
                                             id="inquiry-date-day" name="inquiry-date-day" type="text" value="" inputmode="numeric">
                                         </div>
                                     </div>
@@ -252,6 +326,80 @@ exports[`set up inquiry GET /inquiry/setup/date should match the snapshot 1`] = 
                                             <label class="govuk-label govuk-date-input__label" for="inquiry-date-year">Year</label>
                                             <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
                                             id="inquiry-date-year" name="inquiry-date-year" type="text" value="" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <fieldset class="govuk-fieldset">
+                            <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Time</legend>
+                            <div id="hearing-date-hint" class="govuk-hint">For example, 9:00 or 13:15</div>
+                            <div class="govuk-date-input">
+                                <div class="govuk-date-input__item govuk-!-margin-right-1">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="inquiry-time-hour">Hour</label>
+                                        <input class="govuk-input govuk-input--width-2" id="inquiry-time-hour"
+                                        name="inquiry-time-hour" type="text" value="10">
+                                    </div>
+                                </div>
+                                <div class="govuk-date-input__item govuk-!-font-size-19 govuk-!-padding-0 govuk-!-margin-right-1">:</div>
+                                <div class="govuk-date-input__item">
+                                    <div class="govuk-form-group">
+                                        <label class="govuk-label" for="inquiry-time-minute">Minute</label>
+                                        <input class="govuk-input govuk-input--width-2" id="inquiry-time-minute"
+                                        name="inquiry-time-minute" type="text" value="00">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`set up inquiry GET /inquiry/setup/date with existing appeal data should match the snapshot for pre-filled form 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - start case</span>
+            <h1 class="govuk-heading-l">Inquiry date and time</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <fieldset class="govuk-fieldset" role="group" aria-describedby="inquiry-date-hint">
+                                <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">Date</legend>
+                                <div id="inquiry-date-hint" class="govuk-hint">For example, 31 3 2025</div>
+                                <div class="govuk-date-input" id="inquiry-date">
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="inquiry-date-day">Day</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="inquiry-date-day" name="inquiry-date-day" type="text" value="19" inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="inquiry-date-month">Month</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-2 govuk-input govuk-date-input__input"
+                                            id="inquiry-date-month" name="inquiry-date-month" type="text" value="03"
+                                            inputmode="numeric">
+                                        </div>
+                                    </div>
+                                    <div class="govuk-date-input__item">
+                                        <div class="govuk-form-group">
+                                            <label class="govuk-label govuk-date-input__label" for="inquiry-date-year">Year</label>
+                                            <input class="govuk-input govuk-date-input__input govuk-input--width-4 govuk-input govuk-date-input__input"
+                                            id="inquiry-date-year" name="inquiry-date-year" type="text" value="2026"
+                                            inputmode="numeric">
                                         </div>
                                     </div>
                                 </div>
