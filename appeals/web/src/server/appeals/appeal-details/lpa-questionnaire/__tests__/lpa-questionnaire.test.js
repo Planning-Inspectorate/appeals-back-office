@@ -3159,7 +3159,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence date month must be a number</a>'
+				'Agreement to change description evidence date must be a real date</a>'
 			);
 		});
 
@@ -3341,24 +3341,27 @@ describe('LPA Questionnaire review', () => {
 		it('should send a patch request to the appeal documents endpoint and redirect to the lpa questionnaire page, if complete and valid document details were provided', async () => {
 			expect(addDocumentsResponse.statusCode).toBe(302);
 
-			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '1',
-							month: '2',
-							year: '2023'
-						},
-						redactionStatus: 2
-					}
-				]
-			});
+			const monthVariants = ['2', ' Feb ', 'February'];
+			for (const month of monthVariants) {
+				const response = await request.post(`${baseUrl}/add-document-details/1`).send({
+					items: [
+						{
+							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+							receivedDate: {
+								day: '1',
+								month: month,
+								year: '2023'
+							},
+							redactionStatus: 2
+						}
+					]
+				});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864/check-your-answers'
-			);
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864/check-your-answers'
+				);
+			}
 		});
 	});
 

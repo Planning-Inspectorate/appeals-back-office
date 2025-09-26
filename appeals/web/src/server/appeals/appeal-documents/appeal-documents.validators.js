@@ -1,9 +1,9 @@
-import { createValidator } from '@pins/express';
-import { body } from 'express-validator';
-
 import { folderPathToFolderNameText } from '#appeals/appeal-documents/appeal-documents.mapper.js';
+import { MONTH_SET } from '#lib/constants.js';
 import { dateIsTodayOrInThePast, dateIsValid } from '#lib/dates.js';
 import { mapFolderNameToDisplayLabel } from '#lib/mappers/utils/documents-and-folders.js';
+import { createValidator } from '@pins/express';
+import { body } from 'express-validator';
 import { lowerCase } from 'lodash-es';
 
 export const validateDocumentNameBodyFormat = createValidator(
@@ -70,9 +70,20 @@ export const validateDocumentDetailsReceivedDatesFields = createValidator(
 	body('items.*.receivedDate').custom((value, { req }) => {
 		const docName = getDocumentName(req);
 		const documentName = docName || 'Received';
-		const day = value.day;
-		const month = value.month;
-		const year = value.year;
+		value.originalDate = {};
+
+		const { day, month, year } = ['day', 'month', 'year'].reduce(
+			/** @param {Record<string, string>} acc
+			 * @param {string} field
+			 * */
+			(acc, field) => {
+				value.originalDate[field] = value[field];
+				value[field] = typeof value?.[field] === 'string' ? value[field].trim() : value[field];
+				acc[field] = value[field];
+				return acc;
+			},
+			{ day: '', month: '', year: '' }
+		);
 
 		if (!day && !month && !year) {
 			const baseDocumentName = getDocumentName(req);
@@ -122,15 +133,20 @@ export const validateDocumentDetailsReceivedDatesFields = createValidator(
 		if (!/^(0?[1-9]|[12]\d|3[01])$/.test(dayStr)) {
 			throw new Error(`day::${documentName} date day must be between 1 and 31`);
 		}
-
 		if (!/^\d+$/.test(monthStr)) {
-			throw new Error(`month::${documentName} date month must be a number`);
-		}
-		if (monthStr.length < 1 || monthStr.length > 2) {
-			throw new Error(`month::${documentName} date month must be 1 or 2 digits`);
-		}
-		if (!/^(0?[1-9]|1[0-2])$/.test(monthStr)) {
-			throw new Error(`month::${documentName} date month must be between 1 and 12`);
+			const monthNum = MONTH_SET[month.toLowerCase()];
+			if (!monthNum) {
+				throw new Error(`month::${documentName} date must be a real date`);
+			} else {
+				value['month'] = monthNum;
+			}
+		} else {
+			if (monthStr.length < 1 || monthStr.length > 2) {
+				throw new Error(`month::${documentName} date month must be 1 or 2 digits`);
+			}
+			if (!/^(0?[1-9]|1[0-2])$/.test(monthStr)) {
+				throw new Error(`month::${documentName} date month must be between 1 and 12`);
+			}
 		}
 
 		if (!/^\d+$/.test(yearStr)) {

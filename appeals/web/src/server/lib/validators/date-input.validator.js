@@ -466,9 +466,28 @@ export const extractAndProcessDateErrors = ({ fieldNamePrefix }) => {
  */
 export const extractAndProcessDocumentDateErrors = () => {
 	return (req, res, next) => {
+		const items = req?.body?.items;
+
 		if (!req.errors) {
+			if (Array.isArray(items)) {
+				items.forEach((item) => delete item?.receivedDate?.originalDate);
+			}
 			return next();
 		}
+
+		if (Array.isArray(items)) {
+			items.forEach((item) => {
+				const originalDate = item?.receivedDate?.originalDate;
+				if (originalDate && typeof originalDate === 'object') {
+					const originalDateFields = Object.keys(originalDate || {});
+					for (const field of originalDateFields) {
+						item.receivedDate[field] = originalDate[field] ?? item.receivedDate[field];
+					}
+				}
+				delete item?.receivedDate?.originalDate;
+			});
+		}
+
 		for (const key in req.errors) {
 			if (Object.hasOwnProperty.call(req.errors, key)) {
 				const errorDetails = req.errors[key];

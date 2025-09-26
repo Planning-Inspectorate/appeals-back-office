@@ -475,7 +475,7 @@ describe('costs', () => {
 								value: 'a',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} date month must be a number`
+								} costs ${costsDocumentType} date must be a real date`
 							},
 							{
 								value: '0',
@@ -1018,7 +1018,7 @@ describe('costs', () => {
 								value: 'a',
 								expectedError: `${
 									costsCategory === 'lpa' ? upperCase(costsCategory) : capitalize(costsCategory)
-								} costs ${costsDocumentType} date month must be a number`
+								} costs ${costsDocumentType} date must be a real date`
 							},
 							{
 								value: '0',
@@ -2160,7 +2160,7 @@ describe('costs', () => {
 
 				const testCases = [
 					{ value: '', expectedError: 'Received date must include a month' },
-					{ value: 'a', expectedError: 'Received date month must be a number' },
+					{ value: 'a', expectedError: 'Received date must be a real date' },
 					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
 					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
 				];
@@ -2450,7 +2450,7 @@ describe('costs', () => {
 
 				const testCases = [
 					{ value: '', expectedError: 'Received date must include a month' },
-					{ value: 'a', expectedError: 'Received date month must be a number' },
+					{ value: 'a', expectedError: 'Received date must be a real date' },
 					{ value: '0', expectedError: 'Received date month must be between 1 and 12' },
 					{ value: '13', expectedError: 'Received date month must be between 1 and 12' }
 				];
@@ -2555,9 +2555,7 @@ describe('costs', () => {
 				expect(errorSummaryElement.innerHTML).toContain('date must be a real date');
 			});
 
-			it(`should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, if complete and valid document details were provided`, async () => {
-				expect(addDocumentsResponse.statusCode).toBe(302);
-
+			it('should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, when month is a number, if complete and valid document details were provided', async () => {
 				const response = await request
 					.post(`${baseUrl}/1/costs/decision/add-document-details/${costsFolder.folderId}/1`)
 					.send({
@@ -2575,7 +2573,52 @@ describe('costs', () => {
 					});
 
 				expect(response.statusCode).toBe(302);
+				expect(response.text).toEqual(
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/${costsFolder.folderId}/1`
+				);
+			});
 
+			it('should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, when month is an abbreviation, if complete and valid document details were provided', async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/decision/add-document-details/${costsFolder.folderId}/1`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: '3',
+									month: 'Feb',
+									year: '2023'
+								},
+								redactionStatus: 2
+							}
+						]
+					});
+
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toEqual(
+					`Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/${costsFolder.folderId}/1`
+				);
+			});
+
+			it('should send a patch request to the appeal documents endpoint and redirect to the check and confirm page, when month is a full name, if complete and valid document details were provided', async () => {
+				const response = await request
+					.post(`${baseUrl}/1/costs/decision/add-document-details/${costsFolder.folderId}/1`)
+					.send({
+						items: [
+							{
+								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
+								receivedDate: {
+									day: '3',
+									month: 'February',
+									year: '2023'
+								},
+								redactionStatus: 2
+							}
+						]
+					});
+
+				expect(response.statusCode).toBe(302);
 				expect(response.text).toEqual(
 					`Found. Redirecting to /appeals-service/appeal-details/1/costs/decision/check-and-confirm/${costsFolder.folderId}/1`
 				);
