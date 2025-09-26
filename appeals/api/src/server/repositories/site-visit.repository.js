@@ -37,4 +37,12 @@ const updateSiteVisitById = (id, data) =>
 		data
 	});
 
-export default { createSiteVisitById, updateSiteVisitById };
+/**
+ * @param {number} id
+ * */
+const deleteSiteVisitById = (id) =>
+	databaseConnector.siteVisit.delete({
+		where: { id }
+	});
+
+export default { createSiteVisitById, updateSiteVisitById, deleteSiteVisitById };
