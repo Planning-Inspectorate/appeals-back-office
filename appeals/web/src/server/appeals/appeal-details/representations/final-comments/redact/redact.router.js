@@ -1,4 +1,3 @@
-import { validateAppeal } from '#appeals/appeal-details/appeal-details.middleware.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
 
@@ -13,12 +12,12 @@ const router = createRouter({ mergeParams: true });
 
 router
 	.route('/')
-	.get(validateAppeal, asyncHandler(getRedactFinalComment))
-	.post(validateAppeal, asyncHandler(postRedactFinalComment));
+	.get(asyncHandler(getRedactFinalComment))
+	.post(asyncHandler(postRedactFinalComment));
 
 router
 	.route('/confirm')
-	.get(validateAppeal, asyncHandler(getConfirmRedactFinalComment))
-	.post(validateAppeal, asyncHandler(postConfirmRedactFinalComment));
+	.get(asyncHandler(getConfirmRedactFinalComment))
+	.post(asyncHandler(postConfirmRedactFinalComment));
 
 export default router;
