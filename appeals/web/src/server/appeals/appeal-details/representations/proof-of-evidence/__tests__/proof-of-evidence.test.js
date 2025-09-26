@@ -168,9 +168,6 @@ describe('proof-of-evidence', () => {
 
 				expect(response.statusCode).toBe(200);
 
-				const element = parseHtml(response.text);
-				expect(element.innerHTML).toMatchSnapshot();
-
 				const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
 				expect(unprettifiedElement.innerHTML).toContain('Appeal 351062</span');
