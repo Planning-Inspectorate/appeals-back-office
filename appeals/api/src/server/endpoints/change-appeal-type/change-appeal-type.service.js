@@ -143,25 +143,27 @@ const resubmitAndMarkInvalid = async (
 		details
 	});
 
-	// const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-	// const personalisation = {
-	// 	existing_appeal_type: appeal.appealType?.type || '',
-	// 	appeal_reference_number: appeal.reference,
-	// 	lpa_reference: appeal.applicationReference || '',
-	// 	site_address: siteAddress,
-	// 	due_date: formatDate(new Date(dueDate || ''), false),
-	// 	appeal_type: newAppealType || ''
-	// };
+	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	const personalisation = {
+		existing_appeal_type: appeal.appealType?.type.toLowerCase() || '',
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress,
+		due_date: formatDate(new Date(dueDate || ''), false),
+		appeal_type: newAppealType.toLowerCase() || '',
+		team_email_address: teamEmail
+	};
 
-	// if (recipientEmail) {
-	// 	await notifySend({
-	// 		azureAdUserId,
-	// 		templateName: 'appeal-type-change-non-has',
-	// 		notifyClient,
-	// 		recipientEmail,
-	// 		personalisation
-	// 	});
-	// }
+	if (recipientEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: 'appeal-type-change-non-has',
+			notifyClient,
+			recipientEmail,
+			personalisation
+		});
+	}
 };
 
 /**
