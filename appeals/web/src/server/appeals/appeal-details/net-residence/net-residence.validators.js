@@ -1,3 +1,5 @@
+import { removeCommasFromNumericInput } from '#lib/sanitizers/numeric-input-sanitizer.js';
+import { NUMERIC_INPUT_REGEX } from '@pins/appeals/constants/support.js';
 import { createValidator } from '@pins/express';
 import { body } from 'express-validator';
 import { capitalize } from 'lodash-es';
@@ -6,6 +8,9 @@ import { capitalize } from 'lodash-es';
  * @typedef {import('express-validator').ValidationChain} ValidationChain
  * @typedef {import('express-validator').CustomValidator} CustomValidator
  */
+
+const MIN_NET_RESIDENCE_GAIN_OR_LOSS = 1;
+const MAX_NET_RESIDENCE_GAIN_OR_LOSS = 999999;
 
 export const validateNetResidenceSelected = createValidator(
 	body('net-residence')
@@ -34,9 +39,21 @@ export const validateNetGainOrLoss = (
 			.trim()
 			.notEmpty()
 			.withMessage(`Enter the ${fieldName}`)
-			.isNumeric()
+			.matches(NUMERIC_INPUT_REGEX)
 			.withMessage(`${capitalize(fieldName)} must be a number, like 5`)
-			.isInt({ min: 1 })
-			.withMessage(`${capitalize(fieldName)} must be a whole number, like 5`)
+			.custom((value) => {
+				// Remove commas
+				const sanitizedValue = removeCommasFromNumericInput(value);
+
+				if (sanitizedValue < MIN_NET_RESIDENCE_GAIN_OR_LOSS) {
+					throw new Error(`${capitalize(fieldName)} must be a whole number, like 5`);
+				}
+
+				if (sanitizedValue > MAX_NET_RESIDENCE_GAIN_OR_LOSS) {
+					throw new Error(`${capitalize(fieldName)} must be 6 digits or less`);
+				}
+
+				return true;
+			})
 	);
 };
