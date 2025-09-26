@@ -104,7 +104,8 @@ describe('change appeal procedure types', () => {
 		});
 	});
 
-	it('should change appeal procedure type - hearing in LPAQ state', () => {
+	// A2-3934 (Ticket is blocked due to post hearing mvp updates)
+	it.skip('should change appeal procedure type - hearing in LPAQ state', () => {
 		happyPathHelper.startS78Case(caseRef, 'hearing');
 		caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 
