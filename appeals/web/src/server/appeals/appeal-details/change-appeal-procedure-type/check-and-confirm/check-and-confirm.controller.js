@@ -121,7 +121,7 @@ export const getCheckAndConfirm = async (request, response) => {
 			title: 'Check details and update appeal procedure',
 			heading: 'Check details and update appeal procedure',
 			preHeading: `Appeal ${currentAppeal.appealReference}`,
-			backLinkUrl: `change-timetable`,
+			backLinkUrl: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${currentAppeal.procedureType.toLowerCase()}/change-timetable`,
 			submitButtonText: 'Update appeal procedure',
 			before: responses,
 			responses: timetableResponses,

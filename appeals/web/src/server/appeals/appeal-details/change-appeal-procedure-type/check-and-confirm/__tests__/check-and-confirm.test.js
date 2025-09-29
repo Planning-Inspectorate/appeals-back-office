@@ -42,7 +42,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			.reply(200, { planningObligation: { hasObligation: false } });
 
 		const response = await request.get(
-			'/appeals-service/appeal-details/1/change-appeal-procedure-type/check-and-confirm'
+			`/appeals-service/appeal-details/1/change-appeal-procedure-type/written/check-and-confirm`
 		);
 
 		expect(response.statusCode).toBe(200);
@@ -98,7 +98,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			.get('/appeals/1/appellant-cases/0')
 			.reply(200, { planningObligation: { hasObligation: true } });
 		const response = await request.get(
-			'/appeals-service/appeal-details/1/change-appeal-procedure-type/check-and-confirm'
+			`/appeals-service/appeal-details/1/change-appeal-procedure-type/written/check-and-confirm`
 		);
 
 		expect(response.statusCode).toBe(200);
@@ -158,7 +158,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 			.get('/appeals/1/appellant-cases/0')
 			.reply(200, { planningObligation: { hasObligation: false } });
 		const response = await request.get(
-			'/appeals-service/appeal-details/1/change-appeal-procedure-type/check-and-confirm'
+			'/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/check-and-confirm'
 		);
 
 		expect(response.statusCode).toBe(200);

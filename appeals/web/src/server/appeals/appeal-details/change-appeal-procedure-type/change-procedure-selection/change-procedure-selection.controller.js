@@ -60,7 +60,7 @@ export const postChangeSelectProcedure = async (request, response) => {
 			[APPEAL_CASE_PROCEDURE.INQUIRY, APPEAL_CASE_PROCEDURE.HEARING].includes(appealProcedure)
 		) {
 			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${appealProcedure}/date`
+				`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${appealProcedure.toLowerCase()}/date`
 			);
 		}
 
