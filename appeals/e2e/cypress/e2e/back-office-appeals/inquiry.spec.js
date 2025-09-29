@@ -164,7 +164,6 @@ it('Can start case as inquiry with address and estimated days', () => {
 });
 
 it('Can start case as inquiry without address or estimated days', () => {
-	cy.wait(1000);
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		dateTimeSection.enterInquiryDate(inquiryDate);
 		dateTimeSection.enterInquiryTime('12', '00');
@@ -187,7 +186,6 @@ it('Can start case as inquiry without address or estimated days', () => {
 });
 
 it('Displays error if inquiry estimated days not entered', () => {
-	cy.wait(1000);
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		dateTimeSection.enterInquiryDate(inquiryDate);
 		dateTimeSection.enterInquiryTime('12', '00');
@@ -205,7 +203,6 @@ it('Displays error if inquiry estimated days not entered', () => {
 });
 
 it('Displays error if invalid input entered for inquiry estimated days', () => {
-	cy.wait(1000);
 	cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 		dateTimeSection.enterInquiryDate(inquiryDate);
 		dateTimeSection.enterInquiryTime('12', '00');
