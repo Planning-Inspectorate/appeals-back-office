@@ -57,7 +57,7 @@ export function generateProofOfEvidenceSummaryList(appealId, proofOfEvidence) {
 				items: [
 					{
 						text: 'Change',
-						href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceTypePath}/change/${proofOfEvidence.attachments?.[0]?.documentVersion?.document?.folderId}`,
+						href: `/appeals-service/appeal-details/${appealId}/proof-of-evidence/${proofOfEvidenceTypePath}/manage-documents/${proofOfEvidence.attachments?.[0]?.documentVersion?.document?.folderId}`,
 						visuallyHiddenText: 'proof of evidence and witnesses'
 					}
 				]

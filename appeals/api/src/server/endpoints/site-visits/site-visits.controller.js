@@ -10,7 +10,11 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { formatSiteVisit } from './site-visits.formatter.js';
-import { createSiteVisit, updateSiteVisit } from './site-visits.service.js';
+import {
+	createSiteVisit,
+	deleteSiteVisit as deleteSiteVisitService,
+	updateSiteVisit
+} from './site-visits.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
@@ -161,5 +165,35 @@ const rearrangeSiteVisit = async (req, res) => {
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
 	}
 };
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+const cancelSiteVisit = async (req, res) => {
+	const { params, appeal, notifyClient } = req;
+	const siteVisitId = Number(params.siteVisitId);
 
-export { getSiteVisitById, postSiteVisit, rearrangeSiteVisit };
+	const azureAdUserId = req.get('azureAdUserId') || '';
+	try {
+		// @ts-ignore
+		const result = await deleteSiteVisitService(
+			siteVisitId,
+			appeal,
+			notifyClient,
+			String(azureAdUserId)
+		);
+		if (!result) {
+			return res.status(404).send({ errors: { body: 'Site visit deletion failed' } });
+		}
+
+		return res.send({
+			siteVisitId
+		});
+	} catch (error) {
+		logger.error(error);
+		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
+	}
+};
+
+export { cancelSiteVisit, getSiteVisitById, postSiteVisit, rearrangeSiteVisit };

@@ -2,7 +2,10 @@ import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.j
 import config from '#environment/config.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
-import { APPEAL_REPRESENTATION_STATUS } from '@pins/appeals/constants/common.js';
+import {
+	APPEAL_PROOF_OF_EVIDENCE_STATUS,
+	APPEAL_REPRESENTATION_STATUS
+} from '@pins/appeals/constants/common.js';
 import {
 	DOCUMENT_STATUS_NOT_RECEIVED,
 	DOCUMENT_STATUS_RECEIVED,
@@ -11,7 +14,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
-/** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'} AppealRequiredAction */
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
@@ -167,6 +170,34 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.VALID ||
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE ||
 				(ipCommentsCounts?.valid && ipCommentsCounts?.valid > 0);
+
+			//TODO: This POE banner management should be moved into the POE state section once it is ready
+			const lpaProofOfEvidenceCompleted =
+				appealDetails.documentationSummary.lpaProofOfEvidence?.representationStatus ===
+				APPEAL_REPRESENTATION_STATUS.VALID;
+			const appellantProofOfEvidenceCompleted =
+				appealDetails.documentationSummary.appellantProofOfEvidence?.representationStatus ===
+				APPEAL_REPRESENTATION_STATUS.VALID;
+			const lpaProofOfEvidenceReceived =
+				appealDetails.documentationSummary.lpaProofOfEvidence?.status ===
+				APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED;
+			const appellantProofOfEvidenceReceived =
+				appealDetails.documentationSummary.appellantProofOfEvidence?.status ===
+				APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED;
+
+			if (
+				lpaProofOfEvidenceCompleted &&
+				!appellantProofOfEvidenceCompleted &&
+				appellantProofOfEvidenceReceived
+			) {
+				actions.push('reviewAppellantProofOfEvidence');
+			} else if (
+				!lpaProofOfEvidenceCompleted &&
+				appellantProofOfEvidenceCompleted &&
+				lpaProofOfEvidenceReceived
+			) {
+				actions.push('reviewLpaProofOfEvidence');
+			}
 
 			if (
 				ipCommentsDueDatePassed &&

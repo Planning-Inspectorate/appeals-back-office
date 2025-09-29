@@ -12,10 +12,12 @@ import {
 } from '@pins/appeals/constants/support.js';
 import formatDate, { formatTime } from '@pins/appeals/utils/date-formatter.js';
 // eslint-disable-next-line no-unused-vars
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
+import { AUDIT_TRAIL_SITE_VISIT_CANCELLED } from '@pins/appeals/constants/support.js';
 import { EventType } from '@pins/event-client';
 import { formatInTimeZone } from 'date-fns-tz';
 
@@ -320,8 +322,60 @@ const fetchSiteVisitScheduleTemplateIds = (visitTypeName) => {
 	}
 };
 
+/**
+ *
+ * @param {number} siteVisitId
+ * @param {import('@pins/appeals.api').Schema.Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
+ * @returns
+ */
+const deleteSiteVisit = async (siteVisitId, appeal, notifyClient, azureAdUserId) => {
+	const result = await siteVisitRepository.deleteSiteVisitById(siteVisitId);
+	if (!result) {
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	}
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+	const personalisation = {
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress,
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
+	};
+	const templateName = 'site-visit-cancelled';
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	if (appeal.appellant?.email) {
+		await notifySend({
+			azureAdUserId: azureAdUserId,
+			templateName: templateName,
+			notifyClient,
+			recipientEmail,
+			personalisation
+		});
+	}
+
+	if (appeal.lpa?.email) {
+		await notifySend({
+			azureAdUserId: azureAdUserId,
+			templateName: templateName,
+			notifyClient,
+			recipientEmail: appeal.lpa?.email,
+			personalisation
+		});
+	}
+	await createAuditTrail({
+		appealId: appeal.id,
+		azureAdUserId: azureAdUserId,
+		details: AUDIT_TRAIL_SITE_VISIT_CANCELLED
+	});
+	return result;
+};
+
 export {
 	checkSiteVisitExists,
+	deleteSiteVisit,
 	fetchRescheduleTemplateIds,
 	fetchSiteVisitScheduleTemplateIds,
 	updateSiteVisit

@@ -27,7 +27,8 @@ export const renderCheckYourAnswers = (request, response) => {
 				files: [{ name, blobStoreUrl }]
 			},
 			addDocument: { [redactionStatusFieldName]: redactionStatus, day, month, year }
-		}
+		},
+		locals: { pageContent }
 	} = request;
 	const baseUrl = request.baseUrl;
 
@@ -39,13 +40,15 @@ export const renderCheckYourAnswers = (request, response) => {
 
 	return renderCheckYourAnswersComponent(
 		{
-			title: 'Check details and add document',
-			heading: 'Check details and add document',
+			title:
+				pageContent?.checkYourAnswer?.pageHeadingTextOverride || 'Check details and add document',
+			heading:
+				pageContent?.checkYourAnswer?.pageHeadingTextOverride || 'Check details and add document',
 			preHeading: `Appeal ${appealShortReference(appealReference)}`,
 			backLinkUrl: `${baseUrl}/date-submitted`,
-			submitButtonText: 'Add document',
+			submitButtonText: pageContent?.checkYourAnswer?.submitButtonTextOverride || 'Add document',
 			responses: {
-				'Supporting document': {
+				[pageContent?.checkYourAnswer?.supportingDocumentTextOverride || 'Supporting document']: {
 					html: `<a class="govuk-link" download href="${blobStoreUrl ?? ''}">${name ?? ''}</a>`,
 					actions: {
 						Change: {
@@ -63,7 +66,7 @@ export const renderCheckYourAnswers = (request, response) => {
 						}
 					}
 				},
-				'Date submitted': {
+				[pageContent?.checkYourAnswer?.dateSubmittedTextOverride || 'Date submitted']: {
 					value: dayMonthYearHourMinuteToDisplayDate({ day, month, year }),
 					actions: {
 						Change: {
@@ -165,6 +168,12 @@ export const postCheckYourAnswers = async (request, response) => {
 			break;
 		case 'lpa_statement':
 			bannerDefinitionKey = 'lpaStatementDocumentAddedSuccess';
+			break;
+		case 'lpa_proofs_evidence':
+			bannerDefinitionKey = 'lpaProofOfEvidenceDocumentAddedSuccess';
+			break;
+		case 'appellant_proofs_evidence':
+			bannerDefinitionKey = 'appellantProofOfEvidenceDocumentAddedSuccess';
 			break;
 		default:
 			bannerDefinitionKey = 'finalCommentsDocumentAddedSuccess';

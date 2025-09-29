@@ -119,9 +119,10 @@ export const requestTransferOfAppeal = async (req, res) => {
 			where: { id: appeal.id },
 			data
 		}),
-		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.AWAITING_TRANSFER),
-		await broadcasters.broadcastAppeal(appeal.id)
+		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.AWAITING_TRANSFER)
 	]);
+
+	await broadcasters.broadcastAppeal(appeal.id);
 
 	return res.send(true);
 };
@@ -144,9 +145,10 @@ export const requestConfirmationTransferOfAppeal = async (req, res) => {
 				caseUpdatedDate: new Date()
 			}
 		}),
-		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.TRANSFERRED),
-		await broadcasters.broadcastAppeal(appeal.id)
+		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.TRANSFERRED)
 	]);
+
+	await broadcasters.broadcastAppeal(appeal.id);
 
 	return res.send(true);
 };
@@ -158,15 +160,15 @@ export const requestConfirmationTransferOfAppeal = async (req, res) => {
  */
 export const requestUpdateOfAppeal = async (req, res) => {
 	const { newAppealTypeId } = req.body;
-	const newAppealType = (
-		req.appealTypes.find((appealType) => appealType.id === Number(newAppealTypeId))?.type || ''
-	).toLowerCase();
+	const newAppealType =
+		req.appealTypes.find((appealType) => appealType.id === Number(newAppealTypeId))?.type || '';
 
 	await updateAppealType(
 		req.appeal,
 		newAppealTypeId,
 		newAppealType,
-		req.get('azureAdUserId') || ''
+		req.get('azureAdUserId') || '',
+		req.notifyClient
 	);
 
 	return res.send(true);

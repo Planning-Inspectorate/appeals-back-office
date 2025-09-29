@@ -1,3 +1,4 @@
+import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
@@ -142,25 +143,27 @@ const resubmitAndMarkInvalid = async (
 		details
 	});
 
-	// const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
-	// const personalisation = {
-	// 	existing_appeal_type: appeal.appealType?.type || '',
-	// 	appeal_reference_number: appeal.reference,
-	// 	lpa_reference: appeal.applicationReference || '',
-	// 	site_address: siteAddress,
-	// 	due_date: formatDate(new Date(dueDate || ''), false),
-	// 	appeal_type: newAppealType || ''
-	// };
+	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
+	const personalisation = {
+		existing_appeal_type: appeal.appealType?.type.toLowerCase() || '',
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress,
+		due_date: formatDate(new Date(dueDate || ''), false),
+		appeal_type: newAppealType.toLowerCase() || '',
+		team_email_address: teamEmail
+	};
 
-	// if (recipientEmail) {
-	// 	await notifySend({
-	// 		azureAdUserId,
-	// 		templateName: 'appeal-type-change-non-has',
-	// 		notifyClient,
-	// 		recipientEmail,
-	// 		personalisation
-	// 	});
-	// }
+	if (recipientEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: 'appeal-type-change-non-has',
+			notifyClient,
+			recipientEmail,
+			personalisation
+		});
+	}
 };
 
 /**
@@ -168,9 +171,16 @@ const resubmitAndMarkInvalid = async (
  * @param {number} newAppealTypeId
  * @param {string} newAppealType
  * @param {string} azureAdUserId
+ * @param {import('#endpoints/appeals.js').NotifyClient } notifyClient
  * @returns {Promise<void>}
  */
-const updateAppealType = async (appeal, newAppealTypeId, newAppealType, azureAdUserId) => {
+const updateAppealType = async (
+	appeal,
+	newAppealTypeId,
+	newAppealType,
+	azureAdUserId,
+	notifyClient
+) => {
 	Promise.all([
 		await databaseConnector.appeal.update({
 			where: { id: appeal.id },
@@ -185,8 +195,44 @@ const updateAppealType = async (appeal, newAppealTypeId, newAppealType, azureAdU
 		})
 	]);
 
-	// To do
-	// Add notifies & broadcast
+	await broadcasters.broadcastAppeal(appeal.id);
+
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
+	const agentOrAppellantEmail = appeal.agent?.email || appeal.appellant?.email;
+	const lpaEmail = appeal.lpa?.email;
+
+	const personalisation = {
+		appeal_reference_number: appeal.reference,
+		site_address: siteAddress,
+		lpa_reference: appeal.applicationReference || '',
+		team_email_address: teamEmail,
+		existing_appeal_type: appeal.appealType?.type.toLowerCase() || '',
+		new_appeal_type: newAppealType.toLowerCase() || ''
+	};
+
+	if (agentOrAppellantEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: 'appeal-type-change-in-cbos-appellant',
+			notifyClient,
+			recipientEmail: agentOrAppellantEmail,
+			personalisation
+		});
+	}
+
+	if (lpaEmail) {
+		await notifySend({
+			azureAdUserId,
+			templateName: 'appeal-type-change-in-cbos-lpa',
+			notifyClient,
+			recipientEmail: lpaEmail,
+			personalisation
+		});
+	}
 };
 
 export { changeAppealType, resubmitAndMarkInvalid, updateAppealType };

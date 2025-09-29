@@ -352,7 +352,23 @@ describe('appeal resubmit mark invalid type routes', () => {
 				]
 			});
 
-			// expect(mockNotifySend).toHaveBeenCalledTimes(1);
+			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: householdAppeal.reference,
+					lpa_reference: householdAppeal.applicationReference,
+					site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
+					existing_appeal_type: householdAppeal.appealType.type.toLowerCase(),
+					appeal_type: 'cas planning',
+					due_date: '5 February 3000',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				},
+				recipientEmail: householdAppeal.agent.email,
+				templateName: 'appeal-type-change-non-has'
+			});
 
 			expect(response.status).toEqual(200);
 		});
@@ -518,6 +534,10 @@ describe('appeal change type transfer confirmation routes', () => {
 });
 
 describe('appeal change update routes', () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
+	});
+
 	describe('POST', () => {
 		test('returns 404 if the appeal does not exist', async () => {
 			// @ts-ignore
@@ -618,7 +638,7 @@ describe('appeal change update routes', () => {
 			['assign case officer', APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER],
 			['validation', APPEAL_CASE_STATUS.VALIDATION]
 		])('successfully updates appeal type for valid case status: %s', async (_, caseStatus) => {
-			const appealWithInvalidCaseStatus = {
+			const appealWithValidCaseStatus = {
 				...householdAppeal,
 				appealStatus: [
 					{
@@ -629,7 +649,7 @@ describe('appeal change update routes', () => {
 			};
 
 			// @ts-ignore
-			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithInvalidCaseStatus);
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithValidCaseStatus);
 			// @ts-ignore
 			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
 
@@ -645,6 +665,83 @@ describe('appeal change update routes', () => {
 				data: {
 					appealTypeId: 10
 				}
+			});
+
+			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(appealWithValidCaseStatus.id);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: appealWithValidCaseStatus.reference,
+					lpa_reference: appealWithValidCaseStatus.applicationReference,
+					site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					existing_appeal_type: appealWithValidCaseStatus.appealType.type.toLowerCase(),
+					new_appeal_type: 'planning appeal'
+				},
+				recipientEmail: appealWithValidCaseStatus.agent.email,
+				templateName: 'appeal-type-change-in-cbos-appellant'
+			});
+
+			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: appealWithValidCaseStatus.reference,
+					lpa_reference: appealWithValidCaseStatus.applicationReference,
+					site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					existing_appeal_type: appealWithValidCaseStatus.appealType.type.toLowerCase(),
+					new_appeal_type: 'planning appeal'
+				},
+				recipientEmail: appealWithValidCaseStatus.lpa.email,
+				templateName: 'appeal-type-change-in-cbos-lpa'
+			});
+
+			expect(response.status).toEqual(200);
+		});
+
+		test('sends a notify to appellant where agent email does not exist', async () => {
+			const appealWithValidCaseStatus = {
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.ASSIGN_CASE_OFFICER,
+						valid: true
+					}
+				],
+				agent: { email: null }
+			};
+			const recipientEmail = appealWithValidCaseStatus.appellant.email;
+
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(appealWithValidCaseStatus);
+			// @ts-ignore
+			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/appeal-update-request`)
+				.send({
+					newAppealTypeId: 10
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(mockNotifySend).toHaveBeenCalledTimes(2);
+			expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: appealWithValidCaseStatus.reference,
+					lpa_reference: appealWithValidCaseStatus.applicationReference,
+					site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
+					existing_appeal_type: appealWithValidCaseStatus.appealType.type.toLowerCase(),
+					new_appeal_type: 'planning appeal'
+				},
+				recipientEmail,
+				templateName: 'appeal-type-change-in-cbos-appellant'
 			});
 
 			expect(response.status).toEqual(200);
