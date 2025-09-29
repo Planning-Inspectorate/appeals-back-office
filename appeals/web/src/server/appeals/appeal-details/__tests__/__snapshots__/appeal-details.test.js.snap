@@ -5528,7 +5528,7 @@ exports[`appeal-details GET /:appealId Team section should render the case-team 
         </ul>
     </dd>
     <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/case-team/edit"
-        data-cy="assign-case-team">Assign<span class="govuk-visually-hidden"> Case team</span></a>
+        data-cy="change-case-team">Change<span class="govuk-visually-hidden"> Case team</span></a>
     </dd>
 </div>"
 `;
