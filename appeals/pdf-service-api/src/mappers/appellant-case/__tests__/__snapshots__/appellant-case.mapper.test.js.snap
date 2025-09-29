@@ -15,6 +15,39 @@ exports[`mapAppellantCaseData should map appellant case data 1`] = `
   },
   "sections": [
     {
+      "heading": "Before you start",
+      "items": [
+        {
+          "html": "Maidstone Borough Council",
+          "key": "Local planning authority",
+        },
+        {
+          "key": "What type of application is your appeal about?",
+          "text": "Planning appeal",
+        },
+        {
+          "key": "Was your application granted or refused?",
+          "text": "Refused",
+        },
+        {
+          "key": "What’s the date on the decision letter from the local planning authority?",
+          "text": "3 June 2025",
+        },
+        {
+          "key": "Are you claiming costs as part of your appeal?",
+          "text": "Not answered",
+        },
+        {
+          "key": "What is the application reference number?",
+          "text": "44377/APP/3/218453",
+        },
+        {
+          "key": "What date did you submit your application?",
+          "text": "22 May 2025",
+        },
+      ],
+    },
+    {
       "heading": "Appellant details",
       "items": [
         {
@@ -76,14 +109,6 @@ exports[`mapAppellantCaseData should map appellant case data 1`] = `
       "heading": "Application details",
       "items": [
         {
-          "html": "Maidstone Borough Council",
-          "key": "Which local planning authority (LPA) do you want to appeal against?",
-        },
-        {
-          "key": "What is the application reference number?",
-          "text": "44377/APP/3/218453",
-        },
-        {
           "key": "What date did you submit your application?",
           "text": "22 May 2025",
         },
@@ -96,14 +121,6 @@ exports[`mapAppellantCaseData should map appellant case data 1`] = `
           "text": "No",
         },
         {
-          "key": "Was your application granted or refused?",
-          "text": "Refused",
-        },
-        {
-          "key": "What’s the date on the decision letter from the local planning authority?",
-          "text": "3 June 2025",
-        },
-        {
           "key": "Development type",
           "text": "Major retail services",
         },
@@ -112,10 +129,6 @@ exports[`mapAppellantCaseData should map appellant case data 1`] = `
     {
       "heading": "Appeal details",
       "items": [
-        {
-          "key": "What type of application is your appeal about?",
-          "text": "Planning appeal",
-        },
         {
           "key": "How would you prefer us to decide your appeal?",
           "text": "Hearing",
@@ -160,6 +173,10 @@ exports[`mapAppellantCaseData should map appellant case data 1`] = `
         {
           "html": "No documents",
           "key": "Planning obligation",
+        },
+        {
+          "html": "No documents",
+          "key": "Draft statement of common ground",
         },
         {
           "html": "No documents",
