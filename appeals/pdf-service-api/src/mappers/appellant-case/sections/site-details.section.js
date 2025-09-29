@@ -1,3 +1,4 @@
+import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	formatAddress,
 	formatSentenceCase,
@@ -11,6 +12,7 @@ function formatArea(area) {
 export function siteDetailsSection(templateData) {
 	const {
 		appealSite,
+		appealType,
 		siteAreaSquareMetres,
 		isGreenBelt,
 		siteOwnership,
@@ -37,7 +39,7 @@ export function siteDetailsSection(templateData) {
 				text: formatSentenceCase(siteOwnership?.knowsOtherLandowners)
 			},
 			// Will only be available for s78
-			...(agriculturalHolding
+			...([APPEAL_TYPE.S78].includes(appealType)
 				? [
 						{
 							key: 'Is the appeal site part of an agricultural holding?',

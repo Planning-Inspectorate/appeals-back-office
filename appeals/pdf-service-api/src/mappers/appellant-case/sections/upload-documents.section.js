@@ -11,6 +11,7 @@ export function uploadDocumentsSection(templateData) {
 		planningObligation: planningObligationDocuments,
 		ownershipCertificate,
 		appellantCostsApplication,
+		statementCommonGround,
 		designAccessStatement,
 		plansDrawings,
 		newPlansDrawings,
@@ -38,6 +39,7 @@ export function uploadDocumentsSection(templateData) {
 				text: formatSentenceCase(planningObligation?.status, 'Not answered')
 			},
 			{ key: 'Planning obligation', html: formatDocumentData(planningObligationDocuments) },
+			{ key: 'Draft statement of common ground', html: formatDocumentData(statementCommonGround) },
 			{
 				key: 'Separate ownership certificate and agricultural land declaration',
 				html: formatDocumentData(ownershipCertificate)
