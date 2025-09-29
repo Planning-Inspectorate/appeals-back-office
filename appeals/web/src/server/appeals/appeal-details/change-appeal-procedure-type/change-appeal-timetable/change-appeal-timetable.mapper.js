@@ -53,7 +53,14 @@ export const mapChangeTimetablePage = (
 	/** @type {PageContent} */
 	let pageContent = {
 		title: `Timetable due dates`,
-		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/change-selected-procedure-type`,
+		backLinkUrl:
+			appealDetails?.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE?.WRITTEN?.toLowerCase()
+				? `/appeals-service/appeal-details/${
+						appealDetails.appealId
+				  }/change-appeal-procedure-type/${appealDetails?.procedureType?.toLowerCase()}/change-selected-procedure-type`
+				: `/appeals-service/appeal-details/${
+						appealDetails.appealId
+				  }/change-appeal-procedure-type/${appealDetails?.procedureType?.toLowerCase()}/address-details`,
 		preHeading: `Appeal ${appealShortReference(
 			appealDetails.appealReference
 		)} - update appeal procedure`,
