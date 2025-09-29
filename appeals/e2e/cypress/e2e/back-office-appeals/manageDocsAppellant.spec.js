@@ -4,7 +4,6 @@
 import { users } from '../../fixtures/users';
 import { DocumentationSectionPage } from '../../page_objects/caseDetails/documentationSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
-import { DateTimeSection } from '../../page_objects/dateTimeSection';
 import { FileUploaderSection } from '../../page_objects/fileUploadSection.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
 import { happyPathHelper } from '../../support/happyPathHelper.js';
@@ -12,7 +11,6 @@ import { tag } from '../../support/tag';
 import { urlPaths } from '../../support/urlPaths.js';
 
 const listCasesPage = new ListCasesPage();
-const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 const fileUploaderSection = new FileUploaderSection();
 const documentationSectionPage = new DocumentationSectionPage();
@@ -154,9 +152,14 @@ describe('manage docs on appellant case', () => {
 
 					//naviagte to review/confirm page
 					caseDetailsPage.clickButtonByText('Continue');
+					// check for lpa heading
+					caseDetailsPage.validateSectionHeader(
+						'Check details and add appellant proof of evidence and witnesses'
+					);
 					caseDetailsPage.clickButtonByText('Add appellant proof of evidence and witness');
 
-					// check success banner
+					// check page header and success banner
+					caseDetailsPage.validateSectionHeader('Review appellant proof of evidence and witnesses');
 					caseDetailsPage.validateBannerMessage(
 						'Success',
 						'Appellant proof of evidence and witnesses added'

@@ -49,6 +49,7 @@ import { representationRoutes } from './representations/representations.routes.j
 import { serviceUserRoutes } from './service-user/service-user.routes.js';
 import { siteVisitTypesRoutes } from './site-visit-types/site-visit-types.routes.js';
 import { siteVisitRoutes } from './site-visits/site-visits.routes.js';
+import { testDataRoutes } from './test-data/test-data.routes.js';
 import { testUtilsRoutes } from './test-utils/test-utils.routes.js';
 import { transferredAppealsRoutes } from './transferred-appeals/transferred-appeal.routes.js';
 import { withdrawalRoutes } from './withdrawal/withdrawal.routes.js';
@@ -58,6 +59,10 @@ router.use(caseTeamRouter);
 router.use(integrationsRoutes);
 router.use(businessDaysRoutes);
 router.use(historicEnglandRoutes);
+
+if (config.enableTestEndpoints) {
+	router.use(testDataRoutes);
+}
 
 router.use('/', checkAzureAdUserIdHeaderExists);
 router.use('/', initNotifyClientAndAddToRequest);

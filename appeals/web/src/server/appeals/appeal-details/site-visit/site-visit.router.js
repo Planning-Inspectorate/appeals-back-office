@@ -81,4 +81,11 @@ router
 		asyncHandler(controller.postSiteVisitMissed)
 	);
 
+router
+	.route('/missed/check')
+	.get(
+		assertUserHasPermission(permissionNames.setEvents),
+		asyncHandler(controller.getSiteVisitMissedCya)
+	);
+
 export default router;

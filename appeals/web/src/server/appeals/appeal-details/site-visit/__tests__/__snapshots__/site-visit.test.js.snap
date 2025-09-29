@@ -224,6 +224,158 @@ exports[`site-visit GET /site-visit/missed should render the who missed the site
 </main>"
 `;
 
+exports[`site-visit GET /site-visit/missed/check should render the who missed the site visit page for appellant 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and record missed site visit</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who missed the site visit?</dt>
+                                <dd                                 class="govuk-summary-list__value">Appellant</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Change<span class="govuk-visually-hidden"> Change who missed site visit</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <details class="govuk-details">
+                                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to appellant</span>
+                                    </summary>
+                                    <div class="govuk-details__text">
+                                        <div class="pins-notify-preview-border">
+                                            <h2>Appeal details</h2>
+                                            <div class="govuk-inset-text">Appeal reference number: 134526
+                                                <br>Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom
+                                                <br>Planning application reference: 48269/APP/2021/1482
+                                                <br>
+                                            </div>
+                                            <h2>Appeal withdrawn</h2>We have withdrawn the appeal following your request on 01 January 2025.
+                                            <br>
+                                            <br>
+                                            <h2>What happens next</h2>We have closed the appeal and cancelled the site visit.
+                                            <br>
+                                            <br>
+                                            <h2>Feedback</h2>We welcome your feedback on our appeals process. Tell us on this short
+                                            <a                                             href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u"
+                                            class="govuk-link">feedback form</a>.
+                                                <br>
+                                                <br>The Planning Inspectorate
+                                                <br>
+                                                <br>caseofficers@planninginspectorate.gov.uk
+                                                <br>
+                                                <br>
+                                        </div>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Record missed site visit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`site-visit GET /site-visit/missed/check should render the who missed the site visit page for inspector 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and record missed site visit</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who missed the site visit?</dt>
+                                <dd                                 class="govuk-summary-list__value">Inspector</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Change<span class="govuk-visually-hidden"> Change who missed site visit</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Record missed site visit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`site-visit GET /site-visit/missed/check should render the who missed the site visit page for lpa 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and record missed site visit</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <dl class="govuk-summary-list">
+                            <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Who missed the site visit?</dt>
+                                <dd                                 class="govuk-summary-list__value">LPA</dd>
+                                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/site-visit/missed">Change<span class="govuk-visually-hidden"> Change who missed site visit</span></a>
+                                    </dd>
+                            </div>
+                        </dl>
+                        <div class="govuk-grid-row">
+                            <div class="govuk-grid-column-full">
+                                <details class="govuk-details">
+                                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text"> Preview email to LPA</span>
+                                    </summary>
+                                    <div class="govuk-details__text">
+                                        <div class="pins-notify-preview-border">We have withdrawn the appeal after the appellant's request.
+                                            <br>
+                                            <br>
+                                            <h2>Appeal details</h2>
+                                            <div class="govuk-inset-text">Appeal reference number: 234567
+                                                <br>Address: 98 The Avenue, Leftfield, Maidstone, Kent, MD21 5YY, United Kingdom
+                                                <br>Planning application reference: 48269/APP/2021/1483
+                                                <br>
+                                            </div>
+                                            <h2>What happens next</h2>We have closed the appeal and cancelled the site visit.
+                                            <br>
+                                            <br>
+                                            <h2>Feedback</h2>We welcome your feedback on our appeals process. Tell us on this short
+                                            <a                                             href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u"
+                                            class="govuk-link">feedback form</a>.
+                                                <br>
+                                                <br>The Planning Inspectorate
+                                                <br>
+                                                <br>caseofficers@planninginspectorate.gov.uk
+                                                <br>
+                                                <br>
+                                        </div>
+                                    </div>
+                                </details>
+                            </div>
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Record missed site visit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`site-visit GET /site-visit/schedule-visit should render the schedule visit page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">

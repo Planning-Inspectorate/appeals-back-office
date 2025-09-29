@@ -599,7 +599,7 @@ describe('internal correspondence', () => {
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} date month must be a number`
+						)} date must be a real date`
 					},
 					{
 						value: '0',
@@ -1041,7 +1041,7 @@ describe('internal correspondence', () => {
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} date month must be a number`
+						)} date must be a real date`
 					},
 					{
 						value: '0',
@@ -2022,7 +2022,7 @@ describe('internal correspondence', () => {
 						value: 'a',
 						expectedError: `${capitalize(
 							documentNameFromCategory(correspondenceCategory)
-						)} date month must be a number`
+						)} date must be a real date`
 					},
 					{
 						value: '0',
@@ -2177,9 +2177,9 @@ describe('internal correspondence', () => {
 							{
 								documentId: '4541e025-00e1-4458-aac6-d1b51f6ae0a7',
 								receivedDate: {
-									day: '1',
-									month: '2',
-									year: '2023'
+									day: ' 1 ',
+									month: ' Feb ',
+									year: ' 2023 '
 								},
 								redactionStatus: 'unredacted'
 							}
