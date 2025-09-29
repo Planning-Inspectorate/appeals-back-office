@@ -232,13 +232,13 @@ exports[`set up hearing GET /hearing/setup/check-details should match the snapsh
                                 <form method="POST" novalidate="novalidate">
                                     <dl class="govuk-summary-list">
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Date</dt>
-                                            <dd class="govuk-summary-list__value">1 February 3025</dd>
+                                            <dd class="govuk-summary-list__value"></dd>
                                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/setup/date?backUrl=%2Fappeals-service%2Fappeal-details%2F2&amp;editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fhearing%2Fsetup%2Fdate"
                                                 data-cy="change-date">Change<span class="govuk-visually-hidden"> Date</span></a>
                                             </dd>
                                         </div>
                                         <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Time</dt>
-                                            <dd class="govuk-summary-list__value">12:00pm</dd>
+                                            <dd class="govuk-summary-list__value"></dd>
                                             <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/hearing/setup/date?backUrl=%2Fappeals-service%2Fappeal-details%2F2&amp;editEntrypoint=%2Fappeals-service%2Fappeal-details%2F1%2Fhearing%2Fsetup%2Fdate"
                                                 data-cy="change-time">Change<span class="govuk-visually-hidden"> Time</span></a>
                                             </dd>
