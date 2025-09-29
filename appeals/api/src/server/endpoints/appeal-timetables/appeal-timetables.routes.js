@@ -4,6 +4,7 @@ import { Router as createRouter } from 'express';
 import {
 	getCalculatedAppealTimetable,
 	startAppeal,
+	startAppealNotifyPreview,
 	updateAppealTimetableById
 } from './appeal-timetables.controller.js';
 import { checkAppealTimetableExists } from './appeal-timetables.service.js';
@@ -27,7 +28,7 @@ router.post(
 		}
 		#swagger.requestBody = {
 			in: 'body',
-			description: 'Appeal and optional start date (defaults to the current date, if omitted)',
+			description: 'Appeal and optionally a start date (defaults to the current date, if omitted), procedure type, and hearing start time',
 			schema: { $ref: '#/components/schemas/StartCaseRequest' },
 			required: true
 		}
@@ -41,6 +42,35 @@ router.post(
 	checkAppealExistsByIdAndAddToRequest,
 	createAppealTimetableValidator,
 	asyncHandler(startAppeal)
+);
+
+router.post(
+	'/:appealId/appeal-timetables/notify-preview',
+	/*
+		#swagger.tags = ['Appeal Timetables']
+		#swagger.path = '/appeals/{appealId}/appeal-timetables/notify-preview'
+		#swagger.description = 'Returns the rendered HTML of the emails that would be sent to the relevant parties'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Appeal and optionally a start date (defaults to the current date, if omitted), procedure type, and hearing start time',
+			schema: { $ref: '#/components/schemas/StartCaseRequest' },
+			required: true
+		}
+		#swagger.responses[200] = {
+			description: 'Returns the rendered HTML of the emails that would be sent to the relevant parties',
+			schema: { $ref: '#/components/schemas/StartCaseNotifyPreviewResponse' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[404] = {}
+		#swagger.responses[500] = {}
+	 */
+	checkAppealExistsByIdAndAddToRequest,
+	asyncHandler(startAppealNotifyPreview)
 );
 
 router.patch(

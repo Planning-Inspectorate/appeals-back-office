@@ -1,4 +1,4 @@
-You have a new {{appeal_type}} appeal against the application {{lpa_reference}}.
+You have a new {{appeal_type | lower}} appeal against the application {{lpa_reference}}.
 
 We will decide the appeal by a hearing. You can tell us if you think a different procedure is more appropriate in the questionnaire.
 
