@@ -2,7 +2,6 @@ import { formatSentenceCase } from '../../../lib/nunjucks-filters/index.js';
 
 export function appealDetailsSection(templateData) {
 	const {
-		appealType,
 		appellantProcedurePreference,
 		appellantProcedurePreferenceDetails,
 		appellantProcedurePreferenceDuration,
@@ -12,10 +11,6 @@ export function appealDetailsSection(templateData) {
 	return {
 		heading: 'Appeal details',
 		items: [
-			{
-				key: 'What type of application is your appeal about?',
-				text: formatSentenceCase(appealType, 'Not provided')
-			},
 			{
 				key: 'How would you prefer us to decide your appeal?',
 				text: formatSentenceCase(appellantProcedurePreference, 'Not answered')
