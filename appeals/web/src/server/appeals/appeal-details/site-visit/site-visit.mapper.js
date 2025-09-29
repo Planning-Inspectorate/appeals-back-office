@@ -607,3 +607,57 @@ export function siteVisitMissedPage(appealId, appealReference, errorMessage) {
 		]
 	};
 }
+
+/**
+ * @param {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} appealDetails
+ * @param {string} emailTemplate
+ *
+ */
+export const cancelSiteVisitPage = (appealDetails, emailTemplate) => {
+	return {
+		title: 'Confirm that you want to cancel the site visit',
+		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
+		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
+		heading: 'Cancel the site visit',
+		submitButtonProperties: {},
+		submitButtonText: 'Cancel site visit',
+		postPageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealDetails.appealId}">Keep site visit</a>`
+				}
+			}
+		],
+		pageComponents: [
+			{
+				type: 'html',
+				parameters: {
+					html: `<p class="govuk-body">We will send an email to the appellant and LPA to tell them that we have cancelled the site visit.</p>`
+				}
+			},
+			{
+				type: 'details',
+				wrapperHtml: {
+					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+					closing: '</div></div>'
+				},
+				parameters: {
+					summaryText: `Preview email to appellant`,
+					html: emailTemplate
+				}
+			},
+			{
+				type: 'details',
+				wrapperHtml: {
+					opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+					closing: '</div></div>'
+				},
+				parameters: {
+					summaryText: `Preview email to LPA`,
+					html: emailTemplate
+				}
+			}
+		]
+	};
+};

@@ -11,6 +11,24 @@ import { parseHtml } from '@pins/platform';
 import nock from 'nock';
 import supertest from 'supertest';
 import { getSiteVisitSuccessBannerTypeAndChangeType } from '../site-visit.mapper.js';
+const template = {
+	renderedHtml: [
+		'We have cancelled the site visit.',
+		'',
+		'# Appeal details',
+		'',
+		'^Appeal reference number: ABC45678',
+		'Address: 10, Test Street',
+		'Planning application reference: 12345XYZ',
+		'',
+		'# What happens next',
+		'',
+		'We will contact you when we set up a new site visit.',
+		'',
+		'The Planning Inspectorate',
+		'caseofficers@planninginspectorate.gov.uk'
+	].join('\n')
+};
 
 /**
  * @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal
@@ -1153,6 +1171,47 @@ describe('site-visit', () => {
 				'visit-end-time-hour': '',
 				'visit-end-time-minute': ''
 			});
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+	});
+	describe('GET /site-visit/delete', () => {
+		it('should render the manage visit page', async () => {
+			nock('http://test/')
+				.post(`/appeals/notify-preview/site-visit-cancelled.content.md`)
+				.reply(200, template);
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+			const response = await request.get(`${baseUrl}/1${siteVisitPath}/delete`);
+			const element = parseHtml(response.text);
+
+			expect(element.innerHTML).toMatchSnapshot();
+			expect(element.innerHTML).toContain('Cancel the site visit</h1>');
+			expect(element.innerHTML).toContain('Preview email to appellant</span>');
+			expect(element.innerHTML).toContain('Preview email to LPA</span>');
+			expect(element.innerHTML).toContain('Cancel site visit</button>');
+			expect(element.innerHTML).toContain(
+				'href="/appeals-service/appeal-details/1">Keep site visit</a>'
+			);
+		});
+	});
+	describe('POST /site-visit/delete', () => {
+		afterEach(() => {
+			nock.cleanAll();
+		});
+
+		it('should delete site visit and redirect to appeal details screen', async () => {
+			nock('http://test/').delete('/appeals/1/site-visits/0').reply(200, {
+				siteVisitId: 1
+			});
+
+			let response = await request
+				.post(`${baseUrl}/1${siteVisitPath}/delete`)
+				.send({ siteVisitId: 1 });
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');

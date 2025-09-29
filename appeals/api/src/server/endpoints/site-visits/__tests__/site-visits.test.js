@@ -18,6 +18,7 @@ import {
 	SITE_VISIT_TYPE_UNACCOMPANIED
 } from '@pins/appeals/constants/support.js';
 import { request } from '../../../app-test.js';
+import { formatAddressSingleLine } from '../../addresses/addresses.formatter.js';
 
 import {
 	appealS78,
@@ -2506,6 +2507,63 @@ describe('site visit routes', () => {
 				});
 
 				expect(mockNotifySend).not.toHaveBeenCalled();
+			});
+		});
+		describe('DELETE', () => {
+			test('deletes a site visit', async () => {
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.user.upsert.mockResolvedValue({
+					id: 1,
+					azureAdUserId
+				});
+				// @ts-ignore
+				databaseConnector.siteVisit.delete.mockResolvedValue(householdAppeal.siteVisit);
+				const response = await request
+					.delete(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
+					.send()
+					.set('azureAdUserId', azureAdUserId);
+				expect(databaseConnector.siteVisit.delete).toHaveBeenCalledWith({
+					where: { id: householdAppeal.siteVisit.id }
+				});
+				expect(databaseConnector.auditTrail.create).toHaveBeenCalledWith({
+					data: {
+						appealId: householdAppeal.id,
+						details: 'Site visit cancelled',
+						loggedAt: expect.any(Date),
+						userId: 1
+					}
+				});
+				const siteAddress = householdAppeal.address
+					? formatAddressSingleLine(householdAppeal.address)
+					: 'Address not available';
+				const personalisation = {
+					appeal_reference_number: householdAppeal.reference,
+					lpa_reference: householdAppeal.applicationReference,
+					site_address: siteAddress,
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				};
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(1, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: personalisation,
+					recipientEmail: householdAppeal.agent.email,
+					templateName: 'site-visit-cancelled'
+				});
+
+				expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.anything(),
+					personalisation: personalisation,
+					recipientEmail: householdAppeal.lpa.email,
+					templateName: 'site-visit-cancelled'
+				});
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({ siteVisitId: 1 });
 			});
 		});
 	});

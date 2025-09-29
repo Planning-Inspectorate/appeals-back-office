@@ -100,5 +100,15 @@ const patchSiteVisitValidator = composeMiddleware(
 		}),
 	validationErrorHandler
 );
+const deleteSiteVisitValidator = composeMiddleware(
+	validateIdParameter('appealId'),
+	validateIdParameter('siteVisitId'),
+	validationErrorHandler
+);
 
-export { getSiteVisitValidator, patchSiteVisitValidator, postSiteVisitValidator };
+export {
+	deleteSiteVisitValidator,
+	getSiteVisitValidator,
+	patchSiteVisitValidator,
+	postSiteVisitValidator
+};

@@ -235,10 +235,10 @@ describe('personal-list', () => {
 		const lpaQuestionnaireId = 1;
 		const testCases = [
 			{
-				name: 'Update Horizon reference',
+				name: 'Mark as transferred',
 				requiredAction: 'addHorizonReference',
 				expectedHtml: {
-					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fpersonal-list">Update Horizon reference<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
+					caseOfficer: `<a class="govuk-link" href="/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference?backUrl=%2Fappeals-service%2Fpersonal-list">Mark as transferred<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`
 				}
 			},
 			{

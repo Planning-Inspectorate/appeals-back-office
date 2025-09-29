@@ -352,7 +352,23 @@ describe('appeal resubmit mark invalid type routes', () => {
 				]
 			});
 
-			// expect(mockNotifySend).toHaveBeenCalledTimes(1);
+			expect(mockNotifySend).toHaveBeenCalledTimes(1);
+
+			expect(mockNotifySend).toHaveBeenCalledWith({
+				azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+				notifyClient: expect.anything(),
+				personalisation: {
+					appeal_reference_number: householdAppeal.reference,
+					lpa_reference: householdAppeal.applicationReference,
+					site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
+					existing_appeal_type: householdAppeal.appealType.type.toLowerCase(),
+					appeal_type: 'cas planning',
+					due_date: '5 February 3000',
+					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+				},
+				recipientEmail: householdAppeal.agent.email,
+				templateName: 'appeal-type-change-non-has'
+			});
 
 			expect(response.status).toEqual(200);
 		});

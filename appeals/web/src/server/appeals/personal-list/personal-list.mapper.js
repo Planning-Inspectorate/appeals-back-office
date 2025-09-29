@@ -1,3 +1,4 @@
+import { isFeatureActive } from '#common/feature-flags.js';
 import config from '#environment/config.js';
 import { numberToAccessibleDigitLabel } from '#lib/accessibility.js';
 import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
@@ -8,6 +9,7 @@ import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import * as authSession from '../../app/auth/auth-session.service.js';
 
@@ -274,10 +276,14 @@ function mapRequiredActionToPersonalListActionHtml(
 ) {
 	switch (action) {
 		case 'addHorizonReference': {
+			const actionListText = isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_APPEAL_TYPE)
+				? 'Mark as transferred'
+				: 'Horizon reference';
+
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
 				request,
 				`/appeals-service/appeal-details/${appealId}/change-appeal-type/add-horizon-reference`
-			)}">Update Horizon reference<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
+			)}">${actionListText}<span class="govuk-visually-hidden"> for appeal ${appealId}</span></a>`;
 		}
 		case 'arrangeSiteVisit': {
 			return `<a class="govuk-link" href="${addBackLinkQueryToUrl(
