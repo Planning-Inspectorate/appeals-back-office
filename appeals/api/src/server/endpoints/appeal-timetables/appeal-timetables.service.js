@@ -2,7 +2,8 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
-import { notifySend } from '#notify/notify-send.js';
+import { generateNotifyPreview } from '#notify/emulate-notify.js';
+import { notifySend, renderTemplate } from '#notify/notify-send.js';
 import appealTimetableRepository from '#repositories/appeal-timetable.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
@@ -34,12 +35,14 @@ import formatDate, {
 	dateISOStringToDisplayDate,
 	formatTime
 } from '@pins/appeals/utils/date-formatter.js';
+import { loadEnvironment } from '@pins/platform';
 import {
 	APPEAL_CASE_PROCEDURE,
 	APPEAL_CASE_STATUS,
 	APPEAL_CASE_TYPE
 } from '@planning-inspectorate/data-model';
 import { mapValues } from 'lodash-es';
+const environment = loadEnvironment(process.env.NODE_ENV);
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -79,7 +82,7 @@ const checkAppealTimetableExists = async (req, res, next) => {
  * @param {string} [hearingStartTime]
  * @returns
  */
-const sendStartCaseNotifies = async (
+const getStartCaseNotifyParams = async (
 	appeal,
 	startDate,
 	notifyClient,
@@ -149,50 +152,150 @@ const sendStartCaseNotifies = async (
 		team_email_address: teamEmail
 	};
 
-	if (appellantEmail) {
-		await notifySend({
-			azureAdUserId,
-			templateName: appellantTemplate,
-			notifyClient,
-			recipientEmail: appellantEmail,
-			personalisation: {
-				...commonEmailVariables,
-				we_will_email_when: weWillEmailWhen,
-				site_visit: procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined, //undefined procedure types are treated as written
-				costs_info: procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined,
-				...(hearingStartTime && {
-					hearing_date: formatDate(new Date(hearingStartTime)),
-					hearing_time: formatTime(hearingStartTime)
-				})
+	return {
+		...(appellantEmail && {
+			appellant: {
+				azureAdUserId,
+				templateName: appellantTemplate,
+				notifyClient,
+				recipientEmail: appellantEmail,
+				personalisation: {
+					...commonEmailVariables,
+					we_will_email_when: weWillEmailWhen,
+					site_visit:
+						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined, //undefined procedure types are treated as written
+					costs_info:
+						procedureType === APPEAL_CASE_PROCEDURE.WRITTEN || procedureType === undefined,
+					...(hearingStartTime && {
+						hearing_date: formatDate(new Date(hearingStartTime)),
+						hearing_time: formatTime(hearingStartTime)
+					})
+				}
 			}
-		});
+		}),
+		...(lpaEmail && {
+			lpa: {
+				azureAdUserId,
+				templateName: lpaTemplate,
+				notifyClient,
+				recipientEmail: lpaEmail,
+				personalisation: {
+					...commonEmailVariables,
+					...(appeal.appealType?.key === APPEAL_CASE_TYPE.W && {
+						statement_of_common_ground_deadline: formatDate(
+							new Date(timetable.statementOfCommonGroundDueDate || ''),
+							false
+						),
+						planning_obligation_deadline: formatDate(
+							new Date(timetable.planningObligationDueDate || ''),
+							false
+						)
+					}),
+					...(hearingStartTime && {
+						hearing_date: formatDate(new Date(hearingStartTime)),
+						hearing_time: formatTime(hearingStartTime)
+					})
+				}
+			}
+		})
+	};
+};
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {string} startDate
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} siteAddress
+ * @param {string} azureAdUserId
+ * @param {TimetableDeadlineDate} timetable
+ * @param {string} [procedureType]
+ * @param {string} [hearingStartTime]
+ * @returns
+ */
+const sendStartCaseNotifies = async (
+	appeal,
+	startDate,
+	notifyClient,
+	siteAddress,
+	azureAdUserId,
+	timetable,
+	procedureType,
+	hearingStartTime
+) => {
+	const { appellant, lpa } = await getStartCaseNotifyParams(
+		appeal,
+		startDate,
+		notifyClient,
+		siteAddress,
+		azureAdUserId,
+		timetable,
+		procedureType,
+		hearingStartTime
+	);
+
+	if (appellant) {
+		await notifySend(appellant);
 	}
 
-	if (lpaEmail) {
-		await notifySend({
-			azureAdUserId,
-			templateName: lpaTemplate,
-			notifyClient,
-			recipientEmail: lpaEmail,
-			personalisation: {
-				...commonEmailVariables,
-				...(appeal.appealType?.key === APPEAL_CASE_TYPE.W && {
-					statement_of_common_ground_deadline: formatDate(
-						new Date(timetable.statementOfCommonGroundDueDate || ''),
-						false
-					),
-					planning_obligation_deadline: formatDate(
-						new Date(timetable.planningObligationDueDate || ''),
-						false
-					)
-				}),
-				...(hearingStartTime && {
-					hearing_date: formatDate(new Date(hearingStartTime)),
-					hearing_time: formatTime(hearingStartTime)
-				})
-			}
-		});
+	if (lpa) {
+		await notifySend(lpa);
 	}
+};
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {string} startDate
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} siteAddress
+ * @param {string} azureAdUserId
+ * @param {TimetableDeadlineDate} timetable
+ * @param {string} [procedureType]
+ * @param {string} [hearingStartTime]
+ * @returns {Promise<{appellant?: string, lpa?: string}>}
+ */
+const generateStartCaseNotifyPreviews = async (
+	appeal,
+	startDate,
+	notifyClient,
+	siteAddress,
+	azureAdUserId,
+	timetable,
+	procedureType,
+	hearingStartTime
+) => {
+	const { appellant, lpa } = await getStartCaseNotifyParams(
+		appeal,
+		startDate,
+		notifyClient,
+		siteAddress,
+		azureAdUserId,
+		timetable,
+		procedureType,
+		hearingStartTime
+	);
+
+	const commonPersonalisation = {
+		front_office_url: environment.FRONT_OFFICE_URL || ''
+	};
+	const appellantTemplate = appellant
+		? renderTemplate(`${appellant.templateName}.content.md`, {
+				...appellant.personalisation,
+				...commonPersonalisation
+		  })
+		: '';
+	const lpaTemplate = lpa
+		? renderTemplate(`${lpa.templateName}.content.md`, {
+				...lpa.personalisation,
+				...commonPersonalisation
+		  })
+		: '';
+
+	return {
+		...(appellant && { appellant: generateNotifyPreview(appellantTemplate) }),
+		...(lpa && { lpa: generateNotifyPreview(lpaTemplate) })
+	};
 };
 
 /**
@@ -292,6 +395,65 @@ const startCase = async (
 	}
 
 	return { success: false };
+};
+
+/**
+ *
+ * @param {Appeal} appeal
+ * @param {string} startDate
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
+ * @param {string} [procedureType]
+ * @param {string} [hearingStartTime]
+ * @returns {Promise<{appellant?: string, lpa?: string}>}
+ */
+const getStartCaseNotifyPreviews = async (
+	appeal,
+	startDate,
+	notifyClient,
+	azureAdUserId,
+	procedureType,
+	hearingStartTime
+) => {
+	try {
+		const isChildAppeal =
+			isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS) && Boolean(appeal?.parentAppeals?.length);
+
+		const appealType = appeal.appealType || null;
+		if (!appealType) {
+			throw new Error('Appeal type is required to start a case.');
+		}
+
+		const startedAt = await recalculateDateIfNotBusinessDay(startDate);
+		const timetable = await calculateTimetable(appealType.key, startedAt, procedureType);
+		const startDateWithTimeCorrection = setTimeInTimeZone(startedAt, 0, 0);
+
+		if (!timetable) {
+			throw new Error('Timetable is required to generate notify previews.');
+		}
+
+		if (isChildAppeal) {
+			throw new Error('Emails are not sent for child appeals.');
+		}
+
+		const siteAddress = appeal.address
+			? formatAddressSingleLine(appeal.address)
+			: 'Address not available';
+
+		return await generateStartCaseNotifyPreviews(
+			appeal,
+			startDateWithTimeCorrection,
+			notifyClient,
+			siteAddress,
+			azureAdUserId,
+			timetable,
+			procedureType,
+			hearingStartTime
+		);
+	} catch (/** @type {any} */ error) {
+		logger.error(`Error generating notify previews for appeal ID ${appeal.id}: ${error}`);
+		throw error;
+	}
 };
 
 /**
@@ -463,4 +625,10 @@ const shouldSendNotify = (appealTypeShorthand, procedureType) => {
 	);
 };
 
-export { calculateAppealTimetable, checkAppealTimetableExists, startCase, updateAppealTimetable };
+export {
+	calculateAppealTimetable,
+	checkAppealTimetableExists,
+	getStartCaseNotifyPreviews,
+	startCase,
+	updateAppealTimetable
+};

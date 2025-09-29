@@ -1436,6 +1436,17 @@ export interface StartCaseResponse {
 	statementReviewDate?: string;
 }
 
+export interface StartCaseNotifyPreviewResponse {
+	appellant?: {
+		/** @example "Rendered HTML for appellant preview" */
+		renderedHtml?: string;
+	};
+	lpa?: {
+		/** @example "Rendered HTML for LPA preview" */
+		renderedHtml?: string;
+	};
+}
+
 export interface SingleLPAQuestionnaireResponse {
 	affectsListedBuildingDetails?: {
 		/** @example "654321" */

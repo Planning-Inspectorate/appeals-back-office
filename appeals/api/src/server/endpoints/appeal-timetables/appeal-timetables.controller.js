@@ -2,10 +2,15 @@ import { buildListOfLinkedAppeals } from '#utils/build-list-of-linked-appeals.js
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { isLinkedAppeal } from '#utils/is-linked-appeal.js';
 import logger from '#utils/logger.js';
+import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
-import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
+import {
+	ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL,
+	ERROR_FAILED_TO_SAVE_DATA
+} from '@pins/appeals/constants/support.js';
 import {
 	calculateAppealTimetable,
+	getStartCaseNotifyPreviews,
 	startCase,
 	updateAppealTimetable
 } from './appeal-timetables.service.js';
@@ -87,6 +92,45 @@ const startAppeal = async (req, res) => {
 /**
  * @param {Request} req
  * @param {Response} res
+ * @returns {Promise<Response|undefined>}
+ */
+const startAppealNotifyPreview = async (req, res) => {
+	const { body, appeal } = req;
+	if (appeal && appeal.appealType) {
+		let startDate = body.startDate;
+
+		if (!startDate) {
+			startDate = new Date().toISOString();
+		}
+
+		const notifyClient = req.notifyClient;
+
+		try {
+			const result = await getStartCaseNotifyPreviews(
+				appeal,
+				startDate,
+				notifyClient,
+				req.get('azureAdUserId') || '',
+				body.procedureType || appeal.procedureType?.key,
+				body.hearingStartTime
+			);
+			return res.status(200).send(result);
+		} catch (/** @type {any} */ error) {
+			logger.error(`Could not generate notify previews for case ${appeal.reference}: ${error}`);
+			return res.status(500).send({
+				errors: {
+					body: stringTokenReplacement(ERROR_FAILED_TO_POPULATE_NOTIFICATION_EMAIL, [
+						error?.message || 'Unknown error'
+					])
+				}
+			});
+		}
+	}
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
  * @returns {Promise<Response>}
  */
 const updateAppealTimetableById = async (req, res) => {
@@ -140,4 +184,9 @@ const getCalculatedAppealTimetable = async (req, res) => {
 	return res.send(timetable);
 };
 
-export { getCalculatedAppealTimetable, startAppeal, updateAppealTimetableById };
+export {
+	getCalculatedAppealTimetable,
+	startAppeal,
+	startAppealNotifyPreview,
+	updateAppealTimetableById
+};
