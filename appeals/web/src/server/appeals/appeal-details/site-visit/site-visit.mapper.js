@@ -8,7 +8,7 @@ import { initialiseAndMapAppealData } from '#lib/mappers/data/appeal/mapper.js';
 import { dateInput, removeSummaryListActions } from '#lib/mappers/index.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { padNumberWithZero } from '#lib/string-utilities.js';
-import { capitalize } from 'lodash-es';
+import { capitalize, upperCase } from 'lodash-es';
 import { siteVisitDateField } from './site-visits.constants.js';
 /**
  * @typedef {'unaccompanied'|'accompanied'|'accessRequired'} WebSiteVisitType
@@ -661,3 +661,74 @@ export const cancelSiteVisitPage = (appealDetails, emailTemplate) => {
 		]
 	};
 };
+/**
+ * @param {Appeal} appeal
+ * @param {string} appealReference
+ * @param {string} whoMissedSiteVisit
+ * @param {{renderedHtml:string}} emailPreview
+ * @returns {PageContent}
+ */
+export function siteVisitMissedPageCya(appeal, appealReference, whoMissedSiteVisit, emailPreview) {
+	/** @type {PageComponent} */
+	const summaryListComponent = {
+		type: 'summary-list',
+		parameters: {
+			rows: [
+				{
+					key: {
+						text: 'Who missed the site visit?'
+					},
+					value: {
+						text:
+							whoMissedSiteVisit === 'lpa'
+								? upperCase(whoMissedSiteVisit)
+								: capitalize(whoMissedSiteVisit)
+					},
+					actions: {
+						items: [
+							{
+								text: 'Change',
+								href: `/appeals-service/appeal-details/${appeal.appealId}/site-visit/missed`,
+								visuallyHiddenText: 'Change who missed site visit'
+							}
+						]
+					}
+				}
+			]
+		}
+	};
+	/** @type {PageComponent} */
+	const emailPreviewComponent = {
+		type: 'details',
+		wrapperHtml: {
+			opening: '<div class="govuk-grid-row"><div class="govuk-grid-column-full">',
+			closing: '</div></div>'
+		},
+		parameters: {
+			summaryText: `Preview email to ${
+				whoMissedSiteVisit === 'lpa' ? upperCase(whoMissedSiteVisit) : whoMissedSiteVisit
+			}`,
+			html: emailPreview.renderedHtml
+		}
+	};
+
+	const pageComponents = [];
+	pageComponents.push(summaryListComponent);
+	if (whoMissedSiteVisit !== 'inspector') {
+		pageComponents.push(emailPreviewComponent);
+	}
+
+	const title = 'Check details and record missed site visit';
+	const pageContent = {
+		title,
+		heading: title,
+		backLinkUrl: `/appeals-service/appeal-details/${appeal.appealId}/site-visit/missed`,
+		preHeading: `Appeal ${appealShortReference(appealReference)}`,
+		pageComponents,
+		submitButtonText: 'Record missed site visit',
+
+		forceRenderSubmitButton: true
+	};
+
+	return pageContent;
+}

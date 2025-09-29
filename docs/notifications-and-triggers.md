@@ -284,3 +284,17 @@ The following notifications are sent from the back-office using these [Notify Te
 - **Appeal type:** all
 - **Notify Template:** [decision-is-invalid-lpa](../appeals/api/src/server/notify/templates/decision-is-invalid-lpa.content.md)
 - **Trigger:** Issue decision and select invalid and continue
+
+## Missed site visit
+
+### Record missed site visit appellant
+
+- **Appeal type:** all
+- **Notify Template:** [record-missed-site-visit-appellant](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-appellant.content.md)
+- **Trigger:** Record missed site visit for appellant
+
+### Record missed site visit lpa
+
+- **Appeal type:** all
+- **Notify Template:** [record-missed-site-visit-lpa](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-lpa.content.md)
+- **Trigger:** Record missed site visit for lpa

@@ -1,9 +1,12 @@
 import usersService from '#appeals/appeal-users/users-service.js';
 import { appealSiteToAddressString } from '#lib/address-formatter.js';
 import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
+import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import logger from '#lib/logger.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { getBackLinkUrlFromQuery } from '#lib/url-utilities.js';
+import { addDays } from '@pins/appeals/utils/business-days.js';
+import { formatTime } from '@pins/appeals/utils/date-formatter.js';
 import { getTeamFromAppealId } from '../update-case-team/update-case-team.service.js';
 import {
 	cancelSiteVisitPage,
@@ -14,9 +17,13 @@ import {
 	setPreviousVisitTypeIfChanged,
 	siteVisitBookedPage,
 	siteVisitMissedPage,
+	siteVisitMissedPageCya,
 	stringIsSiteVisitConfirmationPageType
 } from './site-visit.mapper.js';
 import * as siteVisitService from './site-visit.service.js';
+
+/** @typedef {import('../appeal-details.types.js').WebAppeal} Appeal
+
 
 /**
  *
@@ -154,6 +161,41 @@ export const renderSiteVisitMissed = async (request, response) => {
 			);
 
 			return response.status(200).render('patterns/display-page.pattern.njk', {
+				pageContent,
+				errors
+			});
+		}
+	}
+
+	return response.status(404).render('app/404.njk');
+};
+
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
+export const renderSiteVisitMissedCya = async (request, response) => {
+	const appealDetails = request.currentAppeal;
+	const { errors } = request;
+	const { whoMissedSiteVisit } = request.session;
+	if (appealDetails) {
+		const siteVisitIdAsNumber = appealDetails.siteVisit?.siteVisitId;
+
+		if (typeof siteVisitIdAsNumber === 'number' && !Number.isNaN(siteVisitIdAsNumber)) {
+			const emailPreview = await getEmailPreview(
+				appealDetails,
+				whoMissedSiteVisit,
+				request.apiClient
+			);
+			const pageContent = siteVisitMissedPageCya(
+				request.currentAppeal,
+				appealDetails.appealReference,
+				whoMissedSiteVisit,
+				emailPreview
+			);
+
+			return response.status(200).render('patterns/change-page.pattern.njk', {
 				pageContent,
 				errors
 			});
@@ -334,6 +376,11 @@ export const getCancelSiteVisit = async (request, response) => {
 	renderCancelSiteVisit(request, response);
 };
 
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const getSiteVisitMissedCya = async (request, response) => {
+	renderSiteVisitMissedCya(request, response);
+};
+
 /**
  *
  * @param {import('@pins/express/types/express.js').Request} request
@@ -405,4 +452,30 @@ export const postCancelSiteVisit = async (request, response) => {
 
 		return response.status(500).render('app/500.njk');
 	}
+};
+/**
+ * @param {Appeal} appeal
+ * @param {string} whoMissedSiteVisit
+ * @param {import('got').Got} apiClient
+ * @returns {Promise<{renderedHtml:string}>}
+ * */
+const getEmailPreview = async (appeal, whoMissedSiteVisit, apiClient) => {
+	if (whoMissedSiteVisit === 'inspector') {
+		return { renderedHtml: '' };
+	}
+	const templateName = `record-missed-site-visit-${whoMissedSiteVisit}.content.md`;
+	const currentDate = new Date();
+	const deadlineDate = dateISOStringToDisplayDate(await addDays(currentDate, 5));
+	const personalisation = {
+		appeal_reference_number: appeal.appealReference,
+		site_address: appealSiteToAddressString(appeal.appealSite),
+		lpa_reference: appeal.planningApplicationReference || '',
+		visit_date: dateISOStringToDisplayDate(appeal.siteVisit.visitDate),
+		'5_day_deadline': deadlineDate,
+		start_time: formatTime(appeal.siteVisit.visitStartTime),
+		team_email_address: (await getTeamFromAppealId(apiClient, appeal.appealId.toString())).email
+	};
+
+	const template = generateNotifyPreview(apiClient, templateName, personalisation);
+	return template;
 };
