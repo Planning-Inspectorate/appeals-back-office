@@ -419,7 +419,7 @@ exports[`change-appeal-type GET /change-appeal-type/check-change-appeal-final-da
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
-            <h1 class="govuk-heading-l">Check details and update timetable due dates</h1>
+            <h1 class="govuk-heading-l">Check details and mark appeal as invalid</h1>
         </div>
     </div>
     <div class="govuk-grid-row">

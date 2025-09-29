@@ -629,7 +629,7 @@ describe('change-appeal-type', () => {
 			const element = parseHtml(response.text);
 
 			expect(element.innerHTML).toMatchSnapshot();
-			expect(element.innerHTML).toContain('Check details and update timetable due dates</h1>');
+			expect(element.innerHTML).toContain('Check details and mark appeal as invalid</h1>');
 
 			const unprettifiedElement = parseHtml(response.text, { skipPrettyPrint: true });
 
