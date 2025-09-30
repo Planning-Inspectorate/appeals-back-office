@@ -46,7 +46,7 @@ describe('Capture Net Residences', () => {
 	it('Net Residence - Personal List', () => {
 		happyPathHelper.assignCaseOfficer(caseRef);
 		cy.visit(urlPaths.personalListFilteredValidation);
-		caseDetailsPage.verifyTagOnPersonalListPage(caseRef, 'Review appellant case');
+		caseDetailsPage.verifyActionOnPersonalListPage(caseRef, 'Add number of residential units');
 	});
 
 	const setupTestCase = () => {

@@ -908,7 +908,7 @@ export class CaseDetailsPage extends Page {
 		this.elements.pageHeading().should('have.text', expectedText);
 	};
 
-	verifyTagOnPersonalListPage(caseRef, expectedTagText) {
+	verifyActionOnPersonalListPage(caseRef, expectedTagText) {
 		cy.get(this.selectors.link)
 			.contains(caseRef)
 			.parents('tr')
