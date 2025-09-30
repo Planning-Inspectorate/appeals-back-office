@@ -534,13 +534,23 @@ export const postTransferAppeal = async (request, response) => {
  */
 export const getCheckChangeAppealFinalDate = async (request, response) => {
 	try {
+		const {
+			errors,
+			session: { changeAppealType }
+		} = request;
 		const appealData = request.currentAppeal;
 		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
-		const { day, month, year } = request.session.changeAppealType;
-		const { errors } = request;
+		const { day, month, year } = changeAppealType;
+
+		const { newChangeAppealType } = await getChangeAppealTypes(
+			request.apiClient,
+			appealData.appealType,
+			changeAppealType
+		);
 
 		const backLinkUrl = `/appeals-service/appeal-details/${appealData.appealId}/change-appeal-type/change-appeal-final-date`;
 		const formattedDate = dayMonthYearHourMinuteToDisplayDate({ day, month, year });
+		const formattedNewChangeAppealType = newChangeAppealType?.toLowerCase() || '';
 
 		/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} */
 		let responses = {
@@ -557,8 +567,8 @@ export const getCheckChangeAppealFinalDate = async (request, response) => {
 
 		return renderCheckYourAnswersComponent(
 			{
-				title: 'Check details and update timetable due dates',
-				heading: 'Check details and update timetable due dates',
+				title: 'Check details and mark appeal as invalid',
+				heading: 'Check details and mark appeal as invalid',
 				preHeading: `Appeal ${appealData.appealReference}`,
 				backLinkUrl,
 				submitButtonText: 'Mark appeal as invalid',
@@ -567,7 +577,7 @@ export const getCheckChangeAppealFinalDate = async (request, response) => {
 					simpleHtmlComponent(
 						'p',
 						{ class: 'govuk-body' },
-						`We will send an email to the appellant to tell them that they need to resubmit a new appeal by ${formattedDate}.`
+						`We will send an email to the appellant to tell them that they need to resubmit a new ${formattedNewChangeAppealType} appeal by ${formattedDate}.`
 					)
 				]
 			},

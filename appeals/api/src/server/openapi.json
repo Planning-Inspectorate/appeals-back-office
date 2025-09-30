@@ -1232,6 +1232,42 @@
 				}
 			}
 		},
+		"/appeals/generate-appeals": {
+			"get": {
+				"tags": ["Test Data"],
+				"description": "Generates fake HAS or S78 appeals in the test environment",
+				"parameters": [
+					{
+						"name": "type",
+						"in": "query",
+						"required": false,
+						"example": "has",
+						"description": "Type of appeal to generate (has or s78)",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "count",
+						"in": "query",
+						"required": false,
+						"example": 100,
+						"description": "Number of appeals to generate",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful generation of test appeals"
+					},
+					"400": {
+						"description": "Invalid request parameters"
+					}
+				}
+			}
+		},
 		"/appeals/appellant-case-incomplete-reasons": {
 			"get": {
 				"tags": ["Appellant Case Incomplete Reasons"],
