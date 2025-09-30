@@ -525,7 +525,75 @@
 				},
 				"requestBody": {
 					"in": "body",
-					"description": "Appeal and optional start date (defaults to the current date, if omitted)",
+					"description": "Appeal and optionally a start date (defaults to the current date, if omitted), procedure type, and hearing start time",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/StartCaseRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/StartCaseRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/appeals/{appealId}/appeal-timetables/notify-preview": {
+			"post": {
+				"tags": ["Appeal Timetables"],
+				"description": "Returns the rendered HTML of the emails that would be sent to the relevant parties",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Returns the rendered HTML of the emails that would be sent to the relevant parties",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StartCaseNotifyPreviewResponse"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/StartCaseNotifyPreviewResponse"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal and optionally a start date (defaults to the current date, if omitted), procedure type, and hearing start time",
 					"required": true,
 					"content": {
 						"application/json": {
@@ -3339,6 +3407,80 @@
 				}
 			},
 			"patch": {
+				"tags": ["Site Visits"],
+				"description": "Updates a single site visit by id",
+				"parameters": [
+					{
+						"name": "appealId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "siteVisitId",
+						"in": "path",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Creates a single site visit by id",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SiteVisitUpdateRequest"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/SiteVisitUpdateRequest"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request"
+					},
+					"404": {
+						"description": "Not Found"
+					},
+					"500": {
+						"description": "Internal Server Error"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Site visit details to create",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SiteVisitUpdateRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/SiteVisitUpdateRequest"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
 				"tags": ["Site Visits"],
 				"description": "Updates a single site visit by id",
 				"parameters": [
@@ -9580,6 +9722,32 @@
 				},
 				"xml": {
 					"name": "StartCaseResponse"
+				}
+			},
+			"StartCaseNotifyPreviewResponse": {
+				"type": "object",
+				"properties": {
+					"appellant": {
+						"type": "object",
+						"properties": {
+							"renderedHtml": {
+								"type": "string",
+								"example": "Rendered HTML for appellant preview"
+							}
+						}
+					},
+					"lpa": {
+						"type": "object",
+						"properties": {
+							"renderedHtml": {
+								"type": "string",
+								"example": "Rendered HTML for LPA preview"
+							}
+						}
+					}
+				},
+				"xml": {
+					"name": "StartCaseNotifyPreviewResponse"
 				}
 			},
 			"SingleLPAQuestionnaireResponse": {

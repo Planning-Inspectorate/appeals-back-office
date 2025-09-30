@@ -556,6 +556,14 @@ export const spec = {
 			lpaQuestionnaireDueDate: '2024-08-11',
 			statementReviewDate: '2024-08-12'
 		},
+		StartCaseNotifyPreviewResponse: {
+			appellant: {
+				renderedHtml: 'Rendered HTML for appellant preview'
+			},
+			lpa: {
+				renderedHtml: 'Rendered HTML for LPA preview'
+			}
+		},
 		SingleLPAQuestionnaireResponse: {
 			affectsListedBuildingDetails: [
 				{
