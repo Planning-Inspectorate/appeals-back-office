@@ -284,7 +284,9 @@ describe('decision routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(1, {
 				data: {
 					appealId: appeal.id,
-					details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
+					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
+						outcome[0].toUpperCase() + outcome.slice(1)
+					]),
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}
@@ -293,7 +295,7 @@ describe('decision routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(2, {
 				data: {
 					appealId: appeal.id,
-					details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
+					details: AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}
@@ -302,9 +304,7 @@ describe('decision routes', () => {
 			expect(databaseConnector.auditTrail.create).toHaveBeenNthCalledWith(3, {
 				data: {
 					appealId: appeal.id,
-					details: stringTokenReplacement(AUDIT_TRAIL_DECISION_ISSUED, [
-						outcome[0].toUpperCase() + outcome.slice(1)
-					]),
+					details: AUDIT_TRAIL_LPA_COSTS_DECISION_ISSUED,
 					loggedAt: expect.any(Date),
 					userId: appeal.caseOfficer.id
 				}
