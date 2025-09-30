@@ -249,6 +249,8 @@ describe('set up inquiry', () => {
 
 			const response = await request.get(`${baseUrl}/${appealId}/Inquiry/setup/estimation`);
 			pageHtml = parseHtml(response.text, { skipPrettyPrint: true });
+
+			console.log(pageHtml.innerHTML);
 		});
 
 		it('should match the snapshot', () => {

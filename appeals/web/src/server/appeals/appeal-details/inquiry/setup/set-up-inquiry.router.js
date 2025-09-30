@@ -30,7 +30,7 @@ router
 	.post(
 		validators.validateYesNoInput,
 		validators.validateEstimationInput,
-		saveBodyToSession('setUpInquiry'),
+		saveBodyToSession('setUpInquiry', { scopeToAppeal: true }),
 		asyncHandler(controller.postInquiryEstimation)
 	);
 
@@ -39,7 +39,7 @@ router
 	.get(asyncHandler(controller.getInquiryAddress))
 	.post(
 		validators.validateAddressKnown,
-		saveBodyToSession('setUpInquiry'),
+		saveBodyToSession('setUpInquiry', { scopeToAppeal: true }),
 		asyncHandler(controller.postInquiryAddress)
 	);
 
@@ -48,7 +48,7 @@ router
 	.get(asyncHandler(controller.getInquiryAddressDetails))
 	.post(
 		validators.validateInquiryAddress,
-		saveBodyToSession('setUpInquiry'),
+		saveBodyToSession('setUpInquiry', { scopeToAppeal: true }),
 		asyncHandler(controller.postInquiryAddressDetails)
 	);
 
@@ -58,7 +58,7 @@ router
 	.post(
 		createNotEmptyBodyValidator('whole-page::Enter timetable due dates'),
 		runDueDateDaysValidator,
-		saveBodyToSession('setUpInquiry'),
+		saveBodyToSession('setUpInquiry', { scopeToAppeal: true }),
 		asyncHandler(controller.postInquiryDueDates)
 	);
 router
