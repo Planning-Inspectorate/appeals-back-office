@@ -323,9 +323,10 @@ export function confirmInquiryPage(appealId, appealReference, hasObligation, act
 		}
 	];
 
-	pageComponents.push(...mapInquiryDetails(appealId, action, session.setUpInquiry));
+	pageComponents.push(...mapInquiryDetails(appealId, action, session['setUpInquiry']?.[appealId]));
+
 	pageComponents.push(
-		...mapInquiryTimetableDue(appealId, action, hasObligation, session.setUpInquiry)
+		...mapInquiryTimetableDue(appealId, action, hasObligation, session['setUpInquiry']?.[appealId])
 	);
 
 	// Add page footer
@@ -370,7 +371,7 @@ export function confirmChangeInquiryPage(appealId, appealReference, action, sess
 			`We'll send an email to the appellant and LPA to tell them about the inquiry.`
 		)
 	];
-	const inquiry = action === 'setup' ? session.setUpInquiry : session.changeInquiry;
+	const inquiry = action === 'setup' ? session['setUpInquiry']?.[appealId] : session.changeInquiry;
 
 	/** @type {PageContent} */
 	const pageContent = {
