@@ -17,6 +17,7 @@ export const getCaseManagement = (mappedData) => ({
 	},
 	wrapperHtml: {
 		opening: '<h1 class="govuk-heading-l">Case management</h1>',
-		closing: ''
+		closing: '',
+		id: 'case-management'
 	}
 });
