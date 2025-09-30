@@ -909,7 +909,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'X1925',
 		name: 'North Hertfordshire District Council',
-		email: 'planningappeals@north-herts.gov.uk',
+		email: 'planning.appeals@north-herts.gov.uk',
 		teamId: 13 // East3
 	},
 	{
