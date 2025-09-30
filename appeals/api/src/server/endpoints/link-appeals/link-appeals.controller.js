@@ -11,6 +11,7 @@ import appealRepository from '#repositories/appeal.repository.js';
 import { getAppealFromHorizon } from '#utils/horizon-gateway.js';
 import { formatHorizonGetCaseData } from '#utils/mapping/map-horizon.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { updatePersonalList } from '#utils/update-personal-list.js';
 import {
 	AUDIT_TRAIL_APPEAL_LINK_ADDED,
 	AUDIT_TRAIL_APPEAL_LINK_REMOVED,
@@ -112,6 +113,10 @@ export const linkAppeal = async (req, res) => {
 	const lpaEmail = currentAppeal.lpa?.email || '';
 
 	await Promise.all([
+		await updatePersonalList(parentAppeal.id),
+
+		await updatePersonalList(childAppeal.id),
+
 		notifySend({
 			templateName: 'link-appeal',
 			notifyClient,
