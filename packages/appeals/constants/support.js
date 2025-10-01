@@ -188,6 +188,7 @@ export const AUDIT_TRAIL_LPAQ_REASON_FOR_NEIGHBOUR_VISITS_UPDATED =
 export const AUDIT_TRAIL_LPAQ_DESIGNATED_SITE_NAMES_UPDATED =
 	'In, near or likely to effect designated sites changed';
 export const AUDIT_TRAIL_TEAM_ASSIGNED = 'Case team {replacement0} assigned';
+export const AUDIT_TRAIL_RECORD_MISSED_SITE_VISIT = '{replacement0} missed the site visit';
 
 export const AUDIT_TRAIL_LISTED_BUILDING_ADDED = 'A listed building was added';
 export const AUDIT_TRAIL_LISTED_BUILDING_UPDATED = 'A listed building was updated';

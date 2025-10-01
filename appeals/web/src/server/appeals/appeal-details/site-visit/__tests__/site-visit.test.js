@@ -27,26 +27,6 @@ const template = {
 		'',
 		'The Planning Inspectorate',
 		'caseofficers@planninginspectorate.gov.uk'
-	]
-};
-const appellantEmailTemplate = {
-	renderedHtml: [
-		`<div class="pins-notify-preview-border">`,
-		`<h2>Appeal details</h2>`,
-		`<div class="govuk-inset-text">`,
-		`  Appeal reference number: 134526 <br>`,
-		`  Address: 96 The Avenue, Leftfield, Maidstone, Kent, MD21 5XY, United Kingdom<br>`,
-		`  Planning application reference: 48269/APP/2021/1482<br>`,
-		`</div>`,
-		`<h2>Appeal withdrawn</h2>`,
-		`We have withdrawn the appeal following your request on 01 January 2025.<br><br>`,
-		`<h2>What happens next</h2>`,
-		`We have closed the appeal and cancelled the site visit.<br><br>`,
-		`<h2>Feedback</h2>`,
-		`We welcome your feedback on our appeals process. Tell us on this short <a href="https://forms.office.com/pages/responsepage.aspx?id=mN94WIhvq0iTIpmM5VcIjfMZj__F6D9LmMUUyoUrZDZUOERYMEFBN0NCOFdNU1BGWEhHUFQxWVhUUy4u" class="govuk-link">feedback form</a>.<br><br>`,
-		`The Planning Inspectorate<br><br>`,
-		`caseofficers@planninginspectorate.gov.uk<br><br>`,
-		`</div>`
 	].join('\n')
 };
 const appellantEmailTemplate = {
@@ -69,7 +49,6 @@ const appellantEmailTemplate = {
 		`</div>`
 	].join('\n')
 };
-
 const lpaEmailTemplate = {
 	renderedHtml: [
 		`<div class="pins-notify-preview-border">`,
@@ -1521,6 +1500,52 @@ describe('site-visit', () => {
 			expect(unprettifiedElement.innerHTML).toContain('LPA</dd>');
 			expect(unprettifiedElement.innerHTML).toContain('Change who missed site visit</span></a>');
 			expect(unprettifiedElement.innerHTML).toContain('Record missed site visit</button>');
+		});
+	});
+
+	describe('POST /site-visit/missed/check', () => {
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let whoMissedSiteVisitResponse;
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+			nock('http://test/')
+				.post(`/appeals/notify-preview/record-missed-site-visit-appellant.content.md`)
+				.reply(200, appellantEmailTemplate);
+			nock('http://test/')
+				.post(`/appeals/notify-preview/record-missed-site-visit-lpa.content.md`)
+				.reply(200, lpaEmailTemplate);
+		});
+		afterEach(nock.cleanAll);
+		it('should redirect to appeal details when record missed site visit successfully recorded', async () => {
+			const whoMissedSiteVisitRadio = 'inspector';
+			nock('http://test/').post(`/appeals/1/site-visits/0/missed`).reply(200, siteVisitData);
+
+			whoMissedSiteVisitResponse = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio
+			});
+			expect(whoMissedSiteVisitResponse.statusCode).toBe(302);
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/missed/check`);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+		it('should error page when site visit fails to save', async () => {
+			const whoMissedSiteVisitRadio = 'inspector';
+			nock('http://test/').post(`/appeals/1/site-visits/0/missed`).reply(500, siteVisitData);
+
+			whoMissedSiteVisitResponse = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio
+			});
+			expect(whoMissedSiteVisitResponse.statusCode).toBe(302);
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/missed/check`);
+
+			expect(response.statusCode).toBe(500);
 		});
 	});
 });

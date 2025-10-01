@@ -64,6 +64,9 @@ describe('site visit routes', () => {
 
 	describe('/:appealId/site-visits', () => {
 		describe('POST', () => {
+			beforeEach(() => {
+				databaseConnector.siteVisit.findFirst.mockResolvedValue();
+			});
 			test('creates a site visit without updating the status', async () => {
 				const { siteVisit } = householdAppeal;
 
@@ -870,6 +873,70 @@ describe('site visit routes', () => {
 					errors: {
 						visitStartTime: ERROR_START_TIME_MUST_BE_EARLIER_THAN_END_TIME
 					}
+				});
+			});
+		});
+		describe('POST rearrange site visit', () => {
+			beforeEach(() => {
+				databaseConnector.siteVisit.findFirst.mockResolvedValue(householdAppeal.siteVisit);
+			});
+			test('updates a site visit without updating the status', async () => {
+				const { siteVisit } = householdAppeal;
+
+				// @ts-ignore
+				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				// @ts-ignore
+				databaseConnector.siteVisitType.findUnique.mockResolvedValue(siteVisit.siteVisitType);
+
+				const response = await request
+					.post(`/appeals/${householdAppeal.id}/site-visits`)
+					.send({
+						visitDate: '2023-07-12T00:00:00.000Z',
+						visitEndTime: '2023-07-12T18:00:00.000Z',
+						visitStartTime: '2023-07-12T17:00:00.000Z',
+						visitType: householdAppeal.siteVisit.siteVisitType.name
+					})
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.siteVisit.update).toHaveBeenCalled();
+
+				expect(response.status).toEqual(200);
+				expect(response.body).toEqual({
+					visitDate: '2023-07-12T00:00:00.000Z',
+					visitEndTime: '2023-07-12T18:00:00.000Z',
+					visitStartTime: '2023-07-12T17:00:00.000Z',
+					visitType: siteVisit.siteVisitType.name
+				});
+
+				expect(mockNotifySend).toHaveBeenCalledTimes(2);
+
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.any(Object),
+					templateName: 'missed-site-visit-rearranged-appellant',
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						lpa_reference: householdAppeal.applicationReference,
+						site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
+						start_time: '18:00',
+						visit_date: '12 July 2023',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					},
+					recipientEmail: householdAppeal.agent.email
+				});
+				expect(mockNotifySend).toHaveBeenCalledWith({
+					azureAdUserId: '6f930ec9-7f6f-448c-bb50-b3b898035959',
+					notifyClient: expect.any(Object),
+					templateName: 'missed-site-visit-rearranged-lpa',
+					personalisation: {
+						appeal_reference_number: householdAppeal.reference,
+						lpa_reference: householdAppeal.applicationReference,
+						site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
+						start_time: '18:00',
+						visit_date: '12 July 2023',
+						team_email_address: 'caseofficers@planninginspectorate.gov.uk'
+					},
+					recipientEmail: householdAppeal.lpa.email
 				});
 			});
 		});
