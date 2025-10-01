@@ -8,14 +8,17 @@ import appellantCaseRepository from '#repositories/appellant-case.repository.js'
 import commonRepository from '#repositories/common.repository.js';
 import transitionState from '#state/transition-state.js';
 import { databaseConnector } from '#utils/database-connector.js';
+import { isFeatureActive } from '#utils/feature-flags.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js';
 import {
+	AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED,
 	AUDIT_TRAIL_APPEAL_TYPE_UPDATED,
 	AUDIT_TRAIL_SUBMISSION_INVALID,
 	VALIDATION_OUTCOME_INVALID
 } from '@pins/appeals/constants/support.js';
-import { setTimeInTimeZone } from '@pins/appeals/utils/business-days.js';
+import { addDays, setTimeInTimeZone } from '@pins/appeals/utils/business-days.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
@@ -235,4 +238,80 @@ const updateAppealType = async (
 	}
 };
 
-export { changeAppealType, resubmitAndMarkInvalid, updateAppealType };
+/**
+ * @param {Appeal} appeal
+ * @param {number} newAppealTypeId
+ * @param {string} azureAdUserId
+ * @returns {Promise<void>}
+ */
+const markAwaitingTransfer = async (appeal, newAppealTypeId, azureAdUserId) => {
+	/** @type {Partial<import('#db-client').Prisma.AppealUpdateInput>} data */
+	let data = {
+		caseResubmittedTypeId: newAppealTypeId,
+		caseUpdatedDate: new Date()
+	};
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_APPEAL_TYPE)) {
+		const currentDate = new Date();
+		const caseExtensionDate = await addDays(currentDate, 5);
+		data = {
+			...data,
+			caseExtensionDate
+		};
+	}
+
+	Promise.all([
+		await databaseConnector.appeal.update({
+			where: { id: appeal.id },
+			data
+		}),
+		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.AWAITING_TRANSFER)
+	]);
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_APPEAL_TYPE)) {
+		await createAuditTrail({
+			appealId: appeal.id,
+			azureAdUserId,
+			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED, ['awaiting transfer'])
+		});
+	}
+
+	await broadcasters.broadcastAppeal(appeal.id);
+};
+
+/**
+ * @param {Appeal} appeal
+ * @param {string} newAppealReference
+ * @param {string} azureAdUserId
+ * @returns {Promise<void>}
+ */
+const markTransferred = async (appeal, newAppealReference, azureAdUserId) => {
+	Promise.all([
+		await databaseConnector.appeal.update({
+			where: { id: appeal.id },
+			data: {
+				caseTransferredId: newAppealReference,
+				caseUpdatedDate: new Date()
+			}
+		}),
+		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.TRANSFERRED)
+	]);
+
+	if (isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_APPEAL_TYPE)) {
+		await createAuditTrail({
+			appealId: appeal.id,
+			azureAdUserId,
+			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED, ['transferred'])
+		});
+	}
+
+	await broadcasters.broadcastAppeal(appeal.id);
+};
+
+export {
+	changeAppealType,
+	markAwaitingTransfer,
+	markTransferred,
+	resubmitAndMarkInvalid,
+	updateAppealType
+};
