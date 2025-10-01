@@ -418,6 +418,26 @@ describe('appeal change type transfer routes', () => {
 				}
 			});
 		});
+
+		test('returns 200 when the appeal is marked as awaiting transfer', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+			// @ts-ignore
+			databaseConnector.appeal.update.mockResolvedValue();
+			// @ts-ignore
+			databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/appeal-transfer-request`)
+				.send({
+					newAppealTypeId: 1
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual(true);
+			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(householdAppeal.id);
+		});
 	});
 });
 
@@ -529,6 +549,30 @@ describe('appeal change type transfer confirmation routes', () => {
 					newAppealReference: ERROR_MUST_BE_STRING
 				}
 			});
+		});
+
+		test('returns 200 on transfer of appeal', async () => {
+			// @ts-ignore
+			databaseConnector.appeal.findUnique.mockResolvedValue({
+				...householdAppeal,
+				appealStatus: [
+					{
+						status: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
+						valid: true
+					}
+				]
+			});
+
+			const response = await request
+				.post(`/appeals/${householdAppeal.id}/appeal-transfer-confirmation`)
+				.send({
+					newAppealReference: '1000000'
+				})
+				.set('azureAdUserId', azureAdUserId);
+
+			expect(response.status).toEqual(200);
+			expect(response.body).toEqual(true);
+			expect(mockBroadcasters.broadcastAppeal).toHaveBeenCalledWith(householdAppeal.id);
 		});
 	});
 });
