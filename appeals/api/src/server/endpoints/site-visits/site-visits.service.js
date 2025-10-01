@@ -3,6 +3,7 @@ import siteVisitRepository from '#repositories/site-visit.repository.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import {
+	AUDIT_TRAIL_RECORD_MISSED_SITE_VISIT,
 	AUDIT_TRAIL_SITE_VISIT_ARRANGED,
 	AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
 	CASE_RELATIONSHIP_LINKED,
@@ -21,8 +22,11 @@ import appealRepository from '#repositories/appeal.repository.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import { AUDIT_TRAIL_SITE_VISIT_CANCELLED } from '@pins/appeals/constants/support.js';
+import { addDays } from '@pins/appeals/utils/business-days.js';
+import { dateISOStringToDisplayDate } from '@pins/appeals/utils/date-formatter.js';
 import { EventType } from '@pins/event-client';
 import { formatInTimeZone } from 'date-fns-tz';
+import { capitalize, upperCase } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Appeals.UpdateSiteVisitData} UpdateSiteVisitData */
 /** @typedef {import('@pins/appeals.api').Appeals.CreateSiteVisitData} CreateSiteVisitData */
@@ -265,6 +269,91 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
 };
+/**
+ * @param {string} azureAdUserId
+ * @param {UpdateSiteVisitData} updateSiteVisitData
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ */
+const updateWhenSiteVisitMissed = async (azureAdUserId, updateSiteVisitData, notifyClient) => {
+	try {
+		const visitDate = updateSiteVisitData.visitDate;
+		const visitEndTime = updateSiteVisitData.visitEndTime;
+		const visitStartTime = updateSiteVisitData.visitStartTime;
+		const siteVisitTypeId = updateSiteVisitData.visitType?.id;
+		const updateData = {
+			...(visitDate && { visitDate }),
+			visitEndTime: visitEndTime || null,
+			visitStartTime: visitStartTime || null,
+			...(siteVisitTypeId && { siteVisitTypeId }),
+			whoMissedSiteVisit: null
+		};
+
+		const appealId = Number(updateSiteVisitData.appealId);
+
+		const result = await siteVisitRepository.updateSiteVisitById(
+			updateSiteVisitData.siteVisitId,
+			updateData
+		);
+		if (!result) {
+			throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+		}
+
+		if (updateSiteVisitData.visitType) {
+			if (visitDate) {
+				await createAuditTrail({
+					appealId,
+					azureAdUserId,
+					details: stringTokenReplacement(AUDIT_TRAIL_SITE_VISIT_ARRANGED, [
+						formatInTimeZone(new Date(visitDate), DEFAULT_TIMEZONE, DEFAULT_DATE_FORMAT_AUDIT_TRAIL)
+					])
+				});
+			}
+
+			await broadcasters.broadcastEvent(
+				updateSiteVisitData.siteVisitId,
+				EVENT_TYPE.SITE_VISIT,
+				EventType.Update
+			);
+		}
+
+		const emailVariables = {
+			appeal_reference_number: updateSiteVisitData.appealReferenceNumber,
+			lpa_reference: updateSiteVisitData.lpaReference,
+			site_address: updateSiteVisitData.siteAddress,
+			start_time: formatTime(updateSiteVisitData.visitStartTime),
+			visit_date: formatDate(new Date(updateSiteVisitData.visitDate || ''), false),
+			team_email_address: await getTeamEmailFromAppealId(appealId)
+		};
+
+		try {
+			await notifySend({
+				azureAdUserId,
+				templateName: 'missed-site-visit-rearranged-appellant',
+				notifyClient,
+				recipientEmail: updateSiteVisitData.appellantEmail,
+				personalisation: emailVariables
+			});
+		} catch (error) {
+			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+		}
+
+		try {
+			await notifySend({
+				azureAdUserId,
+				templateName: 'missed-site-visit-rearranged-lpa',
+				notifyClient,
+				recipientEmail: updateSiteVisitData.lpaEmail,
+				personalisation: emailVariables
+			});
+		} catch (error) {
+			throw new Error(ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL);
+		}
+
+		return result;
+	} catch (error) {
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	}
+};
 
 /**
  * @param {string} visitType
@@ -417,11 +506,86 @@ const deleteSiteVisit = async (siteVisitId, appeal, notifyClient, azureAdUserId)
 	});
 	return result;
 };
+/**
+ *
+ * @param {number} siteVisitId
+ * @param {import('@pins/appeals.api').Schema.Appeal} appeal
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {string} azureAdUserId
+ * @param {string} whoMissedSiteVisit
+ * @returns
+ */
+const recordMissedSiteVisit = async (
+	siteVisitId,
+	appeal,
+	notifyClient,
+	azureAdUserId,
+	whoMissedSiteVisit
+) => {
+	const result = await siteVisitRepository.updateSiteVisitById(siteVisitId, { whoMissedSiteVisit });
+	if (!result) {
+		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
+	}
+
+	const siteAddress = appeal.address
+		? formatAddressSingleLine(appeal.address)
+		: 'Address not available';
+
+	const currentDate = new Date();
+	const deadlineDate = dateISOStringToDisplayDate(await addDays(currentDate, 5));
+	const personalisation = {
+		appeal_reference_number: appeal.reference,
+		lpa_reference: appeal.applicationReference || '',
+		site_address: siteAddress,
+		visit_date: dateISOStringToDisplayDate(appeal.siteVisit?.visitDate),
+		'5_day_deadline': deadlineDate,
+		start_time: formatTime(appeal.siteVisit?.visitStartTime),
+		team_email_address: await getTeamEmailFromAppealId(appeal.id)
+	};
+	await createAuditTrail({
+		appealId: appeal.id,
+		azureAdUserId: azureAdUserId,
+		details: stringTokenReplacement(AUDIT_TRAIL_RECORD_MISSED_SITE_VISIT, [
+			whoMissedSiteVisit === 'lpa' ? upperCase(whoMissedSiteVisit) : capitalize(whoMissedSiteVisit)
+		])
+	});
+
+	const recipientEmail = appeal.appellant?.email;
+	if (appeal.appellant?.email && whoMissedSiteVisit === 'appellant') {
+		await notifySend({
+			azureAdUserId: azureAdUserId,
+			templateName: 'record-missed-site-visit-appellant',
+			notifyClient,
+			recipientEmail,
+			personalisation
+		});
+	}
+
+	if (appeal.lpa?.email && whoMissedSiteVisit === 'lpa') {
+		await notifySend({
+			azureAdUserId: azureAdUserId,
+			templateName: 'record-missed-site-visit-lpa',
+			notifyClient,
+			recipientEmail: appeal.lpa?.email,
+			personalisation
+		});
+	}
+	return result;
+};
+/**
+ *
+ * @param {number} appealId
+ */
+const getMissedSiteVisit = async (appealId) =>
+	await siteVisitRepository.getMissedSiteVisitByAppealId(appealId);
 
 export {
 	checkSiteVisitExists,
 	deleteSiteVisit,
 	fetchRescheduleTemplateIds,
 	fetchSiteVisitScheduleTemplateIds,
-	updateSiteVisit
+	getMissedSiteVisit,
+	recordMissedSiteVisit,
+	updateSiteVisit,
+	updateWhenSiteVisitMissed
 };

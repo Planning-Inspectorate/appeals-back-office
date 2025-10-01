@@ -44,6 +44,21 @@ export async function createSiteVisit(
  * @param {import('got').Got} apiClient
  * @param {number} appealId
  * @param {number} siteVisitId
+ * @param {string} whoMissedSiteVisit
+ */
+export async function recordMissedSiteVisit(apiClient, appealId, siteVisitId, whoMissedSiteVisit) {
+	return apiClient
+		.post(`appeals/${appealId}/site-visits/${siteVisitId}/missed`, {
+			json: {
+				whoMissedSiteVisit
+			}
+		})
+		.json();
+}
+/**
+ * @param {import('got').Got} apiClient
+ * @param {number} appealId
+ * @param {number} siteVisitId
  * @param {import('@pins/appeals/types/inspector.js').SiteVisitType} visitType
  * @param {string} [visitDate]
  * @param {string} [visitStartTime]
