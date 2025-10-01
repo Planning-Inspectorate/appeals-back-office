@@ -64,7 +64,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'F1610',
 		name: 'Cotswold District Council',
-		email: 'planning@cotswold.gov.uk',
+		email: 'planning.appeals@cotswold.gov.uk',
 		teamId: 10 // West4
 	},
 	{
