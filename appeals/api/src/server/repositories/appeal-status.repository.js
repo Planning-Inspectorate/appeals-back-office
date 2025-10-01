@@ -29,7 +29,7 @@ const updateAppealStatusByAppealId = (appealId, status) =>
 const rollBackAppealStatusTo = (appealId, status) =>
 	databaseConnector.$transaction(async (tx) => {
 		const prevStatus = await tx.appealStatus.findFirst({
-			where: { appealId, status }
+			where: { appealId, valid: true }
 		});
 
 		if (!prevStatus) {
