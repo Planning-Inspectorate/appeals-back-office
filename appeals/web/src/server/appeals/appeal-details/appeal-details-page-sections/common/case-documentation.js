@@ -35,7 +35,8 @@ export const getCaseDocumentation = (mappedData, appealDetails) => {
 		},
 		wrapperHtml: {
 			opening: '<h1 class="govuk-heading-l">Documentation</h1>',
-			closing: ''
+			closing: '',
+			id: 'case-documentation'
 		}
 	};
 };

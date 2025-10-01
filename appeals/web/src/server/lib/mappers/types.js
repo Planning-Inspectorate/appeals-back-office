@@ -73,6 +73,7 @@
  * @typedef {Object} PageComponentWrapperHtml
  * @property {string} opening
  * @property {string} closing
+ * @property {string} [id]
  */
 
 /**

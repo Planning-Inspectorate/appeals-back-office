@@ -8,6 +8,13 @@ const caseDocumentationTableActionColumnIndex = 3;
  */
 export function removeAppealDetailsSectionComponentsActions(pageComponents) {
 	pageComponents.forEach((component) => {
+		if (
+			component.wrapperHtml?.id === 'case-management' ||
+			component.wrapperHtml?.id === 'case-documentation'
+		) {
+			return;
+		}
+
 		switch (component.type) {
 			case 'summary-list':
 				component.parameters.rows = component.parameters.rows.map(
