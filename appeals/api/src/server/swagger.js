@@ -1175,6 +1175,15 @@ export const spec = {
 				}
 			]
 		},
+		MissedSiteVisitRequest: {
+			type: 'object',
+			required: ['whoMissedSiteVisit'],
+			properties: {
+				whoMissedSiteVisit: {
+					type: 'string'
+				}
+			}
+		},
 		UpdateServiceUserRequest: {
 			type: 'object',
 			properties: {

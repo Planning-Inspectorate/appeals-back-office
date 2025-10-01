@@ -49,7 +49,6 @@ const appellantEmailTemplate = {
 		`</div>`
 	].join('\n')
 };
-
 const lpaEmailTemplate = {
 	renderedHtml: [
 		`<div class="pins-notify-preview-border">`,
@@ -1501,6 +1500,52 @@ describe('site-visit', () => {
 			expect(unprettifiedElement.innerHTML).toContain('LPA</dd>');
 			expect(unprettifiedElement.innerHTML).toContain('Change who missed site visit</span></a>');
 			expect(unprettifiedElement.innerHTML).toContain('Record missed site visit</button>');
+		});
+	});
+
+	describe('POST /site-visit/missed/check', () => {
+		/**
+		 * @type {import("superagent").Response}
+		 */
+		let whoMissedSiteVisitResponse;
+		beforeEach(() => {
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+			nock('http://test/')
+				.post(`/appeals/notify-preview/record-missed-site-visit-appellant.content.md`)
+				.reply(200, appellantEmailTemplate);
+			nock('http://test/')
+				.post(`/appeals/notify-preview/record-missed-site-visit-lpa.content.md`)
+				.reply(200, lpaEmailTemplate);
+		});
+		afterEach(nock.cleanAll);
+		it('should redirect to appeal details when record missed site visit successfully recorded', async () => {
+			const whoMissedSiteVisitRadio = 'inspector';
+			nock('http://test/').post(`/appeals/1/site-visits/0/missed`).reply(200, siteVisitData);
+
+			whoMissedSiteVisitResponse = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio
+			});
+			expect(whoMissedSiteVisitResponse.statusCode).toBe(302);
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/missed/check`);
+
+			expect(response.statusCode).toBe(302);
+			expect(response.text).toBe('Found. Redirecting to /appeals-service/appeal-details/1');
+		});
+		it('should error page when site visit fails to save', async () => {
+			const whoMissedSiteVisitRadio = 'inspector';
+			nock('http://test/').post(`/appeals/1/site-visits/0/missed`).reply(500, siteVisitData);
+
+			whoMissedSiteVisitResponse = await request.post(`${baseUrl}/1${siteVisitPath}/missed`).send({
+				whoMissedSiteVisitRadio
+			});
+			expect(whoMissedSiteVisitResponse.statusCode).toBe(302);
+			const response = await request.post(`${baseUrl}/1${siteVisitPath}/missed/check`);
+
+			expect(response.statusCode).toBe(500);
 		});
 	});
 });
