@@ -199,7 +199,7 @@ const rearrangeMissedSiteVisit = async (req, res) => {
 	const lpaEmail = appeal.lpa?.email || '';
 	const visitTypeName = visitType.name;
 
-	/** @type {*} } */
+	/** @type {*} */
 	const updateSiteVisitData = {
 		siteVisitId: Number(siteVisitId),
 		appealId: Number(appealId),
