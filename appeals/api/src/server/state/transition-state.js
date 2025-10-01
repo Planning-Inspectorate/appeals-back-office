@@ -70,9 +70,8 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	if (isStatePassed(appeal, newState)) {
 		await appealStatusRepository.rollBackAppealStatusTo(appealId, newState);
-	} else {
-		await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
 	}
+	await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
 
 	createAuditTrail({
 		appealId,
