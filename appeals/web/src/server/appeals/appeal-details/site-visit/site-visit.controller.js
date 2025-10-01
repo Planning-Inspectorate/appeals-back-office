@@ -380,6 +380,44 @@ export const getCancelSiteVisit = async (request, response) => {
 export const getSiteVisitMissedCya = async (request, response) => {
 	renderSiteVisitMissedCya(request, response);
 };
+/** @type {import('@pins/express').RequestHandler<Response>}  */
+export const postSiteVisitMissedCya = async (request, response) => {
+	const { errors } = request;
+	const { whoMissedSiteVisit } = request.session;
+
+	if (errors) {
+		return renderSiteVisitMissedCya(request, response);
+	}
+
+	try {
+		const appealDetails = request.currentAppeal;
+
+		const missedSiteVisit = await siteVisitService.recordMissedSiteVisit(
+			request.apiClient,
+			appealDetails.appealId,
+			appealDetails.siteVisit.siteVisitId,
+			whoMissedSiteVisit
+		);
+
+		if (missedSiteVisit) {
+			addNotificationBannerToSession({
+				session: request.session,
+				bannerDefinitionKey: 'missedSiteVisitRecorded',
+				appealId: appealDetails.appealId
+			});
+
+			return response.redirect(`/appeals-service/appeal-details/${appealDetails.appealId}`);
+		}
+		return response.status(404).render('app/404.njk');
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error ? error.message : 'Something went wrong when scheduling the site visit'
+		);
+
+		return response.status(500).render('app/500.njk');
+	}
+};
 
 /**
  *

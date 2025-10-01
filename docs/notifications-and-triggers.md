@@ -298,3 +298,15 @@ The following notifications are sent from the back-office using these [Notify Te
 - **Appeal type:** all
 - **Notify Template:** [record-missed-site-visit-lpa](../appeals/api/src/server/notify/templates/decision-is-allowed-split-dismissed-lpa.content.md)
 - **Trigger:** Record missed site visit for lpa
+
+### Rearrange missed site visit appellant
+
+- **Appeal type:** all
+- **Notify Template:** [rearrange-missed-site-visit-appellant](../appeals/api/src/server/notify/templates/rearrange-missed-site-visit-appellant.content.md)
+- **Trigger:** Setting up a site visit after recording a missed site visit
+
+### Rearrange missed site visit lpa
+
+- **Appeal type:** all
+- **Notify Template:** [rearrange-missed-site-visit-lpa](../appeals/api/src/server/notify/templates/rearrange-missed-site-visit-lpa.content.md)
+- **Trigger:** Setting up a site visit after recording a missed site visit

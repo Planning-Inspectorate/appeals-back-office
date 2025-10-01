@@ -10,7 +10,7 @@ import { getCaseCosts } from './common/case-costs.js';
 import { getCaseManagement } from './common/case-management.js';
 import { getCaseOverview } from './common/case-overview.js';
 import { getCaseTeam } from './common/case-team.js';
-import { getSiteDetails as getSiteDetailsOld } from './common/site-details-old.js';
+import { getSiteDetails as getSiteDetailsLegacy } from './common/site-details-legacy.js';
 import { getSiteDetails } from './common/site-details.js';
 import { getCaseHearing } from './s78/case-hearing.js';
 import { getCaseInquiry } from './s78/case-inquiry.js';
@@ -30,7 +30,7 @@ export function generateAppealDetailsPageComponents(appealDetails, mappedData, s
 		? []
 		: config.featureFlags.featureFlagCancelSiteVisit
 		? getSiteDetails(mappedData, appealDetails)
-		: getSiteDetailsOld(mappedData, appealDetails);
+		: getSiteDetailsLegacy(mappedData, appealDetails);
 	/** @type {PageComponent[]} */
 	const caseTimetable = [
 		{

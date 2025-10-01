@@ -2544,6 +2544,10 @@ export type SiteVisitSingleResponse = SiteVisitCreateRequest & {
 	siteVisitId: number;
 };
 
+export interface MissedSiteVisitRequest {
+	whoMissedSiteVisit: string;
+}
+
 export interface UpdateServiceUserRequest {
 	serviceUser?: {
 		/**

@@ -46,7 +46,7 @@ import {
 	mapSiteVisitStartTime
 } from './submappers/site-visit-datetime.mapper.js';
 import { mapSiteVisitTimetable } from './submappers/site-visit-timetable.mapper.js';
-import { mapSiteVisit } from './submappers/site-visit.mapper.js';
+import { mapSiteVisit, mapSiteVisitOld } from './submappers/site-visit.mapper.js';
 import { mapStartedAt } from './submappers/started-at.mapper.js';
 import { mapCaseTeam } from './submappers/team.mapper.js';
 import { mapValidAt } from './submappers/valid-at.mapper.js';
@@ -83,7 +83,7 @@ export const submaps = {
 	startedAt: mapStartedAt,
 	lpaQuestionnaireDueDate: mapLpaQuestionnaireDueDate,
 	siteVisitTimetable: mapSiteVisitTimetable,
-	siteVisit: mapSiteVisit,
+	siteVisit: config.featureFlags.featureFlagCancelSiteVisit ? mapSiteVisit : mapSiteVisitOld,
 	siteVisitDate: mapSiteVisitDate,
 	siteVisitStartTime: mapSiteVisitStartTime,
 	siteVisitEndTime: mapSiteVisitEndTime,
