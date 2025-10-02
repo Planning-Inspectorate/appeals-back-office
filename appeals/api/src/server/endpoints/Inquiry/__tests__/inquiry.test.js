@@ -920,7 +920,7 @@ describe('inquiry routes', () => {
 				expect(databaseConnector.appealStatus.create).not.toHaveBeenCalled();
 			});
 
-			test('updates a single inquiry with no address', async () => {
+			test('updates a single inquiry with null address', async () => {
 				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
 				databaseConnector.inquiry.update.mockResolvedValue(inquiry);
 
@@ -934,6 +934,37 @@ describe('inquiry routes', () => {
 						address: {
 							disconnect: true
 						},
+						appeal: {
+							connect: {
+								id: fullPlanningAppeal.id
+							}
+						},
+						inquiryStartTime: '2999-01-02T12:00:00.000Z',
+						inquiryEndTime: undefined,
+						estimatedDays: 6
+					},
+					where: {
+						id: inquiry.id
+					},
+					include: {
+						address: true
+					}
+				});
+
+				expect(response.status).toEqual(201);
+			});
+
+			test('updates a single inquiry with no address', async () => {
+				databaseConnector.appeal.findUnique.mockResolvedValue(fullPlanningAppeal);
+				databaseConnector.inquiry.update.mockResolvedValue(inquiry);
+
+				const response = await request
+					.patch(`/appeals/${fullPlanningAppeal.id}/inquiry/${inquiry.id}`)
+					.send({ inquiryStartTime: '2999-01-02T12:00:00.000Z', estimatedDays: 6 })
+					.set('azureAdUserId', azureAdUserId);
+
+				expect(databaseConnector.inquiry.update).toHaveBeenCalledWith({
+					data: {
 						appeal: {
 							connect: {
 								id: fullPlanningAppeal.id

@@ -123,9 +123,9 @@ export const patchInquiry = async (req, res) => {
 				inquiryEndTime: undefined,
 				estimatedDays,
 				addressId,
-				...{
+				...(address !== undefined && {
 					address: address === null ? null : formatAddressForDb(address)
-				}
+				})
 			},
 			appeal
 		);
