@@ -5,6 +5,7 @@ import changeDateAndTimeRouter from './change-appeal-date-and-time/change-appeal
 import changeEstimationRouter from './change-appeal-estimation/change-appeal-estimation.router.js';
 import * as controller from './change-appeal-procedure-type.controller.js';
 import changeTimetableRouter from './change-appeal-timetable/change-appeal-timetable.router.js';
+import changeEventKnownRouter from './change-event-date-known/change-event-date-known.router.js';
 import changeProcedureSelectionRouter from './change-procedure-selection/change-procedure-selection.router.js';
 import checkAndConfirmRouter from './check-and-confirm/check-and-confirm.router.js';
 
@@ -14,6 +15,12 @@ router.use(
 	'/change-selected-procedure-type',
 	controller.updateChangeProcedureTypeSession,
 	changeProcedureSelectionRouter
+);
+
+router.use(
+	'/:procedureType/change-event-date-known',
+	controller.updateChangeProcedureTypeSession,
+	changeEventKnownRouter
 );
 
 router.use(

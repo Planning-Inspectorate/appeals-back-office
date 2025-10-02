@@ -15,7 +15,7 @@ export function changeAddressDetailsPage(appealData, action, currentAddress, err
 
 	/** @type {PageContent} */
 	return {
-		title: `Address - start case - ${shortAppealReference}`,
+		title: `Address - update appeal procedure - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${
 			appealData.appealId
 		}/change-appeal-procedure-type/${appealData?.procedureType?.toLowerCase()}/address-known`,

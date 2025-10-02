@@ -23,179 +23,354 @@ const appealDataWithoutStartDate = {
 describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 	afterEach(teardown);
 
-	it('should render the check details page with the expected content for written procedure type if an appeal procedure is found in the session', async () => {
-		nock('http://test/')
-			.get('/appeals/1')
-			.reply(200, {
-				...appealDataWithoutStartDate,
-				appealStatus: 'lpa_questionnaire',
-				appealType: 'Planning appeal',
-				documentationSummary: {
-					lpaQuestionnaire: {
-						status: 'not received'
+	describe('GET /change-appeal-procedure-type/written/check-and-confirm', () => {
+		it('should render the check details page with the expected content for written procedure type if an appeal procedure is found in the session', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealStatus: 'lpa_questionnaire',
+					appealType: 'Planning appeal',
+					documentationSummary: {
+						lpaQuestionnaire: {
+							status: 'not received'
+						}
 					}
-				}
-			});
+				});
 
-		nock('http://test/')
-			.get('/appeals/1/appellant-cases/0')
-			.reply(200, { planningObligation: { hasObligation: false } });
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, { planningObligation: { hasObligation: false } });
 
-		const response = await request.get(
-			`/appeals-service/appeal-details/1/change-appeal-procedure-type/written/check-and-confirm`
-		);
+			const response = await request.get(
+				`/appeals-service/appeal-details/1/change-appeal-procedure-type/written/check-and-confirm`
+			);
 
-		expect(response.statusCode).toBe(200);
+			expect(response.statusCode).toBe(200);
 
-		const html = parseHtml(response.text).innerHTML;
+			const html = parseHtml(response.text).innerHTML;
 
-		expect(html).toMatchSnapshot();
+			expect(html).toMatchSnapshot();
 
-		const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
-		expect(unprettifiedHtml).toContain('Check details and update appeal procedure</h1>');
-		expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
-		expect(unprettifiedHtml).toContain('Written representations</dd>');
-		expect(unprettifiedHtml).toContain(
-			'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
-		);
-		expect(unprettifiedHtml).toContain('<h3 class="govuk-heading-m">Timetable due dates</h3>');
+			expect(unprettifiedHtml).toContain('Check details and update appeal procedure</h1>');
+			expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
+			expect(unprettifiedHtml).toContain('Written representations</dd>');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+			);
+			expect(unprettifiedHtml).toContain('<h3 class="govuk-heading-m">Timetable due dates</h3>');
 
-		expect(unprettifiedHtml).toContain('Interested party comments due</dt>');
-		expect(unprettifiedHtml).toContain('13 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('Interested party comments due</dt>');
+			expect(unprettifiedHtml).toContain('13 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
 
-		expect(unprettifiedHtml).toContain('Statements due</dt>');
-		expect(unprettifiedHtml).toContain('14 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('Statements due</dt>');
+			expect(unprettifiedHtml).toContain('14 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
 
-		expect(unprettifiedHtml).toContain('LPA questionnaire due</dt>');
-		expect(unprettifiedHtml).toContain('11 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('LPA questionnaire due</dt>');
+			expect(unprettifiedHtml).toContain('11 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
 
-		expect(unprettifiedHtml).toContain('Final comments due</dt>');
-		expect(unprettifiedHtml).toContain('12 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('Final comments due</dt>');
+			expect(unprettifiedHtml).toContain('12 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
 
-		expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
+			expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
+		});
 	});
 
-	it('should render the check details page with the expected content for hearing procedure type with planning obligation if an appeal procedure is found in the session', async () => {
-		nock('http://test/')
-			.get('/appeals/1')
-			.reply(200, {
-				...appealDataWithoutStartDate,
-				appealStatus: 'lpa_questionnaire',
-				appealType: 'Planning appeal',
-				procedureType: 'hearing',
-				documentationSummary: {
-					lpaQuestionnaire: {
-						status: 'not received'
+	describe('GET /change-appeal-procedure-type/hearing/check-and-confirm', () => {
+		it('should render the check details page with the expected content for hearing procedure type with planning obligation if an appeal procedure is found in the session', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealStatus: 'lpa_questionnaire',
+					appealType: 'Planning appeal',
+					procedureType: 'hearing',
+					documentationSummary: {
+						lpaQuestionnaire: {
+							status: 'not received'
+						}
 					}
-				}
-			});
-		nock('http://test/')
-			.get('/appeals/1/appellant-cases/0')
-			.reply(200, { planningObligation: { hasObligation: true } });
-		const response = await request.get(
-			`/appeals-service/appeal-details/1/change-appeal-procedure-type/written/check-and-confirm`
-		);
+				});
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, { planningObligation: { hasObligation: true } });
 
-		expect(response.statusCode).toBe(200);
+			const response = await request.get(
+				`/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/check-and-confirm`
+			);
 
-		const html = parseHtml(response.text).innerHTML;
+			expect(response.statusCode).toBe(200);
 
-		expect(html).toMatchSnapshot();
+			const html = parseHtml(response.text).innerHTML;
 
-		const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+			expect(html).toMatchSnapshot();
 
-		expect(unprettifiedHtml).toContain('Check details and update appeal procedure</h1>');
-		expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
-		expect(unprettifiedHtml).toContain('Hearing</dd>');
-		expect(unprettifiedHtml).toContain(
-			'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
-		);
-		expect(unprettifiedHtml).toContain('<h3 class="govuk-heading-m">Timetable due dates</h3>');
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
-		expect(unprettifiedHtml).toContain('Interested party comments due</dt>');
-		expect(unprettifiedHtml).toContain('13 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('Check details and update appeal procedure</h1>');
+			expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
+			expect(unprettifiedHtml).toContain('Hearing</dd>');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+			);
+			expect(unprettifiedHtml).toContain('<h3 class="govuk-heading-m">Timetable due dates</h3>');
 
-		expect(unprettifiedHtml).toContain('Statements due</dt>');
-		expect(unprettifiedHtml).toContain('14 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('Interested party comments due</dt>');
+			expect(unprettifiedHtml).toContain('13 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
 
-		expect(unprettifiedHtml).toContain('LPA questionnaire due</dt>');
-		expect(unprettifiedHtml).toContain('11 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('Statements due</dt>');
+			expect(unprettifiedHtml).toContain('14 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
 
-		expect(unprettifiedHtml).toContain('Planning obligation due</dt>');
-		expect(unprettifiedHtml).toContain('16 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('LPA questionnaire due</dt>');
+			expect(unprettifiedHtml).toContain('11 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
 
-		expect(unprettifiedHtml).toContain('Statement of common ground due</dt>');
-		expect(unprettifiedHtml).toContain('15 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('Planning obligation due</dt>');
+			expect(unprettifiedHtml).toContain('16 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
 
-		expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
+			expect(unprettifiedHtml).toContain('Statement of common ground due</dt>');
+			expect(unprettifiedHtml).toContain('15 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+
+			expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
+		});
+
+		it('should render the check details page with the expected content for hearing procedure type without planning obligation if an appeal procedure is found in the session', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealStatus: 'lpa_questionnaire',
+					appealType: 'Planning appeal',
+					procedureType: 'hearing',
+					documentationSummary: {
+						lpaQuestionnaire: {
+							status: 'not received'
+						}
+					}
+				});
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, { planningObligation: { hasObligation: false } });
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/check-and-confirm'
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const html = parseHtml(response.text).innerHTML;
+
+			expect(html).toMatchSnapshot();
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).toContain('Check details and update appeal procedure</h1>');
+			expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
+			expect(unprettifiedHtml).toContain('Hearing</dd>');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+			);
+
+			expect(unprettifiedHtml).toContain('Hearing details</h3>');
+			expect(unprettifiedHtml).toContain('Hearing date</dt>');
+			expect(unprettifiedHtml).toContain(
+				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date" data-cy="change-hearing-date">Change'
+			);
+			expect(unprettifiedHtml).toContain(
+				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date" data-cy="change-hearing-time">Change<span class="govuk-visually-hidden"> Hearing time</span></a>'
+			);
+
+			expect(unprettifiedHtml).toContain('<h3 class="govuk-heading-m">Timetable due dates</h3>');
+
+			expect(unprettifiedHtml).toContain('Interested party comments due</dt>');
+			expect(unprettifiedHtml).toContain('13 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+
+			expect(unprettifiedHtml).toContain('Statements due</dt>');
+			expect(unprettifiedHtml).toContain('14 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+
+			expect(unprettifiedHtml).toContain('LPA questionnaire due</dt>');
+			expect(unprettifiedHtml).toContain('11 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+
+			expect(unprettifiedHtml).not.toContain('Planning Obligation due</dt>');
+			expect(unprettifiedHtml).not.toContain('16 October 2023</dd>');
+
+			expect(unprettifiedHtml).toContain('Statement of common ground due</dt>');
+			expect(unprettifiedHtml).toContain('15 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+
+			expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
+		});
 	});
 
-	it('should render the check details page with the expected content for hearing procedure type without planning obligation if an appeal procedure is found in the session', async () => {
-		nock('http://test/')
-			.get('/appeals/1')
-			.reply(200, {
-				...appealDataWithoutStartDate,
-				appealStatus: 'lpa_questionnaire',
-				appealType: 'Planning appeal',
-				procedureType: 'hearing',
-				documentationSummary: {
-					lpaQuestionnaire: {
-						status: 'not received'
+	describe('GET /change-appeal-procedure-type/inquiry/check-and-confirm', () => {
+		it('should render the check details page with the expected content for inquiry procedure type', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealStatus: 'lpa_questionnaire',
+					appealType: 'Planning appeal',
+					procedureType: 'inquiry',
+					inquiry: {
+						estimatedDays: 8,
+						address: {
+							addressId: 1,
+							addressLine1: '21 The Pavement',
+							county: 'Wandsworth',
+							postCode: 'SW4 0HY'
+						}
+					},
+					documentationSummary: {
+						lpaQuestionnaire: {
+							status: 'not received'
+						}
 					}
-				}
-			});
-		nock('http://test/')
-			.get('/appeals/1/appellant-cases/0')
-			.reply(200, { planningObligation: { hasObligation: false } });
-		const response = await request.get(
-			'/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/check-and-confirm'
-		);
+				});
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, { planningObligation: { hasObligation: false } });
 
-		expect(response.statusCode).toBe(200);
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/check-and-confirm'
+			);
 
-		const html = parseHtml(response.text).innerHTML;
+			expect(response.statusCode).toBe(200);
 
-		expect(html).toMatchSnapshot();
+			const html = parseHtml(response.text).innerHTML;
 
-		const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+			expect(html).toMatchSnapshot();
 
-		expect(unprettifiedHtml).toContain('Check details and update appeal procedure</h1>');
-		expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
-		expect(unprettifiedHtml).toContain('Hearing</dd>');
-		expect(unprettifiedHtml).toContain(
-			'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
-		);
-		expect(unprettifiedHtml).toContain('<h3 class="govuk-heading-m">Timetable due dates</h3>');
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
 
-		expect(unprettifiedHtml).toContain('Interested party comments due</dt>');
-		expect(unprettifiedHtml).toContain('13 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('Check details and update appeal procedure</h1>');
+			expect(unprettifiedHtml).toContain('Appeal procedure</dt>');
+			expect(unprettifiedHtml).toContain('Inquiry</dd>');
+			expect(unprettifiedHtml).toContain(
+				'<a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/change-selected-procedure-type" data-cy="change-appeal-procedure">Change<span class="govuk-visually-hidden"> Appeal procedure</span></a>'
+			);
 
-		expect(unprettifiedHtml).toContain('Statements due</dt>');
-		expect(unprettifiedHtml).toContain('14 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('Inquiry details</h3>');
+			expect(unprettifiedHtml).toContain('Inquiry date</dt>');
+			expect(unprettifiedHtml).toContain(
+				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/date" data-cy="change-inquiry-date">Change'
+			);
+			expect(unprettifiedHtml).toContain(
+				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/date" data-cy="change-inquiry-time">Change<span class="govuk-visually-hidden"> Inquiry time</span></a>'
+			);
+			expect(unprettifiedHtml).toContain(
+				'Do you know the expected number of days to carry out the inquiry?</dt>'
+			);
+			expect(unprettifiedHtml).toContain(
+				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation" data-cy="change-inquiry-expected-number-of-days">Change'
+			);
+			expect(unprettifiedHtml).toContain('Expected number of days to carry out the inquiry</dt>');
+			expect(unprettifiedHtml).toContain(
+				'Do you know the address of where the inquiry will take place?</dt>'
+			);
+			expect(unprettifiedHtml).toContain('Address of where the inquiry will take place</dt>');
 
-		expect(unprettifiedHtml).toContain('LPA questionnaire due</dt>');
-		expect(unprettifiedHtml).toContain('11 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('<h3 class="govuk-heading-m">Timetable due dates</h3>');
 
-		expect(unprettifiedHtml).not.toContain('Planning Obligation due</dt>');
-		expect(unprettifiedHtml).not.toContain('16 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('Interested party comments due</dt>');
+			expect(unprettifiedHtml).toContain('13 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
 
-		expect(unprettifiedHtml).toContain('Statement of common ground due</dt>');
-		expect(unprettifiedHtml).toContain('15 October 2023</dd>');
-		expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+			expect(unprettifiedHtml).toContain('Statements due</dt>');
+			expect(unprettifiedHtml).toContain('14 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
 
-		expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
+			expect(unprettifiedHtml).toContain('LPA questionnaire due</dt>');
+			expect(unprettifiedHtml).toContain('11 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+
+			expect(unprettifiedHtml).not.toContain('Planning Obligation due</dt>');
+			expect(unprettifiedHtml).not.toContain('16 October 2023</dd>');
+
+			expect(unprettifiedHtml).toContain('Statement of common ground due</dt>');
+			expect(unprettifiedHtml).toContain('15 October 2023</dd>');
+			expect(unprettifiedHtml).toContain('<a class="govuk-link" href="change-timetable">Change ');
+
+			expect(unprettifiedHtml).toContain('Update appeal procedure</button>');
+		});
+
+		it('should render the check details page with the expected content for inquiry procedure type with no estimated days', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealStatus: 'lpa_questionnaire',
+					appealType: 'Planning appeal',
+					procedureType: 'inquiry',
+					inquiry: {
+						address: {
+							addressId: 1,
+							addressLine1: '21 The Pavement',
+							county: 'Wandsworth',
+							postCode: 'SW4 0HY'
+						}
+					},
+					documentationSummary: {
+						lpaQuestionnaire: {
+							status: 'not received'
+						}
+					}
+				});
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, { planningObligation: { hasObligation: false } });
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/check-and-confirm'
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).not.toContain(
+				'Expected number of days to carry out the inquiry</dt>'
+			);
+		});
+
+		it('should render the check details page with the expected content for inquiry procedure type with no selected address when address is unknown', async () => {
+			nock('http://test/')
+				.get('/appeals/1')
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealStatus: 'lpa_questionnaire',
+					appealType: 'Planning appeal',
+					procedureType: 'inquiry',
+					documentationSummary: {
+						lpaQuestionnaire: {
+							status: 'not received'
+						}
+					}
+				});
+			nock('http://test/')
+				.get('/appeals/1/appellant-cases/0')
+				.reply(200, { planningObligation: { hasObligation: false } });
+
+			const response = await request.get(
+				'/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/check-and-confirm'
+			);
+
+			expect(response.statusCode).toBe(200);
+
+			const unprettifiedHtml = parseHtml(response.text, { skipPrettyPrint: true }).innerHTML;
+
+			expect(unprettifiedHtml).not.toContain('Address of where the inquiry will take place</dt>');
+		});
 	});
 });

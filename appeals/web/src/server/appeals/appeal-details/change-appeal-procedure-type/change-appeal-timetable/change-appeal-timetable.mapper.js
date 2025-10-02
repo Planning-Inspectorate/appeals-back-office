@@ -34,6 +34,7 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
  * @param {Appeal} appealDetails
  * @param {AppellantCase} appellantCase
  * @param {Record<string, any>} body
+ * @param {string} procedureType
  * @param {import("@pins/express").ValidationErrors | undefined} errors
  * @returns {PageContent}
  */
@@ -42,6 +43,7 @@ export const mapChangeTimetablePage = (
 	appealDetails,
 	appellantCase,
 	body,
+	procedureType,
 	errors = undefined
 ) => {
 	const timetableTypes = getTimetableTypes(
@@ -54,13 +56,13 @@ export const mapChangeTimetablePage = (
 	let pageContent = {
 		title: `Timetable due dates`,
 		backLinkUrl:
-			appealDetails?.procedureType?.toLowerCase() === APPEAL_CASE_PROCEDURE?.WRITTEN?.toLowerCase()
-				? `/appeals-service/appeal-details/${
-						appealDetails.appealId
-				  }/change-appeal-procedure-type/${appealDetails?.procedureType?.toLowerCase()}/change-selected-procedure-type`
-				: `/appeals-service/appeal-details/${
-						appealDetails.appealId
-				  }/change-appeal-procedure-type/${appealDetails?.procedureType?.toLowerCase()}/address-details`,
+			procedureType === APPEAL_CASE_PROCEDURE?.WRITTEN
+				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${procedureType}/change-selected-procedure-type`
+				: procedureType === APPEAL_CASE_PROCEDURE?.HEARING && session.dateKnown === 'yes'
+				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${procedureType}/date`
+				: procedureType === APPEAL_CASE_PROCEDURE?.HEARING && session.dateKnown === 'no'
+				? `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${procedureType}/change-event-date-known`
+				: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-procedure-type/${procedureType}/address-details`,
 		preHeading: `Appeal ${appealShortReference(
 			appealDetails.appealReference
 		)} - update appeal procedure`,

@@ -15,7 +15,7 @@ const renderChangeAppealTimetable = async (request, response) => {
 	const {
 		currentAppeal,
 		session,
-		params: { appealId },
+		params: { appealId, procedureType },
 		errors,
 		locals: { appellantCase }
 	} = request;
@@ -24,6 +24,7 @@ const renderChangeAppealTimetable = async (request, response) => {
 		currentAppeal,
 		appellantCase,
 		request.body,
+		procedureType,
 		errors
 	);
 
