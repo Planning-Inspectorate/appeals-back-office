@@ -7716,7 +7716,7 @@ role="banner" data-module="govuk-header">
                 </div><span>Planning Inspectorate</span>
             </div>
             <div class="pins-column--central">
-                <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
+                <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
                 <nav class="govuk-header__navigation pins-header-navigation"
                 aria-label="Menu">
                     <ul class="govuk-header__navigation-list">
@@ -8159,7 +8159,7 @@ exports[`appeal-details should not render a back button 1`] = `
                     </div><span>Planning Inspectorate</span>
                 </div>
                 <div class="pins-column--central">
-                    <p class="pins-header-domainname govuk-!-margin-top-1">Casework Back Office System - Appeals</p>
+                    <p class="pins-header-domainname govuk-!-margin-top-1">Manage appeals</p>
                     <nav class="govuk-header__navigation pins-header-navigation"
                     aria-label="Menu">
                         <ul class="govuk-header__navigation-list">

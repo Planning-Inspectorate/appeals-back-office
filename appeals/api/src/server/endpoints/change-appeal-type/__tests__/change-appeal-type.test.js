@@ -682,7 +682,7 @@ describe('appeal change update routes', () => {
 					new_appeal_type: 'planning appeal'
 				},
 				recipientEmail: appealWithValidCaseStatus.agent.email,
-				templateName: 'appeal-type-change-in-cbos-appellant'
+				templateName: 'appeal-type-change-in-manage-appeals-appellant'
 			});
 
 			expect(mockNotifySend).toHaveBeenNthCalledWith(2, {
@@ -697,7 +697,7 @@ describe('appeal change update routes', () => {
 					new_appeal_type: 'planning appeal'
 				},
 				recipientEmail: appealWithValidCaseStatus.lpa.email,
-				templateName: 'appeal-type-change-in-cbos-lpa'
+				templateName: 'appeal-type-change-in-manage-appeals-lpa'
 			});
 
 			expect(response.status).toEqual(200);
@@ -741,7 +741,7 @@ describe('appeal change update routes', () => {
 					new_appeal_type: 'planning appeal'
 				},
 				recipientEmail,
-				templateName: 'appeal-type-change-in-cbos-appellant'
+				templateName: 'appeal-type-change-in-manage-appeals-appellant'
 			});
 
 			expect(response.status).toEqual(200);

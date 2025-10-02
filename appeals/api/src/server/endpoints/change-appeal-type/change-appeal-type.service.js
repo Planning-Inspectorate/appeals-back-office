@@ -217,7 +217,7 @@ const updateAppealType = async (
 	if (agentOrAppellantEmail) {
 		await notifySend({
 			azureAdUserId,
-			templateName: 'appeal-type-change-in-cbos-appellant',
+			templateName: 'appeal-type-change-in-manage-appeals-appellant',
 			notifyClient,
 			recipientEmail: agentOrAppellantEmail,
 			personalisation
@@ -227,7 +227,7 @@ const updateAppealType = async (
 	if (lpaEmail) {
 		await notifySend({
 			azureAdUserId,
-			templateName: 'appeal-type-change-in-cbos-lpa',
+			templateName: 'appeal-type-change-in-manage-appeals-lpa',
 			notifyClient,
 			recipientEmail: lpaEmail,
 			personalisation
