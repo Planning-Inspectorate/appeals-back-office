@@ -42,6 +42,39 @@ export async function setStartDate(
 }
 
 /**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {string} [startDate]
+ * @param {string} [procedureType]
+ * @param {string} [hearingStartTime]
+ * @returns {Promise<{appellant?: string, lpa?: string}>}
+ */
+export async function getStartCaseNotifyPreviews(
+	apiClient,
+	appealId,
+	startDate,
+	procedureType,
+	hearingStartTime
+) {
+	const result = await apiClient
+		.post(`appeals/${appealId}/appeal-timetables/notify-preview`, {
+			json: {
+				...(startDate && { startDate }),
+				...(procedureType && { procedureType }),
+				...(hearingStartTime && { hearingStartTime })
+			}
+		})
+		.json();
+
+	if (result.error) {
+		throw new Error(result.error);
+	}
+
+	return result;
+}
+
+/**
  * @param {import('got').Got} apiClient
  * @param {string} appealId
  * @param {string} [procedureType]

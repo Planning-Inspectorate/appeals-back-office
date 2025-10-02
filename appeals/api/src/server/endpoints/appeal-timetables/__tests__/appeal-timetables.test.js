@@ -1676,4 +1676,75 @@ describe('appeal timetables routes', () => {
 			});
 		});
 	});
+
+	describe('POST /appeals/:appealId/appeal-timetables/notify-preview', () => {
+		test('returns the rendered HTML of the emails that would be sent to the relevant parties', async () => {
+			const appeal = {
+				...fullPlanningAppeal
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+
+			const { id } = fullPlanningAppeal;
+			const response = await request
+				.post(`/appeals/${id}/appeal-timetables/notify-preview`)
+				.set('azureAdUserId', azureAdUserId)
+				.send({
+					startDate: '2024-06-12T22:59:00.000Z',
+					procedureType: 'hearing',
+					hearingStartTime: '2024-06-12T12:00:00.000Z'
+				});
+
+			expect(response.status).toEqual(200);
+			const appellantPreview = response.body.appellant;
+			const lpaPreview = response.body.lpa;
+			expect(appellantPreview).toContain(
+				'Your appeal started on 12 June 2024. The timetable for the appeal begins from this date'
+			);
+			expect(lpaPreview).toContain(
+				'You have a new full planning appeal against the application 48269/APP/2021/1482.'
+			);
+		});
+
+		test('returns an error if the appeal is a child appeal', async () => {
+			const appeal = {
+				...fullPlanningAppeal,
+				parentAppeals: [{ type: CASE_RELATIONSHIP_LINKED }]
+			};
+			databaseConnector.appeal.findUnique.mockResolvedValue(appeal);
+			const { id } = fullPlanningAppeal;
+			const response = await request
+				.post(`/appeals/${id}/appeal-timetables/notify-preview`)
+				.set('azureAdUserId', azureAdUserId)
+				.send({
+					startDate: '2024-06-12T22:59:00.000Z',
+					procedureType: 'hearing',
+					hearingStartTime: '2024-06-12T12:00:00.000Z'
+				});
+
+			expect(response.status).toEqual(500);
+			expect(response.body).toMatchObject({
+				errors: {
+					body: 'failed to populate notification email due to Emails are not sent for child appeals.'
+				}
+			});
+		});
+
+		test('returns an error if the appeal is not found', async () => {
+			databaseConnector.appeal.findUnique.mockResolvedValue(null);
+			const { id } = fullPlanningAppeal;
+			const response = await request
+				.post(`/appeals/${id}/appeal-timetables/notify-preview`)
+				.set('azureAdUserId', azureAdUserId)
+				.send({
+					startDate: '2024-06-12T22:59:00.000Z',
+					procedureType: 'hearing',
+					hearingStartTime: '2024-06-12T12:00:00.000Z'
+				});
+
+			expect(response.status).toEqual(404);
+			expect(response.body).toMatchObject({
+				errors: { appealId: 'Not found' }
+			});
+		});
+	});
 });

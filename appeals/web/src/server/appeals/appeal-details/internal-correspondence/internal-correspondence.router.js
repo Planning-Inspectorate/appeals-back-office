@@ -8,22 +8,20 @@ import {
 	validateCaseFolderId
 } from '../../appeal-documents/appeal-documents.middleware.js';
 import * as documentsValidators from '../../appeal-documents/appeal-documents.validators.js';
-import { validateAppeal } from '../appeal-details.middleware.js';
 import * as controller from './internal-correspondence.controller.js';
 
 const router = createRouter({ mergeParams: true });
+router.param('folderId', (req, res, next) => {
+	validateCaseFolderId(req, res, next);
+});
 
 router
 	.route('/:correspondenceCategory/upload-documents/:folderId')
 	.get(
-		validateAppeal,
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.getDocumentUpload)
 	)
 	.post(
-		validateAppeal,
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.postDocumentUploadPage)
 	);
@@ -31,14 +29,10 @@ router
 router
 	.route('/:correspondenceCategory/upload-documents/:folderId/:documentId')
 	.get(
-		validateAppeal,
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.getDocumentVersionUpload)
 	)
 	.post(
-		validateAppeal,
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.postDocumentVersionUpload)
 	);
@@ -49,14 +43,10 @@ router
 		'/:correspondenceCategory/add-document-details/:folderId/:documentId'
 	])
 	.get(
-		validateAppeal,
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.getAddDocumentDetails)
 	)
 	.post(
-		validateAppeal,
-		validateCaseFolderId,
 		documentsValidators.validateDocumentDetailsBodyFormat,
 		documentsValidators.validateDocumentDetailsReceivedDatesFields,
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
@@ -70,14 +60,10 @@ router
 router
 	.route('/:correspondenceCategory/check-your-answers/:folderId')
 	.get(
-		validateAppeal,
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
-		validateAppeal,
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.postAddDocumentsCheckAndConfirm)
 	);
@@ -85,38 +71,32 @@ router
 router
 	.route('/:correspondenceCategory/check-your-answers/:folderId/:documentId')
 	.get(
-		validateAppeal,
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.getAddDocumentsCheckAndConfirm)
 	)
 	.post(
-		validateAppeal,
-		validateCaseFolderId,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.postAddDocumentVersionCheckAndConfirm)
 	);
 
 router
 	.route('/:correspondenceCategory/manage-documents/:folderId')
-	.get(validateCaseFolderId, asyncHandler(controller.getManageFolder));
+	.get(asyncHandler(controller.getManageFolder));
 
 router
 	.route('/:correspondenceCategory/manage-documents/:folderId/:documentId')
-	.get(validateCaseFolderId, asyncHandler(controller.getManageDocument));
+	.get(asyncHandler(controller.getManageDocument));
 
 router
 	.route('/:correspondenceCategory/change-document-name/:folderId/:documentId')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
-		validateCaseFolderId,
+
 		asyncHandler(controller.getChangeDocumentFileNameDetails)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
-		validateCaseFolderId,
+
 		documentsValidators.validateDocumentNameBodyFormat,
 		documentsValidators.validateDocumentName,
 		asyncHandler(controller.postChangeDocumentFileNameDetails)
@@ -125,15 +105,13 @@ router
 router
 	.route('/:correspondenceCategory/change-document-details/:folderId/:documentId')
 	.get(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
-		validateCaseFolderId,
+
 		asyncHandler(controller.getChangeDocumentVersionDetails)
 	)
 	.post(
-		validateAppeal,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
-		validateCaseFolderId,
+
 		documentsValidators.validateDocumentDetailsBodyFormat,
 		documentsValidators.validateDocumentDetailsReceivedDatesFields,
 		documentsValidators.validateDocumentDetailsReceivedDateValid,
@@ -146,13 +124,11 @@ router
 router
 	.route('/:correspondenceCategory/manage-documents/:folderId/:documentId/:versionId/delete')
 	.get(
-		validateCaseFolderId,
 		validateCaseDocumentId,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		asyncHandler(controller.getDeleteInternalCorrespondenceDocument)
 	)
 	.post(
-		validateCaseFolderId,
 		validateCaseDocumentId,
 		assertUserHasPermission(permissionNames.viewCaseDetails),
 		documentsValidators.validateDocumentDeleteAnswer,

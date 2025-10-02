@@ -34,7 +34,7 @@ describe('appeal-valid-start-case-lpa-hearing.md', () => {
 		};
 
 		const expectedContent = [
-			'You have a new Householder appeal against the application 48269/APP/2021/1482.',
+			'You have a new householder appeal against the application 48269/APP/2021/1482.',
 			'',
 			'We will decide the appeal by a hearing. You can tell us if you think a different procedure is more appropriate in the questionnaire.',
 			'',

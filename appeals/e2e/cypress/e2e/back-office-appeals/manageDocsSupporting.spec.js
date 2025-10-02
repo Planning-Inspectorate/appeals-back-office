@@ -36,7 +36,7 @@ describe('add supporting documents', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Success', 'Additional documents added');
-			cy.reload();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickIndividualLinkWhenMultiple('Additional documents', 'Manage');
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('Upload a new version');
@@ -45,7 +45,7 @@ describe('add supporting documents', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Success', 'Additional documents updated');
-			cy.reload();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickIndividualLinkWhenMultiple('Additional documents', 'Manage');
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('Remove current version');
@@ -78,6 +78,7 @@ describe('add supporting documents', () => {
 			caseDetailsPage.clickButtonByText('Continue');
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.clickButtonByText('Confirm');
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickButtonByText('Remove current version');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -102,7 +103,7 @@ describe('add supporting documents', () => {
 			caseDetailsPage.clickBackLink();
 			happyPathHelper.addLpaStatement(caseRef);
 			cy.simulateStatementsDeadlineElapsed(caseRef);
-			cy.reload();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.checkStatusOfCase('Final comments', 0);
@@ -111,7 +112,7 @@ describe('add supporting documents', () => {
 				happyPathHelper.addAppellantFinalComment(caseRef, serviceUserId);
 			});
 			cy.simulateFinalCommentsDeadlineElapsed(caseRef);
-			cy.reload();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.basePageElements.bannerLink().click();
 			caseDetailsPage.clickButtonByText('Share final comments');
 			caseDetailsPage.checkStatusOfCase('Site visit ready to set up', 0);
