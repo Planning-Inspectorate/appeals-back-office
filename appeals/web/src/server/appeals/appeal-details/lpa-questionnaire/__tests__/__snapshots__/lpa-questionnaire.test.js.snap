@@ -580,11 +580,6 @@ exports[`LPA Questionnaire review GET / should render the CAS planning LPA Quest
                                 <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-supplementary-planning">Add<span class="govuk-visually-hidden"> Supplementary planning documents (4. Planning officer’s report and supplementary documents)</span></a>
                                 </dd>
                         </div>
-                        <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Emerging plan relevant to appeal</dt>
-                            <dd                             class="govuk-summary-list__value">No documents</dd>
-                                <dd class="govuk-summary-list__actions"><a class="govuk-link" href="#" data-cy="add-emerging-plan">Add<span class="govuk-visually-hidden"> Emerging plan relevant to appeal (4. Planning officer’s report and supplementary documents)</span></a>
-                                </dd>
-                        </div>
                     </dl>
                 </div>
             </div>
