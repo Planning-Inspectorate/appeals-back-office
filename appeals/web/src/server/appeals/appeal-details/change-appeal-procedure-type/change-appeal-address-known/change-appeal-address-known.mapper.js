@@ -25,7 +25,7 @@ export function changeAddressKnownPage(appealData, action, values) {
 		backLinkUrl: `/appeals-service/appeal-details/${
 			appealData.appealId
 		}/change-appeal-procedure-type/${appealData?.procedureType?.toLowerCase()}/estimation`,
-		preHeading: `Appeal ${shortAppealReference} - start case`,
+		preHeading: `Appeal ${shortAppealReference} - update appeal procedure`,
 		pageComponents: [addressKnownComponent]
 	};
 }
