@@ -61,6 +61,7 @@ router
 		saveBodyToSession('setUpInquiry', { scopeToAppeal: true }),
 		asyncHandler(controller.postInquiryDueDates)
 	);
+
 router
 	.route('/check-details')
 	.get(asyncHandler(controller.getInquiryCheckDetails))
