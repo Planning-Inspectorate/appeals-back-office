@@ -90,8 +90,6 @@ const getMyAppeals = async (req, res) => {
 
 	const [itemCount, appeals = [], statuses] = await appealListRepository.getUserAppeals(
 		azureUserId,
-		pageNumber,
-		pageSize,
 		status
 	);
 
@@ -136,6 +134,12 @@ const getMyAppeals = async (req, res) => {
 
 	const sortedAppeals = sortAppeals(filteredAppeals);
 
+	//TODO: find solution for only fetching appropriately paginated appeals directly from DB instead
+	const paginatedAppeals = sortedAppeals.slice(
+		(pageNumber - 1) * pageSize,
+		(pageNumber - 1) * pageSize + pageSize
+	);
+
 	// Flatten to a unique array of strings
 	// @ts-ignore
 	const formattedStatuses = statuses
@@ -146,7 +150,7 @@ const getMyAppeals = async (req, res) => {
 
 	return res.send({
 		itemCount,
-		items: sortedAppeals,
+		items: paginatedAppeals,
 		statuses: formattedStatuses,
 		page: pageNumber,
 		pageCount: getPageCount(itemCount, pageSize),
