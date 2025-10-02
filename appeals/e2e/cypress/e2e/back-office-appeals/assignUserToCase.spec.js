@@ -121,7 +121,7 @@ describe('Assign user to case', () => {
 				cy.viewport(1200, 800);
 				listCasesPage.basePageElements.serviceHeader().should(($elWide) => {
 					expect($elWide.height()).to.be.lessThan(initialHeight * 1.5);
-					expect($elWide.text()).to.contains('Casework Back Office System - Appeals');
+					expect($elWide.text()).to.contains('Manage appeals');
 					expect($elWide[0].scrollWidth).to.be.lte($elWide[0].clientWidth);
 				});
 			});

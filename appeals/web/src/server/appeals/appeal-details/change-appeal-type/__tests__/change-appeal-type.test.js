@@ -176,7 +176,7 @@ describe('change-appeal-type', () => {
 			);
 		});
 
-		it('should redirect to update appeal page if the required field is equal to no and the appeal type is in CBOS', async () => {
+		it('should redirect to update appeal page if the required field is equal to no and the appeal type is in Manage appeals', async () => {
 			nock('http://test/')
 				.get('/appeals/appeal-types?filterEnabled=true')
 				.reply(200, appealTypesData);
@@ -197,7 +197,7 @@ describe('change-appeal-type', () => {
 			);
 		});
 
-		it('should redirect to transfer appeal page if the required field is equal to no and appeal type is not in CBOS', async () => {
+		it('should redirect to transfer appeal page if the required field is equal to no and appeal type is not in Manage appeals', async () => {
 			nock('http://test/')
 				.get('/appeals/appeal-types?filterEnabled=true')
 				.reply(200, appealTypesData);
