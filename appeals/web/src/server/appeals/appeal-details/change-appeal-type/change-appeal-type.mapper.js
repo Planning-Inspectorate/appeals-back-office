@@ -317,7 +317,7 @@ export function changeAppealFinalDatePage(
 	const pageContent = {
 		title: `Deadline to resubmit appeal - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: `Appeal ${shortAppealReference} - change appeal type`,
 		pageComponents: [selectDateComponent],
 		submitButtonText: 'Continue'
 	};
