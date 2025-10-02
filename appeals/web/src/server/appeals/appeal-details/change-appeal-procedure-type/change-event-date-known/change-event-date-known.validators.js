@@ -3,8 +3,8 @@ import { body } from 'express-validator';
 
 export const validateDateKnown = createValidator(
 	body('dateKnown').custom((value, { req }) => {
-		// @ts-ignore
 		const {
+			// @ts-ignore
 			params: { procedureType }
 		} = req;
 
