@@ -31,6 +31,7 @@ export const getCaseOfficers = async (
  */
 export const viewNationalList = async (request, response) => {
 	const { originalUrl, query, session } = request;
+	delete session.changeAppealType;
 
 	const appealStatusFilter = query.appealStatusFilter && String(query.appealStatusFilter);
 	const inspectorStatusFilter = query.inspectorStatusFilter && String(query.inspectorStatusFilter);

@@ -338,15 +338,15 @@ export const postAddHorizonReference = async (request, response) => {
 			});
 		}
 
-		if (errors) {
-			return renderAddHorizonReference(request, response);
-		}
-
 		/** @type {import('./change-appeal-type.types.js').ChangeAppealTypeRequest} */
 		request.session.changeAppealType = {
 			...request.session.changeAppealType,
 			transferredAppealHorizonReference: horizonReference
 		};
+
+		if (errors) {
+			return renderAddHorizonReference(request, response);
+		}
 
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/change-appeal-type/check-transfer`

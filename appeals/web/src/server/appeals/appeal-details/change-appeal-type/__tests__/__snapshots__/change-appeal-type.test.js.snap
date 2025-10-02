@@ -595,7 +595,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> Horizon reference</label></h1>
                             <p id="horizon-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a reference number</p>
                             <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
-                            id="horizon-reference" name="horizon-reference" type="text" aria-describedby="horizon-reference-error">
+                            id="horizon-reference" name="horizon-reference" type="text" value="" aria-describedby="horizon-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -638,7 +638,8 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                             <p id="horizon-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Reference number must
                                 only include numbers</p>
                             <input class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
-                            id="horizon-reference" name="horizon-reference" type="text" aria-describedby="horizon-reference-error">
+                            id="horizon-reference" name="horizon-reference" type="text" value="a123456"
+                            aria-describedby="horizon-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -681,7 +682,8 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                             <p id="horizon-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Reference number must
                                 be 7 characters</p>
                             <input class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
-                            id="horizon-reference" name="horizon-reference" type="text" aria-describedby="horizon-reference-error">
+                            id="horizon-reference" name="horizon-reference" type="text" value="12345678"
+                            aria-describedby="horizon-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -724,7 +726,8 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                             <p id="horizon-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Reference number must
                                 be 7 characters</p>
                             <input class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
-                            id="horizon-reference" name="horizon-reference" type="text" aria-describedby="horizon-reference-error">
+                            id="horizon-reference" name="horizon-reference" type="text" value="12345"
+                            aria-describedby="horizon-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
