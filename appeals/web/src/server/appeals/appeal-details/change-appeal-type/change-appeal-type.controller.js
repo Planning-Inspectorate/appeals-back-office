@@ -407,12 +407,15 @@ export const postCheckTransfer = async (request, response) => {
 
 		const {
 			errors,
-			params: { appealId }
+			params: { appealId },
+			currentAppeal: { appealStatus }
 		} = request;
 
 		if (errors) {
 			return renderCheckTransfer(request, response);
 		}
+
+		const isAlreadyTransferred = appealStatus == APPEAL_CASE_STATUS.TRANSFERRED;
 
 		await postAppealTransferConfirmation(
 			request.apiClient,
@@ -425,7 +428,9 @@ export const postCheckTransfer = async (request, response) => {
 
 		addNotificationBannerToSession({
 			session: request.session,
-			bannerDefinitionKey: 'appealMarkedAsTransferred',
+			bannerDefinitionKey: isAlreadyTransferred
+				? 'horizonReferenceUpdated'
+				: 'appealMarkedAsTransferred',
 			appealId
 		});
 
