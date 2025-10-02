@@ -17,7 +17,6 @@ describe('set up inquiry', () => {
 			hasObligation: true
 		}
 	};
-
 	beforeEach(() => {
 		installMockApi();
 		nock('http://test/')
