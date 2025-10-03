@@ -2,6 +2,13 @@ import usersService from '#appeals/appeal-users/users-service.js';
 import { mapStatusText } from '#lib/appeal-status.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import {
+	AUDIT_TRAIL_IP_UUID,
+	AUDIT_TRAIL_LPA_UUID,
+	AUDIT_TRAIL_SYSTEM_UUID,
+	AUDIT_TRIAL_APPELLANT_UUID,
+	AUDIT_TRIAL_AUTOMATIC_EVENT_UUID
+} from '@pins/appeals/constants/support.js';
+import {
 	APPEAL_CASE_STAGE,
 	APPEAL_DOCUMENT_TYPE,
 	APPEAL_REDACTED_STATUS
@@ -47,7 +54,12 @@ const uuidRegex =
  * @returns {Promise<string>}
  */
 export const tryMapUsers = async (log, session) => {
-	const result = log.replace('00000000-0000-0000-0000-000000000000', 'System');
+	const result = log
+		.replace(AUDIT_TRAIL_SYSTEM_UUID, 'System')
+		.replace(AUDIT_TRIAL_APPELLANT_UUID, 'Appellant')
+		.replace(AUDIT_TRAIL_IP_UUID, 'Interested party')
+		.replace(AUDIT_TRAIL_LPA_UUID, 'Local planning authority')
+		.replace(AUDIT_TRIAL_AUTOMATIC_EVENT_UUID, 'Automatic event');
 	const uuid = uuidRegex.exec(result);
 
 	if (!uuid) {
