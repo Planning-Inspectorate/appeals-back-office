@@ -6,6 +6,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
+/** @typedef {import('@pins/appeals.api').Schema.SiteVisit} SiteVisit */
 /** @typedef {import('@pins/appeals.api').Schema.InspectorDecision} InspectorDecision */
 /** @typedef {import('@pins/appeals.api').Schema.DocumentVersion} DocumentVersion */
 /** @typedef {import('@pins/appeals.api').Schema.User} User */
@@ -113,6 +114,9 @@ const appealDetailsInclude = {
 		}
 	},
 	siteVisit: {
+		where: {
+			whoMissedSiteVisit: null
+		},
 		include: {
 			siteVisitType: true
 		}
@@ -158,7 +162,6 @@ const getAppealById = async (id, includeDetails = true) => {
 		},
 		include: includeDetails ? appealDetailsInclude : null
 	});
-
 	if (appeal) {
 		// @ts-ignore
 		return appeal;

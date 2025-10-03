@@ -28,6 +28,7 @@ const createSiteVisitById = (data) =>
  * 	visitEndTime?: Date;
  * 	visitStartTime?: Date;
  * 	siteVisitTypeId?: number;
+ * 	whoMissedSiteVisit?: string
  * }} data
  * @returns {PrismaPromise<object>}
  */
@@ -45,4 +46,23 @@ const deleteSiteVisitById = (id) =>
 		where: { id }
 	});
 
-export default { createSiteVisitById, updateSiteVisitById, deleteSiteVisitById };
+/**
+ *
+ * @param {number} appealId
+ * @returns
+ */
+const getMissedSiteVisitByAppealId = (appealId) => {
+	return databaseConnector.siteVisit.findFirst({
+		where: {
+			appealId: appealId,
+			whoMissedSiteVisit: { not: null }
+		}
+	});
+};
+
+export default {
+	createSiteVisitById,
+	updateSiteVisitById,
+	deleteSiteVisitById,
+	getMissedSiteVisitByAppealId
+};

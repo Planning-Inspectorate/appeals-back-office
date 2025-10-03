@@ -566,14 +566,15 @@ model DesignatedSiteSelected {
 /// SiteVisit model
 /// Contains information on the scheduled site visit for an appeal.
 model SiteVisit {
-  id              Int            @id @default(autoincrement())
-  appealId        Int            @unique
-  siteVisitTypeId Int?
-  visitDate       DateTime?
-  visitStartTime  DateTime?
-  visitEndTime    DateTime?
-  appeal          Appeal         @relation(fields: [appealId], references: [id])
-  siteVisitType   SiteVisitType? @relation(fields: [siteVisitTypeId], references: [id])
+  id                 Int            @id @default(autoincrement())
+  appealId           Int            @unique
+  siteVisitTypeId    Int?
+  visitDate          DateTime?
+  visitStartTime     DateTime?
+  visitEndTime       DateTime?
+  appeal             Appeal         @relation(fields: [appealId], references: [id])
+  siteVisitType      SiteVisitType? @relation(fields: [siteVisitTypeId], references: [id])
+  whoMissedSiteVisit String?
 }
 
 /// SiteVisitType model
