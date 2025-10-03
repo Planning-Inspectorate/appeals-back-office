@@ -253,7 +253,7 @@ Cypress.Commands.add('checkNotifySent', (reference, expectedNotifies) => {
 	});
 });
 
-Cypress.Commands.add('updateAppealDetailsViaApi', (reference, caseDetails) => {
+Cypress.Commands.add('updateAppealDetails', (reference, caseDetails) => {
 	return cy.wrap(null).then(async () => {
 		const details = await appealsApiClient.loadCaseDetails(reference);
 		const appealId = details.appealId;
@@ -309,13 +309,5 @@ Cypress.Commands.add('deleteEstimateViaApi', (procedureType, reference) => {
 		const details = await appealsApiClient.loadCaseDetails(reference);
 		const appealId = await details.appealId;
 		return await appealsApiClient.deleteEstimate(procedureType, appealId);
-	});
-});
-
-Cypress.Commands.add('assignCaseOfficerViaApi', (reference) => {
-	return cy.wrap(null).then(async () => {
-		const details = await appealsApiClient.loadCaseDetails(reference);
-		const appealId = await details.appealId;
-		return await appealsApiClient.assignCaseOfficer(appealId);
 	});
 });

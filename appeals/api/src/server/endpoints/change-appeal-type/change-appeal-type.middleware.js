@@ -1,5 +1,5 @@
 import { getAllAppealTypes } from '#repositories/appeal-type.repository.js';
-import { currentStatus } from '#utils/current-status.js';
+import { currentStatus, isCurrentStatus } from '#utils/current-status.js';
 import { filterEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
 import { ERROR_INVALID_APPEAL_STATE, ERROR_NOT_FOUND } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
@@ -72,10 +72,7 @@ export const validateAppealStatus = async (req, res, next) => {
  * @returns {Promise<object|void>}
  */
 export const validateAppealStatusForTransfer = async (req, res, next) => {
-	const isValidStatus = [
-		APPEAL_CASE_STATUS.AWAITING_TRANSFER,
-		APPEAL_CASE_STATUS.TRANSFERRED
-	].includes(currentStatus(req.appeal));
+	const isValidStatus = isCurrentStatus(req.appeal, APPEAL_CASE_STATUS.AWAITING_TRANSFER);
 
 	if (!isValidStatus) {
 		return res.status(400).send({ errors: { appealStatus: ERROR_INVALID_APPEAL_STATE } });

@@ -124,14 +124,6 @@ const deleteAppealData = async (
 		}
 	});
 
-	const deletePersonalList = databaseConnector.personalList.deleteMany({
-		where: {
-			appealId: {
-				in: appealIDs
-			}
-		}
-	});
-
 	const deleteTimetables = databaseConnector.appealTimetable.deleteMany({
 		where: {
 			appealId: {
@@ -451,7 +443,6 @@ const deleteAppealData = async (
 		deleteHearing,
 		deleteInquiry,
 		deleteInquiryEstimate,
-		deletePersonalList,
 		deleteAppeals
 	]);
 };

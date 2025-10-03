@@ -56,9 +56,8 @@ describe('calculateDueDate Tests', () => {
 	test('maps STATE_TARGET_READY_TO_START status', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.READY_TO_START;
 		mockAppeal.caseExtensionDate = new Date('2023-02-01');
-		mockAppeal.appellantCase = { appellantCaseValidationOutcome: { name: 'Incomplete' } };
 		// @ts-ignore
-		const dueDate = await calculateDueDate(mockAppeal);
+		const dueDate = await calculateDueDate(mockAppeal, 'Incomplete');
 		expect(dueDate).toEqual(new Date('2023-02-01'));
 	});
 

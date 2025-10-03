@@ -7,7 +7,6 @@ import timetableRepository from '#repositories/appeal-timetable.repository.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import commonRepository from '#repositories/common.repository.js';
 import transitionState from '#state/transition-state.js';
-import { isCurrentStatus } from '#utils/current-status.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
@@ -16,7 +15,6 @@ import { DEADLINE_HOUR, DEADLINE_MINUTE } from '@pins/appeals/constants/dates.js
 import {
 	AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED,
 	AUDIT_TRAIL_APPEAL_TYPE_UPDATED,
-	AUDIT_TRAIL_HORIZON_REFERENCE_UPDATED,
 	AUDIT_TRAIL_SUBMISSION_INVALID,
 	VALIDATION_OUTCOME_INVALID
 } from '@pins/appeals/constants/support.js';
@@ -288,28 +286,22 @@ const markAwaitingTransfer = async (appeal, newAppealTypeId, azureAdUserId) => {
  * @returns {Promise<void>}
  */
 const markTransferred = async (appeal, newAppealReference, azureAdUserId) => {
-	await databaseConnector.appeal.update({
-		where: { id: appeal.id },
-		data: {
-			caseTransferredId: newAppealReference,
-			caseUpdatedDate: new Date()
-		}
-	});
-
-	let details;
-
-	if (isCurrentStatus(appeal, APPEAL_CASE_STATUS.AWAITING_TRANSFER)) {
-		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.TRANSFERRED);
-		details = stringTokenReplacement(AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED, ['transferred']);
-	} else {
-		details = AUDIT_TRAIL_HORIZON_REFERENCE_UPDATED;
-	}
+	Promise.all([
+		await databaseConnector.appeal.update({
+			where: { id: appeal.id },
+			data: {
+				caseTransferredId: newAppealReference,
+				caseUpdatedDate: new Date()
+			}
+		}),
+		await transitionState(appeal.id, azureAdUserId, APPEAL_CASE_STATUS.TRANSFERRED)
+	]);
 
 	if (isFeatureActive(FEATURE_FLAG_NAMES.CHANGE_APPEAL_TYPE)) {
 		await createAuditTrail({
 			appealId: appeal.id,
 			azureAdUserId,
-			details
+			details: stringTokenReplacement(AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED, ['transferred'])
 		});
 	}
 

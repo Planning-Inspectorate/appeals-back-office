@@ -20,7 +20,6 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import * as documentRepository from '#repositories/document.repository.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
 import { EventType } from '@pins/event-client';
 import { APPEAL_DOCUMENT_TYPE } from '@planning-inspectorate/data-model';
 import { formatDocument } from './documents.formatter.js';
@@ -100,8 +99,6 @@ const addDocuments = async (req, res) => {
 
 	try {
 		const documentInfo = await service.addDocumentsToAppeal(req.body, appeal);
-
-		await updatePersonalList(appeal.id);
 
 		const auditTrails = await Promise.all(
 			documentInfo.documents.filter(Boolean).map(async (document) => {

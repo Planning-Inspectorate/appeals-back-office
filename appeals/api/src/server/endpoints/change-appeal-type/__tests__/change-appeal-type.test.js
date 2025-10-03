@@ -443,27 +443,13 @@ describe('appeal change type transfer routes', () => {
 
 describe('appeal change type transfer confirmation routes', () => {
 	describe('POST', () => {
-		test.each([
-			['awaiting event', APPEAL_CASE_STATUS.AWAITING_EVENT],
-			['closed', APPEAL_CASE_STATUS.CLOSED],
-			['complete', APPEAL_CASE_STATUS.COMPLETE],
-			['event', APPEAL_CASE_STATUS.EVENT],
-			['evidence', APPEAL_CASE_STATUS.EVIDENCE],
-			['final comments', APPEAL_CASE_STATUS.FINAL_COMMENTS],
-			['invalid', APPEAL_CASE_STATUS.INVALID],
-			['issue determination', APPEAL_CASE_STATUS.ISSUE_DETERMINATION],
-			['lpa questionnaire', APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE],
-			['ready to start', APPEAL_CASE_STATUS.READY_TO_START],
-			['statements', APPEAL_CASE_STATUS.STATEMENTS],
-			['withdrawn', APPEAL_CASE_STATUS.WITHDRAWN],
-			['witnesses', APPEAL_CASE_STATUS.WITNESSES]
-		])('returns 400 when appeal status is invalid: %s', async (_, caseStatus) => {
+		test('returns 400 when appeal status is invalid', async () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
 				appealStatus: [
 					{
-						status: caseStatus,
+						status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE,
 						valid: true
 					}
 				]
@@ -565,16 +551,13 @@ describe('appeal change type transfer confirmation routes', () => {
 			});
 		});
 
-		test.each([
-			['transfer', 'awaiting transfer', APPEAL_CASE_STATUS.AWAITING_TRANSFER],
-			['update of horizon reference', 'transferred', APPEAL_CASE_STATUS.TRANSFERRED]
-		])('returns 200 on %s of appeal with current status status: %s', async (_, __, caseStatus) => {
+		test('returns 200 on transfer of appeal', async () => {
 			// @ts-ignore
 			databaseConnector.appeal.findUnique.mockResolvedValue({
 				...householdAppeal,
 				appealStatus: [
 					{
-						status: caseStatus,
+						status: APPEAL_CASE_STATUS.AWAITING_TRANSFER,
 						valid: true
 					}
 				]

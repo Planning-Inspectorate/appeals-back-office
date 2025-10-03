@@ -16,7 +16,6 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import { AUDIT_TRAIL_SITE_VISIT_CANCELLED } from '@pins/appeals/constants/support.js';
 import { EventType } from '@pins/event-client';
@@ -162,8 +161,6 @@ const updateSiteVisit = async (azureAdUserId, updateSiteVisitData, notifyClient)
 		if (!result) {
 			throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 		}
-
-		await updatePersonalList(appealId);
 
 		if (updateSiteVisitData.visitType) {
 			await createAuditTrail({

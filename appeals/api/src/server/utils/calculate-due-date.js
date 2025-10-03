@@ -1,6 +1,5 @@
 import { calculateIssueDecisionDeadline } from '#endpoints/appeals/appeals.service.js';
 import { currentStatus } from '#utils/current-status.js';
-import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { add, addBusinessDays } from 'date-fns';
 
@@ -22,15 +21,14 @@ const approxStageCompletion = {
 /**
  * Map each appeal to include a due date.
  * @param {DBAppeal | DBUserAppeal} appeal
+ * @param {string} appellantCaseStatus
+ * @param {CostsDecision} [costsDecision]
  * @returns {Promise<Date | null | undefined>}
  */
-export const calculateDueDate = async (appeal) => {
+export const calculateDueDate = async (appeal, appellantCaseStatus, costsDecision) => {
 	switch (currentStatus(appeal)) {
 		case APPEAL_CASE_STATUS.READY_TO_START:
-			if (
-				appeal.appellantCase?.appellantCaseValidationOutcome?.name === 'Incomplete' &&
-				appeal.caseExtensionDate
-			) {
+			if (appellantCaseStatus === 'Incomplete' && appeal.caseExtensionDate) {
 				return new Date(appeal.caseExtensionDate);
 			}
 			return add(new Date(appeal.caseCreatedDate), {
@@ -47,8 +45,6 @@ export const calculateDueDate = async (appeal) => {
 			return add(new Date(appeal.caseCreatedDate), {
 				days: approxStageCompletion.STATE_TARGET_ASSIGN_CASE_OFFICER
 			});
-		case APPEAL_CASE_STATUS.VALIDATION:
-			return new Date(appeal.caseCreatedDate);
 		case APPEAL_CASE_STATUS.ISSUE_DETERMINATION: {
 			if (appeal.siteVisit) {
 				return await calculateIssueDecisionDeadline(
@@ -62,7 +58,6 @@ export const calculateDueDate = async (appeal) => {
 			);
 		}
 		case APPEAL_CASE_STATUS.COMPLETE: {
-			const costsDecision = await formatCostsDecision(appeal);
 			if (
 				costsDecision?.awaitingAppellantCostsDecision ||
 				costsDecision?.awaitingLpaCostsDecision

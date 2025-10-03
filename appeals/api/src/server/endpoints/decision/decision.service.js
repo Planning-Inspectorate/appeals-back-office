@@ -7,7 +7,6 @@ import { notifySend } from '#notify/notify-send.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import transitionState from '#state/transition-state.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
 import {
 	AUDIT_TRAIL_APPELLANT_COSTS_DECISION_ISSUED,
 	AUDIT_TRAIL_CORRECTION_NOTICE_ADDED,
@@ -164,8 +163,6 @@ export const publishCostsDecision = async (
 		throw new Error('Unable to parse decision type for cost decision details.');
 	}
 	const { recipientEmailTemplate, lpaEmailTemplate, auditTrailDetails } = costDecisionDetails;
-
-	await updatePersonalList(appeal.id);
 
 	if (!skipNotifies) {
 		const personalisation = {

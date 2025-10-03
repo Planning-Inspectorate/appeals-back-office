@@ -420,25 +420,5 @@ export const appealsApiClient = {
 		} catch {
 			return false;
 		}
-	},
-
-	async assignCaseOfficer(appealId) {
-		try {
-			const url = `${baseUrl}appeals/${appealId}`;
-			const response = await fetch(url, {
-				method: 'PATCH',
-				headers: {
-					'Content-Type': 'application/json',
-					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
-				},
-				body: JSON.stringify({
-					caseOfficer: '13de469c-8de6-4908-97cd-330ea73df618'
-				})
-			});
-			expect(response.status).eq(200);
-			return await response.json();
-		} catch {
-			return false;
-		}
 	}
 };

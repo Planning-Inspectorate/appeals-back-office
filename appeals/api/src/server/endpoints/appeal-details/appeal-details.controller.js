@@ -2,7 +2,6 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { contextEnum } from '#mappers/context-enum.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import logger from '#utils/logger.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { ERROR_FAILED_TO_SAVE_DATA } from '@pins/appeals/constants/support.js';
 import { appealDetailService } from './appeal-details.service.js';
@@ -66,8 +65,6 @@ const updateAppealById = async (req, res) => {
 				azureAdUserId
 			);
 		}
-
-		await updatePersonalList(appealId);
 
 		await broadcasters.broadcastAppeal(appeal.id);
 	} catch (error) {

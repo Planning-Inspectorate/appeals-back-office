@@ -189,5 +189,3 @@ export interface HearingEstimate extends schema.HearingEstimate {}
 export interface InquiryEstimate extends schema.InquiryEstimate {}
 
 export interface AppealRelationship extends schema.AppealRelationship {}
-
-export interface PersonalList extends schema.PersonalList {}

@@ -10,7 +10,6 @@ import transitionState from '#state/transition-state.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
-import { updatePersonalList } from '#utils/update-personal-list.js';
 import {
 	FEATURE_FLAG_NAMES,
 	PROCEDURE_TYPE_ID_MAP,
@@ -501,8 +500,6 @@ const updateAppealTimetable = async (appeal, body, notifyClient, azureAdUserId) 
 					dateISOStringToDisplayDate(processedBody[key])
 				]);
 		});
-
-		await updatePersonalList(appeal.id);
 
 		await createAuditTrail({
 			appealId: appeal.id,

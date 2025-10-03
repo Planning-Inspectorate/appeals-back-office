@@ -138,7 +138,6 @@ const mockTeamFindUnique = jest.fn().mockResolvedValue({});
 const mockTeamFindFirst = jest.fn().mockResolvedValue({});
 const mockTeamFindMany = jest.fn().mockResolvedValue({});
 const mockBlobStorageCopyFile = jest.fn().mockResolvedValue({});
-const mockPersonalListUpsert = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
 	const { doNotMockNotifySend = false, ...options } = params || {};
@@ -233,12 +232,6 @@ class MockPrismaClient {
 		return {
 			upsert: mockAppealTimetableUpsert,
 			update: mockAppealTimetableUpdate
-		};
-	}
-
-	get personalList() {
-		return {
-			upsert: mockPersonalListUpsert
 		};
 	}
 

@@ -66,7 +66,6 @@ model Appeal {
   inquiryEstimate       InquiryEstimate?
   assignedTeam          Team?                @relation(fields: [assignedTeamId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   assignedTeamId        Int?
-  PersonalList          PersonalList?        @relation("appeal")
 
   @@index([addressId])
   @@index([appealTypeId])
@@ -908,16 +907,4 @@ model Team {
 
   lpas   LPA[]    @relation("team")
   Appeal Appeal[]
-}
-
-/// PersonalList model
-model PersonalList {
-  id           Int       @id @default(autoincrement())
-  appealId     Int       @unique
-  linkType     String?
-  leadAppealId Int?
-  dueDate      DateTime?
-  appeal       Appeal    @relation("appeal", fields: [appealId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-
-  @@index([dueDate, leadAppealId, linkType(sort: Desc), appealId])
 }
