@@ -15,6 +15,7 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 import isFPA from '@pins/appeals/utils/is-fpa.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { countBy } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -86,7 +87,7 @@ const formatMyAppeal = async ({
 		localPlanningDepartment: appeal.lpa?.name || '',
 		lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 		documentationSummary: formatDocumentationSummary(appeal),
-		dueDate: await calculateDueDate(appeal),
+		dueDate: await calculateDueDate(appeal, costsDecision),
 		appealTimetable: formatAppealTimetable(appeal),
 		isParentAppeal,
 		isChildAppeal,
@@ -96,6 +97,50 @@ const formatMyAppeal = async ({
 		awaitingLinkedAppeal,
 		costsDecision,
 		numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange ?? null
+	};
+};
+
+/**
+ *
+ * @param {Object} options
+ * @param {number} options.appealId
+ * @param {DBUserAppeal} options.appeal
+ * @param {Date} options.dueDate
+ * @param {String} options.linkType
+ * @param {Boolean} [options.awaitingLinkedAppeal]
+ * @returns {Promise<AppealListResponse>}
+ */
+const formatPersonalListItem = async ({
+	appealId,
+	appeal,
+	dueDate,
+	linkType,
+	awaitingLinkedAppeal = false
+}) => {
+	const { reference, lpaQuestionnaire, appellantCase, hearing, procedureType, appealType } = appeal;
+	const appealStatus = currentStatus(appeal);
+	return {
+		appealId,
+		appealReference: reference,
+		appealSite: formatAddress(appeal.address),
+		appealStatus,
+		appealType: appealType?.type,
+		procedureType: procedureType?.name,
+		createdAt: appeal.caseCreatedDate,
+		localPlanningDepartment: appeal.lpa?.name || '',
+		lpaQuestionnaireId: lpaQuestionnaire?.id ?? null,
+		documentationSummary: formatDocumentationSummary(appeal),
+		dueDate,
+		appealTimetable: formatAppealTimetable(appeal),
+		isParentAppeal: linkType === 'parent',
+		isChildAppeal: linkType === 'child',
+		planningApplicationReference: appeal.applicationReference,
+		isHearingSetup: !!hearing,
+		hasHearingAddress: !!hearing?.addressId,
+		awaitingLinkedAppeal,
+		costsDecision:
+			appealStatus === APPEAL_CASE_STATUS.COMPLETE ? await formatCostsDecision(appeal) : null,
+		numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange ?? null
 	};
 };
 
@@ -125,7 +170,7 @@ const formatDocumentationSummary = (appeal) => {
 		appellantCase: {
 			status: formatAppellantCaseDocumentationStatus(appeal),
 			dueDate: appeal.caseExtensionDate && appeal.caseExtensionDate?.toISOString(),
-			receivedAt: appeal.caseCreatedDate.toISOString()
+			receivedAt: appeal.caseCreatedDate?.toISOString()
 		},
 		lpaQuestionnaire: {
 			status: formatLpaQuestionnaireDocumentationStatus(appeal),
@@ -272,4 +317,11 @@ const formatLinkedAppealData = async function (
 		}));
 };
 
-export { formatAppeal, formatLinkedAppealData, formatMyAppeal, getIdsOfReferencedAppeals };
+export {
+	formatAppeal,
+	formatDocumentationSummary,
+	formatLinkedAppealData,
+	formatMyAppeal,
+	formatPersonalListItem,
+	getIdsOfReferencedAppeals
+};

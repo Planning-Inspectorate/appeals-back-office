@@ -129,7 +129,7 @@ const allLinkedAppealsHaveSameAppealStatus = (appeal, linkedAppeals) => {
 		}
 		return (
 			appealStatus === linkedAppeal.currentStatus ||
-			linkedAppeal.completedStateList.includes(appealStatus)
+			linkedAppeal.completedStateList?.includes(appealStatus)
 		);
 	});
 };

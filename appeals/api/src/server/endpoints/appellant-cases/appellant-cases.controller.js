@@ -5,6 +5,7 @@ import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.
 import { contextEnum } from '#mappers/context-enum.js';
 import appellantCaseRepository from '#repositories/appellant-case.repository.js';
 import logger from '#utils/logger.js';
+import { updatePersonalList } from '#utils/update-personal-list.js';
 import * as CONSTANTS from '@pins/appeals/constants/support.js';
 import {
 	renderAuditTrailDetail,
@@ -149,6 +150,8 @@ const updateAppellantCaseById = async (req, res) => {
 					siteGridReferenceEasting,
 					siteGridReferenceNorthing
 			  });
+
+		await updatePersonalList(appeal.id);
 
 		const auditTrailDetail = renderAuditTrailDetail(body);
 

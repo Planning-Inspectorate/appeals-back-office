@@ -53,6 +53,7 @@ apps_config = {
     featureFlagHearingPostMvp         = false
     featureFlagAutoAssignTeam         = true
     featureFlagCancelSiteVisit        = false
+    featureFlagPersonalList           = false
   }
 
   use_system_test_bc_for_change_lpa = false
