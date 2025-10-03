@@ -1,7 +1,7 @@
 import { getSessionValuesForAppeal } from '#lib/edit-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
-import { getBackLinkUrl } from '../change-appeal-procedure-type.controller.js';
-import { dateKnownPage } from './change-event-date-known.mapper.js';
+import { getBackLinkUrl } from '../change-procedure-type.controller.js';
+import { dateKnownPage } from './change-procedure-event-date-known.mapper.js';
 
 /** @typedef {import('@pins/express').ValidationErrors} ValidationErrors */
 

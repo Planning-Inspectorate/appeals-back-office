@@ -1,4 +1,4 @@
-import { inquiryEstimationPage } from './change-appeal-estimation.mapper.js';
+import { inquiryEstimationPage } from './change-procedure-estimation.mapper.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
