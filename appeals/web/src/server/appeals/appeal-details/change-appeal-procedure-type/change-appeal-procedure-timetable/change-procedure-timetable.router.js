@@ -3,8 +3,8 @@ import { addAppellantCaseToLocals } from '#appeals/appeal-details/timetable/time
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import * as controllers from './change-appeal-timetable.controller.js';
-import { runTimetableValidators } from './change-appeal-timetable.middleware.js';
+import * as controllers from './change-procedure-timetable.controller.js';
+import { runTimetableValidators } from './change-procedure-timetable.middleware.js';
 
 const router = createRouter({ mergeParams: true });
 

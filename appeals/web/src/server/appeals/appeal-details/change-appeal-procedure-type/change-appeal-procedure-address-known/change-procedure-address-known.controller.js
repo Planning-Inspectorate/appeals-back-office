@@ -1,4 +1,4 @@
-import { changeAddressKnownPage } from './change-appeal-address-known.mapper.js';
+import { changeAddressKnownPage } from './change-procedure-address-known.mapper.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request

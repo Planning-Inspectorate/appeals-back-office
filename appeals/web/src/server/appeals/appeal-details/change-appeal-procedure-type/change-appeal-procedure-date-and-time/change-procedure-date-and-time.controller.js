@@ -1,5 +1,5 @@
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
-import { eventChangeProcedureDatePage } from './change-appeal-date-and-time.mapper.js';
+import { eventChangeProcedureDatePage } from './change-procedure-date-and-time.mapper.js';
 
 /**
  * @param {string} path
