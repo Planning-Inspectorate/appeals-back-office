@@ -1,3 +1,4 @@
+import { getTimetableTypes } from '#appeals/appeal-details/change-appeal-procedure-type/change-appeal-procedure-timetable/change-procedure-timetable.mapper.js';
 import { getTimetableTypeText } from '#appeals/appeal-details/timetable/timetable.mapper.js';
 import { addressToString } from '#lib/address-formatter.js';
 import {
@@ -11,14 +12,13 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { capitalize, pick } from 'lodash-es';
-import { getTimetableTypes } from '../change-appeal-timetable/change-appeal-timetable.mapper.js';
-import { appealProcedureToLabelText } from './check-and-confirm.mapper.js';
+import { appealProcedureToLabelText } from './change-procedure-check-and-confirm.mapper.js';
 
 /**
- * @typedef {import('../change-appeal-procedure-type.controller.js').AppealTimetable} AppealTimetable
+ * @typedef {import('../change-procedure-type.controller.js').AppealTimetable} AppealTimetable
  */
 /**
- * @typedef {import('../change-appeal-procedure-type.controller.js').ChangeProcedureType} ChangeProcedureTypeSession
+ * @typedef {import('../change-procedure-type.controller.js').ChangeProcedureType} ChangeProcedureTypeSession
  */
 
 /**

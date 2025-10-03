@@ -2,18 +2,17 @@ import * as validators from '#appeals/appeal-details/inquiry/setup/set-up-inquir
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import * as controller from './change-appeal-estimation.controller.js';
+import * as controller from './change-procedure-address-details.controller.js';
 
 const router = createRouter({ mergeParams: true });
 
 router
 	.route('/')
-	.get(asyncHandler(controller.getChangeInquiryEstimation))
+	.get(asyncHandler(controller.getInquiryAddressDetails))
 	.post(
-		validators.validateYesNoInput,
-		validators.validateEstimationInput,
+		validators.validateInquiryAddress,
 		saveBodyToSession('changeProcedureType'),
-		asyncHandler(controller.postChangeInquiryEstimation)
+		asyncHandler(controller.postInquiryAddressDetails)
 	);
 
 export default router;

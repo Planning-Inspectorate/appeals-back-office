@@ -21,7 +21,7 @@ import assignUserRouter from './assign-user/assign-user.router.js';
 import { auditRouter } from './audit/audit.router.js';
 import cancelAppealRouter from './cancel/cancel.router.js';
 import changeAppealDetailsRouter from './change-appeal-details/change-appeal-details.router.js';
-import changeAppealProcedureTypeRouter from './change-appeal-procedure-type/change-appeal-procedure-type.router.js';
+import changeAppealProcedureTypeRouter from './change-appeal-procedure-type/change-procedure-type.router.js';
 import changeAppealTypeMiddleware from './change-appeal-type.middleware.js';
 import costsRouter from './costs/costs.router.js';
 import environmentalAssessmentRouter from './environmental-assessment/environmental-assessment.router.js';
