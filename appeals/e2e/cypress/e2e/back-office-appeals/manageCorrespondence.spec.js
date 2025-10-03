@@ -28,6 +28,7 @@ describe('Manage correspondence', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Success', 'Cross-team correspondence added');
 			caseDetailsPage.clickManageCrossTeamCorrespondence();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('Upload a new version');
 			caseDetailsPage.uploadSampleFile(sampleFiles.document2);
@@ -55,6 +56,7 @@ describe('Manage correspondence', () => {
 			caseDetailsPage.clickButtonByText('Confirm');
 			caseDetailsPage.validateBannerMessage('Success', 'Inspector correspondence added');
 			caseDetailsPage.clickManageInspectorCorrespondence();
+			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
 			caseDetailsPage.clickButtonByText('Remove current version');
 			caseDetailsPage.selectRadioButtonByValue('Yes');
