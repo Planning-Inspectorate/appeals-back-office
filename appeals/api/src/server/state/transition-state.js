@@ -5,6 +5,7 @@ import appealRepository from '#repositories/appeal.repository.js';
 import { currentStatus } from '#utils/current-status.js';
 import logger from '#utils/logger.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
+import { updatePersonalList } from '#utils/update-personal-list.js';
 import {
 	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS,
@@ -87,7 +88,11 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 				appeal.hearing &&
 				appeal.hearing?.addressId))
 	) {
-		transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+		await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_COMPLETE);
+	}
+
+	if (!appeal.parentAppeals?.length) {
+		await updatePersonalList(appealId);
 	}
 
 	stateMachineService.stop();

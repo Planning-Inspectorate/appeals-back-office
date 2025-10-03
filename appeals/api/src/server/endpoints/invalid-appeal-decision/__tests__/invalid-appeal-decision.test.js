@@ -15,6 +15,9 @@ import { request } from '../../../app-test.js';
 const { databaseConnector } = await import('#utils/database-connector.js');
 
 describe('invalid appeal decision routes', () => {
+	beforeAll(() => {
+		jest.clearAllMocks();
+	});
 	beforeEach(() => {
 		// @ts-ignore
 		databaseConnector.appealRelationship.findMany.mockResolvedValue([]);
