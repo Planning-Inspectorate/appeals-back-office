@@ -170,6 +170,15 @@ export class Page {
 		this.basePageElements.checkbox().check({ force: true });
 	}
 
+	getCheckboxText(index) {
+		let text;
+
+		this.basePageElements
+			.checkbox()
+			.eq(indexNumber)
+			.then((elem) => {});
+	}
+
 	// clickAccordionByText(text) {
 	// 	this.basePageElements.accordion(text).click();
 	// }
@@ -314,6 +323,10 @@ export class Page {
 
 	validateNumberOfCheckboxes(checkboxCount) {
 		this.basePageElements.checkbox().should('have.length', checkboxCount);
+	}
+
+	validateNumberOfSelectedCheckboxes(checkedCount) {
+		cy.get(`${this.selectors.checkbox} input:checked`).should('have.length', checkedCount);
 	}
 
 	validateNumberOfRadioBtn(radioCount) {
