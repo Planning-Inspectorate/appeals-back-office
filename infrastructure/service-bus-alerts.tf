@@ -50,9 +50,9 @@ locals {
 resource "azurerm_monitor_metric_alert" "sb_dead_letter_alerts" {
   for_each = local.sb_alerts
 
-  name                = "Dead Letter Alert - ${each.key} - ${azurerm_servicebus_namespace.main.name}"
+  name                = "Dead Letter Alert - ${each.key} - ${local.service_bus.name}"
   resource_group_name = azurerm_resource_group.primary.name
-  scopes              = [azurerm_servicebus_namespace.main.id]
+  scopes              = [local.service_bus.id]
   description         = "Triggered when messages are added to dead-letter queue"
   severity            = 1
   frequency           = "PT5M"

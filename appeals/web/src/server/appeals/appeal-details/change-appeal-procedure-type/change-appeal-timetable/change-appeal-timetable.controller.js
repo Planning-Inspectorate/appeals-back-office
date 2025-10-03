@@ -15,7 +15,7 @@ const renderChangeAppealTimetable = async (request, response) => {
 	const {
 		currentAppeal,
 		session,
-		params: { appealId },
+		params: { appealId, procedureType },
 		errors,
 		locals: { appellantCase }
 	} = request;
@@ -24,6 +24,7 @@ const renderChangeAppealTimetable = async (request, response) => {
 		currentAppeal,
 		appellantCase,
 		request.body,
+		procedureType,
 		errors
 	);
 
@@ -46,7 +47,7 @@ export const postChangeAppealTimetable = async (request, response) => {
 	try {
 		const {
 			errors,
-			params: { appealId }
+			params: { appealId, procedureType }
 		} = request;
 
 		if (errors) {
@@ -54,7 +55,7 @@ export const postChangeAppealTimetable = async (request, response) => {
 		}
 
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/check-and-confirm`
+			`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType.toLowerCase()}/check-and-confirm`
 		);
 	} catch (error) {
 		logger.error(error);

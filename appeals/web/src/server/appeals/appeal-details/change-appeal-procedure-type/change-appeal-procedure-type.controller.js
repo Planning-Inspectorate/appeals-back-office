@@ -1,10 +1,29 @@
 /** @typedef {import('express').NextFunction} NextFunction */
 
+import { dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
+import { isAtEditEntrypoint } from '#lib/edit-utilities.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
+import { isEmpty, pick } from 'lodash-es';
+
 /**
  * @typedef {Object} ChangeProcedureType
  * @property {string} appealProcedure
  * @property {string} existingAppealProcedure
  * @property {AppealTimetable} appealTimetable
+ * @property {string} event-date-day
+ * @property {string} event-date-month
+ * @property {string} event-date-year
+ * @property {string} event-time-hour
+ * @property {string} event-time-minute
+ * @property {string} dateKnown
+ * @property {string} estimationYesNo
+ * @property {string} estimationDays
+ * @property {string} addressKnown
+ * @property {string} addressLine1
+ * @property {string} addressLine2
+ * @property {string} town
+ * @property {string} county
+ * @property {string} postCode
  */
 
 /**
@@ -25,13 +44,73 @@
  */
 export const updateChangeProcedureTypeSession = (request, response, next) => {
 	/** @type {ChangeProcedureType} */
-	const sessionValues = request.session.changeProcedureType || {};
+	let sessionValues = request.session.changeProcedureType || {};
 	const appealDetails = request.currentAppeal;
 
 	sessionValues.existingAppealProcedure = appealDetails.procedureType.toLowerCase();
 
 	sessionValues.appealProcedure =
 		sessionValues.appealProcedure ?? appealDetails.procedureType.toLowerCase();
+
+	switch (sessionValues.appealProcedure) {
+		case APPEAL_CASE_PROCEDURE.HEARING: {
+			const hearingDate = dateISOStringToDayMonthYearHourMinute(
+				appealDetails.hearing?.hearingStartTime
+			);
+			sessionValues.dateKnown = sessionValues.dateKnown ?? hearingDate ? 'yes' : 'no';
+			sessionValues['event-date-day'] = sessionValues['event-date-day'] ?? hearingDate?.day;
+			sessionValues['event-date-month'] = sessionValues['event-date-month'] ?? hearingDate.month;
+			sessionValues['event-date-year'] = sessionValues['event-date-year'] ?? hearingDate.year;
+			sessionValues['event-time-hour'] = sessionValues['event-time-hour'] ?? hearingDate.hour;
+			sessionValues['event-time-minute'] = sessionValues['event-time-minute'] ?? hearingDate.minute;
+			break;
+		}
+		case APPEAL_CASE_PROCEDURE.INQUIRY: {
+			const inquiryDate = dateISOStringToDayMonthYearHourMinute(
+				appealDetails.inquiry?.inquiryStartTime
+			);
+			sessionValues.dateKnown = sessionValues.dateKnown ?? inquiryDate ? 'yes' : 'no';
+			sessionValues['event-date-day'] = sessionValues['event-date-day'] ?? inquiryDate?.day;
+			sessionValues['event-date-month'] = sessionValues['event-date-month'] ?? inquiryDate.month;
+			sessionValues['event-date-year'] = sessionValues['event-date-year'] ?? inquiryDate.year;
+			sessionValues['event-time-hour'] = sessionValues['event-time-hour'] ?? inquiryDate.hour;
+			sessionValues['event-time-minute'] = sessionValues['event-time-minute'] ?? inquiryDate.minute;
+
+			sessionValues.estimationYesNo =
+				sessionValues.estimationYesNo ?? appealDetails.inquiry?.estimatedDays ? 'yes' : 'no';
+			sessionValues.estimationDays =
+				sessionValues.estimationDays ?? appealDetails.inquiry?.estimatedDays;
+			sessionValues.addressKnown =
+				sessionValues.addressKnown ?? appealDetails.inquiry?.address ? 'yes' : 'no';
+
+			const sessionAddressValues = pick(sessionValues, [
+				'addressLine1',
+				'addressLine2',
+				'town',
+				'county',
+				'postCode'
+			]);
+
+			const addressValues =
+				sessionValues['addressKnown'] === 'no'
+					? pick([], ['addressLine1', 'addressLine2', 'town', 'county', 'postCode'])
+					: isEmpty(sessionAddressValues)
+					? {
+							...pick(appealDetails.inquiry.address, [
+								'addressLine1',
+								'addressLine2',
+								'town',
+								'county'
+							]),
+							postCode: appealDetails.inquiry.address
+								? appealDetails.inquiry.address['postcode']
+								: null
+					  }
+					: sessionAddressValues;
+			sessionValues = { ...sessionValues, ...addressValues };
+			break;
+		}
+	}
 
 	sessionValues.appealTimetable = sessionValues.appealTimetable || {};
 
@@ -59,4 +138,16 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 	request.session.changeProcedureType = sessionValues;
 
 	next();
+};
+
+/**
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {string} url
+ * @returns {string}
+ */
+export const getBackLinkUrl = (request, url) => {
+	const baseUrl = `/appeals-service/appeal-details/${request.currentAppeal.appealId}/change-appeal-procedure-type`;
+	return isAtEditEntrypoint(request)
+		? `${baseUrl}/${request.params.appealProcedure}/check-and-confirm`
+		: `${baseUrl}/${url}`;
 };

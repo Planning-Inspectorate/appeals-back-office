@@ -5,7 +5,7 @@
 {%- if child_appeals.length > 1 %}
 
 We have made a decision on the following appeals:
-- {{ appeal_reference_number }}
+- {{ appeal_reference_number }} (lead)
 {%- for child_appeal in child_appeals %}
 - {{ child_appeal }}
 {%- endfor %}

@@ -90,7 +90,7 @@ describe('Change procedure timetable', () => {
 						.reply(200, { planningObligation: { hasObligation: false } })
 						.persist();
 
-					const response = await request.get(`${baseUrl}/change-timetable`);
+					const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
 					const element = parseHtml(response.text);
 
 					expect(element.innerHTML).toMatchSnapshot();
@@ -126,7 +126,7 @@ describe('Change procedure timetable', () => {
 						.reply(200, { planningObligation: { hasObligation: true } })
 						.persist();
 
-					const response = await request.get(`${baseUrl}/change-timetable`);
+					const response = await request.get(`${baseUrl}/${appealProcedure}/change-timetable`);
 					const element = parseHtml(response.text);
 
 					expect(element.innerHTML).toMatchSnapshot();
@@ -318,7 +318,7 @@ describe('Change procedure timetable', () => {
 							}
 
 							const response = await request
-								.post(`${baseUrl}/change-timetable`)
+								.post(`${baseUrl}/written/change-timetable`)
 								.send(payloadForTest);
 							const element = parseHtml(response.text);
 
@@ -333,7 +333,7 @@ describe('Change procedure timetable', () => {
 			});
 
 			it('should redirect to the timetable CYA page if required due dates are present in the request body', async () => {
-				const response = await request.post(`${baseUrl}/change-timetable`).send({
+				const response = await request.post(`${baseUrl}/written/change-timetable`).send({
 					'lpa-questionnaire-due-date-day': '10',
 					'lpa-questionnaire-due-date-month': '10',
 					'lpa-questionnaire-due-date-year': '2050',
@@ -350,7 +350,7 @@ describe('Change procedure timetable', () => {
 
 				expect(response.statusCode).toBe(302);
 				expect(response.text).toBe(
-					'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-procedure-type/check-and-confirm'
+					'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-procedure-type/written/check-and-confirm'
 				);
 			});
 
@@ -393,7 +393,7 @@ describe('Change procedure timetable', () => {
 					'final-comments-due-date-year': '2050'
 				};
 
-				const response = await request.post(`${baseUrl}/change-timetable`).send(payload);
+				const response = await request.post(`${baseUrl}/written/change-timetable`).send(payload);
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
@@ -441,7 +441,7 @@ describe('Change procedure timetable', () => {
 					'lpa-questionnaire-due-date-year': '2050'
 				};
 
-				const response = await request.post(`${baseUrl}/change-timetable`).send(payload);
+				const response = await request.post(`${baseUrl}/written/change-timetable`).send(payload);
 				const element = parseHtml(response.text);
 
 				expect(element.innerHTML).toMatchSnapshot();
@@ -647,7 +647,7 @@ describe('Change procedure timetable', () => {
 							}
 
 							const response = await request
-								.post(`${baseUrl}/change-timetable`)
+								.post(`${baseUrl}/written/change-timetable`)
 								.send(payloadForTest);
 							const element = parseHtml(response.text);
 

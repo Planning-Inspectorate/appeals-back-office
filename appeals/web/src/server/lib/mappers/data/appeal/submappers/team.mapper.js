@@ -3,7 +3,7 @@ import { textSummaryListItem } from '#lib/mappers/index.js';
 /** @type {import('../mapper.js').SubMapper} */
 export const mapCaseTeam = ({ appealDetails, currentRoute, userHasUpdateCasePermission }) => {
 	const teamAssigned =
-		appealDetails.assignedTeam?.name === null || appealDetails.assignedTeam?.email === null
+		appealDetails.assignedTeam?.name === null && appealDetails.assignedTeam?.email === null
 			? false
 			: true;
 	const teamRowValue = `

@@ -64,6 +64,7 @@ export async function lpaQuestionnairePage(
 		session,
 		currentRoute
 	);
+
 	const mappedAppealDetails = await initialiseAndMapAppealData(
 		appealDetails,
 		currentRoute,

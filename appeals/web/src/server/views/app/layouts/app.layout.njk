@@ -1,6 +1,6 @@
 {% extends "govuk/template.njk" %}
 {% set assetPath = "" %}
-{% set serviceName = 'Casework Back Office System' %}
+{% set serviceName = 'Manage appeals' %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block header %}
-	{% set domainName = 'Casework Back Office System - Appeals'%}
+	{% set domainName = 'Manage appeals'%}
   {{ globalHeader(domainType, domainName, containerClasses, pageIsPersonalList, pageIsNationalList) }}
 {% endblock %}
 

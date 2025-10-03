@@ -21,7 +21,7 @@ describe('appeal types routes', () => {
 				expect(response.body).toEqual(appealTypes);
 			});
 
-			test('gets appeal types that are active in CBOS if query parameter filterEnabled is true', async () => {
+			test('gets appeal types that are active in Manage appeals if query parameter filterEnabled is true', async () => {
 				// @ts-ignore
 				databaseConnector.appealType.findMany.mockResolvedValue(appealTypes);
 

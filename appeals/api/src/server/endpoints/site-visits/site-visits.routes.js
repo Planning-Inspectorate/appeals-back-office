@@ -3,9 +3,15 @@ import checkLookupValueIsValidAndAddToRequest from '#middleware/check-lookup-val
 import { ERROR_INVALID_SITE_VISIT_TYPE } from '@pins/appeals/constants/support.js';
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import { getSiteVisitById, postSiteVisit, rearrangeSiteVisit } from './site-visits.controller.js';
+import {
+	cancelSiteVisit,
+	getSiteVisitById,
+	postSiteVisit,
+	rearrangeSiteVisit
+} from './site-visits.controller.js';
 import { checkSiteVisitExists } from './site-visits.service.js';
 import {
+	deleteSiteVisitValidator,
 	getSiteVisitValidator,
 	patchSiteVisitValidator,
 	postSiteVisitValidator
@@ -104,6 +110,40 @@ router.patch(
 		ERROR_INVALID_SITE_VISIT_TYPE
 	),
 	asyncHandler(rearrangeSiteVisit)
+);
+router.delete(
+	'/:appealId/site-visits/:siteVisitId',
+	/*
+		#swagger.tags = ['Site Visits']
+		#swagger.path = '/appeals/{appealId}/site-visits/{siteVisitId}'
+		#swagger.description = 'Updates a single site visit by id'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Site visit details to create',
+			schema: { $ref: '#/components/schemas/SiteVisitUpdateRequest' },
+			required: true
+		}
+		#swagger.responses[200] = {
+			description: 'Creates a single site visit by id',
+			schema: { $ref: '#/components/schemas/SiteVisitUpdateRequest' }
+		}
+		#swagger.responses[400] = {}
+		#swagger.responses[500] = {}
+	 */
+	deleteSiteVisitValidator,
+	checkAppealExistsByIdAndAddToRequest,
+	checkSiteVisitExists,
+	checkLookupValueIsValidAndAddToRequest(
+		'visitType',
+		'siteVisitType',
+		ERROR_INVALID_SITE_VISIT_TYPE
+	),
+	asyncHandler(cancelSiteVisit)
 );
 
 export { router as siteVisitRoutes };

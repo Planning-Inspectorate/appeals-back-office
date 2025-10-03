@@ -1,8 +1,6 @@
 import { appealProcedureToLabelText } from '#appeals/appeal-details/change-appeal-procedure-type/check-and-confirm/check-and-confirm.mapper.js';
 import { sessionValuesToDateTime } from '#appeals/appeal-details/hearing/setup/set-up-hearing.controller.js';
 import { hearingDatePage } from '#appeals/appeal-details/hearing/setup/set-up-hearing.mapper.js';
-import { appealSiteToAddressString } from '#lib/address-formatter.js';
-import { generateNotifyPreview } from '#lib/api/notify-preview.api.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import {
 	dateISOStringToDisplayDate,
@@ -22,7 +20,7 @@ import { detailsComponent } from '#lib/mappers/components/page-components/detail
 import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
-import { calculateAppealTimetable, setStartDate } from '../start-case.service.js';
+import { getStartCaseNotifyPreviews, setStartDate } from '../start-case.service.js';
 import { dateKnownPage } from './hearing.mapper.js';
 
 /** @typedef {import('@pins/express').ValidationErrors} ValidationErrors */
@@ -148,25 +146,6 @@ export const postHearingDate = async (request, response) => {
 };
 
 /**
- * Generate Notify preview templates for appellant and LPA
- * @param {import('got').Got} apiClient
- * @param {object} personalisation
- * @param {boolean} dateKnown
- * @returns {Promise<{appellantTemplate: {renderedHtml: string}, lpaTemplate: {renderedHtml: string}}>}
- */
-const generateStartCaseNotifyPreviews = async (apiClient, personalisation, dateKnown) => {
-	const suffix = dateKnown ? '-hearing' : '';
-	const appellantTemplateName = `appeal-valid-start-case-s78-appellant${suffix}.content.md`;
-	const lpaTemplateName = `appeal-valid-start-case-s78-lpa${suffix}.content.md`;
-
-	const [appellantTemplate, lpaTemplate] = await Promise.all([
-		generateNotifyPreview(apiClient, appellantTemplateName, personalisation),
-		generateNotifyPreview(apiClient, lpaTemplateName, personalisation)
-	]);
-	return { appellantTemplate, lpaTemplate };
-};
-
-/**
  * @param {Record<string, string>} sessionValues
  * @returns {string}
  */
@@ -194,44 +173,23 @@ export const getHearingConfirm = async (request, response) => {
 	const baseUrl = `/appeals-service/appeal-details/${currentAppeal.appealId}/start-case`;
 	const backLinkUrl = dateKnown ? `${baseUrl}/hearing/date` : `${baseUrl}/hearing`;
 	const hearingStartTime = hearingStartTimeFromSession(sessionValues);
-	const timetable = await calculateAppealTimetable(
-		request.apiClient,
-		currentAppeal.appealId,
-		sessionValues.appealProcedure
-	);
 
-	const personalisation = {
-		appeal_reference_number: currentAppeal.appealReference,
-		lpa_reference: currentAppeal.planningApplicationReference || '',
-		site_address: appealSiteToAddressString(currentAppeal.appealSite),
-		appeal_type: currentAppeal.appealType,
-		local_planning_authority:
-			currentAppeal.localPlanningDepartment || 'the local planning authority',
-		start_date: dateISOStringToDisplayDate(timetable.startDate),
-		questionnaire_due_date: dateISOStringToDisplayDate(timetable.lpaQuestionnaireDueDate),
-		lpa_statement_deadline: dateISOStringToDisplayDate(timetable.lpaStatementDueDate),
-		ip_comments_deadline: dateISOStringToDisplayDate(timetable.ipCommentsDueDate),
-		statement_of_common_ground_due_date: dateISOStringToDisplayDate(
-			timetable.statementOfCommonGroundDueDate
-		),
-		hearing_date: dateISOStringToDisplayDate(hearingStartTime),
-		hearing_time: dateISOStringToDisplayTime12hr(hearingStartTime),
-		procedure_type: 'a hearing',
-		child_appeals: []
-	};
+	const errorMessage = 'Failed to generate email preview';
 
 	/** @type {string} */
-	let appellantPreview = '';
+	let appellantPreview = errorMessage;
 	/** @type {string} */
-	let lpaPreview = '';
+	let lpaPreview = errorMessage;
 	try {
-		const result = await generateStartCaseNotifyPreviews(
+		const result = await getStartCaseNotifyPreviews(
 			request.apiClient,
-			personalisation,
-			dateKnown
+			currentAppeal.appealId,
+			undefined,
+			sessionValues?.appealProcedure,
+			dateKnown ? hearingStartTime : undefined
 		);
-		appellantPreview = result.appellantTemplate?.renderedHtml || '';
-		lpaPreview = result.lpaTemplate?.renderedHtml || '';
+		appellantPreview = result.appellant || '';
+		lpaPreview = result.lpa || '';
 	} catch (error) {
 		logger.error(error);
 	}

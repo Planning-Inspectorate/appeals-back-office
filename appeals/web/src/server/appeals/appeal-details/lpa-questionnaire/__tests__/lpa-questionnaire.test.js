@@ -80,6 +80,27 @@ const appealDataCasPlanning = {
 	appealType: 'CAS planning'
 };
 
+const FieldTestCases = [
+	{
+		fieldName: 'eiaColumnTwoThreshold',
+		text: 'Does the development meet or exceed the threshold or criteria in column 2?',
+		cssClass: 'lpa-eia-column-two-threshold',
+		undefinedValue: 'Not answered'
+	},
+	{
+		fieldName: 'eiaRequiresEnvironmentalStatement',
+		text: 'Did your screening opinion say the development needed an environmental statement?',
+		cssClass: 'lpa-eia-requires-environmental-statement',
+		undefinedValue: 'Not answered'
+	},
+	{
+		fieldName: 'isInfrastructureLevyFormallyAdopted',
+		text: 'Is the community infrastructure levy formally adopted?',
+		cssClass: 'lpa-is-infrastructure-levy-formally-adopted',
+		undefinedValue: 'No documents'
+	}
+];
+
 describe('LPA Questionnaire review', () => {
 	beforeAll(teardown);
 	beforeEach(installMockApi);
@@ -760,6 +781,157 @@ describe('LPA Questionnaire review', () => {
 	});
 
 	describe('GET /', () => {
+		FieldTestCases.forEach(({ fieldName, text, cssClass, undefinedValue }) => {
+			describe(`${text} Field`, () => {
+				it(`should display "No" when ${fieldName} is false`, async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId: 2
+						});
+					nock('http://test/')
+						.get('/appeals/2/lpa-questionnaires/1')
+						.reply(200, {
+							...lpaQuestionnaireData,
+							lpaQuestionnaireId: 1,
+							[fieldName]: false
+						});
+
+					const response = await request.get(
+						'/appeals-service/appeal-details/2/lpa-questionnaire/1'
+					);
+					const element = parseHtml(response.text);
+					const fieldElementKey = element.querySelector(`.${cssClass} dt`);
+					const fieldElementValue = element.querySelector(`.${cssClass} dd`);
+					expect(fieldElementKey?.textContent).toContain(text);
+					expect(fieldElementValue?.textContent).toContain('No');
+				});
+
+				it(`should display "Yes" when ${fieldName} is true`, async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId: 2
+						});
+					nock('http://test/')
+						.get('/appeals/2/lpa-questionnaires/1')
+						.reply(200, {
+							...lpaQuestionnaireData,
+							lpaQuestionnaireId: 1,
+							[fieldName]: true
+						});
+
+					const response = await request.get(
+						'/appeals-service/appeal-details/2/lpa-questionnaire/1'
+					);
+					const element = parseHtml(response.text);
+
+					const fieldElementKey = element.querySelector(`.${cssClass} dt`);
+					const fieldElementValue = element.querySelector(`.${cssClass} dd`);
+					expect(fieldElementKey?.textContent).toContain(text);
+					expect(fieldElementValue?.textContent).toContain('Yes');
+				});
+
+				it(`should display ${undefinedValue} when ${fieldName} is undefined`, async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId: 2
+						});
+					nock('http://test/')
+						.get('/appeals/2/lpa-questionnaires/1')
+						.reply(200, {
+							...lpaQuestionnaireData,
+							lpaQuestionnaireId: 1,
+							[fieldName]: undefined
+						});
+
+					const response = await request.get(
+						'/appeals-service/appeal-details/2/lpa-questionnaire/1'
+					);
+					const element = parseHtml(response?.text);
+
+					const fieldElementKey = element.querySelector(`.${cssClass} dt`);
+					const fieldElementValue = element.querySelector(`.${cssClass} dd`);
+					expect(fieldElementKey?.textContent).toContain(text);
+					expect(fieldElementValue?.textContent).toContain(undefinedValue);
+				});
+
+				it(`should display ${undefinedValue} when ${fieldName} is null`, async () => {
+					nock('http://test/')
+						.get('/appeals/2')
+						.reply(200, {
+							...appealDataFullPlanning,
+							appealId: 2
+						});
+					nock('http://test/')
+						.get('/appeals/2/lpa-questionnaires/1')
+						.reply(200, {
+							...lpaQuestionnaireData,
+							lpaQuestionnaireId: 1,
+							[fieldName]: null
+						});
+
+					const response = await request.get(
+						'/appeals-service/appeal-details/2/lpa-questionnaire/1'
+					);
+					const element = parseHtml(response.text);
+					const fieldElementKey = element.querySelector(`.${cssClass} dt`);
+					const fieldElementValue = element.querySelector(`.${cssClass} dd`);
+					expect(fieldElementKey?.textContent).toContain(text);
+					expect(fieldElementValue?.textContent).toContain(undefinedValue);
+				});
+			});
+		});
+
+		it('should display the mapped EIA development description when value exists', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/lpa-questionnaires/1')
+				.reply(200, {
+					...lpaQuestionnaireData,
+					lpaQuestionnaireId: 1,
+					eiaDevelopmentDescription: 'other-projects'
+				});
+
+			const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+			const element = parseHtml(response.text);
+
+			expect(element?.innerHTML).toContain('Description of development</dt>');
+			expect(element?.innerHTML).toContain('Other projects</dd>');
+		});
+		it('should display "No Data" when EIA development description is missing', async () => {
+			nock('http://test/')
+				.get('/appeals/2')
+				.reply(200, {
+					...appealDataFullPlanning,
+					appealId: 2
+				});
+			nock('http://test/')
+				.get('/appeals/2/lpa-questionnaires/1')
+				.reply(200, {
+					...lpaQuestionnaireDataNotValidated,
+					lpaQuestionnaireId: 1,
+					eiaDevelopmentDescription: undefined
+				});
+
+			const response = await request.get('/appeals-service/appeal-details/2/lpa-questionnaire/1');
+			const element = parseHtml(response.text);
+
+			const fieldElementKey = element.querySelector(`.lpa-eia-development-description dt`);
+			const fieldElementValue = element.querySelector(`.lpa-eia-development-description dd`);
+			expect(fieldElementKey?.textContent).toContain('Description of development');
+			expect(fieldElementValue?.textContent).toContain('No Data');
+		});
+
 		it('should render the Householder LPA Questionnaire page with the expected content', async () => {
 			nock('http://test/')
 				.get('/appeals/1/lpa-questionnaires/2')
@@ -2987,7 +3159,7 @@ describe('LPA Questionnaire review', () => {
 			});
 			expect(unprettifiedElement.innerHTML).toContain('There is a problem</h2>');
 			expect(unprettifiedElement.innerHTML).toContain(
-				'Agreement to change description evidence date month must be a number</a>'
+				'Agreement to change description evidence date must be a real date</a>'
 			);
 		});
 
@@ -3169,24 +3341,27 @@ describe('LPA Questionnaire review', () => {
 		it('should send a patch request to the appeal documents endpoint and redirect to the lpa questionnaire page, if complete and valid document details were provided', async () => {
 			expect(addDocumentsResponse.statusCode).toBe(302);
 
-			const response = await request.post(`${baseUrl}/add-document-details/1`).send({
-				items: [
-					{
-						documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
-						receivedDate: {
-							day: '1',
-							month: '2',
-							year: '2023'
-						},
-						redactionStatus: 2
-					}
-				]
-			});
+			const monthVariants = ['2', ' Feb ', 'February'];
+			for (const month of monthVariants) {
+				const response = await request.post(`${baseUrl}/add-document-details/1`).send({
+					items: [
+						{
+							documentId: 'a6681be2-7cf8-4c9f-b223-f97f003577f3',
+							receivedDate: {
+								day: '1',
+								month: month,
+								year: '2023'
+							},
+							redactionStatus: 2
+						}
+					]
+				});
 
-			expect(response.statusCode).toBe(302);
-			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864/check-your-answers'
-			);
+				expect(response.statusCode).toBe(302);
+				expect(response.text).toBe(
+					'Found. Redirecting to /appeals-service/appeal-details/1/lpa-questionnaire/2/add-documents/2864/check-your-answers'
+				);
+			}
 		});
 	});
 

@@ -50,6 +50,17 @@ router
 	);
 
 router
+	.route('/delete')
+	.get(
+		assertUserHasPermission(permissionNames.setEvents),
+		asyncHandler(controller.getCancelSiteVisit)
+	)
+	.post(
+		assertUserHasPermission(permissionNames.setEvents),
+		asyncHandler(controller.postCancelSiteVisit)
+	);
+
+router
 	.route('/visit-scheduled/:confirmationPageTypeToRender')
 	.get(
 		assertUserHasPermission(permissionNames.setEvents),
@@ -68,6 +79,13 @@ router
 		assertUserHasPermission(permissionNames.setEvents),
 		validators.validateWhoMissedSiteVisit,
 		asyncHandler(controller.postSiteVisitMissed)
+	);
+
+router
+	.route('/missed/check')
+	.get(
+		assertUserHasPermission(permissionNames.setEvents),
+		asyncHandler(controller.getSiteVisitMissedCya)
 	);
 
 export default router;

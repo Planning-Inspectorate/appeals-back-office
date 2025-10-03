@@ -4,7 +4,7 @@ import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
  * @typedef {import('#appeals/appeal.constants.js').ServicePageName} ServicePageName
  */
 
-/** @typedef {'awaitingLinkedAppeal'|'allocationDetailsUpdated'|'allocationDetailsAdded'|'appealAwaitingTransfer'|'appealAwaitingTransferOld'|'appealLinked'|'appealTypeChanged'|'appealTypeUpdated'|'appealUnlinked'|'appealValidAndReadyToStart'|'appealWithdrawn'|'appellantCaseInvalidOrIncomplete'|'appellantCaseNotValid'|'appellantFinalCommentsAcceptSuccess'|'appellantFinalCommentsAwaitingReview'|'assignCaseOfficer'|'caseOfficerAdded'|'caseOfficerRemoved'|'caseProgressed'|'caseStarted'|'changePage'|'commentsAndLpaStatementShared'|'costsDocumentAdded'|'documentAdded'|'documentDeleted'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentVersionAdded'|'finalCommentsAppellantRejectionSuccess'|'finalCommentsDocumentAddedSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsRedactionSuccess'|'finalCommentsShared'|'appealMarkedAsAwaitingTransfer'|'appealMarkedAsTransferred'|'horizonReferenceAdded'|'inspectorAdded'|'inspectorRemoved'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsDocumentAddedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsValidSuccess'|'internalCorrespondenceDocumentAdded'|'issuedDecisionInvalid'|'issuedDecisionValid'|'lpaCostsDecisionIssued'|'appellantCostsDecisionIssued'|'lpaFinalCommentsAcceptSuccess'|'lpaFinalCommentsAwaitingReview'|'lpaqReviewComplete'|'lpaqReviewIncomplete'|'lpaQuestionnaireNotValid'|'lpaStatementAccepted'|'lpaStatementAwaitingReview'|'lpaStatementDocumentAddedSuccess'|'lpaStatementIncomplete'|'lpaStatementRedactedAndAccepted'|'neighbouringSiteAdded'|'neighbouringSiteAffected'|'neighbouringSiteRemoved'|'neighbouringSiteUpdated'|'notCheckedDocument'|'progressedToFinalComments'|'progressFromFinalComments'|  'progressHearingCaseWithNoRepsFromStatements'| 'progressedToHearingReadyToSetUp' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' | 'progressedToAwaitingHearing' |'progressFromStatements'|'readyForDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'readyForLpaQuestionnaireReview'|'readyForSetUpSiteVisit'|'readyForValidation'|'relatedAppeal'|'shareCommentsAndLpaStatement'|'shareFinalComments'|'siteAddressUpdated'|'siteVisitChangedDefault'|'siteVisitNoChanges'|'siteVisitRescheduled'|'siteVisitScheduled'|'siteVisitTypeChanged'|'startDateChanged'|'timetableDueDateUpdated'|'updateLpaStatement'|'lpaChanged'|'hearingEstimatesAdded'|'hearingEstimatesChanged'|'hearingSetUp'|'hearingUpdated'|'hearingCancelled'|'timetableStarted'|'addHearingAddress'|'setupHearing'|'linkedAppealAdded'|'decisionLetterUpdated'|'caseOfficerAssigned'|'inspectorAssigned'|'appealValidated'|'inquiryEstimatesAdded'|'inquiryEstimatesChanged'|'netResidenceAdded'|'inquiryUpdated'|'addResidencesNetChange'|'appellantProofOfEvidenceAcceptSuccess'|'lpaProofOfEvidenceAcceptSuccess'|'caseTeamUpdated'|'appellantProofOfEvidenceDocumentAddedSuccess'|'lpaProofOfEvidenceDocumentAddedSuccess'|'lpaProofOfEvidenceIncomplete'|'appellantProofOfEvidenceIncomplete'} NotificationBannerDefinitionKey */
+/** @typedef {'awaitingLinkedAppeal'|'allocationDetailsUpdated'|'allocationDetailsAdded'|'appealAwaitingTransfer'|'appealAwaitingTransferOld'|'appealLinked'|'appealTypeChanged'|'appealTypeUpdated'|'appealUnlinked'|'appealValidAndReadyToStart'|'appealWithdrawn'|'appellantCaseInvalidOrIncomplete'|'appellantCaseNotValid'|'appellantFinalCommentsAcceptSuccess'|'appellantFinalCommentsAwaitingReview'|'assignCaseOfficer'|'caseOfficerAdded'|'caseOfficerRemoved'|'caseProgressed'|'caseStarted'|'changePage'|'commentsAndLpaStatementShared'|'costsDocumentAdded'|'documentAdded'|'documentDeleted'|'documentDetailsUpdated'|'documentFilenameUpdated'|'documentVersionAdded'|'finalCommentsAppellantRejectionSuccess'|'finalCommentsDocumentAddedSuccess'|'finalCommentsLPARejectionSuccess'|'finalCommentsRedactionSuccess'|'finalCommentsShared'|'appealMarkedAsAwaitingTransfer'|'appealMarkedAsTransferred'|'appealTypeUpdated'|'horizonReferenceAdded'|'inspectorAdded'|'inspectorRemoved'|'interestedPartyCommentAdded'|'interestedPartyCommentsAddressAddedSuccess'|'interestedPartyCommentsAddressUpdatedSuccess'|'interestedPartyCommentsAwaitingReview'|'interestedPartyCommentsDocumentAddedSuccess'|'interestedPartyCommentsRedactionSuccess'|'interestedPartyCommentsRejectedSuccess'|'interestedPartyCommentsValidSuccess'|'internalCorrespondenceDocumentAdded'|'issuedDecisionInvalid'|'issuedDecisionValid'|'lpaCostsDecisionIssued'|'appellantCostsDecisionIssued'|'lpaFinalCommentsAcceptSuccess'|'lpaFinalCommentsAwaitingReview'|'lpaqReviewComplete'|'lpaqReviewIncomplete'|'lpaQuestionnaireNotValid'|'lpaStatementAccepted'|'lpaStatementAwaitingReview'|'lpaStatementDocumentAddedSuccess'|'lpaStatementIncomplete'|'lpaStatementRedactedAndAccepted'|'neighbouringSiteAdded'|'neighbouringSiteAffected'|'neighbouringSiteRemoved'|'neighbouringSiteUpdated'|'notCheckedDocument'|'progressedToFinalComments'|'progressFromFinalComments'|  'progressHearingCaseWithNoRepsFromStatements'| 'progressedToHearingReadyToSetUp' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' | 'progressedToAwaitingHearing' |'progressFromStatements'|'readyForDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'readyForLpaQuestionnaireReview'|'readyForSetUpSiteVisit'|'readyForValidation'|'relatedAppeal'|'shareCommentsAndLpaStatement'|'shareFinalComments'|'siteAddressUpdated'|'siteVisitChangedDefault'|'siteVisitNoChanges'|'siteVisitRescheduled'|'siteVisitScheduled'|'siteVisitTypeChanged'|'startDateChanged'|'timetableDueDateUpdated'|'updateLpaStatement'|'lpaChanged'|'hearingEstimatesAdded'|'hearingEstimatesChanged'|'hearingSetUp'|'hearingUpdated'|'hearingCancelled'|'timetableStarted'|'addHearingAddress'|'setupHearing'|'linkedAppealAdded'|'decisionLetterUpdated'|'caseOfficerAssigned'|'inspectorAssigned'|'appealValidated'|'inquiryEstimatesAdded'|'inquiryEstimatesChanged'|'netResidenceAdded'|'inquiryUpdated'|'addResidencesNetChange'|'appellantProofOfEvidenceAcceptSuccess'|'lpaProofOfEvidenceAcceptSuccess'|'caseTeamUpdated'|'appellantProofOfEvidenceDocumentAddedSuccess'|'lpaProofOfEvidenceDocumentAddedSuccess'|'lpaProofOfEvidenceIncomplete'|'appellantProofOfEvidenceIncomplete'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'|'siteVisitCancelled'} NotificationBannerDefinitionKey */
 
 /**
  * @typedef {Object} NotificationBannerDefinition
@@ -42,6 +42,11 @@ export const notificationBannerDefinitions = {
 		pages: ['appealDetails'],
 		type: 'success',
 		text: 'Site visit updated'
+	},
+	siteVisitCancelled: {
+		pages: ['appealDetails'],
+		type: 'success',
+		text: 'Site visit cancelled'
 	},
 	allocationDetailsUpdated: {
 		type: 'success',
@@ -183,6 +188,11 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['appealDetails', 'appellantCase', 'lpaQuestionnaire'],
 		text: 'Appeal marked as transferred'
+	},
+	appealTypeUpdated: {
+		type: 'success',
+		pages: ['appealDetails'],
+		text: 'Appeal type updated'
 	},
 	horizonReferenceAdded: {
 		type: 'success',
@@ -558,12 +568,12 @@ export const notificationBannerDefinitions = {
 	appellantProofOfEvidenceAcceptSuccess: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'Appellant proof of evidence accepted'
+		text: 'Appellant proof of evidence and witnesses accepted'
 	},
 	lpaProofOfEvidenceAcceptSuccess: {
 		type: 'success',
 		pages: ['appealDetails'],
-		text: 'LPA proof of evidence accepted'
+		text: 'LPA proof of evidence and witnesses accepted'
 	},
 	caseTeamUpdated: {
 		type: 'success',
@@ -584,6 +594,14 @@ export const notificationBannerDefinitions = {
 		type: 'success',
 		pages: ['appealDetails'],
 		text: 'Appellant proof of evidence incomplete'
+	},
+	reviewLpaProofOfEvidence: {
+		type: 'important',
+		pages: ['appealDetails']
+	},
+	reviewAppellantProofOfEvidence: {
+		type: 'important',
+		pages: ['appealDetails']
 	}
 };
 
@@ -619,7 +637,9 @@ const appealActionRequiredToNotificationBannerMapping = {
 	setupHearing: 'setupHearing',
 	linkedAppealAdded: 'linkedAppealAdded',
 	decisionLetterUpdated: 'decisionLetterUpdated',
-	addResidencesNetChange: 'addResidencesNetChange'
+	addResidencesNetChange: 'addResidencesNetChange',
+	reviewLpaProofOfEvidence: 'reviewLpaProofOfEvidence',
+	reviewAppellantProofOfEvidence: 'reviewAppellantProofOfEvidence'
 };
 
 /**

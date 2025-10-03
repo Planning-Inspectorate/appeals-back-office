@@ -80,7 +80,7 @@ describe('decision-is-allowed-split-dismissed-appellant.md', () => {
 
 		const expectedContent = expectedContentRows([
 			'We have made a decision on the following appeals:',
-			'- ABC45678',
+			'- ABC45678 (lead)',
 			'- CHILD123',
 			'- CHILD456',
 			'- CHILD789'

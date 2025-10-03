@@ -416,22 +416,11 @@ describe('start case hearing flow', () => {
 
 	describe('GET /start-case/hearing/confirm', () => {
 		it('should render the confirm page when date is known', async () => {
-			const personalisation = {
-				appeal_reference_number: 'APP/Q9999/D/21/351062',
-				lpa_reference: '48269/APP/2021/1482',
-				site_address: '21 The Pavement, Wandsworth, SW4 0HY',
-				appeal_type: 'Planning appeal',
-				local_planning_authority: 'Wiltshire Council',
-				start_date: '1 February 2025',
-				questionnaire_due_date: '1 February 2025',
-				lpa_statement_deadline: '1 March 2025',
-				ip_comments_deadline: '1 April 2025',
-				statement_of_common_ground_due_date: '1 May 2025',
-				hearing_date: '1 February 3025',
-				hearing_time: '12:00pm',
-				procedure_type: 'a hearing',
-				child_appeals: []
-			};
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
 			nock('http://test/')
 				.get('/appeals/1')
 				.times(3)
@@ -440,26 +429,14 @@ describe('start case hearing flow', () => {
 					appealType: 'Planning appeal'
 				});
 			nock('http://test/')
-				.get('/appeals/1/appeal-timetables/calculate?procedureType=hearing')
+				.post('/appeals/1/appeal-timetables/notify-preview', {
+					procedureType: 'hearing',
+					hearingStartTime: '3025-02-01T12:00:00.000Z'
+				})
 				.reply(200, {
-					startDate: '2025-02-01T12:00:00.000Z',
-					lpaQuestionnaireDueDate: '2025-02-01T12:00:00.000Z',
-					lpaStatementDueDate: '2025-03-01T12:00:00.000Z',
-					ipCommentsDueDate: '2025-04-01T12:00:00.000Z',
-					statementOfCommonGroundDueDate: '2025-05-01T12:00:00.000Z'
+					appellant: 'Rendered HTML for appellant preview',
+					lpa: 'Rendered HTML for LPA preview'
 				});
-			nock('http://test/')
-				.post(
-					'/appeals/notify-preview/appeal-valid-start-case-s78-appellant-hearing.content.md',
-					personalisation
-				)
-				.reply(200, { renderedHtml: 'Rendered HTML for appellant preview' });
-			nock('http://test/')
-				.post(
-					'/appeals/notify-preview/appeal-valid-start-case-s78-lpa-hearing.content.md',
-					personalisation
-				)
-				.reply(200, { renderedHtml: 'Rendered HTML for LPA preview' });
 
 			await request
 				.post(`${baseUrl}/1/start-case/select-procedure`)
@@ -516,22 +493,11 @@ describe('start case hearing flow', () => {
 		});
 
 		it('should render the confirm page when date is not known', async () => {
-			const personalisation = {
-				appeal_reference_number: 'APP/Q9999/D/21/351062',
-				lpa_reference: '48269/APP/2021/1482',
-				site_address: '21 The Pavement, Wandsworth, SW4 0HY',
-				appeal_type: 'Planning appeal',
-				local_planning_authority: 'Wiltshire Council',
-				start_date: '1 February 2025',
-				questionnaire_due_date: '1 February 2025',
-				lpa_statement_deadline: '1 March 2025',
-				ip_comments_deadline: '1 April 2025',
-				statement_of_common_ground_due_date: '1 May 2025',
-				hearing_date: '',
-				hearing_time: '',
-				procedure_type: 'a hearing',
-				child_appeals: []
-			};
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
 			nock('http://test/')
 				.get('/appeals/1')
 				.twice()
@@ -540,23 +506,13 @@ describe('start case hearing flow', () => {
 					appealType: 'Planning appeal'
 				});
 			nock('http://test/')
-				.get('/appeals/1/appeal-timetables/calculate?procedureType=hearing')
+				.post('/appeals/1/appeal-timetables/notify-preview', {
+					procedureType: 'hearing'
+				})
 				.reply(200, {
-					startDate: '2025-02-01T12:00:00.000Z',
-					lpaQuestionnaireDueDate: '2025-02-01T12:00:00.000Z',
-					lpaStatementDueDate: '2025-03-01T12:00:00.000Z',
-					ipCommentsDueDate: '2025-04-01T12:00:00.000Z',
-					statementOfCommonGroundDueDate: '2025-05-01T12:00:00.000Z'
+					appellant: 'Rendered HTML for appellant preview',
+					lpa: 'Rendered HTML for LPA preview'
 				});
-			nock('http://test/')
-				.post(
-					'/appeals/notify-preview/appeal-valid-start-case-s78-appellant.content.md',
-					personalisation
-				)
-				.reply(200, { renderedHtml: 'Rendered HTML for appellant preview' });
-			nock('http://test/')
-				.post('/appeals/notify-preview/appeal-valid-start-case-s78-lpa.content.md', personalisation)
-				.reply(200, { renderedHtml: 'Rendered HTML for LPA preview' });
 
 			// Set up the session values
 			await request
@@ -600,6 +556,82 @@ describe('start case hearing flow', () => {
 			)?.innerHTML;
 			expect(appellantPreview).toContain('Rendered HTML for appellant preview');
 			expect(lpaPreview).toContain('Rendered HTML for LPA preview');
+		});
+
+		it('should render an error message when the email preview fails', async () => {
+			const personalisation = {
+				appeal_reference_number: 'APP/Q9999/D/21/351062',
+				lpa_reference: '48269/APP/2021/1482',
+				site_address: '21 The Pavement, Wandsworth, SW4 0HY',
+				appeal_type: 'Planning appeal',
+				local_planning_authority: 'Wiltshire Council',
+				start_date: '1 February 2025',
+				questionnaire_due_date: '1 February 2025',
+				lpa_statement_deadline: '1 March 2025',
+				ip_comments_deadline: '1 April 2025',
+				statement_of_common_ground_due_date: '1 May 2025',
+				hearing_date: '',
+				hearing_time: '',
+				procedure_type: 'a hearing',
+				child_appeals: []
+			};
+			nock('http://test/')
+				.get('/appeals/1')
+				.twice()
+				.reply(200, {
+					...appealDataWithoutStartDate,
+					appealType: 'Planning appeal'
+				});
+			nock('http://test/')
+				.get('/appeals/1/appeal-timetables/calculate?procedureType=hearing')
+				.reply(200, {
+					startDate: '2025-02-01T12:00:00.000Z',
+					lpaQuestionnaireDueDate: '2025-02-01T12:00:00.000Z',
+					lpaStatementDueDate: '2025-03-01T12:00:00.000Z',
+					ipCommentsDueDate: '2025-04-01T12:00:00.000Z',
+					statementOfCommonGroundDueDate: '2025-05-01T12:00:00.000Z'
+				});
+			nock('http://test/')
+				.post(
+					'/appeals/notify-preview/appeal-valid-start-case-s78-appellant.content.md',
+					personalisation
+				)
+				.reply(500);
+			nock('http://test/')
+				.post('/appeals/notify-preview/appeal-valid-start-case-s78-lpa.content.md', personalisation)
+				.reply(500);
+			nock('http://test/').get('/appeals/1/case-team-email').reply(200, {
+				id: 1,
+				email: 'caseofficers@planninginspectorate.gov.uk',
+				name: 'standard email'
+			});
+
+			// Set up the session values
+			await request
+				.post(`${baseUrl}/1/start-case/select-procedure`)
+				.send({ appealProcedure: 'hearing' });
+			await request.post(`${baseUrl}/1/start-case/hearing`).send({ dateKnown: 'no' });
+			const response = await request.get(`${baseUrl}/1/start-case/hearing/confirm`);
+
+			expect(response.statusCode).toBe(200);
+			const mainHtml = parseHtml(response.text).innerHTML;
+			expect(mainHtml).toMatchSnapshot();
+
+			const pageHtml = parseHtml(response.text, { rootElement: 'body' });
+
+			expect(
+				pageHtml.querySelector('details[data-cy="preview-email-to-appellant"]')
+			).not.toBeNull();
+			expect(pageHtml.querySelector('details[data-cy="preview-email-to-lpa"]')).not.toBeNull();
+
+			const appellantPreview = pageHtml.querySelector(
+				'details[data-cy="preview-email-to-appellant"] .govuk-details__text'
+			)?.innerHTML;
+			const lpaPreview = pageHtml.querySelector(
+				'details[data-cy="preview-email-to-lpa"] .govuk-details__text'
+			)?.innerHTML;
+			expect(appellantPreview).toContain('Failed to generate email preview');
+			expect(lpaPreview).toContain('Failed to generate email preview');
 		});
 	});
 

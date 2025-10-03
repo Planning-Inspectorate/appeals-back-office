@@ -222,3 +222,21 @@ export const deleteDocument = async (apiClient, appealId, documentId, versionId)
 		);
 	}
 };
+
+/**
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @returns {Promise<*>}
+ */
+export const getRepresentationAttachments = async (apiClient, appealId) => {
+	try {
+		return await apiClient.get(`appeals/${appealId}/reps`).json();
+	} catch (error) {
+		logger.error(
+			error,
+			error instanceof Error
+				? error.message
+				: `An error occurred while attempting to retrieve the representation attachments for appeal ID ${appealId}`
+		);
+	}
+};

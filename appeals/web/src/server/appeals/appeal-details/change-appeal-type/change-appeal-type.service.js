@@ -48,6 +48,33 @@ export async function postAppealChangeRequest(
  *
  * @param {import('got').Got} apiClient
  * @param {string} appealId
+ * @param {number} appellantCaseId
+ * @param {number} appealTypeId
+ * @param {string|null} appealTypeFinalDate
+ * @returns {Promise<import('./change-appeal-type.types.js').ChangeAppealTypeRequest>}
+ */
+export async function postAppealResubmitMarkInvalidRequest(
+	apiClient,
+	appealId,
+	appellantCaseId,
+	appealTypeId,
+	appealTypeFinalDate
+) {
+	return await apiClient
+		.post(`appeals/${appealId}/appeal-resubmit-mark-invalid`, {
+			json: {
+				newAppealTypeId: appealTypeId,
+				newAppealTypeFinalDate: appealTypeFinalDate,
+				appellantCaseId
+			}
+		})
+		.json();
+}
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
  * @param {number} appealTypeId
  * @returns {Promise<import('./change-appeal-type.types.js').ChangeAppealTypeRequest>}
  */
@@ -114,4 +141,19 @@ export async function getChangeAppealTypes(apiClient, appealType, changeAppealTy
 	)?.changeAppealType;
 
 	return { existingChangeAppealType, newChangeAppealType };
+}
+
+/**
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} appealId
+ * @param {number} appealTypeId
+ * @returns {Promise<void>}
+ */
+export async function postAppealUpdateRequest(apiClient, appealId, appealTypeId) {
+	return await apiClient
+		.post(`appeals/${appealId}/appeal-update-request`, {
+			json: { newAppealTypeId: appealTypeId }
+		})
+		.json();
 }

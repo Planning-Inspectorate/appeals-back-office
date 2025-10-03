@@ -62,6 +62,7 @@ const mockAppellantCaseIncompleteReasonFindMany = jest.fn().mockResolvedValue({}
 const mockAppellantCaseIncompleteReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseIncompleteReasonsSelectedCreateMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonFindMany = jest.fn().mockResolvedValue({});
+const mockAppellantCaseInvalidReasonFindUnique = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonsSelectedDeleteMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseInvalidReasonsSelectedCreateMany = jest.fn().mockResolvedValue({});
 const mockAppellantCaseValidationOutcomeFindMany = jest.fn().mockResolvedValue({});
@@ -77,6 +78,7 @@ const mockLPAQuestionnaireIncompleteReasonsSelectedUpdate = jest.fn().mockResolv
 const mockSiteVisitCreate = jest.fn().mockResolvedValue({});
 const mockSiteVisitUpdate = jest.fn().mockResolvedValue({});
 const mockSiteVisitFindUnique = jest.fn().mockResolvedValue({});
+const mockSiteVisitDelete = jest.fn().mockResolvedValue({});
 const mockHearingCreate = jest.fn().mockResolvedValue({});
 const mockHearingUpdate = jest.fn().mockResolvedValue({});
 const mockHearingFindUnique = jest.fn().mockResolvedValue({});
@@ -297,7 +299,8 @@ class MockPrismaClient {
 
 	get appellantCaseInvalidReason() {
 		return {
-			findMany: mockAppellantCaseInvalidReasonFindMany
+			findMany: mockAppellantCaseInvalidReasonFindMany,
+			findUnique: mockAppellantCaseInvalidReasonFindUnique
 		};
 	}
 
@@ -354,7 +357,8 @@ class MockPrismaClient {
 		return {
 			create: mockSiteVisitCreate,
 			update: mockSiteVisitUpdate,
-			findUnique: mockSiteVisitFindUnique
+			findUnique: mockSiteVisitFindUnique,
+			delete: mockSiteVisitDelete
 		};
 	}
 

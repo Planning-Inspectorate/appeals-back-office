@@ -5,12 +5,16 @@ import {
 	getAppealTypes,
 	requestChangeOfAppealType,
 	requestConfirmationTransferOfAppeal,
-	requestTransferOfAppeal
+	requestResubmitAndMarkInvalid,
+	requestTransferOfAppeal,
+	requestUpdateOfAppeal
 } from './change-appeal-type.controller.js';
 import {
 	loadAllAppealTypesAndAddToRequest,
+	loadEnabledAppealTypesAndAddToRequest,
 	validateAppealStatus,
 	validateAppealStatusForTransfer,
+	validateAppealStatusForUpdate,
 	validateAppealType
 } from './change-appeal-type.middleware.js';
 import {
@@ -71,6 +75,33 @@ router.post(
 );
 
 router.post(
+	'/:appealId/appeal-resubmit-mark-invalid',
+	/*
+		#swagger.tags = ['Appeal Type Change Request']
+		#swagger.path = '/appeals/{appealId}/appeal-resubmit-mark-invalid'
+		#swagger.description = 'Records a request to mark an appeal as invalid when due to be resubmitted'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Appeal type change request',
+			schema: { $ref: '#/components/schemas/AppealTypeResubmitMarkInvalidRequest' },
+			required: true
+		}
+		#swagger.responses[400] = {}
+	 */
+	loadAllAppealTypesAndAddToRequest,
+	checkAppealExistsByIdAndAddToRequest,
+	validateAppealStatus,
+	validateAppealType,
+	postAppealTypeChangeValidator,
+	asyncHandler(requestResubmitAndMarkInvalid)
+);
+
+router.post(
 	'/:appealId/appeal-transfer-request',
 	/*
 		#swagger.tags = ['Appeal Type Change Request']
@@ -120,6 +151,32 @@ router.post(
 	validateAppealStatusForTransfer,
 	postAppealTypeTransferConfirmationValidator,
 	asyncHandler(requestConfirmationTransferOfAppeal)
+);
+
+router.post(
+	'/:appealId/appeal-update-request',
+	/*
+		#swagger.tags = ['Appeal Type Change Request']
+		#swagger.path = '/appeals/{appealId}/appeal-update-request'
+		#swagger.description = 'Updates the appeal type'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.requestBody = {
+			in: 'body',
+			description: 'Appeal type update request',
+			schema: { $ref: '#/components/schemas/AppealTypeUpdateRequest' },
+			required: true
+		}
+		#swagger.responses[400] = {}
+	 */
+	checkAppealExistsByIdAndAddToRequest,
+	loadEnabledAppealTypesAndAddToRequest,
+	validateAppealType,
+	validateAppealStatusForUpdate,
+	asyncHandler(requestUpdateOfAppeal)
 );
 
 export { router as changeAppealTypeRoutes };

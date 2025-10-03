@@ -53,7 +53,6 @@ const renderLpaQuestionnaire = async (request, response, errors = null) => {
 		currentAppeal.appealId,
 		lpaQuestionnaireId
 	);
-
 	if (!lpaQuestionnaire) {
 		return response.status(404).render('app/404.njk');
 	}

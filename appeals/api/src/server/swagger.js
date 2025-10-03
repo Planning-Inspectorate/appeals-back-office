@@ -150,11 +150,19 @@ export const spec = {
 			newAppealTypeId: 32,
 			newAppealTypeFinalDate: '2024-02-02'
 		},
+		AppealTypeResubmitMarkInvalidRequest: {
+			newAppealTypeId: 32,
+			newAppealTypeFinalDate: '2024-02-02',
+			appellantCaseId: 12
+		},
 		AppealTypeTransferRequest: {
 			newAppealTypeId: 32
 		},
 		AppealTypeTransferConfirmationRequest: {
 			newAppealReference: '76215416'
+		},
+		AppealTypeUpdateRequest: {
+			newAppealTypeId: 32
 		},
 		AppealTypes: [
 			{
@@ -547,6 +555,14 @@ export const spec = {
 			issueDeterminationDate: '2024-08-10',
 			lpaQuestionnaireDueDate: '2024-08-11',
 			statementReviewDate: '2024-08-12'
+		},
+		StartCaseNotifyPreviewResponse: {
+			appellant: {
+				renderedHtml: 'Rendered HTML for appellant preview'
+			},
+			lpa: {
+				renderedHtml: 'Rendered HTML for LPA preview'
+			}
 		},
 		SingleLPAQuestionnaireResponse: {
 			affectsListedBuildingDetails: [

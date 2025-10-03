@@ -52,13 +52,22 @@ export const postChangeSelectProcedure = async (request, response) => {
 			return renderSelectProcedure(request, response);
 		}
 
-		if (
-			appealProcedure === APPEAL_CASE_PROCEDURE.WRITTEN ||
-			appealProcedure === APPEAL_CASE_PROCEDURE.HEARING
-		) {
-			return response.redirect(
-				`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/change-timetable`
-			);
+		switch (appealProcedure) {
+			case APPEAL_CASE_PROCEDURE.WRITTEN: {
+				return response.redirect(
+					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/change-timetable`
+				);
+			}
+			case APPEAL_CASE_PROCEDURE.HEARING: {
+				return response.redirect(
+					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${appealProcedure}/change-event-date-known`
+				);
+			}
+			case APPEAL_CASE_PROCEDURE.INQUIRY: {
+				return response.redirect(
+					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${appealProcedure}/date`
+				);
+			}
 		}
 
 		return response.status(404).render('app/404.njk');

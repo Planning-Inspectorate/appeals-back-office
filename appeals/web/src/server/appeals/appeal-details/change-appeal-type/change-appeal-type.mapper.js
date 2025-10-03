@@ -196,16 +196,17 @@ export function resubmitAppealPage(appealDetails, changeAppeal, errorMessage) {
  * @param {Appeal} appealDetails
  * @param {string|undefined} backUrl
  * @param {string|undefined} horizonReference
+ * @param {string | undefined} errorMessage
  * @returns {PageContent}
  */
-export function addHorizonReferencePage(appealDetails, backUrl, horizonReference) {
+export function addHorizonReferencePage(appealDetails, backUrl, horizonReference, errorMessage) {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	/** @type {PageContent} */
 	const pageContent = {
 		title: `Horizon reference - ${shortAppealReference}`,
 		backLinkUrl: backUrl || `/appeals-service/appeal-details/${appealDetails.appealId}`,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: `Appeal ${shortAppealReference} - mark as transferred`,
 		pageComponents: [
 			{
 				type: 'input',
@@ -219,7 +220,8 @@ export function addHorizonReferencePage(appealDetails, backUrl, horizonReference
 						isPageHeading: true,
 						classes: 'govuk-label--l'
 					},
-					value: horizonReference
+					value: horizonReference,
+					errorMessage: errorMessage && { text: errorMessage }
 				}
 			}
 		]
@@ -315,7 +317,7 @@ export function changeAppealFinalDatePage(
 	const pageContent = {
 		title: `Deadline to resubmit appeal - ${shortAppealReference}`,
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/resubmit`,
-		preHeading: `Appeal ${shortAppealReference}`,
+		preHeading: `Appeal ${shortAppealReference} - change appeal type`,
 		pageComponents: [selectDateComponent],
 		submitButtonText: 'Continue'
 	};
@@ -340,7 +342,7 @@ export function changeAppealMarkAppealInvalidPage(
 		type: 'html',
 		parameters: {
 			html: `
-			<p class="govuk-body">You need to add a deadline for the appellant to resubmit the new ${newAppealType} appeal.<p>
+			<p class="govuk-body">You need to add a deadline for the appellant to resubmit the new ${newAppealType.toLowerCase()} appeal.<p>
       	`
 		}
 	};
@@ -393,21 +395,21 @@ export function changeAppealTransferAppealPage(appealDetails) {
 /**
  *
  * @param {Appeal} appealDetails
- * @param {string} existingChangeAppealType
+ * @param {string} newChangeAppealType
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {import('@pins/express').ValidationErrors | undefined} errors
  * @returns
  */
 export function checkDetailsAndUpdateAppealTypePage(
 	appealDetails,
-	existingChangeAppealType,
+	newChangeAppealType,
 	response,
 	errors
 ) {
 	/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} */
 	const responses = {
 		'Appeal type': {
-			value: existingChangeAppealType,
+			value: newChangeAppealType,
 			actions: {
 				Change: {
 					href: `/appeals-service/appeal-details/${appealDetails.appealId}/change-appeal-type/appeal-type`,

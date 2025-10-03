@@ -3,7 +3,7 @@
 exports[`change-appeal-type GET /change-appeal-type/add-horizon-reference should render the add horizon reference page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as transferred</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -46,22 +46,27 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type" name="appealType"
                                         type="radio" value="66" checked>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type">Householder</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
                                         type="radio" value="75">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-2">Planning</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-3" name="appealType"
                                         type="radio" value="77">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-3">Planning listed building and conservation area</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
                                         type="radio" value="79">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">Commercial planning (CAS)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-5" name="appealType"
                                         type="radio" value="78">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-5">Commercial advertisement (CAS)</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -96,22 +101,27 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type" name="appealType"
                                         type="radio" value="66" checked>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type">Householder</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
                                         type="radio" value="75">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-2">Planning</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-3" name="appealType"
                                         type="radio" value="77">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-3">Planning listed building and conservation area</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
                                         type="radio" value="79">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">Commercial planning (CAS)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-5" name="appealType"
                                         type="radio" value="78">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-5">Commercial advertisement (CAS)</label>
                                     </div>
                                 </div>
                             </fieldset>
@@ -354,7 +364,7 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
 exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date should render the final date page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -397,6 +407,36 @@ exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date sho
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`change-appeal-type GET /change-appeal-type/check-change-appeal-final-date should render the check change appeal final date page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal APP/Q9999/D/21/351062</span>
+            <h1 class="govuk-heading-l">Check details and mark appeal as invalid</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Deadline to resubmit appeal</dt>
+                    <dd                     class="govuk-summary-list__value"></dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/change-appeal-final-date">Change <span class="govuk-visually-hidden">Deadline to resubmit appeal</span></a>
+                        </dd>
+                </div>
+            </dl>
+            <p class="govuk-body">We will send an email to the appellant to tell them that they need to
+                resubmit a new appeal by .</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Mark appeal as invalid</button>
                     </form>
                 </div>
             </div>
@@ -490,7 +530,42 @@ exports[`change-appeal-type GET /change-appeal-type/resubmit should render the r
 </main>"
 `;
 
-exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should re-render the add horizon reference page with an error message if no horizon reference was provided 1`] = `
+exports[`change-appeal-type GET /change-appeal-type/update-appeal should render the check details and update appeal page 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Check details and update appeal type</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Appeal type</dt>
+                    <dd class="govuk-summary-list__value">Planning</dd>
+                    <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/appeal-type">Change <span class="govuk-visually-hidden">Appeal type</span></a>
+                    </dd>
+                </div>
+                <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Does the appellant need to resubmit the appeal?</dt>
+                    <dd                     class="govuk-summary-list__value">No</dd>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-type/resubmit">Change <span class="govuk-visually-hidden">Does the appellant need to resubmit the appeal? </span></a>
+                        </dd>
+                </div>
+            </dl>
+            <p class="govuk-body">We will send an email to the relevant parties to tell them that the appeal
+                type has changed.</p>
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="post" novalidate="novalidate">
+                        <button type="submit" class="govuk-button" data-module="govuk-button">Update appeal type</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should re-render the add horizon reference page with an error message if the horizon reference is: missing 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -499,7 +574,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#horizon-reference">Enter a valid Horizon appeal reference</a>
+                            <li><a href="#horizon-reference">Enter a reference number</a>
                             </li>
                         </ul>
                     </div>
@@ -508,7 +583,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as transferred</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -516,10 +591,11 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group govuk-form-group--error">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> Horizon reference</label></h1>
-                            <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
-                            name="horizon-reference" type="text">
+                            <p id="horizon-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Enter a reference number</p>
+                            <input                             class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
+                            id="horizon-reference" name="horizon-reference" type="text" value="" aria-describedby="horizon-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -531,7 +607,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
 </main>"
 `;
 
-exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should re-render the add horizon reference page with an error message if the provided horizon reference was not valid 1`] = `
+exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should re-render the add horizon reference page with an error message if the horizon reference is: not only numeric 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -540,7 +616,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#horizon-reference">Enter a valid Horizon appeal reference</a>
+                            <li><a href="#horizon-reference">Reference number must only include numbers</a>
                             </li>
                         </ul>
                     </div>
@@ -549,7 +625,7 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as transferred</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -557,10 +633,101 @@ exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference shoul
             <div class="govuk-grid-row">
                 <div class="govuk-grid-column-full">
                     <form method="POST" novalidate="novalidate">
-                        <div class="govuk-form-group">
+                        <div class="govuk-form-group govuk-form-group--error">
                             <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> Horizon reference</label></h1>
-                            <input class="govuk-input govuk-input govuk-input--width-10" id="horizon-reference"
-                            name="horizon-reference" type="text">
+                            <p id="horizon-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Reference number must
+                                only include numbers</p>
+                            <input class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
+                            id="horizon-reference" name="horizon-reference" type="text" value="a123456"
+                            aria-describedby="horizon-reference-error">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should re-render the add horizon reference page with an error message if the horizon reference is: too long 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#horizon-reference">Reference number must be 7 characters</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as transferred</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> Horizon reference</label></h1>
+                            <p id="horizon-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Reference number must
+                                be 7 characters</p>
+                            <input class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
+                            id="horizon-reference" name="horizon-reference" type="text" value="12345678"
+                            aria-describedby="horizon-reference-error">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`change-appeal-type POST /change-appeal-type/add-horizon-reference should re-render the add horizon reference page with an error message if the horizon reference is: too short 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-error-summary" data-module="govuk-error-summary">
+                <div role="alert">
+                    <h2 class="govuk-error-summary__title"> There is a problem</h2>
+                    <div class="govuk-error-summary__body">
+                        <ul class="govuk-list govuk-error-summary__list">
+                            <li><a href="#horizon-reference">Reference number must be 7 characters</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - mark as transferred</span>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group govuk-form-group--error">
+                            <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--l" for="horizon-reference"> Horizon reference</label></h1>
+                            <p id="horizon-reference-error" class="govuk-error-message"><span class="govuk-visually-hidden">Error:</span> Reference number must
+                                be 7 characters</p>
+                            <input class="govuk-input govuk-input govuk-input--width-10 govuk-input--error"
+                            id="horizon-reference" name="horizon-reference" type="text" value="12345"
+                            aria-describedby="horizon-reference-error">
                         </div>
                         <button type="submit" data-prevent-double-click="true" class="govuk-button"
                         data-module="govuk-button">Continue</button>
@@ -608,22 +775,27 @@ exports[`change-appeal-type POST /change-appeal-type/appeal-type should re-rende
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type" name="appealType"
                                         type="radio" value="66" checked>
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type">Householder</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-2" name="appealType"
                                         type="radio" value="75">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-2">Planning</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-3" name="appealType"
                                         type="radio" value="77">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-3">Planning listed building and conservation area</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-4" name="appealType"
                                         type="radio" value="79">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-4">Commercial planning (CAS)</label>
                                     </div>
                                     <div class="govuk-radios__item">
                                         <input class="govuk-radios__input" id="appeal-type-5" name="appealType"
                                         type="radio" value="78">
+                                        <label class="govuk-label govuk-radios__label" for="appeal-type-5">Commercial advertisement (CAS)</label>
                                     </div>
                         </div>
                         </fieldset>
@@ -656,7 +828,7 @@ exports[`change-appeal-type POST /change-appeal-type/change-appeal-final-date sh
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -727,7 +899,7 @@ exports[`change-appeal-type POST /change-appeal-type/change-appeal-final-date sh
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -798,7 +970,7 @@ exports[`change-appeal-type POST /change-appeal-type/change-appeal-final-date sh
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -870,7 +1042,7 @@ exports[`change-appeal-type POST /change-appeal-type/change-appeal-final-date sh
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -942,7 +1114,7 @@ exports[`change-appeal-type POST /change-appeal-type/change-appeal-final-date sh
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1069,6 +1241,23 @@ exports[`change-appeal-type POST /change-appeal-type/resubmit should re-render t
 </main>"
 `;
 
+exports[`change-appeal-type POST /change-appeal-type/update-appeal should render a 500 error page if the required data is not present in the session 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Sorry, there is a problem with the service</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">Try again later.</p>
+            <p class="govuk-body"><a href="https://has-appeal.herokuapp.com/help/contact" class="govuk-link">Contact the Planning Inspectorate Customer Support</a> if
+                the problem persists.</p>
+        </div>
+    </div>
+</main>"
+`;
+
 exports[`change-appeal-type should re-render the final date page with an error message if the provided date is not a business day: abbreviated month name 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
@@ -1087,7 +1276,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1158,7 +1347,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1229,7 +1418,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">

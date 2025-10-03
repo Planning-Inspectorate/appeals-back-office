@@ -7,11 +7,1223 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Q9999',
 		name: 'System Test Borough Council',
-		email: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+		email: 'appealplanningdecisiontest@planninginspectorate.gov.uk',
+		teamId: 10000001 // Ops Test
 	},
 	{
 		lpaCode: 'Q1111',
 		name: 'System Test Borough Council 2',
-		email: 'appealplanningdecisiontest@planninginspectorate.gov.uk'
+		email: 'appealplanningdecisiontest@planninginspectorate.gov.uk',
+		teamId: 10000001 // Ops Test
+	},
+	{
+		lpaCode: 'N5090',
+		name: 'Barnet',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'H1705',
+		name: 'Basingstoke and Deane Borough Council',
+		email: 'appeals@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'F0114',
+		name: 'Bath and North East Somerset Council',
+		email: 'Planning_appeals@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'V1260',
+		name: 'Bournemouth, Christchurch and Poole',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'G5180',
+		name: 'Bromley',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'K0425',
+		name: 'Buckinghamshire Council - Wycombe Area',
+		email: 'planning.wyc@example.gov.uk'
+	},
+	{
+		lpaCode: 'X3405',
+		name: 'Cannock Chase District Council',
+		email: 'developmentcontrol@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'D0840',
+		name: 'Cornwall Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'F1610',
+		name: 'Cotswold District Council',
+		email: 'planning@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'U4610',
+		name: 'Coventry City Council',
+		email: 'planning@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'J9497',
+		name: 'Dartmoor National Park Authority',
+		email: 'planning@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'D1265',
+		name: 'Dorset',
+		email: 'Appeals@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'C4615',
+		name: 'Dudley Metropolitan Borough Council',
+		email: 'development.control@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'U1105',
+		name: 'East Devon District Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'B3410',
+		name: 'East Staffordshire Borough Council',
+		email: 'dcsupport@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'W1715',
+		name: 'Eastleigh Borough Council',
+		email: 'ebcplanningsupport@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'Y1110',
+		name: 'Exeter City Council',
+		email: 'planning@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'F9498',
+		name: 'Exmoor National Park Authority',
+		email: 'plan@example.gov.uk'
+	},
+	{
+		lpaCode: 'A1720',
+		name: 'Fareham Borough Council',
+		email: 'devcontrol@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'P1615',
+		name: 'Forest of Dean District Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'U1620',
+		name: 'Gloucester City Council',
+		email: 'Development.Control@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'T1600',
+		name: 'Gloucestershire',
+		email: 'planningdc@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'J1725',
+		name: 'Gosport',
+		email: 'planning@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'E5330',
+		name: 'Greenwich',
+		email: 'planning-enforcement@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'N1730',
+		name: 'Hart District Council',
+		email: 'appeals@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'X1735',
+		name: 'Havant Borough Council',
+		email: 'planning.development@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'B5480',
+		name: 'Havering',
+		email: 'planning_appeals@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'W1850',
+		name: 'Herefordshire Council',
+		email: 'planning_enquiries@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'P2114',
+		name: 'Isle of Wight Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'K3415',
+		name: 'Lichfield District Council',
+		email: 'appeals@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'J1860',
+		name: 'Malvern Hills District Council',
+		email: 'developmentcontrol@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'Y1138',
+		name: 'Mid Devon District Council',
+		email: 'appeals@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'B1740',
+		name: 'New Forest District Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'B9506',
+		name: 'New Forest National Park Authority',
+		email: 'appeals@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'P3420',
+		name: 'Newcastle-under-Lyme Borough Council',
+		email: 'planningapplications@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'X1118',
+		name: 'North Devon District Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'R3705',
+		name: 'North Warwickshire Borough Council',
+		email: 'planningcontrol@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'W3710',
+		name: 'Nuneaton and Bedworth Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'N1160',
+		name: 'Plymouth City Council',
+		email: 'planningconsents@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'L5810',
+		name: 'Richmond',
+		email: 'richmondplanningappeals@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'E3715',
+		name: 'Rugby Borough Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'P1750',
+		name: 'Rushmoor Borough Council',
+		email: 'plan@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'L3245',
+		name: 'Shropshire Council',
+		email: 'appeals@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'J0350',
+		name: 'Slough Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'Q4625',
+		name: 'Solihull Metropolitan Borough Council',
+		email: 'planningenforcement@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'Y9507',
+		name: 'South Downs National Park Authority',
+		email: 'planning@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'K1128',
+		name: 'South Hams District Council',
+		email: 'Dm.appeals@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'Q3115',
+		name: 'South Oxfordshire District Council',
+		email: 'registration@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'D1780',
+		name: 'Southampton City Council',
+		email: 'planning.appeal@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'Y3425',
+		name: 'Stafford Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'B3438',
+		name: 'Staffordshire Moorlands District Council',
+		email: 'planning@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'J3720',
+		name: 'Stratford-on-Avon District Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'C1625',
+		name: 'Stroud District Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'U3935',
+		name: 'Swindon Borough Council',
+		email: 'appeals@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'Z3445',
+		name: 'Tamworth Borough Council',
+		email: 'planningadmin@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'P1133',
+		name: 'Teignbridge District Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'C3240',
+		name: 'Telford and Wrekin Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'C1760',
+		name: 'Test Valley Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'G1630',
+		name: 'Tewkesbury Borough Council',
+		email: 'appealsadmin@example.gov.uk',
+		teamId: 8 // West2
+	},
+	{
+		lpaCode: 'Z0835',
+		name: 'The Isles of Scilly Council',
+		email: 'planning@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'X1165',
+		name: 'Torbay Council',
+		email: 'planning@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'W1145',
+		name: 'Torridge District Council',
+		email: 'planningsupport@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'V3120',
+		name: 'Vale of White Horse District Council',
+		email: 'registration@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'V4630',
+		name: 'Walsall Metropolitan Borough Council',
+		email: 'planningservices@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'T3725',
+		name: 'Warwick District Council',
+		email: 'planning_appeals@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'W0340',
+		name: 'West Berkshire District Council',
+		email: 'appeals@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'Q1153',
+		name: 'West Devon Borough Council',
+		email: 'dc@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'D3125',
+		name: 'West Oxfordshire District Council',
+		email: 'Planning.Appeals@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'Y3940',
+		name: 'Wiltshire Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'L1765',
+		name: 'Winchester City Council',
+		email: 'appeals@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'D4635',
+		name: 'Wolverhampton City Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'M3835',
+		name: 'Worthing Borough Council',
+		email: 'planning-worthing@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'H1840',
+		name: 'Wychavon District Council',
+		email: 'Planning.Appeals@example.gov.uk',
+		teamId: 9 // West3
+	},
+	{
+		lpaCode: 'R1845',
+		name: 'Wyre Forest District Council',
+		email: 'planning.admin@example.gov.uk',
+		teamId: 10 // West4
+	},
+	{
+		lpaCode: 'M1005',
+		name: 'Amber Valley Borough Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'W3005',
+		name: 'Ashfield District Council',
+		email: 'planning.admin@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'D3505',
+		name: 'Babergh District Council',
+		email: 'planning@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'R4408',
+		name: 'Barnsley Borough Council',
+		email: 'developmentcontrol@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'A3010',
+		name: 'Bassetlaw District Council',
+		email: 'planning.appeal@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'T2405',
+		name: 'Blaby District Council',
+		email: 'planning@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'M2372',
+		name: 'Blackburn with Darwen Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'R1010',
+		name: 'Bolsover District Council',
+		email: 'dev.control@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'N4205',
+		name: 'Bolton Metropolitan Borough Council',
+		email: 'planning.control@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'Z2505',
+		name: 'Boston Borough Council',
+		email: 'Planning@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'H1515',
+		name: 'Brentwood Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 11 // East1
+	},
+	{
+		lpaCode: 'K2610',
+		name: 'Broadland District Council',
+		email: 'planning.administration@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'E9505',
+		name: 'Broads Authority',
+		email: 'planning@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'W1905',
+		name: 'Borough of Broxbourne',
+		email: 'planning@example.gov.uk',
+		teamId: 13 // East3
+	},
+	{
+		lpaCode: 'J3015',
+		name: 'Broxtowe Borough Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'Z2315',
+		name: 'Burnley Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'A4710',
+		name: 'Calderdale Metropolitan Borough Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 18 // North4
+	},
+	{
+		lpaCode: 'Q0505',
+		name: 'Cambridge City Council',
+		email: 'asappeals@example.gov.uk',
+		teamId: 18 // North4
+	},
+	{
+		lpaCode: 'E0535',
+		name: 'Cambridgeshire County Council',
+		email: 'planningdc@example.gov.uk',
+		teamId: 18 // North4
+	},
+	{
+		lpaCode: 'M1520',
+		name: 'Castle Point Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 11 // East1
+	},
+	{
+		lpaCode: 'X2410',
+		name: 'Charnwood Borough Council',
+		email: 'development.control@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'A1015',
+		name: 'Chesterfield Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'L3815',
+		name: 'Chichester District Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'M2515',
+		name: 'City of Lincoln Council',
+		email: 'developmentteam@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'F0935',
+		name: 'Cumberland Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'A1910',
+		name: 'Dacorum Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'N1350',
+		name: 'Darlington Borough Council',
+		email: 'planning.enquiries@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'U1050',
+		name: 'Derbyshire County Council',
+		email: 'planningcontrol@example.gov.uk',
+		teamId: null
+	},
+	{
+		lpaCode: 'P1045',
+		name: 'Derbyshire Dales District Council',
+		email: 'planning@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'F4410',
+		name: 'Doncaster Metropolitan Borough Council',
+		email: 'tsi@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'V0510',
+		name: 'East Cambridgeshire District Council',
+		email: 'appeals@example.gov.uk',
+		teamId: 18 // North4
+	},
+	{
+		lpaCode: 'D2510',
+		name: 'East Lindsey District Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'J2285',
+		name: 'Ebbsfleet Development Corporation',
+		email: 'EDCplanning@example.gov.uk',
+		teamId: null
+	},
+	{
+		lpaCode: 'N1025',
+		name: 'Erewash Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'Z1585',
+		name: 'Essex County Council',
+		email: 'mineralsandwastedm@example.gov.uk',
+		teamId: 11 // East1
+	},
+	{
+		lpaCode: 'D0515',
+		name: 'Fenland District Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 18 // North4
+	},
+	{
+		lpaCode: 'M2325',
+		name: 'Fylde Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'H4505',
+		name: 'Gateshead Metropolitan Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'N3020',
+		name: 'Gedling Borough Council',
+		email: 'PandEServiceSupport@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'K2230',
+		name: 'Gravesham Borough Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'U2615',
+		name: 'Great Yarmouth Borough Council',
+		email: 'plan@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'D0650',
+		name: 'Halton Borough Council',
+		email: 'dev.control@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'Q1770',
+		name: 'Hampshire County Council',
+		email: 'planning@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'F2415',
+		name: 'Harborough District Council',
+		email: 'planning@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'N1540',
+		name: 'Harlow District Council',
+		email: 'planning.services@example.gov.uk',
+		teamId: 11 // East1
+	},
+	{
+		lpaCode: 'H0724',
+		name: 'Hartlepool Borough Council',
+		email: 'developmentcontrol@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'B1415',
+		name: 'Hastings Borough Council',
+		email: 'dcenquiries@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'M1900',
+		name: 'Hertfordshire County Council',
+		email: 'spatialplanning@example.gov.uk',
+		teamId: 13 // East3
+	},
+	{
+		lpaCode: 'N1920',
+		name: 'Hertsmere Borough Council',
+		email: 'appeals.planning@example.gov.uk',
+		teamId: 13 // East3
+	},
+	{
+		lpaCode: 'H1033',
+		name: 'High Peak Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'K2420',
+		name: 'Hinckley and Bosworth Borough Council',
+		email: 'planningappeal@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'H0520',
+		name: 'Huntingdonshire District Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 18 // North4
+	},
+	{
+		lpaCode: 'R2330',
+		name: 'Hyndburn Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'R3515',
+		name: 'Ipswich Borough Council',
+		email: 'development.management@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'W2275',
+		name: 'Kent County Council',
+		email: 'planning.applications@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'V2004',
+		name: 'Kingston-Upon-Hull City Council',
+		email: 'dev.control@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'Z4718',
+		name: 'Kirklees Metropolitan Council',
+		email: 'dc.admin@example.gov.uk',
+		teamId: 18 // North4
+	},
+	{
+		lpaCode: 'V4305',
+		name: 'Knowsley Metropolitan Borough Council',
+		email: 'dcconsultations@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'Q9495',
+		name: 'Lake District National Park',
+		email: 'appeals@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'Q2371',
+		name: 'Lancashire County Council',
+		email: 'devcon@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'W2465',
+		name: 'Leicester City Council',
+		email: 'planning@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'Z5060',
+		name: 'London Borough of Barking and Dagenham Council',
+		email: 'Planning@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'R5510',
+		name: 'London Borough of Hillingdon',
+		email: 'PlanningAppeals@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'N5660',
+		name: 'London Borough of Lambeth',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'W5780',
+		name: 'London Borough of Redbridge',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'X1545',
+		name: 'Maldon District Council',
+		email: 'dc.planning@example.gov.uk',
+		teamId: 11 // East1
+	},
+	{
+		lpaCode: 'X3025',
+		name: 'Mansfield District Council',
+		email: 'pbc@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'A2280',
+		name: 'Medway Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'Y2430',
+		name: 'Melton Borough Council',
+		email: 'externaldevelopmentcontrol@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'D3830',
+		name: 'Mid Sussex District Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'W0734',
+		name: 'Middlesbrough Council',
+		email: 'developmentcontrol@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'B3030',
+		name: 'Newark & Sherwood District Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'X2600',
+		name: 'Norfolk County Council',
+		email: 'mawp@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'R1038',
+		name: 'North East Derbyshire District Council',
+		email: 'developmentcontrol@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'B2002',
+		name: 'North East Lincolnshire Council',
+		email: 'Planning@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'X1925',
+		name: 'North Hertfordshire District Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 13 // East3
+	},
+	{
+		lpaCode: 'R2520',
+		name: 'North Kesteven District Council',
+		email: 'planning@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'Y2620',
+		name: 'North Norfolk District Council',
+		email: 'planning-appeals@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'W4515',
+		name: 'North Tyneside Council',
+		email: 'development.control@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'G2435',
+		name: 'North West Leicestershire District Council',
+		email: 'development.control@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'W9500',
+		name: 'North York Moors National Park Authority',
+		email: 'dc@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'T9501',
+		name: 'Northumberland National Park Authority',
+		email: 'planning@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'Q3060',
+		name: 'Nottingham City Council',
+		email: 'development.control@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'L2440',
+		name: 'Oadby and Wigston Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'F5730',
+		name: 'Old Oak and Park Royal Development Corporation',
+		email: 'planningapplications@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'U3100',
+		name: 'Oxfordshire County Council',
+		email: 'planning@example.gov.uk',
+		teamId: 7 // West1
+	},
+	{
+		lpaCode: 'M9496',
+		name: 'Peak District National Park Authority',
+		email: 'legal@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'E2340',
+		name: 'Pendle Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'J0540',
+		name: 'Peterborough City Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 18 // North4
+	},
+	{
+		lpaCode: 'N2345',
+		name: 'Preston City Council',
+		email: 'devcon@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'V0728',
+		name: 'Redcar and Cleveland Borough Council',
+		email: 'planning_admin@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'T2350',
+		name: 'Ribble Valley Borough Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'B1550',
+		name: 'Rochford District Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 11 // East1
+	},
+	{
+		lpaCode: 'B2355',
+		name: 'Rossendale Borough Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'U1430',
+		name: 'Rother District Council',
+		email: 'Planning-Appeals@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'P4415',
+		name: 'Rotherham Metropolitan Borough Council',
+		email: 'development.control@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'K5600',
+		name: 'Royal Borough of Kensington and Chelsea',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'P3040',
+		name: 'Rushcliffe Borough Council',
+		email: 'developmentcontrol@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'A2470',
+		name: 'Rutland County Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'M4320',
+		name: 'Sefton Metropolitan Borough Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'G2245',
+		name: 'Sevenoaks District Council',
+		email: 'appeals@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'W0530',
+		name: 'South Cambridgeshire District Council',
+		email: 'DSAppeals@example.gov.uk',
+		teamId: 18 // North4
+	},
+	{
+		lpaCode: 'F1040',
+		name: 'South Derbyshire District Council',
+		email: 'Planning@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'A2525',
+		name: 'South Holland District Council',
+		email: 'planningadvice@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'E2530',
+		name: 'South Kesteven District Council',
+		email: 'Planning@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'L2630',
+		name: 'South Norfolk District Council',
+		email: 'Planning.snc@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'F2360',
+		name: 'South Ribble Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'A4520',
+		name: 'South Tyneside Council',
+		email: 'planningapplications@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'K1935',
+		name: 'Stevenage Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 13 // East3
+	},
+	{
+		lpaCode: 'V3500',
+		name: 'Suffolk County Council',
+		email: 'planning@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'J4525',
+		name: 'Sunderland City Council',
+		email: 'dc@example.gov.uk',
+		teamId: 16 // North2
+	},
+	{
+		lpaCode: 'B3600',
+		name: 'Surrey County Council',
+		email: 'mwcd@example.gov.uk',
+		teamId: 13 // East3
+	},
+	{
+		lpaCode: 'V2255',
+		name: 'Swale Borough Council',
+		email: 'appeals@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'P1560',
+		name: 'Tendring District Council',
+		email: 'appeals.planningservices@example.gov.uk',
+		teamId: 11 // East1
+	},
+	{
+		lpaCode: 'Z2260',
+		name: 'Thanet District Council',
+		email: 'planning.services@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'P1940',
+		name: 'Three Rivers District Council',
+		email: 'trdc.appeals@example.gov.uk',
+		teamId: 13 // East3
+	},
+	{
+		lpaCode: 'M1595',
+		name: 'Thurrock Borough Council',
+		email: 'plan.appeals@example.gov.uk',
+		teamId: 11 // East1
+	},
+	{
+		lpaCode: 'H2265',
+		name: 'Tonbridge and Malling Borough Council',
+		email: 'planning.appeals@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'M2270',
+		name: 'Tunbridge Wells Borough Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 12 // East2
+	},
+	{
+		lpaCode: 'Y1945',
+		name: 'Watford Borough Council',
+		email: 'developmentcontrol@example.gov.uk',
+		teamId: 13 // East3
+	},
+	{
+		lpaCode: 'C1950',
+		name: 'Welwyn Hatfield Council',
+		email: 'planningappeals@example.gov.uk',
+		teamId: 13 // East3
+	},
+	{
+		lpaCode: 'K0940',
+		name: 'Westmorland and Furness Council',
+		email: 'appeals4@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'N2535',
+		name: 'West Lindsey District Council',
+		email: 'Planning.Customer.Care@example.gov.uk',
+		teamId: 17 // North3
+	},
+	{
+		lpaCode: 'F3545',
+		name: 'West Suffolk',
+		email: 'planning.helpdesk@example.gov.uk',
+		teamId: 14 // East4
+	},
+	{
+		lpaCode: 'V4250',
+		name: 'Wigan Metropolitan Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'W4325',
+		name: 'Wirral Metropolitan Borough Council',
+		email: 'appeals@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'U2370',
+		name: 'Wyre Borough Council',
+		email: 'planning@example.gov.uk',
+		teamId: 15 // North1
+	},
+	{
+		lpaCode: 'C9499',
+		name: 'Yorkshire Dales National Park Authority',
+		email: 'planning@example.gov.uk',
+		teamId: 16 // North2
 	}
 ];

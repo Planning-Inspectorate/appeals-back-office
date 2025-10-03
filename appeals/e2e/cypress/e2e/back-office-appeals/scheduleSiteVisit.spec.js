@@ -32,7 +32,7 @@ describe('Schedule site visit', () => {
 				dateTimeSection.enterVisitEndTime('12', '00');
 				caseDetailsPage.clickButtonByText('Confirm');
 				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
-				caseDetailsPage.validateAnswer('Visit Type', visitType);
+				caseDetailsPage.validateAnswer('Type', visitType, { matchQuestionCase: true });
 			});
 		});
 
@@ -50,7 +50,7 @@ describe('Schedule site visit', () => {
 				dateTimeSection.enterVisitEndTime('12', '00');
 				caseDetailsPage.clickButtonByText('Confirm');
 				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
-				caseDetailsPage.validateAnswer('Visit type', visitType);
+				caseDetailsPage.validateAnswer('Type', visitType, { matchQuestionCase: true });
 			});
 		});
 	});

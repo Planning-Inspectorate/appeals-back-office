@@ -22,7 +22,17 @@ const { value, error } = schema.validate({
 	useNotifyEmulator: environment.NOTIFY_SEND_MAIL_EMULATOR || false,
 	defaultApiVersion: environment.DEFAULT_API_VERSION || '1',
 	serviceBusOptions: {
-		hostname: environment.SERVICE_BUS_HOSTNAME
+		hostname: environment.SERVICE_BUS_HOSTNAME,
+		topicAppealHas: environment.SB_TOPIC_NAME_APPEAL_HAS || 'appeal-has',
+		topicAppealS78: environment.SB_TOPIC_NAME_APPEAL_S78 || 'appeal-s78',
+		topicAppealDocument: environment.SB_TOPIC_NAME_APPEAL_DOCUMENT || 'appeal-document',
+		topicAppealServiceUser: environment.SB_TOPIC_NAME_APPEAL_SERVICE_USER || 'appeal-service-user',
+		topicAppealEvent: environment.SB_TOPIC_NAME_APPEAL_EVENT || 'appeal-event',
+		topicAppealEventEstimate:
+			environment.SB_TOPIC_NAME_APPEAL_EVENT_ESTIMATE || 'appeal-event-estimate',
+		topicDocumentMove: environment.SB_TOPIC_NAME_DOCUMENT_MOVE || 'appeal-document-to-move',
+		topicAppealRepresentation:
+			environment.SB_TOPIC_NAME_APPEAL_REPRESENTATION || 'appeal-representation'
 	},
 	msal: {
 		clientId: environment.AUTH_CLIENT_BACKEND_API_ID,

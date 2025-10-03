@@ -2,8 +2,10 @@ import { generateAllPdfs } from '#app/components/download-all-generated-pdfs.com
 import {
 	getAllCaseFolders,
 	getFileInfo,
-	getFileVersionsInfo
+	getFileVersionsInfo,
+	getRepresentationAttachments
 } from '#appeals/appeal-documents/appeal.documents.service.js';
+import { camelCaseToWords, toSentenceCase } from '#lib/string-utilities.js';
 import { BlobServiceClient } from '@azure/storage-blob';
 import config from '@pins/appeals.web/environment/config.js';
 import { BlobStorageClient } from '@pins/blob-storage-client';
@@ -215,7 +217,8 @@ const createBlobDownloadStream = async (
 		if (!blobProperties) {
 			return null;
 		}
-	} catch {
+	} catch (error) {
+		console.error(`Error getting blob properties for ${documentKey}:`, error);
 		return null;
 	}
 
@@ -243,29 +246,9 @@ export const getBulkDocumentDownload = async (
 	{ apiClient, params, session, currentAppeal },
 	response
 ) => {
-	const { filename: requestedFilename, caseId } = params;
-
-	const folders = await getAllCaseFolders(apiClient, caseId);
-	const bulkFileInfo = folders
-		?.filter((folder) => folder.documents.length)
-		.filter((folder) => !folder.path.startsWith(APPEAL_CASE_STAGE.INTERNAL))
-		.flatMap((folder) => {
-			return folder.documents.map((document) => {
-				const { blobStorageContainer, blobStoragePath, documentURI } =
-					document.latestDocumentVersion;
-				return {
-					fullName: `${folder.path}/${document.name}`,
-					blobStorageContainer,
-					blobStoragePath,
-					documentURI
-				};
-			});
-		});
-
-	const timestampTokens = new Date().toISOString().split('T');
-	const dateString = timestampTokens[0].replaceAll('-', '');
-	const timeString = timestampTokens[1].split('.')[0].replaceAll(':', '');
-	const zipFileName = requestedFilename?.replace('.zip', `_${dateString}${timeString}.zip`);
+	const { filename = '', caseId } = params;
+	const bulkFileInfo = await getBulkFileInfo(apiClient, caseId);
+	const zipFileName = buildZipFileName(caseId, filename);
 
 	response.setHeader('content-type', 'application/zip');
 	response.setHeader('content-disposition', `attachment; filename=${zipFileName}`);
@@ -283,6 +266,7 @@ export const getBulkDocumentDownload = async (
 	} else {
 		const blobStorageClient = await createBlobStorageClient(session);
 		const blobStreams = await Promise.all(
+			// @ts-ignore
 			bulkFileInfo.map((fileInfo) =>
 				createBlobDownloadStream(
 					blobStorageClient,
@@ -314,4 +298,99 @@ export const getBulkDocumentDownload = async (
 
 	await archive.finalize();
 	return response.status(200);
+};
+
+/**
+ * Build a zipped file name
+ *
+ * @param {string} caseId
+ * @param {string} filename
+ * @returns {*}
+ */
+const buildZipFileName = (caseId, filename) => {
+	const timestampTokens = new Date().toISOString().split('T');
+	const dateString = timestampTokens[0].replaceAll('-', '');
+	const timeString = timestampTokens[1].split('.')[0].replaceAll(':', '');
+
+	return filename?.replace('.zip', `_${dateString}${timeString}.zip`);
+};
+
+/**
+ * Get all representation's documents
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} caseId
+ * @returns {Promise<*>}
+ */
+const getRepresentationAttachmentFullNames = async (apiClient, caseId) => {
+	const representations = await getRepresentationAttachments(apiClient, caseId);
+	const fullAttachmentNames = {};
+	const statusCounts = {};
+	// @ts-ignore
+	representations?.items?.forEach((representation) => {
+		let representationStatus = representation.status;
+		if (representation.status === 'valid') {
+			representationStatus = 'accepted';
+		} else if (representation.status === 'invalid') {
+			representationStatus = 'rejected';
+		}
+		// Keep a count of each representation type and status so that we can give each ip comment a unique folder name
+		const statusCountKey = `${representation.representationType}-${representation.status}`;
+		// @ts-ignore
+		if (statusCounts[statusCountKey] === undefined) {
+			// @ts-ignore
+			statusCounts[statusCountKey] = 0;
+		}
+		const representationType =
+			representation.representationType === 'comment'
+				? `Interested party comments/${toSentenceCase(
+						representationStatus
+						// @ts-ignore
+				  )}/Comment ${++statusCounts[statusCountKey]}`
+				: toSentenceCase(representation.representationType).replace('Lpa', 'LPA');
+		// @ts-ignore
+		representation.attachments.forEach((attachment) => {
+			const { document } = attachment.documentVersion || {};
+			// @ts-ignore
+			fullAttachmentNames[document.guid] = `Representations/${representationType}/${document.name}`;
+		});
+	});
+	return fullAttachmentNames;
+};
+
+/**
+ * Get bulk file info
+ *
+ * @param {import('got').Got} apiClient
+ * @param {string} caseId
+ * @returns {Promise<*>}
+ */
+export const getBulkFileInfo = async (apiClient, caseId) => {
+	const representationAttachmentFullNames = await getRepresentationAttachmentFullNames(
+		apiClient,
+		caseId
+	);
+	const folders = await getAllCaseFolders(apiClient, caseId);
+	return folders
+		?.filter(
+			(folder) => folder.documents?.length && !folder.path.startsWith(APPEAL_CASE_STAGE.INTERNAL)
+		)
+		.flatMap((folder) => {
+			const folderPath = folder.path
+				.split('/')
+				.map((folderName) => camelCaseToWords(folderName.trim()).replace('Lpa', 'LPA'))
+				.join('/');
+			return folder.documents.map((document) => {
+				const { blobStorageContainer, blobStoragePath, documentURI } =
+					document.latestDocumentVersion;
+				return {
+					fullName:
+						// @ts-ignore
+						representationAttachmentFullNames[document.guid] || `${folderPath}/${document.name}`,
+					blobStorageContainer,
+					blobStoragePath,
+					documentURI
+				};
+			});
+		});
 };

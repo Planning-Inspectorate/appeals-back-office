@@ -6,7 +6,10 @@ import manageDocumentsRouter from '../document-attachments/manage-documents.rout
 import acceptProofOfEvidenceRouter from './accept/accept.router.js';
 import addRepresentationRouter from './add-representation/add-representation.router.js';
 import incompleteProofOfEvidenceRouter from './incomplete/incomplete.router.js';
-import { withSingularRepresentation } from './proof-of-evidence.middleware.js';
+import {
+	addPageContentToLocals,
+	withSingularRepresentation
+} from './proof-of-evidence.middleware.js';
 import viewAndReviewProofOfEvidenceRouter from './view-and-review/view-and-review.router.js';
 
 const router = createRouter({ mergeParams: true });
@@ -27,13 +30,17 @@ router.use(
 
 router.use(
 	'/:proofOfEvidenceType/add-document',
+	validateAppeal,
+	addPageContentToLocals,
 	withSingularRepresentation,
 	getRepresentationAttachmentsFolder,
 	addDocumentRouter
 );
 
 router.use(
-	'/:proofOfEvidenceType/change',
+	'/:proofOfEvidenceType/manage-documents',
+	validateAppeal,
+	addPageContentToLocals,
 	withSingularRepresentation,
 	getRepresentationAttachmentsFolder,
 	manageDocumentsRouter

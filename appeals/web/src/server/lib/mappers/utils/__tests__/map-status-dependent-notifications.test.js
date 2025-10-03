@@ -137,6 +137,18 @@ describe('mapStatusDependentNotifications', () => {
 			requiredAction: 'addResidencesNetChangeS20',
 			expectedContainedHtml: `<a class="govuk-link" data-cy="add-residences-net-change" href="/appeals-service/appeal-details/${mockAppealData.appealId}/residential-units/new?backUrl=%2Fappeals-service%2Fappeal-details%2F${mockAppealData.appealId}">Add number of residential units</a>`,
 			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'reviewLpaProofOfEvidence',
+			requiredAction: 'reviewLpaProofOfEvidence',
+			expectedContainedHtml: `<a class="govuk-link" data-cy="review-lpa-proof-of-evidence" href="/appeals-service/appeal-details/${mockAppealData.appealId}/proof-of-evidence/lpa?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Review LPA proof of evidence and witnesses</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
+		},
+		{
+			bannerKey: 'reviewAppellantProofOfEvidence',
+			requiredAction: 'reviewAppellantProofOfEvidence',
+			expectedContainedHtml: `<a class="govuk-link" data-cy="review-appellant-proof-of-evidence" href="/appeals-service/appeal-details/${mockAppealData.appealId}/proof-of-evidence/appellant?backUrl=%2Fappeals-service%2Fappeal-details%2F1">Review appellant proof of evidence and witnesses</a>`,
+			bannerShouldNotDisplayWhenChildLinkedAppeal: true
 		}
 	];
 

@@ -65,6 +65,18 @@ export class InquirySectionPage extends CaseDetailsPage {
 		dateTimeSection.clearInquiryDateAndTime();
 	}
 
+	clearEstimatedDays() {
+		estimatedDaysSection.clearEstimatedDays();
+	}
+
+	enterEstimatedDays(estimatedDays) {
+		estimatedDaysSection.enterEstimatedInquiryDays(estimatedDays);
+	}
+
+	selectEstimatedDaysOption(option) {
+		estimatedDaysSection.selectEstimatedDaysOption(option);
+	}
+
 	setUpInquiry(day, month, year, hour, minute) {
 		dateTimeSection.setInquiryDate(day, month, year);
 		dateTimeSection.enterInquiryTime(hour, minute);

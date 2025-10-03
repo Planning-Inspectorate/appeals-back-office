@@ -6,9 +6,18 @@ import { isAtEditEntrypoint } from '#lib/edit-utilities.js';
 import { constructUrl } from '#lib/mappers/utils/url.mapper.js';
 import { preserveQueryString } from '#lib/url-utilities.js';
 
-/** @type {import('@pins/express').RequestHandler<{}>}  */
+/**
+ *
+ * @param {import('@pins/express/types/express.js').Request} request
+ * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
+ */
 export const renderDocumentUpload = async (request, response) => {
-	const { currentAppeal, session, query } = request;
+	const {
+		currentAppeal,
+		session,
+		query,
+		locals: { pageContent }
+	} = request;
 
 	const baseUrl = request.baseUrl;
 	const representationBaseUrl = request.baseUrl.replace('/add-document', '');
@@ -27,9 +36,12 @@ export const renderDocumentUpload = async (request, response) => {
 		appealDetails: currentAppeal,
 		backButtonUrl,
 		nextPageUrl: `${baseUrl}/redaction-status`,
-		pageHeadingTextOverride: 'Upload supporting document',
+		pageHeadingTextOverride:
+			pageContent?.addDocument?.pageHeadingTextOverride || 'Upload supporting document',
 		allowMultipleFiles: false,
-		documentType: session.costsDocumentType
+		documentType: session.costsDocumentType,
+		preHeadingTextOverride: pageContent?.pageHeadingTextOverride,
+		uploadContainerHeadingTextOverride: pageContent?.addDocument?.uploadContainerHeadingTextOverride
 	});
 };
 
