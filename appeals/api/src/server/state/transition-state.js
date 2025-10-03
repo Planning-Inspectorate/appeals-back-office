@@ -10,6 +10,7 @@ import {
 	APPEAL_TYPE_SHORTHAND_FPA,
 	APPEAL_TYPE_SHORTHAND_HAS,
 	AUDIT_TRAIL_PROGRESSED_TO_STATUS,
+	AUDIT_TRIAL_AUTOMATIC_EVENT_UUID,
 	CASE_RELATIONSHIP_LINKED,
 	VALIDATION_OUTCOME_COMPLETE
 } from '@pins/appeals/constants/support.js';
@@ -73,6 +74,8 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 		await appealStatusRepository.rollBackAppealStatusTo(appealId, newState);
 	}
 	await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
+
+	if (newState === 'issue_determination') azureAdUserId = AUDIT_TRIAL_AUTOMATIC_EVENT_UUID;
 
 	createAuditTrail({
 		appealId,
