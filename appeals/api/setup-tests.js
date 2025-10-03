@@ -171,6 +171,8 @@ const mockTeamFindFirst = jest.fn().mockResolvedValue({});
 const mockTeamFindMany = jest.fn().mockResolvedValue({});
 const mockBlobStorageCopyFile = jest.fn().mockResolvedValue({});
 const mockPersonalListUpsert = jest.fn().mockResolvedValue({});
+const mockPersonalListCount = jest.fn().mockResolvedValue({});
+const mockPersonalListFindMany = jest.fn().mockResolvedValue({});
 const mockPersonalListDeleteMany = jest.fn().mockResolvedValue({});
 
 const mockNotifySend = jest.fn().mockImplementation(async (params) => {
@@ -280,6 +282,8 @@ class MockPrismaClient {
 	get personalList() {
 		return {
 			upsert: mockPersonalListUpsert,
+			count: mockPersonalListCount,
+			findMany: mockPersonalListFindMany,
 			deleteMany: mockPersonalListDeleteMany
 		};
 	}

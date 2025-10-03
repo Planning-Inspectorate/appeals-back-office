@@ -67,7 +67,9 @@ const { value, error } = schema.validate({
 			environment.FEATURE_FLAG_CHANGE_APPEAL_TYPE === 'true',
 		featureFlagHearingPostMvp:
 			environment.FEATURE_FLAG_HEARING_POST_MVP &&
-			environment.FEATURE_FLAG_HEARING_POST_MVP === 'true'
+			environment.FEATURE_FLAG_HEARING_POST_MVP === 'true',
+		featureFlagPersonalList:
+			environment.FEATURE_FLAG_PERSONAL_LIST && environment.FEATURE_FLAG_PERSONAL_LIST === 'true'
 	},
 	serviceBusEnabled: environment.SERVICE_BUS_ENABLED && environment.SERVICE_BUS_ENABLED === 'true',
 	enableTestEndpoints:

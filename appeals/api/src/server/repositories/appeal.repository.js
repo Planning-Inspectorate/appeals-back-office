@@ -544,6 +544,15 @@ const getAppealsWithCompletedEvents = () =>
 	});
 
 /**
+ * @returns {PrismaPromise<{ id: number; }[]>}
+ */
+const getAppealIdsWithNoPersonalListEntries = () =>
+	databaseConnector.appeal.findMany({
+		select: { id: true },
+		where: { PersonalList: { is: null } }
+	});
+
+/**
  * @param {number} id
  * @param {number|null} assignedTeamId
  * @returns {PrismaPromise<import('#db-client').Appeal>}
@@ -590,6 +599,7 @@ export default {
 	unlinkAppeal,
 	getAppealsByIds,
 	getAppealsWithCompletedEvents,
+	getAppealsWithNoPersonalListEntries: getAppealIdsWithNoPersonalListEntries,
 	setAssignedTeamId,
 	deleteAppealsByIds
 };

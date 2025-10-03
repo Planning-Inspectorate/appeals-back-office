@@ -16,28 +16,28 @@ export const formatCostsDecision = async (appeal) => {
 	const costsFolders = await getFoldersForAppeal(appeal.id, APPEAL_CASE_STAGE.COSTS);
 	const costsDecision = costsFolders.reduce((costsDecision, folder) => {
 		const costsType = folder.path.replace('costs/', '');
-		const hasDocuments = folder.documents?.filter((doc) => !doc.isDeleted).length > 0;
-		return { ...costsDecision, [costsType]: hasDocuments };
+		const documentCount = folder.documents?.filter((doc) => !doc.isDeleted).length;
+		return { ...costsDecision, [costsType]: documentCount };
 	}, {});
 	const {
 		// @ts-ignore
-		appellantCostsApplication = false,
+		appellantCostsApplication = 0,
 		// @ts-ignore
-		appellantCostsWithdrawal = false,
+		appellantCostsWithdrawal = 0,
 		// @ts-ignore
-		appellantCostsDecisionLetter = false,
+		appellantCostsDecisionLetter = 0,
 		// @ts-ignore
-		lpaCostsApplication = false,
+		lpaCostsApplication = 0,
 		// @ts-ignore
-		lpaCostsWithdrawal = false,
+		lpaCostsWithdrawal = 0,
 		// @ts-ignore
-		lpaCostsDecisionLetter = false
+		lpaCostsDecisionLetter = 0
 	} = (currentStatus(appeal) === APPEAL_CASE_STATUS.COMPLETE && costsDecision) || {};
 
 	const awaitingAppellantCostsDecision =
-		!appellantCostsDecisionLetter && appellantCostsApplication && !appellantCostsWithdrawal;
+		appellantCostsDecisionLetter === 0 && appellantCostsApplication > appellantCostsWithdrawal;
 	const awaitingLpaCostsDecision =
-		!lpaCostsDecisionLetter && lpaCostsApplication && !lpaCostsWithdrawal;
+		lpaCostsDecisionLetter === 0 && lpaCostsApplication > lpaCostsWithdrawal;
 
 	return { awaitingAppellantCostsDecision, awaitingLpaCostsDecision };
 };
