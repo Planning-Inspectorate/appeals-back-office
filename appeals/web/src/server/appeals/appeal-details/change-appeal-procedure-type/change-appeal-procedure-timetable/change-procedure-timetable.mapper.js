@@ -22,11 +22,11 @@ import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
  */
 
 /**
- * @typedef {import('../change-appeal-procedure-type.controller.js').AppealTimetable} AppealTimetable
+ * @typedef {import('../change-procedure-type.controller.js').AppealTimetable} AppealTimetable
  */
 
 /**
- * @typedef {import('../change-appeal-procedure-type.controller.js').ChangeProcedureType} ChangeProcedureTypeSession
+ * @typedef {import('../change-procedure-type.controller.js').ChangeProcedureType} ChangeProcedureTypeSession
  */
 
 /**

@@ -1,5 +1,5 @@
 import logger from '#lib/logger.js';
-import { mapChangeTimetablePage } from './change-appeal-timetable.mapper.js';
+import { mapChangeTimetablePage } from './change-procedure-timetable.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getChangeAppealTimetable = async (request, response) => {

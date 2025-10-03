@@ -1,5 +1,5 @@
 import { selectTimetableValidators } from '#appeals/appeal-details/timetable/timetable.validators.js';
-import { getTimetableTypes } from './change-appeal-timetable.mapper.js';
+import { getTimetableTypes } from './change-procedure-timetable.mapper.js';
 
 /**
  * @type {import('express').RequestHandler}

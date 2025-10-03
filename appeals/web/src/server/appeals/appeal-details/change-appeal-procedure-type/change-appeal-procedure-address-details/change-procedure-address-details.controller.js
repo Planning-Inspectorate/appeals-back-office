@@ -1,4 +1,4 @@
-import { changeAddressDetailsPage } from './change-appeal-address-details.mapper.js';
+import { changeAddressDetailsPage } from './change-procedure-address-details.mapper.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
