@@ -2,7 +2,10 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import personalListRepository from '#repositories/personal-list.repository.js';
 import { calculateDueDate } from '#utils/calculate-due-date.js';
+import { currentStatus } from '#utils/current-status.js';
+import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /**
  *
@@ -10,7 +13,11 @@ import { CASE_RELATIONSHIP_LINKED } from '@pins/appeals/constants/support.js';
  */
 export const updatePersonalList = async (appealId) => {
 	const appeal = await appealRepository.getAppealById(appealId);
-	let dueDate = await calculateDueDate(appeal);
+	const costsDecision =
+		currentStatus(appeal) === APPEAL_CASE_STATUS.COMPLETE
+			? await formatCostsDecision(appeal)
+			: null;
+	let dueDate = await calculateDueDate(appeal, costsDecision);
 	let linkType = null;
 	const linkedAppeals = await appealRepository.getLinkedAppeals(
 		appeal.reference,
@@ -24,7 +31,11 @@ export const updatePersonalList = async (appealId) => {
 		}
 		if (!dueDate) {
 			const parentAppeal = await appealRepository.getAppealById(linkedAppeals[0].parentId);
-			dueDate = await calculateDueDate(parentAppeal);
+			const costsDecision =
+				currentStatus(parentAppeal) === APPEAL_CASE_STATUS.COMPLETE
+					? await formatCostsDecision(parentAppeal)
+					: null;
+			dueDate = await calculateDueDate(parentAppeal, costsDecision);
 		}
 	}
 	const personalListEntry = {

@@ -86,7 +86,7 @@ const formatMyAppeal = async ({
 		localPlanningDepartment: appeal.lpa?.name || '',
 		lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 		documentationSummary: formatDocumentationSummary(appeal),
-		dueDate: await calculateDueDate(appeal),
+		dueDate: await calculateDueDate(appeal, costsDecision),
 		appealTimetable: formatAppealTimetable(appeal),
 		isParentAppeal,
 		isChildAppeal,
@@ -272,4 +272,10 @@ const formatLinkedAppealData = async function (
 		}));
 };
 
-export { formatAppeal, formatLinkedAppealData, formatMyAppeal, getIdsOfReferencedAppeals };
+export {
+	formatAppeal,
+	formatDocumentationSummary,
+	formatLinkedAppealData,
+	formatMyAppeal,
+	getIdsOfReferencedAppeals
+};

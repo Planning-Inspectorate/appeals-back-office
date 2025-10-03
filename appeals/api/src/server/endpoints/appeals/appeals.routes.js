@@ -1,6 +1,11 @@
 import { asyncHandler } from '@pins/express';
 import { Router as createRouter } from 'express';
-import { getAppeals, getMyAppeals, updateCompletedEventsController } from './appeals.controller.js';
+import {
+	getAppeals,
+	getMyAppeals,
+	getPersonalList,
+	updateCompletedEventsController
+} from './appeals.controller.js';
 import { validateAppealStatus, validateHasInspector } from './appeals.middleware.js';
 import { getAppealsValidator } from './appeals.validators.js';
 
@@ -114,6 +119,43 @@ router.get(
 	getAppealsValidator,
 	validateAppealStatus,
 	asyncHandler(getMyAppeals)
+);
+
+router.get(
+	'/personal-list',
+	/*
+		#swagger.tags = ['Appeal Lists']
+		#swagger.path = '/appeals/personal-list'
+		#swagger.description = 'Gets appeals assigned to the current user'
+		#swagger.parameters['azureAdUserId'] = {
+			in: 'header',
+			required: true,
+			example: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+		}
+		#swagger.parameters['pageNumber'] = {
+			in: 'query',
+			description: 'The pagination page number - required if pageSize is given',
+			example: 1,
+		}
+		#swagger.parameters['pageSize'] = {
+			in: 'query',
+			description: 'The pagination page size - required if pageNumber is given',
+			example: 30,
+		}
+		#swagger.parameters['status'] = {
+			in: 'query',
+			description: 'The appeal status',
+			example: 'lpa_questionnaire_due',
+		}
+		#swagger.responses[200] = {
+			description: 'Requested appeals',
+			schema: { $ref: '#/components/schemas/AllAppeals' },
+		}
+		#swagger.responses[400] = {}
+	 */
+	getAppealsValidator,
+	validateAppealStatus,
+	asyncHandler(getPersonalList)
 );
 
 router.post(

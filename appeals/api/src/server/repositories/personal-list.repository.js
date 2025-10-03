@@ -1,4 +1,7 @@
 import { databaseConnector } from '#utils/database-connector.js';
+import { getSkipValue } from '#utils/database-pagination.js';
+import { getEnabledAppealTypes } from '#utils/feature-flags-appeal-types.js';
+import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
 /** @typedef {import('@pins/appeals.api').Schema.PersonalList} PersonalList */
 
@@ -11,6 +14,7 @@ const upsertPersonalListEntry = async (data) => {
 	const { appealId, ...createData } = data;
 	// @ts-ignore
 	return databaseConnector.personalList.upsert({
+		// @ts-ignore
 		where: { appealId },
 		// @ts-ignore
 		create: { ...createData, appeal: { connect: { id: appealId } } },
@@ -18,6 +22,166 @@ const upsertPersonalListEntry = async (data) => {
 	});
 };
 
+/**
+ * @param {string} userId
+ * @param {number} pageNumber
+ * @param {number} pageSize
+ * @param {string} [status]
+ */
+const getPersonalList = async (userId, pageNumber, pageSize, status) => {
+	/**
+	 *
+	 * @param {string} [status]
+	 * @returns {*}
+	 */
+	const where = (status) => ({
+		AND: [
+			{
+				dueDate: { not: null }
+			},
+			{
+				appeal: {
+					is: {
+						appealType: { key: { in: getEnabledAppealTypes() } },
+						AND: [
+							...(status
+								? [
+										{
+											appealStatus: {
+												some: { valid: true, status }
+											}
+										}
+								  ]
+								: []),
+							{
+								appealStatus: {
+									some: {
+										valid: true,
+										status: {
+											notIn: [
+												APPEAL_CASE_STATUS.TRANSFERRED,
+												APPEAL_CASE_STATUS.INVALID,
+												APPEAL_CASE_STATUS.WITHDRAWN
+											]
+										}
+									}
+								}
+							}
+						],
+						OR: [
+							{ inspector: { azureAdUserId: { equals: userId } } },
+							{ caseOfficer: { azureAdUserId: { equals: userId } } }
+						]
+					}
+				}
+			}
+		]
+	});
+
+	return databaseConnector.$transaction(async (tx) => {
+		const personalList = await tx.personalList.findMany({
+			where: where(status),
+			select: {
+				appealId: true,
+				dueDate: true,
+				linkType: true,
+				leadAppealId: true,
+				appeal: {
+					select: {
+						caseCreatedDate: true,
+						reference: true,
+						inspector: true,
+						caseOfficer: true,
+						appealStatus: true,
+						hearing: { select: { addressId: true } },
+						procedureType: { select: { name: true } },
+						appellantCase: {
+							select: {
+								appellantCaseIncompleteReasonsSelected: {
+									select: {
+										appellantCaseIncompleteReason: true,
+										appellantCaseIncompleteReasonText: true
+									}
+								},
+								appellantCaseInvalidReasonsSelected: {
+									select: {
+										appellantCaseInvalidReason: true,
+										appellantCaseInvalidReasonText: true
+									}
+								},
+								appellantCaseValidationOutcome: true
+							}
+						},
+						lpa: true,
+						lpaQuestionnaire: {
+							select: {
+								lpaQuestionnaireValidationOutcome: true,
+								lpaQuestionnaireIncompleteReasonsSelected: {
+									select: {
+										lpaQuestionnaireIncompleteReason: true,
+										lpaQuestionnaireIncompleteReasonText: true
+									}
+								},
+								lpaNotificationMethods: {
+									select: {
+										lpaNotificationMethod: true
+									}
+								},
+								listedBuildingDetails: true
+							}
+						},
+						representations: true,
+						inquiry: true
+					}
+				}
+			},
+			skip: getSkipValue(pageNumber, pageSize),
+			take: pageSize,
+			orderBy: [
+				{
+					dueDate: 'asc'
+				},
+				{
+					leadAppealId: 'asc'
+				},
+				{
+					linkType: 'desc'
+				},
+				{
+					appealId: 'asc'
+				}
+			]
+		});
+
+		const itemCount = await tx.personalList.count({ where: where(status) });
+
+		const appealStatuses = await tx.personalList.findMany({
+			where: where(),
+			select: {
+				appeal: {
+					select: {
+						appealStatus: {
+							select: {
+								status: true
+							},
+							where: {
+								valid: true
+							}
+						}
+					}
+				}
+			}
+		});
+
+		const statuses = [
+			...new Set(appealStatuses.map(({ appeal }) => appeal.appealStatus[0].status))
+		];
+
+		return { itemCount, personalList, statuses };
+	});
+};
+
 export default {
+	getPersonalList,
 	upsertPersonalListEntry
 };

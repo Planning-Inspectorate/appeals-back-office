@@ -437,5 +437,6 @@ export default {
 	getAllAppealsCount,
 	getUserAppeals,
 	getAppealsStatusesInNationalList,
+	getAppealsStatusesInPersonalList,
 	getAppealsWithoutIncludes
 };
