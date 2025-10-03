@@ -37,7 +37,7 @@ export function setNewDatePage(appealDetails, deadlineString) {
 			yesNoInput({
 				name: 'setNewDate',
 				legendText: 'Do you want to allow the LPA to resubmit their statement?',
-				hint: `The LPA can resubmit their comments by ${deadlineString}`
+				hint: `We will update the statement due date to ${deadlineString}.`
 			})
 		]
 	};
