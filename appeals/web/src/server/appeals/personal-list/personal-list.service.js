@@ -1,3 +1,5 @@
+import featureFlags from '#common/feature-flags.js';
+import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { paginationDefaultSettings } from '../appeal.constants.js';
 
 /** @typedef {import('@pins/appeals').AppealList} AppealList */
@@ -21,7 +23,11 @@ export const getAppealsAssignedToCurrentUser = (
 		urlAppendix = `&status=${appealStatusFilter}`;
 	}
 
+	const pageName = featureFlags.isFeatureActive(FEATURE_FLAG_NAMES.PERSONAL_LIST)
+		? 'personal-list'
+		: 'my-appeals';
+
 	return apiClient
-		.get(`appeals/my-appeals?pageNumber=${pageNumber}&pageSize=${pageSize}${urlAppendix}`)
+		.get(`appeals/${pageName}?pageNumber=${pageNumber}&pageSize=${pageSize}${urlAppendix}`)
 		.json();
 };

@@ -239,6 +239,7 @@ describe('calculateDueDate Tests', () => {
 
 	test('handles STATE_TARGET_COMPLETE', async () => {
 		mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.COMPLETE;
+		mockAppeal.appellantCase = { numberOfResidencesNetChange: 5 };
 
 		// @ts-ignore
 		const dueDate = await calculateDueDate(mockAppeal, '', {});

@@ -1,9 +1,12 @@
 import config from '#config/config.js';
 import appealListRepository from '#repositories/appeal-lists.repository.js';
 import appealRepository from '#repositories/appeal.repository.js';
+import personalListRepository from '#repositories/personal-list.repository.js';
 import { sortAppeals } from '#utils/appeal-sorter.js';
+import { currentStatus } from '#utils/current-status.js';
 import { getPageCount } from '#utils/database-pagination.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
+import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	CASE_RELATIONSHIP_LINKED,
@@ -12,12 +15,17 @@ import {
 	ERROR_CANNOT_BE_EMPTY_STRING
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
-import { formatLinkedAppealData, formatMyAppeal } from './appeals.formatter.js';
+import {
+	formatDocumentationSummary,
+	formatLinkedAppealData,
+	formatMyAppeal
+} from './appeals.formatter.js';
 import { retrieveAppealListData, updateCompletedEvents } from './appeals.service.js';
 
 /** @typedef {import('express').Request} Request */
 /** @typedef {import('express').Response} Response */
 /** @typedef {import('@pins/appeals.api').Appeals.SingleAppealDetailsResponse} SingleAppealDetailsResponse */
+/** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 
 /**
  * @param {Request} req
@@ -155,6 +163,68 @@ const getMyAppeals = async (req, res) => {
 };
 
 /**
+ *
+ * @param {*} item
+ * @returns {Promise<*>}
+ */
+const formatItem = async (item) => {
+	const { appealId, appeal, dueDate, linkType, awaitingLinkedAppeal = false } = item;
+	const { reference, lpaQuestionnaire, appellantCase, hearing, procedureType } = appeal;
+	const appealStatus = currentStatus(appeal);
+	return {
+		appealId,
+		appealReference: reference,
+		procedureType: procedureType?.name ?? null,
+		appealStatus,
+		lpaQuestionnaireId: lpaQuestionnaire?.id ?? null,
+		dueDate,
+		documentationSummary: formatDocumentationSummary(appeal),
+		isParentAppeal: linkType === 'parent',
+		isChildAppeal: linkType === 'child',
+		isHearingSetup: !!hearing,
+		hasHearingAddress: !!hearing?.addressId,
+		awaitingLinkedAppeal,
+		costsDecision:
+			appealStatus === APPEAL_CASE_STATUS.COMPLETE ? await formatCostsDecision(appeal) : null,
+		numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange ?? null
+	};
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ */
+const getPersonalList = async (req, res) => {
+	const { query } = req;
+	const pageNumber = Number(query.pageNumber) || DEFAULT_PAGE_NUMBER;
+	const pageSize = Number(query.pageSize) || DEFAULT_PAGE_SIZE;
+	const status = query.status ? String(query.status) : undefined;
+	const azureUserId = req.get('azureAdUserId');
+
+	if (!azureUserId) {
+		return res.status(401).send({ errors: { azureUserId: ERROR_CANNOT_BE_EMPTY_STRING } });
+	}
+
+	const {
+		itemCount = 0,
+		personalList = [],
+		statuses = []
+	} = await personalListRepository.getPersonalList(azureUserId, pageNumber, pageSize, status);
+
+	const items = await Promise.all(personalList.map(formatItem));
+
+	return res.send({
+		itemCount,
+		items,
+		statuses: statuses,
+		page: pageNumber,
+		pageCount: getPageCount(itemCount, pageSize),
+		pageSize
+	});
+};
+
+/**
  * @param {Request} req
  * @param {Response} res
  * @returns {Promise<Response>}
@@ -167,4 +237,4 @@ async function updateCompletedEventsController(req, res) {
 	return res.status(204).end();
 }
 
-export { getAppeals, getMyAppeals, updateCompletedEventsController };
+export { getAppeals, getMyAppeals, getPersonalList, updateCompletedEventsController };
