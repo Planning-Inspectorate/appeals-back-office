@@ -1,4 +1,3 @@
-import { formatCostsDecision } from '#endpoints/appeals/appeals.formatter.js';
 import { createAuditTrail } from '#endpoints/audit-trails/audit-trails.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { contextEnum } from '#mappers/context-enum.js';
@@ -9,6 +8,7 @@ import serviceUserRepository from '#repositories/service-user.repository.js';
 import userRepository from '#repositories/user.repository.js';
 import transitionState from '#state/transition-state.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
+import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 import stringTokenReplacement from '#utils/string-token-replacement.js';
 import { camelToScreamingSnake } from '#utils/string-utils.js';

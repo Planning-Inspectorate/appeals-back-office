@@ -224,6 +224,8 @@ export const AUDIT_TRAIL_SITE_VISIT_CANCELLED = 'Site visit cancelled';
 export const AUDIT_TRAIL_APPEAL_TYPE_TRANSFERRED = 'Appeal marked as {replacement0}';
 export const AUDIT_TRAIL_APPEAL_TYPE_UPDATED = 'Appeal type updated to {replacement0}';
 
+export const AUDIT_TRAIL_HORIZON_REFERENCE_UPDATED = 'Horizon reference updated';
+
 export const AUDIT_TRAIL_ASSIGNED_TEAM_UPDATED = 'Case team {replacement0} assigned';
 export const BANK_HOLIDAY_FEED_DIVISION_ENGLAND = 'england-and-wales';
 

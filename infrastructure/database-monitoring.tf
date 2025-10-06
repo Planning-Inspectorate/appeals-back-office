@@ -46,8 +46,14 @@ resource "azurerm_storage_container" "sql_server" {
   container_access_type = "private"
 }
 
+moved {
+  from = azurerm_advanced_threat_protection.sql_server_storage
+  to   = azurerm_advanced_threat_protection.sql_server_storage[0]
+}
+
 # Advanced Threat Protection is skipped as classic plan protection is deprecated. New one doesn't have a specific resource block
 resource "azurerm_advanced_threat_protection" "sql_server_storage" {
+  count              = var.environment != "staging" ? 1 : 0
   target_resource_id = azurerm_storage_account.sql_server.id
   enabled            = true
 }

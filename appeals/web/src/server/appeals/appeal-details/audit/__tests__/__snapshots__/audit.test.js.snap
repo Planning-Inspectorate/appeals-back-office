@@ -147,7 +147,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">1 October 2024
-                            <br><span>11:00</span>
+                            <br><span>11:00am</span>
                         </td>
                         <td class="govuk-table__cell">Case note added:
                             <br>A case note you should see.</td>
@@ -155,7 +155,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">1 October 2024
-                            <br><span>11:00</span>
+                            <br><span>11:00am</span>
                         </td>
                         <td class="govuk-table__cell">Case note added:
                             <br>A case note you should see.</td>

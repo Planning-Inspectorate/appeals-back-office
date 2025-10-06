@@ -24,27 +24,34 @@ export function formatObjectAsString(object, seperator = '') {
 
 /**
  * Takes a date object and returns formatted date and time
- * @param {*} date Date to format
- * @returns formatted date and time
+ * @param {Date} date - Date to format
+ * @param {boolean} isOrdinal - Whether to use ordinal format (short month, 24-hour time)
+ * @returns {Object} Formatted date and time
+ * @throws {Error} When invalid date object is provided
  */
-export function formatDateAndTime(date) {
+export function formatDateAndTime(date, isOrdinal = false) {
 	if (!(date instanceof Date)) {
 		throw new Error('Invalid date object');
 	}
 
-	// Format date (e.g., "22 May 2025")
-	const formattedDate = new Intl.DateTimeFormat('en-GB', {
+	// Set format options based on ordinal flag
+	const dateOptions = {
 		day: 'numeric',
-		month: 'long',
+		month: isOrdinal ? 'short' : 'long',
 		year: 'numeric'
-	}).format(date);
+	};
 
-	// Format time (e.g., "2:31am")
-	const formattedTime = new Intl.DateTimeFormat('en-GB', {
+	const timeOptions = {
 		hour: 'numeric',
 		minute: 'numeric',
-		hour12: true
-	})
+		hour12: !isOrdinal
+	};
+
+	// Format date (e.g., "22 May 2025" or "22 Oct 2025")
+	const formattedDate = new Intl.DateTimeFormat('en-GB', dateOptions).format(date);
+
+	// Format time (e.g., "2:31am" or "14:31")
+	const formattedTime = new Intl.DateTimeFormat('en-GB', timeOptions)
 		.format(date)
 		.toLowerCase()
 		.replace(' ', '');

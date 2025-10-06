@@ -1,8 +1,8 @@
-import { getFoldersForAppeal } from '#endpoints/documents/documents.service.js';
 import appealRepository from '#repositories/appeal.repository.js';
 import { calculateDueDate } from '#utils/calculate-due-date.js';
 import { currentStatus } from '#utils/current-status.js';
 import formatAddress from '#utils/format-address.js';
+import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import {
 	formatAppellantCaseDocumentationStatus,
 	formatLpaQuestionnaireDocumentationStatus,
@@ -15,7 +15,6 @@ import {
 	DOCUMENT_STATUS_RECEIVED
 } from '@pins/appeals/constants/support.js';
 import isFPA from '@pins/appeals/utils/is-fpa.js';
-import { APPEAL_CASE_STAGE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { countBy } from 'lodash-es';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
@@ -87,11 +86,7 @@ const formatMyAppeal = async ({
 		localPlanningDepartment: appeal.lpa?.name || '',
 		lpaQuestionnaireId: appeal.lpaQuestionnaire?.id || null,
 		documentationSummary: formatDocumentationSummary(appeal),
-		dueDate: await calculateDueDate(
-			appeal,
-			appeal.appellantCase?.appellantCaseValidationOutcome?.name || '',
-			costsDecision
-		),
+		dueDate: await calculateDueDate(appeal),
 		appealTimetable: formatAppealTimetable(appeal),
 		isParentAppeal,
 		isChildAppeal,
@@ -102,40 +97,6 @@ const formatMyAppeal = async ({
 		costsDecision,
 		numberOfResidencesNetChange: appeal.appellantCase?.numberOfResidencesNetChange ?? null
 	};
-};
-
-/**
- * @param {DBAppeal | DBUserAppeal | Appeal} appeal
- * @returns {Promise<CostsDecision>}
- * */
-const formatCostsDecision = async (appeal) => {
-	const costsFolders = await getFoldersForAppeal(appeal.id, APPEAL_CASE_STAGE.COSTS);
-	const costsDecision = costsFolders.reduce((costsDecision, folder) => {
-		const costsType = folder.path.replace('costs/', '');
-		const hasDocuments = folder.documents?.filter((doc) => !doc.isDeleted).length > 0;
-		return { ...costsDecision, [costsType]: hasDocuments };
-	}, {});
-	const {
-		// @ts-ignore
-		appellantCostsApplication = false,
-		// @ts-ignore
-		appellantCostsWithdrawal = false,
-		// @ts-ignore
-		appellantCostsDecisionLetter = false,
-		// @ts-ignore
-		lpaCostsApplication = false,
-		// @ts-ignore
-		lpaCostsWithdrawal = false,
-		// @ts-ignore
-		lpaCostsDecisionLetter = false
-	} = (currentStatus(appeal) === APPEAL_CASE_STATUS.COMPLETE && costsDecision) || {};
-
-	const awaitingAppellantCostsDecision =
-		!appellantCostsDecisionLetter && appellantCostsApplication && !appellantCostsWithdrawal;
-	const awaitingLpaCostsDecision =
-		!lpaCostsDecisionLetter && lpaCostsApplication && !lpaCostsWithdrawal;
-
-	return { awaitingAppellantCostsDecision, awaitingLpaCostsDecision };
 };
 
 /**
@@ -311,10 +272,4 @@ const formatLinkedAppealData = async function (
 		}));
 };
 
-export {
-	formatAppeal,
-	formatCostsDecision,
-	formatLinkedAppealData,
-	formatMyAppeal,
-	getIdsOfReferencedAppeals
-};
+export { formatAppeal, formatLinkedAppealData, formatMyAppeal, getIdsOfReferencedAppeals };
