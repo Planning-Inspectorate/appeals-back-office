@@ -8,13 +8,13 @@ export class EvidenceReasonsSection extends CaseDetailsPage {
 	// S E L E C T O R S
 
 	selectors = {
-		checkbox: '.govuk-checkboxes__input'
+		otherReasonBox: '.pins-add-another__item-input'
 	};
 
 	// E L E M E N T S
 
 	elements = {
-		checkbox: () => cy.get(this.selectors.checkbox).find('input')
+		otherReasonBox: () => cy.get(this.selectors.otherReasonBox)
 	};
 
 	// A C T I O N S
@@ -27,5 +27,10 @@ export class EvidenceReasonsSection extends CaseDetailsPage {
 		options.forEach((option) => {
 			this.chooseCheckboxByText(option);
 		});
+	}
+
+	selectOtherReason(reason) {
+		this.chooseCheckboxByText('Other reason');
+		this.elements.otherReasonBox().clear().type(reason);
 	}
 }

@@ -29,7 +29,7 @@ describe('manage docs on appellant case', () => {
 	const setupInquiry = (caseRef, inquiryDate) => {
 		// require case to be started as inquiry to access appellant POE evidence e.g.
 		cy.addInquiryViaApi(caseRef, inquiryDate);
-		happyPathHelper.assignCaseOfficer(caseRef);
+		cy.assignCaseOfficerViaApi(caseRef);
 		happyPathHelper.reviewAppellantCase(caseRef);
 		happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
 	};
@@ -211,7 +211,7 @@ describe('manage docs on appellant case', () => {
 					// require case to be started as inquiry to access appellant POE evidence
 					setupInquiry(caseRef, inquiryDate);
 
-					// find case and open inqiiry section
+					// find case and open inquiry section
 					cy.visit(urlPaths.appealsList);
 					listCasesPage.clickAppealByRef(caseRef);
 
@@ -232,8 +232,6 @@ describe('manage docs on appellant case', () => {
 					evidenceReasonsSection.verifyNumberOfSelectedReasons(0);
 
 					// select reason and proceed to check answers page
-					const reason = evidenceReasonsSection.getCheckBoxValue(0);
-					cy.log('** the reason is ', reason);
 					evidenceReasonsSection.selectEvidenceReasonOptions(['Contains links to web pages']);
 					evidenceReasonsSection.clickButtonByText('Continue');
 
@@ -241,6 +239,50 @@ describe('manage docs on appellant case', () => {
 					cyaSection.verifyAnswerUpdated({
 						field: cyaSection.cyaSectionFields.reasonForRejectAppellantPOE,
 						value: 'Contains links to web pages'
+					});
+				});
+			});
+		}
+	);
+
+	it(
+		'can mark appellant proof of evidence as incomplete and select other reason',
+		{ tags: tag.smoke },
+		() => {
+			cy.createCase({ caseType: 'W' }).then((caseRef) => {
+				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+					// require case to be started as inquiry to access appellant POE evidence
+					setupInquiry(caseRef, inquiryDate);
+
+					// find case and open inquiry section
+					cy.visit(urlPaths.appealsList);
+					listCasesPage.clickAppealByRef(caseRef);
+
+					// navigate to file upload view, upload file and verify uploaded
+					documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
+					fileUploaderSection.uploadFile(sampleFiles.document);
+					fileUploaderSection.verifyFilesUploaded([sampleFiles.document]);
+
+					//naviagte to review/confirm page
+					fileUploaderSection.clickButtonByText('Continue');
+					caseDetailsPage.clickButtonByText('Add appellant proof of evidence and witness');
+
+					// set review as incomplete and select reason
+					reviewEvidenceSection.selectEvidenceReviewOption('Mark as incomplete');
+					reviewEvidenceSection.clickButtonByText('Continue');
+
+					// check that that should not be any preselected options
+					evidenceReasonsSection.verifyNumberOfSelectedReasons(0);
+
+					// select other reason and proceed to check answers page
+					const otherReason = 'This is another reason';
+					evidenceReasonsSection.selectOtherReason(otherReason);
+					evidenceReasonsSection.clickButtonByText('Continue');
+
+					// check address is correct
+					cyaSection.verifyAnswerUpdated({
+						field: cyaSection.cyaSectionFields.reasonForRejectAppellantPOE,
+						value: otherReason
 					});
 				});
 			});
