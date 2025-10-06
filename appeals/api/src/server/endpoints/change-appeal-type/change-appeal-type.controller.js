@@ -61,9 +61,9 @@ export const requestChangeOfAppealType = async (req, res) => {
 export const requestResubmitAndMarkInvalid = async (req, res) => {
 	const appeal = req.appeal;
 	const { newAppealTypeId, newAppealTypeFinalDate, appellantCaseId } = req.body;
-	const newAppealType = (
-		req.appealTypes.find((appealType) => appealType.id === Number(newAppealTypeId))?.type || ''
-	).toLowerCase();
+	const newAppealType =
+		req.appealTypes.find((appealType) => appealType.id === Number(newAppealTypeId))
+			?.changeAppealType || '';
 
 	const notifyClient = req.notifyClient;
 	const siteAddress = appeal.address

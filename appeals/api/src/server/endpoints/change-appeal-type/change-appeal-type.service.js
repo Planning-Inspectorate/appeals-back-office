@@ -24,6 +24,7 @@ import {
 import { addDays, setTimeInTimeZone } from '@pins/appeals/utils/business-days.js';
 import formatDate from '@pins/appeals/utils/date-formatter.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import { formatAppealTypeForNotify } from './change-appeal-type.util.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('express').Request} Request */
@@ -152,12 +153,12 @@ const resubmitAndMarkInvalid = async (
 	const teamEmail = await getTeamEmailFromAppealId(appeal.id);
 	const recipientEmail = appeal.agent?.email || appeal.appellant?.email;
 	const personalisation = {
-		existing_appeal_type: appeal.appealType?.type.toLowerCase() || '',
+		existing_appeal_type: formatAppealTypeForNotify(appeal.appealType?.changeAppealType),
 		appeal_reference_number: appeal.reference,
 		lpa_reference: appeal.applicationReference || '',
 		site_address: siteAddress,
 		due_date: formatDate(new Date(dueDate || ''), false),
-		appeal_type: newAppealType.toLowerCase() || '',
+		appeal_type: formatAppealTypeForNotify(newAppealType),
 		team_email_address: teamEmail
 	};
 

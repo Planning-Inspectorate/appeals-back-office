@@ -25,7 +25,8 @@ const appealTypes = [
 		type: 'Householder',
 		key: 'D',
 		processCode: 'HAS',
-		enabled: true
+		enabled: true,
+		changeAppealType: 'Householder'
 	},
 	{
 		id: 2,
@@ -109,7 +110,8 @@ const appealTypes = [
 		type: 'CAS planning',
 		key: 'ZP',
 		processCode: null,
-		enabled: false
+		enabled: false,
+		changeAppealType: 'Commercial planning (CAS)'
 	}
 ];
 const appealsWithValidStatus = [
@@ -349,8 +351,8 @@ describe('appeal resubmit mark invalid type routes', () => {
 					appeal_reference_number: householdAppeal.reference,
 					lpa_reference: householdAppeal.applicationReference,
 					site_address: `${householdAppeal.address.addressLine1}, ${householdAppeal.address.addressLine2}, ${householdAppeal.address.addressTown}, ${householdAppeal.address.addressCounty}, ${householdAppeal.address.postcode}, ${householdAppeal.address.addressCountry}`,
-					existing_appeal_type: householdAppeal.appealType.type.toLowerCase(),
-					appeal_type: 'cas planning',
+					existing_appeal_type: `householder appeal`,
+					appeal_type: 'commercial planning (CAS) appeal',
 					due_date: '5 February 3000',
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				},
