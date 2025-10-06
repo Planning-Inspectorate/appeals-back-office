@@ -14,12 +14,13 @@ const isNumberArray = (values) => values.every((value) => typeof value === 'numb
 
 /**
  * @param {string} parameterName
+ * @param {boolean} isRequired
  * @param {(() => void) | undefined} customFn
  * @returns {ValidationChain}
  */
-const validateNumberArrayParameter = (parameterName, customFn = undefined) => {
+const validateNumberArrayParameter = (parameterName, isRequired = false, customFn = undefined) => {
 	const validator = body(parameterName)
-		.optional()
+		.optional(!isRequired)
 		.isArray()
 		.withMessage(ERROR_MUST_BE_ARRAY_OF_NUMBERS)
 		.custom((values) => isNumberArray(values))
