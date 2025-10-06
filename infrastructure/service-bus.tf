@@ -41,7 +41,7 @@ resource "azurerm_servicebus_namespace" "main" {
 }
 
 resource "azurerm_private_endpoint" "sb_main" {
-  count = var.service_bus_config.sku == "Premium" && var.service_bus_shared == false ? 1 : 0
+  count = var.service_bus_config.sku == "Premium" && !var.service_bus_shared.use_sb_test ? 1 : 0
 
   name                = "pins-pe-${local.service_name}-sb-${var.environment}"
   resource_group_name = azurerm_resource_group.primary.name
