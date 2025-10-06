@@ -18,6 +18,7 @@ import {
 	AUDIT_TRAIL_APPEAL_TYPE_UPDATED,
 	AUDIT_TRAIL_HORIZON_REFERENCE_UPDATED,
 	AUDIT_TRAIL_SUBMISSION_INVALID,
+	CHANGE_APPEAL_TYPE_INVALID_REASON,
 	VALIDATION_OUTCOME_INVALID
 } from '@pins/appeals/constants/support.js';
 import { addDays, setTimeInTimeZone } from '@pins/appeals/utils/business-days.js';
@@ -115,7 +116,7 @@ const resubmitAndMarkInvalid = async (
 
 	const invalidReason = await commonRepository.getLookupListValueByName(
 		'appellantCaseInvalidReason',
-		'Other reason'
+		CHANGE_APPEAL_TYPE_INVALID_REASON
 	);
 
 	Promise.all([
@@ -133,7 +134,7 @@ const resubmitAndMarkInvalid = async (
 			appealId,
 			appellantCaseId,
 			validationOutcomeId: invalidOutcome.id,
-			invalidReasons: [{ id: invalidReason.id, text: ['Wrong appeal type, resubmission required'] }]
+			invalidReasons: [{ id: invalidReason.id, text: [] }]
 		}),
 		await transitionState(appealId, azureAdUserId, VALIDATION_OUTCOME_INVALID)
 	]);

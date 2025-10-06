@@ -334,6 +334,11 @@ export const appellantCaseInvalidReasons = [
 		id: 4,
 		name: 'Other reason',
 		hasText: true
+	},
+	{
+		id: 5,
+		name: 'Wrong appeal type',
+		hasText: false
 	}
 ];
 
