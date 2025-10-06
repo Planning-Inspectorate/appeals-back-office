@@ -14,6 +14,8 @@ export const CASE_OUTCOME_DISMISSED = 'dismissed';
 export const CASE_OUTCOME_SPLIT_DECISION = 'split decision';
 export const CASE_OUTCOME_INVALID = 'invalid';
 
+export const CHANGE_APPEAL_TYPE_INVALID_REASON = 'Wrong appeal type';
+
 export const DECISION_TYPE_INSPECTOR = 'inspector-decision';
 export const DECISION_TYPE_APPELLANT_COSTS = 'appellant-costs-decision';
 export const DECISION_TYPE_LPA_COSTS = 'lpa-costs-decision';

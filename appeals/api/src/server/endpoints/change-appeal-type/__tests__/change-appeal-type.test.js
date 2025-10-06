@@ -144,9 +144,9 @@ const appealsWithInvalidStatus = [
 	}
 ];
 const mockInvalidReason = {
-	id: 4,
-	name: 'Other reason',
-	hasText: true
+	id: 5,
+	name: 'Wrong appeal type',
+	hasText: false
 };
 
 describe('appeal change type resubmit routes', () => {
@@ -338,18 +338,6 @@ describe('appeal resubmit mark invalid type routes', () => {
 				data: {
 					appellantCaseValidationOutcomeId: appellantCaseValidationOutcomes[0].id
 				}
-			});
-
-			expect(databaseConnector.appellantCaseInvalidReasonText.deleteMany).toHaveBeenCalled();
-
-			expect(databaseConnector.appellantCaseInvalidReasonText.createMany).toHaveBeenCalledWith({
-				data: [
-					{
-						appellantCaseId: 1,
-						appellantCaseInvalidReasonId: mockInvalidReason.id,
-						text: 'Wrong appeal type, resubmission required'
-					}
-				]
 			});
 
 			expect(mockNotifySend).toHaveBeenCalledTimes(1);

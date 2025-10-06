@@ -5,6 +5,7 @@ import { objectContainsAllKeys } from '#lib/object-utilities.js';
 import { addNotificationBannerToSession } from '#lib/session-utilities.js';
 import { capitalizeFirstLetter } from '#lib/string-utilities.js';
 import { getBackLinkUrlFromQuery, stripQueryString } from '#lib/url-utilities.js';
+import { CHANGE_APPEAL_TYPE_INVALID_REASON } from '@pins/appeals/constants/support.js';
 import { capitalize } from 'lodash-es';
 import {
 	postChangeDocumentDetails,
@@ -94,14 +95,19 @@ const renderCheckAndConfirm = async (request, response) => {
 				request.apiClient,
 				webAppellantCaseReviewOutcome.validationOutcome
 			);
-		if (!reasonOptions) {
+
+		const filteredReasonOptions = reasonOptions.filter(
+			(reason) => reason.name !== CHANGE_APPEAL_TYPE_INVALID_REASON
+		);
+
+		if (!filteredReasonOptions) {
 			throw new Error('error retrieving invalid reason options');
 		}
 
 		const mappedPageContent = checkAndConfirmPage(
 			currentAppeal.appealId,
 			currentAppeal.appealReference,
-			reasonOptions,
+			filteredReasonOptions,
 			webAppellantCaseReviewOutcome.validationOutcome,
 			request.session,
 			webAppellantCaseReviewOutcome.reasons,
