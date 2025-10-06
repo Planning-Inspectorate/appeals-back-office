@@ -35,7 +35,7 @@ describe('manage docs on appellant case', () => {
 	};
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
-	/*it('upload new version of document on appellant case', { tags: tag.smoke }, () => {
+	it('upload new version of document on appellant case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseRef) => {
 			happyPathHelper.uploadDocAppellantCase(caseRef);
 			cy.reloadUntilVirusCheckComplete();
@@ -200,7 +200,7 @@ describe('manage docs on appellant case', () => {
 				});
 			});
 		}
-	);*/
+	);
 
 	it(
 		'can mark appellant proof of evidence as incomplete and select reason',
@@ -232,6 +232,8 @@ describe('manage docs on appellant case', () => {
 					evidenceReasonsSection.verifyNumberOfSelectedReasons(0);
 
 					// select reason and proceed to check answers page
+					const reason = evidenceReasonsSection.getCheckBoxValue(0);
+					cy.log('** the reason is ', reason);
 					evidenceReasonsSection.selectEvidenceReasonOptions(['Contains links to web pages']);
 					evidenceReasonsSection.clickButtonByText('Continue');
 
