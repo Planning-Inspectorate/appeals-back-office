@@ -4,7 +4,7 @@ exports[`site-visit GET /site-visit/delete should render the manage visit page 1
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
-            <h1 class="govuk-heading-l">Cancel the site visit</h1>
+            <h1 class="govuk-heading-l">Confirm that you want to cancel the site visit</h1>
         </div>
     </div>
     <div class="govuk-grid-row">
