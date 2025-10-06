@@ -34,7 +34,9 @@ export function mapRepresentationDocumentSummaryActionLink(
 		if (typeof representationStatus === 'string') {
 			return [
 				APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW,
-				APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+				!['appellant-proofs-evidence', 'lpa-proofs-evidence'].includes(representationType)
+					? APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+					: ''
 			].includes(representationStatus);
 		}
 

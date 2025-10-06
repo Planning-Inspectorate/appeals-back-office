@@ -4151,9 +4151,9 @@ export const appealDataToGetRequiredActions = {
 		appealType: 'Planning listed building and conservation area appeal',
 		numberOfResidencesNetChange: null
 	},
-	reviewLpaProofOfEvidence: {
+	reviewLpaProofOfEvidenceComplete: {
 		...baseAppealDataToGetRequiredActions,
-		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
 		documentationSummary: {
 			lpaProofOfEvidence: {
 				status: DOCUMENT_STATUS_RECEIVED,
@@ -4167,14 +4167,46 @@ export const appealDataToGetRequiredActions = {
 			}
 		}
 	},
-	reviewAppellantProofOfEvidence: {
+	reviewAppellantProofOfEvidenceComplete: {
 		...baseAppealDataToGetRequiredActions,
-		appealStatus: APPEAL_CASE_STATUS.STATEMENTS,
+		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
 		documentationSummary: {
 			lpaProofOfEvidence: {
 				status: DOCUMENT_STATUS_RECEIVED,
 				receivedAt: pastDate,
 				representationStatus: APPEAL_REPRESENTATION_STATUS.VALID
+			},
+			appellantProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			}
+		}
+	},
+	reviewLpaProofOfEvidenceIncomplete: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		documentationSummary: {
+			lpaProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.AWAITING_REVIEW
+			},
+			appellantProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+			}
+		}
+	},
+	reviewAppellantProofOfEvidenceIncomplete: {
+		...baseAppealDataToGetRequiredActions,
+		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		documentationSummary: {
+			lpaProofOfEvidence: {
+				status: DOCUMENT_STATUS_RECEIVED,
+				receivedAt: pastDate,
+				representationStatus: APPEAL_REPRESENTATION_STATUS.INCOMPLETE
 			},
 			appellantProofOfEvidence: {
 				status: DOCUMENT_STATUS_RECEIVED,
