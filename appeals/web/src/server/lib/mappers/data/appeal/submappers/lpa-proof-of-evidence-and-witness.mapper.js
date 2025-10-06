@@ -4,11 +4,11 @@ import {
 	mapAddRepresentationSummaryActionLink,
 	mapRepresentationDocumentSummaryActionLink
 } from '#lib/representation-utilities.js';
-import { APPEAL_PROOF_OF_EVIDENCE_STATUS } from '@pins/appeals/constants/common.js';
 import {
-	APPEAL_CASE_PROCEDURE,
+	APPEAL_PROOF_OF_EVIDENCE_STATUS,
 	APPEAL_REPRESENTATION_STATUS
-} from '@planning-inspectorate/data-model';
+} from '@pins/appeals/constants/common.js';
+import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
 import { capitalize } from 'lodash-es';
 
 /** @type {import('../mapper.js').SubMapper} */
@@ -25,7 +25,7 @@ export const mapLPAProofOfEvidence = ({ appealDetails, currentRoute, request }) 
 
 	if (representationStatus?.toLowerCase() === APPEAL_REPRESENTATION_STATUS.VALID) {
 		statusText = 'Completed';
-	} else if (representationStatus?.toLowerCase() === 'incomplete') {
+	} else if (representationStatus?.toLowerCase() === APPEAL_REPRESENTATION_STATUS.INCOMPLETE) {
 		statusText = 'Incomplete';
 	} else {
 		statusText =

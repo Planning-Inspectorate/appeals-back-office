@@ -171,34 +171,6 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 				lpaStatementRepresentationStatus === APPEAL_REPRESENTATION_STATUS.INCOMPLETE ||
 				(ipCommentsCounts?.valid && ipCommentsCounts?.valid > 0);
 
-			//TODO: This POE banner management should be moved into the POE state section once it is ready
-			const lpaProofOfEvidenceCompleted =
-				appealDetails.documentationSummary.lpaProofOfEvidence?.representationStatus ===
-				APPEAL_REPRESENTATION_STATUS.VALID;
-			const appellantProofOfEvidenceCompleted =
-				appealDetails.documentationSummary.appellantProofOfEvidence?.representationStatus ===
-				APPEAL_REPRESENTATION_STATUS.VALID;
-			const lpaProofOfEvidenceReceived =
-				appealDetails.documentationSummary.lpaProofOfEvidence?.status ===
-				APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED;
-			const appellantProofOfEvidenceReceived =
-				appealDetails.documentationSummary.appellantProofOfEvidence?.status ===
-				APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED;
-
-			if (
-				lpaProofOfEvidenceCompleted &&
-				!appellantProofOfEvidenceCompleted &&
-				appellantProofOfEvidenceReceived
-			) {
-				actions.push('reviewAppellantProofOfEvidence');
-			} else if (
-				!lpaProofOfEvidenceCompleted &&
-				appellantProofOfEvidenceCompleted &&
-				lpaProofOfEvidenceReceived
-			) {
-				actions.push('reviewLpaProofOfEvidence');
-			}
-
 			if (
 				ipCommentsDueDatePassed &&
 				lpaStatementDueDatePassed &&
@@ -310,6 +282,32 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 		!isChildAppeal(appealDetails)
 	) {
 		actions.push('addResidencesNetChange');
+	}
+
+	//TODO: This POE banner management should be moved into the POE state section once it is ready
+	const lpaProofOfEvidenceDone = [
+		APPEAL_REPRESENTATION_STATUS.VALID,
+		APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+	].includes(appealDetails.documentationSummary?.lpaProofOfEvidence?.representationStatus);
+	const appellantProofOfEvidenceDone = [
+		APPEAL_REPRESENTATION_STATUS.VALID,
+		APPEAL_REPRESENTATION_STATUS.INCOMPLETE
+	].includes(appealDetails.documentationSummary?.appellantProofOfEvidence?.representationStatus);
+	const lpaProofOfEvidenceReceived =
+		appealDetails.documentationSummary?.lpaProofOfEvidence?.status ===
+		APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED;
+	const appellantProofOfEvidenceReceived =
+		appealDetails.documentationSummary?.appellantProofOfEvidence?.status ===
+		APPEAL_PROOF_OF_EVIDENCE_STATUS.RECEIVED;
+
+	if (lpaProofOfEvidenceDone && !appellantProofOfEvidenceDone && appellantProofOfEvidenceReceived) {
+		actions.push('reviewAppellantProofOfEvidence');
+	} else if (
+		!lpaProofOfEvidenceDone &&
+		appellantProofOfEvidenceDone &&
+		lpaProofOfEvidenceReceived
+	) {
+		actions.push('reviewLpaProofOfEvidence');
 	}
 
 	return actions;
