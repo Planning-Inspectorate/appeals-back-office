@@ -364,7 +364,7 @@ exports[`change-appeal-type GET /change-appeal-type/appeal-type should render th
 exports[`change-appeal-type GET /change-appeal-type/change-appeal-final-date should render the final date page 1`] = `
 "<main class="govuk-main-wrapper" id="main-content">
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -828,7 +828,7 @@ exports[`change-appeal-type POST /change-appeal-type/change-appeal-final-date sh
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -899,7 +899,7 @@ exports[`change-appeal-type POST /change-appeal-type/change-appeal-final-date sh
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -970,7 +970,7 @@ exports[`change-appeal-type POST /change-appeal-type/change-appeal-final-date sh
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1042,7 +1042,7 @@ exports[`change-appeal-type POST /change-appeal-type/change-appeal-final-date sh
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1114,7 +1114,7 @@ exports[`change-appeal-type POST /change-appeal-type/change-appeal-final-date sh
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1276,7 +1276,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1347,7 +1347,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
@@ -1418,7 +1418,7 @@ exports[`change-appeal-type should re-render the final date page with an error m
         </div>
     </div>
     <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - change appeal type</span>
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062 - update appeal type</span>
         </div>
     </div>
     <div class="govuk-grid-row">
