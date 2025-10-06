@@ -1,4 +1,4 @@
-import { getTimetableTypes } from '#appeals/appeal-details/change-appeal-procedure-type/change-appeal-procedure-timetable/change-procedure-timetable.mapper.js';
+import { getTimetableTypes } from '#appeals/appeal-details/change-procedure-type/change-procedure-timetable/change-procedure-timetable.mapper.js';
 import { getTimetableTypeText } from '#appeals/appeal-details/timetable/timetable.mapper.js';
 import { addressToString } from '#lib/address-formatter.js';
 import {

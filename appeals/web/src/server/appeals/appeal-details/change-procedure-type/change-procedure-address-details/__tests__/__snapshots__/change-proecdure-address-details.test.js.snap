@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Change to inquiry address details GET /change-appeal-procedure-type/inquiry/address-details should match the snapshot 1`] = `
+"<main class="govuk-main-wrapper" id="main-content">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds"><span class="govuk-caption-l">Appeal 351062</span>
+            <h1 class="govuk-heading-l">Inquiry address</h1>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-full">
+                    <form method="POST" novalidate="novalidate">
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="address-line-1">Address line 1</label>
+                            <input class="govuk-input" id="address-line-1" name="addressLine1"
+                            type="text" value="">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="address-line-2">Address line 2 (optional)</label>
+                            <input class="govuk-input" id="address-line-2"
+                            name="addressLine2" type="text" value="">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="town">Town or city</label>
+                            <input class="govuk-input govuk-input govuk-input--width-20"
+                            id="town" name="town" type="text" value="">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="county">County (optional)</label>
+                            <input class="govuk-input govuk-input govuk-input--width-20"
+                            id="county" name="county" type="text" value="">
+                        </div>
+                        <div class="govuk-form-group">
+                            <label class="govuk-label" for="post-code">Postcode</label>
+                            <input class="govuk-input govuk-input govuk-input--width-10"
+                            id="post-code" name="postCode" type="text" value="">
+                        </div>
+                        <div class="govuk-form-group">
+                            <input class="govuk-input" id="operation-type" name="operationType" type="hidden"
+                            value="">
+                        </div>
+                        <button type="submit" data-prevent-double-click="true" class="govuk-button"
+                        data-module="govuk-button">Continue</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>"
+`;
+
+exports[`Change to inquiry address details POST /change-appeal-procedure-type/inquiry/address-details should re-render the page if addressLine1 is an empty string 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#address-line-1">Enter address line 1</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`Change to inquiry address details POST /change-appeal-procedure-type/inquiry/address-details should re-render the page if addressLine1 is null 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#address-line-1">Enter address line 1</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`Change to inquiry address details POST /change-appeal-procedure-type/inquiry/address-details should re-render the page if the postcode is an empty string 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#post-code">Enter postcode</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`Change to inquiry address details POST /change-appeal-procedure-type/inquiry/address-details should re-render the page if the postcode is invalid 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#post-code">Enter a full UK postcode</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`Change to inquiry address details POST /change-appeal-procedure-type/inquiry/address-details should re-render the page if the postcode is null 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#post-code">Enter postcode</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`Change to inquiry address details POST /change-appeal-procedure-type/inquiry/address-details should re-render the page if town is an empty string 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#town">Enter town or city</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
+
+exports[`Change to inquiry address details POST /change-appeal-procedure-type/inquiry/address-details should re-render the page if town is null 1`] = `
+"<div class="govuk-error-summary" data-module="govuk-error-summary">
+    <div role="alert">
+        <h2 class="govuk-error-summary__title"> There is a problem</h2>
+        <div class="govuk-error-summary__body">
+            <ul class="govuk-list govuk-error-summary__list">
+                <li><a href="#town">Enter town or city</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>"
+`;
