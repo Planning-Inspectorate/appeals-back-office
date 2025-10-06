@@ -1,5 +1,6 @@
 import { isFeatureActive } from '#common/feature-flags.js';
 import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
+import { generateCasAdvertLpaQuestionnaireComponents } from './cas-advert.js';
 import { generateCasPlanningLpaQuestionnaireComponents } from './cas-planning.js';
 import { generateHASLpaQuestionnaireComponents } from './has.js';
 import { generateS20LpaQuestionnaireComponents } from './s20.js';
@@ -32,7 +33,7 @@ export function generateCaseTypeSpecificComponents(
 			}
 		case APPEAL_TYPE.CAS_ADVERTISEMENT:
 			if (isFeatureActive(FEATURE_FLAG_NAMES.CAS_ADVERT)) {
-				return generateHASLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
+				return generateCasAdvertLpaQuestionnaireComponents(mappedLPAQData, mappedAppealDetails);
 			} else {
 				throw new Error('Feature flag inactive for CAS');
 			}
