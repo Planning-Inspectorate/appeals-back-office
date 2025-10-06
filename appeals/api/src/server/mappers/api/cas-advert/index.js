@@ -1,5 +1,7 @@
 import { mapCasAdvertAppellantCase } from './map-appellant-case.js';
+import { mapCasAdvertLpaQuestionnaire } from './map-lpa-questionnaire.js';
 
 export const apiCasAdvertMappers = {
-	appellantCase: mapCasAdvertAppellantCase
+	appellantCase: mapCasAdvertAppellantCase,
+	lpaQuestionnaire: mapCasAdvertLpaQuestionnaire
 };
