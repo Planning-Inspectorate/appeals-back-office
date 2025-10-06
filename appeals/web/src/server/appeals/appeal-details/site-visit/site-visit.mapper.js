@@ -618,7 +618,7 @@ export const cancelSiteVisitPage = (appealDetails, emailTemplate) => {
 		title: 'Confirm that you want to cancel the site visit',
 		backLinkUrl: `/appeals-service/appeal-details/${appealDetails.appealId}`,
 		preHeading: `Appeal ${appealShortReference(appealDetails.appealReference)}`,
-		heading: 'Cancel the site visit',
+		heading: 'Confirm that you want to cancel the site visit',
 		submitButtonProperties: {},
 		submitButtonText: 'Cancel site visit',
 		postPageComponents: [
