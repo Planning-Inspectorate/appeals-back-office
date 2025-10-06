@@ -9,7 +9,7 @@ export const getChangeInquiryAddressKnown = async (request, response) => {
 		request,
 		response,
 		'change',
-		request.session.setUpInquiry || {}
+		request.session.changeProcedureType || {}
 	);
 };
 
@@ -41,7 +41,7 @@ export const postChangeInquiryAddressKnown = async (request, response) => {
 		return renderChangeInquiryAddressKnown(request, response, 'change');
 	}
 
-	const { appealId, procedureType } = request.currentAppeal;
+	const { appealId, procedureType } = request.params;
 
 	if (request.body.addressKnown === 'yes') {
 		return response.redirect(

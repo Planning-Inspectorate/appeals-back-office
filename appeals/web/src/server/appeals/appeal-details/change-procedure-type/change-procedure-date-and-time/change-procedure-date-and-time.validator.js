@@ -35,7 +35,7 @@ export const validateEventDateTime = () => async (req, res, next) => {
 		const timeField = 'event-time';
 
 		const dateLabel = `${capitalize(procedureType)} date`;
-		const timeLabel = `${capitalize(procedureType)} time`;
+		const timeLabel = `${procedureType} time`;
 
 		const chains = [
 			createDateInputFieldsValidator(dateField, dateLabel),
