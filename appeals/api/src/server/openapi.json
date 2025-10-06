@@ -6048,6 +6048,48 @@
 				}
 			}
 		},
+		"/appeals/delete-appeals": {
+			"delete": {
+				"tags": ["Test Utilities"],
+				"description": "A test endpoint to delete one or many appeals and their related data",
+				"parameters": [
+					{
+						"name": "azureAdUserId",
+						"in": "header",
+						"required": true,
+						"example": "434bff4e-8191-4ce0-9a0a-91e5d6cdd882",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					},
+					"400": {
+						"description": "Bad Request"
+					}
+				},
+				"requestBody": {
+					"in": "body",
+					"description": "Appeal IDs to delete",
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DeleteAppealsRequest"
+							}
+						},
+						"application/xml": {
+							"schema": {
+								"$ref": "#/components/schemas/DeleteAppealsRequest"
+							}
+						}
+					}
+				}
+			}
+		},
 		"/appeals/linkable-appeal/{appealReference}/{linkableType}": {
 			"get": {
 				"tags": ["Linkable appeals"],
@@ -12819,6 +12861,17 @@
 					"teamId": {
 						"type": "string",
 						"example": "1"
+					}
+				}
+			},
+			"DeleteAppealsRequest": {
+				"type": "object",
+				"properties": {
+					"appealIds": {
+						"type": "array",
+						"items": {
+							"type": "number"
+						}
 					}
 				}
 			},

@@ -1,5 +1,6 @@
 import { updateCompletedEvents } from '#endpoints/appeals/appeals.service.js';
 import { getAppealNotifications } from '#repositories/appeal-notification.repository.js';
+import appealRepository from '#repositories/appeal.repository.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { APPEAL_START_RANGE } from '@pins/appeals/constants/common.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
@@ -157,4 +158,15 @@ export const simulateHearingElapsed = async (req, res) => {
 	}
 
 	return res.send(false);
+};
+
+/**
+ * @param {Request} req
+ * @param {Response} res
+ * @returns {Promise<Response>}
+ * */
+export const deleteAppeals = async (req, res) => {
+	const { appealIds } = req.body;
+	await appealRepository.deleteAppealsByIds(appealIds);
+	return res.send(true);
 };

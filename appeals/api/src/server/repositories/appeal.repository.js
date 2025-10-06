@@ -3,6 +3,10 @@ import { isFeatureActive } from '#utils/feature-flags.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
+import {
+	deleteAppealsInBatches,
+	getAppealReferencesByIds
+} from './delete-appeal-data/delete-appeal-data.js';
 
 /** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals.api').Schema.AppealType} AppealType */
@@ -554,6 +558,21 @@ const setAssignedTeamId = (id, assignedTeamId) => {
 	});
 };
 
+/**
+ * @param {number[]} appealIds
+ * @returns {Promise<void>}
+ */
+const deleteAppealsByIds = async (appealIds) => {
+	const appeals = await getAppealReferencesByIds(appealIds);
+
+	if (appeals.length === 0) {
+		console.log('Nothing to delete.');
+		return;
+	}
+
+	await deleteAppealsInBatches(appeals);
+};
+
 export default {
 	getLinkedAppeals,
 	getLinkedAppealsById,
@@ -570,5 +589,6 @@ export default {
 	unlinkAppeal,
 	getAppealsByIds,
 	getAppealsWithCompletedEvents,
-	setAssignedTeamId
+	setAssignedTeamId,
+	deleteAppealsByIds
 };

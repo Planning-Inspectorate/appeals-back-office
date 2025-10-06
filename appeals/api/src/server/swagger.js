@@ -1786,6 +1786,17 @@ export const spec = {
 				}
 			}
 		},
+		DeleteAppealsRequest: {
+			type: 'object',
+			properties: {
+				appealIds: {
+					type: 'array',
+					items: {
+						type: 'number'
+					}
+				}
+			}
+		},
 		...ApiDefinitions
 	},
 	components: {}

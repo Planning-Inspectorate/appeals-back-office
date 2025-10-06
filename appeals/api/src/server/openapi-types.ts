@@ -2933,6 +2933,10 @@ export interface UpdateAsssignedTeamRequest {
 	teamId?: string;
 }
 
+export interface DeleteAppealsRequest {
+	appealIds?: number[];
+}
+
 export interface Address {
 	addressId?: number;
 	addressLine1: string;
