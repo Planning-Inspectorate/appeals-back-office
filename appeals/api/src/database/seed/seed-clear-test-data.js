@@ -2,6 +2,7 @@ import {
 	deleteAppealsInBatches,
 	getAppealsFromLpaCodes
 } from '#repositories/delete-appeal-data/delete-appeal-data.js';
+import logger from '#utils/logger.js';
 import { localPlanningDepartmentList } from './LPAs/training.js';
 
 /**
@@ -13,7 +14,7 @@ async function deleteTestRecords() {
 
 	const appeals = await getAppealsFromLpaCodes(lpaCodes);
 	if (appeals.length === 0) {
-		console.log('Nothing to delete.');
+		logger.info('Nothing to delete.');
 		return;
 	}
 

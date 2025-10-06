@@ -1,6 +1,7 @@
 import { databaseConnector } from '#utils/database-connector.js';
 import { isFeatureActive } from '#utils/feature-flags.js';
 import { hasValueOrIsNull } from '#utils/has-value-or-null.js';
+import logger from '#utils/logger.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import {
@@ -566,7 +567,7 @@ const deleteAppealsByIds = async (appealIds) => {
 	const appeals = await getAppealReferencesByIds(appealIds);
 
 	if (appeals.length === 0) {
-		console.log('Nothing to delete.');
+		logger.info('Nothing to delete.');
 		return;
 	}
 
