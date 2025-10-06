@@ -156,7 +156,8 @@ export const householdAppeal = {
 		id: 2,
 		key: APPEAL_TYPE_SHORTHAND_HAS,
 		processCode: 'HAS',
-		type: 'Householder'
+		type: 'Householder',
+		changeAppealType: 'Householder'
 	},
 	appellantCase: {
 		id: 1,
