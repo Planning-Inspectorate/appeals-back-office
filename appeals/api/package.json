@@ -95,7 +95,7 @@
 		"stream-json": "^1.9.1",
 		"supertest": "7.0.0",
 		"swagger-autogen": "^2.21.4",
-		"swagger-typescript-api": "^13.0.5"
+		"swagger-typescript-api": "^13.2.14"
 	},
 	"imports": {
 		"#db-client": "./src/server/utils/db-client/index.js",
