@@ -108,11 +108,11 @@ describe('Start case', () => {
 			happyPathHelper.viewCaseDetails(caseRef);
 
 			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(ref);
+			cy.assignCaseOfficerViaApi(caseRef);
 
 			// Validate Appeal Via API
 			cy.getBusinessActualDate(new Date(), 0).then((date) => {
-				cy.updateAppealDetailsViaApi(ref, { validationOutcome: 'valid', validAt: date });
+				cy.updateAppealDetailsViaApi(caseRef, { validationOutcome: 'valid', validAt: date });
 			});
 			cy.reload();
 
