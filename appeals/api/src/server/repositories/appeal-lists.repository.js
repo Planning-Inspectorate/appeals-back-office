@@ -279,11 +279,9 @@ const buildAllAppealsWhereClause = (
 
 /**
  * @param {string} userId
- * @param {number} pageNumber
- * @param {number} pageSize
  * @param {string} [status]
  */
-const getUserAppeals = (userId, pageNumber, pageSize, status) => {
+const getUserAppeals = (userId, status) => {
 	const where = {
 		appealType: { key: { in: getEnabledAppealTypes() } },
 		AND: [
@@ -372,9 +370,10 @@ const getUserAppeals = (userId, pageNumber, pageSize, status) => {
 				},
 				hearing: true,
 				inquiry: true
-			},
-			skip: getSkipValue(pageNumber, pageSize),
-			take: pageSize
+			}
+			// temporary measure to get all the appeals for a user and paginate them AFTER sorting instead
+			// skip: getSkipValue(pageNumber, pageSize),
+			// take: pageSize
 		}),
 		getAppealsStatusesInPersonalList(userId)
 	]);
