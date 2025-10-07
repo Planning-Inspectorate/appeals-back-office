@@ -80,6 +80,36 @@ describe('costs-appellant-decision.mapper', () => {
 				}
 			});
 		});
+
+		it('when the appeal is withdrawn', () => {
+			data.appealDetails.completedStateList = [];
+			data.appealDetails.appealStatus = 'withdrawn';
+			const result = mapCostsAppellantDecision(data);
+			expect(result).toEqual({
+				id: 'appellant-costs-decision',
+				display: {
+					summaryListItem: {
+						actions: {
+							items: [
+								{
+									attributes: { 'data-cy': 'issue-appellant-costs-decision' },
+									href: '/test/issue-decision/issue-appellant-costs-decision-letter-upload?backUrl=%2Foriginal-url',
+									text: 'Issue',
+									visuallyHiddenText: 'Appellant costs decision'
+								}
+							]
+						},
+						classes: 'costs-appellant-decision',
+						key: {
+							text: 'Appellant costs decision'
+						},
+						value: {
+							text: 'Not issued'
+						}
+					}
+				}
+			});
+		});
 	});
 
 	describe('should return an empty display object', () => {
@@ -89,7 +119,7 @@ describe('costs-appellant-decision.mapper', () => {
 			expect(result).toEqual({ id: 'appellant-costs-decision', display: {} });
 		});
 
-		it('when the appeal has not yet moved to the issue decision stage', () => {
+		it('when the appeal has not yet moved to the issue decision stage and is not withdrawn', () => {
 			data.appealDetails.completedStateList = ['ready_to_start', 'lpa_questionnaire'];
 			const result = mapCostsAppellantDecision(data);
 			expect(result).toEqual({ id: 'appellant-costs-decision', display: {} });

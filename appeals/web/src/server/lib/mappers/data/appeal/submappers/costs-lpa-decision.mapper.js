@@ -14,17 +14,23 @@ export const mapCostsLpaDecision = ({ appealDetails, currentRoute, session, requ
 	const lpaApplicationCount = lpaApplicationFolder?.documents?.length || 0;
 	const lpaWithdrawalCount = lpaWithdrawalFolder?.documents?.length || 0;
 
+	const isAppealWithdrawn = appealDetails.appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
+	const isAppealPassedAwaitingEvent = isStatePassed(
+		appealDetails,
+		APPEAL_CASE_STATUS.AWAITING_EVENT
+	);
+	const isAppealInRequiredState = isAppealWithdrawn || isAppealPassedAwaitingEvent;
+
 	if (
 		isChildAppeal(appealDetails) ||
-		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) ||
+		!isAppealInRequiredState ||
 		lpaApplicationCount <= lpaWithdrawalCount
 	) {
 		return { id: 'lpa-costs-decision', display: {} };
 	}
 
 	const editable =
-		isStatePassed(appealDetails, APPEAL_CASE_STATUS.AWAITING_EVENT) &&
-		userHasPermission(permissionNames.setCaseOutcome, session);
+		isAppealInRequiredState && userHasPermission(permissionNames.setCaseOutcome, session);
 
 	const isIssued = lpaDecisionFolder?.documents?.length;
 
