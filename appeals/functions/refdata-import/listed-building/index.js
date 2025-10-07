@@ -4,22 +4,22 @@ import api from './back-office-api-client.js';
 
 /**
  *
- * @param {import('@azure/functions').Context} context
- * @param {*} msg
+ * @type {import('@azure/functions').ServiceBusTopicHandler}
  */
-export default async function (context, msg) {
+export default async function (msg, context) {
 	context.log('Listed Building import command', msg);
 
-	const applicationProperties = context?.bindingData?.applicationProperties;
+	const applicationProperties = context?.triggerMetadata?.applicationProperties;
 
 	const hasType =
 		Boolean(applicationProperties) &&
 		Object.prototype.hasOwnProperty.call(applicationProperties, 'type');
 	if (!hasType) {
-		context.log.warn('Ignoring invalid message, no type', msg);
-		return;
+		context.warn('Ignoring invalid message, no type', msg);
+		return {};
 	}
 
+	// @ts-ignore
 	const type = applicationProperties?.type;
 
 	try {
@@ -28,17 +28,20 @@ export default async function (context, msg) {
 		}
 
 		if (type === EventType.Delete) {
+			// @ts-ignore
 			await api.deleteRecord(msg['reference']);
 		}
 	} catch (e) {
 		if (e instanceof HTTPError) {
-			context.log.error('Error modifying listed building data', {
+			context.error('Error modifying listed building data', {
 				message: e.message,
 				body: e.response?.body
 			});
 		} else {
-			context.log.error('Error modifying listed building data', e);
+			context.error('Error modifying listed building data', e);
 		}
 		throw e;
 	}
+
+	return {};
 }
