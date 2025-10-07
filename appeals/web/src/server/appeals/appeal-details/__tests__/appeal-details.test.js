@@ -5392,9 +5392,11 @@ describe('appeal-details', () => {
 
 		describe('Appellant costs decision', () => {
 			appealStatuses
-				.filter(({ statusPassedEvent }) => statusPassedEvent)
+				.filter(
+					({ appealStatus, statusPassedEvent }) => statusPassedEvent || appealStatus === 'withdrawn'
+				)
 				.forEach(({ appealStatus }) => {
-					it(`should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (${appealStatus})`, async () => {
+					it(`should render a row in the case overview accordion, if the appeal status is "issue_determination", "withdrawn" or after (${appealStatus})`, async () => {
 						const appealId = 2;
 
 						nock('http://test/')
@@ -5430,9 +5432,12 @@ describe('appeal-details', () => {
 				});
 
 			appealStatuses
-				.filter(({ statusPassedEvent }) => !statusPassedEvent)
+				.filter(
+					({ appealStatus, statusPassedEvent }) =>
+						!statusPassedEvent && appealStatus !== 'withdrawn'
+				)
 				.forEach(({ appealStatus }) => {
-					it(`should not render a row in the case overview accordion , if the appeal status is before "issue_determination" (${appealStatus})`, async () => {
+					it(`should not render a row in the case overview accordion , if the appeal status is before "issue_determination" or "withdrawn" (${appealStatus})`, async () => {
 						const appealId = 2;
 
 						nock('http://test/')
@@ -5459,9 +5464,11 @@ describe('appeal-details', () => {
 
 		describe('LPA costs decision', () => {
 			appealStatuses
-				.filter(({ statusPassedEvent }) => statusPassedEvent)
+				.filter(
+					({ appealStatus, statusPassedEvent }) => statusPassedEvent || appealStatus === 'withdrawn'
+				)
 				.forEach(({ appealStatus }) => {
-					it(`should render a row in the case overview accordion, if the appeal status is "issue_determination" or after (${appealStatus})`, async () => {
+					it(`should render a row in the case overview accordion, if the appeal status is "issue_determination", "withdrawn" or after (${appealStatus})`, async () => {
 						const appealId = 2;
 
 						nock('http://test/')
@@ -5497,9 +5504,12 @@ describe('appeal-details', () => {
 				});
 
 			appealStatuses
-				.filter(({ statusPassedEvent }) => !statusPassedEvent)
+				.filter(
+					({ appealStatus, statusPassedEvent }) =>
+						!statusPassedEvent && appealStatus !== 'withdrawn'
+				)
 				.forEach(({ appealStatus }) => {
-					it(`should not render a row in the case overview accordion , if the appeal status is before "issue_determination" (${appealStatus})`, async () => {
+					it(`should not render a row in the case overview accordion , if the appeal status is before "issue_determination" or "withdrawn" (${appealStatus})`, async () => {
 						const appealId = 2;
 
 						nock('http://test/')
