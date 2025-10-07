@@ -39,7 +39,6 @@ apps_config = {
     featureFlagS20                    = true
     featureFlagCAS                    = true
     featureFlagCasAdvert              = true
-    featureFlagIssueDecision          = true
     featureFlagReIssueDecision        = true
     featureFlagNotifyCaseHistory      = true
     featureFlagSimplifyTeamAssignment = true

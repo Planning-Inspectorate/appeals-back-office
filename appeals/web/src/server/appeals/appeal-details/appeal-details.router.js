@@ -30,7 +30,6 @@ import inquiryRouter from './inquiry/inquiry.router.js';
 import inspectorAccessRouter from './inspector-access/inspector-access.router.js';
 import internalCorrespondenceRouter from './internal-correspondence/internal-correspondence.router.js';
 import invalidAppealRouter from './invalid-appeal/invalid-appeal.router.js';
-import issueDecisionOldRouter from './issue-decision-old/issue-decision.router.js';
 import issueDecisionRouter from './issue-decision/issue-decision.router.js';
 import linkedAppealsRouter from './linked-appeals/linked-appeals.router.js';
 import lpaQuestionnaireRouter from './lpa-questionnaire/lpa-questionnaire.router.js';
@@ -51,6 +50,7 @@ import updateCaseTeamRouter from './update-case-team/update-case-team.router.js'
 import updateDecisionLetterRouter from './update-decision-letter/update-decision-letter.router.js';
 import withdrawalRouterOld from './withdrawal-old/withdrawal.router.js';
 import withdrawalRouter from './withdrawal/withdrawal.router.js';
+
 const router = createRouter();
 
 router
@@ -108,7 +108,7 @@ router.use(
 	'/:appealId/issue-decision',
 	validateAppeal,
 	assertUserHasPermission(permissionNames.viewCaseList),
-	config.featureFlags.featureFlagIssueDecision ? issueDecisionRouter : issueDecisionOldRouter
+	issueDecisionRouter
 );
 router.use(
 	'/:appealId/change-appeal-type',
