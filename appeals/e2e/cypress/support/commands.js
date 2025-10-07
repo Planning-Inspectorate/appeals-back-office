@@ -319,3 +319,20 @@ Cypress.Commands.add('assignCaseOfficerViaApi', (reference) => {
 		return await appealsApiClient.assignCaseOfficer(appealId);
 	});
 });
+
+Cypress.Commands.add('deleteAppeals', (reference) => {
+	return cy.wrap(null).then(async () => {
+		const appealRefs = [].concat(reference);
+
+		const appealsArray = [];
+
+		for (const appeal of appealRefs) {
+			const details = await appealsApiClient.loadCaseDetails(appeal);
+			const appealId = details.appealId;
+			appealsArray.push(appealId);
+		}
+
+		cy.log(`Deleting cases ${appealsArray}`);
+		return await appealsApiClient.deleteAppeals(appealsArray);
+	});
+});

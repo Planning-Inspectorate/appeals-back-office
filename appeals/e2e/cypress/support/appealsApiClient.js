@@ -440,5 +440,24 @@ export const appealsApiClient = {
 		} catch {
 			return false;
 		}
+	},
+
+	async deleteAppeals(appealId) {
+		try {
+			const url = `${baseUrl}appeals/delete-appeals`;
+			const response = await fetch(url, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json',
+					azureAdUserId: '434bff4e-8191-4ce0-9a0a-91e5d6cdd882'
+				},
+				body: JSON.stringify({
+					appealIds: appealId
+				})
+			});
+			expect(response.status).eq(200);
+		} catch {
+			return false;
+		}
 	}
 };
