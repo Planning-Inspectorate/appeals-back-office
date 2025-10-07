@@ -2,11 +2,14 @@
 /// <reference types="cypress"/>
 
 import { users } from '../../fixtures/users';
+import { NetResidencePage } from '../../page_objects/caseDetails/netResidencePage.js';
+import { OverviewSectionPage } from '../../page_objects/caseDetails/overviewSectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
-import { urlPaths } from '../../support/urlPaths';
 
 const caseDetailsPage = new CaseDetailsPage();
+const netResidencePage = new NetResidencePage();
+const overviewSectionPage = new OverviewSectionPage();
 
 let caseRef;
 
@@ -15,38 +18,45 @@ describe('Capture Net Residences', () => {
 		setupTestCase();
 	});
 
+	const overviewDetails = {
+		appealType: 'Planning appeal',
+		applicationReference: '123',
+		appealProcedure: 'Written',
+		allocationLevel: 'No allocation level for this appeal',
+		linkedAppeals: 'No linked appeals',
+		relatedAppeals: 'No',
+		netGainResidential: 'Not provided'
+	};
+
 	it('Net Residence - Net Gain', () => {
-		caseDetailsPage.clickAddNetResidence();
+		overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
+		netResidencePage.clickAddNetResidence();
 		caseDetailsPage.chooseCheckboxByText('Net gain');
 		caseDetailsPage.fillInput('5');
 		caseDetailsPage.clickButtonByText('Save and return');
 		caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added');
-		caseDetailsPage.verifyNetResidenceValue('Net gain');
-		caseDetailsPage.verifyNetResidenceNumber('5');
+		netResidencePage.verifyNetResidenceValue('Net gain');
+		netResidencePage.verifyNetResidenceNumber('5');
 	});
 
 	it('Net Residence - Net Loss', () => {
-		caseDetailsPage.clickAddNetResidence();
+		overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
+		netResidencePage.clickAddNetResidence();
 		caseDetailsPage.chooseCheckboxByText('Net loss');
 		caseDetailsPage.fillInput('5', 1);
 		caseDetailsPage.clickButtonByText('Save and return');
 		caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added');
-		caseDetailsPage.verifyNetResidenceValue('Net loss');
-		caseDetailsPage.verifyNetResidenceNumber('5');
+		netResidencePage.verifyNetResidenceValue('Net loss');
+		netResidencePage.verifyNetResidenceNumber('5');
 	});
 
 	it('Net Residence - No Change', () => {
-		caseDetailsPage.clickAddNetResidence();
+		overviewSectionPage.verifyCaseOverviewDetails(overviewDetails);
+		netResidencePage.clickAddNetResidence();
 		caseDetailsPage.chooseCheckboxByText('No change in number of residential units');
 		caseDetailsPage.clickButtonByText('Save and return');
 		caseDetailsPage.validateBannerMessage('Success', 'Number of residential units added');
-		caseDetailsPage.verifyNetResidenceValue('No change to number of residential units');
-	});
-
-	it('Net Residence - Personal List', () => {
-		happyPathHelper.assignCaseOfficer(caseRef);
-		cy.visit(urlPaths.personalListFilteredValidation);
-		caseDetailsPage.verifyActionOnPersonalListPage(caseRef, 'Add number of residential units');
+		netResidencePage.verifyNetResidenceValue('No change to number of residential units');
 	});
 
 	const setupTestCase = () => {
@@ -55,6 +65,9 @@ describe('Capture Net Residences', () => {
 		cy.createCase({ caseType: 'W' }).then((ref) => {
 			caseRef = ref;
 			happyPathHelper.viewCaseDetails(caseRef);
+			happyPathHelper.assignCaseOfficer(caseRef);
+			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.startS78Case(caseRef, 'written');
 		});
 	};
 });

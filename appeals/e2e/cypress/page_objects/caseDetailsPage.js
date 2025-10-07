@@ -31,7 +31,6 @@ export class CaseDetailsPage extends Page {
 		addCrossTeamCorrespondence: 'add-cross-team-correspondence',
 		addInspectorCorrespondence: 'add-inspector-correspondence',
 		addMainPartyCorrespondence: 'add-main-party-correspondence',
-		addNetResidence: 'add-residences-net-change',
 		issueAppellantCostsDecision: 'issue-appellant-costs-decision',
 		issueLpaCostsDecision: 'issue-lpa-costs-decision',
 		manageCrossTeamCorrespondence: 'manage-cross-team-correspondence',
@@ -105,9 +104,6 @@ export class CaseDetailsPage extends Page {
 		manageNotifyingParties: () => cy.getByData(this._cyDataSelectors.manageNotifyingParties),
 		linkedAppeal: () => cy.get(`[data-cy^=${this._cyDataSelectors.linkedAppeal}]`),
 		linkedAppealValue: () => cy.get('.appeal-linked-appeals .govuk-summary-list__value'),
-		netResidenceKey: () => cy.get('.appeal-net-residence-change > .govuk-summary-list__value'),
-		netResidenceValue: () =>
-			cy.get('.appeal-net-residence-gain-or-loss > .govuk-summary-list__value'),
 		manageRelatedAppeals: () => cy.getByData(this._cyDataSelectors.manageRelatedAppeals),
 		uploadFile: () => cy.getByData(this._cyDataSelectors.uploadFile),
 		changeAppealType: () => cy.getByData(this._cyDataSelectors.changeAppealType),
@@ -115,7 +111,6 @@ export class CaseDetailsPage extends Page {
 		addAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.addAgreementToChangeDescriptionEvidence),
 		addNotifiyingParties: () => cy.getByData(this._cyDataSelectors.addNotifyingParties),
-		addNetResidence: () => cy.getByData(this._cyDataSelectors.addNetResidence),
 		manageAgreementToChangeDescriptionEvidence: () =>
 			cy.getByData(this._cyDataSelectors.manageAgreementToChangeDescriptionEvidence),
 		issueAppellantCostsDecision: (index = 0) =>
@@ -273,10 +268,6 @@ export class CaseDetailsPage extends Page {
 
 	clickReviewLpaq() {
 		this.elements.reviewLpaQuestionnaire().click();
-	}
-
-	clickAddNetResidence() {
-		this.elements.addNetResidence().click();
 	}
 
 	clickAssignCaseOfficer() {
@@ -895,13 +886,6 @@ export class CaseDetailsPage extends Page {
 
 	verifyAppealType(expectedAppealType) {
 		this.elements.appealType().should('contain', expectedAppealType);
-	}
-
-	verifyNetResidenceValue(expectedText) {
-		this.elements.netResidenceKey().should('contain', expectedText);
-	}
-	verifyNetResidenceNumber(expectedNumber) {
-		this.elements.netResidenceValue().should('contain', expectedNumber);
 	}
 
 	checkHeading = (expectedText) => {
