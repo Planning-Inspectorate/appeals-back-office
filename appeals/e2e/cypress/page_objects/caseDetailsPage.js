@@ -891,12 +891,4 @@ export class CaseDetailsPage extends Page {
 	checkHeading = (expectedText) => {
 		this.elements.pageHeading().should('have.text', expectedText);
 	};
-
-	verifyActionOnPersonalListPage(caseRef, expectedTagText) {
-		cy.get(this.selectors.link)
-			.contains(caseRef)
-			.parents('tr')
-			.find('.govuk-link')
-			.should('contain', expectedTagText);
-	}
 }
