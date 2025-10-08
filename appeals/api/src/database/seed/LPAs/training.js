@@ -612,7 +612,7 @@ export const localPlanningDepartmentList = [
 		lpaCode: 'A1910',
 		name: 'Dacorum Borough Council',
 		email: 'planning@example.gov.uk',
-		teamId: 12 // East2
+		teamId: 13 // East3
 	},
 	{
 		lpaCode: 'N1350',
