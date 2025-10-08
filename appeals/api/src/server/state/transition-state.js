@@ -72,8 +72,9 @@ const transitionState = async (appealId, azureAdUserId, trigger) => {
 
 	if (isStatePassed(appeal, newState)) {
 		await appealStatusRepository.rollBackAppealStatusTo(appealId, newState);
+	} else {
+		await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
 	}
-	await appealStatusRepository.updateAppealStatusByAppealId(appealId, newState);
 
 	if (newState === 'issue_determination') azureAdUserId = AUDIT_TRIAL_AUTOMATIC_EVENT_UUID;
 
