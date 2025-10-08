@@ -561,7 +561,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'Q0505',
 		name: 'Cambridge City Council',
-		email: 'asappeals@cambridge.gov.uk',
+		email: 'appeals@greatercambridgeplanning.org',
 		teamId: 18 // North4
 	},
 	{
