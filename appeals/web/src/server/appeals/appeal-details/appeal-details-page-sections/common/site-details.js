@@ -1,3 +1,4 @@
+import { simpleHtmlComponent } from '#lib/mappers/index.js';
 import { isDefined } from '#lib/ts-utilities.js';
 import { APPEAL_TYPE } from '@pins/appeals/constants/common.js';
 import { APPEAL_CASE_PROCEDURE } from '@planning-inspectorate/data-model';
@@ -37,13 +38,9 @@ export const getSiteDetails = (mappedData, appealDetails) => {
 		type: 'summary-list',
 		parameters: {
 			rows: [
-				...(appealDetails.siteVisit
-					? [
-							mappedData.appeal.siteVisitDate.display.summaryListItem,
-							mappedData.appeal.siteVisitStartTime.display.summaryListItem,
-							mappedData.appeal.visitType.display.summaryListItem
-					  ]
-					: [mappedData.appeal.siteVisit.display.summaryListItem])
+				mappedData.appeal.siteVisitDate.display.summaryListItem,
+				mappedData.appeal.siteVisitStartTime.display.summaryListItem,
+				mappedData.appeal.visitType.display.summaryListItem
 			].filter(isDefined)
 		}
 	};
@@ -87,7 +84,13 @@ export const getSiteDetails = (mappedData, appealDetails) => {
 			allComponents.push(recordMissedSiteVisitLink);
 		}
 	}
-	allComponents.push(siteVisitDetailsList);
+	if (!appealDetails.siteVisit) {
+		mappedData.appeal.siteVisit.display.buttonItem
+			? allComponents.push(mappedData.appeal.siteVisit.display.buttonItem)
+			: simpleHtmlComponent('p', { class: 'govuk-body govuk-!-margin-bottom-7' }, 'Not set up');
+	} else {
+		allComponents.push(siteVisitDetailsList);
+	}
 	allComponents.push(...siteVisitRequestDetails);
 
 	if (appealDetails.appealType === APPEAL_TYPE.S78) {
