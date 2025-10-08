@@ -54,69 +54,69 @@ describe('Start case', () => {
 	});
 
 	it('Start case', { tags: tag.smoke }, () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			cy.loadAppealDetails(caseRef).then((appealDetails) => {
+		cy.createCase().then((caseObj) => {
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
+			cy.loadAppealDetails(caseObj).then((appealDetails) => {
 				const startedAt = appealDetails?.startedAt;
 				expect(startedAt).to.not.be.null;
 			});
 
-			cy.checkNotifySent(caseRef, expectedNotifies.Household);
+			cy.checkNotifySent(caseObj, expectedNotifies.Household);
 		});
 	});
 
 	it('Start S78 case', { tags: tag.smoke }, () => {
 		cy.createCase({
 			caseType: 'W'
-		}).then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startS78Case(caseRef, 'written');
+		}).then((caseObj) => {
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startS78Case(caseObj, 'written');
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
-			cy.loadAppealDetails(caseRef).then((appealDetails) => {
+			cy.loadAppealDetails(caseObj).then((appealDetails) => {
 				const startedAt = appealDetails?.startedAt;
 				expect(startedAt).to.not.be.null;
 			});
 
-			cy.checkNotifySent(caseRef, expectedNotifies.PlanningAppeal);
+			cy.checkNotifySent(caseObj, expectedNotifies.PlanningAppeal);
 		});
 	});
 
 	it('Start S20 Listed Building case', { tags: tag.smoke }, () => {
 		cy.createCase({
 			caseType: 'Y'
-		}).then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		}).then((caseObj) => {
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			caseDetailsPage.verifyAppealType('Planning listed building and conservation area appeal');
-			cy.loadAppealDetails(caseRef).then((appealDetails) => {
+			cy.loadAppealDetails(caseObj).then((appealDetails) => {
 				const startedAt = appealDetails?.startedAt;
 				expect(startedAt).to.not.be.null;
 			});
 
-			cy.checkNotifySent(caseRef, expectedNotifies.PlanningAppeal);
+			cy.checkNotifySent(caseObj, expectedNotifies.PlanningAppeal);
 		});
 	});
 
 	it('S78 hearing case - start appeal without scheduled hearing', () => {
 		cy.login(users.appeals.caseAdmin);
-		cy.createCase({ caseType: 'W' }).then((caseRef) => {
-			happyPathHelper.viewCaseDetails(caseRef);
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			happyPathHelper.viewCaseDetails(caseObj);
 
 			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseRef);
+			cy.assignCaseOfficerViaApi(caseObj);
 
 			// Validate Appeal Via API
 			cy.getBusinessActualDate(new Date(), 0).then((date) => {
-				cy.updateAppealDetailsViaApi(caseRef, { validationOutcome: 'valid', validAt: date });
+				cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
 			});
 			cy.reload();
 
-			happyPathHelper.viewCaseDetails(caseRef);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickReadyToStartCase();
 			procedureTypePage.selectProcedureType('hearing');
 			caseDetailsPage.selectRadioButtonByValue('no');
@@ -128,26 +128,26 @@ describe('Start case', () => {
 			caseDetailsPage.validateBannerMessage('Success', 'Appeal started');
 			caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 
-			cy.checkNotifySent(caseRef, expectedNotifies.PlanningAppeal);
+			cy.checkNotifySent(caseObj, expectedNotifies.PlanningAppeal);
 		});
 	});
 
 	it('S78 hearing case - start appeal with scheduled hearing', () => {
 		cy.login(users.appeals.caseAdmin);
-		cy.createCase({ caseType: 'W' }).then((caseRef) => {
-			happyPathHelper.viewCaseDetails(caseRef);
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			happyPathHelper.viewCaseDetails(caseObj);
 
 			// Assign Case Officer Via API
-			cy.assignCaseOfficerViaApi(caseRef);
+			cy.assignCaseOfficerViaApi(caseObj);
 
 			// Validate Appeal Via API
 			cy.getBusinessActualDate(new Date(), 0).then((date) => {
-				cy.updateAppealDetailsViaApi(caseRef, { validationOutcome: 'valid', validAt: date });
+				cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
 			});
 
 			cy.reload();
 
-			happyPathHelper.viewCaseDetails(caseRef);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickReadyToStartCase();
 			caseDetailsPage.selectRadioButtonByValue('hearing');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -170,7 +170,7 @@ describe('Start case', () => {
 				caseDetailsPage.validateBannerMessage('Success', 'Timetable started');
 			});
 
-			cy.checkNotifySent(caseRef, expectedNotifies.PlanningAppealHearing);
+			cy.checkNotifySent(caseObj, expectedNotifies.PlanningAppealHearing);
 		});
 	});
 });

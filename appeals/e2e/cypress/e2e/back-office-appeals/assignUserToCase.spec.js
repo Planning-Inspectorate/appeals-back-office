@@ -21,10 +21,10 @@ describe('Assign user to case', () => {
 		'Case officer should be able to assign themselves to a case using name search',
 		{ tags: tag.smoke },
 		() => {
-			cy.createCase().then((caseRef) => {
+			cy.createCase().then((caseObj) => {
 				console.log(users.appeals);
 				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseRef);
+				listCasesPage.clickAppealByRef(caseObj);
 				caseDetailsPage.clickAssignCaseOfficer();
 				caseDetailsPage.searchForCaseOfficer('case');
 				caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
@@ -39,9 +39,9 @@ describe('Assign user to case', () => {
 		'Inspector should be able to assign themselves to a case using name search',
 		{ tags: tag.smoke },
 		() => {
-			cy.createCase().then((caseRef) => {
+			cy.createCase().then((caseObj) => {
 				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseRef);
+				listCasesPage.clickAppealByRef(caseObj);
 				caseDetailsPage.clickAssignInspector();
 				caseDetailsPage.searchForCaseOfficer('Mctester');
 				caseDetailsPage.chooseSummaryListValue(users.appeals.inspector.email);
@@ -53,9 +53,9 @@ describe('Assign user to case', () => {
 	);
 
 	it('Case officer should be able to change assigned user', () => {
-		cy.createCase().then((caseRef) => {
+		cy.createCase().then((caseObj) => {
 			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.clickAssignCaseOfficer();
 			caseDetailsPage.searchForCaseOfficer('case');
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
@@ -66,9 +66,9 @@ describe('Assign user to case', () => {
 	});
 
 	it('Inspector should be able to change assigned user', () => {
-		cy.createCase().then((caseRef) => {
+		cy.createCase().then((caseObj) => {
 			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.clickAssignInspector();
 			caseDetailsPage.searchForCaseOfficer('case');
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
@@ -79,9 +79,9 @@ describe('Assign user to case', () => {
 	});
 
 	it.skip('Case officer should be able to remove assigned user', () => {
-		cy.createCase().then((caseRef) => {
+		cy.createCase().then((caseObj) => {
 			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.clickAssignCaseOfficer();
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
 			caseDetailsPage.clickLinkByText('Remove');
@@ -95,9 +95,9 @@ describe('Assign user to case', () => {
 	});
 
 	it.skip('Inspector should be able to remove assigned user', () => {
-		cy.createCase().then((caseRef) => {
+		cy.createCase().then((caseObj) => {
 			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseRef);
+			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.clickAssignInspector();
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
 			caseDetailsPage.clickLinkByText('Remove');

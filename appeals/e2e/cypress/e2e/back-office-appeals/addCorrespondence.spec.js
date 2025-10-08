@@ -20,8 +20,8 @@ describe('Add correspondence', () => {
 
 	it('Add cross-team correspondence', () => {
 		const uploadDate = new Date();
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
+		cy.createCase().then((caseObj) => {
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddCrossTeamCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -36,8 +36,8 @@ describe('Add correspondence', () => {
 
 	it('Add inspector correspondence', () => {
 		const uploadDate = new Date();
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
+		cy.createCase().then((caseObj) => {
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddInspectorCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -52,8 +52,8 @@ describe('Add correspondence', () => {
 
 	it('Add main party correspondence', () => {
 		const uploadDate = new Date();
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
+		cy.createCase().then((caseObj) => {
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddMainPartyCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');

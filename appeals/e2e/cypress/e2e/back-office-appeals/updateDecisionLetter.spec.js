@@ -20,14 +20,14 @@ describe('Update Decision Letter', () => {
 	});
 	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('Update Decision Letter', () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			happyPathHelper.reviewLpaq(caseRef);
-			happyPathHelper.setupSiteVisitFromBanner(caseRef);
-			cy.simulateSiteVisit(caseRef).then((caseRef) => {
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
+			happyPathHelper.reviewLpaq(caseObj);
+			happyPathHelper.setupSiteVisitFromBanner(caseObj);
+			cy.simulateSiteVisit(caseObj).then((caseObj) => {
 				cy.reload();
 			});
 			//Issue decision
@@ -75,7 +75,7 @@ describe('Update Decision Letter', () => {
 				}
 			];
 
-			cy.checkNotifySent(caseRef, expectedNotifies);
+			cy.checkNotifySent(caseObj, expectedNotifies);
 			//Verify Appeal Decision Page
 			caseDetailsPage.validateBannerMessage('Success', 'Decision letter updated');
 			caseDetailsPage.verifyCheckYourAnswers('Decision issue date', formattedDate.date);

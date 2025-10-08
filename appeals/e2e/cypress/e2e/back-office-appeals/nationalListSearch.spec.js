@@ -9,7 +9,7 @@ import { urlPaths } from '../../support/urlPaths';
 const listCasesPage = new ListCasesPage();
 
 describe('All cases search', () => {
-	let caseRef;
+	let caseObj;
 	const fieldId = 'searchTerm';
 	const postcode = 'XX12 3XX';
 	const errorMessage =
@@ -25,9 +25,9 @@ describe('All cases search', () => {
 	});
 
 	it('Case admin user should be able to use search using appeal id', { tags: tag.smoke }, () => {
-		const testData = { rowIndex: 0, cellIndex: 0, textToMatch: caseRef, strict: true };
+		const testData = { rowIndex: 0, cellIndex: 0, textToMatch: caseObj.reference, strict: true };
 		listCasesPage.verifySectionHeader('Search all cases');
-		listCasesPage.nationalListSearch(caseRef);
+		listCasesPage.nationalListSearch(caseObj.reference);
 		listCasesPage.verifyTableCellText(testData);
 		listCasesPage.clearSearchResults();
 	});
@@ -56,7 +56,7 @@ describe('All cases search', () => {
 
 	const setupTestCase = () => {
 		cy.createCase({ siteAddressPostcode: postcode }).then((ref) => {
-			caseRef = ref;
+			caseObj = ref;
 		});
 	};
 

@@ -23,11 +23,11 @@ describe('Review LPAQ', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 	it('Complete LPAQ', { tags: tag.smoke }, () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickReviewLpaq();
 			caseDetailsPage.selectRadioButtonByValue('Complete');
 			caseDetailsPage.clickButtonByText('Confirm');
@@ -38,11 +38,11 @@ describe('Review LPAQ', () => {
 	});
 
 	it('incomplete LPAQ', { tags: tag.smoke }, () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickReviewLpaq();
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
 			caseDetailsPage.clickButtonByText('Confirm');
@@ -61,11 +61,11 @@ describe('Review LPAQ', () => {
 	});
 
 	it('incomplete LPAQ add another', { tags: tag.smoke }, () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickReviewLpaq();
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
 			caseDetailsPage.clickButtonByText('Confirm');
@@ -85,11 +85,11 @@ describe('Review LPAQ', () => {
 		});
 	});
 	it('Validate fields and answers in LPAQfor householder appeal', { tags: tag.smoke }, () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickReviewLpaq();
 			// Section 1 – Constraints
 			lpaqPage.assertCorrectAppealType(casedata.isCorrectAppealType ? 'Yes' : 'No');
@@ -135,11 +135,11 @@ describe('Review LPAQ', () => {
 	});
 
 	it('Validate fields and answers in LPAQ for s78 appeal', { tags: tag.smoke }, () => {
-		cy.createCase({ caseType: 'W' }).then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startS78Case(caseRef, 'written');
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startS78Case(caseObj, 'written');
 			caseDetailsPage.clickReviewLpaq();
 			const address = casedata.neighbouringSiteAddresses[0];
 
@@ -218,11 +218,11 @@ describe('Review LPAQ', () => {
 		'Validate attributes and answers in LPAQ for s20 listed building appeal',
 		{ tags: tag.smoke },
 		() => {
-			cy.createCase({ caseType: 'Y' }).then((caseRef) => {
-				cy.addLpaqSubmissionToCase(caseRef);
-				happyPathHelper.assignCaseOfficer(caseRef);
-				happyPathHelper.reviewAppellantCase(caseRef);
-				happyPathHelper.startCase(caseRef);
+			cy.createCase({ caseType: 'Y' }).then((caseObj) => {
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
+				happyPathHelper.startCase(caseObj);
 				caseDetailsPage.clickReviewLpaq();
 				const address = casedata.neighbouringSiteAddresses[0];
 

@@ -20,21 +20,21 @@ describe('Remove doc from upload page', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	const setupInquiry = (caseRef, inquiryDate) => {
+	const setupInquiry = (caseObj, inquiryDate) => {
 		// require case to be started as inquiry to access appellant POE evidence e.g.
-		cy.addInquiryViaApi(caseRef, inquiryDate);
-		happyPathHelper.assignCaseOfficer(caseRef);
-		happyPathHelper.reviewAppellantCase(caseRef);
-		happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
+		cy.addInquiryViaApi(caseObj, inquiryDate);
+		happyPathHelper.assignCaseOfficer(caseObj);
+		happyPathHelper.reviewAppellantCase(caseObj);
+		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
 	};
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('add a doc and then remove on file upload page', () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickReviewLpaq();
 			caseDetailsPage.clickAddNotifyingParties();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
@@ -47,11 +47,11 @@ describe('Remove doc from upload page', () => {
 	});
 
 	it('remove a doc when not the last version', () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			happyPathHelper.uploadDocsLpaq();
 			happyPathHelper.uploadDocVersionLpaq();
 			caseDetailsPage.clickManageNotifyingParties();
@@ -71,11 +71,11 @@ describe('Remove doc from upload page', () => {
 	});
 
 	it('remove the last version of the document', () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			happyPathHelper.uploadDocsLpaq();
 			happyPathHelper.removeDocLpaq();
 			caseDetailsPage.checkAnswerNotifyingParties(
@@ -86,14 +86,14 @@ describe('Remove doc from upload page', () => {
 	});
 
 	it('can upload lpa proof of evidence and witness to inquiry case', { tags: tag.smoke }, () => {
-		cy.createCase({ caseType: 'W' }).then((caseRef) => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 				// require case to be started as inquiry to access appellant POE evidence
-				setupInquiry(caseRef, inquiryDate);
+				setupInquiry(caseObj, inquiryDate);
 
 				// find case and open inqiiry section
 				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseRef);
+				listCasesPage.clickAppealByRef(caseObj);
 
 				// navigate to file upload view, upload file and verify uploaded
 				documentationSectionPage.selectAddDocument('lpa-proofs-evidence');
@@ -122,14 +122,14 @@ describe('Remove doc from upload page', () => {
 		'upload lpa proof of evidence and witness - proceed without uploading file',
 		{ tags: tag.smoke },
 		() => {
-			cy.createCase({ caseType: 'W' }).then((caseRef) => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
 				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 					// require case to be started as inquiry to access appellant POE evidence
-					setupInquiry(caseRef, inquiryDate);
+					setupInquiry(caseObj, inquiryDate);
 
 					// find case and open inqiiry section
 					cy.visit(urlPaths.appealsList);
-					listCasesPage.clickAppealByRef(caseRef);
+					listCasesPage.clickAppealByRef(caseObj);
 
 					// navigate to file upload view, proceed without uploading file
 					documentationSectionPage.selectAddDocument('lpa-proofs-evidence');

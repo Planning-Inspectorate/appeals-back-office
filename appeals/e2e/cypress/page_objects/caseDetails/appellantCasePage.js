@@ -30,16 +30,16 @@ export class AppellantCasePage extends Page {
 		agentSection: () => cy.get('.appeal-agent'),
 		addRelatedAppeal: () => cy.getByData(this._cyDataSelectors.addRelatedAppeals),
 		changeRelatedAppeal: () => cy.getByData(this._cyDataSelectors.changeRelatedAppeals),
-		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`)
+		relatedAppealValue: (caseObj) => cy.get(`[data-cy="related-appeal-${caseObj}"]`)
 	};
 
 	/*********************************************************
 	 ******************** Navigation **************************
 	 *********************************************************/
 
-	navigateToAppellantCase(caseRef) {
+	navigateToAppellantCase(caseObj) {
 		caseDetailsPage.navigateToAppealsService();
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 		caseDetailsPage.clickReviewAppellantCase();
 	}
 
