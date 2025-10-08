@@ -2,6 +2,8 @@
 
 import { Page } from './basePage';
 
+const baseUrl = Cypress.config('apiBaseUrl');
+
 export class FileUploader extends Page {
 	fixturesPath = 'cypress/fixtures/';
 

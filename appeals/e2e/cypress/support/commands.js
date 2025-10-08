@@ -320,6 +320,39 @@ Cypress.Commands.add('assignCaseOfficerViaApi', (reference) => {
 	});
 });
 
+Cypress.Commands.add('selectReasonOption', (optionLabel = null) => {
+	return cy.get('input[type="checkbox"]').then(($checkboxes) => {
+		// Helper function to get label text for a checkbox
+		const getLabelText = (checkbox) => Cypress.$(checkbox).siblings('label').text().trim();
+
+		// Filter checkboxes based on the selection logic
+		const targetCheckbox =
+			optionLabel === 'Other reason'
+				? $checkboxes.filter((i, elem) => getLabelText(elem) === 'Other reason')[0]
+				: $checkboxes.filter((i, elem) => getLabelText(elem) !== 'Other reason')[
+						Math.floor(
+							Math.random() *
+								$checkboxes.filter((i, elem) => getLabelText(elem) !== 'Other reason').length
+						)
+				  ];
+
+		// Validate target checkbox exists
+		if (!targetCheckbox) {
+			throw new Error(
+				optionLabel === 'Other reason'
+					? 'Checkbox with label "Other reason" not found'
+					: 'No eligible checkboxes available (excluding "Other reason")'
+			);
+		}
+
+		// Select checkbox and return label text
+		const selectedLabelText = getLabelText(targetCheckbox);
+		cy.wrap(targetCheckbox).click().should('be.checked');
+
+		return cy.wrap(selectedLabelText);
+	});
+});
+
 Cypress.Commands.add('deleteAppeals', (reference) => {
 	return cy.wrap(null).then(async () => {
 		const appealRefs = [].concat(reference);
@@ -334,5 +367,38 @@ Cypress.Commands.add('deleteAppeals', (reference) => {
 
 		cy.log(`Deleting cases ${appealsArray}`);
 		return await appealsApiClient.deleteAppeals(appealsArray);
+	});
+});
+
+Cypress.Commands.add('selectReasonOption', (optionLabel = null) => {
+	return cy.get('input[type="checkbox"]').then(($checkboxes) => {
+		// Helper function to get label text for a checkbox
+		const getLabelText = (checkbox) => Cypress.$(checkbox).siblings('label').text().trim();
+
+		// Filter checkboxes based on the selection logic
+		const targetCheckbox =
+			optionLabel === 'Other reason'
+				? $checkboxes.filter((i, elem) => getLabelText(elem) === 'Other reason')[0]
+				: $checkboxes.filter((i, elem) => getLabelText(elem) !== 'Other reason')[
+						Math.floor(
+							Math.random() *
+								$checkboxes.filter((i, elem) => getLabelText(elem) !== 'Other reason').length
+						)
+				  ];
+
+		// Validate target checkbox exists
+		if (!targetCheckbox) {
+			throw new Error(
+				optionLabel === 'Other reason'
+					? 'Checkbox with label "Other reason" not found'
+					: 'No eligible checkboxes available (excluding "Other reason")'
+			);
+		}
+
+		// Select checkbox and return label text
+		const selectedLabelText = getLabelText(targetCheckbox);
+		cy.wrap(targetCheckbox).click().should('be.checked');
+
+		return cy.wrap(selectedLabelText);
 	});
 });
