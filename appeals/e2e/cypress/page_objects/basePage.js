@@ -316,6 +316,10 @@ export class Page {
 		this.basePageElements.checkbox().should('have.length', checkboxCount);
 	}
 
+	validateNumberOfSelectedCheckboxes(checkedCount) {
+		cy.get(`${this.selectors.checkbox} input:checked`).should('have.length', checkedCount);
+	}
+
 	validateNumberOfRadioBtn(radioCount) {
 		this.basePageElements.radioButton().should('have.length', radioCount);
 	}
