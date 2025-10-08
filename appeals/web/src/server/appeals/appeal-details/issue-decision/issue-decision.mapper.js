@@ -6,7 +6,6 @@ import {
 	mapDocumentDownloadUrl,
 	mapUncommittedDocumentDownloadUrl
 } from '#appeals/appeal-documents/appeal-documents.mapper.js';
-import config from '#environment/config.js';
 import { addressToMultilineStringHtml } from '#lib/address-formatter.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
@@ -632,18 +631,16 @@ export function viewDecisionPageRows(appealData, request, latestDecsionDocumentT
 				key: 'Decision letter',
 				value: decision.documentName,
 				href: mapDocumentDownloadUrl(appealId, documentId || '', documentName || ''),
-				actions: config.featureFlags.featureFlagReIssueDecision
-					? [
-							{
-								text: 'Change',
-								href: `${addBackLinkQueryToUrl(
-									request,
-									`/appeals-service/appeal-details/${appealId}/update-decision-letter/upload-decision-letter`
-								)}`,
-								visuallyHiddenText: 'decision letter'
-							}
-					  ]
-					: null
+				actions: [
+					{
+						text: 'Change',
+						href: `${addBackLinkQueryToUrl(
+							request,
+							`/appeals-service/appeal-details/${appealId}/update-decision-letter/upload-decision-letter`
+						)}`,
+						visuallyHiddenText: 'decision letter'
+					}
+				]
 			});
 		}
 	}
