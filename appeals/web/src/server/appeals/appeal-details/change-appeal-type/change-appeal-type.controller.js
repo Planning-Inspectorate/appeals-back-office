@@ -297,8 +297,8 @@ const renderAddHorizonReference = async (request, response) => {
 	const { errors } = request;
 	const appealData = request.currentAppeal;
 	const horizonReference =
-		appealData.transferStatus?.transferredAppealReference ||
-		request.session.changeAppealType?.transferredAppealHorizonReference;
+		request.session.changeAppealType?.transferredAppealHorizonReference ||
+		appealData.transferStatus?.transferredAppealReference;
 
 	const mappedPageContent = addHorizonReferencePage(
 		appealData,
