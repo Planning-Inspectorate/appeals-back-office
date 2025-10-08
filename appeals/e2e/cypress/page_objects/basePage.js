@@ -61,7 +61,7 @@ export class Page {
 		xlHeader: '.govuk-heading-xl',
 		projectManagement: 'span.font-weight--700:nth-child(2)', // TODO Use specific data-cy selector
 		unpublish: 'a.govuk-button:nth-child(5)', // TODO Use specific data-cy selector
-		caseRefTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)', // TODO Use specific data-cy selector
+		caseObjTraining: ':nth-child(2) > .govuk-table__body > :nth-child(1) > :nth-child(2)', // TODO Use specific data-cy selector
 		serviceHeader: '.pins-header-domainname',
 		users: '#users'
 	};
@@ -391,17 +391,17 @@ export class Page {
 		});
 	}
 
-	verifyTagOnPersonalListPage(caseRef, expectedTagText) {
+	verifyTagOnPersonalListPage(caseObj, expectedTagText) {
 		cy.get(this.selectors.link)
-			.contains(caseRef)
+			.contains(caseObj)
 			.parents('tr')
 			.find('.govuk-tag')
 			.last()
 			.should('have.text', expectedTagText);
 	}
 
-	verifyTagOnAllCasesPage(caseRef, expectedTagText, index = 0) {
-		cy.getByData(caseRef)
+	verifyTagOnAllCasesPage(caseObj, expectedTagText, index = 0) {
+		cy.getByData(caseObj)
 			.parent('td')
 			.siblings('.govuk-table__cell')
 			.find('.govuk-tag')

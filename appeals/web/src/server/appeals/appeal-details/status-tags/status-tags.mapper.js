@@ -77,9 +77,7 @@ export const generateStatusTags = async (mappedData, appealDetails, request) => 
 		if (appealDetails.decision?.outcome) {
 			insetTextRows.push(`Decision: ${toSentenceCase(appealDetails.decision.outcome)}`);
 			insetTextRows.push(
-				letterDateObject.latestFileVersion &&
-					letterDateObject.latestFileVersion?.version > 1 &&
-					config.featureFlags.featureFlagReIssueDecision
+				letterDateObject.latestFileVersion && letterDateObject.latestFileVersion?.version > 1
 					? `Decision issued on ${letterDateObject.originalLetterDate} (updated on ${letterDateObject.latestLetterDate})`
 					: `Decision issued on ${letterDateObject.latestLetterDate}`
 			);

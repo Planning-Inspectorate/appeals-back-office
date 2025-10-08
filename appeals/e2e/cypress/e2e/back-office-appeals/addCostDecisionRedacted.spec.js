@@ -20,14 +20,14 @@ describe('add cost decision and redact', () => {
 	let sampleFiles = caseDetailsPage.sampleFiles;
 
 	it('add costs decsion and redact', { tags: tag.smoke }, () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			happyPathHelper.reviewLpaq(caseRef);
-			happyPathHelper.setupSiteVisitFromBanner(caseRef);
-			cy.simulateSiteVisit(caseRef).then((caseRef) => {
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
+			happyPathHelper.reviewLpaq(caseObj);
+			happyPathHelper.setupSiteVisitFromBanner(caseObj);
+			cy.simulateSiteVisit(caseObj).then((caseObj) => {
 				cy.reload();
 			});
 			caseDetailsPage.clickIssueAppellantCostsDecision();
@@ -39,10 +39,10 @@ describe('add cost decision and redact', () => {
 	});
 
 	it('change the redaction status of a cost decsion', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickAddAppellantApplication();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -61,10 +61,10 @@ describe('add cost decision and redact', () => {
 	});
 
 	it('Upload new version and change filename', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
 			caseDetailsPage.clickAddAppellantApplication();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.clickButtonByText('Continue');

@@ -10,11 +10,11 @@ const caseDetailsPage = new CaseDetailsPage();
 const listCasesPage = new ListCasesPage();
 
 describe('change contacts', () => {
-	let caseRef;
+	let caseObj;
 
 	before(() => {
 		cy.createCase().then((ref) => {
-			caseRef = ref;
+			caseObj = ref;
 			cy.login(users.appeals.caseAdmin);
 			happyPathHelper.assignCaseOfficer(ref);
 		});
@@ -23,7 +23,7 @@ describe('change contacts', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 		caseDetailsPage.navigateToAppealsService();
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 		caseDetailsPage.clickCaseNotes();
 	});
 

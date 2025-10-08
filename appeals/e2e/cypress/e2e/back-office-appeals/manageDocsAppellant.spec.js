@@ -26,18 +26,18 @@ describe('manage docs on appellant case', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
-	const setupInquiry = (caseRef, inquiryDate) => {
-		// require case to be setup with inquiry to access appellant POE evidence e.g.
-		cy.addInquiryViaApi(caseRef, inquiryDate);
-		cy.assignCaseOfficerViaApi(caseRef);
-		happyPathHelper.reviewAppellantCase(caseRef);
-		happyPathHelper.startS78InquiryCase(caseRef, 'inquiry');
+	const setupInquiry = (caseObj, inquiryDate) => {
+		// require case to be started as inquiry to access appellant POE evidence e.g.
+		cy.addInquiryViaApi(caseObj, inquiryDate);
+		happyPathHelper.assignCaseOfficer(caseObj);
+		happyPathHelper.reviewAppellantCase(caseObj);
+		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
 	};
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('upload new version of document on appellant case', { tags: tag.smoke }, () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.uploadDocAppellantCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			happyPathHelper.uploadDocAppellantCase(caseObj);
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 			cy.reloadUntilVirusCheckComplete();
@@ -55,8 +55,8 @@ describe('manage docs on appellant case', () => {
 	});
 
 	it('check correct error response for file upload', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.uploadDocAppellantCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			happyPathHelper.uploadDocAppellantCase(caseObj);
 			caseDetailsPage.clickAddAdditionalDocs();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.checkFileNameDisplays(sampleFiles.document);
@@ -68,8 +68,8 @@ describe('manage docs on appellant case', () => {
 	});
 
 	it('upload doc and remove when final version', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.uploadDocAppellantCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			happyPathHelper.uploadDocAppellantCase(caseObj);
 			caseDetailsPage.clickAddAdditionalDocs();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.checkFileNameDisplays(sampleFiles.document);
@@ -90,8 +90,8 @@ describe('manage docs on appellant case', () => {
 	});
 
 	it('remove doc when not final version', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.uploadDocAppellantCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			happyPathHelper.uploadDocAppellantCase(caseObj);
 			caseDetailsPage.clickAddAdditionalDocs();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
 			caseDetailsPage.checkFileNameDisplays(sampleFiles.document);
@@ -126,8 +126,8 @@ describe('manage docs on appellant case', () => {
 	});
 
 	it('rename an uploaded file', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.uploadDocAppellantCase(caseRef);
+		cy.createCase().then((caseObj) => {
+			happyPathHelper.uploadDocAppellantCase(caseObj);
 			caseDetailsPage.clickManageAgreementToChangeDescriptionEvidence();
 			cy.reloadUntilVirusCheckComplete();
 			caseDetailsPage.clickLinkByText('View and edit');
@@ -142,14 +142,14 @@ describe('manage docs on appellant case', () => {
 		'can upload appellant proof of evidence and witness to inquiry case',
 		{ tags: tag.smoke },
 		() => {
-			cy.createCase({ caseType: 'W' }).then((caseRef) => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
 				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 					// require case to be started as inquiry to access appellant POE evidence
-					setupInquiry(caseRef, inquiryDate);
+					setupInquiry(caseObj, inquiryDate);
 
 					// find case and open inqiiry section
 					cy.visit(urlPaths.appealsList);
-					listCasesPage.clickAppealByRef(caseRef);
+					listCasesPage.clickAppealByRef(caseObj);
 
 					// navigate to file upload view, upload file and verify uploaded
 					documentationSectionPage.selectAddDocument('appellant-proofs-evidence');
@@ -179,14 +179,14 @@ describe('manage docs on appellant case', () => {
 		'upload appellant proof of evidence and witness - proceed without uploading file',
 		{ tags: tag.smoke },
 		() => {
-			cy.createCase({ caseType: 'W' }).then((caseRef) => {
+			cy.createCase({ caseType: 'W' }).then((caseObj) => {
 				cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
 					// require case to be started as inquiry to access appellant POE evidence
-					setupInquiry(caseRef, inquiryDate);
+					setupInquiry(caseObj, inquiryDate);
 
 					// find case and open inqiiry section
 					cy.visit(urlPaths.appealsList);
-					listCasesPage.clickAppealByRef(caseRef);
+					listCasesPage.clickAppealByRef(caseObj);
 
 					// navigate to file upload view, proceed without uploading file
 					documentationSectionPage.selectAddDocument('appellant-proofs-evidence');

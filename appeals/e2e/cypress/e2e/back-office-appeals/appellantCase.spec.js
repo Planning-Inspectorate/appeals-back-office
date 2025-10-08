@@ -30,16 +30,16 @@ describe('Managing Appellant Case Details', () => {
 	});
 
 	it('should reject empty value for the LPA application number', () => {
-		cy.createCase({ caseType: 'D' }).then((caseRef) => {
-			navigateToReferenceUpdate(caseRef);
+		cy.createCase({ caseType: 'D' }).then((caseObj) => {
+			navigateToReferenceUpdate(caseObj);
 			caseDetailsPage.updatePlanningApplicationReference(' ');
 			verifyError('Enter the application reference number');
 		});
 	});
 
 	it('should reject reference exceeding 100 characters for the LPA application number', () => {
-		cy.createCase({ caseType: 'W' }).then((caseRef) => {
-			navigateToReferenceUpdate(caseRef);
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			navigateToReferenceUpdate(caseObj);
 			caseDetailsPage.updatePlanningApplicationReference(exceededLengthReference);
 			verifyError('Application reference number must be 100 characters or less');
 		});
@@ -47,12 +47,12 @@ describe('Managing Appellant Case Details', () => {
 
 	Object.entries(appealTypes).forEach(([caseType, description]) => {
 		it(`should update ${description} LPA application reference`, () => {
-			cy.createCase({ caseType }).then((caseRef) => {
-				navigateToReferenceUpdate(caseRef);
+			cy.createCase({ caseType }).then((caseObj) => {
+				navigateToReferenceUpdate(caseObj);
 				caseDetailsPage.updatePlanningApplicationReference(maxLengthReference);
 
 				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Appeal updated');
-				cy.loadAppealDetails(caseRef)
+				cy.loadAppealDetails(caseObj)
 					.its('planningApplicationReference')
 					.should('eq', maxLengthReference);
 			});
@@ -60,8 +60,8 @@ describe('Managing Appellant Case Details', () => {
 	});
 
 	it('should display expected fields for householder (D) case', () => {
-		cy.createCase({ applicationDecision: 'not_received' }).then((caseRef) => {
-			appellantCasePage.navigateToAppellantCase(caseRef);
+		cy.createCase({ applicationDecision: 'not_received' }).then((caseObj) => {
+			appellantCasePage.navigateToAppellantCase(caseObj);
 			// ✅ Appellant section
 			appellantCasePage.assertAppellantDetails({
 				firstName: apiUsers[0].firstName,
@@ -109,8 +109,8 @@ describe('Managing Appellant Case Details', () => {
 	});
 
 	it('should display expected fields for full planning (W) case', () => {
-		cy.createCase({ caseType: 'W' }).then((caseRef) => {
-			appellantCasePage.navigateToAppellantCase(caseRef);
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			appellantCasePage.navigateToAppellantCase(caseObj);
 			// ✅ Appellant section
 			appellantCasePage.assertAppellantDetails({
 				firstName: apiUsers[0].firstName,
@@ -172,8 +172,8 @@ describe('Managing Appellant Case Details', () => {
 	});
 
 	it('should display expected fields for s20 listed building planning (Y) case', () => {
-		cy.createCase({ caseType: 'Y' }).then((caseRef) => {
-			appellantCasePage.navigateToAppellantCase(caseRef);
+		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
+			appellantCasePage.navigateToAppellantCase(caseObj);
 			// ✅ Appellant section
 			appellantCasePage.assertAppellantDetails({
 				firstName: apiUsers[0].firstName,
@@ -233,9 +233,9 @@ describe('Managing Appellant Case Details', () => {
 		});
 	});
 
-	const navigateToReferenceUpdate = (caseRef) => {
+	const navigateToReferenceUpdate = (caseObj) => {
 		caseDetailsPage.navigateToAppealsService();
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 		caseDetailsPage.clickReviewAppellantCase();
 		caseDetailsPage.clickChangeApplicationReferenceLink();
 	};

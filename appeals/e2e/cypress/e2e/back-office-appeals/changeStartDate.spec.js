@@ -13,24 +13,24 @@ describe('Change start date', () => {
 	});
 
 	it('Change Start date', () => {
-		cy.createCase().then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			happyPathHelper.changeStartDate(caseRef);
+		cy.createCase().then((caseObj) => {
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
+			happyPathHelper.changeStartDate(caseObj);
 			let dueDate = new Date();
 			caseDetailsPage.verifyDateChanges('start-date', dueDate);
 		});
 	});
 
 	it('Change Start date - hearing', () => {
-		cy.createCase({ caseType: 'W' }).then((caseRef) => {
-			happyPathHelper.assignCaseOfficer(caseRef);
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseRef);
+			happyPathHelper.reviewAppellantCase(caseObj);
 			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startS78Case(caseRef, 'hearing');
-			happyPathHelper.changeStartDate(caseRef);
+			happyPathHelper.startS78Case(caseObj, 'hearing');
+			happyPathHelper.changeStartDate(caseObj);
 			let dueDate = new Date();
 			caseDetailsPage.verifyDateChanges('start-date', dueDate);
 
@@ -46,7 +46,7 @@ describe('Change start date', () => {
 				}
 			];
 
-			cy.checkNotifySent(caseRef, expectedNotifies);
+			cy.checkNotifySent(caseObj, expectedNotifies);
 		});
 	});
 });

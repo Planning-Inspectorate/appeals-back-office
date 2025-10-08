@@ -24,9 +24,9 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 			let dueDate = new Date();
 			let officer;
 
-			cy.createCase().then((caseRef) => {
-				happyPathHelper.assignCaseOfficer(caseRef);
-				happyPathHelper.reviewAppellantCase(caseRef);
+			cy.createCase().then((caseObj) => {
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
 
 				caseDetailsPage.getCaseOfficer().then((name) => {
 					officer = name;
@@ -44,8 +44,8 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 		() => {
 			let dueDate = new Date();
 
-			cy.createCase().then((caseRef) => {
-				happyPathHelper.manageDocsAppellantCase(caseRef);
+			cy.createCase().then((caseObj) => {
+				happyPathHelper.manageDocsAppellantCase(caseObj);
 				caseDetailsPage.clickChangeSiteOwnership();
 				caseDetailsPage.selectRadioButtonByValue('Owns some of the land');
 				caseDetailsPage.clickButtonByText('Continue');

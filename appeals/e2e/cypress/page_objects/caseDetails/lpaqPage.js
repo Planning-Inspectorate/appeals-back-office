@@ -20,15 +20,15 @@ export class LpaqPage extends Page {
 
 	elements = {
 		addRelatedAppeal: () => cy.getByData(this._cyDataSelectors.addRelatedAppeals),
-		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`)
+		relatedAppealValue: (caseObj) => cy.get(`[data-cy="related-appeal-${caseObj}"]`)
 	};
 	/********************************************************
 	 ******************** Navigation *************************
 	 *********************************************************/
 
-	navigateToLpaq(caseRef) {
+	navigateToLpaq(caseObj) {
 		caseDetailsPage.navigateToAppealsService();
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 		caseDetailsPage.clickReviewLpaQuestionnaire(); // Assuming this exists
 	}
 
