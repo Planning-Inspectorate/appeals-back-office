@@ -24,7 +24,7 @@ export const validateLpaCostsDecision = createValidator(
 export const validateInvalidReason = createTextareaConditionalValidator(
 	'invalidReason',
 	'decision',
-	'Invalid',
+	'invalid',
 	'Enter a reason',
 	textInputCharacterLimits.defaultTextareaLength,
 	`Reason must be ${textInputCharacterLimits.defaultTextareaLength} characters or less`
