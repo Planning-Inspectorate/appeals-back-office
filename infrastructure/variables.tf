@@ -49,7 +49,6 @@ variable "apps_config" {
       featureFlagCAS                    = bool
       featureFlagCasAdvert              = bool
       featureFlagNotifyCaseHistory      = bool
-      featureFlagReIssueDecision        = bool
       featureFlagSimplifyTeamAssignment = bool
       featureFlagChangeAppealType       = bool
       featureFlagPdfDownload            = bool
