@@ -427,6 +427,7 @@ export const getBulkFileInfo = async (apiClient, caseId) => {
 							return {
 								// @ts-ignore
 								fullName:
+									// @ts-ignore
 									representationAttachmentFullNames[document.guid] ||
 									`${folderPath}/${document.name}`,
 								blobStorageContainer,
