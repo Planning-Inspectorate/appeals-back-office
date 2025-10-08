@@ -10,7 +10,7 @@ const caseDetailsPage = new CaseDetailsPage();
 const listCasesPage = new ListCasesPage();
 
 describe('add case notes', () => {
-	let caseRef;
+	let caseObj;
 	const maxCharacters = 500;
 	const caseNoteText = 'Here is a case note that is more than 500 characters.';
 	const invalidCaseNote = caseNoteText.repeat(10).substring(0, maxCharacters + 1);
@@ -18,7 +18,7 @@ describe('add case notes', () => {
 
 	before(() => {
 		cy.createCase().then((ref) => {
-			caseRef = ref;
+			caseObj = ref;
 			cy.login(users.appeals.caseAdmin);
 			happyPathHelper.assignCaseOfficer(ref);
 		});
@@ -27,7 +27,7 @@ describe('add case notes', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 		caseDetailsPage.navigateToAppealsService();
-		listCasesPage.clickAppealByRef(caseRef);
+		listCasesPage.clickAppealByRef(caseObj);
 		caseDetailsPage.clickCaseNotes();
 	});
 

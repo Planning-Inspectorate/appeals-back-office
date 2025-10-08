@@ -202,7 +202,7 @@ export class CaseDetailsPage extends Page {
 		postcode: () => cy.get('#post-code'),
 		changeInquiryDate: () => cy.getByData(this._cyDataSelectors.changeInquiryDate),
 		changeInquiryExpectedDays: () => cy.getByData(this._cyDataSelectors.changeInquiryNumberOfDays),
-		relatedAppealValue: (caseRef) => cy.get(`[data-cy="related-appeal-${caseRef}"]`),
+		relatedAppealValue: (caseObj) => cy.get(`[data-cy="related-appeal-${caseObj}"]`),
 		estimatedPreparationTime: () => cy.get('#preparation-time'),
 		estimatedSittingTime: () => cy.get('#sitting-time'),
 		estimatedReportingTime: () => cy.get('#reporting-time'),
@@ -470,13 +470,13 @@ export class CaseDetailsPage extends Page {
 		this.elements.costDecisionStatus().contains(text);
 	}
 
-	clickRemoveRelatedAppealByRef(caseRefToRelate) {
-		cy.log(caseRefToRelate);
-		cy.getByData('remove-appeal-' + caseRefToRelate).click();
+	clickRemoveRelatedAppealByRef(caseObjToRelate) {
+		cy.log(caseObjToRelate);
+		cy.getByData('remove-appeal-' + caseObjToRelate).click();
 	}
 
-	clickLinkedAppeal(caseRef) {
-		cy.getByData(this._cyDataSelectors.linkedAppeal + caseRef).click();
+	clickLinkedAppeal(caseObj) {
+		cy.getByData(this._cyDataSelectors.linkedAppeal + caseObj.reference).click();
 	}
 
 	clickRemoveFileUpload(fileName) {
@@ -501,8 +501,8 @@ export class CaseDetailsPage extends Page {
 		this.basePageElements.linkByText(text).click();
 	}
 
-	clickSiteVisitBanner(caseRef) {
-		this.elements.siteVisitBanner(caseRef).click();
+	clickSiteVisitBanner(caseObj) {
+		this.elements.siteVisitBanner(caseObj).click();
 	}
 
 	clickRowChangeLink(row) {
@@ -583,8 +583,8 @@ export class CaseDetailsPage extends Page {
 	 ************************ Verification ************************
 	 ****************************************************************/
 
-	assertRelatedAppealValue(caseRef) {
-		this.elements.relatedAppealValue(caseRef).should('be.visible');
+	assertRelatedAppealValue(caseObj) {
+		this.elements.relatedAppealValue(caseObj).should('be.visible');
 	}
 
 	checkAdditonalDocsAppellantCase(value) {
@@ -743,8 +743,8 @@ export class CaseDetailsPage extends Page {
 			});
 	}
 
-	verifyAppealRefOnCaseDetails(caseRef) {
-		this.elements.getAppealRefCaseDetails().contains(caseRef);
+	verifyAppealRefOnCaseDetails(caseObj) {
+		this.elements.getAppealRefCaseDetails().contains(caseObj);
 	}
 
 	verifyCheckYourAnswers(label, value) {
@@ -820,8 +820,9 @@ export class CaseDetailsPage extends Page {
 		this.clickButtonByText('Update timetable due dates');
 	}
 
-	acceptLpaStatement(caseRef, updateAllocation, representation) {
-		cy.addRepresentation(caseRef, 'lpaStatement', null, representation).then((caseRef) => {
+	acceptLpaStatement(caseObj, updateAllocation, representation) {
+		cy.log('problem is here');
+		cy.addRepresentation(caseObj, 'lpaStatement', null, representation).then((caseObj) => {
 			cy.reload();
 		});
 		this.elements.lpaStatementReviewLink().click();

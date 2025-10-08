@@ -25,19 +25,19 @@ describe('Issue decision', () => {
 
 	issueDecisionCompleteStatus.forEach((issueDecision) => {
 		it(`Issue '${issueDecision}' decision`, { tags: tag.smoke }, () => {
-			cy.createCase().then((caseRef) => {
-				cy.addLpaqSubmissionToCase(caseRef);
-				happyPathHelper.assignCaseOfficer(caseRef);
-				happyPathHelper.reviewAppellantCase(caseRef);
-				happyPathHelper.startCase(caseRef);
-				happyPathHelper.reviewLpaq(caseRef);
-				happyPathHelper.setupSiteVisitFromBanner(caseRef);
-				cy.simulateSiteVisit(caseRef).then((caseRef) => {
+			cy.createCase().then((caseObj) => {
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
+				happyPathHelper.startCase(caseObj);
+				happyPathHelper.reviewLpaq(caseObj);
+				happyPathHelper.setupSiteVisitFromBanner(caseObj);
+				cy.simulateSiteVisit(caseObj).then((caseObj) => {
 					cy.reload();
 				});
 
 				//Issue decision
-				happyPathHelper.issueDecision(caseRef, issueDecision);
+				happyPathHelper.issueDecision(caseObj, issueDecision);
 
 				//Case details
 				caseDetailsPage.checkDecisionOutcome(`Decision: ${issueDecision}`);
@@ -58,7 +58,7 @@ describe('Issue decision', () => {
 					}
 				];
 
-				cy.checkNotifySent(caseRef, expectedNotifies);
+				cy.checkNotifySent(caseObj, expectedNotifies);
 			});
 		});
 	});
@@ -70,19 +70,19 @@ describe('Issue decision', () => {
 
 	costs.forEach(({ typeOfCost, appellant, lpa, remainingCost }) => {
 		it(`Issue decision with ${typeOfCost} costs only`, () => {
-			cy.createCase().then((caseRef) => {
-				cy.addLpaqSubmissionToCase(caseRef);
-				happyPathHelper.assignCaseOfficer(caseRef);
-				happyPathHelper.reviewAppellantCase(caseRef);
-				happyPathHelper.startCase(caseRef);
-				happyPathHelper.reviewLpaq(caseRef);
-				happyPathHelper.setupSiteVisitFromBanner(caseRef);
-				cy.simulateSiteVisit(caseRef).then((caseRef) => {
+			cy.createCase().then((caseObj) => {
+				cy.addLpaqSubmissionToCase(caseObj);
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
+				happyPathHelper.startCase(caseObj);
+				happyPathHelper.reviewLpaq(caseObj);
+				happyPathHelper.setupSiteVisitFromBanner(caseObj);
+				cy.simulateSiteVisit(caseObj).then((caseObj) => {
 					cy.reload();
 				});
 
 				//Issue decision
-				happyPathHelper.issueDecision(caseRef, 'Allowed', appellant, lpa);
+				happyPathHelper.issueDecision(caseObj, 'Allowed', appellant, lpa);
 
 				//Case details
 				caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
@@ -94,19 +94,19 @@ describe('Issue decision', () => {
 	});
 
 	it('Issue decision without costs', () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			happyPathHelper.reviewLpaq(caseRef);
-			happyPathHelper.setupSiteVisitFromBanner(caseRef);
-			cy.simulateSiteVisit(caseRef).then((caseRef) => {
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
+			happyPathHelper.reviewLpaq(caseObj);
+			happyPathHelper.setupSiteVisitFromBanner(caseObj);
+			cy.simulateSiteVisit(caseObj).then((caseObj) => {
 				cy.reload();
 			});
 
 			//Issue decision without costs
-			happyPathHelper.issueDecision(caseRef, 'Allowed', false, false);
+			happyPathHelper.issueDecision(caseObj, 'Allowed', false, false);
 
 			//Case details
 			caseDetailsPage.checkDecisionOutcome(`Decision issued on ${formattedDate.date}`);
@@ -120,19 +120,19 @@ describe('Issue decision', () => {
 
 describe('Invalid decision', () => {
 	it('Issue `Invalid` decision', { tags: tag.smoke }, () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			happyPathHelper.reviewLpaq(caseRef);
-			happyPathHelper.setupSiteVisitFromBanner(caseRef);
-			cy.simulateSiteVisit(caseRef).then((caseRef) => {
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
+			happyPathHelper.reviewLpaq(caseObj);
+			happyPathHelper.setupSiteVisitFromBanner(caseObj);
+			cy.simulateSiteVisit(caseObj).then((caseObj) => {
 				cy.reload();
 			});
 
 			//Issue invalid decision
-			happyPathHelper.issueDecision(caseRef, 'Invalid');
+			happyPathHelper.issueDecision(caseObj, 'Invalid');
 
 			//Case details inset text
 			caseDetailsPage.checkDecisionOutcome('Decision: Invalid');
@@ -153,26 +153,26 @@ describe('Invalid decision', () => {
 				}
 			];
 
-			cy.checkNotifySent(caseRef, expectedNotifies);
+			cy.checkNotifySent(caseObj, expectedNotifies);
 		});
 	});
 });
 
 describe('Issue individual costs decision', () => {
 	it('Issue appellant costs separately', () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			happyPathHelper.reviewLpaq(caseRef);
-			happyPathHelper.setupSiteVisitFromBanner(caseRef);
-			cy.simulateSiteVisit(caseRef).then((caseRef) => {
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
+			happyPathHelper.reviewLpaq(caseObj);
+			happyPathHelper.setupSiteVisitFromBanner(caseObj);
+			cy.simulateSiteVisit(caseObj).then((caseObj) => {
 				cy.reload();
 			});
 
 			//Issue decision without costs
-			happyPathHelper.issueDecision(caseRef, 'Allowed', false, false);
+			happyPathHelper.issueDecision(caseObj, 'Allowed', false, false);
 
 			//Upload decision letter
 			caseDetailsPage.clickIssueAppellantCostsDecision();
@@ -196,24 +196,24 @@ describe('Issue individual costs decision', () => {
 				}
 			];
 
-			cy.checkNotifySent(caseRef, notifies);
+			cy.checkNotifySent(caseObj, notifies);
 		});
 	});
 
 	it('Issue LPA costs separately', () => {
-		cy.createCase().then((caseRef) => {
-			cy.addLpaqSubmissionToCase(caseRef);
-			happyPathHelper.assignCaseOfficer(caseRef);
-			happyPathHelper.reviewAppellantCase(caseRef);
-			happyPathHelper.startCase(caseRef);
-			happyPathHelper.reviewLpaq(caseRef);
-			happyPathHelper.setupSiteVisitFromBanner(caseRef);
-			cy.simulateSiteVisit(caseRef).then((caseRef) => {
+		cy.createCase().then((caseObj) => {
+			cy.addLpaqSubmissionToCase(caseObj);
+			happyPathHelper.assignCaseOfficer(caseObj);
+			happyPathHelper.reviewAppellantCase(caseObj);
+			happyPathHelper.startCase(caseObj);
+			happyPathHelper.reviewLpaq(caseObj);
+			happyPathHelper.setupSiteVisitFromBanner(caseObj);
+			cy.simulateSiteVisit(caseObj).then((caseObj) => {
 				cy.reload();
 			});
 
 			//Issue decision without costs
-			happyPathHelper.issueDecision(caseRef, 'Allowed', false, false);
+			happyPathHelper.issueDecision(caseObj, 'Allowed', false, false);
 
 			//Upload decision letter
 			caseDetailsPage.clickIssueLpaCostsDecision();
@@ -237,7 +237,7 @@ describe('Issue individual costs decision', () => {
 				}
 			];
 
-			cy.checkNotifySent(caseRef, notifies);
+			cy.checkNotifySent(caseObj, notifies);
 		});
 	});
 });
