@@ -386,7 +386,7 @@ Cypress.Commands.add('deleteAppeals', (caseObj) => {
 			appealsArray.push(appealId);
 		}
 
-		cy.log(`Deleting cases ${appealsArray}`);
+		cy.log(`Deleting cases ${appealRefs}`);
 		return await appealsApiClient.deleteAppeals(appealsArray);
 	});
 });
