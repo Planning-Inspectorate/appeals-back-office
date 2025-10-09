@@ -24,7 +24,8 @@ describe('unrelate appeals', () => {
 			cy.createCase().then((caseObjToRelate) => {
 				cy.createCase().then((secondcaseObjToRelate) => {
 					cases = [caseObj, caseObjToRelate, secondcaseObjToRelate];
-					happyPathHelper.assignCaseOfficer(caseObj);
+					cy.assignCaseOfficerViaApi(caseObj);
+					happyPathHelper.viewCaseDetails(caseObj);
 					caseDetailsPage.clickAddRelatedAppeals();
 					caseDetailsPage.fillInput(caseObjToRelate.reference);
 					caseDetailsPage.clickButtonByText('Continue');
@@ -59,7 +60,8 @@ describe('unrelate appeals', () => {
 
 		cy.createCase().then((caseObj) => {
 			cases = [caseObj];
-			happyPathHelper.assignCaseOfficer(caseObj);
+			cy.assignCaseOfficerViaApi(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickAddRelatedAppeals();
 			caseDetailsPage.fillInput(horizonAppealId);
 			caseDetailsPage.clickButtonByText('Continue');

@@ -23,7 +23,7 @@ beforeEach(() => {
 	cy.createCase().then((caseObj) => {
 		cy.wrap(caseObj).as('caseObjAlias');
 		appeal = caseObj;
-		happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'ISSUE_DECISION', 'HAS');
+		happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'ISSUE_DECISION', 'HAS');
 	});
 });
 

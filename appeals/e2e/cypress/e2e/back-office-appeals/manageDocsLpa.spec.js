@@ -34,10 +34,13 @@ describe('Manage docs on lpa case', () => {
 
 	const setupInquiry = (caseObj, inquiryDate) => {
 		// require case to be started as inquiry to access appellant POE evidence e.g.
-		cy.addInquiryViaApi(caseObj, inquiryDate);
-		happyPathHelper.assignCaseOfficer(caseObj);
-		happyPathHelper.reviewAppellantCase(caseObj);
-		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
+		happyPathHelper.advanceTo(
+			caseObj,
+			'ASSIGN_CASE_OFFICER',
+			'LPA_QUESTIONNAIRE',
+			'S78',
+			'INQUIRY'
+		);
 	};
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
@@ -45,9 +48,7 @@ describe('Manage docs on lpa case', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			caseDetailsPage.clickReviewLpaq();
 			caseDetailsPage.clickAddNotifyingParties();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
@@ -63,9 +64,7 @@ describe('Manage docs on lpa case', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			happyPathHelper.uploadDocsLpaq();
 			happyPathHelper.uploadDocVersionLpaq();
 			caseDetailsPage.clickManageNotifyingParties();
@@ -88,9 +87,7 @@ describe('Manage docs on lpa case', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			happyPathHelper.uploadDocsLpaq();
 			happyPathHelper.removeDocLpaq();
 			caseDetailsPage.checkAnswerNotifyingParties(

@@ -65,12 +65,7 @@ describe('Capture Net Residences', () => {
 		cy.createCase({ caseType: 'W' }).then((ref) => {
 			caseObj = ref;
 			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.viewCaseDetails(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startS78Case(caseObj, 'written');
-			happyPathHelper.reviewS78Lpaq(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'STATEMENTS', 'S78', 'WRITTEN');
 		});
 	};
 });

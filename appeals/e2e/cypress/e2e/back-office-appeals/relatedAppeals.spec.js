@@ -29,7 +29,8 @@ describe('related appeals', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((caseObjToLink) => {
 				cases = [caseObj, caseObjToLink];
-				happyPathHelper.assignCaseOfficer(caseObj);
+				cy.assignCaseOfficerViaApi(caseObj);
+				happyPathHelper.viewCaseDetails(caseObj);
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseObjToLink.reference);
 				caseDetailsPage.clickButtonByText('Continue');
@@ -45,7 +46,8 @@ describe('related appeals', () => {
 			cy.createCase().then((firstcaseObjToLink) => {
 				cy.createCase().then((secondcaseObjToLink) => {
 					cases = [caseObj, firstcaseObjToLink, secondcaseObjToLink];
-					happyPathHelper.assignCaseOfficer(caseObj);
+					cy.assignCaseOfficerViaApi(caseObj);
+					happyPathHelper.viewCaseDetails(caseObj);
 					caseDetailsPage.clickAddRelatedAppeals();
 					caseDetailsPage.fillInput(firstcaseObjToLink.reference);
 					caseDetailsPage.clickButtonByText('Continue');
@@ -75,7 +77,8 @@ describe('related appeals', () => {
 
 		cy.createCase().then((caseObj) => {
 			cases = [caseObj];
-			happyPathHelper.assignCaseOfficer(caseObj);
+			cy.assignCaseOfficerViaApi(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickAddRelatedAppeals();
 			caseDetailsPage.fillInput(horizonAppealId);
 			caseDetailsPage.clickButtonByText('Continue');
@@ -90,10 +93,12 @@ describe('related appeals', () => {
 			cy.createCase().then((caseObjToLink) => {
 				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to validation
-				happyPathHelper.assignCaseOfficer(caseObjToLink); //move case to validation
+				cy.assignCaseOfficerViaApi(caseObjToLink);
+				happyPathHelper.viewCaseDetails(caseObjToLink);
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
 				//related appeal in validation status
-				happyPathHelper.assignCaseOfficer(caseObj);
+				cy.assignCaseOfficerViaApi(caseObj);
+				happyPathHelper.viewCaseDetails(caseObj);
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseObjToLink.reference);
@@ -110,14 +115,11 @@ describe('related appeals', () => {
 			cy.createCase({ caseType: 'W' }).then((caseObjToLink) => {
 				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to final comments
-				cy.addLpaqSubmissionToCase(caseObjToLink);
-				happyPathHelper.assignCaseOfficer(caseObjToLink);
-				happyPathHelper.reviewAppellantCase(caseObjToLink);
-				happyPathHelper.startS78Case(caseObjToLink, 'written');
-				happyPathHelper.reviewLPaStatement(caseObjToLink);
+				happyPathHelper.advanceTo(caseObjToLink, 'ASSIGN_CASE_OFFICER', 'FINAL_COMMENTS', 'S78');
 				caseDetailsPage.checkStatusOfCase('Final comments', 0);
 				//related appeal in validation status
-				happyPathHelper.assignCaseOfficer(caseObj);
+				cy.assignCaseOfficerViaApi(caseObj);
+				happyPathHelper.viewCaseDetails(caseObj);
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseObjToLink.reference);
@@ -134,14 +136,16 @@ describe('related appeals', () => {
 			cy.createCase({ caseType: 'W' }).then((caseObjToLink) => {
 				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to final comments
-				cy.addLpaqSubmissionToCase(caseObjToLink);
-				happyPathHelper.assignCaseOfficer(caseObjToLink);
-				happyPathHelper.reviewAppellantCase(caseObjToLink);
-				happyPathHelper.startS78Case(caseObjToLink, 'hearing');
-				happyPathHelper.reviewLPaStatement(caseObjToLink);
+				happyPathHelper.advanceTo(
+					caseObjToLink,
+					'ASSIGN_CASE_OFFICER',
+					'EVENT_READY_TO_SETUP',
+					'S78'
+				);
 				caseDetailsPage.checkStatusOfCase('Hearing ready to set up', 0);
 				//related appeal in validation status
-				happyPathHelper.assignCaseOfficer(caseObj);
+				cy.assignCaseOfficerViaApi(caseObj);
+				happyPathHelper.viewCaseDetails(caseObj);
 				caseDetailsPage.checkStatusOfCase('Validation', 0);
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseObjToLink.reference);
@@ -158,20 +162,10 @@ describe('related appeals', () => {
 			cy.createCase().then((caseObjToLink) => {
 				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to issue decision
-				cy.addLpaqSubmissionToCase(caseObjToLink);
-				happyPathHelper.assignCaseOfficer(caseObjToLink);
-				happyPathHelper.reviewAppellantCase(caseObjToLink);
-				happyPathHelper.startCase(caseObjToLink);
-				happyPathHelper.reviewLpaq(caseObjToLink);
-				happyPathHelper.progressSiteVisit(caseObjToLink);
+				happyPathHelper.advanceTo(caseObjToLink, 'ASSIGN_CASE_OFFICER', 'ISSUE_DECISION', 'HAS');
 				caseDetailsPage.checkStatusOfCase('Issue decision', 0);
 				//progress to be related appeal to issue decision
-				cy.addLpaqSubmissionToCase(caseObj);
-				happyPathHelper.assignCaseOfficer(caseObj);
-				happyPathHelper.reviewAppellantCase(caseObj);
-				happyPathHelper.startCase(caseObj);
-				happyPathHelper.reviewLpaq(caseObj);
-				happyPathHelper.progressSiteVisit(caseObj);
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'ISSUE_DECISION', 'HAS');
 				caseDetailsPage.checkStatusOfCase('Issue decision', 0);
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseObjToLink.reference);
@@ -188,19 +182,10 @@ describe('related appeals', () => {
 			cy.createCase().then((caseObjToLink) => {
 				cases = [caseObj, caseObjToLink];
 				//progress to be related appeal to issue decision
-				cy.addLpaqSubmissionToCase(caseObjToLink);
-				happyPathHelper.assignCaseOfficer(caseObjToLink);
-				happyPathHelper.reviewAppellantCase(caseObjToLink);
-				happyPathHelper.startCase(caseObjToLink);
-				happyPathHelper.reviewLpaq(caseObjToLink);
-				happyPathHelper.progressSiteVisit(caseObjToLink);
+				happyPathHelper.advanceTo(caseObjToLink, 'ASSIGN_CASE_OFFICER', 'ISSUE_DECISION', 'HAS');
 				caseDetailsPage.checkStatusOfCase('Issue decision', 0);
 				//progress to be related appeal to issue decision
-				cy.addLpaqSubmissionToCase(caseObj);
-				happyPathHelper.assignCaseOfficer(caseObj);
-				happyPathHelper.reviewAppellantCase(caseObj);
-				happyPathHelper.startS78Case(caseObj, 'written');
-				happyPathHelper.reviewS78Lpaq(caseObj);
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'STATEMENTS', 'S78', 'WRITTEN');
 				caseDetailsPage.checkStatusOfCase('Statements', 0);
 				caseDetailsPage.clickAddRelatedAppeals();
 				caseDetailsPage.fillInput(caseObjToLink.reference);
@@ -216,8 +201,9 @@ describe('related appeals', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((relatedCase) => {
 				cases = [caseObj, relatedCase];
-				happyPathHelper.assignCaseOfficer(relatedCase);
-				happyPathHelper.assignCaseOfficer(caseObj);
+				cy.assignCaseOfficerViaApi(relatedCase);
+				cy.assignCaseOfficerViaApi(caseObj);
+				happyPathHelper.viewCaseDetails(caseObj);
 
 				//navigate to appellant case
 				caseDetailsPage.clickReviewAppellantCase();
@@ -244,13 +230,8 @@ describe('related appeals', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((relatedCase) => {
 				cases = [caseObj, relatedCase];
-				happyPathHelper.assignCaseOfficer(relatedCase);
-				happyPathHelper.assignCaseOfficer(caseObj);
-				happyPathHelper.reviewAppellantCase(caseObj);
-				happyPathHelper.startCase(caseObj);
-				cy.addLpaqSubmissionToCase(caseObj);
-				happyPathHelper.reviewLpaq(caseObj);
-
+				cy.assignCaseOfficerViaApi(relatedCase);
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'EVENT_READY_TO_SETUP', 'HAS');
 				//navigate to LPAQ
 				caseDetailsPage.clickViewLpaQuestionnaire();
 
@@ -275,7 +256,8 @@ describe('related appeals', () => {
 	it('related appeals error messaging', () => {
 		cy.createCase().then((caseObj) => {
 			cases = [caseObj];
-			happyPathHelper.assignCaseOfficer(caseObj);
+			cy.assignCaseOfficerViaApi(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickAddRelatedAppeals();
 
 			caseDetailsPage.clickButtonByText('Continue');

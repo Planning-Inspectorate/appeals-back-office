@@ -30,11 +30,7 @@ describe('add supporting documents', () => {
 		}).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startS78Case(caseObj, 'written');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 			caseDetailsPage.clickLinkByText('Review');
 			caseDetailsPage.clickIndividualLinkWhenMultiple('Additional documents', 'Add');
@@ -68,11 +64,7 @@ describe('add supporting documents', () => {
 		}).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startS78Case(caseObj, 'written');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 			happyPathHelper.reviewS78Lpaq(caseObj);
 			caseDetailsPage.checkStatusOfCase('Statements', 0);
@@ -100,11 +92,7 @@ describe('add supporting documents', () => {
 		}).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startS78Case(caseObj, 'written');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
 			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
 			happyPathHelper.reviewS78Lpaq(caseObj);
 			caseDetailsPage.checkStatusOfCase('Statements', 0);

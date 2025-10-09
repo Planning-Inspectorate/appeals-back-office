@@ -8,44 +8,51 @@ import { happyPathHelper } from '../../support/happyPathHelper.js';
 const caseDetailsPage = new CaseDetailsPage();
 
 describe('Create Test Data', () => {
+	beforeEach(() => {
+		cy.login(users.appeals.caseAdmin);
+	});
 	it.only('HAS', () => {
 		cy.createCase().then((caseObj) => {
-			cy.login(users.appeals.caseAdmin);
-			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'VALIDATION', 'HAS');
 		});
 	});
-	it('S78 Full Planning', () => {
+	it('S78 Written', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.login(users.appeals.caseAdmin);
-			happyPathHelper.updateCase(
-				caseObj,
-				'ASSIGN_CASE_OFFICER',
-				'LPA_QUESTIONNAIRE',
-				'S78',
-				'written'
-			);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'S78', 'WRITTEN');
+		});
+	});
+	it('S78 Hearing', () => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'S78', 'HEARING');
+		});
+	});
+	it('S78 Inquiry', () => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'AWAITING_EVENT', 'S78', 'INQUIRY');
 		});
 	});
 	it('S20 Listed Building', () => {
 		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
-			cy.login(users.appeals.caseAdmin);
-			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'S20');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'S20');
+		});
+	});
+	it('CAS Planning', () => {
+		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'CAS_PLANNING');
+		});
+	});
+	it('CAS ADVERT', () => {
+		cy.createCase({ caseType: 'ZA' }).then((caseObj) => {
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'CAS_ADVERT');
+		});
+	});
+	it('Full Advert', () => {
+		cy.createCase({ caseType: 'H' }).then((caseObj) => {
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'ADVERT');
 		});
 	});
 	it('Update Case', () => {
-		const caseObj = { reference: '6004064' };
-		cy.login(users.appeals.caseAdmin);
-		happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'FINAL_COMMENTS', 'S78');
+		const caseObj = { reference: '6053117' };
+		happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'READY_TO_START', 'HAS');
 	});
 });
-
-// STATUSES.ASSIGN_CASE_OFFICER,
-// STATUSES.VALIDATION,
-// STATUSES.READY_TO_START,
-// STATUSES.LPA_QUESTIONNAIRE,
-// STATUSES.STATEMENTS,
-// STATUSES.FINAL_COMMENTS,
-// STATUSES.EVENT_READY_TO_SETUP,
-// STATUSES.AWAITING_EVENT,
-// STATUSES.ISSUE_DECISION,
-// STATUSES.COMPLETE
