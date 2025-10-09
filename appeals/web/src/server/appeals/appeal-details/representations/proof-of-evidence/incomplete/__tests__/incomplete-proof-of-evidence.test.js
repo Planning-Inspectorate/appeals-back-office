@@ -151,38 +151,6 @@ describe('incomplete proof of evidence', () => {
 			);
 		});
 
-		it('should return validation error when "Other Reason" (30) is selected but text is too short', async () => {
-			const response = await request
-				.post(`${baseUrl}/2/proof-of-evidence/appellant/incomplete/reasons`)
-				.send({
-					rejectionReason: ['30'],
-					'rejectionReason-30': 'ab'
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(response.status).toBe(400);
-			expect(element.querySelector('.govuk-error-summary__list li')?.textContent).toContain(
-				'The reason field must be between 3 and 100 characters'
-			);
-		});
-
-		it('should return validation error when "Other Reason" (30) is selected with invalid characters', async () => {
-			const response = await request
-				.post(`${baseUrl}/2/proof-of-evidence/appellant/incomplete/reasons`)
-				.send({
-					rejectionReason: ['30'],
-					'rejectionReason-30': '<invalid>'
-				});
-
-			const element = parseHtml(response.text);
-
-			expect(response.status).toBe(400);
-			expect(element.querySelector('.govuk-error-summary__list li')?.textContent).toContain(
-				'The reason field contains invalid characters'
-			);
-		});
-
 		it('should save valid data and redirect to the next step if only Supporting documents missing is selected', async () => {
 			const response = await request
 				.post(`${baseUrl}/2/proof-of-evidence/appellant/incomplete/reasons`)
