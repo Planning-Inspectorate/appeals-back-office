@@ -696,6 +696,24 @@ const newCASAdvertAppeals = [
 	appealFactory({
 		typeShorthand: APPEAL_CASE_TYPE.ZA,
 		status: { status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, createdAt: getPastDate({ months: 6 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 6 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.ZA,
+		status: { status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, createdAt: getPastDate({ months: 6 }) },
+		lpaQuestionnaire: true,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 6 }),
+		assignCaseOfficer: true,
+		agent: false
+	}),
+	appealFactory({
+		typeShorthand: APPEAL_CASE_TYPE.ZA,
+		status: { status: APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE, createdAt: getPastDate({ months: 6 }) },
 		lpaQuestionnaire: false,
 		startedAt: getPastDate({ months: 2 }),
 		validAt: getPastDate({ months: 6 }),
@@ -704,16 +722,7 @@ const newCASAdvertAppeals = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_CASE_TYPE.ZA,
-		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
-		lpaQuestionnaire: true,
-		startedAt: getPastDate({ months: 2 }),
-		validAt: getPastDate({ months: 6 }),
-		assignCaseOfficer: true,
-		agent: false
-	}),
-	appealFactory({
-		typeShorthand: APPEAL_CASE_TYPE.ZA,
-		status: { status: APPEAL_CASE_STATUS.STATEMENTS, createdAt: getPastDate({ months: 6 }) },
+		status: { status: APPEAL_CASE_STATUS.INVALID, createdAt: getPastDate({ months: 6 }) },
 		lpaQuestionnaire: true,
 		startedAt: getPastDate({ months: 2 }),
 		validAt: getPastDate({ months: 6 }),
@@ -722,20 +731,14 @@ const newCASAdvertAppeals = [
 	}),
 	appealFactory({
 		typeShorthand: APPEAL_CASE_TYPE.ZA,
-		status: { status: APPEAL_CASE_STATUS.FINAL_COMMENTS, createdAt: getPastDate({ months: 10 }) },
+		status: {
+			status: APPEAL_CASE_STATUS.ISSUE_DETERMINATION,
+			createdAt: getPastDate({ months: 6 })
+		},
 		lpaQuestionnaire: true,
-		startedAt: getPastDate({ months: 6 }),
-		validAt: getPastDate({ months: 10 }),
-		assignCaseOfficer: false,
-		agent: false
-	}),
-	appealFactory({
-		typeShorthand: APPEAL_CASE_TYPE.ZA,
-		status: { status: APPEAL_CASE_STATUS.FINAL_COMMENTS, createdAt: getPastDate({ months: 10 }) },
-		lpaQuestionnaire: true,
-		startedAt: getPastDate({ months: 6 }),
-		validAt: getPastDate({ months: 10 }),
-		assignCaseOfficer: false,
+		startedAt: getPastDate({ months: 2 }),
+		validAt: getPastDate({ months: 6 }),
+		assignCaseOfficer: true,
 		agent: true
 	})
 ];
