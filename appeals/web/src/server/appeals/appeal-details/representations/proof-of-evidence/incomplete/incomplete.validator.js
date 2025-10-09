@@ -36,7 +36,6 @@ export const validateOtherReasonInput = createValidator(
 
 			return false;
 		})
-
 		// Field validation (only runs if Other reason is selected)
 		.trim()
 		.notEmpty()
@@ -44,5 +43,4 @@ export const validateOtherReasonInput = createValidator(
 		.bail()
 		.isLength({ max: LENGTH_1000 })
 		.withMessage(`Reason must be ${LENGTH_1000} characters or less`)
-		.withMessage(capitalize('The reason field contains invalid characters'))
 );
