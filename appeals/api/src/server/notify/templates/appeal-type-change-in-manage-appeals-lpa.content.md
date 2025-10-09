@@ -4,7 +4,7 @@
 
 The appeal did not match the type of application that the appellant made to the local planning authority.
 
-We have changed the {{existing_appeal_type}} to {{new_appeal_type}}.
+We have changed the {{existing_appeal_type}} to {{new_appeal_type}}. We have removed any documents the appellant submitted that are not included with a {{new_appeal_type}}.
 
 # What happens next
 

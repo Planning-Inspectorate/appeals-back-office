@@ -217,8 +217,8 @@ const updateAppealType = async (
 		site_address: siteAddress,
 		lpa_reference: appeal.applicationReference || '',
 		team_email_address: teamEmail,
-		existing_appeal_type: appeal.appealType?.type.toLowerCase() || '',
-		new_appeal_type: newAppealType.toLowerCase() || ''
+		existing_appeal_type: formatAppealTypeForNotify(appeal.appealType?.changeAppealType),
+		new_appeal_type: formatAppealTypeForNotify(newAppealType)
 	};
 
 	if (agentOrAppellantEmail) {
