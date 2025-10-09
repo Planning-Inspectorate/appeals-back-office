@@ -110,18 +110,7 @@ const setupTestCase = () => {
 	cy.createCase({ caseType: 'W', planningObligation: true }).then((ref) => {
 		caseObj = ref;
 		appeal = caseObj;
-		happyPathHelper.viewCaseDetails(caseObj);
-
-		// Assign Case Officer Via API
-		cy.assignCaseOfficerViaApi(caseObj);
-
-		// Validate Appeal Via API
-		cy.getBusinessActualDate(new Date(), 0).then((date) => {
-			cy.updateAppealDetailsViaApi(caseObj, { validationOutcome: 'valid', validAt: date });
-		});
-
-		cy.reload();
-
+		happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'READY_TO_START', 'S78', 'INQUIRY');
 		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
 		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
 		dateTimeSection.clearInquiryDateAndTime();

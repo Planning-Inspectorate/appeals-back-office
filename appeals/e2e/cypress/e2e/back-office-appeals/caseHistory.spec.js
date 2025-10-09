@@ -34,9 +34,7 @@ describe('Case History - Assign, validate, amend docs, update appellant case', (
 
 			cy.createCase().then((caseObj) => {
 				appeal = caseObj;
-				happyPathHelper.assignCaseOfficer(caseObj);
-				happyPathHelper.reviewAppellantCase(caseObj);
-
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'READY_TO_START', 'HAS');
 				caseDetailsPage.getCaseOfficer().then((name) => {
 					officer = name;
 					caseDetailsPage.clickViewCaseHistory();

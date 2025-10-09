@@ -33,9 +33,7 @@ describe('Review LPAQ', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			caseDetailsPage.clickReviewLpaq();
 			caseDetailsPage.selectRadioButtonByValue('Complete');
 			caseDetailsPage.clickButtonByText('Confirm');
@@ -49,9 +47,7 @@ describe('Review LPAQ', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			caseDetailsPage.clickReviewLpaq();
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
 			caseDetailsPage.clickButtonByText('Confirm');
@@ -73,9 +69,7 @@ describe('Review LPAQ', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			caseDetailsPage.clickReviewLpaq();
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
 			caseDetailsPage.clickButtonByText('Confirm');
@@ -98,7 +92,7 @@ describe('Review LPAQ', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			caseDetailsPage.clickReviewLpaq();
 
 			// Section 1 – Constraints
@@ -175,7 +169,7 @@ describe('Review LPAQ', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
 			caseDetailsPage.clickReviewLpaq();
 			const address = casedata.neighbouringSiteAddresses[0];
 
@@ -280,7 +274,7 @@ describe('Review LPAQ', () => {
 		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			caseDetailsPage.clickReviewLpaq();
 			const address = casedata.neighbouringSiteAddresses[0];
 
@@ -390,7 +384,7 @@ describe('Review LPAQ', () => {
 		cy.createCase({ ...appealsApiRequests.casAdvertsSubmission.casedata }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
 			caseDetailsPage.clickReviewLpaq();
 			const address = casedata.neighbouringSiteAddresses[0];
 
@@ -503,7 +497,7 @@ describe('Review LPAQ', () => {
 		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
 			caseDetailsPage.clickReviewLpaq();
 
 			// Section 1 – Constraints
@@ -580,7 +574,7 @@ describe('Review LPAQ', () => {
 		cy.createCase({ ...appealsApiRequests.advertsSubmission.casedata }).then((caseObj) => {
 			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
 			caseDetailsPage.clickReviewLpaq();
 			const address = casedata.neighbouringSiteAddresses[0];
 

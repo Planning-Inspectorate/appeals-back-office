@@ -56,9 +56,7 @@ describe('Update LPAQ Due date', () => {
 	});
 
 	const updateLpaqDueDate = (caseObj) => {
-		cy.assignCaseOfficerViaApi(caseObj);
-		happyPathHelper.reviewAppellantCase(caseObj);
-		cy.startAppeal(caseObj);
+		happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'S78');
 		cy.clearCookies();
 		happyPathHelper.viewCaseDetails(caseObj);
 		caseDetailsPage.clickChangeLpaqDueDate();

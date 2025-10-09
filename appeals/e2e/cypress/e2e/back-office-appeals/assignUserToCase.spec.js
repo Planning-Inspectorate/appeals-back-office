@@ -4,6 +4,7 @@
 import { users } from '../../fixtures/users';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage.js';
 import { ListCasesPage } from '../../page_objects/listCasesPage';
+import { happyPathHelper } from '../../support/happyPathHelper.js';
 import { tag } from '../../support/tag';
 import { urlPaths } from '../../support/urlPaths';
 
@@ -30,9 +31,7 @@ describe('Assign user to case', () => {
 		() => {
 			cy.createCase().then((caseObj) => {
 				appeal = caseObj;
-				console.log(users.appeals);
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseObj);
+				happyPathHelper.viewCaseDetails(caseObj);
 				caseDetailsPage.clickAssignCaseOfficer();
 				caseDetailsPage.searchForCaseOfficer('case');
 				caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
@@ -49,8 +48,7 @@ describe('Assign user to case', () => {
 		() => {
 			cy.createCase().then((caseObj) => {
 				appeal = caseObj;
-				cy.visit(urlPaths.appealsList);
-				listCasesPage.clickAppealByRef(caseObj);
+				happyPathHelper.viewCaseDetails(caseObj);
 				caseDetailsPage.clickAssignInspector();
 				caseDetailsPage.searchForCaseOfficer('Mctester');
 				caseDetailsPage.chooseSummaryListValue(users.appeals.inspector.email);
@@ -64,8 +62,7 @@ describe('Assign user to case', () => {
 	it('Case officer should be able to change assigned user', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickAssignCaseOfficer();
 			caseDetailsPage.searchForCaseOfficer('case');
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);
@@ -78,8 +75,7 @@ describe('Assign user to case', () => {
 	it('Inspector should be able to change assigned user', () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			cy.visit(urlPaths.appealsList);
-			listCasesPage.clickAppealByRef(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickAssignInspector();
 			caseDetailsPage.searchForCaseOfficer('case');
 			caseDetailsPage.chooseSummaryListValue(users.appeals.caseAdmin.email);

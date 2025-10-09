@@ -20,10 +20,7 @@ const setupTestCase = () => {
 		caseObj = refObj;
 		appeal = caseObj;
 		cy.addLpaqSubmissionToCase(caseObj);
-		happyPathHelper.assignCaseOfficer(caseObj);
-		caseDetailsPage.checkStatusOfCase('Validation', 0);
-		happyPathHelper.reviewAppellantCase(caseObj);
-		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+		happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'READY_TO_START', 'S78', 'INQUIRY');
 		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
 	});
 };

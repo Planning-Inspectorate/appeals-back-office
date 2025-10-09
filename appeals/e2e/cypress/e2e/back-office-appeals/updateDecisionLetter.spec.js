@@ -32,7 +32,7 @@ describe('Update Decision Letter', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
 			//Move Case to Decision Issued Status
-			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'ISSUE_DECISION', 'S78');
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'ISSUE_DECISION', 'S78');
 			//Change decision letter
 			happyPathHelper.issueDecision('Allowed', 'both costs', false, false);
 			caseDetailsPage.clickViewDecisionLetter('View decision');
