@@ -15,6 +15,7 @@ const listCasesPage = new ListCasesPage();
 const fileUploader = new FileUploader();
 
 let sampleFiles = fileUploader.sampleFiles;
+let pdf = sampleFiles.pdf;
 
 export const happyPathHelper = {
 	viewCaseDetails(caseObj) {
@@ -255,7 +256,7 @@ export const happyPathHelper = {
 		caseDetailsPage.validateBannerMessage('Success', 'Site visit set up');
 	},
 
-	issueDecision(caseObj, decision, appellantCostsBool = true, lpaCostsBool = true) {
+	issueDecision(decision, route, appellantCostsBool = true, lpaCostsBool = true) {
 		caseDetailsPage.clickIssueDecision();
 		caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(decision));
 
@@ -268,26 +269,35 @@ export const happyPathHelper = {
 			caseDetailsPage.clickButtonByText('Continue');
 		}
 
-		//Appellant costs
-		if (appellantCostsBool) {
-			caseDetailsPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-			fileUploader.uploadFiles(sampleFiles.pdf);
-			caseDetailsPage.clickButtonByText('Continue');
-		} else {
-			caseDetailsPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
-		}
+		const issueCosts = (bool) => {
+			if (bool) {
+				basePage.selectRadioButtonByValue('Yes');
+				basePage.clickButtonByText('Continue');
+				fileUploader.uploadFiles(sampleFiles.pdf);
+				fileUploader.clickButtonByText('Continue');
+			} else {
+				basePage.selectRadioButtonByValue('No');
+				basePage.clickButtonByText('Continue');
+			}
+		};
 
-		//LPA costs
-		if (lpaCostsBool) {
-			caseDetailsPage.selectRadioButtonByValue('Yes');
-			caseDetailsPage.clickButtonByText('Continue');
-			fileUploader.uploadFiles(sampleFiles.pdf);
-			caseDetailsPage.clickButtonByText('Continue');
-		} else {
-			caseDetailsPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
+		//this is not for which costs are issued but which costs are eligible to be issued
+		switch (route) {
+			case 'both costs':
+				issueCosts(appellantCostsBool);
+				issueCosts(lpaCostsBool);
+				break;
+
+			case 'appellant only':
+				issueCosts(appellantCostsBool);
+				break;
+
+			case 'lpa only':
+				issueCosts(lpaCostsBool);
+				break;
+
+			case 'no costs':
+				break;
 		}
 
 		//CYA
@@ -349,18 +359,34 @@ export const happyPathHelper = {
 		caseDetailsPage.checkStatusOfCase('Complete', 0);
 	},
 
-	issueAppellantCostsDecision(caseObj) {
+	issueAppellantCostsDecision() {
 		caseDetailsPage.clickIssueAppellantCostsDecision();
 		fileUploader.uploadFiles(sampleFiles.pdf);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Issue appellant costs decision');
 	},
 
-	issueLpaCostsDecision(caseObj) {
+	issueLpaCostsDecision() {
 		caseDetailsPage.clickIssueLpaCostsDecision();
 		fileUploader.uploadFiles(sampleFiles.pdf);
 		caseDetailsPage.clickButtonByText('Continue');
 		caseDetailsPage.clickButtonByText('Issue lpa costs decision');
+	},
+
+	addAppellantCostWithdrawal() {
+		caseDetailsPage.clickAddAppellantWithdrawal();
+		fileUploader.uploadFiles(pdf);
+		fileUploader.clickButtonByText('Continue');
+		fileUploader.clickButtonByText('Confirm');
+		fileUploader.clickButtonByText('Confirm');
+	},
+
+	addLpaCostWithdrawal() {
+		caseDetailsPage.clickAddLpaWithdrawal();
+		fileUploader.uploadFiles(pdf);
+		fileUploader.clickButtonByText('Continue');
+		fileUploader.clickButtonByText('Confirm');
+		fileUploader.clickButtonByText('Confirm');
 	},
 
 	addLinkedAppeal(leadcaseObj, childcaseObj, firstLink = true) {
