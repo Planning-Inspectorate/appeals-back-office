@@ -27,36 +27,12 @@ describe('Update Decision Letter', () => {
 
 	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('Update Decision Letter', () => {
-		cy.createCase().then((caseObj) => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
-			happyPathHelper.reviewLpaq(caseObj);
-			happyPathHelper.setupSiteVisitFromBanner(caseObj);
-			cy.simulateSiteVisit(caseObj).then((caseObj) => {
-				cy.reload();
-			});
-			//Issue decision
-			caseDetailsPage.clickIssueDecision();
-			caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch('Allowed'));
-			caseDetailsPage.clickButtonByText('Continue');
-			caseDetailsPage.uploadSampleFile(sampleFiles.pdf);
-			caseDetailsPage.clickButtonByText('Continue');
-			//Appellant costs
-			caseDetailsPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			//LPA costs
-			caseDetailsPage.selectRadioButtonByValue('No');
-			caseDetailsPage.clickButtonByText('Continue');
-			//CYA
-			caseDetailsPage.clickButtonByText('Issue decision');
-			//Case details inset text
-			caseDetailsPage.validateBannerMessage('Success', 'Decision issued');
-			caseDetailsPage.checkStatusOfCase('Complete', 0);
-			caseDetailsPage.checkDecisionOutcome('Allowed');
+			//Move Case to Decision Issued Status
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'ISSUE_DECISION', 'S78');
 			//Change decision letter
+			happyPathHelper.issueDecision('Allowed', 'both costs', false, false);
 			caseDetailsPage.clickViewDecisionLetter('View decision');
 			caseDetailsPage.clickChangeLinkByLabel('Decision letter');
 			caseDetailsPage.uploadSampleFile(sampleFiles.pdf2);

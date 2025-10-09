@@ -6,6 +6,7 @@ import { CaseDetailsPage } from '../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../page_objects/dateTimeSection';
 import { ListCasesPage } from '../page_objects/listCasesPage';
 import { FileUploader } from '../page_objects/shared.js';
+import { FLOWS, STATUSES } from './flows';
 import { urlPaths } from './urlPaths.js';
 
 const basePage = new Page();
@@ -465,5 +466,49 @@ export const happyPathHelper = {
 		basePage.fillInput(number);
 		basePage.clickButtonByText('Save and return');
 		basePage.validateBannerMessage('Success', 'Number of residential units added');
+	},
+
+	updateCase(caseObj, currentStatus, targetStatus, appealType, procedureType = 'written') {
+		const baseActions = {
+			[STATUSES.ASSIGN_CASE_OFFICER]: (c) => cy.assignCaseOfficerViaApi(c),
+			[STATUSES.VALIDATION]: (c) => cy.updateAppealDetailsViaApi(c, { validationOutcome: 'valid' }),
+			[STATUSES.READY_TO_START]: (c, appealType, procedureType) => cy.startAppeal(c),
+			[STATUSES.LPA_QUESTIONNAIRE]: (c) => {
+				cy.addLpaqSubmissionToCase(c);
+				cy.reviewLpaqSubmission(c);
+			},
+			[STATUSES.STATEMENTS]: (c) => {
+				cy.addRepresentation(c, 'lpaStatement', null);
+				cy.reviewStatementViaApi(c);
+				cy.simulateStatementsDeadlineElapsed(c);
+				cy.shareCommentsAndStatementsViaApi(c);
+			},
+			[STATUSES.FINAL_COMMENTS]: (c) => {
+				cy.addRepresentation(c, 'lpaFinalComment', null);
+				cy.reviewLpaFinalCommentsViaApi(c);
+				cy.simulateFinalCommentsDeadlineElapsed(c);
+				cy.shareCommentsAndStatementsViaApi(c);
+			},
+			[STATUSES.EVENT_READY_TO_SETUP]: (c) => cy.setupSiteVisitViaAPI(c),
+			[STATUSES.AWAITING_EVENT]: (c) => cy.simulateSiteVisit(c),
+			[STATUSES.ISSUE_DECISION]: (c) => cy.issueDecisionViaApi(c)
+		};
+
+		const flow = FLOWS[appealType];
+		if (!flow) {
+			throw new Error(
+				`Unknown appealType "${appealType}". Valid types: ${Object.keys(FLOWS).join(', ')}`
+			);
+		}
+		const fromIndex = flow.indexOf(currentStatus);
+		const toIndex = flow.indexOf(targetStatus);
+
+		for (let i = fromIndex; i < toIndex; i++) {
+			const current = flow[i];
+			const fn = baseActions[current];
+			if (fn) fn(caseObj, appealType, procedureType);
+			else cy.log(`No action defined for ${current}`);
+		}
+		this.viewCaseDetails(caseObj);
 	}
 };
