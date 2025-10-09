@@ -12,6 +12,7 @@ import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { formatSiteVisit } from './site-visits.formatter.js';
 import {
 	createSiteVisit,
+	createSiteVisitForLinkedChildAppeals,
 	deleteSiteVisit as deleteSiteVisitService,
 	updateSiteVisit
 } from './site-visits.service.js';
@@ -77,6 +78,9 @@ const postSiteVisit = async (req, res) => {
 
 	try {
 		await createSiteVisit(azureAdUserId, siteVisitData, notifyClient);
+		if (isFeatureActive(FEATURE_FLAG_NAMES.LINKED_APPEALS)) {
+			await createSiteVisitForLinkedChildAppeals(azureAdUserId, siteVisitData, notifyClient);
+		}
 	} catch (error) {
 		logger.error(error);
 		return res.status(500).send({ errors: { body: ERROR_FAILED_TO_SAVE_DATA } });
