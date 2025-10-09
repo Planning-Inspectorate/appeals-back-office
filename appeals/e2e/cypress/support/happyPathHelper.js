@@ -503,11 +503,21 @@ export const happyPathHelper = {
 		basePage.validateBannerMessage('Success', 'Number of residential units added');
 	},
 
-	updateCase(caseObj, currentStatus, targetStatus, appealType, procedureType = 'written') {
+	updateCase(caseObj, currentStatus, targetStatus, appealType, procedureType = 'WRITTEN') {
 		const baseActions = {
 			[STATUSES.ASSIGN_CASE_OFFICER]: (c) => cy.assignCaseOfficerViaApi(c),
 			[STATUSES.VALIDATION]: (c) => cy.updateAppealDetailsViaApi(c, { validationOutcome: 'valid' }),
-			[STATUSES.READY_TO_START]: (c, appealType, procedureType) => cy.startAppeal(c),
+			[STATUSES.READY_TO_START]: (c, appealType, procedureType) => {
+				if (procedureType === 'HEARING') {
+					happyPathHelper.startS78HearingCase(c, 'hearing');
+				} else if (procedureType === 'INQUIRY') {
+					cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+						cy.addInquiryViaApi(caseObj, inquiryDate);
+					});
+				} else {
+					cy.startAppeal(c);
+				}
+			},
 			[STATUSES.LPA_QUESTIONNAIRE]: (c) => {
 				cy.addLpaqSubmissionToCase(c);
 				cy.reviewLpaqSubmission(c);
@@ -519,13 +529,40 @@ export const happyPathHelper = {
 				cy.shareCommentsAndStatementsViaApi(c);
 			},
 			[STATUSES.FINAL_COMMENTS]: (c) => {
+				if (procedureType === 'HEARING' || procedureType === 'INQUIRY') {
+					cy.log(`"${procedureType}" procedure — skipping final comments`);
+					return;
+				}
 				cy.addRepresentation(c, 'lpaFinalComment', null);
 				cy.reviewLpaFinalCommentsViaApi(c);
 				cy.simulateFinalCommentsDeadlineElapsed(c);
 				cy.shareCommentsAndStatementsViaApi(c);
 			},
-			[STATUSES.EVENT_READY_TO_SETUP]: (c) => cy.setupSiteVisitViaAPI(c),
-			[STATUSES.AWAITING_EVENT]: (c) => cy.simulateSiteVisit(c),
+			[STATUSES.EVIDENCE]: (c, appealType, procedureType) => {
+				if (procedureType !== 'INQUIRY') {
+					cy.log('Skipping EVIDENCE stage because procedure type is not inquiry');
+					return;
+				}
+				cy.addRepresentation(c, 'lpaProofOfEvidence', null);
+			},
+			[STATUSES.EVENT_READY_TO_SETUP]: (c) => {
+				if (procedureType == 'HEARING') {
+					cy.setupHearingViaApi(c);
+				} else if (procedureType === 'INQUIRY') {
+					cy.log('Inquiry procedure - skipping as inquiry already set up');
+				} else {
+					cy.setupSiteVisitViaAPI(c);
+				}
+			},
+			[STATUSES.AWAITING_EVENT]: (c) => {
+				if (procedureType == 'HEARING') {
+					cy.simulateHearingElapsed(c);
+				} else if (procedureType === 'INQUIRY') {
+					//cy.simulateInquiryElapsed(c);
+				} else {
+					cy.simulateSiteVisit(c);
+				}
+			},
 			[STATUSES.ISSUE_DECISION]: (c) => cy.issueDecisionViaApi(c)
 		};
 

@@ -8,34 +8,58 @@ import { happyPathHelper } from '../../support/happyPathHelper.js';
 const caseDetailsPage = new CaseDetailsPage();
 
 describe('Create Test Data', () => {
-	it.only('HAS', () => {
+	beforeEach(() => {
+		cy.login(users.appeals.caseAdmin);
+	});
+	it('HAS', () => {
 		cy.createCase().then((caseObj) => {
-			cy.login(users.appeals.caseAdmin);
-			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'HAS');
 		});
 	});
-	it('S78 Full Planning', () => {
+	it('S78 Written', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
-			cy.login(users.appeals.caseAdmin);
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'S78', 'WRITTEN');
+		});
+	});
+	it('S78 Hearing', () => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'S78', 'HEARING');
+		});
+	});
+	it('S78 Inquiry', () => {
+		cy.createCase({ caseType: 'W' }).then((caseObj) => {
 			happyPathHelper.updateCase(
 				caseObj,
 				'ASSIGN_CASE_OFFICER',
-				'LPA_QUESTIONNAIRE',
+				'AWAITING_EVENT',
 				'S78',
-				'written'
+				'INQUIRY'
 			);
 		});
 	});
 	it('S20 Listed Building', () => {
 		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
-			cy.login(users.appeals.caseAdmin);
 			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'S20');
 		});
 	});
-	it('Update Case', () => {
-		const caseObj = { reference: '6004064' };
-		cy.login(users.appeals.caseAdmin);
-		happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'FINAL_COMMENTS', 'S78');
+	it('CAS Planning', () => {
+		cy.createCase({ caseType: 'ZP' }).then((caseObj) => {
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'CAS_PLANNING');
+		});
+	});
+	it('CAS ADVERT', () => {
+		cy.createCase({ caseType: 'ZA' }).then((caseObj) => {
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'CAS_ADVERT');
+		});
+	});
+	it('Full Advert', () => {
+		cy.createCase({ caseType: 'H' }).then((caseObj) => {
+			happyPathHelper.updateCase(caseObj, 'ASSIGN_CASE_OFFICER', 'COMPLETE', 'ADVERT');
+		});
+	});
+	it.skip('Update Case', () => {
+		const caseObj = { reference: '6003035' };
+		happyPathHelper.updateCase(caseObj, 'LPA_QUESTIONNAIRE', 'COMPLETE', 'S78');
 	});
 });
 
