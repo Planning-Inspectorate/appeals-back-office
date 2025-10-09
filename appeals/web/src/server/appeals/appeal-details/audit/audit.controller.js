@@ -2,11 +2,7 @@ import nunjucksEnvironments from '#app/config/nunjucks.js';
 import { getAppealCaseNotes } from '#appeals/appeal-details/case-notes/case-notes.service.js';
 import config from '#environment/config.js';
 import { appealShortReference } from '#lib/appeals-formatter.js';
-import {
-	dateISOStringToDisplayDate,
-	dateISOStringToDisplayTime12hr,
-	dateISOStringToDisplayTime24hr
-} from '#lib/dates.js';
+import { dateISOStringToDisplayDate, dateISOStringToDisplayTime12hr } from '#lib/dates.js';
 import { utcToZonedTime } from 'date-fns-tz';
 import * as interestedPartyCommentsService from '../representations/interested-party-comments/interested-party-comments.service.js';
 import { mapMessageContent, tryMapUsers } from './audit.mapper.js';
@@ -68,7 +64,7 @@ export const renderAudit = async (request, response) => {
 			return {
 				dateTime: loggedDate.getTime(),
 				date: dateISOStringToDisplayDate(audit.loggedDate),
-				time: dateISOStringToDisplayTime24hr(audit.loggedDate),
+				time: dateISOStringToDisplayTime12hr(audit.loggedDate),
 				details: detailsHtml,
 				user: await tryMapUsers(audit.azureAdUserId, request.session)
 			};
@@ -128,7 +124,7 @@ export const renderAudit = async (request, response) => {
 				return {
 					dateTime: createdAt.getTime(),
 					date: dateISOStringToDisplayDate(notification.dateCreated),
-					time: dateISOStringToDisplayTime24hr(notification.dateCreated),
+					time: dateISOStringToDisplayTime12hr(notification.dateCreated),
 					details: finalHtml,
 					user
 				};
