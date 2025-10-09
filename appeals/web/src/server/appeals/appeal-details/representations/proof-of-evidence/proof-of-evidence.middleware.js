@@ -72,7 +72,8 @@ export const addPageContentToLocals = async (req, _res, next) => {
 			submitButtonTextOverride: `Add ${proofOfEvidenceType} proof of evidence and witnesses`,
 			supportingDocumentTextOverride: 'Proof of evidence and witnesses',
 			dateSubmittedTextOverride: 'Date received'
-		}
+		},
+		showSuccessBanner: true
 	};
 	next();
 };

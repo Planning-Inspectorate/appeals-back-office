@@ -170,9 +170,11 @@ export const postCheckYourAnswers = async (request, response) => {
 			bannerDefinitionKey = 'lpaStatementDocumentAddedSuccess';
 			break;
 		case 'lpa_proofs_evidence':
+			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
 			bannerDefinitionKey = 'lpaProofOfEvidenceDocumentAddedSuccess';
 			break;
 		case 'appellant_proofs_evidence':
+			nextPageUrl = `${nextPageUrl}/manage-documents/${folderId}`;
 			bannerDefinitionKey = 'appellantProofOfEvidenceDocumentAddedSuccess';
 			break;
 		default:
