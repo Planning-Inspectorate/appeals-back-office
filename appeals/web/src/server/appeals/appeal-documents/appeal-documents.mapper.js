@@ -877,6 +877,15 @@ export function manageFolderPage({
 	dateColumnLabelTextOverride,
 	preHeadingTextOverride
 }) {
+	/** @type {PageComponent[]} */
+	let proofOfEvidenceSuccessBanner = [];
+	if (request.locals?.pageContent?.showSuccessBanner) {
+		proofOfEvidenceSuccessBanner = mapNotificationBannersFromSession(
+			request.session,
+			'viewProofOfEvidence',
+			request.currentAppeal.appealId
+		);
+	}
 	const notificationBanners = mapNotificationBannersFromSession(
 		request.session,
 		'manageFolder',
@@ -929,6 +938,7 @@ export function manageFolderPage({
 		preHeading: preHeadingTextOverride || 'Manage folder',
 		heading: pageHeadingTextOverride || mapManageFolderPageHeading(folder.path),
 		pageComponents: [
+			...proofOfEvidenceSuccessBanner,
 			...notificationBanners,
 			...errorSummaryPageComponents,
 			buttonComponent,

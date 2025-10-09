@@ -283,7 +283,7 @@ describe('proof-of-evidence', () => {
 				expect(response.statusCode).toBe(302);
 
 				expect(response.text).toBe(
-					`Found. Redirecting to ${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}`
+					`Found. Redirecting to ${baseUrl}/2/proof-of-evidence/${proofOfEvidenceType.type}/manage-documents/1234`
 				);
 			});
 		});
