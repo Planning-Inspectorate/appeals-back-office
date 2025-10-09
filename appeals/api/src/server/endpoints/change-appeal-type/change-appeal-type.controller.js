@@ -118,7 +118,8 @@ export const requestConfirmationTransferOfAppeal = async (req, res) => {
 export const requestUpdateOfAppeal = async (req, res) => {
 	const { newAppealTypeId } = req.body;
 	const newAppealType =
-		req.appealTypes.find((appealType) => appealType.id === Number(newAppealTypeId))?.type || '';
+		req.appealTypes.find((appealType) => appealType.id === Number(newAppealTypeId))
+			?.changeAppealType || '';
 
 	await updateAppealType(
 		req.appeal,
