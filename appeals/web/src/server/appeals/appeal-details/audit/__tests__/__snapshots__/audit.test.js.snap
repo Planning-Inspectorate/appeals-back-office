@@ -20,7 +20,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                 <tbody class="govuk-table__body">
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:55</span>
+                            <br><span>10:55am</span>
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Issue decision</strong>
                         </td>
@@ -28,7 +28,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:55</span>
+                            <br><span>10:55am</span>
                         </td>
                         <td class="govuk-table__cell">
                             <div class="pins-show-more" data-label="" data-mode="html" data-toggle-text-collapsed="Show more"
@@ -43,7 +43,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:55</span>
+                            <br><span>10:55am</span>
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--yellow">Awaiting site visit</strong>
                         </td>
@@ -51,21 +51,21 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:55</span>
+                            <br><span>10:55am</span>
                         </td>
                         <td class="govuk-table__cell">The site visit was arranged for Thursday 2 October</td>
                         <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:55</span>
+                            <br><span>10:55am</span>
                         </td>
                         <td class="govuk-table__cell">Final comments shared</td>
                         <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:55</span>
+                            <br><span>10:55am</span>
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Site visit ready to set up</strong>
                         </td>
@@ -73,28 +73,28 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:55</span>
+                            <br><span>10:55am</span>
                         </td>
                         <td class="govuk-table__cell">LPA final comments accepted</td>
                         <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:55</span>
+                            <br><span>10:55am</span>
                         </td>
                         <td class="govuk-table__cell">Appellant final comments accepted</td>
                         <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:54</span>
+                            <br><span>10:54am</span>
                         </td>
                         <td class="govuk-table__cell">Statements and IP comments shared</td>
                         <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:54</span>
+                            <br><span>10:54am</span>
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Final comments</strong>
                         </td>
@@ -102,14 +102,14 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:52</span>
+                            <br><span>10:52am</span>
                         </td>
                         <td class="govuk-table__cell">LPA questionnaire updated</td>
                         <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:52</span>
+                            <br><span>10:52am</span>
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Statements</strong>
                         </td>
@@ -117,7 +117,7 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:52</span>
+                            <br><span>10:52am</span>
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">LPA questionnaire</strong>
                         </td>
@@ -125,21 +125,21 @@ exports[`audit GET /:appealId/audit should render the case history page with a r
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:52</span>
+                            <br><span>10:52am</span>
                         </td>
                         <td class="govuk-table__cell">The case timeline was created</td>
                         <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:52</span>
+                            <br><span>10:52am</span>
                         </td>
                         <td class="govuk-table__cell">Case updated</td>
                         <td class="govuk-table__cell">Smith, John</td>
                     </tr>
                     <tr class="govuk-table__row">
                         <td class="govuk-table__cell">27 May 2025
-                            <br><span>10:52</span>
+                            <br><span>10:52am</span>
                         </td>
                         <td class="govuk-table__cell">Case progressed to <strong class="govuk-tag govuk-tag--green">Ready to start</strong>
                         </td>
