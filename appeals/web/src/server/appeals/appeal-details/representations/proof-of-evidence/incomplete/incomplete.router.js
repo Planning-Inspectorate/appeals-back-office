@@ -1,6 +1,7 @@
 import {
 	validateIncompleteReason,
-	validateIncompleteReasonTextItems
+	validateIncompleteReasonTextItems,
+	validateOtherReasonInput
 } from '#appeals/appeal-details/representations/proof-of-evidence/incomplete/incomplete.validator.js';
 import { saveBodyToSession } from '#lib/middleware/save-body-to-session.js';
 import { asyncHandler } from '@pins/express';
@@ -23,6 +24,7 @@ router
 	.post(
 		validateIncompleteReason('Select why the proof of evidence and witnesses are incomplete'),
 		validateIncompleteReasonTextItems,
+		validateOtherReasonInput,
 		saveBodyToSession('proofOfEvidence', { scopeToAppeal: true }),
 		asyncHandler(postReasons)
 	);

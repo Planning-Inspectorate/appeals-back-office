@@ -104,6 +104,116 @@ describe('incomplete proof of evidence', () => {
 		});
 	});
 
+	describe('POST /reasons', () => {
+		it('should return validation error when no reason is selected', async () => {
+			const response = await request
+				.post(`${baseUrl}/2/proof-of-evidence/appellant/incomplete/reasons`)
+				.send({});
+
+			const element = parseHtml(response.text);
+
+			expect(response.status).toBe(400);
+			expect(element.innerHTML).toMatchSnapshot();
+
+			expect(element.querySelector('.govuk-error-summary__list li')?.textContent).toContain(
+				'Select why the proof of evidence and witnesses are incomplete'
+			);
+		});
+		it('should return validation error when both a "Supporting documents missing" (29) and "Other Reason" (30) are selected but the "Other Reason" field text is empty', async () => {
+			const response = await request
+				.post(`${baseUrl}/2/proof-of-evidence/appellant/incomplete/reasons`)
+				.send({
+					rejectionReason: ['10', '30'],
+					'rejectionReason-30': '' // empty field should trigger validation
+				});
+
+			const element = parseHtml(response.text);
+
+			expect(response.status).toBe(400);
+			expect(element.querySelector('.govuk-error-summary__list li')?.textContent).toContain(
+				'The reason field cannot be empty'
+			);
+		});
+
+		it('should return validation error when "Other Reason" (30) is selected but no text provided', async () => {
+			const response = await request
+				.post(`${baseUrl}/2/proof-of-evidence/appellant/incomplete/reasons`)
+				.send({
+					rejectionReason: ['30'],
+					'rejectionReason-30': '' // no text entered
+				});
+
+			const element = parseHtml(response.text);
+
+			expect(response.status).toBe(400);
+			expect(element.querySelector('.govuk-error-summary__list li')?.textContent).toContain(
+				'The reason field cannot be empty'
+			);
+		});
+
+		it('should return validation error when "Other Reason" (30) is selected but text is too short', async () => {
+			const response = await request
+				.post(`${baseUrl}/2/proof-of-evidence/appellant/incomplete/reasons`)
+				.send({
+					rejectionReason: ['30'],
+					'rejectionReason-30': 'ab'
+				});
+
+			const element = parseHtml(response.text);
+
+			expect(response.status).toBe(400);
+			expect(element.querySelector('.govuk-error-summary__list li')?.textContent).toContain(
+				'The reason field must be between 3 and 100 characters'
+			);
+		});
+
+		it('should return validation error when "Other Reason" (30) is selected with invalid characters', async () => {
+			const response = await request
+				.post(`${baseUrl}/2/proof-of-evidence/appellant/incomplete/reasons`)
+				.send({
+					rejectionReason: ['30'],
+					'rejectionReason-30': '<invalid>'
+				});
+
+			const element = parseHtml(response.text);
+
+			expect(response.status).toBe(400);
+			expect(element.querySelector('.govuk-error-summary__list li')?.textContent).toContain(
+				'The reason field contains invalid characters'
+			);
+		});
+
+		it('should save valid data and redirect to the next step if only Supporting documents missing is selected', async () => {
+			const response = await request
+				.post(`${baseUrl}/2/proof-of-evidence/appellant/incomplete/reasons`)
+				.send({
+					rejectionReason: ['29'],
+					'rejectionReason-30': ''
+				});
+
+			// successful submissions usually redirect (303 or 302)
+			expect([302, 303]).toContain(response.status);
+			expect(response.headers.location).toContain(
+				'/appeals-service/appeal-details/2/proof-of-evidence/appellant/incomplete/confirm'
+			);
+		});
+
+		it('should save valid data and redirect to the next step if "Supporting documents missing" and "Other reason" is selected', async () => {
+			const response = await request
+				.post(`${baseUrl}/2/proof-of-evidence/appellant/incomplete/reasons`)
+				.send({
+					rejectionReason: ['29', '30'],
+					'rejectionReason-30': 'Testing'
+				});
+
+			// successful submissions usually redirect (303 or 302)
+			expect([302, 303]).toContain(response.status);
+			expect(response.headers.location).toContain(
+				'/appeals-service/appeal-details/2/proof-of-evidence/appellant/incomplete/confirm'
+			);
+		});
+	});
+
 	describe('GET /confirm', () => {
 		for (const proofOfEvidenceType of proofOfEvidenceTypes) {
 			it(`should render the incomplete ${proofOfEvidenceType.type} proof of evidence CYA page with the expected content`, async () => {
