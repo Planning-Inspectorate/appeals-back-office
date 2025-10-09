@@ -62,7 +62,9 @@ export class CaseDetailsPage extends Page {
 		hearingBannerAddressLink: 'add-hearing-address',
 		pageHeading: 'h1',
 		changeInquiryDate: 'change-inquiry-date',
-		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days'
+		changeInquiryNumberOfDays: 'change-inquiry-expected-number-of-days',
+		addAppellantWithdrawal: 'add-costs-appellant-withdrawal',
+		addLpaWithdrawal: 'add-costs-lpa-withdrawal'
 	};
 
 	fixturesPath = 'cypress/fixtures/';
@@ -147,10 +149,43 @@ export class CaseDetailsPage extends Page {
 		manageMainPartyCorrespondence: () =>
 			cy.getByData(this._cyDataSelectors.manageMainPartyCorrespondence),
 		decisionOutcomeText: () => cy.get('.govuk-inset-text'),
-		manageCostDecision: () =>
+		manageAppellantCostApplication: () =>
 			cy
 				.get('.govuk-table__row')
 				.contains('Appellant application')
+				.siblings()
+				.eq(1)
+				.children()
+				.first()
+				.children()
+				.first(), //Returns the manage link next in the Costs decsion row under costs section
+
+		manageAppellantCostWithdrawal: () =>
+			cy
+				.get('.govuk-table__row')
+				.contains('Appellant withdrawal')
+				.siblings()
+				.eq(1)
+				.children()
+				.first()
+				.children()
+				.first(), //Returns the manage link next in the Costs decsion row under costs section
+
+		manageLpaCostApplication: () =>
+			cy
+				.get('.govuk-table__row')
+				.contains('LPA application')
+				.siblings()
+				.eq(1)
+				.children()
+				.first()
+				.children()
+				.first(), //Returns the manage link next in the Costs decsion row under costs section
+
+		manageLpaCostWithdrawal: () =>
+			cy
+				.get('.govuk-table__row')
+				.contains('LPA withdrawal')
 				.siblings()
 				.eq(1)
 				.children()
@@ -207,7 +242,9 @@ export class CaseDetailsPage extends Page {
 		estimatedSittingTime: () => cy.get('#sitting-time'),
 		estimatedReportingTime: () => cy.get('#reporting-time'),
 		caseDetailsInquiryEstimateLink: () => cy.get('#addInquiryEstimates'),
-		caseOfficerValue: () => cy.get('.appeal-case-officer .govuk-summary-list__value')
+		caseOfficerValue: () => cy.get('.appeal-case-officer .govuk-summary-list__value'),
+		addAppellantWithdrawal: () => cy.getByData(this._cyDataSelectors.addAppellantWithdrawal),
+		addLpaWithdrawal: () => cy.getByData(this._cyDataSelectors.addLpaWithdrawal)
 	};
 	/********************************************************
 	 ************************ Actions ************************
@@ -217,8 +254,20 @@ export class CaseDetailsPage extends Page {
 		this.elements.viewLpaQuestionnaire().click();
 	}
 
-	clickManageDocsCostDecision() {
-		this.elements.manageCostDecision().click();
+	clickManageAppellantCostApplication() {
+		this.elements.manageAppellantCostApplication().click();
+	}
+
+	clickManageAppellanCostWithdrawal() {
+		this.elements.manageAppellantCostWithdrawal().click();
+	}
+
+	clickManageLpaCostApplication() {
+		this.elements.manageLpaCostApplication().click();
+	}
+
+	clickManageLpaCostWithdrawal() {
+		this.elements.manageLpaCostWithdrawal().click();
 	}
 
 	checkDocVersionNumber(versionNumber) {
@@ -386,6 +435,14 @@ export class CaseDetailsPage extends Page {
 
 	clickAddAppellantApplication() {
 		this.elements.addAppellantApplication().click();
+	}
+
+	clickAddAppellantWithdrawal() {
+		this.elements.addAppellantWithdrawal().click();
+	}
+
+	clickAddLpaWithdrawal() {
+		this.elements.addLpaWithdrawal().click();
 	}
 
 	clickChangeSiteOwnership() {
