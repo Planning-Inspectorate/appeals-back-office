@@ -58,7 +58,7 @@ export async function renderReasons(request, response) {
 
 	const pageContent = incompleteProofOfEvidencePage(currentAppeal, proofOfEvidenceType);
 
-	return response.status(200).render('appeals/appeal/reject-representation.njk', {
+	return response.status(400).render('appeals/appeal/reject-representation.njk', {
 		errors,
 		pageContent,
 		rejectionReasons: mappedRejectionReasons
@@ -74,7 +74,6 @@ export const postReasons = async (request, response) => {
 		params: { appealId, proofOfEvidenceType },
 		errors
 	} = request;
-
 	if (errors) {
 		return renderReasons(request, response);
 	}
