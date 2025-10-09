@@ -28,7 +28,8 @@ describe('Review appellant case', () => {
 
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
+			cy.assignCaseOfficerViaApi(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Valid');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -43,7 +44,8 @@ describe('Review appellant case', () => {
 	it('Invalidate appellant case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
+			cy.assignCaseOfficerViaApi(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Invalid');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -62,7 +64,8 @@ describe('Review appellant case', () => {
 
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
+			cy.assignCaseOfficerViaApi(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
 			caseDetailsPage.clickButtonByText('Continue');
@@ -84,7 +87,8 @@ describe('Review appellant case', () => {
 
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
+			cy.assignCaseOfficerViaApi(caseObj);
+			happyPathHelper.viewCaseDetails(caseObj);
 			caseDetailsPage.clickReviewAppellantCase();
 			caseDetailsPage.selectRadioButtonByValue('Incomplete');
 			caseDetailsPage.clickButtonByText('Continue');
