@@ -1,6 +1,7 @@
 import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatter.js';
 import { isCurrentStatus } from '#utils/current-status.js';
 import {
+	CASE_RELATIONSHIP_LINKED,
 	DECISION_TYPE_APPELLANT_COSTS,
 	DECISION_TYPE_INSPECTOR,
 	DECISION_TYPE_LPA_COSTS,
@@ -21,6 +22,8 @@ import { publishChildDecision, publishCostsDecision, publishDecision } from './d
 export const postInspectorDecision = async (req, res) => {
 	const { appeal } = req;
 	const { decisions } = req.body;
+
+	const childAppeals = appeal.childAppeals || [];
 
 	if (
 		decisions.some(
@@ -52,12 +55,20 @@ export const postInspectorDecision = async (req, res) => {
 				switch (decisionType) {
 					case DECISION_TYPE_INSPECTOR: {
 						if (isChildAppeal) {
-							return publishChildDecision(
-								Number(decisionAppealId),
-								outcome,
-								documentDate,
-								azureAdUserId
-							);
+							const childAppeal = childAppeals.find(
+								(appeal) =>
+									appeal.type === CASE_RELATIONSHIP_LINKED && appeal.childId === decisionAppealId
+							)?.child;
+
+							if (childAppeal) {
+								return publishChildDecision(
+									childAppeal,
+									outcome,
+									documentDate,
+									azureAdUserId,
+									appeal
+								);
+							}
 						}
 						return publishDecision(
 							appeal,
