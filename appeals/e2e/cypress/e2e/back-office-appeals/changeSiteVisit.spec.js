@@ -25,9 +25,7 @@ describe('Change site visit', () => {
 
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue('Unaccompanied');
 			dateTimeSection.enterVisitDate(visitDate);
@@ -53,9 +51,7 @@ describe('Change site visit', () => {
 
 		cy.createCase().then((caseObj) => {
 			appeal = caseObj;
-			happyPathHelper.assignCaseOfficer(caseObj);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			happyPathHelper.startCase(caseObj);
+			happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'LPA_QUESTIONNAIRE', 'HAS');
 			caseDetailsPage.clickSetUpSiteVisitType();
 			caseDetailsPage.selectRadioButtonByValue('Access required');
 			dateTimeSection.enterVisitDate(visitDate);

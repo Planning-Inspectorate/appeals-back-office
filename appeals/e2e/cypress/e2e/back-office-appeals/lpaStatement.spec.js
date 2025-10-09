@@ -12,22 +12,12 @@ const caseDetailsPage = new CaseDetailsPage();
 		const statementPrefix = 'Hello, not about cheese but still a rep of some kind (LPA statement).';
 
 		const setupCaseToStatementsStage = (caseObj) => {
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
 			cy.addAllocationLevelAndSpecialisms(caseObj);
-			caseDetailsPage.checkStatusOfCase('Validation', 0);
-
-			happyPathHelper.reviewAppellantCase(caseObj);
-			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-
 			if (caseType === 'W') {
-				happyPathHelper.startS78Case(caseObj, 'written');
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'STATEMENTS', 'S78', 'WRITTEN');
 			} else {
-				happyPathHelper.startCase(caseObj);
+				happyPathHelper.advanceTo(caseObj, 'ASSIGN_CASE_OFFICER', 'STATEMENTS', 'S20');
 			}
-			caseDetailsPage.checkStatusOfCase('LPA questionnaire', 0);
-
-			happyPathHelper.reviewS78Lpaq(caseObj);
 			caseDetailsPage.checkStatusOfCase('Statements', 0);
 		};
 
