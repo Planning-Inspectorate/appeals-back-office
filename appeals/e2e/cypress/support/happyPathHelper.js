@@ -6,6 +6,7 @@ import { CaseDetailsPage } from '../page_objects/caseDetailsPage.js';
 import { DateTimeSection } from '../page_objects/dateTimeSection';
 import { ListCasesPage } from '../page_objects/listCasesPage';
 import { FileUploader } from '../page_objects/shared.js';
+import { FLOWS, STATUSES } from './flows';
 import { urlPaths } from './urlPaths.js';
 
 const basePage = new Page();
@@ -465,5 +466,86 @@ export const happyPathHelper = {
 		basePage.fillInput(number);
 		basePage.clickButtonByText('Save and return');
 		basePage.validateBannerMessage('Success', 'Number of residential units added');
+	},
+
+	updateCase(caseObj, currentStatus, targetStatus, appealType, procedureType = 'WRITTEN') {
+		const baseActions = {
+			[STATUSES.ASSIGN_CASE_OFFICER]: (c) => cy.assignCaseOfficerViaApi(c),
+			[STATUSES.VALIDATION]: (c) => cy.updateAppealDetailsViaApi(c, { validationOutcome: 'valid' }),
+			[STATUSES.READY_TO_START]: (c, appealType, procedureType) => {
+				if (procedureType === 'HEARING') {
+					happyPathHelper.startS78HearingCase(c, 'hearing');
+				} else if (procedureType === 'INQUIRY') {
+					cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+						cy.addInquiryViaApi(caseObj, inquiryDate);
+					});
+				} else {
+					cy.startAppeal(c);
+				}
+			},
+			[STATUSES.LPA_QUESTIONNAIRE]: (c) => {
+				cy.addLpaqSubmissionToCase(c);
+				cy.reviewLpaqSubmission(c);
+			},
+			[STATUSES.STATEMENTS]: (c) => {
+				cy.addRepresentation(c, 'lpaStatement', null);
+				cy.reviewStatementViaApi(c);
+				cy.simulateStatementsDeadlineElapsed(c);
+				cy.shareCommentsAndStatementsViaApi(c);
+			},
+			[STATUSES.FINAL_COMMENTS]: (c) => {
+				if (procedureType === 'HEARING' || procedureType === 'INQUIRY') {
+					cy.log(`"${procedureType}" procedure — skipping final comments`);
+					return;
+				}
+				cy.addRepresentation(c, 'lpaFinalComment', null);
+				cy.reviewLpaFinalCommentsViaApi(c);
+				cy.simulateFinalCommentsDeadlineElapsed(c);
+				cy.shareCommentsAndStatementsViaApi(c);
+			},
+			[STATUSES.EVIDENCE]: (c, appealType, procedureType) => {
+				if (procedureType !== 'INQUIRY') {
+					cy.log('Skipping EVIDENCE stage because procedure type is not inquiry');
+					return;
+				}
+				cy.addRepresentation(c, 'lpaProofOfEvidence', null);
+			},
+			[STATUSES.EVENT_READY_TO_SETUP]: (c) => {
+				if (procedureType == 'HEARING') {
+					cy.setupHearingViaApi(c);
+				} else if (procedureType === 'INQUIRY') {
+					cy.log('Inquiry procedure - skipping as inquiry already set up');
+				} else {
+					cy.setupSiteVisitViaAPI(c);
+				}
+			},
+			[STATUSES.AWAITING_EVENT]: (c) => {
+				if (procedureType == 'HEARING') {
+					cy.simulateHearingElapsed(c);
+				} else if (procedureType === 'INQUIRY') {
+					//cy.simulateInquiryElapsed(c);
+				} else {
+					cy.simulateSiteVisit(c);
+				}
+			},
+			[STATUSES.ISSUE_DECISION]: (c) => cy.issueDecisionViaApi(c)
+		};
+
+		const flow = FLOWS[appealType];
+		if (!flow) {
+			throw new Error(
+				`Unknown appealType "${appealType}". Valid types: ${Object.keys(FLOWS).join(', ')}`
+			);
+		}
+		const fromIndex = flow.indexOf(currentStatus);
+		const toIndex = flow.indexOf(targetStatus);
+
+		for (let i = fromIndex; i < toIndex; i++) {
+			const current = flow[i];
+			const fn = baseActions[current];
+			if (fn) fn(caseObj, appealType, procedureType);
+			else cy.log(`No action defined for ${current}`);
+		}
+		this.viewCaseDetails(caseObj);
 	}
 };
