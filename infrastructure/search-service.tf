@@ -3,6 +3,10 @@ resource "azurerm_search_service" "appeals_search_service" {
   resource_group_name = azurerm_resource_group.primary.name
   location            = module.primary_region.location
   sku                 = "free"
+
+  identity {
+    type = "SystemAssigned"
+  }
 }
 
 resource "azurerm_storage_account" "appeals_search_service_temp_storage" {
@@ -37,4 +41,10 @@ resource "azurerm_storage_container" "appeals_search_service_temp_container" {
   name                  = "appeals-bo-search-temp"
   storage_account_id    = azurerm_storage_account.appeals_search_service_temp_storage.id
   container_access_type = "private"
+}
+
+resource "azurerm_role_assignment" "search_storage_access" {
+  scope                = azurerm_storage_account.appeals_search_service_temp_storage.id
+  role_definition_name = "Storage Blob Data Reader"
+  principal_id         = azurerm_search_service.appeals_search_service.identity[0].principal_id
 }
