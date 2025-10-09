@@ -444,3 +444,100 @@ export const happyPathHelper = {
 		basePage.validateBannerMessage('Success', 'Number of residential units added');
 	}
 };
+
+// 1) Reusable status constants
+const STATUSES = {
+	ASSIGN_CASE_OFFICER: 'ASSIGN_CASE_OFFICER',
+	VALIDATION: 'VALIDATION',
+	READY_TO_START: 'READY_TO_START',
+	LPA_QUESTIONNAIRE: 'LPA_QUESTIONNAIRE',
+	STATEMENTS: 'STATEMENTS',
+	FINAL_COMMENTS: 'FINAL_COMMENTS',
+	EVENT_READY_TO_SETUP: 'EVENT_READY_TO_SETUP',
+	AWAITING_EVENT: 'AWAITING_EVENT',
+	ISSUE_DECISION: 'ISSUE_DECISION',
+	COMPLETE: 'COMPLETE'
+};
+
+// 2️⃣  Flows pick only the statuses they need (and order)
+const FLOWS = {
+	BASE: [
+		STATUSES.ASSIGN_CASE_OFFICER,
+		STATUSES.VALIDATION,
+		STATUSES.READY_TO_START,
+		STATUSES.LPA_QUESTIONNAIRE,
+		STATUSES.STATEMENTS,
+		STATUSES.EVENT_READY_TO_SETUP,
+		STATUSES.AWAITING_EVENT,
+		STATUSES.ISSUE_DECISION
+	],
+	S78: [
+		STATUSES.ASSIGN_CASE_OFFICER,
+		STATUSES.VALIDATION,
+		STATUSES.READY_TO_START,
+		STATUSES.LPA_QUESTIONNAIRE,
+		STATUSES.STATEMENTS,
+		STATUSES.FINAL_COMMENTS,
+		STATUSES.AWAITING_EVENT,
+		STATUSES.ISSUE_DECISION
+	]
+};
+
+const baseActions = {
+	[STATUSES.VALIDATION]: (caseObj) => {
+		happyPathHelper.assignCaseOfficer(caseObj);
+	},
+	[STATUSES.READY_TO_START]: (caseObj) => {
+		happyPathHelper.reviewAppellantCase(caseObj);
+	},
+	[STATUSES.LPA_QUESTIONNAIRE]: (caseObj, appealType) => {
+		if (appealType === 'PLANNING') {
+			// 👇 Planning-specific start behaviour
+			happyPathHelper.startS78Case(caseObj, 'written');
+		} else {
+			// 👇 Default path for all other appeal types
+			happyPathHelper.startCase(caseObj);
+		}
+	},
+	[STATUSES.STATEMENTS]: (caseObj, appealType) => {
+		if (appealType === 'PLANNING') {
+			// 👇 Planning-specific start behaviour
+			happyPathHelper.reviewS78Lpaq(caseObj);
+		} else {
+			// 👇 Default path for all other appeal types
+			happyPathHelper.reviewLpaq(caseObj);
+		}
+	},
+	[STATUSES.FINAL_COMMENTS]: (caseObj) => {
+		happyPathHelper.addLpaStatement(caseObj);
+		cy.simulateStatementsDeadlineElapsed(caseObj.reference).then(() => {
+			cy.reload();
+		});
+	},
+	[STATUSES.EVENT_READY_TO_SETUP]: (caseObj) => {
+		happyPathHelper.setupSiteVisitFromBanner(caseObj);
+	},
+	[STATUSES.AWAITING_EVENT]: (caseObj) => {
+		cy.simulateSiteVisit(caseObj).then(() => {
+			cy.reload();
+		});
+	},
+	[STATUSES.ISSUE_DECISION]: (caseObj) => {
+		happyPathHelper.issueDecision(caseObj, 'Allowed');
+	}
+};
+
+// 4️⃣  Generic runner — flow decides what steps run
+function updateCase(caseObj, currentStatus, targetStatus, appealType = 'BASE') {
+	const flow = FLOWS[appealType] || FLOWS.BASE;
+	const fromIndex = flow.indexOf(currentStatus);
+	const toIndex = flow.indexOf(targetStatus);
+
+	for (let i = fromIndex + 1; i <= toIndex; i++) {
+		const next = flow[i];
+		const fn = baseActions[next];
+		if (fn) fn(caseObj, appealType);
+	}
+}
+
+Cypress.Commands.add('updateCase', updateCase);
