@@ -89,7 +89,8 @@ const appealTypes = [
 		type: 'Planning appeal',
 		key: 'W',
 		processCode: null,
-		enabled: false
+		enabled: false,
+		changeAppealType: 'Planning'
 	},
 	{
 		id: 11,
@@ -729,7 +730,7 @@ describe('appeal change update routes', () => {
 					lpa_reference: appealWithValidCaseStatus.applicationReference,
 					site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-					existing_appeal_type: appealWithValidCaseStatus.appealType.type.toLowerCase(),
+					existing_appeal_type: 'householder appeal',
 					new_appeal_type: 'planning appeal'
 				},
 				recipientEmail: appealWithValidCaseStatus.agent.email,
@@ -744,7 +745,7 @@ describe('appeal change update routes', () => {
 					lpa_reference: appealWithValidCaseStatus.applicationReference,
 					site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-					existing_appeal_type: appealWithValidCaseStatus.appealType.type.toLowerCase(),
+					existing_appeal_type: 'householder appeal',
 					new_appeal_type: 'planning appeal'
 				},
 				recipientEmail: appealWithValidCaseStatus.lpa.email,
@@ -788,7 +789,7 @@ describe('appeal change update routes', () => {
 					lpa_reference: appealWithValidCaseStatus.applicationReference,
 					site_address: `${appealWithValidCaseStatus.address.addressLine1}, ${appealWithValidCaseStatus.address.addressLine2}, ${appealWithValidCaseStatus.address.addressTown}, ${appealWithValidCaseStatus.address.addressCounty}, ${appealWithValidCaseStatus.address.postcode}, ${appealWithValidCaseStatus.address.addressCountry}`,
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk',
-					existing_appeal_type: appealWithValidCaseStatus.appealType.type.toLowerCase(),
+					existing_appeal_type: 'householder appeal',
 					new_appeal_type: 'planning appeal'
 				},
 				recipientEmail,
