@@ -20,6 +20,12 @@ describe('Date Validation', { testIsolation: false }, () => {
 		inquirySectionPage.clearInquiryDateAndTime();
 	});
 
+	let appeal;
+
+	after(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('All fields are blank', () => {
 		inquirySectionPage.setUpInquiry('', '', '', '10', '00');
 
@@ -249,6 +255,7 @@ describe('Date Validation', { testIsolation: false }, () => {
 
 		cy.createCase({ caseType: 'W' }).then((ref) => {
 			caseObj = ref;
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);

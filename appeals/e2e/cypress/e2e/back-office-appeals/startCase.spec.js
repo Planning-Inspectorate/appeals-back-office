@@ -53,8 +53,15 @@ describe('Start case', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('Start case', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startCase(caseObj);
@@ -71,6 +78,7 @@ describe('Start case', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
@@ -88,6 +96,7 @@ describe('Start case', () => {
 		cy.createCase({
 			caseType: 'Y'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startCase(caseObj);
@@ -105,6 +114,7 @@ describe('Start case', () => {
 	it('S78 hearing case - start appeal without scheduled hearing', () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.viewCaseDetails(caseObj);
 
 			// Assign Case Officer Via API
@@ -135,6 +145,7 @@ describe('Start case', () => {
 	it('S78 hearing case - start appeal with scheduled hearing', () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.viewCaseDetails(caseObj);
 
 			// Assign Case Officer Via API

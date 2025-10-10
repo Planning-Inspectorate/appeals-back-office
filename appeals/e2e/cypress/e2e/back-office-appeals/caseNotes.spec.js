@@ -19,6 +19,7 @@ describe('add case notes', () => {
 	before(() => {
 		cy.createCase().then((ref) => {
 			caseObj = ref;
+			appeal = caseObj;
 			cy.login(users.appeals.caseAdmin);
 			happyPathHelper.assignCaseOfficer(ref);
 		});
@@ -29,6 +30,12 @@ describe('add case notes', () => {
 		caseDetailsPage.navigateToAppealsService();
 		listCasesPage.clickAppealByRef(caseObj);
 		caseDetailsPage.clickCaseNotes();
+	});
+
+	let appeal;
+
+	after(() => {
+		cy.deleteAppeals(appeal);
 	});
 
 	it('add a case note of more than 500 characters', () => {

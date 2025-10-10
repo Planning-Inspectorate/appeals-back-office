@@ -15,6 +15,12 @@ describe('Schedule site visit', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	const visitTypeTestCases = ['Accompanied', 'Access required', 'Unaccompanied'];
 
 	visitTypeTestCases.forEach((visitType, index) => {
@@ -22,6 +28,7 @@ describe('Schedule site visit', () => {
 			let visitDate = happyPathHelper.validVisitDate();
 
 			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
 				happyPathHelper.assignCaseOfficer(caseObj);
 				happyPathHelper.reviewAppellantCase(caseObj);
 				happyPathHelper.startCase(caseObj);
@@ -40,6 +47,7 @@ describe('Schedule site visit', () => {
 			let visitDate = happyPathHelper.validVisitDate();
 
 			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
 				happyPathHelper.assignCaseOfficer(caseObj);
 				happyPathHelper.reviewAppellantCase(caseObj);
 				happyPathHelper.startCase(caseObj);
@@ -57,6 +65,7 @@ describe('Schedule site visit', () => {
 
 	it('should show an error when visit type is not selected', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startCase(caseObj);
@@ -79,6 +88,7 @@ describe('Schedule site visit', () => {
 	// no times required for unnaccompanied visits
 	it('should show a sucess banner when a past date is entered for the site visit', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startCase(caseObj);
@@ -99,6 +109,7 @@ describe('Schedule site visit', () => {
 
 	it('should show an error when the start time is after the end time', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startCase(caseObj);

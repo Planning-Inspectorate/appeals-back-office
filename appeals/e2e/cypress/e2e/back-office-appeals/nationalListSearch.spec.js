@@ -24,6 +24,12 @@ describe('All cases search', () => {
 		cy.visit(urlPaths.appealsList);
 	});
 
+	let appeal;
+
+	after(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('Case admin user should be able to use search using appeal id', { tags: tag.smoke }, () => {
 		const testData = { rowIndex: 0, cellIndex: 0, textToMatch: caseObj.reference, strict: true };
 		listCasesPage.verifySectionHeader('Search all cases');
@@ -57,6 +63,7 @@ describe('All cases search', () => {
 	const setupTestCase = () => {
 		cy.createCase({ siteAddressPostcode: postcode }).then((ref) => {
 			caseObj = ref;
+			appeal = caseObj;
 		});
 	};
 

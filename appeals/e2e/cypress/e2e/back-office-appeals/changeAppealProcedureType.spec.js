@@ -46,6 +46,12 @@ describe('change appeal procedure types', () => {
 		setupTestCase();
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	// A2-3934 (Ticket is blocked due to post hearing mvp updates)
 	it.skip('should change appeal procedure type - written in LPAQ state', () => {
 		happyPathHelper.startS78Case(caseObj, 'written');
@@ -186,6 +192,7 @@ describe('change appeal procedure types', () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.createCase({ caseType: 'W' }).then((ref) => {
 			caseObj = ref;
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);

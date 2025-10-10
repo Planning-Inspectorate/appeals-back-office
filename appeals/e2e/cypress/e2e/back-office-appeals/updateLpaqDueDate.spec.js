@@ -16,8 +16,15 @@ describe('Update LPAQ Due date', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('change lpaq due date from timetable', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startCase(caseObj);
@@ -35,6 +42,7 @@ describe('Update LPAQ Due date', () => {
 
 	it('change S78 lpaq due date from timetable', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');

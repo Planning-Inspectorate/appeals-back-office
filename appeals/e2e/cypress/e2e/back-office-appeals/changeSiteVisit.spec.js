@@ -14,10 +14,17 @@ describe.skip('Change site visit', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it(`Change visit from Site details`, () => {
 		let visitDate = happyPathHelper.validVisitDate();
 
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startCase(caseObj);
@@ -45,6 +52,7 @@ describe.skip('Change site visit', () => {
 		let visitDate = happyPathHelper.validVisitDate();
 
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startCase(caseObj);

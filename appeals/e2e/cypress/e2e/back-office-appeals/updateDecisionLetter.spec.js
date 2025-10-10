@@ -18,9 +18,17 @@ describe('Update Decision Letter', () => {
 	beforeEach(() => {
 		cy.login(users.appeals.caseAdmin);
 	});
+
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	let sampleFiles = caseDetailsPage.sampleFiles;
 	it('Update Decision Letter', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);

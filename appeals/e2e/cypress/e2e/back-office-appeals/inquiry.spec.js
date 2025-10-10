@@ -116,6 +116,7 @@ const setupTestCase = () => {
 	cy.login(users.appeals.caseAdmin);
 	cy.createCase({ caseType: 'W', planningObligation: true }).then((ref) => {
 		caseObj = ref;
+		appeal = caseObj;
 		cy.addLpaqSubmissionToCase(caseObj);
 		happyPathHelper.assignCaseOfficer(caseObj);
 		caseDetailsPage.checkStatusOfCase('Validation', 0);
@@ -127,6 +128,12 @@ const setupTestCase = () => {
 };
 beforeEach(() => {
 	setupTestCase();
+});
+
+let appeal;
+
+afterEach(() => {
+	cy.deleteAppeals(appeal);
 });
 
 it('Can start case as inquiry with address and estimated days', () => {

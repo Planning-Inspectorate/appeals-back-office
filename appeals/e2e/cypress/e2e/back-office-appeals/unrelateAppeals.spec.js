@@ -13,10 +13,17 @@ describe('unrelate appeals', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let cases = [];
+
+	afterEach(() => {
+		cy.deleteAppeals(cases);
+	});
+
 	it('unrelate an appeal from an appeal that has more than 1 related appeal', () => {
 		cy.createCase().then((caseObj) => {
 			cy.createCase().then((caseObjToRelate) => {
 				cy.createCase().then((secondcaseObjToRelate) => {
+					cases = [caseObj, caseObjToRelate, secondcaseObjToRelate];
 					happyPathHelper.assignCaseOfficer(caseObj);
 					caseDetailsPage.clickAddRelatedAppeals();
 					caseDetailsPage.fillInput(caseObjToRelate.reference);
@@ -51,6 +58,7 @@ describe('unrelate appeals', () => {
 				: horizonTestAppeals.horizonAppealMock;
 
 		cy.createCase().then((caseObj) => {
+			cases = [caseObj];
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddRelatedAppeals();
 			caseDetailsPage.fillInput(horizonAppealId);

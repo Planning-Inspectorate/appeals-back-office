@@ -15,6 +15,13 @@ describe('Assign user to case', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		if (!appeal) return; // <-- no-op if nothing was created
+		cy.deleteAppeals(appeal);
+	});
+
 	const viewports = [{ name: 'ipad-mini' }, { name: 'samsung-note9' }];
 
 	it(
@@ -22,6 +29,7 @@ describe('Assign user to case', () => {
 		{ tags: tag.smoke },
 		() => {
 			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
 				console.log(users.appeals);
 				cy.visit(urlPaths.appealsList);
 				listCasesPage.clickAppealByRef(caseObj);
@@ -40,6 +48,7 @@ describe('Assign user to case', () => {
 		{ tags: tag.smoke },
 		() => {
 			cy.createCase().then((caseObj) => {
+				appeal = caseObj;
 				cy.visit(urlPaths.appealsList);
 				listCasesPage.clickAppealByRef(caseObj);
 				caseDetailsPage.clickAssignInspector();
@@ -54,6 +63,7 @@ describe('Assign user to case', () => {
 
 	it('Case officer should be able to change assigned user', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.clickAssignCaseOfficer();
@@ -67,6 +77,7 @@ describe('Assign user to case', () => {
 
 	it('Inspector should be able to change assigned user', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.clickAssignInspector();
@@ -80,6 +91,7 @@ describe('Assign user to case', () => {
 
 	it.skip('Case officer should be able to remove assigned user', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.clickAssignCaseOfficer();
@@ -96,6 +108,7 @@ describe('Assign user to case', () => {
 
 	it.skip('Inspector should be able to remove assigned user', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.visit(urlPaths.appealsList);
 			listCasesPage.clickAppealByRef(caseObj);
 			caseDetailsPage.clickAssignInspector();

@@ -29,8 +29,15 @@ describe('Managing Appellant Case Details', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('should reject empty value for the LPA application number', () => {
 		cy.createCase({ caseType: 'D' }).then((caseObj) => {
+			appeal = caseObj;
 			navigateToReferenceUpdate(caseObj);
 			caseDetailsPage.updatePlanningApplicationReference(' ');
 			verifyError('Enter the application reference number');
@@ -39,6 +46,7 @@ describe('Managing Appellant Case Details', () => {
 
 	it('should reject reference exceeding 100 characters for the LPA application number', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			appeal = caseObj;
 			navigateToReferenceUpdate(caseObj);
 			caseDetailsPage.updatePlanningApplicationReference(exceededLengthReference);
 			verifyError('Application reference number must be 100 characters or less');
@@ -48,6 +56,7 @@ describe('Managing Appellant Case Details', () => {
 	Object.entries(appealTypes).forEach(([caseType, description]) => {
 		it(`should update ${description} LPA application reference`, () => {
 			cy.createCase({ caseType }).then((caseObj) => {
+				appeal = caseObj;
 				navigateToReferenceUpdate(caseObj);
 				caseDetailsPage.updatePlanningApplicationReference(maxLengthReference);
 
@@ -61,6 +70,7 @@ describe('Managing Appellant Case Details', () => {
 
 	it('should display expected fields for householder (D) case', () => {
 		cy.createCase({ applicationDecision: 'not_received' }).then((caseObj) => {
+			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
 			// ✅ Appellant section
 			appellantCasePage.assertAppellantDetails({
@@ -110,6 +120,7 @@ describe('Managing Appellant Case Details', () => {
 
 	it('should display expected fields for full planning (W) case', () => {
 		cy.createCase({ caseType: 'W' }).then((caseObj) => {
+			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
 			// ✅ Appellant section
 			appellantCasePage.assertAppellantDetails({
@@ -173,6 +184,7 @@ describe('Managing Appellant Case Details', () => {
 
 	it('should display expected fields for s20 listed building planning (Y) case', () => {
 		cy.createCase({ caseType: 'Y' }).then((caseObj) => {
+			appeal = caseObj;
 			appellantCasePage.navigateToAppellantCase(caseObj);
 			// ✅ Appellant section
 			appellantCasePage.assertAppellantDetails({

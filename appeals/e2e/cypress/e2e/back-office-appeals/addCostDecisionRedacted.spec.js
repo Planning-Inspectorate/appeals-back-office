@@ -12,15 +12,22 @@ const listCasesPage = new ListCasesPage();
 const dateTimeSection = new DateTimeSection();
 const caseDetailsPage = new CaseDetailsPage();
 
-describe('add cost decision and redact', () => {
-	beforeEach(() => {
-		cy.login(users.appeals.caseAdmin);
-	});
+beforeEach(() => {
+	cy.login(users.appeals.caseAdmin);
+});
 
+let appeal;
+
+afterEach(() => {
+	cy.deleteAppeals(appeal);
+});
+
+describe('add cost decision and redact', () => {
 	let sampleFiles = caseDetailsPage.sampleFiles;
 
 	it('add costs decsion and redact', { tags: tag.smoke }, () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
@@ -40,6 +47,7 @@ describe('add cost decision and redact', () => {
 
 	it('change the redaction status of a cost decsion', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startCase(caseObj);
@@ -62,6 +70,7 @@ describe('add cost decision and redact', () => {
 
 	it('Upload new version and change filename', () => {
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startCase(caseObj);

@@ -60,6 +60,12 @@ describe('Setup hearing and add hearing estimates', () => {
 		hearingSectionPage.navigateToHearingSection(caseObj);
 	});
 
+	let appeal;
+
+	after(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('should not accept current date with no time - Hearing Time', () => {
 		caseDetailsPage.clickHearingButton();
 		hearingSectionPage.setUpHearing(new Date(), ' ', ' ');
@@ -676,6 +682,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.createCase({ caseType: 'W' }).then((ref) => {
 			// Set up a new case
 			caseObj = ref;
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
@@ -752,6 +759,7 @@ describe('Setup hearing and add hearing estimates', () => {
 		cy.login(users.appeals.caseAdmin);
 		cy.createCase({ caseType: 'W' }).then((ref) => {
 			caseObj = ref;
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
