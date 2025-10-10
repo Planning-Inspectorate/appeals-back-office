@@ -8,7 +8,7 @@ export const mapDevelopmentType = ({ appellantCaseData, currentRoute, userHasUpd
 	const entry = APPEAL_DEVELOPMENT_TYPES.find(
 		(/** @type {{value: string, label: string}} */ item) => item.value === code
 	);
-	const label = capitalizeFirstLetter(entry?.label || 'Not provided');
+	const label = capitalizeFirstLetter(entry?.label || 'Not answered');
 
 	return textSummaryListItem({
 		id: 'development-type',
