@@ -1,18 +1,17 @@
 import { copyBlob } from './blob.js';
 
 /**
- * @type {import('@azure/functions').ServiceBusTopicHandler}
+ *
+ * @param {import('@azure/functions').Context} context
+ * @param {*} msg
  */
-export default async function (msg, context) {
-	context.info('Document move', msg);
+export default async function (context, msg) {
+	context.log.info('Document move', msg);
 	try {
-		// @ts-ignore
 		const { originalURI, importedURI } = msg;
 		await copyBlob(originalURI, importedURI);
 	} catch (e) {
-		context.error('Not enough information to process this request', e);
+		context.log.error('Not enough information to process this request', e);
 		throw e;
 	}
-
-	return {};
 }

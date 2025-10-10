@@ -1,0 +1,12 @@
+{
+	"bindings": [
+		{
+			"name": "registerSubscription",
+			"type": "serviceBusTrigger",
+			"direction": "in",
+			"topicName": "%SB_TOPIC_NAME_DOCUMENT_MOVE%",
+			"subscriptionName": "%SB_SUBSCRIPTION_NAME_DOCUMENT_MOVE%",
+			"connection": "ServiceBusConnection"
+		}
+	]
+}

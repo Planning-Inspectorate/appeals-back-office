@@ -3,28 +3,28 @@ import { HTTPError } from 'got';
 import api from './back-office-api-client.js';
 
 /**
- * This appears to be unused and the api endpoint does not exist
- * @type {import('@azure/functions').ServiceBusTopicHandler}
+ *
+ * @param {import('@azure/functions').Context} context
+ * @param {*} msg
  */
-export default async function (msg, context) {
-	context.info('Employee import command', msg);
+export default async function (context, msg) {
+	context.log('Employee import command', msg);
 
-	const applicationProperties = context?.triggerMetadata?.applicationProperties;
+	const applicationProperties = context?.bindingData?.applicationProperties;
 
 	const hasType =
 		Boolean(applicationProperties) &&
 		Object.prototype.hasOwnProperty.call(applicationProperties, 'type');
 	if (!hasType) {
-		context.warn('Ignoring invalid message, no type', msg);
-		return {};
+		context.log.warn('Ignoring invalid message, no type', msg);
+		return;
 	}
 
-	// @ts-ignore
 	const type = applicationProperties?.type;
 
 	if (type !== EventType.Create && type !== EventType.Update) {
-		context.warn(`Ignoring invalid message, unsupported type '${type}'`, msg);
-		return {};
+		context.log.warn(`Ignoring invalid message, unsupported type '${type}'`, msg);
+		return;
 	}
 
 	try {
@@ -32,18 +32,16 @@ export default async function (msg, context) {
 
 		const { id } = res;
 
-		context.info(`Employee created: ${id}`);
+		context.log.info(`Employee created: ${id}`);
 	} catch (e) {
 		if (e instanceof HTTPError) {
-			context.error('Error creating employee', {
+			context.log.error('Error creating employee', {
 				message: e.message,
 				body: e.response?.body
 			});
 		} else {
-			context.error('Error creating employee', e);
+			context.log.error('Error creating employee', e);
 		}
 		throw e;
 	}
-
-	return {};
 }
