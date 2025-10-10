@@ -1640,7 +1640,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">Enter a real end time</a>
+                            <li><a href="#visit-end-time-hour">End time hour must be 23 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -1762,7 +1762,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real end time</p>
+                                <p id="time-error" class="govuk-error-message">End time hour must be 23 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
@@ -1791,7 +1791,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">Enter a real end time</a>
+                            <li><a href="#visit-end-time-hour">End time minute must be 59 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -1913,7 +1913,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real end time</p>
+                                <p id="time-error" class="govuk-error-message">End time minute must be 59 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
@@ -1942,7 +1942,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Enter a real start time</a>
+                            <li><a href="#visit-start-time-hour">Start time hour must be 23 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -2055,7 +2055,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real start time</p>
+                                <p id="time-error" class="govuk-error-message">Start time hour must be 23 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
@@ -2244,7 +2244,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Enter a real start time</a>
+                            <li><a href="#visit-start-time-hour">Start time minute must be 59 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -2357,7 +2357,7 @@ exports[`site-visit POST /site-visit/manage-visit should re-render the manage vi
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real start time</p>
+                                <p id="time-error" class="govuk-error-message">Start time minute must be 59 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
@@ -3653,7 +3653,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">Enter a real end time</a>
+                            <li><a href="#visit-end-time-hour">End time hour must be 23 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -3775,7 +3775,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real end time</p>
+                                <p id="time-error" class="govuk-error-message">End time hour must be 23 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
@@ -3804,7 +3804,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-end-time-hour">Enter a real end time</a>
+                            <li><a href="#visit-end-time-hour">End time minute must be 59 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -3926,7 +3926,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-6">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">End time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real end time</p>
+                                <p id="time-error" class="govuk-error-message">End time minute must be 59 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-end-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-end-time-hour"
@@ -3955,7 +3955,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Enter a real start time</a>
+                            <li><a href="#visit-start-time-hour">Start time hour must be 23 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -4068,7 +4068,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real start time</p>
+                                <p id="time-error" class="govuk-error-message">Start time hour must be 23 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"
@@ -4257,7 +4257,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                     <h2 class="govuk-error-summary__title"> There is a problem</h2>
                     <div class="govuk-error-summary__body">
                         <ul class="govuk-list govuk-error-summary__list">
-                            <li><a href="#visit-start-time-hour">Enter a real start time</a>
+                            <li><a href="#visit-start-time-hour">Start time minute must be 59 or less</a>
                             </li>
                         </ul>
                     </div>
@@ -4370,7 +4370,7 @@ exports[`site-visit POST /site-visit/schedule-visit should re-render the schedul
                         <div class="govuk-form-group govuk-form-group--error">
                             <fieldset class="govuk-fieldset govuk-!-margin-bottom-4">
                                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">Start time</legend>
-                                <p id="time-error" class="govuk-error-message">Enter a real start time</p>
+                                <p id="time-error" class="govuk-error-message">Start time minute must be 59 or less</p>
                                 <label class="govuk-label govuk-visually-hidden"
                                 for="visit-start-time-hour">Hour</label>
                                 <input class="govuk-input govuk-input--width-2" id="visit-start-time-hour"

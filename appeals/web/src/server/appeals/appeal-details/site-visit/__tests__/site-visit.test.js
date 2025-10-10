@@ -397,7 +397,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real start time</a>');
+			expect(errorSummaryHtml).toContain('Start time hour must be 23 or less</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit start time minute is invalid', async () => {
@@ -423,7 +423,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real start time</a>');
+			expect(errorSummaryHtml).toContain('Start time minute must be 59 or less</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit end time hour is invalid', async () => {
@@ -449,7 +449,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real end time</a>');
+			expect(errorSummaryHtml).toContain('End time hour must be 23 or less</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit end time minute is invalid', async () => {
@@ -475,7 +475,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real end time</a>');
+			expect(errorSummaryHtml).toContain('End time minute must be 59 or less</a>');
 		});
 
 		it('should re-render the schedule visit page with the expected error message if visit start time is not before end time', async () => {
@@ -971,7 +971,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real start time</a>');
+			expect(errorSummaryHtml).toContain('Start time hour must be 23 or less</a>');
 		});
 
 		it('should re-render the manage visit page with the expected error message if visit start time minute is invalid', async () => {
@@ -997,7 +997,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real start time</a>');
+			expect(errorSummaryHtml).toContain('Start time minute must be 59 or less</a>');
 		});
 
 		it('should re-render the manage visit page with the expected error message if visit end time hour is invalid', async () => {
@@ -1023,7 +1023,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real end time</a>');
+			expect(errorSummaryHtml).toContain('End time hour must be 23 or less</a>');
 		});
 
 		it('should re-render the manage visit page with the expected error message if visit end time minute is invalid', async () => {
@@ -1049,7 +1049,7 @@ describe('site-visit', () => {
 			}).innerHTML;
 
 			expect(errorSummaryHtml).toContain('There is a problem</h2>');
-			expect(errorSummaryHtml).toContain('Enter a real end time</a>');
+			expect(errorSummaryHtml).toContain('End time minute must be 59 or less</a>');
 		});
 
 		it('should re-render the manage visit page with the expected error message if visit start time is not before end time', async () => {
