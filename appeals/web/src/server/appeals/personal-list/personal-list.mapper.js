@@ -5,7 +5,7 @@ import { mapStatusFilterLabel, mapStatusText } from '#lib/appeal-status.js';
 import { appealShortReference, linkedAppealStatus } from '#lib/appeals-formatter.js';
 import { dateISOStringToDisplayDate } from '#lib/dates.js';
 import { removeSummaryListActions } from '#lib/mappers/index.js';
-import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
+import { isChildAppeal, isParentAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { getRequiredActionsForAppeal } from '#lib/mappers/utils/required-actions.js';
 import { preRenderPageComponents } from '#lib/nunjucks-template-builders/page-component-rendering.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
@@ -159,8 +159,8 @@ export function personalListPage(
 			rows: (appealsAssignedToCurrentUser?.items || []).map((appeal) => {
 				const shortReference = appealShortReference(appeal.appealReference);
 				const linkedAppealStatusText = linkedAppealStatus(
-					appeal.isParentAppeal,
-					appeal.isChildAppeal
+					isParentAppeal(appeal),
+					isChildAppeal(appeal)
 				);
 				const actionLinks = canDisplayAction(appeal)
 					? mapActionLinksForAppeal(appeal, isCaseOfficer, request)
@@ -193,7 +193,7 @@ export function personalListPage(
 						html: actionLinks || ''
 					},
 					{
-						text: actionLinks?.length ? dateISOStringToDisplayDate(appeal.dueDate) || '' : ''
+						text: isChildAppeal(appeal) ? '' : dateISOStringToDisplayDate(appeal.dueDate) || ''
 					},
 					{
 						html: '',
@@ -505,6 +505,6 @@ export function mapActionLinksForAppeal(appeal, isCaseOfficer, request) {
 				request
 			);
 		})
-		.filter((action) => action !== undefined)
+		.filter((action) => action?.trim())
 		.join('<br>');
 }
