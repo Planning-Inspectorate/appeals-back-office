@@ -5,6 +5,7 @@ import { EVENT_TYPE } from '@pins/appeals/constants/common.js';
 import {
 	AUDIT_TRAIL_SITE_VISIT_ARRANGED,
 	AUDIT_TRAIL_SITE_VISIT_TYPE_SELECTED,
+	CASE_RELATIONSHIP_LINKED,
 	DEFAULT_DATE_FORMAT_AUDIT_TRAIL,
 	ERROR_FAILED_TO_SAVE_DATA,
 	ERROR_FAILED_TO_SEND_NOTIFICATION_EMAIL,
@@ -16,6 +17,7 @@ import { formatAddressSingleLine } from '#endpoints/addresses/addresses.formatte
 import { getTeamEmailFromAppealId } from '#endpoints/case-team/case-team.service.js';
 import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { notifySend } from '#notify/notify-send.js';
+import appealRepository from '#repositories/appeal.repository.js';
 import { updatePersonalList } from '#utils/update-personal-list.js';
 import { DEFAULT_TIMEZONE } from '@pins/appeals/constants/dates.js';
 import { AUDIT_TRAIL_SITE_VISIT_CANCELLED } from '@pins/appeals/constants/support.js';
@@ -35,9 +37,15 @@ import { formatInTimeZone } from 'date-fns-tz';
  * @param {string} azureAdUserId
  * @param {CreateSiteVisitData} siteVisitData
  * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @param {boolean} [isChildAppeal]
  * @returns {Promise<void>}
  */
-export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient) => {
+export const createSiteVisit = async (
+	azureAdUserId,
+	siteVisitData,
+	notifyClient,
+	isChildAppeal = false
+) => {
 	try {
 		const appealId = siteVisitData.appealId;
 		const visitDate = siteVisitData.visitDate;
@@ -52,6 +60,10 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 			visitStartTime,
 			siteVisitTypeId: visitTypeId
 		});
+
+		if (isChildAppeal) {
+			return;
+		}
 
 		if (visitDate) {
 			await broadcasters.broadcastEvent(siteVisit.id, EVENT_TYPE.SITE_VISIT, EventType.Create);
@@ -107,6 +119,36 @@ export const createSiteVisit = async (azureAdUserId, siteVisitData, notifyClient
 	} catch (error) {
 		throw new Error(ERROR_FAILED_TO_SAVE_DATA);
 	}
+};
+
+/**
+ * @param {string} azureAdUserId
+ * @param {CreateSiteVisitData} siteVisitData
+ * @param {import('#endpoints/appeals.js').NotifyClient} notifyClient
+ * @returns {Promise<void[]>}
+ */
+export const createSiteVisitForLinkedChildAppeals = async (
+	azureAdUserId,
+	siteVisitData,
+	notifyClient
+) => {
+	const linkedAppeals = await appealRepository.getLinkedAppealsById(
+		siteVisitData.appealId,
+		CASE_RELATIONSHIP_LINKED
+	);
+	return Promise.all(
+		linkedAppeals.map(async (linkedAppeal) => {
+			if (linkedAppeal.childId === null) {
+				return;
+			}
+			return createSiteVisit(
+				azureAdUserId,
+				{ ...siteVisitData, appealId: linkedAppeal.childId },
+				notifyClient,
+				true
+			);
+		})
+	);
 };
 
 /**
