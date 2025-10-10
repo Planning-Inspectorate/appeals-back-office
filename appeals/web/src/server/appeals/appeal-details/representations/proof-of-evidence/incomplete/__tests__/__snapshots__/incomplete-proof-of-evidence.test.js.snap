@@ -18,7 +18,7 @@ exports[`incomplete proof of evidence GET /confirm should render the incomplete 
                             </li>
                         </ol>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/appellant/change/135568/?backUrl=/proof-of-evidence/appellant/incomplete/confirm">Change <span class="govuk-visually-hidden">supporting documents</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/appellant/manage-documents/135568/?backUrl=/proof-of-evidence/appellant/incomplete/confirm">Change <span class="govuk-visually-hidden">supporting documents</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>
@@ -70,7 +70,7 @@ exports[`incomplete proof of evidence GET /confirm should render the incomplete 
                             </li>
                         </ol>
                         </dd>
-                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/change/135568/?backUrl=/proof-of-evidence/lpa/incomplete/confirm">Change <span class="govuk-visually-hidden">supporting documents</span></a>
+                        <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/2/proof-of-evidence/lpa/manage-documents/135568/?backUrl=/proof-of-evidence/lpa/incomplete/confirm">Change <span class="govuk-visually-hidden">supporting documents</span></a>
                         </dd>
                 </div>
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Review decision</dt>

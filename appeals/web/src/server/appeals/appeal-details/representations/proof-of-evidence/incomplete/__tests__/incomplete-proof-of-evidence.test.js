@@ -145,7 +145,7 @@ describe('incomplete proof of evidence', () => {
 					`href="/documents/4881/download/ed52cdc1-3cc2-462a-8623-c1ae256969d6/blank copy 5.pdf" target="_blank">blank copy 5.pdf</a>`
 				);
 				expect(pageHtml).toContain(
-					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/change/135568/?backUrl=/proof-of-evidence/${proofOfEvidenceType.type}/incomplete/confirm">Change <span class="govuk-visually-hidden">supporting documents</span></a>`
+					`href="/appeals-service/appeal-details/2/proof-of-evidence/${proofOfEvidenceType.type}/manage-documents/135568/?backUrl=/proof-of-evidence/${proofOfEvidenceType.type}/incomplete/confirm">Change <span class="govuk-visually-hidden">supporting documents</span></a>`
 				);
 
 				expect(pageHtml).toContain(`Review decision</dt>`);
