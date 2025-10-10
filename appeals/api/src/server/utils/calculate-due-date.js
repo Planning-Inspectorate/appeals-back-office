@@ -5,6 +5,7 @@ import { APPEAL_TYPE, FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { add, addBusinessDays } from 'date-fns';
 
+/** @typedef {import('@pins/appeals.api').Schema.Appeal} Appeal */
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#repositories/appeal-lists.repository.js').DBAppeals} DBAppeals */
 /** @typedef {DBAppeals[0]} DBAppeal */
@@ -35,8 +36,8 @@ const isNetResidencesAppealType = (appealType) => {
 
 /**
  * Map each appeal to include a due date.
- * @param {DBAppeal | DBUserAppeal} appeal
- * @param {CostsDecision} [costsDecision]
+ * @param {DBAppeal | DBUserAppeal | Appeal} appeal
+ * @param {CostsDecision | null} [costsDecision]
  * @returns {Promise<Date | null | undefined>}
  */
 export const calculateDueDate = async (appeal, costsDecision) => {
