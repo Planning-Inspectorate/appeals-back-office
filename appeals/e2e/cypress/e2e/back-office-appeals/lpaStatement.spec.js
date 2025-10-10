@@ -35,11 +35,17 @@ const caseDetailsPage = new CaseDetailsPage();
 			cy.login(users.appeals.caseAdmin);
 		});
 
+		let appeal;
+
+		afterEach(() => {
+			cy.deleteAppeals(appeal);
+		});
 		it('should show more/close functionality on check your answers page', () => {
 			const representation = Cypress._.repeat(statementPrefix, 5).substring(0, 301);
 			const isToggleDisplayed = true;
 
 			cy.createCase({ caseType }).then((caseObj) => {
+				appeal = caseObj;
 				setupCaseToStatementsStage(caseObj);
 				caseDetailsPage.acceptLpaStatement(caseObj, 'No', representation);
 				caseDetailsPage.verifyStatementIsDisplayed(representation, isToggleDisplayed);
@@ -50,6 +56,7 @@ const caseDetailsPage = new CaseDetailsPage();
 			const isToggleDisplayed = false;
 
 			cy.createCase({ caseType }).then((caseObj) => {
+				appeal = caseObj;
 				setupCaseToStatementsStage(caseObj);
 				caseDetailsPage.acceptLpaStatement(caseObj, 'No', statementPrefix);
 				caseDetailsPage.verifyStatementIsDisplayed(statementPrefix, isToggleDisplayed);
@@ -62,6 +69,7 @@ const caseDetailsPage = new CaseDetailsPage();
 			const isToggleDisplayed = false;
 
 			cy.createCase({ caseType }).then((caseObj) => {
+				appeal = caseObj;
 				setupCaseToStatementsStage(caseObj);
 				caseDetailsPage.acceptLpaStatement(caseObj, 'No', statementPrefix);
 				caseDetailsPage.verifyStatementIsDisplayed(statementPrefix, isToggleDisplayed);
@@ -77,6 +85,7 @@ const caseDetailsPage = new CaseDetailsPage();
 			const isToggleDisplayed = false;
 
 			cy.createCase({ caseType }).then((caseObj) => {
+				appeal = caseObj;
 				setupCaseToStatementsStage(caseObj);
 				caseDetailsPage.acceptLpaStatement(caseObj, 'No', representation);
 				caseDetailsPage.verifyStatementIsDisplayed(representation, isToggleDisplayed);

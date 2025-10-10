@@ -12,11 +12,18 @@ describe('Manage correspondence', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	let sampleFiles = caseDetailsPage.sampleFiles;
 
 	it('upload updated cross team correspondence doc', () => {
 		const uploadDate = new Date();
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddCrossTeamCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);
@@ -45,6 +52,7 @@ describe('Manage correspondence', () => {
 	it('remove an inspector correspondence doc', () => {
 		const uploadDate = new Date();
 		cy.createCase().then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.clickAddInspectorCorrespondence();
 			caseDetailsPage.uploadSampleFile(sampleFiles.document);

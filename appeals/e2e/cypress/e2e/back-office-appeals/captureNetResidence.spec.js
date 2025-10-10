@@ -18,6 +18,12 @@ describe('Capture Net Residences', () => {
 		setupTestCase();
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	const overviewDetails = {
 		appealType: 'Planning appeal',
 		applicationReference: '123',
@@ -64,6 +70,7 @@ describe('Capture Net Residences', () => {
 
 		cy.createCase({ caseType: 'W' }).then((ref) => {
 			caseObj = ref;
+			appeal = caseObj;
 			happyPathHelper.viewCaseDetails(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);

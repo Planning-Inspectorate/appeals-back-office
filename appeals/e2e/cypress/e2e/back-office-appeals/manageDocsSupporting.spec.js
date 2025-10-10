@@ -16,12 +16,19 @@ describe('add supporting documents', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	let sampleFiles = caseDetailsPage.sampleFiles;
 
 	it('upload and manage LPA documemnts ', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
@@ -59,6 +66,7 @@ describe('add supporting documents', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
@@ -90,6 +98,7 @@ describe('add supporting documents', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
