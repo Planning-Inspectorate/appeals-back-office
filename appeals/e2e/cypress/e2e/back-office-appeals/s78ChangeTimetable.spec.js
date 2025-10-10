@@ -42,10 +42,17 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		}).as('timetableCheck');
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it('should change due dates when case status is lpa_questionnaire', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
@@ -57,6 +64,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
@@ -73,6 +81,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
@@ -93,6 +102,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
 			happyPathHelper.startS78Case(caseObj, 'written');
@@ -107,6 +117,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
@@ -126,6 +137,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);
@@ -147,6 +159,7 @@ describe('S78 - Case officer update pre populated timetable dates', () => {
 		cy.createCase({
 			caseType: 'W'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			happyPathHelper.reviewAppellantCase(caseObj);

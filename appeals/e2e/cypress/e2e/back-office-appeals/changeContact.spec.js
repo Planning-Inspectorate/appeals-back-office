@@ -15,6 +15,7 @@ describe('change contacts', () => {
 	before(() => {
 		cy.createCase().then((ref) => {
 			caseObj = ref;
+			appeal = caseObj;
 			cy.login(users.appeals.caseAdmin);
 			happyPathHelper.assignCaseOfficer(ref);
 		});
@@ -25,6 +26,12 @@ describe('change contacts', () => {
 		caseDetailsPage.navigateToAppealsService();
 		listCasesPage.clickAppealByRef(caseObj);
 		caseDetailsPage.clickCaseNotes();
+	});
+
+	let appeal;
+
+	after(() => {
+		cy.deleteAppeals(appeal);
 	});
 
 	it(`change contact appellant`, () => {

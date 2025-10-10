@@ -17,12 +17,19 @@ describe('Progress S20 to decision', () => {
 		cy.login(users.appeals.caseAdmin);
 	});
 
+	let appeal;
+
+	afterEach(() => {
+		cy.deleteAppeals(appeal);
+	});
+
 	it(`Completes a s20 appeal to decision`, { tags: tag.smoke }, () => {
 		let todaysDate = new Date();
 
 		cy.createCase({
 			caseType: 'Y'
 		}).then((caseObj) => {
+			appeal = caseObj;
 			cy.addLpaqSubmissionToCase(caseObj);
 			happyPathHelper.assignCaseOfficer(caseObj);
 			caseDetailsPage.checkStatusOfCase('Validation', 0);
