@@ -14,7 +14,7 @@ import {
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_PROCEDURE, APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
-/** @typedef {'addHorizonReference'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'} AppealRequiredAction */
+/** @typedef {'addHorizonReference'|'awaitingEvent'|'appellantCaseOverdue'|'arrangeSiteVisit'|'assignCaseOfficer'|'awaitingAppellantUpdate'|'awaitingFinalComments'|'awaitingIpComments'|'awaitingLpaQuestionnaire'|'awaitingLpaStatement'|'awaitingLpaUpdate'|'awaitingLinkedAppeal'|'issueDecision'|'issueAppellantCostsDecision'|'issueLpaCostsDecision'|'lpaQuestionnaireOverdue'|'progressFromFinalComments' | 'progressHearingCaseWithNoRepsFromStatements' | 'progressHearingCaseWithNoRepsAndHearingSetUpFromStatements' |'progressFromStatements'|'reviewAppellantCase'|'reviewAppellantFinalComments'|'reviewIpComments'|'reviewLpaFinalComments'|'reviewLpaQuestionnaire'|'reviewLpaStatement'|'shareFinalComments'|'shareIpCommentsAndLpaStatement'|'startAppeal'|'updateLpaStatement'|'addHearingAddress'|'setupHearing'|'addResidencesNetChange'|'reviewLpaProofOfEvidence'|'reviewAppellantProofOfEvidence'} AppealRequiredAction */
 
 /** @typedef {import('@pins/appeals').CostsDecision} CostsDecision */
 /** @typedef {import('#appeals/appeal-details/appeal-details.types.js').WebAppeal} WebAppeal */
@@ -43,6 +43,9 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			break;
 		case APPEAL_CASE_STATUS.AWAITING_TRANSFER:
 			actions.push('addHorizonReference');
+			break;
+		case APPEAL_CASE_STATUS.AWAITING_EVENT:
+			actions.push('awaitingEvent');
 			break;
 		case APPEAL_CASE_STATUS.EVENT:
 			if (
