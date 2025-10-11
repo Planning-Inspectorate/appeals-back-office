@@ -14,4 +14,4 @@ export const validateIncompleteReason = (message) =>
 	);
 
 export const validateIncompleteReasonTextItems =
-	createCheckboxTextItemsValidator('IncompleteReason');
+	createCheckboxTextItemsValidator('rejectionReason');

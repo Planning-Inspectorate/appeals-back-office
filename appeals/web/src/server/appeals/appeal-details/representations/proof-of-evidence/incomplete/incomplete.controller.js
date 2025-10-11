@@ -74,7 +74,6 @@ export const postReasons = async (request, response) => {
 		params: { appealId, proofOfEvidenceType },
 		errors
 	} = request;
-
 	if (errors) {
 		return renderReasons(request, response);
 	}
