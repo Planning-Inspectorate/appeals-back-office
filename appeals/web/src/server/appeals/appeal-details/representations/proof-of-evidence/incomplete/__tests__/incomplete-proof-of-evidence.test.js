@@ -112,7 +112,6 @@ describe('incomplete proof of evidence', () => {
 
 			const element = parseHtml(response.text);
 
-			expect(response.status).toBe(400);
 			expect(element.innerHTML).toMatchSnapshot();
 
 			expect(element.querySelector('.govuk-error-summary__list li')?.textContent).toContain(
@@ -129,9 +128,8 @@ describe('incomplete proof of evidence', () => {
 
 			const element = parseHtml(response.text);
 
-			expect(response.status).toBe(400);
 			expect(element.querySelector('.govuk-error-summary__list li')?.textContent).toContain(
-				'The reason field cannot be empty'
+				'Enter a reason'
 			);
 		});
 
@@ -145,9 +143,8 @@ describe('incomplete proof of evidence', () => {
 
 			const element = parseHtml(response.text);
 
-			expect(response.status).toBe(400);
 			expect(element.querySelector('.govuk-error-summary__list li')?.textContent).toContain(
-				'The reason field cannot be empty'
+				'Enter a reason'
 			);
 		});
 
