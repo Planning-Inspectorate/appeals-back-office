@@ -267,7 +267,8 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			}
 			break;
 		}
-		case APPEAL_CASE_STATUS.COMPLETE: {
+		case APPEAL_CASE_STATUS.COMPLETE:
+		case APPEAL_CASE_STATUS.WITHDRAWN: {
 			if (appealDetails.costsDecision?.awaitingAppellantCostsDecision) {
 				actions.push('issueAppellantCostsDecision');
 			}

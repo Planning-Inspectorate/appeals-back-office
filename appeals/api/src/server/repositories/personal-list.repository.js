@@ -60,11 +60,7 @@ const getPersonalList = async (userId, pageNumber, pageSize, status, leadAppealI
 									some: {
 										valid: true,
 										status: {
-											notIn: [
-												APPEAL_CASE_STATUS.TRANSFERRED,
-												APPEAL_CASE_STATUS.INVALID,
-												APPEAL_CASE_STATUS.WITHDRAWN
-											]
+											notIn: [APPEAL_CASE_STATUS.TRANSFERRED, APPEAL_CASE_STATUS.INVALID]
 										}
 									}
 								}

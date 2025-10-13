@@ -17,10 +17,12 @@ export const updatePersonalList = async (appealId) => {
 	if (!appeal) {
 		return;
 	}
-	const costsDecision =
-		currentStatus(appeal) === APPEAL_CASE_STATUS.COMPLETE
-			? await formatCostsDecision(appeal)
-			: null;
+
+	const appealStatus = currentStatus(appeal);
+	const appealIsCompleteOrWithdrawn =
+		appealStatus === APPEAL_CASE_STATUS.COMPLETE || appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
+	const costsDecision = appealIsCompleteOrWithdrawn ? await formatCostsDecision(appeal) : null;
+
 	let dueDate = await calculateDueDate(appeal, costsDecision);
 	let linkType = null;
 	const linkedAppeals = await appealRepository.getLinkedAppeals(
