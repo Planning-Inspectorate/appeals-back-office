@@ -1,6 +1,7 @@
 import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.js';
 import { isStatePassed } from '#lib/appeal-status.js';
 import { textSummaryListItem } from '#lib/mappers/index.js';
+import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import { addBackLinkQueryToUrl } from '#lib/url-utilities.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 
@@ -13,7 +14,9 @@ export const mapNetResidenceChange = ({
 }) => {
 	const netChange = appellantCase?.numberOfResidencesNetChange;
 	const id = 'net-residence-change';
+
 	if (
+		isChildAppeal(appealDetails) ||
 		!isStatePassed(appealDetails, APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE) ||
 		!isNetResidencesAppealType(appealDetails.appealType) ||
 		[

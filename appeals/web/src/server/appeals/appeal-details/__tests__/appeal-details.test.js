@@ -2927,6 +2927,27 @@ describe('appeal-details', () => {
 				}
 			);
 
+			it('should not render a "Is there a net gain or loss of residential units?" row in the overview accordion if a S78 linked child appeal', async () => {
+				nock('http://test/')
+					.get(`/appeals/${appealId}`)
+					.reply(200, {
+						...appealData,
+						appealId,
+						appealType: 'Planning appeal'
+					});
+				nock('http://test/')
+					.get(/appeals\/\d+\/appellant-cases\/\d+/)
+					.reply(200, {
+						planningObligation: { hasObligation: false },
+						numberOfResidencesNetChange: null
+					});
+
+				const response = await request.get(`${baseUrl}/${appealId}`);
+				expect(response.text).not.toContain(
+					'Is there a net gain or loss of residential units?</dt>'
+				);
+			});
+
 			it('should not render a "Is there a net gain or loss of residential units?" row in the overview accordion if not S78 appeal', async () => {
 				nock('http://test/')
 					.get(`/appeals/${appealId}`)
