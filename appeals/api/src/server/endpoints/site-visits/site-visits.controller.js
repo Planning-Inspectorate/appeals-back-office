@@ -6,7 +6,8 @@ import logger from '#utils/logger.js';
 import { FEATURE_FLAG_NAMES } from '@pins/appeals/constants/common.js';
 import {
 	ERROR_FAILED_TO_SAVE_DATA,
-	VALIDATION_OUTCOME_COMPLETE
+	VALIDATION_OUTCOME_COMPLETE,
+	VALIDATION_OUTCOME_INCOMPLETE
 } from '@pins/appeals/constants/support.js';
 import { APPEAL_CASE_STATUS } from '@planning-inspectorate/data-model';
 import { formatSiteVisit } from './site-visits.formatter.js';
@@ -190,6 +191,8 @@ const cancelSiteVisit = async (req, res) => {
 		if (!result) {
 			return res.status(404).send({ errors: { body: 'Site visit deletion failed' } });
 		}
+
+		await transitionState(appeal.id, azureAdUserId, VALIDATION_OUTCOME_INCOMPLETE);
 
 		return res.send({
 			siteVisitId
