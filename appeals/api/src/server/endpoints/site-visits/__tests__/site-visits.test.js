@@ -2510,9 +2510,45 @@ describe('site visit routes', () => {
 			});
 		});
 		describe('DELETE', () => {
-			test('deletes a site visit', async () => {
+			test('deletes a site visit and moves the status back', async () => {
+				householdAppeal.appealStatus = [
+					{
+						id: 1,
+						status: 'event',
+						createdAt: '2025-09-18T10:07:15.406Z',
+						valid: false,
+						appealId: householdAppeal.id,
+						subStateMachineName: null,
+						compoundStateName: null
+					},
+					{
+						id: 2,
+						status: 'awaiting_event',
+						createdAt: '2025-09-18T10:07:22.069Z',
+						valid: true,
+						appealId: householdAppeal.id,
+						subStateMachineName: null,
+						compoundStateName: null
+					}
+				];
+
 				// @ts-ignore
-				databaseConnector.appeal.findUnique.mockResolvedValue(householdAppeal);
+				databaseConnector.appeal.findUnique
+					.mockResolvedValueOnce(householdAppeal)
+					.mockResolvedValue({
+						...householdAppeal,
+						siteVisit: null
+					});
+				databaseConnector.appealStatus.findFirst.mockImplementationOnce(({ where: { status } }) => {
+					switch (status) {
+						case 'event':
+							return householdAppeal.appealStatus[0];
+						case 'awaiting_event':
+							return householdAppeal.appealStatus[1];
+						default:
+							return null;
+					}
+				});
 				// @ts-ignore
 				databaseConnector.user.upsert.mockResolvedValue({
 					id: 1,
@@ -2520,6 +2556,8 @@ describe('site visit routes', () => {
 				});
 				// @ts-ignore
 				databaseConnector.siteVisit.delete.mockResolvedValue(householdAppeal.siteVisit);
+				databaseConnector.appealStatus.deleteMany.mockResolvedValue();
+				databaseConnector.appealStatus.update.mockResolvedValue();
 				const response = await request
 					.delete(`/appeals/${householdAppeal.id}/site-visits/${householdAppeal.siteVisit.id}`)
 					.send()
@@ -2544,6 +2582,23 @@ describe('site visit routes', () => {
 					site_address: siteAddress,
 					team_email_address: 'caseofficers@planninginspectorate.gov.uk'
 				};
+
+				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledTimes(1);
+				expect(databaseConnector.appealStatus.update).toHaveBeenCalledTimes(1);
+
+				expect(databaseConnector.appealStatus.deleteMany).toHaveBeenCalledWith({
+					where: {
+						appealId: householdAppeal.id,
+						createdAt: {
+							gt: '2025-09-18T10:07:15.406Z' //createdAt for the 'event' status
+						}
+					}
+				});
+
+				expect(databaseConnector.appealStatus.update).toHaveBeenCalledWith({
+					where: { id: 1 },
+					data: { valid: true }
+				});
 
 				expect(mockNotifySend).toHaveBeenCalledTimes(2);
 
