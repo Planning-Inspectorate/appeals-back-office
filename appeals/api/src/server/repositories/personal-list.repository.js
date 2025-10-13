@@ -184,51 +184,7 @@ const getPersonalList = async (userId, pageNumber, pageSize, status, leadAppealI
 	});
 };
 
-/**
- *
- * @param {number} appealId
- * @returns {Promise<*>}
- */
-const deletePersonalListEntry = async (appealId) => {
-	return databaseConnector.personalList.delete({
-		where: { appealId }
-	});
-};
-
-/**
- *
- * @returns {Promise<*>}
- */
-const getCompletedPersonalListEntriesWithDueDate = async () => {
-	// @ts-ignore
-	return databaseConnector.personalList.findMany({
-		where: {
-			dueDate: { not: null },
-			appeal: {
-				appealStatus: {
-					some: {
-						valid: true,
-						status: {
-							in: [APPEAL_CASE_STATUS.COMPLETE, APPEAL_CASE_STATUS.CLOSED]
-						}
-					}
-				}
-			}
-		}
-	});
-};
-
-/**
- * @param {number[]} appealIds
- * @returns {Promise<*>}
- */
-const deletePersonalListEntries = async (appealIds) =>
-	databaseConnector.personalList.deleteMany({ where: { appealId: { in: appealIds } } });
-
 export default {
 	getPersonalList,
-	upsertPersonalListEntry,
-	deletePersonalListEntry,
-	getCompletedPersonalListEntriesWithDueDate,
-	deletePersonalListEntries
+	upsertPersonalListEntry
 };
