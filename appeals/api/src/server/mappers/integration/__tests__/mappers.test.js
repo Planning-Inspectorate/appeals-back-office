@@ -183,7 +183,7 @@ describe('mapCaseDates', () => {
 					lpaProofsSubmittedDate: new Date('2025-03-06T09:12:33.334Z'),
 					lpaQuestionnairePublishedDate: new Date('2025-03-07T09:12:33.334Z'),
 					lpaQuestionnaireValidationOutcomeDate: new Date('2025-03-08T09:12:33.334Z'),
-					proofsOfEvidenceDueDate: new Date('2025-03-10T09:12:33.334Z'),
+					proofOfEvidenceAndWitnessesDueDate: new Date('2025-03-10T09:12:33.334Z'),
 					siteNoticesSentDate: new Date('2025-03-11T09:12:33.334Z'),
 					lpaStatementDueDate: new Date('2025-03-12T09:12:33.334Z'),
 					statementOfCommonGroundDueDate: new Date('2025-03-13T09:12:33.334Z'),
@@ -209,6 +209,10 @@ describe('mapCaseDates', () => {
 					{
 						representationType: APPEAL_REPRESENTATION_TYPE.LPA_PROOFS_EVIDENCE,
 						dateCreated: new Date('2025-03-19T09:12:33.334Z')
+					},
+					{
+						representationType: APPEAL_REPRESENTATION_TYPE.APPELLANT_PROOFS_EVIDENCE,
+						dateCreated: new Date('2025-03-20T09:12:33.334Z')
 					}
 				],
 				appealStatus: [
@@ -234,9 +238,10 @@ describe('mapCaseDates', () => {
 			statementDueDate: '2025-03-12T09:12:33.334Z',
 			statementOfCommonGroundDueDate: '2025-03-13T09:12:33.334Z',
 			planningObligationDueDate: '2025-03-14T09:12:33.334Z',
-			proofsOfEvidenceDueDate: null,
-			siteNoticesSentDate: null,
-			lpaProofsSubmittedDate: null
+			proofsOfEvidenceDueDate: '2025-03-10T09:12:33.334Z',
+			lpaProofsSubmittedDate: '2025-03-19T09:12:33.334Z',
+			appellantProofsSubmittedDate: '2025-03-20T09:12:33.334Z',
+			siteNoticesSentDate: null
 		});
 	});
 });
