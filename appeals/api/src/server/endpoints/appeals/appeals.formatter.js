@@ -1,6 +1,6 @@
 import appealRepository from '#repositories/appeal.repository.js';
 import { calculateDueDate } from '#utils/calculate-due-date.js';
-import { currentStatus } from '#utils/current-status.js';
+import { completedStateList, currentStatus } from '#utils/current-status.js';
 import formatAddress from '#utils/format-address.js';
 import { formatCostsDecision } from '#utils/format-costs-decision.js';
 import {
@@ -44,6 +44,7 @@ const formatAppeal = (appeal, linkedAppeals) => {
 		appealReference: appeal.reference,
 		appealSite: formatAddress(appeal.address),
 		appealStatus: currentStatus(appeal),
+		completedStateList: completedStateList(appeal),
 		appealType: appeal.appealType?.type,
 		procedureType: appeal.procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
@@ -81,6 +82,7 @@ const formatMyAppeal = async ({
 		appealReference: appeal.reference,
 		appealSite: formatAddress(appeal.address),
 		appealStatus: currentStatus(appeal),
+		completedStateList: completedStateList(appeal),
 		appealType: appeal.appealType?.type,
 		procedureType: appeal.procedureType?.name,
 		createdAt: appeal.caseCreatedDate,
@@ -124,6 +126,7 @@ const formatPersonalListItem = async ({
 		appealReference: reference,
 		appealSite: formatAddress(appeal.address),
 		appealStatus,
+		completedStateList: completedStateList(appeal),
 		appealType: appealType?.type,
 		procedureType: procedureType?.name,
 		createdAt: appeal.caseCreatedDate,

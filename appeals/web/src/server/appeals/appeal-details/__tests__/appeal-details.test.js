@@ -1413,7 +1413,8 @@ describe('appeal-details', () => {
 								.reply(200, {
 									...appealData,
 									appealId,
-									appealType: appealType
+									appealType: appealType,
+									completedStateList: ['lpa_questionnaire']
 								});
 							nock('http://test/')
 								.get(/appeals\/\d+\/appellant-cases\/\d+/)
@@ -1451,7 +1452,8 @@ describe('appeal-details', () => {
 									...appealData,
 									appealId,
 									appealType: appealType,
-									appealStatus: 'complete'
+									appealStatus: 'complete',
+									completedStateList: ['lpa_questionnaire']
 								});
 							nock('http://test/')
 								.get(/appeals\/\d+\/appellant-cases\/\d+/)
@@ -2902,6 +2904,7 @@ describe('appeal-details', () => {
 						.reply(200, {
 							...appealData,
 							appealId,
+							completedStateList: ['lpa_questionnaire'],
 							appealType: appealType
 						});
 					nock('http://test/')
