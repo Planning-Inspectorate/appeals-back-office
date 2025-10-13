@@ -96,6 +96,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -152,6 +153,7 @@ describe('appeals list routes', () => {
 								postCode: fullPlanningAppeal.address.postcode
 							},
 							appealStatus: fullPlanningAppeal.appealStatus[0].status,
+							completedStateList: fullPlanningAppeal.completedStateList,
 							appealType: fullPlanningAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
@@ -271,6 +273,7 @@ describe('appeals list routes', () => {
 								postCode: fullPlanningAppeal.address.postcode
 							},
 							appealStatus: fullPlanningAppeal.appealStatus[0].status,
+							completedStateList: fullPlanningAppeal.completedStateList,
 							appealType: fullPlanningAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: fullPlanningAppeal.caseCreatedDate.toISOString(),
@@ -386,6 +389,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -501,6 +505,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -616,6 +621,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -713,6 +719,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -812,6 +819,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -909,6 +917,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1012,6 +1021,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1116,6 +1126,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1204,6 +1215,7 @@ describe('appeals list routes', () => {
 								postCode: householdAppeal.address.postcode
 							},
 							appealStatus: householdAppeal.appealStatus[0].status,
+							completedStateList: householdAppeal.completedStateList,
 							appealType: householdAppeal.appealType.type,
 							awaitingLinkedAppeal: null,
 							createdAt: householdAppeal.caseCreatedDate.toISOString(),
@@ -1458,6 +1470,7 @@ describe('appeals list routes', () => {
 								postCode: ''
 							},
 							appealStatus: '',
+							completedStateList: householdAppeal.completedStateList,
 							localPlanningDepartment: '',
 							lpaQuestionnaireId: null,
 							documentationSummary: {
@@ -1505,6 +1518,7 @@ describe('appeals list routes', () => {
 								postCode: ''
 							},
 							appealStatus: '',
+							completedStateList: householdAppeal.completedStateList,
 							localPlanningDepartment: '',
 							lpaQuestionnaireId: null,
 							documentationSummary: {

@@ -119,6 +119,7 @@ export const householdAppeal = {
 			valid: true
 		}
 	],
+	completedStateList: [],
 	addressId: 1,
 	lpa: {
 		name: 'Maidstone Borough Council',

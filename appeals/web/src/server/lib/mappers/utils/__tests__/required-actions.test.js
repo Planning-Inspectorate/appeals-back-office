@@ -79,6 +79,7 @@ describe('required actions', () => {
 							...appealData,
 							appealType: appealType,
 							appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+							completedStateList: ['lpa_questionnaire'],
 							numberOfResidencesNetChange: null
 						},
 						'detail'
