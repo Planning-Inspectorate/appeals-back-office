@@ -483,7 +483,7 @@ export const localPlanningDepartmentList = [
 	{
 		lpaCode: 'A3010',
 		name: 'Bassetlaw District Council',
-		email: 'planning.appeal@bassetlaw.gov.uk',
+		email: 'planningappeals@bassetlaw.gov.uk',
 		teamId: 17 // North3
 	},
 	{
