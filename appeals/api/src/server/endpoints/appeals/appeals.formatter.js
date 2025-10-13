@@ -119,6 +119,9 @@ const formatPersonalListItem = async ({
 }) => {
 	const { reference, lpaQuestionnaire, appellantCase, hearing, procedureType, appealType } = appeal;
 	const appealStatus = currentStatus(appeal);
+	const appealIsCompleteOrWithdrawn =
+		appealStatus === APPEAL_CASE_STATUS.COMPLETE || appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
+
 	return {
 		appealId,
 		appealReference: reference,
@@ -138,8 +141,7 @@ const formatPersonalListItem = async ({
 		isHearingSetup: !!hearing,
 		hasHearingAddress: !!hearing?.addressId,
 		awaitingLinkedAppeal,
-		costsDecision:
-			appealStatus === APPEAL_CASE_STATUS.COMPLETE ? await formatCostsDecision(appeal) : null,
+		costsDecision: appealIsCompleteOrWithdrawn ? await formatCostsDecision(appeal) : null,
 		numberOfResidencesNetChange: appellantCase?.numberOfResidencesNetChange ?? null
 	};
 };

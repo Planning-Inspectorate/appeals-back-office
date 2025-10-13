@@ -148,6 +148,18 @@ export const calculateDueDate = async (appeal, costsDecision) => {
 			);
 			return addBusinessDays(new Date(appealStatus?.createdAt || ''), 5);
 		}
+		case APPEAL_CASE_STATUS.WITHDRAWN: {
+			if (
+				costsDecision?.awaitingAppellantCostsDecision ||
+				costsDecision?.awaitingLpaCostsDecision
+			) {
+				const appealStatus = appeal.appealStatus.find(
+					(state) => state.status === APPEAL_CASE_STATUS.WITHDRAWN
+				);
+				return addBusinessDays(new Date(appealStatus?.createdAt || ''), 5);
+			}
+			return null;
+		}
 		default: {
 			return undefined;
 		}
