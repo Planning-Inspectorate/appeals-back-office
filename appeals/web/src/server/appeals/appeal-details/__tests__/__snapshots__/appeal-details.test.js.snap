@@ -668,13 +668,6 @@ exports[`appeal-details GET /:appealId Linked appeals should not render a "Appea
             </dd>
         </div>
     </dl>
-    <div id="case-details-cancel-section">
-        <h3 class="govuk-heading-m">Cancel appeal</h3>
-        <div>
-            <p><a id="cancelCase" class="govuk-body govuk-link" href="/appeals-service/appeal-details/2/cancel">Cancel appeal</a>
-            </p>
-        </div>
-    </div>
 </main>"
 `;
 
@@ -1312,13 +1305,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a child tag 
             </dd>
         </div>
     </dl>
-    <div id="case-details-cancel-section">
-        <h3 class="govuk-heading-m">Cancel appeal</h3>
-        <div>
-            <p><a id="cancelCase" class="govuk-body govuk-link" href="/appeals-service/appeal-details/1/cancel">Cancel appeal</a>
-            </p>
-        </div>
-    </div>
 </main>"
 `;
 
@@ -1714,13 +1700,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render a lead tag n
             </dd>
         </div>
     </dl>
-    <div id="case-details-cancel-section">
-        <h3 class="govuk-heading-m">Cancel appeal</h3>
-        <div>
-            <p><a id="cancelCase" class="govuk-body govuk-link" href="/appeals-service/appeal-details/1/cancel">Cancel appeal</a>
-            </p>
-        </div>
-    </div>
 </main>"
 `;
 
@@ -2127,13 +2106,6 @@ exports[`appeal-details GET /:appealId Linked appeals should render an action li
             </dd>
         </div>
     </dl>
-    <div id="case-details-cancel-section">
-        <h3 class="govuk-heading-m">Cancel appeal</h3>
-        <div>
-            <p><a id="cancelCase" class="govuk-body govuk-link" href="/appeals-service/appeal-details/1/cancel">Cancel appeal</a>
-            </p>
-        </div>
-    </div>
 </main>"
 `;
 
