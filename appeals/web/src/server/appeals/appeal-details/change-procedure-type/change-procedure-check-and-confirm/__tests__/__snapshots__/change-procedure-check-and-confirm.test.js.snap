@@ -197,7 +197,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the expected number of days to carry out the inquiry?</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation"
-                            data-cy="change-inquiry-expected-number-of-days">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
+                            data-cy="change-inquiry-estimation">Change<span class="govuk-visually-hidden"> Do you know the expected number of days to carry out the inquiry?</span></a>
                         </dd>
                 </div>
             </dl>
@@ -205,7 +205,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Expected number of days to carry out the inquiry</dt>
                     <dd                     class="govuk-summary-list__value">8 days</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation"
-                            data-cy="change-expected-number-of-days">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
+                            data-cy="change-inquiry-estimation">Change<span class="govuk-visually-hidden"> Expected number of days to carry out the inquiry</span></a>
                         </dd>
                 </div>
             </dl>
@@ -213,7 +213,7 @@ exports[`GET /change-appeal-procedure-type/check-and-confirm GET /change-appeal-
                 <div class="govuk-summary-list__row"><dt class="govuk-summary-list__key"> Do you know the address of where the inquiry will take place?</dt>
                     <dd                     class="govuk-summary-list__value">Yes</dd>
                         <dd class="govuk-summary-list__actions"><a class="govuk-link" href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/address-known"
-                            data-cy="change-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
+                            data-cy="change-inquiry-address-known">Change<span class="govuk-visually-hidden"> Do you know the address of where the inquiry will take place?</span></a>
                         </dd>
                 </div>
             </dl>

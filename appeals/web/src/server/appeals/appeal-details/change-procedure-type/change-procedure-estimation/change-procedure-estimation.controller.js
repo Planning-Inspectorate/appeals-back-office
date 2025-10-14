@@ -1,25 +1,26 @@
-import { inquiryEstimationPage } from './change-procedure-estimation.mapper.js';
+import { estimationPage } from './change-procedure-estimation.mapper.js';
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const getChangeInquiryEstimation = async (request, response) => {
-	const sessionValues = request.session.changeInquiry || {};
-	return renderChangeInquiryEstimation(request, response, 'change', sessionValues);
+export const getChangeEstimation = async (request, response) => {
+	const sessionValues = request.session.changeProcedureType || {};
+	return renderChangeEstimation(request, response, 'change', sessionValues);
 };
 
 /**
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  * @param {'change' | 'setup'} action
- * @param {{inquiryEstimationYesNo: string, inquiryEstimationDays: number}} [values]
+ * @param {{estimationYesNo: string, estimationDays: number}} [values]
  */
-export const renderChangeInquiryEstimation = async (request, response, action, values) => {
+export const renderChangeEstimation = async (request, response, action, values) => {
 	const { errors } = request;
 	const appealDetails = request.currentAppeal;
+	const newProcedureType = request.session.changeProcedureType.appealProcedure;
 
-	const mappedPageContent = inquiryEstimationPage(appealDetails, action, errors, values);
+	const mappedPageContent = estimationPage(appealDetails, action, newProcedureType, errors, values);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -31,16 +32,16 @@ export const renderChangeInquiryEstimation = async (request, response, action, v
  * @param {import('@pins/express/types/express.js').Request} request
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
-export const postChangeInquiryEstimation = async (request, response) => {
-	if (request.errors) {
-		const sessionValues = request.session.changeInquiry || {};
+export const postChangeEstimation = async (request, response) => {
+	const { appealId } = request.currentAppeal;
+	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const sessionValues = request.session.changeProcedureType || {};
 
-		return renderChangeInquiryEstimation(request, response, 'change', sessionValues);
+	if (request.errors) {
+		return renderChangeEstimation(request, response, 'change', sessionValues || {});
 	}
 
-	const { appealId, procedureType } = request.currentAppeal;
-
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType.toLowerCase()}/address-known`
+		`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/address-known`
 	);
 };

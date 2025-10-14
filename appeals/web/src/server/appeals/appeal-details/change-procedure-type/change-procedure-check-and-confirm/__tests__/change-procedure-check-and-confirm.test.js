@@ -99,7 +99,11 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 				});
 			nock('http://test/')
 				.get('/appeals/1/appellant-cases/0')
-				.reply(200, { planningObligation: { hasObligation: true } });
+				.reply(200, {
+					planningObligation: { hasObligation: true },
+					procedureType: 'hearing',
+					dateKnown: 'yes'
+				});
 
 			const response = await request.get(
 				`/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/check-and-confirm`
@@ -186,7 +190,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date" data-cy="change-hearing-date">Change'
 			);
 			expect(unprettifiedHtml).toContain(
-				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date" data-cy="change-hearing-time">Change<span class="govuk-visually-hidden"> Hearing time</span></a>'
+				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/hearing/date" data-cy="change-hearing-time">Change'
 			);
 
 			expect(unprettifiedHtml).toContain('<h3 class="govuk-heading-m">Timetable due dates</h3>');
@@ -273,7 +277,7 @@ describe('GET /change-appeal-procedure-type/check-and-confirm', () => {
 				'Do you know the expected number of days to carry out the inquiry?</dt>'
 			);
 			expect(unprettifiedHtml).toContain(
-				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation" data-cy="change-inquiry-expected-number-of-days">Change'
+				'href="/appeals-service/appeal-details/1/change-appeal-procedure-type/inquiry/estimation" data-cy="change-inquiry-estimation">Change'
 			);
 			expect(unprettifiedHtml).toContain('Expected number of days to carry out the inquiry</dt>');
 			expect(unprettifiedHtml).toContain(

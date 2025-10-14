@@ -4,17 +4,17 @@ import { yesNoInput } from '#lib/mappers/index.js';
 /**
  * @param {import('../../appeal-details.types.js').WebAppeal} appealDetails
  * @param {string} backLinkUrl
- * @param {string} procedureType
+ * @param {string} newProcedureType
  * @param {Record<string, string>} [values]
  * @returns {PageContent}
  */
-export const dateKnownPage = (appealDetails, backLinkUrl, procedureType, values) => {
+export const dateKnownPage = (appealDetails, backLinkUrl, newProcedureType, values) => {
 	const shortAppealReference = appealShortReference(appealDetails.appealReference);
 
 	const dateKnownComponent = yesNoInput({
 		name: 'dateKnown',
 		id: 'date-known',
-		legendText: `Do you know the date and time of the ${procedureType}?`,
+		legendText: `Do you know the date and time of the ${newProcedureType}?`,
 		legendIsPageHeading: true,
 		value: values?.dateKnown
 	});

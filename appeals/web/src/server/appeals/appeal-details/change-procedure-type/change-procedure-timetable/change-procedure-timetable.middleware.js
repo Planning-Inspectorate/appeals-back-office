@@ -7,13 +7,13 @@ import { getTimetableTypes } from './change-procedure-timetable.mapper.js';
 export const runTimetableValidators = async (req, res, next) => {
 	const { currentAppeal } = req || {};
 	const { appellantCase } = req.locals;
-	const changeProcedureTypeSession = req.session.changeProcedureType || {};
+	const sessionValues = req.session.changeProcedureType || {};
 	const timetableTypes = getTimetableTypes(
 		currentAppeal.appealType,
 		appellantCase.planningObligation?.hasObligation,
-		changeProcedureTypeSession?.appealProcedure
+		sessionValues?.appealProcedure
 	);
-	const validators = selectTimetableValidators(req, timetableTypes, changeProcedureTypeSession);
+	const validators = selectTimetableValidators(req, timetableTypes, sessionValues);
 	let index = 0;
 
 	// @ts-ignore

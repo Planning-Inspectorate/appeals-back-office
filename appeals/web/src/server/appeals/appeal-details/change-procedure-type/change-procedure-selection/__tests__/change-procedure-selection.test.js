@@ -100,7 +100,8 @@ describe('Change procedure type', () => {
 				.get('/appeals/1')
 				.reply(200, {
 					...appealDataWithoutStartDate,
-					appealType: 'Planning appeal'
+					appealType: 'Planning appeal',
+					procedureType: 'written'
 				});
 
 			const selectProcedurePostResponse = await request
@@ -113,7 +114,7 @@ describe('Change procedure type', () => {
 
 			expect(selectProcedurePostResponse.statusCode).toBe(302);
 			expect(selectProcedurePostResponse.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-procedure-type/change-timetable'
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-procedure-type/written/change-timetable'
 			);
 
 			nock('http://test/')
@@ -181,7 +182,8 @@ describe('Change procedure type', () => {
 				.get('/appeals/1')
 				.reply(200, {
 					...appealDataWithoutStartDate,
-					appealType: 'Planning appeal'
+					appealType: 'Planning appeal',
+					procedureType: 'written'
 				});
 
 			const response = await request
@@ -194,7 +196,7 @@ describe('Change procedure type', () => {
 
 			expect(response.statusCode).toBe(302);
 			expect(response.text).toBe(
-				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-procedure-type/change-timetable'
+				'Found. Redirecting to /appeals-service/appeal-details/1/change-appeal-procedure-type/written/change-timetable'
 			);
 		});
 	});
@@ -205,7 +207,8 @@ describe('Change procedure type', () => {
 				.get('/appeals/1')
 				.reply(200, {
 					...appealDataWithoutStartDate,
-					appealType: 'Planning appeal'
+					appealType: 'Planning appeal',
+					procedureType: 'written'
 				});
 
 			const response = await request
