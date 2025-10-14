@@ -7,7 +7,7 @@
 		"cy:open": "npx cypress open --browser chrome --e2e --config-file cypress.config.local.env.js",
 		"cy:open:dev": "npx cypress open --browser chrome --e2e --config-file cypress.config.dev.env.js",
 		"cy:open:test": "npx cypress open --browser chrome --e2e --config-file cypress.config.test.env.js",
-		"cy:run": "npx cypress run --config-file cypress.config.local.env.js", 
+		"cy:run": "npx cypress run --config-file cypress.config.local.env.js",
 		"cy:run:dev": "npx cypress run --config-file cypress.config.dev.env.js",
 		"cy:run:test": "npx cypress run --config-file cypress.config.test.env.js",
 		"cy:open-smoke": "npx cypress open --browser chrome --e2e --env grepTags='smoke'",
@@ -32,6 +32,7 @@
 		"dotenv": "^16.0.3",
 		"eslint-plugin-cypress": "^4.3.0",
 		"fs-extra": "^11.2.0",
-		"puppeteer": "^24.3.0"
+		"puppeteer": "^24.3.0",
+		"typescript": "^5.9.3"
 	}
 }
