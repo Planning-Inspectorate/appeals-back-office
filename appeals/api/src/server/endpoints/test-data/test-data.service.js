@@ -32,7 +32,6 @@ const generateAppeals = async (appealType, count, userEmails) => {
 	for (let start = 0; start < count; start += BATCH_SIZE) {
 		const end = Math.min(start + BATCH_SIZE, count);
 		const promises = [];
-
 		for (let i = start; i < end; i++) {
 			const appealInput = createMockAppeal(appealType, userEmails);
 			promises.push(
@@ -46,10 +45,12 @@ const generateAppeals = async (appealType, count, userEmails) => {
 					.catch((err) => console.error('Error creating appeal:', err))
 			);
 		}
-
 		await Promise.all(promises);
-	}
 
+		if (start + BATCH_SIZE < count) {
+			await new Promise((resolve) => setTimeout(resolve, 1000));
+		}
+	}
 	console.log(`Finished generating ${count} ${appealType.toUpperCase()} appeals`);
 };
 
