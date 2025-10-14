@@ -1,3 +1,4 @@
+import { broadcasters } from '#endpoints/integrations/integrations.broadcasters.js';
 import { databaseConnector } from '#utils/database-connector.js';
 import { AUDIT_TRAIL_SYSTEM_UUID } from '@pins/appeals/constants/support.js';
 import {
@@ -26,30 +27,32 @@ import {
  */
 const generateAppeals = async (appealType, count, userEmails) => {
 	const BATCH_SIZE = 10;
+	const folder = await findFolderByPath('representation/representationAttachments');
 
-	return databaseConnector.$transaction(async (tx) => {
-		const folder = await findFolderByPath('representation/representationAttachments');
-		const created = [];
+	for (let start = 0; start < count; start += BATCH_SIZE) {
+		const end = Math.min(start + BATCH_SIZE, count);
+		const promises = [];
 
-		for (let start = 0; start < count; start += BATCH_SIZE) {
-			const end = Math.min(start + BATCH_SIZE, count);
-			const promises = [];
-
-			for (let i = start; i < end; i++) {
-				const appealInput = createMockAppeal(appealType, userEmails);
-				promises.push(
-					createAppeal(appealInput).then(async (appeal) => {
-						await createRepresentationWithAttachments(tx, appeal.id, folder.id, { count: 25 });
-						return appeal;
+		for (let i = start; i < end; i++) {
+			const appealInput = createMockAppeal(appealType, userEmails);
+			promises.push(
+				createAppeal(appealInput)
+					.then(async (appeal) => {
+						await createRepresentationWithAttachments(databaseConnector, appeal.id, folder.id, {
+							count: 25
+						});
+						await broadcasters.broadcastAppeal(appeal.id);
 					})
-				);
-			}
-			created.push(...(await Promise.all(promises)));
+					.catch((err) => console.error('Error creating appeal:', err))
+			);
 		}
 
-		return created;
-	});
+		await Promise.all(promises);
+	}
+
+	console.log(`Finished generating ${count} ${appealType.toUpperCase()} appeals`);
 };
+
 /**
  * @param {import('#db-client').Prisma.TransactionClient} tx
  * @param {number} appealId

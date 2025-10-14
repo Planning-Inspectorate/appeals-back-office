@@ -15,11 +15,10 @@ export const generateTestAppeals = async (request, response) => {
 	const userEmails = ['load-test@example.com', 'load-test2@example.com'];
 
 	try {
-		const appeals = await testDataService.generateAppeals(appealType, count, userEmails);
+		await testDataService.generateAppeals(appealType, count, userEmails);
 		return response.status(200).json({
 			message: `Created ${count} ${appealType.toUpperCase()} appeal(s).`,
-			count,
-			sample: appeals.slice(0, 3)
+			count
 		});
 	} catch (/** @type {any} */ err) {
 		console.error('Error creating test appeals:', err);
