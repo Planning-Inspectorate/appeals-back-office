@@ -6,10 +6,10 @@ export function beforeYouStartSection(templateData) {
 		localPlanningDepartment,
 		planningApplicationReference,
 		applicationDate,
-		appealType,
 		appellantCostsAppliedFor,
 		applicationDecision,
-		applicationDecisionDate
+		applicationDecisionDate,
+		typeOfPlanningApplication
 	} = templateData;
 
 	return {
@@ -21,7 +21,7 @@ export function beforeYouStartSection(templateData) {
 			},
 			{
 				key: 'What type of application is your appeal about?',
-				text: formatSentenceCase(appealType, 'Not provided')
+				text: formatSentenceCase(typeOfPlanningApplication, 'Not provided')
 			},
 			{
 				key: 'Was your application granted or refused?',
