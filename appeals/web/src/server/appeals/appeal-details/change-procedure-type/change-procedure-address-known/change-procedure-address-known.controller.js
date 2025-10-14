@@ -43,9 +43,6 @@ export const postChangeInquiryAddressKnown = async (request, response) => {
 	const { appealId } = request.params;
 	const newProcedureType = request.session.changeProcedureType.appealProcedure;
 
-	console.log('known BODY!!!!!', request.body);
-	console.log('known SESSION!!!!', request.session.changeProcedureType);
-
 	if (request.body.addressKnown === 'yes') {
 		return response.redirect(
 			`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/address-details`
