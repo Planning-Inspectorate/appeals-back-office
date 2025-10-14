@@ -246,6 +246,30 @@ describe('calculateDueDate Tests', () => {
 		expect(dueDate).toBeNull();
 	});
 
+	describe('handles WITHDRAWN', () => {
+		test('return null where costs decisions do not exist', async () => {
+			const mockCostDecision = {
+				awaitingAppellantCostsDecision: false,
+				awaitingLpaCostsDecision: false
+			};
+			mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.WITHDRAWN;
+
+			expect(await calculateDueDate(mockAppeal, mockCostDecision)).toBeNull();
+		});
+
+		test('returns dueDate where costs decisions exist', async () => {
+			const createdAtPlusFiveDate = new Date('2024-01-16T16:14:31.387Z');
+			const mockCostDecision = {
+				awaitingAppellantCostsDecision: true,
+				awaitingLpaCostsDecision: true
+			};
+			mockAppeal.appealStatus[0].status = APPEAL_CASE_STATUS.WITHDRAWN;
+
+			const dueDate = await calculateDueDate(mockAppeal, mockCostDecision);
+			expect(dueDate).toEqual(createdAtPlusFiveDate);
+		});
+	});
+
 	test('handles unexpected status (default case)', async () => {
 		mockAppeal.appealStatus[0].status = 'unexpected_status';
 

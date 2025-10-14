@@ -1,5 +1,6 @@
 import { isNetResidencesAppealType } from '#common/net-residences-appeal-types.js';
 import config from '#environment/config.js';
+import { isStatePassed } from '#lib/appeal-status.js';
 import { dateIsInThePast, dateISOStringToDayMonthYearHourMinute } from '#lib/dates.js';
 import { isChildAppeal } from '#lib/mappers/utils/is-linked-appeal.js';
 import {
@@ -266,7 +267,8 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 			}
 			break;
 		}
-		case APPEAL_CASE_STATUS.COMPLETE: {
+		case APPEAL_CASE_STATUS.COMPLETE:
+		case APPEAL_CASE_STATUS.WITHDRAWN: {
 			if (appealDetails.costsDecision?.awaitingAppellantCostsDecision) {
 				actions.push('issueAppellantCostsDecision');
 			}
@@ -280,9 +282,16 @@ export function getRequiredActionsForAppeal(appealDetails, view) {
 	}
 
 	if (
+		isStatePassed(appealDetails, APPEAL_CASE_STATUS.LPA_QUESTIONNAIRE) &&
 		isNetResidencesAppealType(appealDetails.appealType) &&
 		appealDetails.numberOfResidencesNetChange === null &&
-		!isChildAppeal(appealDetails)
+		!isChildAppeal(appealDetails) &&
+		appealDetails.appealStatus &&
+		![
+			APPEAL_CASE_STATUS.INVALID,
+			APPEAL_CASE_STATUS.WITHDRAWN,
+			APPEAL_CASE_STATUS.TRANSFERRED
+		].includes(appealDetails.appealStatus)
 	) {
 		actions.push('addResidencesNetChange');
 	}

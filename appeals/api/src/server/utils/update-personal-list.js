@@ -17,10 +17,12 @@ export const updatePersonalList = async (appealId) => {
 	if (!appeal) {
 		return;
 	}
-	const costsDecision =
-		currentStatus(appeal) === APPEAL_CASE_STATUS.COMPLETE
-			? await formatCostsDecision(appeal)
-			: null;
+
+	const appealStatus = currentStatus(appeal);
+	const appealIsCompleteOrWithdrawn =
+		appealStatus === APPEAL_CASE_STATUS.COMPLETE || appealStatus === APPEAL_CASE_STATUS.WITHDRAWN;
+	const costsDecision = appealIsCompleteOrWithdrawn ? await formatCostsDecision(appeal) : null;
+
 	let dueDate = await calculateDueDate(appeal, costsDecision);
 	let linkType = null;
 	const linkedAppeals = await appealRepository.getLinkedAppeals(
@@ -101,16 +103,21 @@ function sleep(ms) {
  * @returns {Promise<void>}
  */
 export async function refreshPersonalList() {
-	const appealsWithoutPersonalListEntry =
-		await appealRepository.getAppealsWithNoPersonalListEntries();
-	if (appealsWithoutPersonalListEntry.length > 0) {
-		logger.info(
-			`PersonalList will be refreshed for ${appealsWithoutPersonalListEntry.length} appeals`
-		);
-		for (const appeal of appealsWithoutPersonalListEntry) {
-			await updatePersonalList(appeal.id);
-			await sleep(10); // sleep for 10 milliseconds
+	try {
+		const appealsWithoutPersonalListEntry =
+			await appealRepository.getAppealsWithNoPersonalListEntries();
+		if (appealsWithoutPersonalListEntry.length > 0) {
+			logger.info(
+				`PersonalList will be refreshed for ${appealsWithoutPersonalListEntry.length} appeals`
+			);
+			for (const appeal of appealsWithoutPersonalListEntry) {
+				await updatePersonalList(appeal.id);
+				await sleep(10); // sleep for 10 milliseconds
+			}
+			logger.info(`PersonalList refresh complete`);
 		}
-		logger.info(`PersonalList refresh complete`);
+	} catch (error) {
+		// @ts-ignore
+		logger.error(`Error refreshing PersonalList: ${error.message}`);
 	}
 }

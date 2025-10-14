@@ -4142,12 +4142,14 @@ export const appealDataToGetRequiredActions = {
 	addResidencesNetChangeS78: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		completedStateList: ['lpa_questionnaire'],
 		appealType: 'Planning appeal',
 		numberOfResidencesNetChange: null
 	},
 	addResidencesNetChangeS20: {
 		...baseAppealDataToGetRequiredActions,
 		appealStatus: APPEAL_CASE_STATUS.COMPLETE,
+		completedStateList: ['lpa_questionnaire'],
 		appealType: 'Planning listed building and conservation area appeal',
 		numberOfResidencesNetChange: null
 	},
