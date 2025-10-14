@@ -4,6 +4,16 @@ parameters:
     default: 'dev'
     values: ['dev', 'test']
 
+  # 👇 Toggle this in the Run pipeline UI
+  - name: RunParallel
+    type: boolean
+    default: false   # nightly (scheduled) uses defaults → single agent
+
+  # 👇 Folder/glob for non-parallel runs (no need to list every spec)
+  - name: SpecsGlob
+    type: string
+    default: 'cypress/e2e/back-office-appeals/**/*.spec.js'
+
 variables:
   - name: APP
     value: 'appeals'
@@ -25,13 +35,22 @@ jobs:
     pool: pins-odt-agent-pool-tests
 
     strategy:
-      matrix:
-        group1:   # HEAVY (~30m34s)
-          SPEC: cypress/e2e/back-office-appeals/relatedAppeals.spec.js,cypress/e2e/back-office-appeals/issueDecision.spec.js,cypress/e2e/back-office-appeals/hearing.spec.js,cypress/e2e/back-office-appeals/reviewAppellantCase.spec.js
-        group2:   # LIGHT (~31m26s)
-          SPEC: cypress/e2e/back-office-appeals/manageCorrespondence.spec.js,cypress/e2e/back-office-appeals/manageDocsAppellantCase.spec.js,cypress/e2e/back-office-appeals/manageDocsLpaq.spec.js,cypress/e2e/back-office-appeals/nationalListSearch.spec.js,cypress/e2e/back-office-appeals/progressS20ToDecision.spec.js,cypress/e2e/back-office-appeals/progressS78ToDecision.spec.js,cypress/e2e/back-office-appeals/reviewLpaq.spec.js,cypress/e2e/back-office-appeals/s78ChangeTimetable.spec.js,cypress/e2e/back-office-appeals/scheduleSiteVisit.spec.js,cypress/e2e/back-office-appeals/startCase.spec.js,cypress/e2e/back-office-appeals/unlinkAppeals.spec.js,cypress/e2e/back-office-appeals/unrelateAppeals.spec.js,cypress/e2e/back-office-appeals/updateLpaqDueDate.spec.js,cypress/e2e/back-office-appeals/uploadDocsAppellantCase.spec.js,cypress/e2e/back-office-appeals/withdrawAppeal.spec.js,cypress/e2e/back-office-appeals/inquiry.spec.js
-        group3:   # Light (~30m34s)
-          SPEC: cypress/e2e/back-office-appeals/addCorrespondence.spec.js,cypress/e2e/back-office-appeals/appellantCase.spec.js,cypress/e2e/back-office-appeals/assignUserToCase.spec.js,cypress/e2e/back-office-appeals/caseHistory.spec.js,cypress/e2e/back-office-appeals/caseNotes.spec.js,cypress/e2e/back-office-appeals/changeAppealType.spec.js,cypress/e2e/back-office-appeals/changeContact.spec.js,cypress/e2e/back-office-appeals/changeSiteVisit.spec.js,cypress/e2e/back-office-appeals/changeStartDate.spec.js,cypress/e2e/back-office-appeals/globalDateValidation.spec.js,cypress/e2e/back-office-appeals/issueDecisionInvalid.spec.js,cypress/e2e/back-office-appeals/linkAppeals.spec.js,cypress/e2e/back-office-appeals/lpaStatement.spec.js,cypress/e2e/back-office-appeals/manageDocsSupporting.spec.js
+      # 🟢 PARALLEL: keep your existing groups
+      ${{ if eq(parameters.RunParallel, true) }}:
+        matrix:
+          group1:
+            SPEC: cypress/e2e/back-office-appeals/relatedAppeals.spec.js,cypress/e2e/back-office-appeals/issueDecision.spec.js,cypress/e2e/back-office-appeals/hearing.spec.js,cypress/e2e/back-office-appeals/reviewAppellantCase.spec.js
+          group2:
+            SPEC: cypress/e2e/back-office-appeals/manageCorrespondence.spec.js,cypress/e2e/back-office-appeals/manageDocsAppellantCase.spec.js,cypress/e2e/back-office-appeals/manageDocsLpaq.spec.js,cypress/e2e/back-office-appeals/nationalListSearch.spec.js,cypress/e2e/back-office-appeals/progressS20ToDecision.spec.js,cypress/e2e/back-office-appeals/progressS78ToDecision.spec.js,cypress/e2e/back-office-appeals/reviewLpaq.spec.js,cypress/e2e/back-office-appeals/s78ChangeTimetable.spec.js,cypress/e2e/back-office-appeals/scheduleSiteVisit.spec.js,cypress/e2e/back-office-appeals/startCase.spec.js,cypress/e2e/back-office-appeals/unlinkAppeals.spec.js,cypress/e2e/back-office-appeals/unrelateAppeals.spec.js,cypress/e2e/back-office-appeals/updateLpaqDueDate.spec.js,cypress/e2e/back-office-appeals/uploadDocsAppellantCase.spec.js,cypress/e2e/back-office-appeals/withdrawAppeal.spec.js,cypress/e2e/back-office-appeals/inquiry.spec.js
+          group3:
+            SPEC: cypress/e2e/back-office-appeals/addCorrespondence.spec.js,cypress/e2e/back-office-appeals/appellantCase.spec.js,cypress/e2e/back-office-appeals/assignUserToCase.spec.js,cypress/e2e/back-office-appeals/caseHistory.spec.js,cypress/e2e/back-office-appeals/caseNotes.spec.js,cypress/e2e/back-office-appeals/changeAppealType.spec.js,cypress/e2e/back-office-appeals/changeContact.spec.js,cypress/e2e/back-office-appeals/changeSiteVisit.spec.js,cypress/e2e/back-office-appeals/changeStartDate.spec.js,cypress/e2e/back-office-appeals/globalDateValidation.spec.js,cypress/e2e/back-office-appeals/issueDecisionInvalid.spec.js,cypress/e2e/back-office-appeals/linkAppeals.spec.js,cypress/e2e/back-office-appeals/lpaStatement.spec.js,cypress/e2e/back-office-appeals/manageDocsSupporting.spec.js
+
+      # 🟡 SINGLE AGENT: run the whole folder via glob (no spec list)
+      ${{ if eq(parameters.RunParallel, false) }}:
+        matrix:
+          single:
+            SPEC: ''   # intentionally empty; we’ll use SpecsGlob in the step
+
     steps:
       - task: NodeTool@0
         inputs:
@@ -57,19 +76,25 @@ jobs:
 
       - script: |
           echo "Assigning per-worker index and jitter..."
-          # ADO is 1-based; convert to 0-based
           export CYPRESS_WORKER_INDEX=$(( $(System.JobPositionInPhase) - 1 ))
           export LOGIN_JITTER_MS=2000
 
           echo "Worker index: $CYPRESS_WORKER_INDEX"
           echo "Login jitter (ms): $LOGIN_JITTER_MS"
 
-          echo "Running specs:"
-          for spec in $(echo "${SPEC}" | tr ',' ' '); do
-            echo "- $spec"
-          done
+          # Choose spec arg: SPEC (parallel) or folder glob (single agent)
+          SPEC_ARG="${SPEC}"
+          if [ -z "$SPEC_ARG" ]; then
+            SPEC_ARG='${{ parameters.SpecsGlob }}'
+            echo "Running with folder glob: $SPEC_ARG"
+          else
+            echo "Running with explicit spec list"
+            for spec in $(echo "$SPEC_ARG" | tr ',' ' '); do
+              echo "- $spec"
+            done
+          fi
 
-          npx cypress run --spec "${SPEC}"
+          npx cypress run --spec "$SPEC_ARG"
         workingDirectory: $(System.DefaultWorkingDirectory)/appeals/e2e
         env:
           TZ: 'Europe/London'
@@ -82,7 +107,7 @@ jobs:
           HAPPY_PATH_EMAIL: $(HAPPY_PATH_EMAIL)
           CYPRESS_WORKER_INDEX: $(CYPRESS_WORKER_INDEX)
           LOGIN_JITTER_MS: $(LOGIN_JITTER_MS)
-        displayName: "Run Cypress Tests (per-worker index + jitter)"
+        displayName: "Run Cypress Tests"
 
       - task: PublishBuildArtifacts@1
         condition: failed()
