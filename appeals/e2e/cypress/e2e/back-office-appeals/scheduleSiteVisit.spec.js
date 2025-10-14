@@ -53,6 +53,26 @@ describe('Schedule site visit', () => {
 				caseDetailsPage.validateAnswer('Type', visitType, { matchQuestionCase: true });
 			});
 		});
+
+		it(`Cancel Site Visit`, { tags: tag.smoke }, () => {
+			let visitDate = happyPathHelper.validVisitDate();
+
+			cy.createCase().then((caseObj) => {
+				happyPathHelper.assignCaseOfficer(caseObj);
+				happyPathHelper.reviewAppellantCase(caseObj);
+				happyPathHelper.startCase(caseObj);
+				caseDetailsPage.clickSetUpSiteVisitType();
+				caseDetailsPage.selectRadioButtonByValue(caseDetailsPage.exactMatch(visitType));
+				dateTimeSection.enterVisitDate(visitDate);
+				dateTimeSection.enterVisitStartTime('08', '00');
+				dateTimeSection.enterVisitEndTime('12', '00');
+				caseDetailsPage.clickButtonByText('Confirm');
+				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit set up');
+				caseDetailsPage.clickLinkByText('Cancel site visit');
+				caseDetailsPage.clickButtonByText('Cancel site visit');
+				caseDetailsPage.validateConfirmationPanelMessage('Success', 'Site visit cancelled');
+			});
+		});
 	});
 
 	it('should show an error when visit type is not selected', () => {
