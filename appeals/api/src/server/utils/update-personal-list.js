@@ -103,16 +103,21 @@ function sleep(ms) {
  * @returns {Promise<void>}
  */
 export async function refreshPersonalList() {
-	const appealsWithoutPersonalListEntry =
-		await appealRepository.getAppealsWithNoPersonalListEntries();
-	if (appealsWithoutPersonalListEntry.length > 0) {
-		logger.info(
-			`PersonalList will be refreshed for ${appealsWithoutPersonalListEntry.length} appeals`
-		);
-		for (const appeal of appealsWithoutPersonalListEntry) {
-			await updatePersonalList(appeal.id);
-			await sleep(10); // sleep for 10 milliseconds
+	try {
+		const appealsWithoutPersonalListEntry =
+			await appealRepository.getAppealsWithNoPersonalListEntries();
+		if (appealsWithoutPersonalListEntry.length > 0) {
+			logger.info(
+				`PersonalList will be refreshed for ${appealsWithoutPersonalListEntry.length} appeals`
+			);
+			for (const appeal of appealsWithoutPersonalListEntry) {
+				await updatePersonalList(appeal.id);
+				await sleep(10); // sleep for 10 milliseconds
+			}
+			logger.info(`PersonalList refresh complete`);
 		}
-		logger.info(`PersonalList refresh complete`);
+	} catch (error) {
+		// @ts-ignore
+		logger.error(`Error refreshing PersonalList: ${error.message}`);
 	}
 }
