@@ -22,11 +22,16 @@ import {
 	CASE_RELATIONSHIP_LINKED,
 	CASE_RELATIONSHIP_RELATED
 } from '@pins/appeals/constants/support.js';
-import { APPEAL_CASE_STATUS, APPEAL_CASE_TYPE } from '@planning-inspectorate/data-model';
+import {
+	APPEAL_ALLOCATION_LEVEL,
+	APPEAL_APPELLANT_PROCEDURE_PREFERENCE,
+	APPEAL_CASE_STATUS,
+	APPEAL_CASE_TYPE
+} from '@planning-inspectorate/data-model';
 import { sub } from 'date-fns';
 
 import isFPA from '@pins/appeals/utils/is-fpa.js';
-import { randomBool } from './data-utilities.js';
+import { randomBool, randomEnumValue } from './data-utilities.js';
 
 /** @typedef {import('@pins/appeals.api').Appeals.AppealSite} AppealSite */
 
@@ -54,6 +59,16 @@ function generateLpaReference() {
 	const date = pickRandom(['2020', '2021', '2022', '2023']);
 
 	return `${numberPrefix}/APP/${date}/${numberSuffix}`;
+}
+
+/**
+ * assigned allocation levels have an associated band - see appealAllocationLevels in config.js
+ * @param {string} level
+ */
+function allocationBandLookup(level) {
+	if (['A', 'B'].includes(level.toLocaleUpperCase())) return 3;
+	if (['C', 'D'].includes(level.toLocaleUpperCase())) return 2;
+	return 1;
 }
 
 /**
@@ -91,9 +106,18 @@ const appealFactory = ({
 		postcode: randomAddress.postCode,
 		addressCountry: null
 	};
+	//allocation is nullable
+	const allocation = randomEnumValue(APPEAL_ALLOCATION_LEVEL);
+	const procedureKey = randomEnumValue(APPEAL_APPELLANT_PROCEDURE_PREFERENCE, false);
+	const appealTypeKey = typeShorthand || randomEnumValue(APPEAL_CASE_TYPE, false);
 
 	const appeal = {
-		appealType: { connect: { key: typeShorthand } },
+		...(appealTypeKey && {
+			appealType: { connect: { key: appealTypeKey } }
+		}),
+		...(procedureKey && {
+			procedureType: { connect: { key: procedureKey } }
+		}),
 		caseStartedDate: startedAt,
 		caseValidDate: validAt,
 		reference: randomUUID(),
@@ -125,6 +149,9 @@ const appealFactory = ({
 		}),
 		...(lpaQuestionnaire && {
 			lpaQuestionnaire: { create: createLPAQuestionnaireForAppealType(typeShorthand) }
+		}),
+		...(allocation && {
+			allocation: { create: { level: allocation, band: allocationBandLookup(allocation) } }
 		})
 	};
 
