@@ -57,7 +57,12 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 			const hearingDate = dateISOStringToDayMonthYearHourMinute(
 				appealDetails.hearing?.hearingStartTime
 			);
-			sessionValues.dateKnown = sessionValues.dateKnown ?? hearingDate ? 'yes' : 'no';
+			sessionValues.dateKnown = sessionValues.dateKnown
+				? sessionValues.dateKnown
+				: hearingDate
+				? 'yes'
+				: 'no';
+
 			sessionValues['event-date-day'] = sessionValues['event-date-day'] ?? hearingDate?.day;
 			sessionValues['event-date-month'] = sessionValues['event-date-month'] ?? hearingDate.month;
 			sessionValues['event-date-year'] = sessionValues['event-date-year'] ?? hearingDate.year;
@@ -76,12 +81,20 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 			sessionValues['event-time-hour'] = sessionValues['event-time-hour'] ?? inquiryDate.hour;
 			sessionValues['event-time-minute'] = sessionValues['event-time-minute'] ?? inquiryDate.minute;
 
-			sessionValues.estimationYesNo =
-				sessionValues.estimationYesNo ?? appealDetails.inquiry?.estimatedDays ? 'yes' : 'no';
+			sessionValues.estimationYesNo = sessionValues.estimationYesNo
+				? sessionValues.estimationYesNo
+				: appealDetails.inquiry?.estimatedDays
+				? 'yes'
+				: 'no';
+
 			sessionValues.estimationDays =
 				sessionValues.estimationDays ?? appealDetails.inquiry?.estimatedDays;
-			sessionValues.addressKnown =
-				sessionValues.addressKnown ?? appealDetails.inquiry?.address ? 'yes' : 'no';
+
+			sessionValues.addressKnown = sessionValues.addressKnown
+				? sessionValues.addressKnown
+				: appealDetails.inquiry?.address
+				? 'yes'
+				: 'no';
 
 			const sessionAddressValues = pick(sessionValues, [
 				'addressLine1',
@@ -96,14 +109,14 @@ export const updateChangeProcedureTypeSession = (request, response, next) => {
 					? pick([], ['addressLine1', 'addressLine2', 'town', 'county', 'postCode'])
 					: isEmpty(sessionAddressValues)
 					? {
-							...pick(appealDetails.inquiry.address, [
+							...pick(appealDetails.inquiry?.address, [
 								'addressLine1',
 								'addressLine2',
 								'town',
 								'county'
 							]),
-							postCode: appealDetails.inquiry.address
-								? appealDetails.inquiry.address['postcode']
+							postCode: appealDetails.inquiry?.address
+								? appealDetails.inquiry?.address['postcode']
 								: null
 					  }
 					: sessionAddressValues;

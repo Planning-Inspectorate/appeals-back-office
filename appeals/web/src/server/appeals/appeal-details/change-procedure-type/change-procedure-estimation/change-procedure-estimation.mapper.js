@@ -5,17 +5,18 @@ import { renderPageComponentsToHtml } from '#lib/nunjucks-template-builders/page
  * @typedef {import("#appeals/appeal-details/appeal-details.types.js").WebAppeal} Appeal
  * @param {Appeal} appealData
  * @param {string} action
- * @param {{inquiryEstimationYesNo: string, inquiryEstimationDays: number}} [values]
+ * @param {{estimationYesNo: string, estimationDays: number}} [values]
  * @param {import("@pins/express").ValidationErrors | undefined} errors
+ * @param {string} newProcedureType
  * @returns {{backLinkUrl: string, title: string, pageComponents: {type: string, parameters: {name: string, fieldset: {legend: {classes: string, text: string, isPageHeading: boolean}}, idPrefix: string, items: [{conditional: {html: string}, text: string, value: string},{text: string, value: string}]}}[], preHeading: string}}
  */
-export function inquiryEstimationPage(appealData, action, errors, values) {
+export function estimationPage(appealData, action, newProcedureType, errors, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
-	const inquiryEstimationComponent = {
+	const estimationComponent = {
 		type: 'radios',
 		parameters: {
-			idPrefix: 'inquiry-estimation-yes-no',
-			name: 'inquiryEstimationYesNo',
+			idPrefix: 'estimation-yes-no',
+			name: 'estimationYesNo',
 			fieldset: {
 				legend: {
 					text: 'Do you know the expected number of days to carry out the inquiry?',
@@ -27,15 +28,15 @@ export function inquiryEstimationPage(appealData, action, errors, values) {
 				{
 					value: 'yes',
 					text: 'Yes',
-					checked: values?.inquiryEstimationYesNo === 'yes',
+					checked: values?.estimationYesNo === 'yes',
 					conditional: {
 						html: renderPageComponentsToHtml([
 							{
 								type: 'input',
 								parameters: {
-									id: 'inquiry-estimation-days',
-									name: 'inquiryEstimationDays',
-									value: values?.inquiryEstimationDays,
+									id: 'estimation-days',
+									name: 'estimationDays',
+									value: values?.estimationDays,
 									...(errors && { errorMessage: { text: errors.msg } }),
 									label: {
 										text: 'Expected number of days to carry out the inquiry',
@@ -53,7 +54,7 @@ export function inquiryEstimationPage(appealData, action, errors, values) {
 				{
 					value: 'no',
 					text: 'No',
-					checked: values?.inquiryEstimationYesNo === 'no'
+					checked: values?.estimationYesNo === 'no'
 				}
 			]
 		}
@@ -62,13 +63,11 @@ export function inquiryEstimationPage(appealData, action, errors, values) {
 	/** @type {PageContent} */
 	return {
 		title: `Appeal - ${shortAppealReference} ${action === 'setup' ? 'start' : 'update'} case`,
-		backLinkUrl: `/appeals-service/appeal-details/${
-			appealData.appealId
-		}/change-appeal-procedure-type/${appealData?.procedureType?.toLowerCase()}/date`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/change-appeal-procedure-type/${newProcedureType}/date`,
 		preHeading: `Appeal ${shortAppealReference} - ${
 			action === 'setup' ? 'set up' : 'change'
 		} inquiry`,
 		// @ts-ignore
-		pageComponents: [inquiryEstimationComponent, errors]
+		pageComponents: [estimationComponent, errors]
 	};
 }

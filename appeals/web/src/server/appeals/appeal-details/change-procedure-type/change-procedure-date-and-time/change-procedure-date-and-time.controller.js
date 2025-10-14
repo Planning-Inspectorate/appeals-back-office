@@ -42,18 +42,11 @@ export const getChangeProcedureEventDate = async (request, response) => {
  * @param {{day?: string | number, month?: string | number, year?: string | number, hour?: string | number, minute?: string | number}} values
  */
 export const renderChangeProcedureEventDate = async (request, response, values) => {
-	const {
-		errors,
-		params: { procedureType }
-	} = request;
+	const { errors } = request;
 
 	const appealDetails = request.currentAppeal;
-
-	const mappedPageContent = await eventChangeProcedureDatePage(
-		appealDetails,
-		values,
-		procedureType
-	);
+	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const mappedPageContent = eventChangeProcedureDatePage(appealDetails, values, newProcedureType);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -68,8 +61,9 @@ export const renderChangeProcedureEventDate = async (request, response, values) 
 export const postChangeProcedureEventDate = async (request, response) => {
 	const {
 		errors,
-		params: { procedureType, appealId }
+		params: { appealId }
 	} = request;
+
 	if (errors) {
 		return renderChangeProcedureEventDate(
 			request,
@@ -78,13 +72,15 @@ export const postChangeProcedureEventDate = async (request, response) => {
 		);
 	}
 
-	if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
+	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+
+	if (newProcedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
 		return response.redirect(
-			`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType}/estimation`
+			`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/estimation`
 		);
 	}
 
 	return response.redirect(
-		`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType}/change-timetable`
+		`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-timetable`
 	);
 };

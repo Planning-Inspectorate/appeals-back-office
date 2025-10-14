@@ -4,7 +4,7 @@ import { selectProcedurePage } from './change-procedure-selection.mapper.js';
 
 /** @type {import('@pins/express').RequestHandler<Response>}  */
 export const getSelectProcedure = async (request, response) => {
-	renderSelectProcedure(request, response);
+	await renderSelectProcedure(request, response);
 };
 
 /**
@@ -44,28 +44,30 @@ export const postChangeSelectProcedure = async (request, response) => {
 	try {
 		const {
 			errors,
-			body: { appealProcedure },
-			params: { appealId }
+			params: { appealId },
+			session: { changeProcedureType }
 		} = request;
 
 		if (errors) {
 			return renderSelectProcedure(request, response);
 		}
 
-		switch (appealProcedure) {
+		const newProcedureType = changeProcedureType.appealProcedure;
+
+		switch (newProcedureType) {
 			case APPEAL_CASE_PROCEDURE.WRITTEN: {
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/change-timetable`
+					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-timetable`
 				);
 			}
 			case APPEAL_CASE_PROCEDURE.HEARING: {
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${appealProcedure}/change-event-date-known`
+					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-event-date-known`
 				);
 			}
 			case APPEAL_CASE_PROCEDURE.INQUIRY: {
 				return response.redirect(
-					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${appealProcedure}/date`
+					`/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/date`
 				);
 			}
 		}

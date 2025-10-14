@@ -18,11 +18,7 @@ export const getEventDateKnown = async (request, response) => {
  * @param {import('@pins/express/types/express.js').RenderedResponse<any, any, Number>} response
  */
 export const renderEventDateKnown = async (request, response) => {
-	const {
-		errors,
-		params: { procedureType }
-	} = request;
-
+	const { errors } = request;
 	const appealDetails = request.currentAppeal;
 	const backLinkUrl = getBackLinkUrl(request, 'change-selected-procedure-type');
 	const sessionValues = getSessionValuesForAppeal(
@@ -30,8 +26,13 @@ export const renderEventDateKnown = async (request, response) => {
 		'changeProcedureType',
 		appealDetails.appealId
 	);
-
-	const mappedPageContent = dateKnownPage(appealDetails, backLinkUrl, procedureType, sessionValues);
+	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const mappedPageContent = dateKnownPage(
+		appealDetails,
+		backLinkUrl,
+		newProcedureType,
+		sessionValues
+	);
 
 	return response.status(errors ? 400 : 200).render('patterns/change-page.pattern.njk', {
 		pageContent: mappedPageContent,
@@ -47,15 +48,15 @@ export const postEventDateKnown = async (request, response) => {
 	const {
 		errors,
 		currentAppeal: { appealId },
-		body: { dateKnown },
-		params: { procedureType }
+		body: { dateKnown }
 	} = request;
 
 	if (errors) {
 		return renderEventDateKnown(request, response);
 	}
 
-	const baseUrl = `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType}`;
+	const newProcedureType = request.session.changeProcedureType.appealProcedure;
+	const baseUrl = `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}`;
 
 	if (dateKnown === 'yes') {
 		// Answer was yes so we progress to the next page

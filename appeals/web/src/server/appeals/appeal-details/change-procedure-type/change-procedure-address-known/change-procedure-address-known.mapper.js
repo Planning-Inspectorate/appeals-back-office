@@ -6,9 +6,10 @@ import { yesNoInput } from '#lib/mappers/components/page-components/radio.js';
  * @param {Appeal} appealData
  * @param {string} action
  * @param {{ addressKnown: string }} [values]
+ * @param {string} newProcedureType
  * @returns {PageContent}
  */
-export function changeAddressKnownPage(appealData, action, values) {
+export function changeAddressKnownPage(appealData, action, newProcedureType, values) {
 	const shortAppealReference = appealShortReference(appealData.appealReference);
 
 	const addressKnownComponent = yesNoInput({
@@ -22,9 +23,7 @@ export function changeAddressKnownPage(appealData, action, values) {
 	/** @type {PageContent} */
 	return {
 		title: `Address - start case - ${shortAppealReference}`,
-		backLinkUrl: `/appeals-service/appeal-details/${
-			appealData.appealId
-		}/change-appeal-procedure-type/${appealData?.procedureType?.toLowerCase()}/estimation`,
+		backLinkUrl: `/appeals-service/appeal-details/${appealData.appealId}/change-appeal-procedure-type/${newProcedureType}/estimation`,
 		preHeading: `Appeal ${shortAppealReference} - update appeal procedure`,
 		pageComponents: [addressKnownComponent]
 	};

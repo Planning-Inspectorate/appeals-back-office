@@ -29,25 +29,26 @@ export const getCheckAndConfirm = async (request, response) => {
 	const {
 		errors,
 		currentAppeal,
-		session,
-		params: { appealId, procedureType }
+		session: { changeProcedureType },
+		params: { appealId }
 	} = request;
 
 	/** @type {ChangeProcedureTypeSession} */
-	const changeProcedureTypeSession = session.changeProcedureType;
+	const sessionValues = changeProcedureType;
+	const newProcedureType = sessionValues.appealProcedure;
 
-	if (!objectContainsAllKeys(changeProcedureTypeSession, 'appealTimetable')) {
+	if (!objectContainsAllKeys(sessionValues, 'appealTimetable')) {
 		return response.status(500).render('app/500.njk');
 	}
 
-	const appealTimetables = changeProcedureTypeSession.appealTimetable;
+	const appealTimetables = sessionValues.appealTimetable;
 
 	const { appellantCase } = request.locals;
 
 	const timeTableTypes = getTimetableTypes(
 		currentAppeal.appealType,
 		appellantCase.planningObligation?.hasObligation,
-		changeProcedureTypeSession.appealProcedure
+		newProcedureType
 	);
 
 	/** @type {{ [key: string]: {value?: string, actions?: { [text: string]: { href: string, visuallyHiddenText: string } }} }} */
@@ -62,27 +63,33 @@ export const getCheckAndConfirm = async (request, response) => {
 					textSummaryListItem({
 						id: 'appeal-procedure',
 						text: 'Appeal procedure',
-						value: appealProcedureToLabelText(changeProcedureTypeSession.appealProcedure),
+						value: appealProcedureToLabelText(newProcedureType),
 						link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/change-selected-procedure-type`,
-						editable: true
+						editable: true,
+						cypressDataName: 'change-appeal-procedure'
 					})?.display.summaryListItem
 				]
 			}
 		}
 	];
 
-	if ([APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(procedureType)) {
-		const values = changeProcedureTypeSession;
+	if ([APPEAL_CASE_PROCEDURE.HEARING, APPEAL_CASE_PROCEDURE.INQUIRY].includes(newProcedureType)) {
 		const dateTime = dayMonthYearHourMinuteToISOString({
-			day: values['event-date-day'],
-			month: values['event-date-month'],
-			year: values['event-date-year'],
-			hour: values['event-time-hour'],
-			minute: values['event-time-minute']
+			day: sessionValues['event-date-day'],
+			month: sessionValues['event-date-month'],
+			year: sessionValues['event-date-year'],
+			hour: sessionValues['event-time-hour'],
+			minute: sessionValues['event-time-minute']
 		});
 		const date = dateISOStringToDisplayDate(dateTime);
 		const time = dateISOStringToDisplayTime12hr(dateTime);
-		const address = pick(values, ['addressLine1', 'addressLine2', 'town', 'county', 'postCode']);
+		const address = pick(sessionValues, [
+			'addressLine1',
+			'addressLine2',
+			'town',
+			'county',
+			'postCode'
+		]);
 
 		responses.push(
 			simpleHtmlComponent(
@@ -90,21 +97,22 @@ export const getCheckAndConfirm = async (request, response) => {
 				{
 					class: 'govuk-heading-m'
 				},
-				`${capitalizeFirstLetter(procedureType)} details`
+				`${capitalizeFirstLetter(newProcedureType)} details`
 			)
 		);
 
-		if (procedureType === APPEAL_CASE_PROCEDURE.HEARING) {
+		if (newProcedureType === APPEAL_CASE_PROCEDURE.HEARING) {
 			responses.push({
 				type: 'summary-list',
 				parameters: {
 					rows: [
 						textSummaryListItem({
-							id: `${procedureType}-date-known`,
-							text: `Do you know the date and time of the ${procedureType}?`,
-							value: values.dateKnown ? 'Yes' : 'No',
-							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType}/change-event-date-known`,
-							editable: true
+							id: `${newProcedureType}-date-known`,
+							text: `Do you know the date and time of the ${newProcedureType}?`,
+							value: sessionValues.dateKnown ? 'Yes' : 'No',
+							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-event-date-known`,
+							editable: true,
+							cypressDataName: `change-${newProcedureType}-date-known`
 						})?.display.summaryListItem
 					]
 				}
@@ -112,19 +120,20 @@ export const getCheckAndConfirm = async (request, response) => {
 		}
 
 		if (
-			procedureType === APPEAL_CASE_PROCEDURE.INQUIRY ||
-			(procedureType === APPEAL_CASE_PROCEDURE.HEARING && values.dateKnown)
+			newProcedureType === APPEAL_CASE_PROCEDURE.INQUIRY ||
+			(newProcedureType === APPEAL_CASE_PROCEDURE.HEARING && sessionValues.dateKnown)
 		) {
 			responses.push({
 				type: 'summary-list',
 				parameters: {
 					rows: [
 						textSummaryListItem({
-							id: `${procedureType}-date`,
-							text: `${capitalizeFirstLetter(procedureType)} date`,
+							id: `${newProcedureType}-date`,
+							text: `${capitalizeFirstLetter(newProcedureType)} date`,
 							value: date,
-							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType}/date`,
-							editable: true
+							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/date`,
+							editable: true,
+							cypressDataName: `change-${newProcedureType}-date`
 						})?.display.summaryListItem
 					]
 				}
@@ -134,43 +143,46 @@ export const getCheckAndConfirm = async (request, response) => {
 				parameters: {
 					rows: [
 						textSummaryListItem({
-							id: `${procedureType}-time`,
-							text: `${capitalizeFirstLetter(procedureType)} time`,
+							id: `${newProcedureType}-time`,
+							text: `${capitalizeFirstLetter(newProcedureType)} time`,
 							value: time,
-							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType}/date`,
-							editable: true
+							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/date`,
+							editable: true,
+							cypressDataName: `change-${newProcedureType}-time`
 						})?.display.summaryListItem
 					]
 				}
 			});
 		}
 
-		if (procedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
+		if (newProcedureType === APPEAL_CASE_PROCEDURE.INQUIRY) {
 			responses.push({
 				type: 'summary-list',
 				parameters: {
 					rows: [
 						textSummaryListItem({
-							id: 'inquiry-expected-number-of-days',
-							text: `Do you know the expected number of days to carry out the ${procedureType}?`,
-							value: capitalize(values.estimationYesNo),
-							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType}/estimation`,
-							editable: true
+							id: 'expected-number-of-days',
+							text: `Do you know the expected number of days to carry out the ${newProcedureType}?`,
+							value: capitalize(sessionValues.estimationYesNo),
+							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/estimation`,
+							editable: true,
+							cypressDataName: `change-${newProcedureType}-estimation`
 						})?.display.summaryListItem
 					]
 				}
 			});
-			if (values.estimationYesNo === 'yes') {
+			if (sessionValues?.estimationYesNo === 'yes') {
 				responses.push({
 					type: 'summary-list',
 					parameters: {
 						rows: [
 							textSummaryListItem({
 								id: 'expected-number-of-days',
-								text: `Expected number of days to carry out the ${procedureType}`,
-								value: `${values.estimationDays} days`,
-								link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType}/estimation`,
-								editable: true
+								text: `Expected number of days to carry out the ${newProcedureType}`,
+								value: `${sessionValues.estimationDays} days`,
+								link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/estimation`,
+								editable: true,
+								cypressDataName: `change-${newProcedureType}-estimation`
 							})?.display.summaryListItem
 						]
 					}
@@ -182,25 +194,27 @@ export const getCheckAndConfirm = async (request, response) => {
 					rows: [
 						textSummaryListItem({
 							id: 'address-known',
-							text: `Do you know the address of where the ${procedureType} will take place?`,
-							value: capitalize(values.addressKnown),
-							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType}/address-known`,
-							editable: true
+							text: `Do you know the address of where the ${newProcedureType} will take place?`,
+							value: capitalize(sessionValues.addressKnown),
+							link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/address-known`,
+							editable: true,
+							cypressDataName: `change-${newProcedureType}-address-known`
 						})?.display.summaryListItem
 					]
 				}
 			});
-			if (values.addressKnown === 'yes') {
+			if (sessionValues.addressKnown === 'yes') {
 				responses.push({
 					type: 'summary-list',
 					parameters: {
 						rows: [
 							textSummaryListItem({
-								id: `${procedureType}-address`,
-								text: `Address of where the ${procedureType} will take place`,
+								id: `${newProcedureType}-address`,
+								text: `Address of where the ${newProcedureType} will take place`,
 								value: { html: addressToString(address, '<br>') },
-								link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${procedureType}/address`,
-								editable: true
+								link: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/address`,
+								editable: true,
+								cypressDataName: `change-${newProcedureType}-address`
 							})?.display.summaryListItem
 						]
 					}
@@ -239,8 +253,8 @@ export const getCheckAndConfirm = async (request, response) => {
 	/** @type {PageComponent[]} */
 	const afterParams = [];
 	if (
-		changeProcedureTypeSession.existingAppealProcedure === APPEAL_CASE_PROCEDURE.HEARING &&
-		changeProcedureTypeSession.appealProcedure !== APPEAL_CASE_PROCEDURE.HEARING
+		sessionValues.existingAppealProcedure === APPEAL_CASE_PROCEDURE.HEARING &&
+		newProcedureType !== APPEAL_CASE_PROCEDURE.HEARING
 	) {
 		afterParams.push(
 			simpleHtmlComponent(
@@ -251,10 +265,7 @@ export const getCheckAndConfirm = async (request, response) => {
 			simpleHtmlComponent('li', { class: 'govuk-body' }, `we've changed the procedure`),
 			simpleHtmlComponent('li', { class: 'govuk-body' }, `we've cancelled the hearing`)
 		);
-	} else if (
-		changeProcedureTypeSession.existingAppealProcedure !==
-		changeProcedureTypeSession.appealProcedure
-	) {
+	} else if (sessionValues.existingAppealProcedure !== newProcedureType) {
 		afterParams.push(
 			simpleHtmlComponent(
 				'p',
@@ -269,7 +280,7 @@ export const getCheckAndConfirm = async (request, response) => {
 			title: 'Check details and update appeal procedure',
 			heading: 'Check details and update appeal procedure',
 			preHeading: `Appeal ${currentAppeal.appealReference}`,
-			backLinkUrl: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${currentAppeal.procedureType.toLowerCase()}/change-timetable`,
+			backLinkUrl: `/appeals-service/appeal-details/${appealId}/change-appeal-procedure-type/${newProcedureType}/change-timetable`,
 			submitButtonText: 'Update appeal procedure',
 			before: responses,
 			responses: timetableResponses,

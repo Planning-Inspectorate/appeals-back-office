@@ -38,7 +38,9 @@ describe('change to inquiry date and time', () => {
 			nock('http://test/')
 				.persist()
 				.get(`/appeals/${appealId}`)
-				.reply(200, { ...appealData, appealId });
+				.reply(200, { ...appealData, appealId, procedureType: 'inquiry' });
+
+			appealData.procedureType = 'inquiry';
 
 			// Save inquiry data for this appealId
 			await request
