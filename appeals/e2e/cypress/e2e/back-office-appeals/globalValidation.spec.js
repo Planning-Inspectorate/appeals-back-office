@@ -5,25 +5,41 @@ import { users } from '../../fixtures/users';
 import { InquirySectionPage } from '../../page_objects/caseDetails/inquirySectionPage.js';
 import { CaseDetailsPage } from '../../page_objects/caseDetailsPage';
 import { happyPathHelper } from '../../support/happyPathHelper';
+import { getDateAndTimeValues } from '../../support/utils/format.js';
 
 const caseDetailsPage = new CaseDetailsPage();
 const inquirySectionPage = new InquirySectionPage();
 
 let caseObj;
+let appeal;
+
+const setupTestCase = () => {
+	cy.login(users.appeals.caseAdmin);
+
+	cy.createCase({ caseType: 'W' }).then((refObj) => {
+		caseObj = refObj;
+		appeal = caseObj;
+		cy.addLpaqSubmissionToCase(caseObj);
+		happyPathHelper.assignCaseOfficer(caseObj);
+		caseDetailsPage.checkStatusOfCase('Validation', 0);
+		happyPathHelper.reviewAppellantCase(caseObj);
+		caseDetailsPage.checkStatusOfCase('Ready to start', 0);
+		happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
+	});
+};
+
+// global setup and cleanup as are using same case across date and time tests
+before(() => {
+	setupTestCase();
+});
+
+after(() => {
+	cy.deleteAppeals(appeal);
+});
 
 describe('Date Validation', { testIsolation: false }, () => {
-	before(() => {
-		setupTestCase();
-	});
-
 	beforeEach(() => {
 		inquirySectionPage.clearInquiryDateAndTime();
-	});
-
-	let appeal;
-
-	after(() => {
-		cy.deleteAppeals(appeal);
 	});
 
 	it('All fields are blank', () => {
@@ -250,18 +266,150 @@ describe('Date Validation', { testIsolation: false }, () => {
 			fields: ['inquiry-date-day']
 		});
 	});
-	const setupTestCase = () => {
-		cy.login(users.appeals.caseAdmin);
+});
 
-		cy.createCase({ caseType: 'W' }).then((ref) => {
-			caseObj = ref;
-			appeal = caseObj;
-			cy.addLpaqSubmissionToCase(caseObj);
-			happyPathHelper.assignCaseOfficer(caseObj);
-			caseDetailsPage.checkStatusOfCase('Validation', 0);
-			happyPathHelper.reviewAppellantCase(caseObj);
-			caseDetailsPage.checkStatusOfCase('Ready to start', 0);
-			happyPathHelper.startS78InquiryCase(caseObj, 'inquiry');
+describe('Time Validation', { testIsolation: false }, () => {
+	beforeEach(() => {
+		inquirySectionPage.clearInquiryDateAndTime();
+	});
+
+	it('All fields are blank', () => {
+		// make sure date part is valid
+		cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+			const dateTimeValues = getDateAndTimeValues(inquiryDate);
+
+			inquirySectionPage.setUpInquiry(
+				dateTimeValues.day,
+				dateTimeValues.month,
+				dateTimeValues.year,
+				'',
+				''
+			);
+
+			inquirySectionPage.verifyErrorMessages({
+				messages: ['Enter the inquiry time'],
+				fields: ['inquiry-time-hour']
+			});
 		});
-	};
+	});
+
+	it('Hour is blank', () => {
+		// make sure date part is valid
+		cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+			const dateTimeValues = getDateAndTimeValues(inquiryDate);
+
+			inquirySectionPage.setUpInquiry(
+				dateTimeValues.day,
+				dateTimeValues.month,
+				dateTimeValues.year,
+				'',
+				'30'
+			);
+
+			inquirySectionPage.verifyErrorMessages({
+				messages: ['Inquiry time must include an hour'],
+				fields: ['inquiry-time-hour']
+			});
+		});
+	});
+
+	it('Minute is blank', () => {
+		// make sure date part is valid
+		cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+			const dateTimeValues = getDateAndTimeValues(inquiryDate);
+
+			inquirySectionPage.setUpInquiry(
+				dateTimeValues.day,
+				dateTimeValues.month,
+				dateTimeValues.year,
+				'23',
+				''
+			);
+
+			inquirySectionPage.verifyErrorMessages({
+				messages: ['Inquiry time must include a minute'],
+				fields: ['inquiry-time-hour']
+			});
+		});
+	});
+
+	it('Hour is outside upper range', () => {
+		// make sure date part is valid
+		cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+			const dateTimeValues = getDateAndTimeValues(inquiryDate);
+
+			inquirySectionPage.setUpInquiry(
+				dateTimeValues.day,
+				dateTimeValues.month,
+				dateTimeValues.year,
+				'24',
+				'30'
+			);
+
+			inquirySectionPage.verifyErrorMessages({
+				messages: ['Inquiry time hour must be 23 or less'],
+				fields: ['inquiry-time-hour']
+			});
+		});
+	});
+
+	it('Minute is outside upper range', () => {
+		// make sure date part is valid
+		cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+			const dateTimeValues = getDateAndTimeValues(inquiryDate);
+
+			inquirySectionPage.setUpInquiry(
+				dateTimeValues.day,
+				dateTimeValues.month,
+				dateTimeValues.year,
+				'23',
+				'60'
+			);
+
+			inquirySectionPage.verifyErrorMessages({
+				messages: ['Inquiry time minute must be 59 or less'],
+				fields: ['inquiry-time-hour']
+			});
+		});
+	});
+
+	it('Hour contains invalid characters', () => {
+		// make sure date part is valid
+		cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+			const dateTimeValues = getDateAndTimeValues(inquiryDate);
+
+			inquirySectionPage.setUpInquiry(
+				dateTimeValues.day,
+				dateTimeValues.month,
+				dateTimeValues.year,
+				'abc',
+				'30'
+			);
+
+			inquirySectionPage.verifyErrorMessages({
+				messages: ['Enter a inquiry time using numbers 0 to 9'],
+				fields: ['inquiry-time-hour']
+			});
+		});
+	});
+
+	it('Minute contains invalid characters', () => {
+		// make sure date part is valid
+		cy.getBusinessActualDate(new Date(), 28).then((inquiryDate) => {
+			const dateTimeValues = getDateAndTimeValues(inquiryDate);
+
+			inquirySectionPage.setUpInquiry(
+				dateTimeValues.day,
+				dateTimeValues.month,
+				dateTimeValues.year,
+				'23',
+				'abc'
+			);
+
+			inquirySectionPage.verifyErrorMessages({
+				messages: ['Enter a inquiry time using numbers 0 to 9'],
+				fields: ['inquiry-time-hour']
+			});
+		});
+	});
 });
